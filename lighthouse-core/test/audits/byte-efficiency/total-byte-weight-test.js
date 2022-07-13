@@ -8,7 +8,7 @@ import {strict as assert} from 'assert';
 import {URL} from 'url';
 
 import TotalByteWeight from '../../../audits/byte-efficiency/total-byte-weight.js';
-import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 
 const options = TotalByteWeight.defaultOptions;
 

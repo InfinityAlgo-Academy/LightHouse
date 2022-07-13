@@ -5,13 +5,14 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const Sentry = require('../../lib/sentry.js');
-
 /**
  * @fileoverview Tracks unused CSS rules.
  */
+
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+import log from 'lighthouse-logger';
+import {Sentry} from '../../lib/sentry.js';
+
 class CSSUsage extends FRGatherer {
   constructor() {
     super();
@@ -146,4 +147,4 @@ class CSSUsage extends FRGatherer {
   }
 }
 
-module.exports = CSSUsage;
+export default CSSUsage;

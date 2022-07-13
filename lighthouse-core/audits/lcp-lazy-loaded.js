@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on whether the largest above-the-fold image was loaded with sufficient priority. This descriptive title is shown to users when the image was loaded properly. */
@@ -17,7 +17,7 @@ const UIStrings = {
   description: 'Above-the-fold images that are lazily loaded render later in the page lifecycle, which can delay the largest contentful paint. [Learn more](https://web.dev/lcp-lazy-loading/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class LargestContentfulPaintLazyLoaded extends Audit {
   /**
@@ -80,5 +80,5 @@ class LargestContentfulPaintLazyLoaded extends Audit {
   }
 }
 
-module.exports = LargestContentfulPaintLazyLoaded;
-module.exports.UIStrings = UIStrings;
+export default LargestContentfulPaintLazyLoaded;
+export {UIStrings};

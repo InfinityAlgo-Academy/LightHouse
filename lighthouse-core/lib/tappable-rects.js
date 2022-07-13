@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const RectHelpers = require('./rect-helpers.js');
+import * as RectHelpers from './rect-helpers.js';
 
 /**
  * Merge client rects together and remove small ones. This may result in a larger overall
@@ -94,6 +94,6 @@ function mergeTouchingClientRects(clientRects) {
   return clientRects;
 }
 
-module.exports = {
+export {
   getTappableRectsFromClientRects,
 };

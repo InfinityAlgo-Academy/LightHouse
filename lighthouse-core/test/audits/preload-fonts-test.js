@@ -5,7 +5,7 @@
  */
 
 import PreloadFontsAudit from '../../audits/preload-fonts.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
 describe('Preload Fonts Audit', () => {
   let networkRecords;

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 /* global window */
 
@@ -55,4 +55,4 @@ class ViewportDimensions extends FRGatherer {
   }
 }
 
-module.exports = ViewportDimensions;
+export default ViewportDimensions;

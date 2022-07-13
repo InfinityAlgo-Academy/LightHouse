@@ -7,7 +7,7 @@
 import jestMock from 'jest-mock';
 
 import ImageElements from '../../../gather/gatherers/image-elements.js';
-import NetworkRecorder from '../../../lib/network-recorder.js';
+import {NetworkRecorder} from '../../../lib/network-recorder.js';
 import {createMockContext, createMockDriver, createMockSession} from
   '../../fraggle-rock/gather/mock-driver.js';
 import {fnAny, readJson, timers} from '../../test-utils.js';

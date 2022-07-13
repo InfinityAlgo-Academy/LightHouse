@@ -6,7 +6,7 @@
 
 import {strict as assert} from 'assert';
 
-import TcpConnection from '../../../../lib/dependency-graph/simulator/tcp-connection.js';
+import {TcpConnection} from '../../../../lib/dependency-graph/simulator/tcp-connection.js';
 
 describe('DependencyGraph/Simulator/TcpConnection', () => {
   describe('#constructor', () => {

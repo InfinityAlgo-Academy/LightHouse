@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 /**
  * @fileoverview Tracks unused JavaScript
@@ -67,4 +67,4 @@ class JsUsage extends FRGatherer {
   }
 }
 
-module.exports = JsUsage;
+export default JsUsage;

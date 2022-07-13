@@ -19,7 +19,7 @@ import {once} from 'events';
 import puppeteer from 'puppeteer-core';
 import ChromeLauncher from 'chrome-launcher';
 
-import ChromeProtocol from '../../../../lighthouse-core/gather/connections/cri.js';
+import {CriConnection} from '../../../../lighthouse-core/gather/connections/cri.js';
 import {LH_ROOT} from '../../../../root.js';
 import {loadArtifacts, saveArtifacts} from '../../../../lighthouse-core/lib/asset-saver.js';
 
@@ -68,9 +68,13 @@ async function runBundledLighthouse(url, configJson, testRunnerOptions) {
   global.require = originalRequire;
   global.Buffer = originalBuffer;
 
-  /** @type {import('../../../../lighthouse-core/index.js')} */
+  /** @type {import('../../../../lighthouse-core/index.js')['default']} */
   // @ts-expect-error - not worth giving test global an actual type.
   const lighthouse = global.runBundledLighthouse;
+
+  /** @type {import('../../../../lighthouse-core/index.js')['legacyNavigation']} */
+  // @ts-expect-error - not worth giving test global an actual type.
+  const legacyNavigation = global.runBundledLighthouseLegacyNavigation;
 
   // Launch and connect to Chrome.
   const launchedChrome = await ChromeLauncher.launch();
@@ -81,9 +85,9 @@ async function runBundledLighthouse(url, configJson, testRunnerOptions) {
     const logLevel = testRunnerOptions.isDebug ? 'info' : undefined;
     let runnerResult;
     if (testRunnerOptions.useLegacyNavigation) {
-      const connection = new ChromeProtocol(port);
+      const connection = new CriConnection(port);
       runnerResult =
-        await lighthouse.legacyNavigation(url, {port, logLevel}, configJson, connection);
+        await legacyNavigation(url, {port, logLevel}, configJson, connection);
     } else {
       // Puppeteer is not included in the bundle, we must create the page here.
       const browser = await puppeteer.connect({browserURL: `http://localhost:${port}`});

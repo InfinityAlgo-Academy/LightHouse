@@ -9,9 +9,10 @@
 /** @typedef {{source: Source, subItems: {type: 'subitems', items: SubItem[]}}} InvalidHreflang */
 /** @typedef {{reason: LH.IcuMessage}} SubItem */
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const {isValidLang} = require('../../../third-party/axe/valid-langs.js');
+import {Audit} from '../audit.js';
+
+import * as i18n from '../../lib/i18n/i18n.js';
+import {isValidLang} from '../../../third-party/axe/valid-langs.js';
 
 const NO_LANGUAGE = 'x-default';
 
@@ -30,7 +31,7 @@ const UIStrings = {
   notFullyQualified: 'Relative href value',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @param {string} href
@@ -145,5 +146,5 @@ class Hreflang extends Audit {
   }
 }
 
-module.exports = Hreflang;
-module.exports.UIStrings = UIStrings;
+export default Hreflang;
+export {UIStrings};

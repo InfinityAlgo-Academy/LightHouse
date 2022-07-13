@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const ComputedCLS = require('../../computed/metrics/cumulative-layout-shift.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {Audit} from '../audit.js';
+import ComputedCLS from '../../computed/metrics/cumulative-layout-shift.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Description of the Cumulative Layout Shift metric that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
@@ -15,7 +15,7 @@ const UIStrings = {
                'elements within the viewport. [Learn more](https://web.dev/cls/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview This metric represents the amount of visual shifting of DOM elements during page load.
@@ -75,5 +75,5 @@ class CumulativeLayoutShift extends Audit {
   }
 }
 
-module.exports = CumulativeLayoutShift;
-module.exports.UIStrings = UIStrings;
+export default CumulativeLayoutShift;
+export {UIStrings};

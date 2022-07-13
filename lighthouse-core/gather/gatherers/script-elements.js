@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const NetworkRecords = require('../../computed/network-records.js');
-const NetworkRequest = require('../../lib/network-request.js');
-const pageFunctions = require('../../lib/page-functions.js');
-const DevtoolsLog = require('./devtools-log.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+import NetworkRecords from '../../computed/network-records.js';
+import {NetworkRequest} from '../../lib/network-request.js';
+import {pageFunctions} from '../../lib/page-functions.js';
+import DevtoolsLog from './devtools-log.js';
 
 /* global getNodeDetails */
 
@@ -108,4 +108,4 @@ class ScriptElements extends FRGatherer {
   }
 }
 
-module.exports = ScriptElements;
+export default ScriptElements;

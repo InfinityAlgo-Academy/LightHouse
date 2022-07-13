@@ -12,7 +12,7 @@
  * around page unload, but this can be expanded in the future.
  */
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 class GlobalListeners extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
@@ -89,4 +89,4 @@ class GlobalListeners extends FRGatherer {
   }
 }
 
-module.exports = GlobalListeners;
+export default GlobalListeners;

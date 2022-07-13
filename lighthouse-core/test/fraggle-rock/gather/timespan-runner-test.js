@@ -27,13 +27,13 @@ before(async () => {
     (await import('../../../fraggle-rock/gather/timespan-runner.js')).startTimespanGather;
 });
 
-const mockSubmodules = mockDriverSubmodules();
-const mockRunner = mockRunnerModule();
+const mockSubmodules = await mockDriverSubmodules();
+const mockRunner = await mockRunnerModule();
 
 // Establish the mocks before we import the file under test.
 /** @type {ReturnType<typeof createMockDriver>} */
 let mockDriver;
-td.replace('../../../fraggle-rock/gather/driver.js',
+await td.replaceEsm('../../../fraggle-rock/gather/driver.js',
   mockDriverModule(() => mockDriver.asDriver()));
 
 describe('Timespan Runner', () => {

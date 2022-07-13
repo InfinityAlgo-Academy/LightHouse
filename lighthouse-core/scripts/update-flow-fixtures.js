@@ -16,8 +16,8 @@ import yargs from 'yargs';
 import {getChromePath} from 'chrome-launcher';
 
 import {LH_ROOT} from '../../root.js';
-import api from '../fraggle-rock/api.js';
-import assetSaver from '../lib/asset-saver.js';
+import * as api from '../fraggle-rock/api.js';
+import * as assetSaver from '../lib/asset-saver.js';
 
 const ARTIFACTS_PATH =
   `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/artifacts/sample-flow-artifacts.json`;

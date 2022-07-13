@@ -72,6 +72,7 @@ import {LH_ROOT} from '../../../root.js';
 /** @type {Array<string>} */
 const WARNINGS = [];
 
+// TODO(esmodules): make non-default
 export default {
   WARNINGS,
   // prettier-ignore

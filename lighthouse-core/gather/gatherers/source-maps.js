@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const URL = require('../../lib/url-shim.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+import URL from '../../lib/url-shim.js';
 
 /**
  * @fileoverview Gets JavaScript source maps.
@@ -154,4 +154,4 @@ class SourceMaps extends FRGatherer {
   }
 }
 
-module.exports = SourceMaps;
+export default SourceMaps;

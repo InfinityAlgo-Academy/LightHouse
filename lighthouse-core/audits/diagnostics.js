@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const MainThreadTasksComputed = require('../computed/main-thread-tasks.js');
-const NetworkRecordsComputed = require('../computed/network-records.js');
-const NetworkAnalysisComputed = require('../computed/network-analysis.js');
-const MainResource = require('../computed/main-resource.js');
+import {Audit} from './audit.js';
+import MainThreadTasksComputed from '../computed/main-thread-tasks.js';
+import NetworkRecordsComputed from '../computed/network-records.js';
+import NetworkAnalysisComputed from '../computed/network-analysis.js';
+import MainResource from '../computed/main-resource.js';
 
 class Diagnostics extends Audit {
   /**
@@ -77,4 +77,4 @@ class Diagnostics extends Audit {
   }
 }
 
-module.exports = Diagnostics;
+export default Diagnostics;

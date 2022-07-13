@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const BaseNode = require('../base-node.js');
+import {BaseNode} from '../base-node.js';
 
 /**
  * @fileoverview
@@ -16,9 +16,9 @@ const BaseNode = require('../base-node.js');
  */
 
 
-/** @typedef {BaseNode.Node} Node */
-/** @typedef {import('../network-node')} NetworkNode */
-/** @typedef {import('../cpu-node')} CpuNode */
+/** @typedef {import('../base-node.js').Node} Node */
+/** @typedef {import('../network-node').NetworkNode} NetworkNode */
+/** @typedef {import('../cpu-node').CPUNode} CpuNode */
 
 /**
  * @typedef NodeTimingComplete
@@ -209,4 +209,4 @@ class SimulatorTimingMap {
   }
 }
 
-module.exports = SimulatorTimingMap;
+export {SimulatorTimingMap};

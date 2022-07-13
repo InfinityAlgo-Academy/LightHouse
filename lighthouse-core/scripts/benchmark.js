@@ -10,7 +10,7 @@
 
 // node lighthouse-core/scripts/benchmark.js
 
-import pageFunctions from '../lib/page-functions.js';
+import {pageFunctions} from '../lib/page-functions.js';
 
 console.log('Computing BenchmarkIndex 10 times...');
 

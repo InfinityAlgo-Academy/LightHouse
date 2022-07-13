@@ -8,9 +8,15 @@
 const path = require('path');
 
 const format = require('../../localization/format.js');
-const i18n = require('../../../lighthouse-core/lib/i18n/i18n.js');
-const constants = require('../../../lighthouse-core/config/constants.js');
 const locales = require('../../localization/locales.js');
+
+// TODO(esmodules): remove when shared/ is esm
+let i18n;
+let constants;
+before(async () => {
+  i18n = await import('../../../lighthouse-core/lib/i18n/i18n.js');
+  constants = await import('../../../lighthouse-core/config/constants.js');
+});
 
 describe('format', () => {
   describe('DEFAULT_LOCALE', () => {
@@ -183,9 +189,9 @@ describe('format', () => {
       expect(formattedStr).toEqual('en-XZ cuerda!');
     });
 
-    it('overwrites existing locale strings', () => {
+    it('overwrites existing locale strings', async () => {
       const filename = 'lighthouse-core/audits/is-on-https.js';
-      const UIStrings = require('../../../lighthouse-core/audits/is-on-https.js').UIStrings;
+      const {UIStrings} = await import('../../../lighthouse-core/audits/is-on-https.js');
       const str_ = i18n.createMessageInstanceIdFn(filename, UIStrings);
 
       // To start with, we get back the intended string..
@@ -305,17 +311,21 @@ describe('format', () => {
       helloWorldMultiReplace: '{hello} {world}',
       helloPlural: '{itemCount, plural, =1{1 hello} other{hellos}}',
       helloPluralNestedICU: '{itemCount, plural, ' +
-        '=1{1 hello {in, number, bytes}} ' +
-        'other{hellos {in, number, bytes}}}',
+      '=1{1 hello {in, number, bytes}} ' +
+      'other{hellos {in, number, bytes}}}',
       helloPluralNestedPluralAndICU: '{itemCount, plural, ' +
-        '=1{{innerItemCount, plural, ' +
-          '=1{1 hello 1 goodbye {in, number, bytes}} ' +
-          'other{1 hello, goodbyes {in, number, bytes}}}} ' +
-        'other{{innerItemCount, plural, ' +
-          '=1{hellos 1 goodbye {in, number, bytes}} ' +
-          'other{hellos, goodbyes {in, number, bytes}}}}}',
+      '=1{{innerItemCount, plural, ' +
+      '=1{1 hello 1 goodbye {in, number, bytes}} ' +
+      'other{1 hello, goodbyes {in, number, bytes}}}} ' +
+      'other{{innerItemCount, plural, ' +
+      '=1{hellos 1 goodbye {in, number, bytes}} ' +
+      'other{hellos, goodbyes {in, number, bytes}}}}}',
     };
-    const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+
+    let str_;
+    before(() => {
+      str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+    });
 
     it('formats a basic message', () => {
       const helloStr = str_(UIStrings.helloWorld);

@@ -8,9 +8,9 @@
  */
 'use strict';
 
-const NetworkRequest = require('../../lib/network-request.js');
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {NetworkRequest} from '../../lib/network-request.js';
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to use video formats rather than animated GIFs, which are wasteful. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -21,7 +21,7 @@ const UIStrings = {
     'network bytes. [Learn more](https://web.dev/efficient-animated-content/)',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 // If GIFs are above this size, we'll flag them
 // See https://github.com/GoogleChrome/lighthouse/pull/4885#discussion_r178406623 and https://github.com/GoogleChrome/lighthouse/issues/4696#issuecomment-370979920
@@ -54,7 +54,7 @@ class EfficientAnimatedContent extends ByteEfficiencyAudit {
   /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
+   * @return {import('./byte-efficiency-audit.js').ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {
     const unoptimizedContent = networkRecords.filter(
@@ -88,5 +88,5 @@ class EfficientAnimatedContent extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = EfficientAnimatedContent;
-module.exports.UIStrings = UIStrings;
+export default EfficientAnimatedContent;
+export {UIStrings};

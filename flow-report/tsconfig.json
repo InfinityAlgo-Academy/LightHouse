@@ -21,6 +21,7 @@
     "./types",
     "../types/test.d.ts",
     "../root.js",
+    "../esm-utils.js",
     "../lighthouse-core/test/test-env/fake-timers.js",
   ],
 }

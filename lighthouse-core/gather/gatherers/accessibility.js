@@ -7,9 +7,10 @@
 
 /* global window, document, getNodeDetails */
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const axeLibSource = require('../../lib/axe.js').source;
-const pageFunctions = require('../../lib/page-functions.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+
+import {axeSource} from '../../lib/axe.js';
+import {pageFunctions} from '../../lib/page-functions.js';
 
 /**
  * @return {Promise<LH.Artifacts.Accessibility>}
@@ -173,7 +174,7 @@ class Accessibility extends FRGatherer {
       args: [],
       useIsolation: true,
       deps: [
-        axeLibSource,
+        axeSource,
         pageFunctions.getNodeDetailsString,
         createAxeRuleResultArtifact,
       ],
@@ -181,4 +182,4 @@ class Accessibility extends FRGatherer {
   }
 }
 
-module.exports = Accessibility;
+export default Accessibility;

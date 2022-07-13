@@ -7,11 +7,12 @@
 
 /* globals window document getBoundingClientRect requestAnimationFrame */
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const emulation = require('../../lib/emulation.js');
-const pageFunctions = require('../../lib/page-functions.js');
-const NetworkMonitor = require('../driver/network-monitor.js');
-const {waitForNetworkIdle} = require('../driver/wait-for-condition.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+
+import * as emulation from '../../lib/emulation.js';
+import {pageFunctions} from '../../lib/page-functions.js';
+import {NetworkMonitor} from '../driver/network-monitor.js';
+import {waitForNetworkIdle} from '../driver/wait-for-condition.js';
 
 // JPEG quality setting
 // Exploration and examples of reports using different quality settings: https://docs.google.com/document/d/1ZSffucIca9XDW2eEwfoevrk-OTl7WQFeMf0CgeJAA8M/edit#
@@ -233,4 +234,4 @@ class FullPageScreenshot extends FRGatherer {
   }
 }
 
-module.exports = FullPageScreenshot;
+export default FullPageScreenshot;

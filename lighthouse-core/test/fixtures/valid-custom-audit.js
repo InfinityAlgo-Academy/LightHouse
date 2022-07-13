@@ -5,9 +5,9 @@
  */
 
 
-const LighthouseAudit = require('../../audits/audit.js');
+import {Audit} from '../../audits/audit.js';
 
-class ValidCustomAudit extends LighthouseAudit {
+class ValidCustomAudit extends Audit {
   static get meta() {
     return {
       id: 'valid-audit',
@@ -21,4 +21,4 @@ class ValidCustomAudit extends LighthouseAudit {
   static audit() {}
 }
 
-module.exports = ValidCustomAudit;
+export default ValidCustomAudit;

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
+import {makeComputedArtifact} from './computed-artifact.js';
 
 const SCREENSHOT_TRACE_NAME = 'Screenshot';
 
@@ -26,4 +26,4 @@ class Screenshots {
   }
 }
 
-module.exports = makeComputedArtifact(Screenshots, null);
+export default makeComputedArtifact(Screenshots, null);

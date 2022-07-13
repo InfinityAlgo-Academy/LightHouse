@@ -7,11 +7,12 @@
 
 /* global window */
 
-const log = require('lighthouse-logger');
-const LighthouseError = require('../../lib/lh-error.js');
-const ExecutionContext = require('./execution-context.js');
+import log from 'lighthouse-logger';
 
-/** @typedef {import('./network-monitor.js')} NetworkMonitor */
+import {LighthouseError} from '../../lib/lh-error.js';
+import {ExecutionContext} from './execution-context.js';
+
+/** @typedef {InstanceType<import('./network-monitor.js')['NetworkMonitor']>} NetworkMonitor */
 /** @typedef {import('./network-monitor.js').NetworkMonitorEvent} NetworkMonitorEvent */
 /** @typedef {{promise: Promise<void>, cancel: function(): void}} CancellableWait */
 
@@ -524,7 +525,7 @@ function waitForUserToContinue(driver) {
   return driver.executionContext.evaluate(createInPagePromise, {args: []});
 }
 
-module.exports = {
+export {
   waitForNothing,
   waitForFrameNavigated,
   waitForFcp,

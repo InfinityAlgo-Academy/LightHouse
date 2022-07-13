@@ -52,7 +52,7 @@ const inpRelevantAudits = [
   'work-during-interaction',
 ];
 
-module.exports = {
+export const metricsToAudits = {
   fcpRelevantAudits,
   lcpRelevantAudits,
   tbtRelevantAudits,

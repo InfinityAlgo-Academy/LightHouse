@@ -5,17 +5,16 @@
  */
 
 import {strict as assert} from 'assert';
-import {createRequire} from 'module';
 
 import jestMock from 'jest-mock';
 
-import Gatherer from '../../gather/gatherers/gatherer.js';
+import {Gatherer} from '../../gather/gatherers/gatherer.js';
 // import GathererRunner_ from '../../gather/gather-runner.js';
-// import Config from '../../config/config.js';
-import LighthouseError from '../../lib/lh-error.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
-// import Driver from '../../gather/driver.js';
-import Connection from '../../gather/connections/connection.js';
+// import {Config} from '../../config/config.js';
+import {LighthouseError} from '../../lib/lh-error.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
+// import {Driver} from '../../gather/driver.js';
+import {Connection} from '../../gather/connections/connection.js';
 import {createMockSendCommandFn, createMockOnceFn} from './mock-commands.js';
 import {
   makeMocksForGatherRunner,
@@ -24,14 +23,14 @@ import {
   flushAllTimersAndMicrotasks,
   fnAny,
   timers,
-  requireMock,
+  importMock,
   readJson,
 } from '../test-utils.js';
-import fakeDriver from './fake-driver.js';
+import {fakeDriver} from './fake-driver.js';
 
 const unresolvedPerfLog = readJson('./../fixtures/unresolved-perflog.json', import.meta);
 
-const require = createRequire(import.meta.url);
+await makeMocksForGatherRunner();
 
 /** @type {jestMock.SpyInstance<Promise<void>, [session: any, pageUrl: string]>} */
 let assertNoSameOriginServiceWorkerClientsMock;
@@ -53,22 +52,21 @@ function createTypeHackedGatherRunner() {
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
 //      https://github.com/facebook/jest/issues/10025
-/** @typedef {import('../../gather/driver.js')} Driver */
-/** @type {typeof import('../../gather/driver.js')} */
+/** @typedef {import('../../gather/driver.js').Driver} Driver */
+/** @type {typeof import('../../gather/driver.js').Driver} */
 let Driver;
-/** @type {typeof import('../../gather/gather-runner.js')} */
+/** @type {typeof import('../../gather/gather-runner.js').GatherRunner} */
 let GatherRunner_;
-/** @typedef {import('../../config/config.js')} Config */
-/** @type {typeof import('../../config/config.js')} */
+/** @typedef {import('../../config/config.js').Config} Config */
+/** @type {typeof import('../../config/config.js').Config} */
 let Config;
 
 /** @type {ReturnType<createTypeHackedGatherRunner>} */
 let GatherRunner;
 before(async () => {
-  makeMocksForGatherRunner();
-  Driver = (await import('../../gather/driver.js')).default;
-  GatherRunner_ = (await import('../../gather/gather-runner.js')).default;
-  Config = (await import('../../config/config.js')).default;
+  Driver = (await import('../../gather/driver.js')).Driver;
+  GatherRunner_ = (await import('../../gather/gather-runner.js')).GatherRunner;
+  Config = (await import('../../config/config.js')).Config;
   assertNoSameOriginServiceWorkerClientsMock =
     jestMock.spyOn(GatherRunner_, 'assertNoSameOriginServiceWorkerClients');
   GatherRunner = createTypeHackedGatherRunner();
@@ -105,7 +103,7 @@ class TestGathererNoArtifact extends Gatherer {
   afterPass() {}
 }
 
-/** @type {import('../../gather/driver.js')} */
+/** @type {import('../../gather/driver.js').Driver} */
 let driver;
 /** @type {Connection & {sendCommand: ReturnType<typeof createMockSendCommandFn>}} */
 let connectionStub;
@@ -133,7 +131,7 @@ function resetDefaultMockResponses() {
     .mockResponse('ServiceWorker.enable');
 }
 
-beforeEach(() => {
+beforeEach(async () => {
   class EmulationDriver extends Driver {
     registerRequestIdleCallbackWrap() {
       return Promise.resolve();
@@ -156,17 +154,8 @@ beforeEach(() => {
   driver = new EmulationDriver(connectionStub);
   resetDefaultMockResponses();
 
-  const emulation = require('../../lib/emulation.js');
-  emulation.emulate = fnAny();
-  emulation.throttle = fnAny();
-  emulation.clearThrottling = fnAny();
-
-  const prepare = require('../../gather/driver/prepare.js');
-  prepare.prepareTargetForNavigationMode = fnAny();
-  prepare.prepareTargetForIndividualNavigation = fnAny().mockResolvedValue({warnings: []});
-
-  const navigation = requireMock('../../gather/driver/navigation.js', import.meta);
-  navigation.gotoURL = fnAny().mockResolvedValue({
+  const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
+  gotoURL.mockReset().mockResolvedValue({
     mainDocumentUrl: 'https://example.com',
     timedOut: false,
     warnings: [],
@@ -179,11 +168,11 @@ afterEach(() => {
 });
 
 describe('GatherRunner', function() {
-  it('loads a page and updates passContext urls on redirect', () => {
+  it('loads a page and updates passContext urls on redirect', async () => {
     const url1 = 'https://example.com';
     const url2 = 'https://example.com/interstitial';
     const driver = {};
-    const {gotoURL} = requireMock('../../gather/driver/navigation.js', import.meta);
+    const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
     gotoURL.mockResolvedValue({mainDocumentUrl: url2, warnings: []});
 
     const passContext = {
@@ -210,7 +199,7 @@ describe('GatherRunner', function() {
     const url = 'https://example.com';
     const error = new LighthouseError(LighthouseError.errors.NO_FCP);
     const driver = {};
-    const {gotoURL} = requireMock('../../gather/driver/navigation.js', import.meta);
+    const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
     gotoURL.mockRejectedValue(error);
 
     const passContext = {
@@ -258,7 +247,7 @@ describe('GatherRunner', function() {
   it('collects requested and final URLs as an artifact', async () => {
     const requestedUrl = 'https://example.com';
     const mainDocumentUrl = 'https://example.com/interstitial';
-    const {gotoURL} = requireMock('../../gather/driver/navigation.js', import.meta);
+    const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
     gotoURL.mockResolvedValue({mainDocumentUrl, timedOut: false, warnings: []});
     const config = await makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {
@@ -472,7 +461,7 @@ describe('GatherRunner', function() {
       LighthouseRunWarnings: [],
     };
 
-    const prepare = requireMock('../../gather/driver/prepare.js', import.meta);
+    const prepare = await importMock('../../gather/driver/prepare.js', import.meta);
     await GatherRunner.runPass(passContext);
     expect(prepare.prepareTargetForIndividualNavigation).toHaveBeenCalled();
   });
@@ -524,7 +513,7 @@ describe('GatherRunner', function() {
       },
     });
 
-    const {gotoURL} = requireMock('../../gather/driver/navigation.js', import.meta);
+    const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
     gotoURL.mockImplementation(
       /** @param {any} _ @param {string} url */
       (_, url) => url.includes('blank') ? null : Promise.reject(navigationError)
@@ -568,7 +557,7 @@ describe('GatherRunner', function() {
       },
     });
 
-    const {gotoURL} = requireMock('../../gather/driver/navigation.js', import.meta);
+    const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
     gotoURL.mockImplementation(
       /** @param {any} _ @param {string} url */
       (_, url) => url.includes('blank') ? gotoUrlForAboutBlank() : gotoUrlForRealUrl()
@@ -841,7 +830,7 @@ describe('GatherRunner', function() {
     let firstLoad = true;
     const driver = Object.assign({}, fakeDriver, {online: true});
 
-    const {gotoURL} = requireMock('../../gather/driver/navigation.js', import.meta);
+    const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
 
     gotoURL.mockImplementation(
       /**
@@ -1254,7 +1243,7 @@ describe('GatherRunner', function() {
         online: true,
       });
 
-      const {gotoURL} = requireMock('../../gather/driver/navigation.js', import.meta);
+      const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
       gotoURL.mockResolvedValue({mainDocumentUrl: requestedUrl, warnings: ['It is too slow']});
 
       return GatherRunner.run(config.passes, {
@@ -1286,7 +1275,7 @@ describe('GatherRunner', function() {
         online: true,
       });
 
-      const {gotoURL} = requireMock('../../gather/driver/navigation.js', import.meta);
+      const {gotoURL} = await importMock('../../gather/driver/navigation.js', import.meta);
       gotoURL
         .mockResolvedValueOnce({finalUrl: requestedUrl, warnings: []})
         .mockResolvedValueOnce({finalUrl: requestedUrl, warnings: ['It is too slow']});

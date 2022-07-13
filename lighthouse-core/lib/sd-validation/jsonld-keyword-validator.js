@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const walkObject = require('./helpers/walk-object.js');
+import walkObject from './helpers/walk-object.js';
 
 // This list comes from the JSON-LD 1.1 editors draft:
 // https://w3c.github.io/json-ld-syntax/#syntax-tokens-and-keywords
@@ -33,7 +33,7 @@ const VALID_KEYWORDS = new Set([
  * @param {*} json
  * @return {Array<{path: string, message: string}>}
  */
-module.exports = function validateJsonLD(json) {
+export default function validateJsonLD(json) {
   /** @type {Array<{path: string, message: string}>} */
   const errors = [];
 
@@ -47,4 +47,4 @@ module.exports = function validateJsonLD(json) {
   });
 
   return errors;
-};
+}

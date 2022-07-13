@@ -7,8 +7,8 @@
 import {strict as assert} from 'assert';
 
 import RedirectsAudit from '../../audits/redirects.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
-import createTestTrace from '../create-test-trace.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
+import {createTestTrace} from '../create-test-trace.js';
 
 const FAILING_THREE_REDIRECTS = [{
   requestId: '1',

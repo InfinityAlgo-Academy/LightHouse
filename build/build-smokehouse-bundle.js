@@ -22,6 +22,15 @@ async function main() {
       rollupPlugins.shim({
         [smokehouseCliFilename]:
           'export function runLighthouse() { throw new Error("not supported"); }',
+        'module': `
+          export const createRequire = () => {
+            return {
+              resolve() {
+                throw new Error('createRequire.resolve is not supported in bundled Lighthouse');
+              },
+            };
+          };
+        `,
       }),
       rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
       rollupPlugins.commonjs(),

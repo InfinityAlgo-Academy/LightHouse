@@ -9,8 +9,8 @@ import path from 'path';
 import log from 'lighthouse-logger';
 import jestMock from 'jest-mock';
 
-import i18n from '../../../lib/i18n/i18n.js';
-import {getModuleDirectory} from '../../../../esm-utils.mjs';
+import * as i18n from '../../../lib/i18n/i18n.js';
+import {getModuleDirectory} from '../../../../esm-utils.js';
 
 const moduleDir = getModuleDirectory(import.meta);
 

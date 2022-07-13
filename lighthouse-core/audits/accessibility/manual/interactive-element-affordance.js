@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit.js');
+import ManualAudit from '../../manual/manual-audit.js';
 
 /**
  * @fileoverview Manual A11y audit for interactive element affordance.
@@ -25,4 +25,4 @@ class InteractiveElementAffordance extends ManualAudit {
   }
 }
 
-module.exports = InteractiveElementAffordance;
+export default InteractiveElementAffordance;

@@ -10,15 +10,15 @@
   */
 'use strict';
 
-const {Buffer} = require('buffer');
-const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const URL = require('../../../lib/url-shim.js');
-const Sentry = require('../../../lib/sentry.js');
-const NetworkRequest = require('../../../lib/network-request.js');
-const gzip = require('zlib').gzip;
-const DevtoolsLog = require('../devtools-log.js');
-const {fetchResponseBodyFromCache} = require('../../driver/network.js');
-const NetworkRecords = require('../../../computed/network-records.js');
+import {Buffer} from 'buffer';
+import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+import URL from '../../../lib/url-shim.js';
+import {Sentry} from '../../../lib/sentry.js';
+import {NetworkRequest} from '../../../lib/network-request.js';
+import {gzip} from 'zlib';
+import DevtoolsLog from '../devtools-log.js';
+import {fetchResponseBodyFromCache} from '../../driver/network.js';
+import NetworkRecords from '../../../computed/network-records.js';
 
 const CHROME_EXTENSION_PROTOCOL = 'chrome-extension:';
 const compressionHeaders = [
@@ -151,4 +151,4 @@ class ResponseCompression extends FRGatherer {
   }
 }
 
-module.exports = ResponseCompression;
+export default ResponseCompression;

@@ -6131,10 +6131,9 @@ query-string@^4.1.0:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
-quibble@^0.6.7:
+quibble@^0.6.7, quibble@connorjclark/quibble#mod-cache:
   version "0.6.9"
-  resolved "https://registry.yarnpkg.com/quibble/-/quibble-0.6.9.tgz#1e7b24a72b59bdb6cc272318448cd6b7eb61fbe8"
-  integrity sha512-EotkZs/lqgDdGsKzdmZuqu2ATgupQzhByUZ8oL3ElzCKDhXmgVLrX+WDe/StvrfB80h4EPOTElXuQifcfJwwFw==
+  resolved "https://codeload.github.com/connorjclark/quibble/tar.gz/b228a4ddbbad5061d36b465db2f364bb7c3291d3"
   dependencies:
     lodash "^4.17.21"
     resolve "^1.20.0"

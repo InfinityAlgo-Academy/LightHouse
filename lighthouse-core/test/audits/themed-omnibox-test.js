@@ -7,7 +7,7 @@
 import {strict as assert} from 'assert';
 
 import ThemedOmniboxAudit from '../../audits/themed-omnibox.js';
-import manifestParser from '../../lib/manifest-parser.js';
+import {parseManifest} from '../../lib/manifest-parser.js';
 import {readJson} from '../test-utils.js';
 
 const manifest = readJson('../fixtures/manifest.json', import.meta);
@@ -20,7 +20,7 @@ const EXAMPLE_DOC_URL = 'https://example.com/index.html';
  * @param {string} src
  */
 function generateMockArtifacts(src = manifestSrc) {
-  const exampleManifest = manifestParser(src, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+  const exampleManifest = parseManifest(src, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 
   return {
     WebAppManifest: exampleManifest,

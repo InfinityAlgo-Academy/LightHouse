@@ -5,7 +5,7 @@
  */
 
 import LCPAudit from '../../../audits/metrics/largest-contentful-paint.js';
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import {readJson} from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);

@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const ProcessedTrace = require('../processed-trace.js');
-const LighthouseError = require('../../lib/lh-error.js');
+import {makeComputedArtifact} from '../computed-artifact.js';
+import ProcessedTrace from '../processed-trace.js';
+import {LighthouseError} from '../../lib/lh-error.js';
 
 /** @typedef {{ts: number, isMainFrame: boolean, weightedScore: number}} LayoutShiftEvent */
 
@@ -126,4 +126,4 @@ class CumulativeLayoutShift {
   }
 }
 
-module.exports = makeComputedArtifact(CumulativeLayoutShift, null);
+export default makeComputedArtifact(CumulativeLayoutShift, null);

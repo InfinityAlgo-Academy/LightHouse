@@ -6,11 +6,8 @@
 
 import {strict as assert} from 'assert';
 
-import {getModulePath} from '../../../esm-utils.mjs';
 import ConfigPlugin from '../../config/config-plugin.js';
-import i18n from '../../lib/i18n/i18n.js';
-
-const modulePath = getModulePath(import.meta);
+import * as i18n from '../../lib/i18n/i18n.js';
 
 /**
  * @param {any} val
@@ -73,7 +70,7 @@ describe('ConfigPlugin', () => {
       title: 'this is a title',
       description: 'this is a description',
     };
-    const str_ = i18n.createMessageInstanceIdFn(modulePath, UIStrings);
+    const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
     const localizedPlugin = {
       groups: {

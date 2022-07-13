@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import * as td from 'testdouble';
 import jestMock from 'jest-mock';
 
 import {
@@ -15,12 +14,12 @@ import {
 } from './mock-driver.js';
 import {initializeConfig} from '../../../fraggle-rock/config/config.js';
 import {defaultNavigationConfig} from '../../../config/constants.js';
-import LighthouseError from '../../../lib/lh-error.js';
+import {LighthouseError} from '../../../lib/lh-error.js';
 import DevtoolsLogGatherer from '../../../gather/gatherers/devtools-log.js';
 import TraceGatherer from '../../../gather/gatherers/trace.js';
-import toDevtoolsLog from '../../network-records-to-devtools-log.js';
 import {fnAny} from '../../test-utils.js';
-// import runner from '../../../fraggle-rock/gather/navigation-runner.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
+import {Runner as runnerActual} from '../../../runner.js';
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
@@ -28,16 +27,14 @@ import {fnAny} from '../../test-utils.js';
 /** @type {import('../../../fraggle-rock/gather/navigation-runner.js')} */
 let runner;
 
-before(async () => {
+const mocks = await mockDriverSubmodules();
+const mockRunner = await mockRunnerModule();
+beforeEach(async () => {
+  mockRunner.reset();
+  mockRunner.getGathererList.mockImplementation(runnerActual.getGathererList);
+  mockRunner.getAuditList.mockImplementation(runnerActual.getAuditList);
   runner = (await import('../../../fraggle-rock/gather/navigation-runner.js'));
 });
-
-const mocks = mockDriverSubmodules();
-
-const mockRunner = mockRunnerModule();
-
-// Establish the mocks before we import the file under test.
-td.replace('../../../runner.js', mockRunner);
 
 /** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: Mock<any, any>, startInstrumentation: Mock<any, any>, stopInstrumentation: Mock<any, any>, startSensitiveInstrumentation: Mock<any, any>, stopSensitiveInstrumentation:  Mock<any, any>}} MockGatherer */
 
@@ -47,7 +44,7 @@ describe('NavigationRunner', () => {
   let requestor;
   /** @type {ReturnType<typeof createMockDriver>} */
   let mockDriver;
-  /** @type {import('../../../fraggle-rock/gather/driver.js')} */
+  /** @type {import('../../../fraggle-rock/gather/driver.js').Driver} */
   let driver;
   /** @type {LH.Config.FRConfig} */
   let config;
@@ -107,7 +104,6 @@ describe('NavigationRunner', () => {
   beforeEach(async () => {
     requestedUrl = 'http://example.com';
     requestor = requestedUrl;
-    mockRunner.reset();
     config = (await initializeConfig(undefined, {gatherMode: 'navigation'})).config;
     navigation = createNavigation().navigation;
     computedCache = new Map();
@@ -428,7 +424,7 @@ describe('NavigationRunner', () => {
     it('finds page load errors in network records when available', async () => {
       const {navigation, gatherers} = createNavigation();
       mocks.navigationMock.gotoURL.mockResolvedValue({mainDocumentUrl: requestedUrl, warnings: []});
-      const devtoolsLog = toDevtoolsLog([{url: requestedUrl, failed: true}]);
+      const devtoolsLog = networkRecordsToDevtoolsLog([{url: requestedUrl, failed: true}]);
       gatherers.timespan.meta.symbol = DevtoolsLogGatherer.symbol;
       gatherers.timespan.getArtifact = fnAny().mockResolvedValue(devtoolsLog);
       gatherers.navigation.meta.symbol = TraceGatherer.symbol;
@@ -560,7 +556,6 @@ describe('NavigationRunner', () => {
 
   describe('navigation', () => {
     it('should throw on invalid URL', async () => {
-      const {default: runnerActual} = await import('../../../runner.js');
       mockRunner.gather.mockImplementation(runnerActual.gather);
 
       const navigatePromise = runner.navigationGather(

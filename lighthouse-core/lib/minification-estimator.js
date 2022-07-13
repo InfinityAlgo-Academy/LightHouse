@@ -190,4 +190,4 @@ function computeCSSTokenLength(content) {
   return computeTokenLength(content, {singlelineComments: false, regex: false});
 }
 
-module.exports = {computeJSTokenLength, computeCSSTokenLength};
+export {computeJSTokenLength, computeCSSTokenLength};

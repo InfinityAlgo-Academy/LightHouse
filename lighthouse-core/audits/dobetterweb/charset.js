@@ -12,9 +12,9 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const MainResource = require('../../computed/main-resource.js');
+import {Audit} from '../audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
+import MainResource from '../../computed/main-resource.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on if the charset is set properly for a page. This title is shown when the charset is defined correctly. Charset defines the character encoding (eg UTF-8) of the page content. */
@@ -27,7 +27,7 @@ const UIStrings = {
     '[Learn more](https://web.dev/charset/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 const CONTENT_TYPE_HEADER = 'content-type';
 // /^[a-zA-Z0-9-_:.()]{2,}$/ matches all known IANA charset names (https://www.iana.org/assignments/character-sets/character-sets.xhtml)
@@ -89,8 +89,5 @@ class CharsetDefined extends Audit {
   }
 }
 
-module.exports = CharsetDefined;
-module.exports.UIStrings = UIStrings;
-module.exports.CHARSET_HTML_REGEX = CHARSET_HTML_REGEX;
-module.exports.CHARSET_HTTP_REGEX = CHARSET_HTTP_REGEX;
-module.exports.IANA_REGEX = IANA_REGEX;
+export default CharsetDefined;
+export {UIStrings, CHARSET_HTML_REGEX, CHARSET_HTTP_REGEX, IANA_REGEX};

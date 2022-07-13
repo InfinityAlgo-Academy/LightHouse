@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const URL = require('../../lib/url-shim.js');
-const MainResource = require('../../computed/main-resource.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {Audit} from '../audit.js';
+import URL from '../../lib/url-shim.js';
+import MainResource from '../../computed/main-resource.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on a page's rel=canonical link. This descriptive title is shown to users when the rel=canonical link is valid. "rel=canonical" is an HTML attribute and value and so should not be translated. */
@@ -43,7 +43,7 @@ const UIStrings = {
     'instead of an equivalent page of content',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @typedef CanonicalURLData
@@ -214,5 +214,5 @@ class Canonical extends Audit {
   }
 }
 
-module.exports = Canonical;
-module.exports.UIStrings = UIStrings;
+export default Canonical;
+export {UIStrings};

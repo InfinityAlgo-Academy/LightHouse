@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
-const InstallableManifestAudit = require('../../lighthouse-core/audits/installable-manifest.js');
+import {UIStrings} from '../../lighthouse-core/audits/installable-manifest.js';
 
 describe('installabilityErrors', () => {
   let chromiumErrorIds;
@@ -74,7 +74,7 @@ Array [
   });
 
   it('are each handled explicitly in the gatherer', () => {
-    const errorStrings = Object.keys(InstallableManifestAudit.UIStrings)
+    const errorStrings = Object.keys(UIStrings)
       .filter(key => chromiumErrorIds.includes(key))
       .sort();
     expect(errorStrings).toEqual(chromiumErrorIds);

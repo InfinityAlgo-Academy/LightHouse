@@ -6,7 +6,8 @@
 
 'use strict';
 
-const fs = require('fs');
+import fs from 'fs';
+import esMain from 'es-main';
 
 /**
  * @fileoverview Helper functions to transform an LHR into a proto-ready LHR.
@@ -108,7 +109,7 @@ function processForProto(lhr) {
 }
 
 // Test if called from the CLI or as a module.
-if (require.main === module) {
+if (esMain(import.meta)) {
   // read in the argv for the input & output
   const args = process.argv.slice(2);
   let input;
@@ -126,8 +127,8 @@ if (require.main === module) {
     // write to output from argv
     fs.writeFileSync(output, JSON.stringify(report), 'utf-8');
   }
-} else {
-  module.exports = {
-    processForProto,
-  };
 }
+
+export {
+  processForProto,
+};

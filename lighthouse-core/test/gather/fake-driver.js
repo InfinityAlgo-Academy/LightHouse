@@ -94,7 +94,6 @@ const protocolGetVersionResponse = {
   userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3577.0 Safari/537.36',
   jsVersion: '7.1.314',
 };
-const fakeDriver = makeFakeDriver({protocolGetVersionResponse});
 
 const fakeDriverUsingRealMobileDevice = makeFakeDriver({
   protocolGetVersionResponse: {
@@ -105,8 +104,8 @@ const fakeDriverUsingRealMobileDevice = makeFakeDriver({
 });
 
 // TODO(esmodules): fix awkward export.
-export default {
-  ...fakeDriver,
+export const fakeDriver = {
+  ...makeFakeDriver({protocolGetVersionResponse}),
   fakeDriverUsingRealMobileDevice,
   protocolGetVersionResponse,
 };

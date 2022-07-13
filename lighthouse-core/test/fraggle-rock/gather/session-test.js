@@ -8,7 +8,7 @@ import {EventEmitter} from 'events';
 
 import {CDPSession} from 'puppeteer/lib/cjs/puppeteer/common/Connection.js';
 
-import ProtocolSession from '../../../fraggle-rock/gather/session.js';
+import {ProtocolSession} from '../../../fraggle-rock/gather/session.js';
 import {
   flushAllTimersAndMicrotasks,
   makePromiseInspectable,

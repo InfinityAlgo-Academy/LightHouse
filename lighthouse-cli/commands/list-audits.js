@@ -4,10 +4,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import lighthouse from '../../lighthouse-core/index.js';
+import {getAuditList} from '../../lighthouse-core/index.js';
 
 function listAudits() {
-  const audits = lighthouse.getAuditList().map((i) => i.replace(/\.js$/, ''));
+  const audits = getAuditList().map((i) => i.replace(/\.js$/, ''));
   process.stdout.write(JSON.stringify({audits}, null, 2));
   process.exit(0);
 }

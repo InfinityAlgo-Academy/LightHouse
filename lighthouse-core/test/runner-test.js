@@ -7,48 +7,75 @@
 import fs from 'fs';
 import {strict as assert} from 'assert';
 import path from 'path';
-import {createRequire} from 'module';
 
 import jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
 // import Runner from '../runner.js';
-// import GatherRunner from '../gather/gather-runner.js';
-import driverMock from './gather/fake-driver.js';
-// import Config from '../config/config.js';
-import Audit from '../audits/audit.js';
-import Gatherer from '../gather/gatherers/gatherer.js';
-import assetSaver from '../lib/asset-saver.js';
-import LighthouseError from '../lib/lh-error.js';
-import i18n from '../lib/i18n/i18n.js';
+// import {GatherRunner} from '../gather/gather-runner.js';
+import {fakeDriver as driverMock} from './gather/fake-driver.js';
+// import {Config} from '../config/config.js';
+import {Audit} from '../audits/audit.js';
+import {Gatherer} from '../gather/gatherers/gatherer.js';
+import * as assetSaver from '../lib/asset-saver.js';
+import {LighthouseError} from '../lib/lh-error.js';
+import * as i18n from '../lib/i18n/i18n.js';
 import {importMock, makeMocksForGatherRunner} from './test-utils.js';
-import {getModuleDirectory, getModulePath} from '../../esm-utils.mjs';
+import {getModuleDirectory} from '../../esm-utils.js';
 
-const require = createRequire(import.meta.url);
-const modulePath = getModulePath(import.meta);
 const moduleDir = getModuleDirectory(import.meta);
+
+await makeMocksForGatherRunner();
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
 //      https://github.com/facebook/jest/issues/10025
-/** @type {typeof import('../runner.js')} */
+/** @type {typeof import('../runner.js').Runner} */
 let Runner;
-/** @type {typeof import('../gather/gather-runner.js')} */
+/** @type {typeof import('../gather/gather-runner.js').GatherRunner} */
 let GatherRunner;
-/** @type {typeof import('../config/config.js')} */
+/** @type {typeof import('../config/config.js').Config} */
 let Config;
 
-before(async () => {
-  Runner = (await import('../runner.js')).default;
-  GatherRunner = (await import('../gather/gather-runner.js')).default;
-  Config = (await import('../config/config.js')).default;
+/** @type {jestMock.Mock} */
+let saveArtifactsSpy;
+/** @type {jestMock.Mock} */
+let saveLhrSpy;
+/** @type {jestMock.Mock} */
+let loadArtifactsSpy;
+/** @type {jestMock.Mock} */
+let gatherRunnerRunSpy;
+/** @type {jestMock.Mock} */
+let runAuditSpy;
+
+await td.replaceEsm('../lib/asset-saver.js', {
+  saveArtifacts: saveArtifactsSpy = jestMock.fn(assetSaver.saveArtifacts),
+  saveLhr: saveLhrSpy = jestMock.fn(),
+  loadArtifacts: loadArtifactsSpy = jestMock.fn(assetSaver.loadArtifacts),
 });
 
-makeMocksForGatherRunner();
-
-td.replace('../gather/driver/service-workers.js', {
+await td.replaceEsm('../gather/driver/service-workers.js', {
   getServiceWorkerVersions: jestMock.fn().mockResolvedValue({versions: []}),
   getServiceWorkerRegistrations: jestMock.fn().mockResolvedValue({registrations: []}),
+});
+
+before(async () => {
+  Runner = (await import('../runner.js')).Runner;
+  GatherRunner = (await import('../gather/gather-runner.js')).GatherRunner;
+  Config = (await import('../config/config.js')).Config;
+});
+
+beforeEach(() => {
+  gatherRunnerRunSpy = jestMock.spyOn(GatherRunner, 'run');
+  runAuditSpy = jestMock.spyOn(Runner, '_runAudit');
+});
+
+afterEach(() => {
+  saveArtifactsSpy.mockClear();
+  saveLhrSpy.mockClear();
+  loadArtifactsSpy.mockClear();
+  gatherRunnerRunSpy.mockRestore();
+  runAuditSpy.mockRestore();
 });
 
 describe('Runner', () => {
@@ -66,33 +93,6 @@ describe('Runner', () => {
     const artifacts = await Runner.gather(gatherFn, opts);
     return Runner.audit(artifacts, opts);
   };
-
-  /** @type {jestMock} */
-  let saveArtifactsSpy;
-  /** @type {jestMock} */
-  let saveLhrSpy;
-  /** @type {jestMock} */
-  let loadArtifactsSpy;
-  /** @type {jestMock} */
-  let gatherRunnerRunSpy;
-  /** @type {jestMock} */
-  let runAuditSpy;
-
-  beforeEach(() => {
-    saveArtifactsSpy = jestMock.spyOn(assetSaver, 'saveArtifacts');
-    saveLhrSpy = jestMock.spyOn(assetSaver, 'saveLhr').mockImplementation(() => {});
-    loadArtifactsSpy = jestMock.spyOn(assetSaver, 'loadArtifacts');
-    gatherRunnerRunSpy = jestMock.spyOn(GatherRunner, 'run');
-    runAuditSpy = jestMock.spyOn(Runner, '_runAudit');
-  });
-
-  afterEach(() => {
-    saveArtifactsSpy.mockRestore();
-    saveLhrSpy.mockRestore();
-    loadArtifactsSpy.mockRestore();
-    gatherRunnerRunSpy.mockRestore();
-    runAuditSpy.mockRestore();
-  });
 
   const basicAuditMeta = {
     id: 'test-audit',
@@ -201,7 +201,7 @@ describe('Runner', () => {
     it('serializes IcuMessages in gatherMode and is able to use them in auditMode', async () => {
       // Can use this to access shared UIStrings in i18n.js.
       // For future changes: exact messages aren't important, just choose ones with replacements.
-      const str_ = i18n.createMessageInstanceIdFn(modulePath, {});
+      const str_ = i18n.createMessageInstanceIdFn(import.meta.url, {});
 
       // A gatherer that produces an IcuMessage runWarning and LighthouseError artifact.
       class WarningAndErrorGatherer extends Gatherer {
@@ -489,7 +489,7 @@ describe('Runner', () => {
       assert.strictEqual(auditResult.scoreDisplayMode, 'error');
       assert.ok(auditResult.errorMessage.includes(errorMessage));
 
-      fs.rmSync(resolvedPath, {recursive: true, force: true});
+      fs.rmSync(resolvedPath, {recursive: true});
     });
 
     it('only passes the requested artifacts to the audit (no optional artifacts)', async () => {
@@ -680,15 +680,15 @@ describe('Runner', () => {
     });
   });
 
-  it('only supports core audits with names matching their filename', () => {
+  it('only supports core audits with ids matching their filename', async () => {
     const coreAudits = Runner.getAuditList();
-    coreAudits.forEach(auditFilename => {
+    for (const auditFilename of coreAudits) {
       const auditPath = '../audits/' + auditFilename;
       const auditExpectedName = path.basename(auditFilename, '.js');
-      const AuditClass = require(auditPath);
+      const {default: AuditClass} = await import(auditPath);
       assert.strictEqual(AuditClass.meta.id, auditExpectedName);
-    });
-  }).timeout(40_000);
+    }
+  });
 
   it('results include artifacts when given artifacts and audits', async () => {
     const config = await Config.fromJson({
@@ -830,7 +830,7 @@ describe('Runner', () => {
         // Loads the page successfully in the first pass, fails with PAGE_HUNG in the second.
       });
 
-      const {gotoURL} = (await importMock('../gather/driver/navigation.js', import.meta)).default;
+      const {gotoURL} = await importMock('../gather/driver/navigation.js', import.meta);
       gotoURL.mockImplementation((_, url) => {
         if (url.includes('blank')) return {mainDocumentUrl: '', warnings: []};
         if (firstLoad) {

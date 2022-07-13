@@ -5,13 +5,10 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const MainResource = require('../computed/main-resource.js');
-const i18n = require('../lib/i18n/i18n.js');
-const {
-  evaluateRawCspsForXss,
-  getTranslatedDescription,
-} = require('../lib/csp-evaluator.js');
+import {Audit} from './audit.js';
+import MainResource from '../computed/main-resource.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import {evaluateRawCspsForXss, getTranslatedDescription} from '../lib/csp-evaluator.js';
 
 /** @typedef {import('../lib/csp-evaluator.js').Finding} Finding */
 
@@ -35,7 +32,7 @@ const UIStrings = {
   itemSeveritySyntax: 'Syntax',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class CspXss extends Audit {
   /**
@@ -182,5 +179,5 @@ class CspXss extends Audit {
   }
 }
 
-module.exports = CspXss;
-module.exports.UIStrings = UIStrings;
+export default CspXss;
+export {UIStrings};

@@ -5,7 +5,7 @@
  */
 
 import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
-import dom from '../../../gather/driver/dom.js';
+import * as dom from '../../../gather/driver/dom.js';
 
 let sessionMock = createMockSession();
 

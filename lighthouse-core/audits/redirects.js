@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit.js');
-const i18n = require('../lib/i18n/i18n.js');
-const ProcessedTrace = require('../computed/processed-trace.js');
-const NetworkRecords = require('../computed/network-records.js');
-const MainResource = require('../computed/main-resource.js');
-const LanternInteractive = require('../computed/metrics/lantern-interactive.js');
+import {Audit} from './audit.js';
+import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import ProcessedTrace from '../computed/processed-trace.js';
+import NetworkRecords from '../computed/network-records.js';
+import MainResource from '../computed/main-resource.js';
+import LanternInteractive from '../computed/metrics/lantern-interactive.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to eliminate the redirects taken through multiple URLs to load the page. This is shown in a list of audits that Lighthouse generates. */
@@ -20,7 +20,7 @@ const UIStrings = {
   description: 'Redirects introduce additional delays before the page can be loaded. [Learn more](https://web.dev/redirects/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class Redirects extends Audit {
   /**
@@ -148,7 +148,7 @@ class Redirects extends Audit {
       // We award a passing grade if you only have 1 redirect
       // TODO(phulce): reconsider if cases like the example in https://github.com/GoogleChrome/lighthouse/issues/8984
       // should fail this audit.
-      score: documentRequests.length <= 2 ? 1 : UnusedBytes.scoreForWastedMs(totalWastedMs),
+      score: documentRequests.length <= 2 ? 1 : ByteEfficiencyAudit.scoreForWastedMs(totalWastedMs),
       numericValue: totalWastedMs,
       numericUnit: 'millisecond',
       displayValue: totalWastedMs ?
@@ -159,5 +159,5 @@ class Redirects extends Audit {
   }
 }
 
-module.exports = Redirects;
-module.exports.UIStrings = UIStrings;
+export default Redirects;
+export {UIStrings};

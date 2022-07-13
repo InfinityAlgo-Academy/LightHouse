@@ -10,13 +10,13 @@
   */
 'use strict';
 
-const log = require('lighthouse-logger');
-const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const URL = require('../../../lib/url-shim.js');
-const NetworkRequest = require('../../../lib/network-request.js');
-const Sentry = require('../../../lib/sentry.js');
-const NetworkRecords = require('../../../computed/network-records.js');
-const DevtoolsLog = require('../devtools-log.js');
+import log from 'lighthouse-logger';
+import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+import URL from '../../../lib/url-shim.js';
+import {NetworkRequest} from '../../../lib/network-request.js';
+import {Sentry} from '../../../lib/sentry.js';
+import NetworkRecords from '../../../computed/network-records.js';
+import DevtoolsLog from '../devtools-log.js';
 
 // Image encoding can be slow and we don't want to spend forever on it.
 // Cap our encoding to 5 seconds, anything after that will be estimated.
@@ -189,4 +189,4 @@ class OptimizedImages extends FRGatherer {
   }
 }
 
-module.exports = OptimizedImages;
+export default OptimizedImages;

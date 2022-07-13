@@ -21,19 +21,21 @@ const mockLoggerSetLevel = jestMock.fn();
 /** @type {import('../../bin.js')} */
 let bin;
 before(async () => {
-  td.replaceEsm('../../run.js', {
+  await td.replaceEsm('../../run.js', {
     runLighthouse: mockRunLighthouse,
   });
-  td.replaceEsm('../../cli-flags.js', {
+  await td.replaceEsm('../../cli-flags.js', {
     getFlags: mockGetFlags,
   });
-  td.replaceEsm('../../sentry-prompt.js', {
+  await td.replaceEsm('../../sentry-prompt.js', {
     askPermission: mockAskPermission,
   });
-  td.replace('../../../lighthouse-core/lib/sentry.js', {
-    init: mockSentryInit,
+  await td.replaceEsm('../../../lighthouse-core/lib/sentry.js', {
+    Sentry: {
+      init: mockSentryInit,
+    },
   });
-  td.replaceEsm('lighthouse-logger', undefined, {setLevel: mockLoggerSetLevel});
+  await td.replaceEsm('lighthouse-logger', undefined, {setLevel: mockLoggerSetLevel});
   bin = await import('../../bin.js');
 });
 

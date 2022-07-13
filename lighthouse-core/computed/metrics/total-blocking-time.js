@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const ComputedMetric = require('./metric.js');
-const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
-const LanternTotalBlockingTime = require('./lantern-total-blocking-time.js');
-const TimetoInteractive = require('./interactive.js');
-const {calculateSumOfBlockingTime} = require('./tbt-utils.js');
+import {makeComputedArtifact} from '../computed-artifact.js';
+import ComputedMetric from './metric.js';
+import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
+import LanternTotalBlockingTime from './lantern-total-blocking-time.js';
+import TimetoInteractive from './interactive.js';
+import {calculateSumOfBlockingTime} from './tbt-utils.js';
 
 /**
  * @fileoverview This audit determines Total Blocking Time.
@@ -68,7 +68,7 @@ class TotalBlockingTime extends ComputedMetric {
   }
 }
 
-module.exports = makeComputedArtifact(
+export default makeComputedArtifact(
   TotalBlockingTime,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

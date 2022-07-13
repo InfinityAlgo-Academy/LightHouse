@@ -5,10 +5,16 @@
  */
 'use strict';
 
-const {URL} = require('../url-shim.js');
-const jsonld = require('jsonld');
-const schemaOrgContext = require('./assets/jsonldcontext.json');
+import fs from 'fs';
+import URL from '../url-shim.js';
+import jsonld from 'jsonld';
+import {LH_ROOT} from '../../../root.js';
+
 const SCHEMA_ORG_HOST = 'schema.org';
+
+/** @type {import('./assets/jsonldcontext.json')} */
+const schemaOrgContext = JSON.parse(fs.readFileSync(
+  LH_ROOT + '/lighthouse-core/lib/sd-validation/assets/jsonldcontext.json', 'utf-8'));
 
 /**
  * Custom loader that prevents network calls and allows us to return local version of the
@@ -45,7 +51,7 @@ async function documentLoader(schemaUrl) {
  * @param {any} inputObject
  * @return {Promise<LH.StructuredData.ExpandedSchemaRepresentation|null>}
  */
-module.exports = async function expand(inputObject) {
+export default async function expand(inputObject) {
   try {
     return await jsonld.expand(inputObject, {documentLoader});
   } catch (err) {
@@ -53,4 +59,4 @@ module.exports = async function expand(inputObject) {
     if (err.details?.cause) throw err.details.cause;
     throw err;
   }
-};
+}

@@ -10,8 +10,9 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import AxeAudit from './axe-audit.js';
+
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of an accesibility audit that checks if all elements that have an aria-hidden attribute do not contain focusable descendent elements. This title is descriptive of the successful state and is shown to users when no user action is required. */
@@ -22,7 +23,7 @@ const UIStrings = {
   description: 'Focusable descendents within an `[aria-hidden="true"]` element prevent those interactive elements from being available to users of assistive technologies like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-hidden-focus).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class AriaHiddenFocus extends AxeAudit {
   /**
@@ -39,5 +40,5 @@ class AriaHiddenFocus extends AxeAudit {
   }
 }
 
-module.exports = AriaHiddenFocus;
-module.exports.UIStrings = UIStrings;
+export default AriaHiddenFocus;
+export {UIStrings};

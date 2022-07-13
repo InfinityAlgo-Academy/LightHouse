@@ -5,9 +5,8 @@
  */
 'use strict';
 
-const Parser = require('metaviewport-parser');
-
-const makeComputedArtifact = require('./computed-artifact.js');
+import Parser from 'metaviewport-parser';
+import {makeComputedArtifact} from './computed-artifact.js';
 
 class ViewportMeta {
   /**
@@ -46,7 +45,7 @@ class ViewportMeta {
   }
 }
 
-module.exports = makeComputedArtifact(ViewportMeta, null);
+export default makeComputedArtifact(ViewportMeta, null);
 
 /**
  * @typedef {object} ViewportMetaResult

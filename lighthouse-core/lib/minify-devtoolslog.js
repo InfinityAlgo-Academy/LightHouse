@@ -84,4 +84,4 @@ function minifyDevtoolsLog(log) {
   });
 }
 
-module.exports = {minifyDevtoolsLog};
+export {minifyDevtoolsLog};

@@ -7,8 +7,9 @@
 
 /* global getNodeDetails */
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../lib/page-functions.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+
+import {pageFunctions} from '../../lib/page-functions.js';
 
 /* eslint-env browser, node */
 
@@ -58,7 +59,7 @@ function collectElements() {
     const parentFormIndex = parentFormEl ?
       [...formElToArtifact.keys()].indexOf(parentFormEl) :
       undefined;
-    const labelIndices = [...inputEl.labels || []].map((labelEl) => {
+    const labelIndices = [...(inputEl.labels || [])].map((labelEl) => {
       return [...labelElToArtifact.keys()].indexOf(labelEl);
     });
 
@@ -110,4 +111,4 @@ class Inputs extends FRGatherer {
   }
 }
 
-module.exports = Inputs;
+export default Inputs;

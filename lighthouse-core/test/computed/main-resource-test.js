@@ -7,7 +7,7 @@
 import {strict as assert} from 'assert';
 
 import MainResource from '../../computed/main-resource.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {readJson} from '../test-utils.js';
 
 const wikipediaDevtoolsLog = readJson('../fixtures/wikipedia-redirect.devtoolslog.json', import.meta);

@@ -7,7 +7,7 @@
 import {strict as assert} from 'assert';
 
 import Interactive from '../../../audits/metrics/interactive.js';
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import {readJson} from '../../test-utils.js';
 
 const acceptableTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const isDeepEqual = require('lodash/isEqual.js');
+import isDeepEqual from 'lodash/isEqual.js';
 
 /**
  * @fileoverview This class is designed to allow maps with arbitrary equality functions.
@@ -78,4 +78,4 @@ class ArbitraryEqualityMap {
   }
 }
 
-module.exports = ArbitraryEqualityMap;
+export {ArbitraryEqualityMap};

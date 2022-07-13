@@ -10,8 +10,8 @@ import * as td from 'testdouble';
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
 //      https://github.com/facebook/jest/issues/10025
-/** @typedef {import('../../../gather/gatherers/link-elements.js')} LinkElements */
-/** @type {typeof import('../../../gather/gatherers/link-elements.js')} */
+/** @typedef {import('../../../gather/gatherers/link-elements.js').default} LinkElements */
+/** @type {typeof import('../../../gather/gatherers/link-elements.js').default} */
 let LinkElements;
 
 before(async () => {
@@ -19,7 +19,7 @@ before(async () => {
 });
 
 const mockMainResource = jestMock.fn();
-td.replace('../../../computed/main-resource.js', {request: mockMainResource});
+await td.replaceEsm('../../../computed/main-resource.js', undefined, {request: mockMainResource});
 
 beforeEach(() => {
   mockMainResource.mockReset();

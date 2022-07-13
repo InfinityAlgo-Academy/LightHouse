@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const NetworkRecorder = require('../lib/network-recorder.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import {NetworkRecorder} from '../lib/network-recorder.js';
 
 class NetworkRecords {
   /**
@@ -18,4 +18,4 @@ class NetworkRecords {
   }
 }
 
-module.exports = makeComputedArtifact(NetworkRecords, null);
+export default makeComputedArtifact(NetworkRecords, null);

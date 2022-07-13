@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('../../audits/audit.js');
-const BaseFRGatherer = require('../gather/base-gatherer.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {Audit} from '../../audits/audit.js';
+import BaseFRGatherer from '../gather/base-gatherer.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 /**
  * @param {LH.Config.GathererDefn | LH.Config.AnyFRGathererDefn} gathererDefn
@@ -297,7 +297,7 @@ function throwInvalidArtifactDependency(artifactId, dependencyKey) {
   );
 }
 
-module.exports = {
+export {
   isFRGathererDefn,
   isValidArtifactDependency,
   assertValidPluginName,

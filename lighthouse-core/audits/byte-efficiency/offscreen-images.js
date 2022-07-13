@@ -9,13 +9,13 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const NetworkRequest = require('../../lib/network-request.js');
-const Sentry = require('../../lib/sentry.js');
-const URL = require('../../lib/url-shim.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const Interactive = require('../../computed/metrics/interactive.js');
-const ProcessedTrace = require('../../computed/processed-trace.js');
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
+import {NetworkRequest} from '../../lib/network-request.js';
+import {Sentry} from '../../lib/sentry.js';
+import URL from '../../lib/url-shim.js';
+import * as i18n from '../../lib/i18n/i18n.js';
+import Interactive from '../../computed/metrics/interactive.js';
+import ProcessedTrace from '../../computed/processed-trace.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to defer loading offscreen images. Offscreen images are images located outside of the visible browser viewport. As they are unseen by the user and slow down page load, they should be loaded later, closer to when the user is going to see them. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -27,7 +27,7 @@ const UIStrings = {
     '[Learn more](https://web.dev/offscreen-images/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 // See https://github.com/GoogleChrome/lighthouse/issues/10471 for discussion about the thresholds here.
 const ALLOWABLE_OFFSCREEN_IN_PX = 100;
@@ -174,7 +174,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
-   * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
+   * @return {Promise<import('./byte-efficiency-audit.js').ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
     const images = artifacts.ImageElements;
@@ -249,5 +249,5 @@ class OffscreenImages extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = OffscreenImages;
-module.exports.UIStrings = UIStrings;
+export default OffscreenImages;
+export {UIStrings};

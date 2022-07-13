@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const TracingProcessor = require('../../lib/tracehouse/trace-processor.js');
-const ProcessedTrace = require('../processed-trace.js');
-const ProcessedNavigation = require('../processed-navigation.js');
-const NetworkRecords = require('../network-records.js');
+import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
+import ProcessedTrace from '../processed-trace.js';
+import ProcessedNavigation from '../processed-navigation.js';
+import NetworkRecords from '../network-records.js';
 
 /**
  * @fileOverview Encapsulates logic for choosing the correct metric computation method based on the
@@ -80,7 +80,7 @@ class Metric {
       processedNavigation,
     }, data);
 
-    TracingProcessor.assertHasToplevelEvents(augmentedData.processedTrace.mainThreadEvents);
+    TraceProcessor.assertHasToplevelEvents(augmentedData.processedTrace.mainThreadEvents);
 
     switch (settings.throttlingMethod) {
       case 'simulate':
@@ -98,4 +98,4 @@ class Metric {
   }
 }
 
-module.exports = Metric;
+export default Metric;

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
+import {makeComputedArtifact} from './computed-artifact.js';
 
 /**
  * @typedef WasteData
@@ -149,7 +149,7 @@ class UnusedJavascriptSummary {
   }
 }
 
-module.exports = makeComputedArtifact(
+export default makeComputedArtifact(
   UnusedJavascriptSummary,
   ['bundle', 'scriptCoverage', 'scriptId']
 );

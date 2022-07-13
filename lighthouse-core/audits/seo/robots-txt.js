@@ -12,8 +12,9 @@
  * https://github.com/GoogleChrome/lighthouse/issues/4356#issuecomment-375489925
  */
 
-const Audit = require('../audit.js');
-const URL = require('../../lib/url-shim.js');
+import {Audit} from '../audit.js';
+
+import URL from '../../lib/url-shim.js';
 
 const HTTP_CLIENT_ERROR_CODE_LOW = 400;
 const HTTP_SERVER_ERROR_CODE_LOW = 500;
@@ -31,7 +32,7 @@ const DIRECTIVE_SAFELIST = new Set([
   'request-rate', 'visit-time', 'noindex', // not officially supported, but used in the wild
 ]);
 const SITEMAP_VALID_PROTOCOLS = new Set(['https:', 'http:', 'ftp:']);
-const i18n = require('../../lib/i18n/i18n.js');
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the site's robots.txt file. Note: "robots.txt" is a canonical filename and should not be translated. This descriptive title is shown when the robots.txt file is present and configured correctly. */
@@ -55,7 +56,7 @@ const UIStrings = {
   explanation: 'Lighthouse was unable to download a robots.txt file',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @param {string} directiveName
@@ -252,5 +253,5 @@ class RobotsTxt extends Audit {
   }
 }
 
-module.exports = RobotsTxt;
-module.exports.UIStrings = UIStrings;
+export default RobotsTxt;
+export {UIStrings};

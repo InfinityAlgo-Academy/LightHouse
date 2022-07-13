@@ -5,7 +5,7 @@
  */
 
 import ThirdPartySummary from '../../audits/third-party-summary.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {readJson} from '../test-utils.js';
 
 const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);

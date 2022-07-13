@@ -7,7 +7,7 @@
 import {Type} from 'csp_evaluator/dist/finding.js';
 
 import CspXss from '../../audits/csp-xss.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
 const SEVERITY = {
   syntax: {

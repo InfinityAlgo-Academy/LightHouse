@@ -5,7 +5,7 @@
  */
 
 import ResourceSummaryAudit from '../../audits/resource-summary.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
 describe('Performance: Resource summary audit', () => {
   let artifacts;

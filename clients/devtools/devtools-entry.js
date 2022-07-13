@@ -9,13 +9,13 @@
 
 import {Buffer} from 'buffer';
 
-import lighthouse from '../../lighthouse-core/index.js';
+import lighthouse, {legacyNavigation} from '../../lighthouse-core/index.js';
 import {navigation, startTimespan, snapshot} from '../../lighthouse-core/fraggle-rock/api.js';
-import RawProtocol from '../../lighthouse-core/gather/connections/raw.js';
+import {RawConnection} from '../../lighthouse-core/gather/connections/raw.js';
 import log from 'lighthouse-logger';
 import {lookupLocale} from '../../lighthouse-core/lib/i18n/i18n.js';
 import {registerLocaleData, getCanonicalLocales} from '../../shared/localization/format.js';
-import constants from '../../lighthouse-core/config/constants.js';
+import * as constants from '../../lighthouse-core/config/constants.js';
 
 /** @typedef {import('../../lighthouse-core/gather/connections/connection.js')} Connection */
 
@@ -52,17 +52,18 @@ function createConfig(categoryIDs, device) {
 
   return {
     extends: 'lighthouse:default',
-    plugins: ['lighthouse-plugin-publisher-ads'],
+    // TODO(esmodules): re-enable when pubads works again
+    // plugins: ['lighthouse-plugin-publisher-ads'],
     settings,
   };
 }
 
 /**
- * @param {RawProtocol.Port} port
- * @return {RawProtocol}
+ * @param {import('../../lighthouse-core/gather/connections/raw.js').Port} port
+ * @return {RawConnection}
  */
 function setUpWorkerConnection(port) {
-  return new RawProtocol(port);
+  return new RawConnection(port);
 }
 
 /** @param {(status: [string, string, string]) => void} listenCallback */
@@ -90,7 +91,7 @@ if (typeof self !== 'undefined') {
   // @ts-expect-error
   self.setUpWorkerConnection = setUpWorkerConnection;
   // @ts-expect-error
-  self.runLighthouse = lighthouse.legacyNavigation;
+  self.runLighthouse = legacyNavigation;
   // @ts-expect-error
   self.runLighthouseNavigation = navigation;
   // @ts-expect-error
@@ -110,4 +111,6 @@ if (typeof self !== 'undefined') {
   // For the bundle smoke test.
   // @ts-expect-error
   global.runBundledLighthouse = lighthouse;
+  // @ts-expect-error
+  global.runBundledLighthouseLegacyNavigation = legacyNavigation;
 }

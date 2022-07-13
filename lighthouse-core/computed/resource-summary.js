@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const NetworkRecords = require('./network-records.js');
-const URL = require('../lib/url-shim.js');
-const NetworkRequest = require('../lib/network-request.js');
-const Budget = require('../config/budget.js');
-const {Util} = require('../util-commonjs.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import NetworkRecords from './network-records.js';
+import URL from '../lib/url-shim.js';
+import {NetworkRequest} from '../lib/network-request.js';
+import {Budget} from '../config/budget.js';
+import {Util} from '../util.cjs';
 
 /** @typedef {{count: number, resourceSize: number, transferSize: number}} ResourceEntry */
 
@@ -111,4 +111,4 @@ class ResourceSummary {
   }
 }
 
-module.exports = makeComputedArtifact(ResourceSummary, ['URL', 'devtoolsLog', 'budgets']);
+export default makeComputedArtifact(ResourceSummary, ['URL', 'devtoolsLog', 'budgets']);

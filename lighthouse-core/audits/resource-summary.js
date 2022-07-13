@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const ComputedResourceSummary = require('../computed/resource-summary.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+import ComputedResourceSummary from '../computed/resource-summary.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to minimize the size and quantity of resources used to load the page. */
@@ -21,7 +21,7 @@ const UIStrings = {
     `other {# requests • {byteCount, number, bytes} KiB}}`,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class ResourceSummary extends Audit {
   /**
@@ -100,5 +100,5 @@ class ResourceSummary extends Audit {
   }
 }
 
-module.exports = ResourceSummary;
-module.exports.UIStrings = UIStrings;
+export default ResourceSummary;
+export {UIStrings};

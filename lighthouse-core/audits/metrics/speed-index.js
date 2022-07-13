@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const ComputedSi = require('../../computed/metrics/speed-index.js');
+import {Audit} from '../audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
+import ComputedSi from '../../computed/metrics/speed-index.js';
 
 const UIStrings = {
   /** Description of the Speed Index metric, which summarizes how quickly the page looked visually complete. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
@@ -15,7 +15,7 @@ const UIStrings = {
       '[Learn more](https://web.dev/speed-index/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class SpeedIndex extends Audit {
   /**
@@ -85,5 +85,5 @@ class SpeedIndex extends Audit {
   }
 }
 
-module.exports = SpeedIndex;
-module.exports.UIStrings = UIStrings;
+export default SpeedIndex;
+export {UIStrings};

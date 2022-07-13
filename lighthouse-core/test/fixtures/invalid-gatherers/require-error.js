@@ -4,11 +4,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 // NOTE: this require path does not resolve correctly.
 // eslint-disable-next-line local-rules/require-file-extension
-const LighthouseGatherer = require('../terrible/path/no/seriously/gatherer.js');
+import LighthouseGatherer from '../terrible/path/no/seriously/gatherer.js';
 
 class CustomGatherer extends LighthouseGatherer {}
 
-module.exports = CustomGatherer;
+export default CustomGatherer;

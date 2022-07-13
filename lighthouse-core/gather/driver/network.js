@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const NetworkRequest = require('../../lib/network-request.js');
+import {NetworkRequest} from '../../lib/network-request.js';
 
 /**
  * Return the body of the response with the given ID. Rejects if getting the
@@ -25,4 +25,4 @@ async function fetchResponseBodyFromCache(session, requestId, timeout = 1000) {
   return result.body;
 }
 
-module.exports = {fetchResponseBodyFromCache};
+export {fetchResponseBodyFromCache};

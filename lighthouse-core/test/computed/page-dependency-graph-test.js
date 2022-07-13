@@ -7,11 +7,11 @@
 import {strict as assert} from 'assert';
 
 import PageDependencyGraph from '../../computed/page-dependency-graph.js';
-import BaseNode from '../../lib/dependency-graph/base-node.js';
-import NetworkRequest from '../../lib/network-request.js';
+import {BaseNode} from '../../lib/dependency-graph/base-node.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
-import NetworkRecorder from '../../lib/network-recorder.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {NetworkRecorder} from '../../lib/network-recorder.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
 const sampleTrace = readJson('../fixtures/traces/iframe-m79.trace.json', import.meta);
 const sampleDevtoolsLog = readJson('../fixtures/traces/iframe-m79.devtoolslog.json', import.meta);

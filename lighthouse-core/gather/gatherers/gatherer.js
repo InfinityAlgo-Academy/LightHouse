@@ -56,4 +56,4 @@ class Gatherer {
   /* eslint-enable no-unused-vars */
 }
 
-module.exports = Gatherer;
+export {Gatherer};

@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const {generateFlowReportHtml} = require('../../report/generator/report-generator.js');
-const {snapshotGather} = require('./gather/snapshot-runner.js');
-const {startTimespanGather} = require('./gather/timespan-runner.js');
-const {navigationGather} = require('./gather/navigation-runner.js');
-const Runner = require('../runner.js');
-const {initializeConfig} = require('./config/config.js');
+import ReportGenerator from '../../report/generator/report-generator.js';
+import {snapshotGather} from './gather/snapshot-runner.js';
+import {startTimespanGather} from './gather/timespan-runner.js';
+import {navigationGather} from './gather/navigation-runner.js';
+import {Runner} from '../runner.js';
+import {initializeConfig} from './config/config.js';
 
 /** @typedef {Parameters<snapshotGather>[0]} FrOptions */
 /** @typedef {Omit<FrOptions, 'page'> & {name?: string}} UserFlowOptions */
@@ -220,7 +220,7 @@ class UserFlow {
    */
   async generateReport() {
     const flowResult = await this.createFlowResult();
-    return generateFlowReportHtml(flowResult);
+    return ReportGenerator.generateFlowReportHtml(flowResult);
   }
 
   /**
@@ -273,7 +273,7 @@ async function auditGatherSteps(gatherSteps, options) {
 }
 
 
-module.exports = {
+export {
   UserFlow,
   auditGatherSteps,
 };

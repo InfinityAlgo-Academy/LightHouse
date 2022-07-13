@@ -10,7 +10,7 @@ import {
   getPageLoadError,
   getNonHtmlError,
 } from '../../lib/navigation-error.js';
-import NetworkRequest from '../../lib/network-request.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 
 const LoadFailureMode = /** @type {const} */ ({
   fatal: 'fatal',

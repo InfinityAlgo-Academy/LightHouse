@@ -47,9 +47,10 @@ function getFailedTests() {
 //    yarn mocha --no-isolation --no-parallel lighthouse-core/test
 //
 // Because mocha workers can divide up test files that mess with global scope in a way that
-// _just happens_ to not cause anything to fail, use this command works to verify that
+// _just happens_ to not cause anything to fail, use this command to verify that
 // all necessary tests are isolated:
-//    yarn mocha --no-parallel lighthouse-core/test
+//    yarn mocha --no-parallel
+// (also, just comment out the `testsToRunIsolated` below, as they won't impact this verification)
 const testsToIsolate = new Set([
   // grep -lRE '^timers\.useFakeTimers' --include='*-test.*' --exclude-dir=node_modules
   'flow-report/test/common-test.tsx',
@@ -67,14 +68,12 @@ const testsToIsolate = new Set([
   'lighthouse-core/test/gather/gatherers/trace-test.js',
 
   // grep -lRE '^td\.replace' --include='*-test.*' --exclude-dir=node_modules
-  'lighthouse-core/test/fraggle-rock/gather/navigation-runner-test.js',
   'lighthouse-core/test/fraggle-rock/gather/snapshot-runner-test.js',
   'lighthouse-core/test/fraggle-rock/gather/timespan-runner-test.js',
   'lighthouse-core/test/fraggle-rock/user-flow-test.js',
   'lighthouse-core/test/gather/driver/prepare-test.js',
   'lighthouse-core/test/gather/gatherers/link-elements-test.js',
   'lighthouse-core/test/gather/gatherers/service-worker-test.js',
-  'lighthouse-core/test/lib/sentry-test.js',
   'lighthouse-core/test/runner-test.js',
 
   // grep -lRE --include='-test.js' 'mockDriverSubmodules|mockRunnerModule|mockDriverModule|mockDriverSubmodules|makeMocksForGatherRunner' --include='*-test.*' --exclude-dir=node_modules
@@ -95,6 +94,8 @@ const testsToIsolate = new Set([
   // ?
   'clients/test/lightrider/lightrider-entry-test.js', // Runner overrides.
   'flow-report/test/flow-report-pptr-test.ts',
+  'lighthouse-cli/test/cli/bin-test.js',
+  'lighthouse-cli/test/cli/run-test.js',
   'lighthouse-core/test/config/config-test.js',
   'lighthouse-core/test/fraggle-rock/config/config-test.js',
   'lighthouse-core/test/lib/emulation-test.js',

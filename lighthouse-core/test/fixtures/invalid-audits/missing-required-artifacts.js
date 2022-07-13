@@ -4,10 +4,9 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {Audit} from '../../../audits/audit.js';
 
-const LighthouseAudit = require('../../../audits/audit.js');
-
-class MissingRequiredArtifacts extends LighthouseAudit {
+class MissingRequiredArtifacts extends Audit {
   static get meta() {
     return {
       id: 'missing-required-artifacts',
@@ -24,4 +23,4 @@ class MissingRequiredArtifacts extends LighthouseAudit {
   }
 }
 
-module.exports = MissingRequiredArtifacts;
+export default MissingRequiredArtifacts;

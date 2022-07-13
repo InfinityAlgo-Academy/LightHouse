@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const URL = require('../lib/url-shim.js');
-const makeComputedArtifact = require('./computed-artifact.js');
+import URL from '../lib/url-shim.js';
+import {makeComputedArtifact} from './computed-artifact.js';
 
 class ImageRecords {
   /**
@@ -59,5 +59,5 @@ class ImageRecords {
   }
 }
 
-module.exports = makeComputedArtifact(ImageRecords, ['ImageElements', 'networkRecords']);
+export default makeComputedArtifact(ImageRecords, ['ImageElements', 'networkRecords']);
 

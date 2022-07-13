@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const MainThreadTasks_ = require('../lib/tracehouse/main-thread-tasks.js');
-const ProcessedTrace = require('./processed-trace.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import {MainThreadTasks as MainThreadTasks_} from '../lib/tracehouse/main-thread-tasks.js';
+import ProcessedTrace from './processed-trace.js';
 
 class MainThreadTasks {
   /**
@@ -21,4 +21,4 @@ class MainThreadTasks {
   }
 }
 
-module.exports = makeComputedArtifact(MainThreadTasks, null);
+export default makeComputedArtifact(MainThreadTasks, null);

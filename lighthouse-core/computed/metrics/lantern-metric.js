@@ -5,16 +5,16 @@
  */
 'use strict';
 
-const BaseNode = require('../../lib/dependency-graph/base-node.js');
-const NetworkRequest = require('../../lib/network-request.js');
-const ProcessedTrace = require('../processed-trace.js');
-const ProcessedNavigation = require('../processed-navigation.js');
-const PageDependencyGraph = require('../page-dependency-graph.js');
-const LoadSimulator = require('../load-simulator.js');
+import {BaseNode} from '../../lib/dependency-graph/base-node.js';
+import {NetworkRequest} from '../../lib/network-request.js';
+import ProcessedTrace from '../processed-trace.js';
+import ProcessedNavigation from '../processed-navigation.js';
+import PageDependencyGraph from '../page-dependency-graph.js';
+import LoadSimulator from '../load-simulator.js';
 
-/** @typedef {BaseNode.Node} Node */
-/** @typedef {import('../../lib/dependency-graph/network-node')} NetworkNode */
-/** @typedef {import('../../lib/dependency-graph/simulator/simulator')} Simulator */
+/** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
+/** @typedef {import('../../lib/dependency-graph/network-node').NetworkNode} NetworkNode */
+/** @typedef {import('../../lib/dependency-graph/simulator/simulator').Simulator} Simulator */
 
 /**
  * @typedef Extras
@@ -162,4 +162,4 @@ class LanternMetricArtifact {
   }
 }
 
-module.exports = LanternMetricArtifact;
+export default LanternMetricArtifact;

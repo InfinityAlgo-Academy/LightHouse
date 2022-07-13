@@ -5,16 +5,17 @@
  */
 'use strict';
 
-const Runner = require('./runner.js');
-const log = require('lighthouse-logger');
-const ChromeProtocol = require('./gather/connections/cri.js');
-const Config = require('./config/config.js');
-const URL = require('./lib/url-shim.js');
-const fraggleRock = require('./fraggle-rock/api.js');
-const {initializeConfig} = require('./fraggle-rock/config/config.js');
-const {flagsToFRContext} = require('./config/config-helpers.js');
+import {Runner} from './runner.js';
+import log from 'lighthouse-logger';
+import {CriConnection} from './gather/connections/cri.js';
+import {Config} from './config/config.js';
+import URL from './lib/url-shim.js';
+import * as fraggleRock from './fraggle-rock/api.js';
+import {Driver} from './gather/driver.js';
+import {flagsToFRContext} from './config/config-helpers.js';
+import {initializeConfig} from './fraggle-rock/config/config.js';
 
-/** @typedef {import('./gather/connections/connection.js')} Connection */
+/** @typedef {import('./gather/connections/connection.js').Connection} Connection */
 
 /*
  * The relationship between these root modules:
@@ -64,7 +65,7 @@ async function legacyNavigation(url, flags = {}, configJSON, userConnection) {
   const config = await generateLegacyConfig(configJSON, flags);
   const computedCache = new Map();
   const options = {config, computedCache};
-  const connection = userConnection || new ChromeProtocol(flags.port, flags.hostname);
+  const connection = userConnection || new CriConnection(flags.port, flags.hostname);
 
   // kick off a lighthouse run
   const artifacts = await Runner.gather(() => {
@@ -103,17 +104,18 @@ function generateLegacyConfig(configJson, flags) {
   return Config.fromJson(configJson, flags);
 }
 
-lighthouse.legacyNavigation = legacyNavigation;
-lighthouse.generateConfig = generateConfig;
-lighthouse.generateLegacyConfig = generateLegacyConfig;
-lighthouse.getAuditList = Runner.getAuditList;
-lighthouse.traceCategories = require('./gather/driver.js').traceCategories;
-lighthouse.Audit = require('./audits/audit.js');
-lighthouse.Gatherer = require('./fraggle-rock/gather/base-gatherer.js');
+function getAuditList() {
+  return Runner.getAuditList();
+}
 
-// Explicit type reference (hidden by makeComputedArtifact) for d.ts export.
-// TODO(esmodules): should be a workaround for module.export and can be removed when in esm.
-/** @type {typeof import('./computed/network-records.js')} */
-lighthouse.NetworkRecords = require('./computed/network-records.js');
-
-module.exports = lighthouse;
+export default lighthouse;
+export {Audit} from './audits/audit.js';
+export {default as Gatherer} from './fraggle-rock/gather/base-gatherer.js';
+export {default as NetworkRecords} from './computed/network-records.js';
+export {
+  legacyNavigation,
+  generateConfig,
+  generateLegacyConfig,
+  getAuditList,
+};
+export const traceCategories = Driver.traceCategories;

@@ -15,8 +15,9 @@
 /** @typedef {{url: string}} IssueSubItem */
 /** @typedef {{issueType: string|LH.IcuMessage, subItems: Array<IssueSubItem>}} IssueItem */
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {Audit} from '../audit.js';
+
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on various types of problems with a website, like security or network errors. This descriptive title is shown to users when no issues were logged into the Chrome DevTools Issues panel. */
@@ -35,7 +36,7 @@ const UIStrings = {
   issueTypeHeavyAds: 'Heavy resource usage by ads',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class IssuesPanelEntries extends Audit {
   /**
@@ -188,5 +189,5 @@ class IssuesPanelEntries extends Audit {
   }
 }
 
-module.exports = IssuesPanelEntries;
-module.exports.UIStrings = UIStrings;
+export default IssuesPanelEntries;
+export {UIStrings};

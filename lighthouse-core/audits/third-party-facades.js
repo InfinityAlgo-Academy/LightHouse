@@ -20,13 +20,14 @@
 
 /** @typedef {{product: ThirdPartyProduct, entity: ThirdPartyEntity}} FacadableProduct */
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
-const thirdPartyWeb = require('../lib/third-party-web.js');
-const NetworkRecords = require('../computed/network-records.js');
-const MainResource = require('../computed/main-resource.js');
-const MainThreadTasks = require('../computed/main-thread-tasks.js');
-const ThirdPartySummary = require('./third-party-summary.js');
+import {Audit} from './audit.js';
+
+import * as i18n from '../lib/i18n/i18n.js';
+import thirdPartyWeb from '../lib/third-party-web.js';
+import NetworkRecords from '../computed/network-records.js';
+import MainResource from '../computed/main-resource.js';
+import MainThreadTasks from '../computed/main-thread-tasks.js';
+import ThirdPartySummary from './third-party-summary.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides details about the third-party code on a web page that can be lazy loaded with a facade alternative. This descriptive title is shown to users when no resources have facade alternatives available. A facade is a lightweight component which looks like the desired resource. Lazy loading means resources are deferred until they are needed. Third-party code refers to resources that are not within the control of the site owner. */
@@ -65,7 +66,7 @@ const UIStrings = {
   categorySocial: '{productName} (Social)',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /** @type {Record<string, string>} */
 const CATEGORY_UI_MAP = {
@@ -93,7 +94,7 @@ class ThirdPartyFacades extends Audit {
   /**
    * Sort items by transfer size and combine small items into a single row.
    * Items will be mutated in place to a maximum of 6 rows.
-   * @param {ThirdPartySummary.URLSummary[]} items
+   * @param {import('./third-party-summary.js').URLSummary[]} items
    */
   static condenseItems(items) {
     items.sort((a, b) => b.transferSize - a.transferSize);
@@ -120,7 +121,7 @@ class ThirdPartyFacades extends Audit {
   }
 
   /**
-   * @param {Map<string, ThirdPartySummary.Summary>} byURL
+   * @param {Map<string, import('./third-party-summary.js').Summary>} byURL
    * @param {ThirdPartyEntity | undefined} mainEntity
    * @return {FacadableProduct[]}
    */
@@ -180,7 +181,7 @@ class ThirdPartyFacades extends Audit {
 
       const items = Array.from(urls).map((url) => {
         const urlStats = summaries.byURL.get(url);
-        return /** @type {ThirdPartySummary.URLSummary} */ ({url, ...urlStats});
+        return /** @type {import('./third-party-summary.js').URLSummary} */ ({url, ...urlStats});
       });
       this.condenseItems(items);
       results.push({
@@ -217,5 +218,5 @@ class ThirdPartyFacades extends Audit {
   }
 }
 
-module.exports = ThirdPartyFacades;
-module.exports.UIStrings = UIStrings;
+export default ThirdPartyFacades;
+export {UIStrings};
