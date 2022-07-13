@@ -6,13 +6,12 @@
 
 import {strict as assert} from 'assert';
 
-import lighthouse from '../index.js';
+import lighthouse, {getAuditList, legacyNavigation, traceCategories} from '../index.js';
 import {LH_ROOT} from '../../root.js';
 import {readJson} from './test-utils.js';
 
 const pkg = readJson('package.json');
 
-const {legacyNavigation} = lighthouse;
 const TEST_DIR = `${LH_ROOT}/lighthouse-core/test`;
 
 describe('Module Tests', function() {
@@ -29,11 +28,11 @@ describe('Module Tests', function() {
   });
 
   it('should return a list of audits', function() {
-    assert.ok(Array.isArray(lighthouse.getAuditList()));
+    assert.ok(Array.isArray(getAuditList()));
   });
 
   it('should return a list of trace categories required by the driver', function() {
-    const lighthouseTraceCategories = lighthouse.traceCategories;
+    const lighthouseTraceCategories = traceCategories;
     assert.ok(Array.isArray(lighthouseTraceCategories));
     assert.notEqual(lighthouseTraceCategories.length, 0);
   });

@@ -18,7 +18,7 @@
  * test-only audit in our core list instead.
  */
 
-module.exports = {
+export default {
   meta: {
     id: 'script-elements-test-audit',
     title: 'ScriptElements',

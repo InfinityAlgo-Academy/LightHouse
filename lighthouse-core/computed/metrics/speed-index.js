@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const NavigationMetric = require('./navigation-metric.js');
-const LanternSpeedIndex = require('./lantern-speed-index.js');
-const Speedline = require('../speedline.js');
+import {makeComputedArtifact} from '../computed-artifact.js';
+import NavigationMetric from './navigation-metric.js';
+import LanternSpeedIndex from './lantern-speed-index.js';
+import Speedline from '../speedline.js';
 
 class SpeedIndex extends NavigationMetric {
   /**
@@ -34,7 +34,7 @@ class SpeedIndex extends NavigationMetric {
   }
 }
 
-module.exports = makeComputedArtifact(
+export default makeComputedArtifact(
   SpeedIndex,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const ProcessedTrace = require('./processed-trace.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import ProcessedTrace from './processed-trace.js';
 
 /** @typedef {{name: string, isMark: true, args: LH.TraceEvent['args'], startTime: number}} MarkEvent */
 /** @typedef {{name: string, isMark: false, args: LH.TraceEvent['args'], startTime: number, endTime: number, duration: number}} MeasureEvent */
@@ -80,4 +80,4 @@ class UserTimings {
   }
 }
 
-module.exports = makeComputedArtifact(UserTimings, null);
+export default makeComputedArtifact(UserTimings, null);

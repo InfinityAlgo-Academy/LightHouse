@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const MultiCheckAudit = require('./multi-check-audit.js');
-const ManifestValues = require('../computed/manifest-values.js');
-const i18n = require('../lib/i18n/i18n.js');
+import MultiCheckAudit from './multi-check-audit.js';
+import ManifestValues from '../computed/manifest-values.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on splash screens. This descriptive title is shown to users when the site has a custom splash screen. */
@@ -20,7 +20,7 @@ const UIStrings = {
     'more](https://web.dev/splash-screen/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview
@@ -95,5 +95,5 @@ class SplashScreen extends MultiCheckAudit {
   }
 }
 
-module.exports = SplashScreen;
-module.exports.UIStrings = UIStrings;
+export default SplashScreen;
+export {UIStrings};

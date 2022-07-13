@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const UnusedCSS = require('../../computed/unused-css.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
+import UnusedCSS from '../../computed/unused-css.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to reduce content from their CSS that isn’t needed immediately and instead load that content at a later time. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -18,7 +18,7 @@ const UIStrings = {
     '[Learn more](https://web.dev/unused-css-rules/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 // Allow 10KiB of unused CSS to permit `:hover` and other styles not used on a non-interactive load.
 // @see https://github.com/GoogleChrome/lighthouse/issues/9353 for more discussion.
@@ -42,7 +42,7 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
    * @param {LH.Artifacts} artifacts
    * @param {LH.Artifacts.NetworkRequest[]} _
    * @param {LH.Audit.Context} context
-   * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
+   * @return {Promise<import('./byte-efficiency-audit.js').ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, _, context) {
     const unusedCssItems = await UnusedCSS.request({
@@ -66,5 +66,5 @@ class UnusedCSSRules extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = UnusedCSSRules;
-module.exports.UIStrings = UIStrings;
+export default UnusedCSSRules;
+export {UIStrings};

@@ -5,7 +5,7 @@
  */
 
 import TBTAudit from '../../../audits/metrics/total-blocking-time.js';
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);

@@ -6,7 +6,7 @@
 'use strict';
 // TODO(esmodules): rename to .js when root is type: module
 
-import module from 'module';
+import {createRequire} from 'module';
 import url from 'url';
 import path from 'path';
 
@@ -15,7 +15,7 @@ import path from 'path';
  * @param {string} packageName
  */
 function resolveModulePath(packageName) {
-  const require = module.createRequire(import.meta.url);
+  const require = createRequire(import.meta.url);
   return require.resolve(packageName);
 }
 

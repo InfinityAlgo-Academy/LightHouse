@@ -139,4 +139,4 @@ class Fetcher {
   }
 }
 
-module.exports = Fetcher;
+export {Fetcher};

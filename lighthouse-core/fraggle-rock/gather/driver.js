@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const ExecutionContext = require('../../gather/driver/execution-context.js');
-const Fetcher = require('../../gather/fetcher.js');
-const TargetManager = require('../../gather/driver/target-manager.js');
+import log from 'lighthouse-logger';
+import {ExecutionContext} from '../../gather/driver/execution-context.js';
+import {TargetManager} from '../../gather/driver/target-manager.js';
+import {Fetcher} from '../../gather/fetcher.js';
 
 /** @return {*} */
 const throwNotConnectedFn = () => {
@@ -89,4 +89,4 @@ class Driver {
   }
 }
 
-module.exports = Driver;
+export {Driver};

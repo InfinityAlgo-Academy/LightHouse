@@ -5,22 +5,24 @@
  */
 'use strict';
 
-const path = require('path');
-const log = require('lighthouse-logger');
-const Runner = require('../../runner.js');
-const format = require('../../../shared/localization/format.js');
-const defaultConfig = require('./default-config.js');
-const {defaultNavigationConfig, nonSimulatedPassConfigOverrides} = require('../../config/constants.js'); // eslint-disable-line max-len
-const {
+import path from 'path';
+import log from 'lighthouse-logger';
+import {Runner} from '../../runner.js';
+import defaultConfig from './default-config.js';
+import {defaultNavigationConfig, nonSimulatedPassConfigOverrides} from '../../config/constants.js'; // eslint-disable-line max-len
+
+import {
   isFRGathererDefn,
   throwInvalidDependencyOrder,
   isValidArtifactDependency,
   throwInvalidArtifactDependency,
   assertArtifactTopologicalOrder,
   assertValidConfig,
-} = require('./validation.js');
-const {filterConfigByGatherMode, filterConfigByExplicitFilters} = require('./filters.js');
-const {
+} from './validation.js';
+
+import {filterConfigByGatherMode, filterConfigByExplicitFilters} from './filters.js';
+
+import {
   deepCloneConfigJson,
   resolveSettings,
   resolveAuditsToDefns,
@@ -28,8 +30,12 @@ const {
   mergePlugins,
   mergeConfigFragment,
   mergeConfigFragmentArrayByKey,
-} = require('../../config/config-helpers.js');
-const defaultConfigPath = path.join(__dirname, './default-config.js');
+} from '../../config/config-helpers.js';
+
+import {getModuleDirectory} from '../../../esm-utils.js';
+import * as format from '../../../shared/localization/format.js';
+
+const defaultConfigPath = path.join(getModuleDirectory(import.meta), './default-config.js');
 
 /** @typedef {LH.Config.FRContext & {gatherMode: LH.Gatherer.GatherMode}} ConfigContext */
 
@@ -134,7 +140,8 @@ async function resolveArtifactsToDefns(artifacts, configDir) {
   const artifactDefnsBySymbol = new Map();
 
   const coreGathererList = Runner.getGathererList();
-  const artifactDefnsPromises = artifacts.map(async (artifactJson) => {
+  const artifactDefns = [];
+  for (const artifactJson of artifacts) {
     /** @type {LH.Config.GathererJson} */
     // @ts-expect-error - remove when legacy runner path is removed.
     const gathererJson = artifactJson.gatherer;
@@ -155,9 +162,8 @@ async function resolveArtifactsToDefns(artifacts, configDir) {
 
     const symbol = artifact.gatherer.instance.meta.symbol;
     if (symbol) artifactDefnsBySymbol.set(symbol, artifact);
-    return artifact;
-  });
-  const artifactDefns = await Promise.all(artifactDefnsPromises);
+    artifactDefns.push(artifact);
+  }
 
   log.timeEnd(status);
   return artifactDefns;
@@ -323,4 +329,8 @@ function getConfigDisplayString(config) {
   return JSON.stringify(jsonConfig, null, 2);
 }
 
-module.exports = {resolveWorkingCopy, initializeConfig, getConfigDisplayString};
+export {
+  resolveWorkingCopy,
+  initializeConfig,
+  getConfigDisplayString,
+};

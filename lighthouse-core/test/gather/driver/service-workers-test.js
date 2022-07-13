@@ -6,7 +6,7 @@
 
 import {createMockSession} from '../../fraggle-rock/gather/mock-driver.js';
 import {makePromiseInspectable, flushAllTimersAndMicrotasks, timers} from '../../test-utils.js';
-import serviceWorkers from '../../../gather/driver/service-workers.js';
+import * as serviceWorkers from '../../../gather/driver/service-workers.js';
 
 let sessionMock = createMockSession();
 

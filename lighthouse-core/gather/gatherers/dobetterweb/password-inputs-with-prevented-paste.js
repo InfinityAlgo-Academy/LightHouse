@@ -7,8 +7,9 @@
 
 /* global document ClipboardEvent getNodeDetails */
 
-const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../../lib/page-functions.js');
+import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+
+import {pageFunctions} from '../../../lib/page-functions.js';
 
 /**
  * @return {LH.Artifacts['PasswordInputsWithPreventedPaste']}
@@ -47,4 +48,4 @@ class PasswordInputsWithPreventedPaste extends FRGatherer {
 }
 
 
-module.exports = PasswordInputsWithPreventedPaste;
+export default PasswordInputsWithPreventedPaste;

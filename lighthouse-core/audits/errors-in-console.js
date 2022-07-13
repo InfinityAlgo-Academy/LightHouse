@@ -10,10 +10,11 @@
  * This is done by collecting Chrome console log messages and filtering out the non-error ones.
  */
 
-const log = require('lighthouse-logger');
-const Audit = require('./audit.js');
-const JsBundles = require('../computed/js-bundles.js');
-const i18n = require('../lib/i18n/i18n.js');
+import log from 'lighthouse-logger';
+
+import {Audit} from './audit.js';
+import JsBundles from '../computed/js-bundles.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on browser errors. This descriptive title is shown to users when no browser errors were logged into the devtools console. */
@@ -26,7 +27,7 @@ const UIStrings = {
     '[Learn more](https://web.dev/errors-in-console/)',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /** @typedef {{ignoredPatterns?: Array<RegExp|string>}} AuditOptions */
 
@@ -114,5 +115,5 @@ class ErrorLogs extends Audit {
   }
 }
 
-module.exports = ErrorLogs;
-module.exports.UIStrings = UIStrings;
+export default ErrorLogs;
+export {UIStrings};

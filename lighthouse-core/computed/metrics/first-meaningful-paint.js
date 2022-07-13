@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const NavigationMetric = require('./navigation-metric.js');
-const LighthouseError = require('../../lib/lh-error.js');
-const LanternFirstMeaningfulPaint = require('./lantern-first-meaningful-paint.js');
+import {makeComputedArtifact} from '../computed-artifact.js';
+import NavigationMetric from './navigation-metric.js';
+import {LighthouseError} from '../../lib/lh-error.js';
+import LanternFirstMeaningfulPaint from './lantern-first-meaningful-paint.js';
 
 class FirstMeaningfulPaint extends NavigationMetric {
   /**
@@ -38,7 +38,7 @@ class FirstMeaningfulPaint extends NavigationMetric {
   }
 }
 
-module.exports = makeComputedArtifact(
+export default makeComputedArtifact(
   FirstMeaningfulPaint,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

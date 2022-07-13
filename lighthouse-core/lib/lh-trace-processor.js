@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const LighthouseError = require('../lib/lh-error.js');
-const TraceProcessor = require('../lib/tracehouse/trace-processor.js');
+import {LighthouseError} from '../lib/lh-error.js';
+import {TraceProcessor} from '../lib/tracehouse/trace-processor.js';
 
 // TraceProcessor throws generic errors, but we'd like our special localized and code-specific LighthouseError
 // objects to be thrown instead.
@@ -43,4 +43,4 @@ class LHTraceProcessor extends TraceProcessor {
   }
 }
 
-module.exports = LHTraceProcessor;
+export default LHTraceProcessor;

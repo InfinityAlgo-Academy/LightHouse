@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const legacyDefaultConfig = require('../../config/default-config.js');
-const m2a = require('../../config/metrics-to-audits.js');
-const {deepClone} = require('../../config/config-helpers.js');
+import legacyDefaultConfig from '../../config/default-config.js';
+import {deepClone} from '../../config/config-helpers.js';
+import {metricsToAudits} from '../../config/metrics-to-audits.js';
 
 /** @type {LH.Config.AuditJson[]} */
 const frAudits = [
@@ -21,7 +21,7 @@ const frCategoryAuditRefExtensions = {
   'performance': [
     {id: 'uses-responsive-images-snapshot', weight: 0},
     {id: 'experimental-interaction-to-next-paint', weight: 0, group: 'metrics', acronym: 'INP',
-      relevantAudits: m2a.inpRelevantAudits},
+      relevantAudits: metricsToAudits.inpRelevantAudits},
     {id: 'work-during-interaction', weight: 0},
   ],
 };
@@ -205,4 +205,4 @@ const defaultConfig = {
   groups: legacyDefaultConfig.groups,
 };
 
-module.exports = defaultConfig;
+export default defaultConfig;

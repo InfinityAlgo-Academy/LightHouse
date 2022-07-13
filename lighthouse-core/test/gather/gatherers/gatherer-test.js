@@ -6,7 +6,7 @@
 
 import {strict as assert} from 'assert';
 
-import Gatherer from '../../../gather/gatherers/gatherer.js';
+import {Gatherer} from '../../../gather/gatherers/gatherer.js';
 
 describe('Gatherer', () => {
   it('returns its name', () => {

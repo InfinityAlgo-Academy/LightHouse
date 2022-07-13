@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Gatherer = require('lighthouse').Gatherer;
+import {Gatherer} from 'lighthouse';
 
 /**
  * @fileoverview Extracts `window.myLoadMetrics` from the test page.
@@ -29,4 +29,4 @@ class TimeToSearchable extends Gatherer {
   }
 }
 
-module.exports = TimeToSearchable;
+export default TimeToSearchable;

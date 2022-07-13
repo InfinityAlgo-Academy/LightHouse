@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const JsBundles = require('./js-bundles.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import JsBundles from './js-bundles.js';
 
 const RELATIVE_SIZE_THRESHOLD = 0.1;
 const ABSOLUTE_SIZE_THRESHOLD_BYTES = 1024 * 0.5;
@@ -134,4 +134,4 @@ class ModuleDuplication {
   }
 }
 
-module.exports = makeComputedArtifact(ModuleDuplication, ['Scripts', 'SourceMaps']);
+export default makeComputedArtifact(ModuleDuplication, ['Scripts', 'SourceMaps']);

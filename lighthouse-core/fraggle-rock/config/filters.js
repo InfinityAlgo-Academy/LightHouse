@@ -5,9 +5,8 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-
-const Audit = require('../../audits/audit.js');
+import log from 'lighthouse-logger';
+import {Audit} from '../../audits/audit.js';
 
 /** @type {Record<keyof LH.FRBaseArtifacts, string>} */
 const baseArtifactKeySource = {
@@ -324,7 +323,7 @@ function filterConfigByExplicitFilters(config, filters) {
   };
 }
 
-module.exports = {
+export {
   filterConfigByGatherMode,
   filterConfigByExplicitFilters,
   filterArtifactsByGatherMode,

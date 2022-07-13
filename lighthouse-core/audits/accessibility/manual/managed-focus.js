@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit.js');
+import ManualAudit from '../../manual/manual-audit.js';
 
 /**
  * @fileoverview Manual A11y audit for focusing new content that's added to the page.
@@ -25,4 +25,4 @@ class ManagedFocus extends ManualAudit {
   }
 }
 
-module.exports = ManagedFocus;
+export default ManagedFocus;

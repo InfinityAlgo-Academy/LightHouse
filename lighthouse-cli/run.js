@@ -15,7 +15,7 @@ import log from 'lighthouse-logger';
 import open from 'open';
 
 import * as Printer from './printer.js';
-import lighthouse from '../lighthouse-core/index.js';
+import lighthouse, {legacyNavigation} from '../lighthouse-core/index.js';
 import {getLhrFilenamePrefix} from '../report/generator/file-namer.js';
 import * as assetSaver from '../lighthouse-core/lib/asset-saver.js';
 import URL from '../lighthouse-core/lib/url-shim.js';
@@ -233,7 +233,7 @@ async function runLighthouse(url, flags, config) {
     }
 
     const runnerResult = flags.legacyNavigation ?
-       await lighthouse.legacyNavigation(url, flags, config) :
+       await legacyNavigation(url, flags, config) :
        await lighthouse(url, flags, config);
 
     // If in gatherMode only, there will be no runnerResult.

@@ -5,16 +5,15 @@
  */
 'use strict';
 
-const defaultConfigPath = './default-config.js';
-const defaultConfig = require('./default-config.js');
-const constants = require('./constants.js');
-const format = require('../../shared/localization/format.js');
-const validation = require('./../fraggle-rock/config/validation.js');
+import defaultConfig from './default-config.js';
+import * as constants from './constants.js';
+import format from '../../shared/localization/format.js';
+import * as validation from './../fraggle-rock/config/validation.js';
+import log from 'lighthouse-logger';
+import path from 'path';
+import {Runner} from '../runner.js';
 
-const log = require('lighthouse-logger');
-const path = require('path');
-const Runner = require('../runner.js');
-const {
+import {
   mergePlugins,
   mergeConfigFragment,
   resolveSettings,
@@ -22,9 +21,12 @@ const {
   resolveGathererToDefn,
   deepClone,
   deepCloneConfigJson,
-} = require('./config-helpers.js');
+} from './config-helpers.js';
+import {getModuleDirectory} from '../../esm-utils.js';
 
-/** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
+const defaultConfigPath = './default-config.js';
+
+/** @typedef {typeof import('../gather/gatherers/gatherer.js').Gatherer} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
 
 /**
@@ -167,7 +169,7 @@ class Config {
 
     if (!configJSON) {
       configJSON = defaultConfig;
-      configPath = path.resolve(__dirname, defaultConfigPath);
+      configPath = path.resolve(getModuleDirectory(import.meta), defaultConfigPath);
     }
 
     if (configPath && !path.isAbsolute(configPath)) {
@@ -559,4 +561,4 @@ class Config {
   }
 }
 
-module.exports = Config;
+export {Config};

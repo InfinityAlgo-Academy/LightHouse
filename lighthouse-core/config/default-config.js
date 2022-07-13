@@ -7,9 +7,10 @@
 
 /* eslint-disable max-len */
 
-const constants = require('./constants.js');
-const i18n = require('../lib/i18n/i18n.js');
-const m2a = require('./metrics-to-audits.js');
+import * as constants from './constants.js';
+
+import * as i18n from '../lib/i18n/i18n.js';
+import {metricsToAudits} from './metrics-to-audits.js';
 
 const UIStrings = {
   /** Title of the Performance category of audits. Equivalent to 'Web performance', this term is inclusive of all web page speed and loading optimization topics. Also used as a label of a score gauge; try to limit to 20 characters. */
@@ -120,7 +121,7 @@ const UIStrings = {
   pwaOptimizedGroupTitle: 'PWA Optimized',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /** @type {LH.Config.Json} */
 const defaultConfig = {
@@ -413,12 +414,12 @@ const defaultConfig = {
       title: str_(UIStrings.performanceCategoryTitle),
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       auditRefs: [
-        {id: 'first-contentful-paint', weight: 10, group: 'metrics', acronym: 'FCP', relevantAudits: m2a.fcpRelevantAudits},
+        {id: 'first-contentful-paint', weight: 10, group: 'metrics', acronym: 'FCP', relevantAudits: metricsToAudits.fcpRelevantAudits},
         {id: 'interactive', weight: 10, group: 'metrics', acronym: 'TTI'},
         {id: 'speed-index', weight: 10, group: 'metrics', acronym: 'SI'},
-        {id: 'total-blocking-time', weight: 30, group: 'metrics', acronym: 'TBT', relevantAudits: m2a.tbtRelevantAudits},
-        {id: 'largest-contentful-paint', weight: 25, group: 'metrics', acronym: 'LCP', relevantAudits: m2a.lcpRelevantAudits},
-        {id: 'cumulative-layout-shift', weight: 15, group: 'metrics', acronym: 'CLS', relevantAudits: m2a.clsRelevantAudits},
+        {id: 'total-blocking-time', weight: 30, group: 'metrics', acronym: 'TBT', relevantAudits: metricsToAudits.tbtRelevantAudits},
+        {id: 'largest-contentful-paint', weight: 25, group: 'metrics', acronym: 'LCP', relevantAudits: metricsToAudits.lcpRelevantAudits},
+        {id: 'cumulative-layout-shift', weight: 15, group: 'metrics', acronym: 'CLS', relevantAudits: metricsToAudits.clsRelevantAudits},
 
         // These are our "invisible" metrics. Not displayed, but still in the LHR.
         {id: 'max-potential-fid', weight: 0, group: 'hidden'},
@@ -624,10 +625,10 @@ const defaultConfig = {
   },
 };
 
-module.exports = defaultConfig;
+export default defaultConfig;
 
 // Use `defineProperty` so that the strings are accesible from original but ignored when we copy it
-Object.defineProperty(module.exports, 'UIStrings', {
+Object.defineProperty(defaultConfig, 'UIStrings', {
   enumerable: false,
   get: () => UIStrings,
 });

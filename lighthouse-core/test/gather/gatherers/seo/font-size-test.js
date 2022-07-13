@@ -6,7 +6,9 @@
 
 import assert from 'assert';
 
-import FontSizeGather from '../../../../gather/gatherers/seo/font-size.js';
+import FontSizeGather, {
+  computeSelectorSpecificity, getEffectiveFontRule,
+} from '../../../../gather/gatherers/seo/font-size.js';
 
 let fontSizeGather;
 
@@ -177,7 +179,7 @@ describe('Font size gatherer', () => {
   });
 
   describe('#computeSelectorSpecificity', () => {
-    const compute = FontSizeGather.computeSelectorSpecificity;
+    const compute = computeSelectorSpecificity;
 
     it('should handle basic selectors', () => {
       expect(compute('h1')).toEqual(1);
@@ -265,7 +267,7 @@ describe('Font size gatherer', () => {
     });
 
     it('should identify inline styles', () => {
-      const result = FontSizeGather.getEffectiveFontRule({inlineStyle});
+      const result = getEffectiveFontRule({inlineStyle});
       expect(result).toEqual({
         cssProperties: [
           {
@@ -279,7 +281,7 @@ describe('Font size gatherer', () => {
     });
 
     it('should identify attributes styles', () => {
-      const result = FontSizeGather.getEffectiveFontRule({attributesStyle});
+      const result = getEffectiveFontRule({attributesStyle});
       expect(result).toEqual({
         cssProperties: [
           {
@@ -292,7 +294,7 @@ describe('Font size gatherer', () => {
     });
 
     it('should identify direct CSS rules', () => {
-      const result = FontSizeGather.getEffectiveFontRule({matchedCSSRules});
+      const result = getEffectiveFontRule({matchedCSSRules});
       expect(result).toEqual({
         cssProperties: [
           {
@@ -317,7 +319,7 @@ describe('Font size gatherer', () => {
     });
 
     it('should identify inherited CSS rules', () => {
-      const result = FontSizeGather.getEffectiveFontRule({inherited});
+      const result = getEffectiveFontRule({inherited});
       expect(result).toEqual({
         cssProperties: [
           {
@@ -339,20 +341,20 @@ describe('Font size gatherer', () => {
     });
 
     it('should respect precendence', () => {
-      let result = FontSizeGather.getEffectiveFontRule(
+      let result = getEffectiveFontRule(
         {attributesStyle, inlineStyle, matchedCSSRules, inherited});
       expect(result).toMatchObject({type: 'Inline'});
 
-      result = FontSizeGather.getEffectiveFontRule({attributesStyle, inherited});
+      result = getEffectiveFontRule({attributesStyle, inherited});
       expect(result).toMatchObject({type: 'Attributes'});
 
-      result = FontSizeGather.getEffectiveFontRule({attributesStyle, matchedCSSRules, inherited});
+      result = getEffectiveFontRule({attributesStyle, matchedCSSRules, inherited});
       expect(result.parentRule).toMatchObject({origin: 'regular'});
 
-      result = FontSizeGather.getEffectiveFontRule({inherited});
+      result = getEffectiveFontRule({inherited});
       expect(result.parentRule).toMatchObject({origin: 'user-agent'});
 
-      result = FontSizeGather.getEffectiveFontRule({});
+      result = getEffectiveFontRule({});
       expect(result).toBe(undefined);
     });
 
@@ -384,7 +386,7 @@ describe('Font size gatherer', () => {
         {rule: fontRuleC, matchingSelectors: [0]},
       ];
 
-      const result = FontSizeGather.getEffectiveFontRule({matchedCSSRules});
+      const result = getEffectiveFontRule({matchedCSSRules});
       // fontRuleB should have one for ID + class
       expect(result.styleSheetId).toEqual(2);
     });
@@ -407,7 +409,7 @@ describe('Font size gatherer', () => {
         {rule: fontRuleB, matchingSelectors: [0]},
       ];
 
-      const result = FontSizeGather.getEffectiveFontRule({matchedCSSRules});
+      const result = getEffectiveFontRule({matchedCSSRules});
       expect(result.styleSheetId).toEqual(2);
     });
   });

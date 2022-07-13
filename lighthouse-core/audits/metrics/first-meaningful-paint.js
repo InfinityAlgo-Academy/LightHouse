@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const ComputedFmp = require('../../computed/metrics/first-meaningful-paint.js');
+import {Audit} from '../audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
+import ComputedFmp from '../../computed/metrics/first-meaningful-paint.js';
 
 const UIStrings = {
   /** Description of the First Meaningful Paint (FMP) metric, which marks the time at which a majority of the content has been painted by the browser. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
@@ -15,7 +15,7 @@ const UIStrings = {
       'visible. [Learn more](https://web.dev/first-meaningful-paint/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class FirstMeaningfulPaint extends Audit {
   /**
@@ -86,5 +86,5 @@ class FirstMeaningfulPaint extends Audit {
   }
 }
 
-module.exports = FirstMeaningfulPaint;
-module.exports.UIStrings = UIStrings;
+export default FirstMeaningfulPaint;
+export {UIStrings};

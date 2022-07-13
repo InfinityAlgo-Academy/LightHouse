@@ -7,11 +7,11 @@
 
 /* global document */
 
-const Gatherer = require('lighthouse').Gatherer;
-const Puppeteer = require('puppeteer');
+import {Gatherer} from 'lighthouse';
+import puppeteer from 'puppeteer';
 
 async function connect(driver) {
-  const browser = await Puppeteer.connect({
+  const browser = await puppeteer.connect({
     browserWSEndpoint: await driver.wsEndpoint(),
     defaultViewport: null,
   });
@@ -48,4 +48,4 @@ class CustomGatherer extends Gatherer {
   }
 }
 
-module.exports = CustomGatherer;
+export default CustomGatherer;

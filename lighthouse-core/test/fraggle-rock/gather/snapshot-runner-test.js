@@ -25,13 +25,13 @@ before(async () => {
   snapshotGather = (await import('../../../fraggle-rock/gather/snapshot-runner.js')).snapshotGather;
 });
 
-const mockRunner = mockRunnerModule();
+const mockRunner = await mockRunnerModule();
 
 // Establish the mocks before we import the file under test.
 /** @type {ReturnType<typeof createMockDriver>} */
 let mockDriver;
 
-td.replace('../../../fraggle-rock/gather/driver.js',
+await td.replaceEsm('../../../fraggle-rock/gather/driver.js',
   mockDriverModule(() => mockDriver.asDriver()));
 
 describe('Snapshot Runner', () => {

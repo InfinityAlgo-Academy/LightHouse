@@ -5,14 +5,14 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const LanternMetric = require('./lantern-metric.js');
-const BaseNode = require('../../lib/dependency-graph/base-node.js');
-const Speedline = require('../speedline.js');
-const LanternFirstContentfulPaint = require('./lantern-first-contentful-paint.js');
-const defaultThrottling = require('../../config/constants.js').throttling;
+import {makeComputedArtifact} from '../computed-artifact.js';
+import LanternMetric from './lantern-metric.js';
+import {BaseNode} from '../../lib/dependency-graph/base-node.js';
+import Speedline from '../speedline.js';
+import LanternFirstContentfulPaint from './lantern-first-contentful-paint.js';
+import {throttling as defaultThrottling} from '../../config/constants.js';
 
-/** @typedef {BaseNode.Node} Node */
+/** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
 class LanternSpeedIndex extends LanternMetric {
   /**
@@ -144,7 +144,7 @@ class LanternSpeedIndex extends LanternMetric {
   }
 }
 
-module.exports = makeComputedArtifact(
+export default makeComputedArtifact(
   LanternSpeedIndex,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

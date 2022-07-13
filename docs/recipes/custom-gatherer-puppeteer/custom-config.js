@@ -5,7 +5,7 @@
  */
 'use strict';
 
-module.exports = {
+export default {
   passes: [{
     passName: 'defaultPass',
     gatherers: [

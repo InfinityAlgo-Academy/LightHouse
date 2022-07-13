@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const LanternMetricArtifact = require('./lantern-metric.js');
-const BaseNode = require('../../lib/dependency-graph/base-node.js');
-const LanternFirstContentfulPaint = require('./lantern-first-contentful-paint.js');
+import {makeComputedArtifact} from '../computed-artifact.js';
+import LanternMetricArtifact from './lantern-metric.js';
+import {BaseNode} from '../../lib/dependency-graph/base-node.js';
+import LanternFirstContentfulPaint from './lantern-first-contentful-paint.js';
 
-/** @typedef {BaseNode.Node} Node */
+/** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
 class LanternMaxPotentialFID extends LanternMetricArtifact {
   /**
@@ -87,7 +87,7 @@ class LanternMaxPotentialFID extends LanternMetricArtifact {
   }
 }
 
-module.exports = makeComputedArtifact(
+export default makeComputedArtifact(
   LanternMaxPotentialFID,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

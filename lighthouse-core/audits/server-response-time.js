@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
-const MainResource = require('../computed/main-resource.js');
+import {Audit} from './audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import MainResource from '../computed/main-resource.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on how long it took from starting a request to when the server started responding. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -20,7 +20,7 @@ const UIStrings = {
   displayValue: `Root document took {timeInMs, number, milliseconds}\xa0ms`,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 // Due to the way that DevTools throttling works we cannot see if server response took less than ~570ms.
 // We set our failure threshold to 600ms to avoid those false positives but we want devs to shoot for 100ms.
@@ -87,5 +87,5 @@ class ServerResponseTime extends Audit {
   }
 }
 
-module.exports = ServerResponseTime;
-module.exports.UIStrings = UIStrings;
+export default ServerResponseTime;
+export {UIStrings};

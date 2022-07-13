@@ -7,7 +7,7 @@
 import {strict as assert} from 'assert';
 
 import HTTPStatusCodeAudit from '../../../audits/seo/http-status-code.js';
-import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 
 describe('SEO: HTTP code audit', () => {
   it('fails when status code is unsuccesfull', () => {

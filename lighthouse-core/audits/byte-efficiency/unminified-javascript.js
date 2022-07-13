@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const computeTokenLength = require('../../lib/minification-estimator.js').computeJSTokenLength;
-const {getRequestForScript, isInline} = require('../../lib/script-helpers.js');
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
+import {computeJSTokenLength as computeTokenLength} from '../../lib/minification-estimator.js';
+import {getRequestForScript, isInline} from '../../lib/script-helpers.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to minify the page’s JS code to reduce file size. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -18,7 +18,7 @@ const UIStrings = {
     '[Learn more](https://web.dev/unminified-javascript/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 const IGNORE_THRESHOLD_IN_PERCENT = 10;
 const IGNORE_THRESHOLD_IN_BYTES = 2048;
@@ -73,7 +73,7 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
   /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
+   * @return {import('./byte-efficiency-audit.js').ByteEfficiencyProduct}
    */
   static audit_(artifacts, networkRecords) {
     /** @type {Array<LH.Audit.ByteEfficiencyItem>} */
@@ -115,5 +115,5 @@ class UnminifiedJavaScript extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = UnminifiedJavaScript;
-module.exports.UIStrings = UIStrings;
+export default UnminifiedJavaScript;
+export {UIStrings};

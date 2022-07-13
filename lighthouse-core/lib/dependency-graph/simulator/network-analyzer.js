@@ -5,8 +5,9 @@
  */
 'use strict';
 
+import URL from '../../url-shim.js';
+
 const INITIAL_CWD = 14 * 1024;
-const URL = require('../../url-shim.js');
 
 // Assume that 40% of TTFB was server response time by default for static assets
 const DEFAULT_SERVER_RESPONSE_PERCENTAGE = 0.4;
@@ -47,7 +48,7 @@ class NetworkAnalyzer {
 
   /**
    * @param {number[]} values
-   * @return {NetworkAnalyzer.Summary}
+   * @return {Summary}
    */
   static getSummary(values) {
     values.sort((a, b) => a - b);
@@ -62,7 +63,7 @@ class NetworkAnalyzer {
 
   /**
    * @param {Map<string,number[]>} values
-   * @return {Map<string, NetworkAnalyzer.Summary>}
+   * @return {Map<string, Summary>}
    */
   static summarize(values) {
     const summaryByKey = new Map();
@@ -302,8 +303,8 @@ class NetworkAnalyzer {
    * is unavailable.
    *
    * @param {LH.Artifacts.NetworkRequest[]} records
-   * @param {NetworkAnalyzer.RTTEstimateOptions} [options]
-   * @return {Map<string, NetworkAnalyzer.Summary>}
+   * @param {RTTEstimateOptions} [options]
+   * @return {Map<string, Summary>}
    */
   static estimateRTTByOrigin(records, options) {
     const {
@@ -354,8 +355,8 @@ class NetworkAnalyzer {
    * estimated automatically if not provided.
    *
    * @param {LH.Artifacts.NetworkRequest[]} records
-   * @param {NetworkAnalyzer.RTTEstimateOptions & {rttByOrigin?: Map<string, number>}} [options]
-   * @return {Map<string, NetworkAnalyzer.Summary>}
+   * @param {RTTEstimateOptions & {rttByOrigin?: Map<string, number>}} [options]
+   * @return {Map<string, Summary>}
    */
   static estimateServerResponseTimeByOrigin(records, options) {
     let rttByOrigin = (options || {}).rttByOrigin;
@@ -457,10 +458,10 @@ class NetworkAnalyzer {
   }
 }
 
-module.exports = NetworkAnalyzer;
+export {NetworkAnalyzer};
 
 /**
- * @typedef NetworkAnalyzer.Summary
+ * @typedef Summary
  * @property {number} min
  * @property {number} max
  * @property {number} avg
@@ -468,7 +469,7 @@ module.exports = NetworkAnalyzer;
  */
 
 /**
- * @typedef NetworkAnalyzer.RTTEstimateOptions
+ * @typedef RTTEstimateOptions
  * @property {boolean} [forceCoarseEstimates] TCP connection handshake information will be used when available, but in some circumstances this data can be unreliable. This flag exposes an option to ignore the handshake data and use the coarse download/TTFB timing data.
  * @property {number} [coarseEstimateMultiplier] Coarse estimates include lots of extra time and noise multiply by some factor to deflate the estimates a bit.
  * @property {boolean} [useDownloadEstimates] Useful for testing to isolate the different methods of estimation.

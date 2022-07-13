@@ -7,7 +7,7 @@
 import {strict as assert} from 'assert';
 
 import Audit from '../../audits/is-on-https.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
 describe('Security: HTTPS audit', () => {
   function getArtifacts(networkRecords, mixedContentIssues) {

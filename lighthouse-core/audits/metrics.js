@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const ComputedTimingSummary = require('../computed/metrics/timing-summary.js');
+import {Audit} from './audit.js';
+import ComputedTimingSummary from '../computed/metrics/timing-summary.js';
 
 /** @type {Set<keyof LH.Artifacts.TimingSummary>} */
 const DECIMAL_METRIC_KEYS = new Set([
@@ -71,4 +71,4 @@ class Metrics extends Audit {
   }
 }
 
-module.exports = Metrics;
+export default Metrics;

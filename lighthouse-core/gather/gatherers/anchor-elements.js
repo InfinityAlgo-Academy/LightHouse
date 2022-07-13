@@ -7,9 +7,10 @@
 
 /* global getNodeDetails */
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const dom = require('../driver/dom.js');
-const pageFunctions = require('../../lib/page-functions.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+
+import {pageFunctions} from '../../lib/page-functions.js';
+import {resolveDevtoolsNodePathToObjectId} from '../driver/dom.js';
 
 /* eslint-env browser, node */
 
@@ -80,7 +81,7 @@ function collectAnchorElements() {
  * @return {Promise<Array<{type: string}>>}
  */
 async function getEventListeners(session, devtoolsNodePath) {
-  const objectId = await dom.resolveDevtoolsNodePathToObjectId(session, devtoolsNodePath);
+  const objectId = await resolveDevtoolsNodePathToObjectId(session, devtoolsNodePath);
   if (!objectId) return [];
 
   const response = await session.sendCommand('DOMDebugger.getEventListeners', {
@@ -130,4 +131,4 @@ class AnchorElements extends FRGatherer {
   }
 }
 
-module.exports = AnchorElements;
+export default AnchorElements;

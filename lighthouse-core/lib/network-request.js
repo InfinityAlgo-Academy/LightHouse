@@ -11,8 +11,7 @@
  * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/sdk/NetworkManager.js
  */
 
-const URL = require('./url-shim.js');
-
+import URL from './url-shim.js';
 
 // Lightrider X-Header names for timing information.
 // See: _updateTransferSizeForLightrider and _updateTimingsForLightrider.
@@ -537,4 +536,4 @@ NetworkRequest.HEADER_TOTAL = HEADER_TOTAL;
 NetworkRequest.HEADER_FETCHED_SIZE = HEADER_FETCHED_SIZE;
 NetworkRequest.HEADER_PROTOCOL_IS_H2 = HEADER_PROTOCOL_IS_H2;
 
-module.exports = NetworkRequest;
+export {NetworkRequest};

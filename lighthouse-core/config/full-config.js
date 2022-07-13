@@ -11,4 +11,4 @@ const fullConfig = {
   settings: {},
 };
 
-module.exports = fullConfig;
+export default fullConfig;

@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const constants = require('../../config/constants.js');
-const pageFunctions = require('../../lib/page-functions.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import log from 'lighthouse-logger';
+import * as constants from '../../config/constants.js';
+import {pageFunctions} from '../../lib/page-functions.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /**
@@ -27,7 +27,7 @@ const UIStrings = {
  */
 const SLOW_CPU_BENCHMARK_INDEX_THRESHOLD = 1000;
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @param {LH.Gatherer.FRProtocolSession} session
@@ -96,7 +96,7 @@ function getEnvironmentWarnings(context) {
   ].filter(/** @return {s is LH.IcuMessage} */ s => !!s);
 }
 
-module.exports = {
+export {
   UIStrings,
   getBrowserVersion,
   getBenchmarkIndex,

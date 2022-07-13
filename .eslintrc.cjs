@@ -36,7 +36,7 @@ module.exports = {
     }],
     'no-floating-decimal': 2,
     'max-len': [2, 100, {
-      ignorePattern: 'readJson\\(',
+      ignorePattern: 'readJson\\(|^import ',
       ignoreComments: true,
       ignoreUrls: true,
       tabWidth: 2,

@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Descriptive title of a diagnostic audit that provides the element that was determined to be the Largest Contentful Paint. */
@@ -16,7 +16,7 @@ const UIStrings = {
     '[Learn More](https://web.dev/lighthouse-largest-contentful-paint/)',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class LargestContentfulPaintElement extends Audit {
   /**
@@ -66,5 +66,5 @@ class LargestContentfulPaintElement extends Audit {
   }
 }
 
-module.exports = LargestContentfulPaintElement;
-module.exports.UIStrings = UIStrings;
+export default LargestContentfulPaintElement;
+export {UIStrings};

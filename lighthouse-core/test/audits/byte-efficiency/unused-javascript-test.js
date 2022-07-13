@@ -7,7 +7,7 @@
 import {strict as assert} from 'assert';
 
 import UnusedJavaScript from '../../../audits/byte-efficiency/unused-javascript.js';
-import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 import {createScript, loadSourceMapAndUsageFixture} from '../../test-utils.js';
 
 const scriptUrlToId = new Map();

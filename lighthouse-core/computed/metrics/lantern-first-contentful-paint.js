@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const LanternMetric = require('./lantern-metric.js');
-const BaseNode = require('../../lib/dependency-graph/base-node.js');
+import {makeComputedArtifact} from '../computed-artifact.js';
+import LanternMetric from './lantern-metric.js';
+import {BaseNode} from '../../lib/dependency-graph/base-node.js';
 
-/** @typedef {BaseNode.Node} Node */
-/** @typedef {import('../../lib/dependency-graph/cpu-node')} CPUNode */
-/** @typedef {import('../../lib/dependency-graph/network-node')} NetworkNode */
+/** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
+/** @typedef {import('../../lib/dependency-graph/cpu-node').CPUNode} CPUNode */
+/** @typedef {import('../../lib/dependency-graph/network-node').NetworkNode} NetworkNode */
 
 class LanternFirstContentfulPaint extends LanternMetric {
   /**
@@ -198,7 +198,7 @@ class LanternFirstContentfulPaint extends LanternMetric {
   }
 }
 
-module.exports = makeComputedArtifact(
+export default makeComputedArtifact(
   LanternFirstContentfulPaint,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

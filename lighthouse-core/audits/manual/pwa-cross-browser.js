@@ -6,8 +6,8 @@
  */
 'use strict';
 
-const ManualAudit = require('./manual-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import ManualAudit from './manual-audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that prompts the user to manually check that their site works across different web browsers. */
@@ -17,7 +17,7 @@ const UIStrings = {
   'every major browser. [Learn more](https://web.dev/pwa-cross-browser/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview Manual PWA audit for cross browser support.
@@ -36,6 +36,6 @@ class PWACrossBrowser extends ManualAudit {
   }
 }
 
-module.exports = PWACrossBrowser;
-module.exports.UIStrings = UIStrings;
+export default PWACrossBrowser;
+export {UIStrings};
 

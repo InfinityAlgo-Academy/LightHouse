@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const ComputedViewportMeta = require('../computed/viewport-meta.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+import ComputedViewportMeta from '../computed/viewport-meta.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the viewport meta tag in a web page's html. This descriptive title is shown to users when a viewport tag is set and configured. */
@@ -23,7 +23,7 @@ const UIStrings = {
   explanationNoTag: 'No `<meta name="viewport">` tag found',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class Viewport extends Audit {
   /**
@@ -61,5 +61,5 @@ class Viewport extends Audit {
   }
 }
 
-module.exports = Viewport;
-module.exports.UIStrings = UIStrings;
+export default Viewport;
+export {UIStrings};

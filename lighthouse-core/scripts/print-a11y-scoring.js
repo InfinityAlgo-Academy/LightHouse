@@ -6,7 +6,7 @@
 
 // node lighthouse-core/scripts/print-a11y-scoring.js
 
-import Config from '../config/config.js';
+import {Config} from '../config/config.js';
 
 const config = await Config.fromJson();
 if (!config.categories || !config.audits) throw new Error('wut');

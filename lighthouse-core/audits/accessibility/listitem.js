@@ -10,8 +10,9 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import AxeAudit from './axe-audit.js';
+
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of an accesibility audit that evaluates if any list item elements do not have list parent elements. This title is descriptive of the successful state and is shown to users when no user action is required. */
@@ -25,7 +26,7 @@ const UIStrings = {
       '[Learn more](https://dequeuniversity.com/rules/axe/4.4/listitem).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class ListItem extends AxeAudit {
   /**
@@ -42,5 +43,5 @@ class ListItem extends AxeAudit {
   }
 }
 
-module.exports = ListItem;
-module.exports.UIStrings = UIStrings;
+export default ListItem;
+export {UIStrings};

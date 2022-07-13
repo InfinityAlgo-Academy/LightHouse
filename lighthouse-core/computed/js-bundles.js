@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const makeComputedArtifact = require('./computed-artifact.js');
-const SDK = require('../lib/cdt/SDK.js');
+import log from 'lighthouse-logger';
+import {makeComputedArtifact} from './computed-artifact.js';
+import SDK from '../lib/cdt/SDK.js';
 
 /**
  * Calculate the number of bytes contributed by each source file
@@ -116,4 +116,4 @@ class JSBundles {
   }
 }
 
-module.exports = makeComputedArtifact(JSBundles, ['Scripts', 'SourceMaps']);
+export default makeComputedArtifact(JSBundles, ['Scripts', 'SourceMaps']);

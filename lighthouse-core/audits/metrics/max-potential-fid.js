@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const ComputedFid = require('../../computed/metrics/max-potential-fid.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {Audit} from '../audit.js';
+import ComputedFid from '../../computed/metrics/max-potential-fid.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Description of the Maximum Potential First Input Delay metric that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
@@ -15,7 +15,7 @@ const UIStrings = {
       'duration of the longest task. [Learn more](https://web.dev/lighthouse-max-potential-fid/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview This metric is the duration of the longest task after FCP. It is meant to capture
@@ -73,5 +73,5 @@ class MaxPotentialFID extends Audit {
   }
 }
 
-module.exports = MaxPotentialFID;
-module.exports.UIStrings = UIStrings;
+export default MaxPotentialFID;
+export {UIStrings};

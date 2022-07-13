@@ -10,8 +10,9 @@
  * See docs/recipes/auth/README.md for more.
  */
 
-const puppeteer = require('puppeteer');
-const lighthouse = require('lighthouse');
+import puppeteer from 'puppeteer';
+import lighthouse from 'lighthouse';
+import esMain from 'es-main';
 
 // This port will be used by Lighthouse later. The specific port is arbitrary.
 const PORT = 8041;
@@ -71,11 +72,11 @@ async function main() {
   console.log(JSON.stringify(result.lhr, null, 2));
 }
 
-if (require.main === module) {
+if (esMain(import.meta)) {
   main();
-} else {
-  module.exports = {
-    login,
-    logout,
-  };
 }
+
+export {
+  login,
+  logout,
+};

@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const ByteEfficiencyAudit = require('../audits/byte-efficiency/byte-efficiency-audit.js');
-const NetworkRecords = require('./network-records.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import {ByteEfficiencyAudit} from '../audits/byte-efficiency/byte-efficiency-audit.js';
+import NetworkRecords from './network-records.js';
 
 const PREVIEW_LENGTH = 100;
 
@@ -150,4 +150,4 @@ class UnusedCSS {
   }
 }
 
-module.exports = makeComputedArtifact(UnusedCSS, ['CSSUsage', 'devtoolsLog']);
+export default makeComputedArtifact(UnusedCSS, ['CSSUsage', 'devtoolsLog']);

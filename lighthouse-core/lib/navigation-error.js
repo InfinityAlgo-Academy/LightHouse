@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const LighthouseError = require('./lh-error.js');
-const NetworkAnalyzer = require('./dependency-graph/simulator/network-analyzer.js');
-const NetworkRequest = require('./network-request.js');
-const i18n = require('./i18n/i18n.js');
+import {LighthouseError} from './lh-error.js';
+import {NetworkAnalyzer} from './dependency-graph/simulator/network-analyzer.js';
+import {NetworkRequest} from './network-request.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /**
@@ -19,7 +19,7 @@ const UIStrings = {
     'The page MIME type is XHTML: Lighthouse does not explicitly support this document type',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 // MIME types are case-insensitive but Chrome normalizes MIME types to be lowercase.
 const HTML_MIME_TYPE = 'text/html';
@@ -165,7 +165,7 @@ function getPageLoadError(navigationError, context) {
   return navigationError;
 }
 
-module.exports = {
+export {
   getNetworkError,
   getInterstitialError,
   getPageLoadError,

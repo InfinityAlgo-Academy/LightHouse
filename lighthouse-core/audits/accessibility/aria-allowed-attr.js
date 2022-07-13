@@ -10,8 +10,9 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import AxeAudit from './axe-audit.js';
+
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of an accesibility audit that evaluates if the ARIA HTML attributes are misaligned with the aria-role HTML attribute specificed on the element, such mismatches are invalid. This title is descriptive of the successful state and is shown to users when no user action is required. */
@@ -24,7 +25,7 @@ const UIStrings = {
       'more](https://dequeuniversity.com/rules/axe/4.4/aria-allowed-attr).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class ARIAAllowedAttr extends AxeAudit {
   /**
@@ -41,5 +42,5 @@ class ARIAAllowedAttr extends AxeAudit {
   }
 }
 
-module.exports = ARIAAllowedAttr;
-module.exports.UIStrings = UIStrings;
+export default ARIAAllowedAttr;
+export {UIStrings};

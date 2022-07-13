@@ -12,9 +12,9 @@
 
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
-const log = require('lighthouse-logger');
+import {Audit} from './audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import log from 'lighthouse-logger';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This descriptive title is shown to users when all input attributes have a valid autocomplete attribute. */
@@ -48,7 +48,7 @@ const UIStrings = {
   manualReview: 'Requires manual review',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /** @type {string[]} This array contains all acceptable autocomplete attributes from the WHATWG standard. More found at https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill */
 const validAutocompleteTokens = ['name', 'honorific-prefix', 'given-name',
@@ -286,5 +286,5 @@ class AutocompleteAudit extends Audit {
   }
 }
 
-module.exports = AutocompleteAudit;
-module.exports.UIStrings = UIStrings;
+export default AutocompleteAudit;
+export {UIStrings};

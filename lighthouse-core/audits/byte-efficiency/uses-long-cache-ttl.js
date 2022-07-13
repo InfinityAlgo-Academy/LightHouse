@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const parseCacheControl = require('parse-cache-control');
-const Audit = require('../audit.js');
-const NetworkRequest = require('../../lib/network-request.js');
-const URL = require('../../lib/url-shim.js');
-const linearInterpolation = require('../../lib/statistics.js').linearInterpolation;
-const i18n = require('../../lib/i18n/i18n.js');
-const NetworkRecords = require('../../computed/network-records.js');
+import parseCacheControl from 'parse-cache-control';
+import {Audit} from '../audit.js';
+import {NetworkRequest} from '../../lib/network-request.js';
+import URL from '../../lib/url-shim.js';
+import {linearInterpolation} from '../../lib/statistics.js';
+import * as i18n from '../../lib/i18n/i18n.js';
+import NetworkRecords from '../../computed/network-records.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the cache policy applies to the page's static assets. Cache refers to browser disk cache, which keeps old versions of network resources around for future use. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -29,7 +29,7 @@ const UIStrings = {
     }`,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 // Ignore assets that have very high likelihood of cache hit
 const IGNORE_THRESHOLD_IN_PERCENT = 0.925;
@@ -294,5 +294,5 @@ class CacheHeaders extends Audit {
   }
 }
 
-module.exports = CacheHeaders;
-module.exports.UIStrings = UIStrings;
+export default CacheHeaders;
+export {UIStrings};

@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const URL = require('../lib/url-shim.js');
-const NetworkRequest = require('../lib/network-request.js');
-const NetworkRecords = require('../computed/network-records.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+import URL from '../lib/url-shim.js';
+import {NetworkRequest} from '../lib/network-request.js';
+import NetworkRecords from '../computed/network-records.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the useage of HTTPS on a page. This descriptive title is shown to users when all requests on a page are fufilled using HTTPS. */
@@ -49,7 +49,7 @@ const resolutionToString = {
   MixedContentWarning: UIStrings.warning,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 
 class HTTPS extends Audit {
@@ -121,5 +121,5 @@ class HTTPS extends Audit {
   }
 }
 
-module.exports = HTTPS;
-module.exports.UIStrings = UIStrings;
+export default HTTPS;
+export {UIStrings};

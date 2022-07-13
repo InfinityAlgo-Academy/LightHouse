@@ -31,8 +31,8 @@
  * @typedef {{name: 'FallbackTiming', duration: number}} FallbackTimingEvent
  */
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const ProcessedTrace = require('../processed-trace.js');
+import ProcessedTrace from '../processed-trace.js';
+import {makeComputedArtifact} from '../computed-artifact.js';
 
 const KEYBOARD_EVENTS = new Set(['keydown', 'keypress', 'keyup']);
 const CLICK_TAP_DRAG_EVENTS = new Set([
@@ -151,7 +151,7 @@ class Responsiveness {
   }
 }
 
-module.exports = makeComputedArtifact(Responsiveness, [
+export default makeComputedArtifact(Responsiveness, [
   'trace',
   'settings',
 ]);

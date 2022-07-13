@@ -18,11 +18,21 @@
 /** @typedef {LH.Audit.ByteEfficiencyItem & {subItems: {type: 'subitems', items: SubItem[]}}} Item */
 /** @typedef {{signal: string, location: LH.Audit.Details.SourceLocationValue}} SubItem */
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const JsBundles = require('../../computed/js-bundles.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const thirdPartyWeb = require('../../lib/third-party-web.js');
-const {getRequestForScript} = require('../../lib/script-helpers.js');
+import fs from 'fs';
+
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
+
+import JsBundles from '../../computed/js-bundles.js';
+import * as i18n from '../../lib/i18n/i18n.js';
+import thirdPartyWeb from '../../lib/third-party-web.js';
+import {getRequestForScript} from '../../lib/script-helpers.js';
+import {LH_ROOT} from '../../../root.js';
+
+const graphJson = fs.readFileSync(
+  `${LH_ROOT}/lighthouse-core/audits/byte-efficiency/polyfill-graph-data.json`, 'utf-8');
+
+/** @type {import('../../scripts/legacy-javascript/create-polyfill-size-estimation.js').PolyfillSizeEstimator} */
+const graph = JSON.parse(graphJson);
 
 const UIStrings = {
   /** Title of a Lighthouse audit that tells the user about legacy polyfills and transforms used on the page. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -33,7 +43,7 @@ const UIStrings = {
   description: 'Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren\'t necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn More](https://web.dev/publish-modern-javascript/)',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * Takes a list of patterns (consisting of a name identifier and a RegExp expression string)
@@ -327,8 +337,6 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     const transformResults = matches.filter(m => m.name.startsWith('@'));
 
     let estimatedWastedBytesFromPolyfills = 0;
-    /** @type {import('../../scripts/legacy-javascript/create-polyfill-size-estimation.js').PolyfillSizeEstimator} */
-    const graph = require('./polyfill-graph-data.json');
     const modulesSeen = new Set();
     for (const result of polyfillResults) {
       const modules = graph.dependencies[result.name];
@@ -466,5 +474,5 @@ class LegacyJavascript extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = LegacyJavascript;
-module.exports.UIStrings = UIStrings;
+export default LegacyJavascript;
+export {UIStrings};

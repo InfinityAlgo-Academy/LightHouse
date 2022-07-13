@@ -7,7 +7,7 @@
 import {strict as assert} from 'assert';
 
 import TapTargetsAudit from '../../../audits/seo/tap-targets.js';
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 
 /** @param {LH.SharedFlagsSettings['formFactor']} formFactor */
 const getFakeContext = (formFactor = 'mobile') => ({

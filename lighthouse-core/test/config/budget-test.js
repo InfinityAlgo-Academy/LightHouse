@@ -6,7 +6,7 @@
 
 import {strict as assert} from 'assert';
 
-import Budget from '../../config/budget.js';
+import {Budget} from '../../config/budget.js';
 
 describe('Budget', () => {
   let budgets;

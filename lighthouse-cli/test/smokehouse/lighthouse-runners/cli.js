@@ -17,7 +17,7 @@ import {execFile} from 'child_process';
 
 import log from 'lighthouse-logger';
 
-import assetSaver from '../../../../lighthouse-core/lib/asset-saver.js';
+import * as assetSaver from '../../../../lighthouse-core/lib/asset-saver.js';
 import {LocalConsole} from '../lib/local-console.js';
 import {ChildProcessError} from '../lib/child-process-error.js';
 import {LH_ROOT} from '../../../../root.js';

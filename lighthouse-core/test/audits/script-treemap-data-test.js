@@ -5,7 +5,7 @@
  */
 
 import ScriptTreemapData_ from '../../audits/script-treemap-data.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {
   createScript,
   loadSourceMapAndUsageFixture,

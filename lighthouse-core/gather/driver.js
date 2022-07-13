@@ -5,20 +5,15 @@
  */
 'use strict';
 
-const Fetcher = require('./fetcher.js');
-const ExecutionContext = require('./driver/execution-context.js');
-const LighthouseError = require('../lib/lh-error.js');
-const {fetchResponseBodyFromCache} = require('../gather/driver/network.js');
-const EventEmitter = require('events').EventEmitter;
-
-const log = require('lighthouse-logger');
-const DevtoolsMessageLog = require('./gatherers/devtools-log.js').DevtoolsMessageLog;
-const TraceGatherer = require('./gatherers/trace.js');
-
-// Pulled in for Connection type checking.
-// eslint-disable-next-line no-unused-vars
-const Connection = require('./connections/connection.js');
-const {getBrowserVersion} = require('./driver/environment.js');
+import {Fetcher} from './fetcher.js';
+import {ExecutionContext} from './driver/execution-context.js';
+import {LighthouseError} from '../lib/lh-error.js';
+import {fetchResponseBodyFromCache} from '../gather/driver/network.js';
+import {EventEmitter} from 'events';
+import log from 'lighthouse-logger';
+import {DevtoolsMessageLog} from './gatherers/devtools-log.js';
+import TraceGatherer from './gatherers/trace.js';
+import {getBrowserVersion} from './driver/environment.js';
 
 // Controls how long to wait for a response after sending a DevTools protocol command.
 const DEFAULT_PROTOCOL_TIMEOUT = 30000;
@@ -67,7 +62,7 @@ class Driver {
   fetcher = new Fetcher(this.defaultSession);
 
   /**
-   * @param {Connection} connection
+   * @param {import('./connections/connection.js').Connection} connection
    */
   constructor(connection) {
     this._connection = connection;
@@ -483,4 +478,4 @@ class Driver {
   }
 }
 
-module.exports = Driver;
+export {Driver};

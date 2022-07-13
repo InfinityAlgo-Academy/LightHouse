@@ -1,5 +1,6 @@
 {
   "name": "lighthouse",
+  "type": "module",
   "version": "9.5.0",
   "description": "Automated auditing, performance metrics, and best practices for the web.",
   "main": "./lighthouse-core/index.js",
@@ -214,7 +215,8 @@
   },
   "resolutions": {
     "puppeteer/**/devtools-protocol": "0.0.995287",
-    "puppeteer-core/**/devtools-protocol": "0.0.995287"
+    "puppeteer-core/**/devtools-protocol": "0.0.995287",
+    "testdouble/**/quibble": "connorjclark/quibble#mod-cache"
   },
   "repository": "GoogleChrome/lighthouse",
   "keywords": [

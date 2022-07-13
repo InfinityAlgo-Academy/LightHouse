@@ -7,7 +7,7 @@
 import {strict as assert} from 'assert';
 
 import CanonicalAudit from '../../../audits/seo/canonical.js';
-import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 
 describe('SEO: Document has valid canonical link', () => {
   /**

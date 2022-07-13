@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const LanternMetric = require('./lantern-metric.js');
-const LighthouseError = require('../../lib/lh-error.js');
-const LanternFirstContentfulPaint = require('./lantern-first-contentful-paint.js');
+import {makeComputedArtifact} from '../computed-artifact.js';
+import LanternMetric from './lantern-metric.js';
+import {LighthouseError} from '../../lib/lh-error.js';
+import LanternFirstContentfulPaint from './lantern-first-contentful-paint.js';
 
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
@@ -77,7 +77,7 @@ class LanternFirstMeaningfulPaint extends LanternMetric {
   }
 }
 
-module.exports = makeComputedArtifact(
+export default makeComputedArtifact(
   LanternFirstMeaningfulPaint,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const ManualAudit = require('./manual-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import ManualAudit from './manual-audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that prompts the user to manually check that page transitions (navigating to other pages on a website) shouldn't feel like they are waiting for the network to load. */
@@ -16,7 +16,7 @@ const UIStrings = {
     'This experience is key to a user\'s perception of performance. [Learn more](https://web.dev/pwa-page-transitions/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview Manual PWA audit for janky-free page transitions.
@@ -35,5 +35,5 @@ class PWAPageTransitions extends ManualAudit {
   }
 }
 
-module.exports = PWAPageTransitions;
-module.exports.UIStrings = UIStrings;
+export default PWAPageTransitions;
+export {UIStrings};

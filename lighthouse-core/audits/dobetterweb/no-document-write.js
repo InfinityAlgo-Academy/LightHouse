@@ -28,8 +28,8 @@
 
 'use strict';
 
-const ViolationAudit = require('../violation-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import ViolationAudit from '../violation-audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the page's use of the `document.write` API. This descriptive title is shown to users when the page does not use `document.write`. */
@@ -42,7 +42,7 @@ const UIStrings = {
       '[Learn more](https://web.dev/no-document-write/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class NoDocWriteAudit extends ViolationAudit {
   /**
@@ -81,5 +81,5 @@ class NoDocWriteAudit extends ViolationAudit {
   }
 }
 
-module.exports = NoDocWriteAudit;
-module.exports.UIStrings = UIStrings;
+export default NoDocWriteAudit;
+export {UIStrings};

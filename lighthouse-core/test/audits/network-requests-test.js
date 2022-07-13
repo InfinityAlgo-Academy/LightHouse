@@ -5,7 +5,7 @@
  */
 
 import NetworkRequests from '../../audits/network-requests.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {readJson} from '../test-utils.js';
 
 const cutoffLoadDevtoolsLog = readJson('../fixtures/traces/cutoff-load-m83.devtoolslog.json', import.meta);

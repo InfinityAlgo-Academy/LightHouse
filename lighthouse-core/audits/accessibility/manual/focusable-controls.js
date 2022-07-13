@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit.js');
+import ManualAudit from '../../manual/manual-audit.js';
 
 /**
  * @fileoverview Manual A11y audit for focusable controls.
@@ -25,4 +25,4 @@ class FocusableControls extends ManualAudit {
   }
 }
 
-module.exports = FocusableControls;
+export default FocusableControls;

@@ -5,7 +5,7 @@
  */
 
 import CumulativeLayoutShift from '../../../computed/metrics/cumulative-layout-shift.js';
-import createTestTrace from '../../create-test-trace.js';
+import {createTestTrace} from '../../create-test-trace.js';
 import {readJson} from '../../test-utils.js';
 
 const jumpyClsTrace = readJson('../../fixtures/traces/jumpy-cls-m90.json', import.meta);

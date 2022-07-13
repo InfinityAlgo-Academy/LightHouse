@@ -10,9 +10,9 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const URL = require('../lib/url-shim.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+import URL from '../lib/url-shim.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 /** @typedef {LH.Artifacts.ImageElement & Required<Pick<LH.Artifacts.ImageElement, 'naturalDimensions'>>} ImageWithNaturalDimensions */
 
@@ -32,7 +32,7 @@ const UIStrings = {
   columnExpected: 'Expected size',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 // Factors used to allow for smaller effective density.
 // A factor of 1 means the actual device pixel density will be used.
@@ -327,5 +327,5 @@ function quantizeDpr(dpr) {
   return 1.0;
 }
 
-module.exports = ImageSizeResponsive;
-module.exports.UIStrings = UIStrings;
+export default ImageSizeResponsive;
+export {UIStrings};

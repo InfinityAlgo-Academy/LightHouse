@@ -16,11 +16,11 @@ import {
   createMockOnceFn,
   createMockSendCommandFn,
 } from '../../gather/mock-commands.js';
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 import {fnAny} from '../../test-utils.js';
 import {LH_ROOT} from '../../../../root.js';
 
-/** @typedef {import('../../../fraggle-rock/gather/driver.js')} Driver */
+/** @typedef {import('../../../fraggle-rock/gather/driver.js').Driver} Driver */
 /** @typedef {import('../../../gather/driver/execution-context.js')} ExecutionContext */
 
 function createMockSession() {
@@ -174,29 +174,31 @@ function createMockDriver() {
   };
 }
 
-const runnerModule = {
+const runnerMock = {
   getAuditList: fnAny().mockReturnValue([]),
   getGathererList: fnAny().mockReturnValue([]),
   audit: fnAny(),
   gather: fnAny(),
   reset() {
-    runnerModule.getGathererList.mockReturnValue([]);
-    runnerModule.getAuditList.mockReturnValue([]);
-    runnerModule.audit.mockReset();
-    runnerModule.gather.mockReset();
+    runnerMock.getGathererList.mockReturnValue([]);
+    runnerMock.getAuditList.mockReturnValue([]);
+    runnerMock.audit.mockReset();
+    runnerMock.gather.mockReset();
   },
 };
-function mockRunnerModule() {
-  td.replace(`${LH_ROOT}/lighthouse-core/runner.js`, runnerModule);
-  return runnerModule;
+async function mockRunnerModule() {
+  await td.replaceEsm(`${LH_ROOT}/lighthouse-core/runner.js`, {Runner: runnerMock});
+  return runnerMock;
 }
 
 /** @param {() => Driver} driverProvider */
 function mockDriverModule(driverProvider) {
-  // This must be a regular function becaues Driver is always invoked as a constructor.
-  // Arrow functions cannot be invoked with `new`.
-  return function() {
-    return driverProvider();
+  return {
+    // This must be a regular function becaues Driver is always invoked as a constructor.
+    // Arrow functions cannot be invoked with `new`.
+    Driver: function() {
+      return driverProvider();
+    },
   };
 }
 
@@ -247,7 +249,7 @@ function createMockContext() {
   };
 }
 
-function mockDriverSubmodules() {
+async function mockDriverSubmodules() {
   const navigationMock = {gotoURL: fnAny()};
   const prepareMock = {
     prepareThrottlingAndNetwork: fnAny(),
@@ -282,15 +284,17 @@ function mockDriverSubmodules() {
    * @return {(...args: any[]) => void}
    */
   const get = (target, name) => {
+    // @ts-expect-error: hack? What is going on here? Should we just remove the proxy stuff?
+    if (name === 'then') return target;
     if (!target[name]) throw new Error(`Target does not have property "${name}"`);
     return (...args) => target[name](...args);
   };
 
-  td.replace('../../../gather/driver/navigation.js', new Proxy(navigationMock, {get}));
-  td.replace('../../../gather/driver/prepare.js', new Proxy(prepareMock, {get}));
-  td.replace('../../../gather/driver/storage.js', new Proxy(storageMock, {get}));
-  td.replace('../../../gather/driver/network.js', new Proxy(networkMock, {get}));
-  td.replace('../../../lib/emulation.js', new Proxy(emulationMock, {get}));
+  await td.replaceEsm('../../../gather/driver/navigation.js', new Proxy(navigationMock, {get}));
+  await td.replaceEsm('../../../gather/driver/prepare.js', new Proxy(prepareMock, {get}));
+  await td.replaceEsm('../../../gather/driver/storage.js', new Proxy(storageMock, {get}));
+  await td.replaceEsm('../../../gather/driver/network.js', new Proxy(networkMock, {get}));
+  await td.replaceEsm('../../../lib/emulation.js', new Proxy(emulationMock, {get}));
 
   reset();
 

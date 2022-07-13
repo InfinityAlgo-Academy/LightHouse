@@ -7,7 +7,7 @@
 import {strict as assert} from 'assert';
 
 import Responsiveness from '../../../computed/metrics/responsiveness.js';
-import createTestTrace from '../../create-test-trace.js';
+import {createTestTrace} from '../../create-test-trace.js';
 import {readJson} from '../../test-utils.js';
 
 const interactionTrace = readJson('../../fixtures/traces/timespan-responsiveness-m103.trace.json', import.meta);

@@ -94,4 +94,4 @@ ${events.map(evt => JSON.stringify(evt)).join(',\n')}
   return jsonStr;
 }
 
-module.exports = {generateTraceEvents, createTraceString};
+export {generateTraceEvents, createTraceString};

@@ -7,12 +7,12 @@
 import {strict as assert} from 'assert';
 import fs from 'fs';
 
-import assetSaver from '../../lib/asset-saver.js';
-import Metrics from '../../lib/traces/pwmetrics-events.js';
-import LighthouseError from '../../lib/lh-error.js';
-import Audit from '../../audits/audit.js';
-import {getModuleDirectory} from '../../../esm-utils.mjs';
+import * as assetSaver from '../../lib/asset-saver.js';
+import {Metrics} from '../../lib/traces/pwmetrics-events.js';
+import {LighthouseError} from '../../lib/lh-error.js';
+import {Audit} from '../../audits/audit.js';
 import {LH_ROOT} from '../../../root.js';
+import {getModuleDirectory} from '../../../esm-utils.js';
 import {readJson} from '../test-utils.js';
 
 const traceEvents = readJson('../fixtures/traces/progressive-app.json', import.meta);

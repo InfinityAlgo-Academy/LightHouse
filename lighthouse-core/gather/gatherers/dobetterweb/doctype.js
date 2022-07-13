@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
+import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 
 /* global document */
 
@@ -45,4 +45,4 @@ class Doctype extends FRGatherer {
   }
 }
 
-module.exports = Doctype;
+export default Doctype;

@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const ManifestValues = require('../computed/manifest-values.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+import ManifestValues from '../computed/manifest-values.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on if the manifest contains a maskable icon. This descriptive title is shown to users when the manifest contains at least one maskable icon. */
@@ -20,7 +20,7 @@ const UIStrings = {
     'the app on a device. [Learn more](https://web.dev/maskable-icon-audit/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview
@@ -67,5 +67,5 @@ class MaskableIcon extends Audit {
   }
 }
 
-module.exports = MaskableIcon;
-module.exports.UIStrings = UIStrings;
+export default MaskableIcon;
+export {UIStrings};

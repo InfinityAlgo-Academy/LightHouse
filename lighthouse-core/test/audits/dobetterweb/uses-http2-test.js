@@ -6,7 +6,7 @@
 
 import UsesHTTP2Audit from '../../../audits/dobetterweb/uses-http2.js';
 import NetworkRecords from '../../../computed/network-records.js';
-import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
 const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);

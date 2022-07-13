@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const ArbitraryEqualityMap = require('../lib/arbitrary-equality-map.js');
-const log = require('lighthouse-logger');
+import {ArbitraryEqualityMap} from '../lib/arbitrary-equality-map.js';
+import log from 'lighthouse-logger';
 
 /**
  * Decorate computableArtifact with a caching `request()` method which will
@@ -59,4 +59,4 @@ function makeComputedArtifact(computableArtifact, keys) {
   return Object.assign(computableArtifact, {request});
 }
 
-module.exports = makeComputedArtifact;
+export {makeComputedArtifact};
