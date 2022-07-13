@@ -294,9 +294,9 @@ class Driver {
    * @param {LH.Crdp.Target.AttachedToTargetEvent} event
    */
   async _handleTargetAttached(event) {
-    // We're only interested in network requests from iframes for now as those are "part of the page".
-    // If it's not an iframe, just resume it and move on.
-    if (event.targetInfo.type !== 'iframe') {
+    // We're only interested in network requests from iframes and workers for now as those are "part of the page".
+    // If it's not an iframe or worker, just resume it and move on.
+    if (event.targetInfo.type !== 'iframe' && event.targetInfo.type !== 'worker') {
       // We suspended the target when we auto-attached, so make sure it goes back to being normal.
       await this.sendCommandToSession('Runtime.runIfWaitingForDebugger', event.sessionId);
       return;
