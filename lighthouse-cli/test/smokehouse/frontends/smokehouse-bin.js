@@ -184,7 +184,7 @@ async function begin() {
   if (argv.runner === 'bundle') {
     console.log('\n✨ Be sure to have recently run this: yarn build-all');
   }
-  const {runLighthouse} = await import(runnerPath);
+  const {runLighthouse, setup} = await import(runnerPath);
   runLighthouse.runnerName = argv.runner;
 
   // Find test definition file and filter by requestedTestIds.
@@ -206,8 +206,8 @@ async function begin() {
     // If running the core tests, spin up the test server.
     if (testDefnPath === coreTestDefnsPath) {
       ({server, serverForOffline} = await import('../../fixtures/static-server.js'));
-      server.listen(10200, 'localhost');
-      serverForOffline.listen(10503, 'localhost');
+      await server.listen(10200, 'localhost');
+      await serverForOffline.listen(10503, 'localhost');
       takeNetworkRequestUrls = server.takeRequestUrls.bind(server);
     }
 
@@ -219,6 +219,7 @@ async function begin() {
       useLegacyNavigation: argv.legacyNavigation,
       lighthouseRunner: runLighthouse,
       takeNetworkRequestUrls,
+      setup,
     };
 
     smokehouseResult = (await runSmokehouse(prunedTestDefns, options));

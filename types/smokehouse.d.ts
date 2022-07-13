@@ -67,6 +67,8 @@ declare global {
       lighthouseRunner?: LighthouseRunner;
       /** A function that gets a list of URLs requested to the server since the last fetch. */
       takeNetworkRequestUrls?: () => string[];
+      /** A function run once before all smoke tests. */
+      setup?: () => Promise<void>;
     }
 
     export interface SmokehouseLibOptions extends SmokehouseOptions {
