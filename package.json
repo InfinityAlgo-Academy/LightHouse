@@ -36,7 +36,7 @@
     "smoke": "node lighthouse-cli/test/smokehouse/frontends/smokehouse-bin.js",
     "debug": "node --inspect-brk ./lighthouse-cli/index.js",
     "start": "yarn build-report --standalone && node ./lighthouse-cli/index.js",
-    "mocha": "node lighthouse-core/test/scripts/run-mocha-tests.js",
+    "mocha": "node --loader=testdouble lighthouse-core/test/scripts/run-mocha-tests.js",
     "test": "yarn diff:sample-json && yarn lint --quiet && yarn unit && yarn type-check",
     "test-bundle": "yarn smoke --runner bundle --retries=2",
     "test-clients": "yarn mocha --testMatch clients/**/*-test.js && yarn mocha --testMatch clients/**/*-test-pptr.js",
