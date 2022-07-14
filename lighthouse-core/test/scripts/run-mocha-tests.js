@@ -74,7 +74,6 @@ const testsToIsolate = new Set([
   'lighthouse-core/test/gather/driver/prepare-test.js',
   'lighthouse-core/test/gather/gatherers/link-elements-test.js',
   'lighthouse-core/test/gather/gatherers/service-worker-test.js',
-  'lighthouse-core/test/runner-test.js',
 
   // grep -lRE --include='-test.js' 'mockDriverSubmodules|mockRunnerModule|mockDriverModule|mockDriverSubmodules|makeMocksForGatherRunner' --include='*-test.*' --exclude-dir=node_modules
   'lighthouse-core/test/fraggle-rock/gather/navigation-runner-test.js',
@@ -84,7 +83,6 @@ const testsToIsolate = new Set([
   'lighthouse-core/test/gather/gather-runner-test.js',
   'lighthouse-core/test/gather/gatherers/dobetterweb/response-compression-test.js',
   'lighthouse-core/test/gather/gatherers/script-elements-test.js',
-  'lighthouse-core/test/runner-test.js',
 
   // These tend to timeout in puppeteer when run in parallel with other tests.
   'lighthouse-core/test/fraggle-rock/scenarios/api-test-pptr.js',
