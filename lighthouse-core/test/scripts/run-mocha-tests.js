@@ -26,8 +26,8 @@ const failedTestsDir = `${LH_ROOT}/.tmp/failing-tests`;
 
 if (!isMainThread && parentPort) {
   // Worker.
-  const {test, grep, numberMochaInvocations} = workerData;
-  const numberFailures = await runMocha([test], grep, numberMochaInvocations);
+  const {test, argv, numberMochaInvocations} = workerData;
+  const numberFailures = await runMocha([test], argv, numberMochaInvocations);
   parentPort?.postMessage({type: 'result', numberFailures});
 }
 
@@ -296,16 +296,17 @@ function exit({numberFailures}) {
 
 /**
  * @param {string[]} tests
- * @param {string | undefined} grep
+ * @param {typeof argv} argv
  * @param {number} invocationNumber
  */
-async function runMocha(tests, grep, invocationNumber) {
+async function runMocha(tests, argv, invocationNumber) {
   process.env.LH_FAILED_TESTS_FILE = `${failedTestsDir}/output-${invocationNumber}.json`;
 
   try {
     const mocha = new Mocha({
       rootHooks,
-      grep,
+      grep: argv.t,
+      bail: argv.bail,
       // TODO: why does parallel not work anymore?
       // parallel: tests.length > 1 && argv.parallel,
       parallel: false,
@@ -318,7 +319,6 @@ async function runMocha(tests, grep, invocationNumber) {
     await mocha.loadFilesAsync();
     return await new Promise(resolve => mocha.run(resolve));
   } catch (err) {
-    console.error(err);
     return 1;
   }
 }
@@ -328,7 +328,7 @@ let numberMochaInvocations = 0;
 let numberFailures = 0;
 try {
   if (testsToRunTogether.length) {
-    numberFailures += await runMocha(testsToRunTogether, argv.t, numberMochaInvocations);
+    numberFailures += await runMocha(testsToRunTogether, argv, numberMochaInvocations);
     numberMochaInvocations += 1;
     if (numberFailures && argv.bail) exit({numberFailures});
   }
@@ -336,7 +336,11 @@ try {
   for (const test of testsToRunIsolated) {
     console.log(`Running test in isolation: ${test}`);
     const worker = new Worker(new URL(import.meta.url), {
-      workerData: {test, grep: argv.t, numberMochaInvocations},
+      workerData: {
+        test,
+        argv,
+        numberMochaInvocations,
+      },
     });
 
     try {
