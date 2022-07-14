@@ -26,8 +26,8 @@ const failedTestsDir = `${LH_ROOT}/.tmp/failing-tests`;
 
 if (!isMainThread && parentPort) {
   // Worker.
-  const {test, argv, numberMochaInvocations} = workerData;
-  const numberFailures = await runMocha([test], argv, numberMochaInvocations);
+  const {test, mochaArgs, numberMochaInvocations} = workerData;
+  const numberFailures = await runMocha([test], mochaArgs, numberMochaInvocations);
   parentPort?.postMessage({type: 'result', numberFailures});
 }
 
@@ -183,7 +183,6 @@ const defaultTestMatches = [
   'viewer/**/*-test.js',
 ];
 
-const mochaPassThruArgs = argv._.filter(arg => typeof arg !== 'string' || arg.startsWith('--'));
 const filterFilePatterns = argv._.filter(arg => !(typeof arg !== 'string' || arg.startsWith('--')));
 
 function getTestFiles() {
@@ -202,12 +201,13 @@ function getTestFiles() {
       allTestFiles
   ).map(testPath => path.relative(process.cwd(), testPath));
 
+  let grep;
   if (argv.onlyFailures) {
     const failedTests = getFailedTests();
     if (failedTests.length === 0) throw new Error('no tests failed');
 
     const titles = getFailedTests().map(failed => failed.title);
-    baseArgs.push(`--grep="${titles.map(escapeRegex).join('|')}"`);
+    grep = new RegExp(titles.map(escapeRegex).join('|'));
 
     filteredTests = filteredTests.filter(file => failedTests.some(failed => failed.file === file));
   }
@@ -217,22 +217,10 @@ function getTestFiles() {
   }
   console.log(`running ${filteredTests.length} test files`);
 
-  return filteredTests;
+  return {filteredTests, grep};
 }
 
-const baseArgs = [
-  '--require=lighthouse-core/test/test-env/mocha-setup.js',
-  '--timeout=20000',
-  // TODO(esmodules): this is only utilized for CLI tests, since only CLI is ESM + mocks.
-  '--loader=testdouble',
-];
-if (argv.t) baseArgs.push(`--grep='${argv.t}'`);
-if (!argv.t || process.env.CI) baseArgs.push('--fail-zero');
-if (argv.bail) baseArgs.push('--bail');
-if (argv.parallel) baseArgs.push('--parallel');
-baseArgs.push(...mochaPassThruArgs);
-
-const testsToRun = getTestFiles();
+const {filteredTests: testsToRun, grep} = getTestFiles();
 const testsToRunTogether = [];
 const testsToRunIsolated = [];
 for (const test of testsToRun) {
@@ -296,21 +284,21 @@ function exit({numberFailures}) {
 
 /**
  * @param {string[]} tests
- * @param {typeof argv} argv
+ * @param {typeof mochaArgs} mochaArgs
  * @param {number} invocationNumber
  */
-async function runMocha(tests, argv, invocationNumber) {
+async function runMocha(tests, mochaArgs, invocationNumber) {
   process.env.LH_FAILED_TESTS_FILE = `${failedTestsDir}/output-${invocationNumber}.json`;
 
   try {
     const mocha = new Mocha({
       rootHooks,
-      grep: argv.t,
-      bail: argv.bail,
-      // TODO: why does parallel not work anymore?
-      // parallel: tests.length > 1 && argv.parallel,
-      parallel: false,
       timeout: 20_000,
+      bail: mochaArgs.bail,
+      grep: mochaArgs.grep,
+      // TODO: not working
+      // parallel: tests.length > 1 && mochaArgs.parallel,
+      parallel: false,
     });
 
     // @ts-expect-error - not in types.
@@ -323,12 +311,18 @@ async function runMocha(tests, argv, invocationNumber) {
   }
 }
 
+const mochaArgs = {
+  grep,
+  bail: argv.bail,
+  parallel: argv.parallel,
+};
+
 mochaGlobalSetup();
 let numberMochaInvocations = 0;
 let numberFailures = 0;
 try {
   if (testsToRunTogether.length) {
-    numberFailures += await runMocha(testsToRunTogether, argv, numberMochaInvocations);
+    numberFailures += await runMocha(testsToRunTogether, mochaArgs, numberMochaInvocations);
     numberMochaInvocations += 1;
     if (numberFailures && argv.bail) exit({numberFailures});
   }
@@ -338,7 +332,7 @@ try {
     const worker = new Worker(new URL(import.meta.url), {
       workerData: {
         test,
-        argv,
+        mochaArgs,
         numberMochaInvocations,
       },
     });
