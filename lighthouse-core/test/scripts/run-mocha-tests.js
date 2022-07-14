@@ -307,6 +307,7 @@ async function runMocha(tests, mochaArgs, invocationNumber) {
     await mocha.loadFilesAsync();
     return await new Promise(resolve => mocha.run(resolve));
   } catch (err) {
+    console.error(err);
     return 1;
   }
 }
