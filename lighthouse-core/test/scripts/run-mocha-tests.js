@@ -243,6 +243,14 @@ for (const test of testsToRun) {
   }
 }
 
+// If running only a single test file, no need for isolation at all. Move
+// the singular test to `testsToRunTogether` so that it's run in-process,
+// allowing for better DX when doing a `node --inspect-brk` workflow.
+if (testsToRunTogether.length === 0 && testsToRunIsolated.length === 1) {
+  testsToRunTogether.push(testsToRunIsolated[0]);
+  testsToRunIsolated.splice(0, 1);
+}
+
 fs.rmSync(failedTestsDir, {recursive: true, force: true});
 fs.mkdirSync(failedTestsDir, {recursive: true});
 
