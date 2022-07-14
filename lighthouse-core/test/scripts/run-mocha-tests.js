@@ -306,6 +306,8 @@ async function runMocha(tests, grep, invocationNumber) {
     const mocha = new Mocha({
       rootHooks,
       grep,
+      // TODO: why does parallel not work anymore?
+      // parallel: tests.length > 1 && argv.parallel,
       parallel: false,
       timeout: 20_000,
     });
