@@ -166,6 +166,8 @@ const rawArgv = y
 const argv =
   /** @type {Awaited<typeof rawArgv> & CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
 
+process.env.SNAPSHOT_UPDATE = argv.update ? '1' : '';
+
 // This captures all of our mocha tests except for:
 // * flow-report, because it needs to provide additional mocha flags
 // * various *-test-pptr.js integration tests, which are long so are handled explicitly in
