@@ -4,21 +4,26 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {Runner} from '../../../runner.js';
-import {
-  mockDriverSubmodules,
-  mockRunnerModule,
-} from './mock-driver.js';
+import jestMock from 'jest-mock';
+import * as td from 'testdouble';
 
-const mocks = await mockDriverSubmodules();
+import {mockRunnerModule} from './gather/mock-driver.js';
+import {Runner} from '../../runner.js';
+
+const snapshotModule = {snapshotGather: jestMock.fn()};
+const navigationModule = {navigationGather: jestMock.fn()};
+const timespanModule = {startTimespanGather: jestMock.fn()};
+
+await td.replaceEsm('../../fraggle-rock/gather/snapshot-runner.js', snapshotModule);
+await td.replaceEsm('../../fraggle-rock/gather/navigation-runner.js', navigationModule);
+await td.replaceEsm('../../fraggle-rock/gather/timespan-runner.js', timespanModule);
 const mockRunner = await mockRunnerModule();
-
-mockRunner.getGathererList.mockImplementation(Runner.getGathererList);
-mockRunner.getAuditList.mockImplementation(Runner.getAuditList);
 
 /** @typedef {typeof testContext} testContext */
 const testContext = {
-  mocks,
+  snapshotModule,
+  navigationModule,
+  timespanModule,
   mockRunner,
   actualRunner: Runner,
 };

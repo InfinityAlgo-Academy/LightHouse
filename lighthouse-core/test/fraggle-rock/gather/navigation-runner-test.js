@@ -22,12 +22,12 @@ import * as runner from '../../../fraggle-rock/gather/navigation-runner.js';
 /** @type {import('./navigation-runner-test.mocks.js').testContext} */
 // @ts-expect-error
 const testContext = global.lighthouseTestContext;
-const {mocks, mockRunner, runnerActual} = testContext;
+const {mocks, mockRunner, actualRunner} = testContext;
 
 beforeEach(async () => {
   mockRunner.reset();
-  mockRunner.getGathererList.mockImplementation(runnerActual.getGathererList);
-  mockRunner.getAuditList.mockImplementation(runnerActual.getAuditList);
+  mockRunner.getGathererList.mockImplementation(actualRunner.getGathererList);
+  mockRunner.getAuditList.mockImplementation(actualRunner.getAuditList);
 });
 
 /** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: Mock<any, any>, startInstrumentation: Mock<any, any>, stopInstrumentation: Mock<any, any>, startSensitiveInstrumentation: Mock<any, any>, stopSensitiveInstrumentation:  Mock<any, any>}} MockGatherer */
@@ -550,7 +550,7 @@ describe('NavigationRunner', () => {
 
   describe('navigation', () => {
     it('should throw on invalid URL', async () => {
-      mockRunner.gather.mockImplementation(runnerActual.gather);
+      mockRunner.gather.mockImplementation(actualRunner.gather);
 
       const navigatePromise = runner.navigationGather(
         '',
