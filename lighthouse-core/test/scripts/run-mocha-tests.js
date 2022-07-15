@@ -301,7 +301,7 @@ async function runMocha(tests, mochaArgs, invocationNumber) {
   const {rootHooks} = await import(rootHooksPath);
 
   let mocksFilePath;
-  if (tests.length === 1) {
+  if (tests.length === 1 && tests[0].endsWith('.js')) {
     mocksFilePath = `${LH_ROOT}/${tests[0].replace('.js', '.mocks.js')}`;
   }
 
@@ -316,7 +316,6 @@ async function runMocha(tests, mochaArgs, invocationNumber) {
       parallel: false,
     });
 
-    // console.log({mocksFilePath});
     if (mocksFilePath && fs.existsSync(mocksFilePath)) {
       // @ts-expect-error
       global.lighthouseTestContext = (await import(mocksFilePath)).testContext;
