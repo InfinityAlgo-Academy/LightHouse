@@ -30,7 +30,7 @@ await td.replaceEsm('../gather/driver/service-workers.js', {
   getServiceWorkerRegistrations: jestMock.fn().mockResolvedValue({registrations: []}),
 });
 
-/** @typedef {typeof testContext} testContext */
+/** @typedef {typeof testContext} TestContext */
 const testContext = {
   saveArtifactsSpy,
   saveLhrSpy,

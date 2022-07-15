@@ -9,7 +9,7 @@ import jestMock from 'jest-mock';
 import {createMockPage} from './gather/mock-driver.js';
 import {auditGatherSteps, UserFlow} from '../../fraggle-rock/user-flow.js';
 
-/** @type {import('./user-flow-test.mocks.js').testContext} */
+/** @type {import('./user-flow-test.mocks.js').TestContext} */
 // @ts-expect-error
 const testContext = global.lighthouseTestContext;
 const {snapshotModule, navigationModule, timespanModule, mockRunner, actualRunner} = testContext;

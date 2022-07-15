@@ -24,7 +24,7 @@ import {getModuleDirectory} from '../../esm-utils.js';
 
 const moduleDir = getModuleDirectory(import.meta);
 
-/** @type {import('./runner-test.mocks.js').testContext} */
+/** @type {import('./runner-test.mocks.js').TestContext} */
 // @ts-expect-error
 const testContext = global.lighthouseTestContext;
 const {saveArtifactsSpy, saveLhrSpy, loadArtifactsSpy} = testContext;

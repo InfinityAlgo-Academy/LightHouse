@@ -19,7 +19,7 @@ import {fnAny} from '../../test-utils.js';
 import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 import * as runner from '../../../fraggle-rock/gather/navigation-runner.js';
 
-/** @type {import('./navigation-runner-test.mocks.js').testContext} */
+/** @type {import('./navigation-runner-test.mocks.js').TestContext} */
 // @ts-expect-error
 const testContext = global.lighthouseTestContext;
 const {mocks, mockRunner, actualRunner} = testContext;

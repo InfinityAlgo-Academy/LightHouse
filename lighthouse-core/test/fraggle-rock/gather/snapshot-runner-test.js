@@ -4,35 +4,17 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-// import {snapshotGather} from '../../../fraggle-rock/gather/snapshot-runner.js';
-import * as td from 'testdouble';
-
 import {
   createMockDriver,
   createMockPage,
   createMockGathererInstance,
-  mockDriverModule,
-  mockRunnerModule,
 } from './mock-driver.js';
+import {snapshotGather} from '../../../fraggle-rock/gather/snapshot-runner.js';
 
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {import('../../../fraggle-rock/gather/snapshot-runner.js')['snapshotGather']} */
-let snapshotGather;
-
-before(async () => {
-  snapshotGather = (await import('../../../fraggle-rock/gather/snapshot-runner.js')).snapshotGather;
-});
-
-const mockRunner = await mockRunnerModule();
-
-// Establish the mocks before we import the file under test.
-/** @type {ReturnType<typeof createMockDriver>} */
-let mockDriver;
-
-await td.replaceEsm('../../../fraggle-rock/gather/driver.js',
-  mockDriverModule(() => mockDriver.asDriver()));
+/** @type {import('./snapshot-runner-test.mocks.js').TestContext} */
+// @ts-expect-error
+const testContext = global.lighthouseTestContext;
+let {mockRunner, mockDriver} = testContext;
 
 describe('Snapshot Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */
@@ -48,7 +30,7 @@ describe('Snapshot Runner', () => {
 
   beforeEach(() => {
     mockPage = createMockPage();
-    mockDriver = createMockDriver();
+    testContext.mockDriver = mockDriver = createMockDriver();
     mockRunner.reset();
     page = mockPage.asPage();
 

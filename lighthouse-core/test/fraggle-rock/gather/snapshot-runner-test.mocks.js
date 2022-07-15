@@ -4,22 +4,26 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {Runner} from '../../../runner.js';
+import * as td from 'testdouble';
+
 import {
-  mockDriverSubmodules,
+  createMockDriver,
+  mockDriverModule,
   mockRunnerModule,
 } from './mock-driver.js';
 
-const mocks = await mockDriverSubmodules();
 const mockRunner = await mockRunnerModule();
 
-mockRunner.getGathererList.mockImplementation(Runner.getGathererList);
-mockRunner.getAuditList.mockImplementation(Runner.getAuditList);
+// Establish the mocks before we import the file under test.
+/** @type {ReturnType<typeof createMockDriver>} */
+const mockDriver = createMockDriver();
+
+await td.replaceEsm('../../../fraggle-rock/gather/driver.js',
+  mockDriverModule(() => testContext.mockDriver.asDriver()));
 
 /** @typedef {typeof testContext} TestContext */
 const testContext = {
-  mocks,
   mockRunner,
-  actualRunner: Runner,
+  mockDriver,
 };
 export {testContext};

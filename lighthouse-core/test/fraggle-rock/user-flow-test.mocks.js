@@ -19,7 +19,7 @@ await td.replaceEsm('../../fraggle-rock/gather/navigation-runner.js', navigation
 await td.replaceEsm('../../fraggle-rock/gather/timespan-runner.js', timespanModule);
 const mockRunner = await mockRunnerModule();
 
-/** @typedef {typeof testContext} testContext */
+/** @typedef {typeof testContext} TestContext */
 const testContext = {
   snapshotModule,
   navigationModule,
