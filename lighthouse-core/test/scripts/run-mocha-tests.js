@@ -20,7 +20,7 @@ import * as yargsHelpers from 'yargs/helpers';
 import glob from 'glob';
 
 import {LH_ROOT} from '../../../root.js';
-import {rootHooks, mochaGlobalSetup, mochaGlobalTeardown} from '../test-env/mocha-setup.js';
+import {mochaGlobalSetup, mochaGlobalTeardown} from '../test-env/mocha-setup.js';
 
 const failedTestsDir = `${LH_ROOT}/.tmp/failing-tests`;
 
@@ -160,6 +160,9 @@ const rawArgv = y
     'onlyFailures': {
       type: 'boolean',
     },
+    'require': {
+      type: 'string',
+    },
   })
   .wrap(y.terminalWidth())
   .argv;
@@ -292,6 +295,9 @@ function exit({numberFailures}) {
 async function runMocha(tests, mochaArgs, invocationNumber) {
   process.env.LH_FAILED_TESTS_FILE = `${failedTestsDir}/output-${invocationNumber}.json`;
 
+  const rootHooksPath = mochaArgs.require || '../test-env/mocha-setup.js';
+  const {rootHooks} = await import(rootHooksPath);
+
   try {
     const mocha = new Mocha({
       rootHooks,
@@ -318,6 +324,7 @@ const mochaArgs = {
   grep,
   bail: argv.bail,
   parallel: argv.parallel,
+  require: argv.require,
 };
 
 mochaGlobalSetup();
