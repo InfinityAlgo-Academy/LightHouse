@@ -8,10 +8,12 @@ import * as td from 'testdouble';
 
 import {
   createMockDriver,
+  mockDriverSubmodules,
   mockDriverModule,
   mockRunnerModule,
 } from './mock-driver.js';
 
+const mockSubmodules = await mockDriverSubmodules();
 const mockRunner = await mockRunnerModule();
 
 const mockDriver = createMockDriver();
@@ -20,6 +22,7 @@ await td.replaceEsm('../../../fraggle-rock/gather/driver.js',
 
 /** @typedef {typeof testContext} TestContext */
 const testContext = {
+  mockSubmodules,
   mockRunner,
   mockDriver,
 };

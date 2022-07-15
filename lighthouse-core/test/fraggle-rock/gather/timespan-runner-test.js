@@ -4,37 +4,17 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import * as td from 'testdouble';
-
-// import {startTimespanGather} from '../../../fraggle-rock/gather/timespan-runner.js';
+import {startTimespanGather} from '../../../fraggle-rock/gather/timespan-runner.js';
 import {
   createMockDriver,
   createMockPage,
   createMockGathererInstance,
-  mockDriverSubmodules,
-  mockDriverModule,
-  mockRunnerModule,
 } from './mock-driver.js';
 
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {import('../../../fraggle-rock/gather/timespan-runner.js')['startTimespanGather']} */
-let startTimespanGather;
-
-before(async () => {
-  startTimespanGather =
-    (await import('../../../fraggle-rock/gather/timespan-runner.js')).startTimespanGather;
-});
-
-const mockSubmodules = await mockDriverSubmodules();
-const mockRunner = await mockRunnerModule();
-
-// Establish the mocks before we import the file under test.
-/** @type {ReturnType<typeof createMockDriver>} */
-let mockDriver;
-await td.replaceEsm('../../../fraggle-rock/gather/driver.js',
-  mockDriverModule(() => mockDriver.asDriver()));
+/** @type {import('./timespan-runner-test.mocks.js').TestContext} */
+// @ts-expect-error
+const testContext = global.lighthouseTestContext;
+let {mockSubmodules, mockRunner, mockDriver} = testContext;
 
 describe('Timespan Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */
@@ -51,7 +31,7 @@ describe('Timespan Runner', () => {
   beforeEach(() => {
     mockSubmodules.reset();
     mockPage = createMockPage();
-    mockDriver = createMockDriver();
+    testContext.mockDriver = mockDriver = createMockDriver();
     mockRunner.reset();
     page = mockPage.asPage();
 
