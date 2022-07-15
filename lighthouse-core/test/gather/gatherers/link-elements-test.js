@@ -4,22 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import jestMock from 'jest-mock';
-import * as td from 'testdouble';
+import LinkElements from '../../../gather/gatherers/link-elements.js';
 
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @typedef {import('../../../gather/gatherers/link-elements.js').default} LinkElements */
-/** @type {typeof import('../../../gather/gatherers/link-elements.js').default} */
-let LinkElements;
-
-before(async () => {
-  LinkElements = (await import('../../../gather/gatherers/link-elements.js')).default;
-});
-
-const mockMainResource = jestMock.fn();
-await td.replaceEsm('../../../computed/main-resource.js', undefined, {request: mockMainResource});
+/** @type {import('./link-elements-test.mocks.js').TestContext} */
+// @ts-expect-error
+const testContext = global.lighthouseTestContext;
+const {mockMainResource} = testContext;
 
 beforeEach(() => {
   mockMainResource.mockReset();
