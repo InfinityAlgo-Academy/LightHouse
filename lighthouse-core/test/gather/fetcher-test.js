@@ -4,25 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {Fetcher} from '../../gather/fetcher.js';
+import {Driver} from '../../gather/driver.js';
 import {Connection} from '../../gather/connections/connection.js';
 import {fnAny, mockCommands} from '../test-utils.js';
 
 const {createMockSendCommandFn} = mockCommands;
-
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @typedef {import('../../gather/driver.js').Driver} Driver */
-/** @type {typeof import('../../gather/driver.js').Driver} */
-let Driver;
-/** @typedef {import('../../gather/fetcher.js').Fetcher} Fetcher */
-/** @type {typeof import('../../gather/fetcher.js').Fetcher} */
-let Fetcher;
-
-before(async () => {
-  Driver = (await import('../../gather/driver.js')).Driver;
-  Fetcher = (await import('../../gather/fetcher.js')).Fetcher;
-});
 
 /** @type {Connection} */
 let connectionStub;
