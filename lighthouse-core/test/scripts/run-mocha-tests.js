@@ -29,6 +29,7 @@ if (!isMainThread && parentPort) {
   const {test, mochaArgs, numberMochaInvocations} = workerData;
   const numberFailures = await runMocha([test], mochaArgs, numberMochaInvocations);
   parentPort?.postMessage({type: 'result', numberFailures});
+  process.exit(0);
 }
 
 /** @param {string} text */
