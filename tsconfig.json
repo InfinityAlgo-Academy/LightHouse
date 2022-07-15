@@ -106,6 +106,7 @@
     "lighthouse-core/test/lib/url-shim-test.js",
     "lighthouse-core/test/network-records-to-devtools-log-test.js",
     "lighthouse-core/test/runner-test.js",
+    "lighthouse-core/test/runner-test.mocks.js",
     "lighthouse-core/test/scoring-test.js",
     "lighthouse-core/test/scripts/i18n/bake-ctc-to-lhl-test.js",
     "lighthouse-core/test/scripts/i18n/collect-strings-test.js",

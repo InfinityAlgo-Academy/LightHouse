@@ -9,8 +9,6 @@ import jestMock from 'jest-mock';
 import {
   createMockDriver,
   createMockBaseArtifacts,
-  mockDriverSubmodules,
-  mockRunnerModule,
 } from './mock-driver.js';
 import {initializeConfig} from '../../../fraggle-rock/config/config.js';
 import {defaultNavigationConfig} from '../../../config/constants.js';
@@ -19,21 +17,17 @@ import DevtoolsLogGatherer from '../../../gather/gatherers/devtools-log.js';
 import TraceGatherer from '../../../gather/gatherers/trace.js';
 import {fnAny} from '../../test-utils.js';
 import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
-import {Runner as runnerActual} from '../../../runner.js';
+import * as runner from '../../../fraggle-rock/gather/navigation-runner.js';
 
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {import('../../../fraggle-rock/gather/navigation-runner.js')} */
-let runner;
+/** @type {import('./navigation-runner-test.mocks.js').testContext} */
+// @ts-expect-error
+const testContext = global.lighthouseTestContext;
+const {mocks, mockRunner, runnerActual} = testContext;
 
-const mocks = await mockDriverSubmodules();
-const mockRunner = await mockRunnerModule();
 beforeEach(async () => {
   mockRunner.reset();
   mockRunner.getGathererList.mockImplementation(runnerActual.getGathererList);
   mockRunner.getAuditList.mockImplementation(runnerActual.getAuditList);
-  runner = (await import('../../../fraggle-rock/gather/navigation-runner.js'));
 });
 
 /** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: Mock<any, any>, startInstrumentation: Mock<any, any>, stopInstrumentation: Mock<any, any>, startSensitiveInstrumentation: Mock<any, any>, stopSensitiveInstrumentation:  Mock<any, any>}} MockGatherer */

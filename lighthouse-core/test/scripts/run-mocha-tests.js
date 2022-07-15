@@ -95,6 +95,7 @@ const testsToIsolate = new Set([
   'lighthouse-core/test/gather/gather-runner-test.js',
   'lighthouse-core/test/gather/gatherers/dobetterweb/response-compression-test.js',
   'lighthouse-core/test/gather/gatherers/script-elements-test.js',
+  'lighthouse-core/test/runner-test.js',
 
   // These tend to timeout in puppeteer when run in parallel with other tests.
   'lighthouse-core/test/fraggle-rock/scenarios/api-test-pptr.js',
@@ -299,6 +300,11 @@ async function runMocha(tests, mochaArgs, invocationNumber) {
   const rootHooksPath = mochaArgs.require || '../test-env/mocha-setup.js';
   const {rootHooks} = await import(rootHooksPath);
 
+  let mocksFilePath;
+  if (tests.length === 1) {
+    mocksFilePath = `${LH_ROOT}/${tests[0].replace('.js', '.mocks.js')}`;
+  }
+
   try {
     const mocha = new Mocha({
       rootHooks,
@@ -309,6 +315,15 @@ async function runMocha(tests, mochaArgs, invocationNumber) {
       // parallel: tests.length > 1 && mochaArgs.parallel,
       parallel: false,
     });
+
+    // console.log({mocksFilePath});
+    if (mocksFilePath && fs.existsSync(mocksFilePath)) {
+      // @ts-expect-error
+      global.lighthouseTestContext = (await import(mocksFilePath)).testContext;
+    } else {
+      // @ts-expect-error
+      global.lighthouseTestContext = undefined;
+    }
 
     // @ts-expect-error - not in types.
     mocha.lazyLoadFiles(true);
