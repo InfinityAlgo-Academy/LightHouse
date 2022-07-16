@@ -6,38 +6,16 @@
 
 import fs from 'fs';
 
-import * as td from 'testdouble';
-import jestMock from 'jest-mock';
-
+import * as bin from '../../bin.js';
 import {LH_ROOT} from '../../../root.js';
 import {readJson} from '../../../lighthouse-core/test/test-utils.js';
 
-const mockRunLighthouse = jestMock.fn();
-const mockGetFlags = jestMock.fn();
-const mockAskPermission = jestMock.fn();
-const mockSentryInit = jestMock.fn();
-const mockLoggerSetLevel = jestMock.fn();
-
-/** @type {import('../../bin.js')} */
-let bin;
-before(async () => {
-  await td.replaceEsm('../../run.js', {
-    runLighthouse: mockRunLighthouse,
-  });
-  await td.replaceEsm('../../cli-flags.js', {
-    getFlags: mockGetFlags,
-  });
-  await td.replaceEsm('../../sentry-prompt.js', {
-    askPermission: mockAskPermission,
-  });
-  await td.replaceEsm('../../../lighthouse-core/lib/sentry.js', {
-    Sentry: {
-      init: mockSentryInit,
-    },
-  });
-  await td.replaceEsm('lighthouse-logger', undefined, {setLevel: mockLoggerSetLevel});
-  bin = await import('../../bin.js');
-});
+/** @type {import('./bin-test.mocks.js').TestContext} */
+// @ts-expect-error
+const testContext = global.lighthouseTestContext;
+const {
+  mockRunLighthouse, mockGetFlags, mockAskPermission, mockSentryInit, mockLoggerSetLevel,
+} = testContext;
 
 /** @type {LH.CliFlags} */
 let cliFlags;
