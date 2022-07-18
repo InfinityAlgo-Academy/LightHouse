@@ -11,7 +11,7 @@
 
 'use strict';
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 /**
  * @param {LH.Crdp.Runtime.RemoteObject} obj
@@ -172,4 +172,4 @@ class ConsoleMessages extends FRGatherer {
   }
 }
 
-module.exports = ConsoleMessages;
+export default ConsoleMessages;

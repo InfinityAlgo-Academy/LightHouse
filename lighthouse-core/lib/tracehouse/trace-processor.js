@@ -22,7 +22,7 @@
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Invalidate'|'largestContentfulPaint::Candidate', args: {data?: {size?: number}, frame: string}}} LCPEvent */
 /** @typedef {Omit<LH.TraceEvent, 'name'|'args'> & {name: 'largestContentfulPaint::Candidate', args: {data: {size: number}, frame: string}}} LCPCandidateEvent */
 
-const log = require('lighthouse-logger');
+import log from 'lighthouse-logger';
 
 const ACCEPTABLE_NAVIGATION_URL_REGEX = /^(chrome|https?):/;
 
@@ -951,8 +951,7 @@ class TraceProcessor {
   }
 }
 
-module.exports = TraceProcessor;
-
+export {TraceProcessor};
 
 /**
  * @typedef ToplevelEvent

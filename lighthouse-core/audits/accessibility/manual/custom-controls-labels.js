@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit.js');
+import ManualAudit from '../../manual/manual-audit.js';
 
 /**
  * @fileoverview Manual A11y audit to assert custom controls have associated labels.
@@ -25,4 +25,4 @@ class CustomControlsLabels extends ManualAudit {
   }
 }
 
-module.exports = CustomControlsLabels;
+export default CustomControlsLabels;

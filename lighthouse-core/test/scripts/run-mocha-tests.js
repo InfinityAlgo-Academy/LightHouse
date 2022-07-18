@@ -9,22 +9,33 @@
  * CLI tool for running mocha tests. Run with `yarn mocha`
  */
 
-import {execFileSync} from 'child_process';
 import fs from 'fs';
 import path from 'path';
+import {Worker, isMainThread, parentPort, workerData} from 'worker_threads';
+import {once} from 'events';
 
+import Mocha from 'mocha';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 import glob from 'glob';
 
 import {LH_ROOT} from '../../../root.js';
+import {mochaGlobalSetup, mochaGlobalTeardown} from '../test-env/mocha-setup.js';
+
+const failedTestsDir = `${LH_ROOT}/.tmp/failing-tests`;
+
+if (!isMainThread && parentPort) {
+  // Worker.
+  const {test, mochaArgs, numberMochaInvocations} = workerData;
+  const numberFailures = await runMocha([test], mochaArgs, numberMochaInvocations);
+  parentPort?.postMessage({type: 'result', numberFailures});
+  process.exit(0);
+}
 
 /** @param {string} text */
 function escapeRegex(text) {
   return text.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 }
-
-const failedTestsDir = `${LH_ROOT}/.tmp/failing-tests`;
 
 function getFailedTests() {
   const allFailedTests = [];
@@ -47,9 +58,10 @@ function getFailedTests() {
 //    yarn mocha --no-isolation --no-parallel lighthouse-core/test
 //
 // Because mocha workers can divide up test files that mess with global scope in a way that
-// _just happens_ to not cause anything to fail, use this command works to verify that
+// _just happens_ to not cause anything to fail, use this command to verify that
 // all necessary tests are isolated:
-//    yarn mocha --no-parallel lighthouse-core/test
+//    yarn mocha --no-parallel
+// (also, just comment out the `testsToRunIsolated` below, as they won't impact this verification)
 const testsToIsolate = new Set([
   // grep -lRE '^timers\.useFakeTimers' --include='*-test.*' --exclude-dir=node_modules
   'flow-report/test/common-test.tsx',
@@ -66,15 +78,13 @@ const testsToIsolate = new Set([
   'lighthouse-core/test/gather/gatherers/trace-elements-test.js',
   'lighthouse-core/test/gather/gatherers/trace-test.js',
 
-  // grep -lRE '^td\.replace' --include='*-test.*' --exclude-dir=node_modules
-  'lighthouse-core/test/fraggle-rock/gather/navigation-runner-test.js',
+  // grep -lRE '^await td\.replace' --include='*-test.*' --exclude-dir=node_modules
   'lighthouse-core/test/fraggle-rock/gather/snapshot-runner-test.js',
   'lighthouse-core/test/fraggle-rock/gather/timespan-runner-test.js',
   'lighthouse-core/test/fraggle-rock/user-flow-test.js',
   'lighthouse-core/test/gather/driver/prepare-test.js',
   'lighthouse-core/test/gather/gatherers/link-elements-test.js',
   'lighthouse-core/test/gather/gatherers/service-worker-test.js',
-  'lighthouse-core/test/lib/sentry-test.js',
   'lighthouse-core/test/runner-test.js',
 
   // grep -lRE --include='-test.js' 'mockDriverSubmodules|mockRunnerModule|mockDriverModule|mockDriverSubmodules|makeMocksForGatherRunner' --include='*-test.*' --exclude-dir=node_modules
@@ -95,9 +105,12 @@ const testsToIsolate = new Set([
   // ?
   'clients/test/lightrider/lightrider-entry-test.js', // Runner overrides.
   'flow-report/test/flow-report-pptr-test.ts',
+  'lighthouse-cli/test/cli/bin-test.js',
+  'lighthouse-cli/test/cli/run-test.js',
   'lighthouse-core/test/config/config-test.js',
   'lighthouse-core/test/fraggle-rock/config/config-test.js',
   'lighthouse-core/test/lib/emulation-test.js',
+  'lighthouse-core/test/lib/sentry-test.js',
   'report/test/clients/bundle-test.js',
   'report/test/clients/bundle-test.js',
   'shared/test/localization/format-test.js',
@@ -149,6 +162,9 @@ const rawArgv = y
     'onlyFailures': {
       type: 'boolean',
     },
+    'require': {
+      type: 'string',
+    },
   })
   .wrap(y.terminalWidth())
   .argv;
@@ -172,7 +188,6 @@ const defaultTestMatches = [
   'viewer/**/*-test.js',
 ];
 
-const mochaPassThruArgs = argv._.filter(arg => typeof arg !== 'string' || arg.startsWith('--'));
 const filterFilePatterns = argv._.filter(arg => !(typeof arg !== 'string' || arg.startsWith('--')));
 
 function getTestFiles() {
@@ -195,12 +210,13 @@ function getTestFiles() {
     filteredTests = filteredTests.map(testPath => testPath.replace(/\\/g, '/'));
   }
 
+  let grep;
   if (argv.onlyFailures) {
     const failedTests = getFailedTests();
     if (failedTests.length === 0) throw new Error('no tests failed');
 
-    const titles = getFailedTests().map(failed => failed.title);
-    baseArgs.push(`--grep="${titles.map(escapeRegex).join('|')}"`);
+    const titles = failedTests.map(failed => failed.title);
+    grep = new RegExp(titles.map(escapeRegex).join('|'));
 
     filteredTests = filteredTests.filter(file => failedTests.some(failed => failed.file === file));
   }
@@ -210,47 +226,21 @@ function getTestFiles() {
   }
   console.log(`running ${filteredTests.length} test files`);
 
-  return filteredTests;
+  return {filteredTests, grep};
 }
-
-const baseArgs = [
-  '--require=lighthouse-core/test/test-env/mocha-setup.js',
-  '--timeout=20000',
-  // TODO(esmodules): this is only utilized for CLI tests, since only CLI is ESM + mocks.
-  '--loader=testdouble',
-];
-if (argv.t) baseArgs.push(`--grep='${argv.t}'`);
-if (!argv.t || process.env.CI) baseArgs.push('--fail-zero');
-if (argv.bail) baseArgs.push('--bail');
-if (argv.parallel) baseArgs.push('--parallel');
-baseArgs.push(...mochaPassThruArgs);
-
-const testsToRun = getTestFiles();
-const testsToRunTogether = [];
-const testsToRunIsolated = [];
-for (const test of testsToRun) {
-  if (argv.isolation && testsToIsolate.has(test)) {
-    testsToRunIsolated.push(test);
-  } else {
-    testsToRunTogether.push(test);
-  }
-}
-
-fs.rmSync(failedTestsDir, {recursive: true, force: true});
-fs.mkdirSync(failedTestsDir, {recursive: true});
 
 /**
- * @param {number} code
+ * @param {{numberFailures: number, numberMochaInvocations: number}} params
  */
-function exit(code) {
-  if (code === 0) {
+function exit({numberFailures, numberMochaInvocations}) {
+  if (!numberFailures) {
     console.log('Tests passed');
     process.exit(0);
   }
 
   if (numberMochaInvocations === 1) {
     console.log('Tests failed');
-    process.exit(code);
+    process.exit(1);
   }
 
   // If running many instances of mocha, failed results can get lost in the output.
@@ -276,62 +266,120 @@ function exit(code) {
     }
   }
 
-  process.exit(code);
+  process.exit(1);
 }
 
-let numberMochaInvocations = 0;
-let didFail = false;
+/**
+ * @typedef OurMochaArgs
+ * @property {RegExp | undefined} grep
+ * @property {boolean} bail
+ * @property {boolean} parallel
+ * @property {string | undefined} require
+ */
 
 /**
  * @param {string[]} tests
+ * @param {OurMochaArgs} mochaArgs
+ * @param {number} invocationNumber
  */
-function runMochaCLI(tests) {
-  const file = 'npx';
-  const args = [
-    'mocha',
-    ...baseArgs,
-    ...tests,
-  ];
+async function runMocha(tests, mochaArgs, invocationNumber) {
+  process.env.LH_FAILED_TESTS_FILE = `${failedTestsDir}/output-${invocationNumber}.json`;
 
-  // Limit on windows is 8192 characters. This includes the invocation of the shell program
-  // (typically `C:\Windows\system32\cmd.exe /d /s /c "npx mocha ..."`), which we can't account
-  // for simply. Instead, use a limit of 8000.
-  if (process.platform === 'win32' && [file, ...args].join(' ').length > 8000) {
-    const halfPoint = Math.floor(tests.length / 2);
-    runMochaCLI(tests.slice(0, halfPoint));
-    runMochaCLI(tests.slice(halfPoint));
-    return;
+  const rootHooksPath = mochaArgs.require || '../test-env/mocha-setup.js';
+  const {rootHooks} = await import(rootHooksPath);
+
+  try {
+    const mocha = new Mocha({
+      rootHooks,
+      timeout: 20_000,
+      bail: mochaArgs.bail,
+      grep: mochaArgs.grep,
+      // TODO: not working
+      // parallel: tests.length > 1 && mochaArgs.parallel,
+      parallel: false,
+    });
+
+    // @ts-expect-error - not in types.
+    mocha.lazyLoadFiles(true);
+    for (const test of tests) mocha.addFile(test);
+    await mocha.loadFilesAsync();
+    return await new Promise(resolve => mocha.run(resolve));
+  } catch (err) {
+    console.error(err);
+    return 1;
+  }
+}
+
+async function main() {
+  process.env.SNAPSHOT_UPDATE = argv.update ? '1' : '';
+
+  const {filteredTests: testsToRun, grep} = getTestFiles();
+  const testsToRunTogether = [];
+  const testsToRunIsolated = [];
+  for (const test of testsToRun) {
+    if (argv.isolation && testsToIsolate.has(test)) {
+      testsToRunIsolated.push(test);
+    } else {
+      testsToRunTogether.push(test);
+    }
   }
 
-  console.log(
-    `Running command: ${argv.update ? 'SNAPSHOT_UPDATE=1 ' : ''}${file} ${args.join(' ')}`);
+  // If running only a single test file, no need for isolation at all. Move
+  // the singular test to `testsToRunTogether` so that it's run in-process,
+  // allowing for better DX when doing a `node --inspect-brk` workflow.
+  if (testsToRunTogether.length === 0 && testsToRunIsolated.length === 1) {
+    testsToRunTogether.push(testsToRunIsolated[0]);
+    testsToRunIsolated.splice(0, 1);
+  }
+
+  fs.rmSync(failedTestsDir, {recursive: true, force: true});
+  fs.mkdirSync(failedTestsDir, {recursive: true});
+
+  /** @type {OurMochaArgs} */
+  const mochaArgs = {
+    grep,
+    bail: argv.bail,
+    parallel: argv.parallel,
+    require: argv.require,
+  };
+
+  mochaGlobalSetup();
+  let numberMochaInvocations = 0;
+  let numberFailures = 0;
   try {
-    execFileSync(file, args, {
-      cwd: LH_ROOT,
-      env: {
-        ...process.env,
-        SNAPSHOT_UPDATE: argv.update ? '1' : undefined,
-        TS_NODE_TRANSPILE_ONLY: '1',
-        LH_FAILED_TESTS_FILE: `${failedTestsDir}/output-${numberMochaInvocations}.json`,
-      },
-      stdio: 'inherit',
-      shell: process.platform === 'win32',
-    });
-  } catch {
-    if (argv.bail) {
-      exit(1);
-    } else {
-      didFail = true;
+    if (testsToRunTogether.length) {
+      numberFailures += await runMocha(testsToRunTogether, mochaArgs, numberMochaInvocations);
+      numberMochaInvocations += 1;
+      if (numberFailures && argv.bail) exit({numberFailures, numberMochaInvocations});
+    }
+
+    for (const test of testsToRunIsolated) {
+      console.log(`Running test in isolation: ${test}`);
+      const worker = new Worker(new URL(import.meta.url), {
+        workerData: {
+          test,
+          mochaArgs,
+          numberMochaInvocations,
+        },
+      });
+
+      try {
+        const [workerResponse] = await once(worker, 'message');
+        numberFailures += workerResponse.numberFailures;
+      } catch (err) {
+        // `once` throws an error if the underlying event emitter produces an 'error' message.
+        console.error(err);
+        numberFailures += 1;
+      }
+
+      numberMochaInvocations += 1;
+      if (numberFailures && argv.bail) exit({numberFailures, numberMochaInvocations});
     }
   } finally {
-    numberMochaInvocations += 1;
+    mochaGlobalTeardown();
   }
+
+  exit({numberFailures, numberMochaInvocations});
 }
 
-if (testsToRunTogether.length) runMochaCLI(testsToRunTogether);
-for (const test of testsToRunIsolated) {
-  console.log(`Running test in isolation: ${test}`);
-  runMochaCLI([test]);
-}
-
-exit(didFail ? 1 : 0);
+await main();

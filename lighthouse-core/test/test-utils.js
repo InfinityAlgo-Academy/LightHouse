@@ -14,9 +14,9 @@ import jestMock from 'jest-mock';
 
 import {LH_ROOT} from '../../root.js';
 import * as mockCommands from './gather/mock-commands.js';
-import NetworkRecorder from '../lib/network-recorder.js';
+import {NetworkRecorder} from '../lib/network-recorder.js';
 import {timers} from './test-env/fake-timers.js';
-import {getModuleDirectory} from '../../esm-utils.mjs';
+import {getModuleDirectory} from '../../esm-utils.js';
 
 const require = createRequire(import.meta.url);
 
@@ -181,36 +181,36 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
  * Mocks gatherers for BaseArtifacts that tests for components using GatherRunner
  * shouldn't concern themselves about.
  */
-function makeMocksForGatherRunner() {
-  td.replace(require.resolve('../gather/driver/environment.js'), {
+async function makeMocksForGatherRunner() {
+  await td.replaceEsm(require.resolve('../gather/driver/environment.js'), {
     getBenchmarkIndex: () => Promise.resolve(150),
     getBrowserVersion: async () => ({userAgent: 'Chrome', milestone: 80}),
     getEnvironmentWarnings: () => [],
   });
-  td.replace(require.resolve('../gather/gatherers/stacks.js'), {
+  await td.replaceEsm(require.resolve('../gather/gatherers/stacks.js'), undefined, {
     collectStacks: () => Promise.resolve([]),
   });
-  td.replace(require.resolve('../gather/gatherers/installability-errors.js'), {
+  await td.replaceEsm(require.resolve('../gather/gatherers/installability-errors.js'), undefined, {
     getInstallabilityErrors: async () => ({errors: []}),
   });
-  td.replace(require.resolve('../gather/gatherers/web-app-manifest.js'), {
+  await td.replaceEsm(require.resolve('../gather/gatherers/web-app-manifest.js'), undefined, {
     getWebAppManifest: async () => null,
   });
-  td.replace(require.resolve('../lib/emulation.js'), {
+  await td.replaceEsm(require.resolve('../lib/emulation.js'), {
     emulate: jestMock.fn(),
     throttle: jestMock.fn(),
     clearThrottling: jestMock.fn(),
   });
-  td.replace(require.resolve('../gather/driver/prepare.js'), {
+  await td.replaceEsm(require.resolve('../gather/driver/prepare.js'), {
     prepareTargetForNavigationMode: jestMock.fn(),
     prepareTargetForIndividualNavigation: jestMock.fn().mockResolvedValue({warnings: []}),
   });
-  td.replace(require.resolve('../gather/driver/storage.js'), {
+  await td.replaceEsm(require.resolve('../gather/driver/storage.js'), {
     clearDataForOrigin: jestMock.fn(),
     cleanBrowserCaches: jestMock.fn(),
     getImportantStorageWarning: jestMock.fn(),
   });
-  td.replace(require.resolve('../gather/driver/navigation.js'), {
+  await td.replaceEsm(require.resolve('../gather/driver/navigation.js'), {
     gotoURL: jestMock.fn().mockResolvedValue({
       mainDocumentUrl: 'http://example.com',
       warnings: [],

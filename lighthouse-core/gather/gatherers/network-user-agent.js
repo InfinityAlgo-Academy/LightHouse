@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const DevtoolsLogGatherer = require('./devtools-log.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+import DevtoolsLogGatherer from './devtools-log.js';
 
 /** @implements {LH.Gatherer.FRGathererInstance<'DevtoolsLog'>} */
 class NetworkUserAgent extends FRGatherer {
@@ -39,4 +39,4 @@ class NetworkUserAgent extends FRGatherer {
   }
 }
 
-module.exports = NetworkUserAgent;
+export default NetworkUserAgent;

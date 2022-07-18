@@ -55,4 +55,4 @@ async function resolveDevtoolsNodePathToObjectId(session, path) {
   }
 }
 
-module.exports = {resolveNodeIdToObjectId, resolveDevtoolsNodePathToObjectId};
+export {resolveNodeIdToObjectId, resolveDevtoolsNodePathToObjectId};

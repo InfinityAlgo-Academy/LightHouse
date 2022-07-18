@@ -10,9 +10,9 @@
 
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('./../lib/i18n/i18n.js');
-const URL = require('./../lib/url-shim.js');
+import {Audit} from './audit.js';
+import * as i18n from './../lib/i18n/i18n.js';
+import URL from './../lib/url-shim.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on whether all images have explicit width and height. This descriptive title is shown to users when every image has explicit width and height */
@@ -23,7 +23,7 @@ const UIStrings = {
   description: 'Set an explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class UnsizedImages extends Audit {
   /**
@@ -159,5 +159,5 @@ class UnsizedImages extends Audit {
   }
 }
 
-module.exports = UnsizedImages;
-module.exports.UIStrings = UIStrings;
+export default UnsizedImages;
+export {UIStrings};

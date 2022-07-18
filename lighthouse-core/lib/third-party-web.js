@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const thirdPartyWeb = require('third-party-web/httparchive-nostats-subset');
+import thirdPartyWeb from 'third-party-web/httparchive-nostats-subset.js';
 
 /** @typedef {import("third-party-web").IEntity} ThirdPartyEntity */
 /** @typedef {import("third-party-web").IProduct} ThirdPartyProduct */
@@ -45,7 +45,7 @@ function isFirstParty(url, mainDocumentEntity) {
   return !isThirdParty(url, mainDocumentEntity);
 }
 
-module.exports = {
+export default {
   getEntity,
   getProduct,
   isThirdParty,

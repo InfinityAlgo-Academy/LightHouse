@@ -8,7 +8,7 @@
 /**
  * A union of all types derived from BaseNode, allowing type check discrimination
  * based on `node.type`. If a new node type is created, it should be added here.
- * @typedef {import('./cpu-node.js') | import('./network-node.js')} Node
+ * @typedef {import('./cpu-node.js').CPUNode | import('./network-node.js').NetworkNode} Node
  */
 
 /**
@@ -360,4 +360,4 @@ BaseNode.TYPES = /** @type {{NETWORK: 'network', CPU: 'cpu'}} */({
   CPU: 'cpu',
 });
 
-module.exports = BaseNode;
+export {BaseNode};

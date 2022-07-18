@@ -8,9 +8,9 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const URL = require('../../lib/url-shim.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
+import URL from '../../lib/url-shim.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to serve images in newer and more efficient image formats in order to enhance the performance of a page. A non-modern image format was designed 20+ years ago. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -21,7 +21,7 @@ const UIStrings = {
     '[Learn more](https://web.dev/uses-webp-images/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 8192;
 
@@ -89,7 +89,7 @@ class ModernImageFormats extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
+   * @return {import('./byte-efficiency-audit.js').ByteEfficiencyProduct}
    */
   static audit_(artifacts) {
     const pageURL = artifacts.URL.finalUrl;
@@ -182,5 +182,5 @@ class ModernImageFormats extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = ModernImageFormats;
-module.exports.UIStrings = UIStrings;
+export default ModernImageFormats;
+export {UIStrings};

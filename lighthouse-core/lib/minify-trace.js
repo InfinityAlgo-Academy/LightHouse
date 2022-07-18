@@ -15,7 +15,7 @@
  *    - lighthouse-core/lib/tracehouse/trace-processor.js
  */
 
-const TracingProcessor = require('./tracehouse/trace-processor.js');
+import {TraceProcessor} from './tracehouse/trace-processor.js';
 
 const toplevelTaskNames = new Set([
   'RunTask', // m71+
@@ -94,7 +94,7 @@ const traceEventsToKeepInProcess = new Set([
  * @param {LH.TraceEvent[]} events
  */
 function filterOutUnnecessaryTasksByNameAndDuration(events) {
-  const {pid} = TracingProcessor.findMainFrameIds(events);
+  const {pid} = TraceProcessor.findMainFrameIds(events);
 
   return events.filter(evt => {
     if (toplevelTaskNames.has(evt.name) && evt.dur < 1000) return false;
@@ -170,4 +170,4 @@ function minifyTrace(inputTrace) {
   return {traceEvents: filterTraceEvents(inputTrace.traceEvents)};
 }
 
-module.exports = {minifyTrace};
+export {minifyTrace};

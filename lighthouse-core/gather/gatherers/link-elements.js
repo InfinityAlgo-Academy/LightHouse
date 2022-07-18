@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const LinkHeader = require('http-link-header');
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const {URL} = require('../../lib/url-shim.js');
-const pageFunctions = require('../../lib/page-functions.js');
-const DevtoolsLog = require('./devtools-log.js');
-const MainResource = require('../../computed/main-resource.js');
+import LinkHeader from 'http-link-header';
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+import URL from '../../lib/url-shim.js';
+import {pageFunctions} from '../../lib/page-functions.js';
+import DevtoolsLog from './devtools-log.js';
+import MainResource from '../../computed/main-resource.js';
 
 /* globals HTMLLinkElement getNodeDetails */
 
@@ -179,4 +179,4 @@ class LinkElements extends FRGatherer {
   }
 }
 
-module.exports = LinkElements;
+export default LinkElements;

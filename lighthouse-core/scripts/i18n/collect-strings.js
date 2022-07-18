@@ -9,6 +9,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import {pathToFileURL} from 'url';
 
 import glob from 'glob';
 import {expect} from 'expect';
@@ -16,12 +17,12 @@ import tsc from 'typescript';
 import MessageParser from 'intl-messageformat-parser';
 import esMain from 'es-main';
 
-import {Util} from '../../../lighthouse-core/util-commonjs.js';
+import {Util} from '../../util.cjs';
 import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';
 import {pruneObsoleteLhlMessages} from './prune-obsolete-lhl-messages.js';
 import {countTranslatedMessages} from './count-translated.js';
 import {LH_ROOT} from '../../../root.js';
-import {resolveModulePath} from '../../../esm-utils.mjs';
+import {resolveModulePath} from '../../../esm-utils.js';
 
 // Match declarations of UIStrings, terminating in either a `};\n` (very likely to always be right)
 // or `}\n\n` (allowing semicolon to be optional, but insisting on a double newline so that an
@@ -552,7 +553,7 @@ async function collectAllStringsInDir(dir) {
     if (!process.env.CI) console.log('Collecting from', relativeToRootPath);
 
     const content = fs.readFileSync(absolutePath, 'utf8');
-    const exportVars = await import(absolutePath);
+    const exportVars = await import(pathToFileURL(absolutePath).href);
     const regexMatch = content.match(UISTRINGS_REGEX);
     const exportedUIStrings = exportVars.UIStrings || exportVars.default?.UIStrings;
 
@@ -663,8 +664,6 @@ function resolveMessageCollisions(strings) {
       'Consider uploading your GIF to a service which will make it available to embed as an HTML5 video.',
       'Consider uploading your GIF to a service which will make it available to embed as an HTML5 video.',
       'Consider uploading your GIF to a service which will make it available to embed as an HTML5 video.',
-      'Consider using a $LINK_START_0$plugin$LINK_END_0$ or service that will automatically convert your uploaded images to the optimal formats.',
-      'Consider using a $LINK_START_0$plugin$LINK_END_0$ or service that will automatically convert your uploaded images to the optimal formats.',
       'Document has a valid $MARKDOWN_SNIPPET_0$',
       'Document has a valid $MARKDOWN_SNIPPET_0$',
       'Failing Elements',

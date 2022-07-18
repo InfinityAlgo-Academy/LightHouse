@@ -6,18 +6,18 @@
 
 import lighthouseStackPacksDep from 'lighthouse-stack-packs';
 
-import stackPacksLib from '../../lib/stack-packs.js';
-import Config from '../../config/config.js';
+import {initializeConfig} from '../../fraggle-rock/config/config.js';
+import {stackPacksToInclude} from '../../lib/stack-packs.js';
 
 async function getAuditIds() {
-  const config = await Config.fromJson();
+  const {config} = await initializeConfig(undefined, {gatherMode: 'navigation'});
   return config.audits.map(a => a.implementation.meta.id);
 }
 
 describe('stack-packs lib', () => {
   it('there are no packs without detectors', () => {
     const result = lighthouseStackPacksDep
-      .filter(p => !stackPacksLib.stackPacksToInclude.find(p2 => p2.packId === p.id))
+      .filter(p => !stackPacksToInclude.find(p2 => p2.packId === p.id))
       .map(p => p.id);
     expect(result).toEqual([]);
   });

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 /**
  * @template T, U
@@ -137,4 +137,4 @@ class Scripts extends FRGatherer {
   }
 }
 
-module.exports = Scripts;
+export default Scripts;

@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const ComputedResponsivenes = require('../../computed/metrics/responsiveness.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {Audit} from '../audit.js';
+import ComputedResponsivenes from '../../computed/metrics/responsiveness.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Description of the Interaction to Next Paint metric. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
@@ -15,7 +15,7 @@ const UIStrings = {
                'takes the page to visibly respond to user input. [Learn more](https://web.dev/inp/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview This metric gives a high-percentile measure of responsiveness to input.
@@ -84,5 +84,5 @@ class ExperimentalInteractionToNextPaint extends Audit {
   }
 }
 
-module.exports = ExperimentalInteractionToNextPaint;
-module.exports.UIStrings = UIStrings;
+export default ExperimentalInteractionToNextPaint;
+export {UIStrings};

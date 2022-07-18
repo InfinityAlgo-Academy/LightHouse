@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const TimingSummary = require('../computed/metrics/timing-summary.js');
-const MainResource = require('../computed/main-resource.js');
-const Budget = require('../config/budget.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+import TimingSummary from '../computed/metrics/timing-summary.js';
+import MainResource from '../computed/main-resource.js';
+import {Budget} from '../config/budget.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that compares how quickly the page loads against targets set by the user. Timing budgets are a type of performance budget. */
@@ -22,7 +22,7 @@ const UIStrings = {
   columnMeasurement: 'Measurement',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /** @typedef {{metric: LH.Budget.TimingMetric, label: LH.IcuMessage, measurement?: LH.Audit.Details.NumericValue|number, overBudget?: LH.Audit.Details.NumericValue|number}} BudgetItem */
 
@@ -171,5 +171,5 @@ class TimingBudget extends Audit {
   }
 }
 
-module.exports = TimingBudget;
-module.exports.UIStrings = UIStrings;
+export default TimingBudget;
+export {UIStrings};

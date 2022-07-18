@@ -7,9 +7,11 @@
 
 /** @typedef {LH.Artifacts.FontSize['analyzedFailingNodesData'][0]} FailingNodeData */
 
-const i18n = require('../../lib/i18n/i18n.js');
-const Audit = require('../audit.js');
-const ComputedViewportMeta = require('../../computed/viewport-meta.js');
+import * as i18n from '../../lib/i18n/i18n.js';
+
+import {Audit} from '../audit.js';
+import ComputedViewportMeta from '../../computed/viewport-meta.js';
+
 const MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT = 60;
 
 const UIStrings = {
@@ -36,7 +38,7 @@ const UIStrings = {
   columnFontSize: 'Font Size',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @param {Array<FailingNodeData>} fontSizeArtifact
@@ -340,5 +342,5 @@ class FontSize extends Audit {
   }
 }
 
-module.exports = FontSize;
-module.exports.UIStrings = UIStrings;
+export default FontSize;
+export {UIStrings};

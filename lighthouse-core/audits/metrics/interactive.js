@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const Interactive = require('../../computed/metrics/interactive.js');
+import {Audit} from '../audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
+import Interactive from '../../computed/metrics/interactive.js';
 
 const UIStrings = {
   /** Description of the Time to Interactive (TTI) metric, which evaluates when a page has completed its primary network activity and main thread work. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
@@ -15,7 +15,7 @@ const UIStrings = {
     'interactive. [Learn more](https://web.dev/interactive/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview This audit identifies the time the page is "consistently interactive".
@@ -90,5 +90,5 @@ class InteractiveMetric extends Audit {
   }
 }
 
-module.exports = InteractiveMetric;
-module.exports.UIStrings = UIStrings;
+export default InteractiveMetric;
+export {UIStrings};

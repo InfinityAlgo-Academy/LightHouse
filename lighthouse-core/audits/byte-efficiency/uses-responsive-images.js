@@ -13,11 +13,11 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const NetworkRequest = require('../../lib/network-request.js');
-const ImageRecords = require('../../computed/image-records.js');
-const URL = require('../../lib/url-shim.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
+import {NetworkRequest} from '../../lib/network-request.js';
+import ImageRecords from '../../computed/image-records.js';
+import URL from '../../lib/url-shim.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to resize images to match the display dimensions. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -29,7 +29,7 @@ const UIStrings = {
   '[Learn more](https://web.dev/uses-responsive-images/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 4096;
 
@@ -131,7 +131,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
-   * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
+   * @return {Promise<import('./byte-efficiency-audit.js').ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
     const images = await ImageRecords.request({
@@ -197,6 +197,5 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = UsesResponsiveImages;
-module.exports.UIStrings = UIStrings;
-module.exports.str_ = str_;
+export default UsesResponsiveImages;
+export {UIStrings, str_};

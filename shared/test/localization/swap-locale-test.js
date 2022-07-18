@@ -8,6 +8,7 @@
 const swapLocale = require('../../localization/swap-locale.js');
 
 const lhr = require('../../../lighthouse-core/test/results/sample_v2.json');
+
 describe('swap-locale', () => {
   it('does not mutate the original lhr', () => {
     /** @type {LH.Result} */

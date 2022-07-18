@@ -4,9 +4,9 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import Driver from '../../gather/driver.js';
-import Connection from '../../gather/connections/connection.js';
-import FakeDriver from './fake-driver.js';
+import {Driver} from '../../gather/driver.js';
+import {Connection} from '../../gather/connections/connection.js';
+import {fakeDriver} from './fake-driver.js';
 import {
   mockCommands,
   makePromiseInspectable,
@@ -15,7 +15,6 @@ import {
   timers,
 } from '../test-utils.js';
 
-const {protocolGetVersionResponse} = FakeDriver;
 const {createMockSendCommandFn} = mockCommands;
 
 timers.useFakeTimers();
@@ -120,7 +119,7 @@ describe('.sendCommand', () => {
 describe('.beginTrace', () => {
   beforeEach(() => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Browser.getVersion', protocolGetVersionResponse)
+      .mockResponse('Browser.getVersion', fakeDriver.protocolGetVersionResponse)
       .mockResponse('Page.enable')
       .mockResponse('Tracing.start');
   });

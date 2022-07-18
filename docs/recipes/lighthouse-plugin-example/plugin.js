@@ -6,7 +6,7 @@
 'use strict';
 
 /** @type {LH.Config.Plugin} */
-module.exports = {
+export default {
   // Additional audit to run on information Lighthouse gathered.
   audits: [{
     path: 'lighthouse-plugin-example/audits/preload-as.js',

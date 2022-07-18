@@ -57,4 +57,4 @@ function setValueAtJsonLDPath(obj, path, value) {
   });
 }
 
-module.exports = getLineNumberFromJsonLDPath;
+export default getLineNumberFromJsonLDPath;

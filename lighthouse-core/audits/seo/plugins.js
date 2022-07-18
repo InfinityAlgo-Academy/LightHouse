@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const URL = require('../../lib/url-shim.js');
+import {Audit} from '../audit.js';
+import URL from '../../lib/url-shim.js';
 
 const JAVA_APPLET_TYPE = 'application/x-java-applet';
 const JAVA_BEAN_TYPE = 'application/x-java-bean';
@@ -31,7 +31,7 @@ const SOURCE_PARAMS = new Set([
   'source',
   'src',
 ]);
-const i18n = require('../../lib/i18n/i18n.js');
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the browser plugins used by the page. This descriptive title is shown when there is no plugin content on the page that would restrict search indexing. */
@@ -44,7 +44,7 @@ const UIStrings = {
     '[Learn more](https://web.dev/plugins/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * Verifies if given MIME type matches any known plugin MIME type
@@ -148,5 +148,5 @@ class Plugins extends Audit {
   }
 }
 
-module.exports = Plugins;
-module.exports.UIStrings = UIStrings;
+export default Plugins;
+export {UIStrings};

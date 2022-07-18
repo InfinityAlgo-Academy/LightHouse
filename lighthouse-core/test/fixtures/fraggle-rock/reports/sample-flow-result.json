@@ -4666,7 +4666,7 @@
               "unminified-css": "If your build system minifies CSS files automatically, ensure that you are deploying the production build of your application. You can check this with the React Developer Tools extension. [Learn more](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build).",
               "unminified-javascript": "If your build system minifies JS files automatically, ensure that you are deploying the production build of your application. You can check this with the React Developer Tools extension. [Learn more](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build).",
               "unused-javascript": "If you are not server-side rendering, [split your JavaScript bundles](https://web.dev/code-splitting-suspense/) with `React.lazy()`. Otherwise, code-split using a third-party library such as [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/).",
-              "server-response-time": "If you are server-side rendering any React components, consider using `renderToNodeStream()` or `renderToStaticNodeStream()` to allow the client to receive and hydrate different parts of the markup instead of all at once. [Learn more](https://reactjs.org/docs/react-dom-server.html#rendertonodestream).",
+              "server-response-time": "If you are server-side rendering any React components, consider using `renderToPipeableStream()` or `renderToStaticNodeStream()` to allow the client to receive and hydrate different parts of the markup instead of all at once. [Learn more](https://reactjs.org/docs/react-dom-server.html#renderToPipeableStream).",
               "redirects": "If you are using React Router, minimize usage of the `<Redirect>` component for [route navigations](https://reacttraining.com/react-router/web/api/Redirect).",
               "user-timings": "Use the React DevTools Profiler, which makes use of the Profiler API, to measure the rendering performance of your components. [Learn more.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)",
               "dom-size": "Consider using a \"windowing\" library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the `Effect` hook to improve runtime performance."
@@ -7614,6 +7614,16 @@
               ]
             }
           },
+          "experimental-interaction-to-next-paint": {
+            "id": "experimental-interaction-to-next-paint",
+            "title": "Interaction to Next Paint",
+            "description": "Interaction to Next Paint measures page responsiveness, how long it takes the page to visibly respond to user input. [Learn more](https://web.dev/inp/).",
+            "score": 1,
+            "scoreDisplayMode": "numeric",
+            "numericValue": 60,
+            "numericUnit": "millisecond",
+            "displayValue": "60 ms"
+          },
           "errors-in-console": {
             "id": "errors-in-console",
             "title": "No browser errors logged to the console",
@@ -9134,16 +9144,6 @@
               "items": []
             }
           },
-          "experimental-interaction-to-next-paint": {
-            "id": "experimental-interaction-to-next-paint",
-            "title": "Interaction to Next Paint",
-            "description": "Interaction to Next Paint measures page responsiveness, how long it takes the page to visibly respond to user input. [Learn more](https://web.dev/inp/).",
-            "score": 1,
-            "scoreDisplayMode": "numeric",
-            "numericValue": 60,
-            "numericUnit": "millisecond",
-            "displayValue": "60 ms"
-          },
           "work-during-interaction": {
             "id": "work-during-interaction",
             "title": "Minimizes work during key interaction",
@@ -9227,6 +9227,15 @@
                   "layout-shift-elements",
                   "non-composited-animations",
                   "unsized-images"
+                ]
+              },
+              {
+                "id": "experimental-interaction-to-next-paint",
+                "weight": 0,
+                "group": "metrics",
+                "acronym": "INP",
+                "relevantAudits": [
+                  "work-during-interaction"
                 ]
               },
               {
@@ -9330,6 +9339,10 @@
                 "weight": 0
               },
               {
+                "id": "work-during-interaction",
+                "weight": 0
+              },
+              {
                 "id": "network-requests",
                 "weight": 0,
                 "group": "hidden"
@@ -9363,19 +9376,6 @@
                 "id": "script-treemap-data",
                 "weight": 0,
                 "group": "hidden"
-              },
-              {
-                "id": "experimental-interaction-to-next-paint",
-                "weight": 0,
-                "group": "metrics",
-                "acronym": "INP",
-                "relevantAudits": [
-                  "work-during-interaction"
-                ]
-              },
-              {
-                "id": "work-during-interaction",
-                "weight": 0
               }
             ],
             "id": "performance",
@@ -9689,181 +9689,181 @@
             },
             {
               "startTime": 28,
-              "name": "lh:audit:errors-in-console",
+              "name": "lh:audit:experimental-interaction-to-next-paint",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 29,
-              "name": "lh:computed:JSBundles",
+              "name": "lh:computed:Responsiveness",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 30,
-              "name": "lh:audit:user-timings",
+              "name": "lh:audit:errors-in-console",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 31,
-              "name": "lh:computed:UserTimings",
+              "name": "lh:computed:JSBundles",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 32,
-              "name": "lh:audit:image-aspect-ratio",
+              "name": "lh:audit:user-timings",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 33,
-              "name": "lh:audit:image-size-responsive",
+              "name": "lh:computed:UserTimings",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 34,
-              "name": "lh:audit:preload-fonts",
+              "name": "lh:audit:image-aspect-ratio",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 35,
-              "name": "lh:audit:deprecations",
+              "name": "lh:audit:image-size-responsive",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 36,
-              "name": "lh:audit:mainthread-work-breakdown",
+              "name": "lh:audit:preload-fonts",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 37,
-              "name": "lh:computed:MainThreadTasks",
+              "name": "lh:audit:deprecations",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 38,
-              "name": "lh:audit:bootup-time",
+              "name": "lh:audit:mainthread-work-breakdown",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 39,
-              "name": "lh:audit:network-requests",
+              "name": "lh:computed:MainThreadTasks",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 40,
-              "name": "lh:audit:network-rtt",
+              "name": "lh:audit:bootup-time",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 41,
-              "name": "lh:computed:NetworkAnalysis",
+              "name": "lh:audit:network-requests",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 42,
-              "name": "lh:audit:network-server-latency",
+              "name": "lh:audit:network-rtt",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 43,
-              "name": "lh:audit:main-thread-tasks",
+              "name": "lh:computed:NetworkAnalysis",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 44,
-              "name": "lh:audit:resource-summary",
+              "name": "lh:audit:network-server-latency",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 45,
-              "name": "lh:computed:ResourceSummary",
+              "name": "lh:audit:main-thread-tasks",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 46,
-              "name": "lh:audit:third-party-summary",
+              "name": "lh:audit:resource-summary",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 47,
-              "name": "lh:audit:layout-shift-elements",
+              "name": "lh:computed:ResourceSummary",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 48,
-              "name": "lh:audit:long-tasks",
+              "name": "lh:audit:third-party-summary",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 49,
-              "name": "lh:audit:no-unload-listeners",
+              "name": "lh:audit:layout-shift-elements",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 50,
-              "name": "lh:audit:non-composited-animations",
+              "name": "lh:audit:long-tasks",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 51,
-              "name": "lh:audit:unsized-images",
+              "name": "lh:audit:no-unload-listeners",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 52,
-              "name": "lh:audit:valid-source-maps",
+              "name": "lh:audit:non-composited-animations",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 53,
-              "name": "lh:audit:full-page-screenshot",
+              "name": "lh:audit:unsized-images",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 54,
-              "name": "lh:audit:script-treemap-data",
+              "name": "lh:audit:valid-source-maps",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 55,
-              "name": "lh:computed:ModuleDuplication",
+              "name": "lh:audit:full-page-screenshot",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 56,
-              "name": "lh:computed:UnusedJavascriptSummary",
+              "name": "lh:audit:script-treemap-data",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 57,
-              "name": "lh:computed:UnusedJavascriptSummary",
+              "name": "lh:computed:ModuleDuplication",
               "duration": 1,
               "entryType": "measure"
             },
@@ -9875,127 +9875,127 @@
             },
             {
               "startTime": 59,
-              "name": "lh:audit:uses-long-cache-ttl",
+              "name": "lh:computed:UnusedJavascriptSummary",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 60,
-              "name": "lh:audit:total-byte-weight",
+              "name": "lh:computed:UnusedJavascriptSummary",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 61,
-              "name": "lh:audit:unminified-css",
+              "name": "lh:audit:uses-long-cache-ttl",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 62,
-              "name": "lh:computed:LoadSimulator",
+              "name": "lh:audit:total-byte-weight",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 63,
-              "name": "lh:audit:unminified-javascript",
+              "name": "lh:audit:unminified-css",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 64,
-              "name": "lh:audit:unused-css-rules",
+              "name": "lh:computed:LoadSimulator",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 65,
-              "name": "lh:computed:UnusedCSS",
+              "name": "lh:audit:unminified-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 66,
-              "name": "lh:audit:unused-javascript",
+              "name": "lh:audit:unused-css-rules",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 67,
-              "name": "lh:audit:modern-image-formats",
+              "name": "lh:computed:UnusedCSS",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 68,
-              "name": "lh:audit:uses-optimized-images",
+              "name": "lh:audit:unused-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 69,
-              "name": "lh:audit:uses-text-compression",
+              "name": "lh:audit:modern-image-formats",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 70,
-              "name": "lh:audit:uses-responsive-images",
+              "name": "lh:audit:uses-optimized-images",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 71,
-              "name": "lh:computed:ImageRecords",
+              "name": "lh:audit:uses-text-compression",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 72,
-              "name": "lh:audit:efficient-animated-content",
+              "name": "lh:audit:uses-responsive-images",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 73,
-              "name": "lh:audit:duplicated-javascript",
+              "name": "lh:computed:ImageRecords",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 74,
-              "name": "lh:audit:legacy-javascript",
+              "name": "lh:audit:efficient-animated-content",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 75,
-              "name": "lh:audit:inspector-issues",
+              "name": "lh:audit:duplicated-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 76,
-              "name": "lh:audit:no-document-write",
+              "name": "lh:audit:legacy-javascript",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 77,
-              "name": "lh:audit:uses-passive-event-listeners",
+              "name": "lh:audit:inspector-issues",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 78,
-              "name": "lh:audit:experimental-interaction-to-next-paint",
+              "name": "lh:audit:no-document-write",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 79,
-              "name": "lh:computed:Responsiveness",
+              "name": "lh:audit:uses-passive-event-listeners",
               "duration": 1,
               "entryType": "measure"
             },
@@ -10091,6 +10091,12 @@
               },
               {
                 "values": {
+                  "timeInMs": 60
+                },
+                "path": "audits[experimental-interaction-to-next-paint].displayValue"
+              },
+              {
+                "values": {
                   "timeInMs": 59.011
                 },
                 "path": "audits[network-rtt].displayValue"
@@ -10100,12 +10106,6 @@
                   "timeInMs": 539.765
                 },
                 "path": "audits[network-server-latency].displayValue"
-              },
-              {
-                "values": {
-                  "timeInMs": 60
-                },
-                "path": "audits[experimental-interaction-to-next-paint].displayValue"
               }
             ],
             "lighthouse-core/lib/i18n/i18n.js | cumulativeLayoutShiftMetric": [
@@ -10113,6 +10113,12 @@
             ],
             "lighthouse-core/audits/metrics/cumulative-layout-shift.js | description": [
               "audits[cumulative-layout-shift].description"
+            ],
+            "lighthouse-core/lib/i18n/i18n.js | interactionToNextPaint": [
+              "audits[experimental-interaction-to-next-paint].title"
+            ],
+            "lighthouse-core/audits/metrics/experimental-interaction-to-next-paint.js | description": [
+              "audits[experimental-interaction-to-next-paint].description"
             ],
             "lighthouse-core/audits/errors-in-console.js | title": [
               "audits[errors-in-console].title"
@@ -10492,12 +10498,6 @@
             ],
             "lighthouse-core/audits/dobetterweb/uses-passive-event-listeners.js | description": [
               "audits[uses-passive-event-listeners].description"
-            ],
-            "lighthouse-core/lib/i18n/i18n.js | interactionToNextPaint": [
-              "audits[experimental-interaction-to-next-paint].title"
-            ],
-            "lighthouse-core/audits/metrics/experimental-interaction-to-next-paint.js | description": [
-              "audits[experimental-interaction-to-next-paint].description"
             ],
             "lighthouse-core/audits/work-during-interaction.js | title": [
               "audits[work-during-interaction].title"
@@ -11989,6 +11989,61 @@
             "score": null,
             "scoreDisplayMode": "manual"
           },
+          "uses-responsive-images-snapshot": {
+            "id": "uses-responsive-images-snapshot",
+            "title": "Images were larger than their displayed size",
+            "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn more](https://web.dev/uses-responsive-images/).",
+            "score": 0,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [
+                {
+                  "key": "node",
+                  "itemType": "node",
+                  "text": ""
+                },
+                {
+                  "key": "url",
+                  "itemType": "url",
+                  "text": "URL"
+                },
+                {
+                  "key": "displayedDimensions",
+                  "itemType": "text",
+                  "text": "Displayed dimensions"
+                },
+                {
+                  "key": "actualDimensions",
+                  "itemType": "text",
+                  "text": "Actual dimensions"
+                }
+              ],
+              "items": [
+                {
+                  "node": {
+                    "type": "node",
+                    "lhId": "page-7-IMG",
+                    "path": "1,HTML,1,BODY,0,DIV,0,DIV,2,HEADER,0,DIV,1,DIV,0,A,0,IMG",
+                    "selector": "div.flex > div.flex-grow > a > img.h-10",
+                    "boundingRect": {
+                      "top": 12,
+                      "bottom": 52,
+                      "left": 136,
+                      "right": 224,
+                      "width": 89,
+                      "height": 40
+                    },
+                    "snippet": "<img src=\"/logo-text.svg\" class=\"h-10\" alt=\"Mike's Cereal Shack Co Logo - The Office Meme Creator\">",
+                    "nodeLabel": "Mike's Cereal Shack Co Logo - The Office Meme Creator"
+                  },
+                  "url": "https://www.mikescerealshack.co/logo-text.svg",
+                  "displayedDimensions": "233.625x105",
+                  "actualDimensions": "1000x450"
+                }
+              ]
+            }
+          },
           "doctype": {
             "id": "doctype",
             "title": "Page has the HTML doctype",
@@ -12359,61 +12414,6 @@
             "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more](https://web.dev/structured-data/).",
             "score": null,
             "scoreDisplayMode": "manual"
-          },
-          "uses-responsive-images-snapshot": {
-            "id": "uses-responsive-images-snapshot",
-            "title": "Images were larger than their displayed size",
-            "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn more](https://web.dev/uses-responsive-images/).",
-            "score": 0,
-            "scoreDisplayMode": "binary",
-            "details": {
-              "type": "table",
-              "headings": [
-                {
-                  "key": "node",
-                  "itemType": "node",
-                  "text": ""
-                },
-                {
-                  "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
-                },
-                {
-                  "key": "displayedDimensions",
-                  "itemType": "text",
-                  "text": "Displayed dimensions"
-                },
-                {
-                  "key": "actualDimensions",
-                  "itemType": "text",
-                  "text": "Actual dimensions"
-                }
-              ],
-              "items": [
-                {
-                  "node": {
-                    "type": "node",
-                    "lhId": "page-7-IMG",
-                    "path": "1,HTML,1,BODY,0,DIV,0,DIV,2,HEADER,0,DIV,1,DIV,0,A,0,IMG",
-                    "selector": "div.flex > div.flex-grow > a > img.h-10",
-                    "boundingRect": {
-                      "top": 12,
-                      "bottom": 52,
-                      "left": 136,
-                      "right": 224,
-                      "width": 89,
-                      "height": 40
-                    },
-                    "snippet": "<img src=\"/logo-text.svg\" class=\"h-10\" alt=\"Mike's Cereal Shack Co Logo - The Office Meme Creator\">",
-                    "nodeLabel": "Mike's Cereal Shack Co Logo - The Office Meme Creator"
-                  },
-                  "url": "https://www.mikescerealshack.co/logo-text.svg",
-                  "displayedDimensions": "233.625x105",
-                  "actualDimensions": "1000x450"
-                }
-              ]
-            }
           }
         },
         "configSettings": {
@@ -12958,7 +12958,7 @@
               "unminified-css": "If your build system minifies CSS files automatically, ensure that you are deploying the production build of your application. You can check this with the React Developer Tools extension. [Learn more](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build).",
               "unminified-javascript": "If your build system minifies JS files automatically, ensure that you are deploying the production build of your application. You can check this with the React Developer Tools extension. [Learn more](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build).",
               "unused-javascript": "If you are not server-side rendering, [split your JavaScript bundles](https://web.dev/code-splitting-suspense/) with `React.lazy()`. Otherwise, code-split using a third-party library such as [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/).",
-              "server-response-time": "If you are server-side rendering any React components, consider using `renderToNodeStream()` or `renderToStaticNodeStream()` to allow the client to receive and hydrate different parts of the markup instead of all at once. [Learn more](https://reactjs.org/docs/react-dom-server.html#rendertonodestream).",
+              "server-response-time": "If you are server-side rendering any React components, consider using `renderToPipeableStream()` or `renderToStaticNodeStream()` to allow the client to receive and hydrate different parts of the markup instead of all at once. [Learn more](https://reactjs.org/docs/react-dom-server.html#renderToPipeableStream).",
               "redirects": "If you are using React Router, minimize usage of the `<Redirect>` component for [route navigations](https://reacttraining.com/react-router/web/api/Redirect).",
               "user-timings": "Use the React DevTools Profiler, which makes use of the Profiler API, to measure the rendering performance of your components. [Learn more.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)",
               "dom-size": "Consider using a \"windowing\" library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the `Effect` hook to improve runtime performance."
@@ -13438,85 +13438,85 @@
             },
             {
               "startTime": 75,
-              "name": "lh:audit:doctype",
+              "name": "lh:audit:uses-responsive-images-snapshot",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 76,
-              "name": "lh:audit:dom-size",
+              "name": "lh:audit:doctype",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 77,
-              "name": "lh:audit:no-vulnerable-libraries",
+              "name": "lh:audit:dom-size",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 78,
-              "name": "lh:audit:js-libraries",
+              "name": "lh:audit:no-vulnerable-libraries",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 79,
-              "name": "lh:audit:password-inputs-can-be-pasted-into",
+              "name": "lh:audit:js-libraries",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 80,
-              "name": "lh:audit:meta-description",
+              "name": "lh:audit:password-inputs-can-be-pasted-into",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 81,
-              "name": "lh:audit:font-size",
+              "name": "lh:audit:meta-description",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 82,
-              "name": "lh:audit:link-text",
+              "name": "lh:audit:font-size",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 83,
-              "name": "lh:audit:crawlable-anchors",
+              "name": "lh:audit:link-text",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 84,
-              "name": "lh:audit:robots-txt",
+              "name": "lh:audit:crawlable-anchors",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 85,
-              "name": "lh:audit:tap-targets",
+              "name": "lh:audit:robots-txt",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 86,
-              "name": "lh:audit:plugins",
+              "name": "lh:audit:tap-targets",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 87,
-              "name": "lh:audit:structured-data",
+              "name": "lh:audit:plugins",
               "duration": 1,
               "entryType": "measure"
             },
             {
               "startTime": 88,
-              "name": "lh:audit:uses-responsive-images-snapshot",
+              "name": "lh:audit:structured-data",
               "duration": 1,
               "entryType": "measure"
             },
@@ -13891,6 +13891,18 @@
             "lighthouse-core/audits/accessibility/video-caption.js | description": [
               "audits[video-caption].description"
             ],
+            "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": [
+              "audits[uses-responsive-images-snapshot].title"
+            ],
+            "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": [
+              "audits[uses-responsive-images-snapshot].description"
+            ],
+            "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": [
+              "audits[uses-responsive-images-snapshot].details.headings[2].text"
+            ],
+            "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": [
+              "audits[uses-responsive-images-snapshot].details.headings[3].text"
+            ],
             "lighthouse-core/audits/dobetterweb/doctype.js | title": [
               "audits.doctype.title"
             ],
@@ -14060,18 +14072,6 @@
             ],
             "lighthouse-core/audits/seo/manual/structured-data.js | description": [
               "audits[structured-data].description"
-            ],
-            "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | failureTitle": [
-              "audits[uses-responsive-images-snapshot].title"
-            ],
-            "lighthouse-core/audits/byte-efficiency/uses-responsive-images.js | description": [
-              "audits[uses-responsive-images-snapshot].description"
-            ],
-            "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": [
-              "audits[uses-responsive-images-snapshot].details.headings[2].text"
-            ],
-            "lighthouse-core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": [
-              "audits[uses-responsive-images-snapshot].details.headings[3].text"
             ],
             "lighthouse-core/config/default-config.js | performanceCategoryTitle": [
               "categories.performance.title"
@@ -18928,7 +18928,7 @@
               "unminified-css": "If your build system minifies CSS files automatically, ensure that you are deploying the production build of your application. You can check this with the React Developer Tools extension. [Learn more](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build).",
               "unminified-javascript": "If your build system minifies JS files automatically, ensure that you are deploying the production build of your application. You can check this with the React Developer Tools extension. [Learn more](https://reactjs.org/docs/optimizing-performance.html#use-the-production-build).",
               "unused-javascript": "If you are not server-side rendering, [split your JavaScript bundles](https://web.dev/code-splitting-suspense/) with `React.lazy()`. Otherwise, code-split using a third-party library such as [loadable-components](https://www.smooth-code.com/open-source/loadable-components/docs/getting-started/).",
-              "server-response-time": "If you are server-side rendering any React components, consider using `renderToNodeStream()` or `renderToStaticNodeStream()` to allow the client to receive and hydrate different parts of the markup instead of all at once. [Learn more](https://reactjs.org/docs/react-dom-server.html#rendertonodestream).",
+              "server-response-time": "If you are server-side rendering any React components, consider using `renderToPipeableStream()` or `renderToStaticNodeStream()` to allow the client to receive and hydrate different parts of the markup instead of all at once. [Learn more](https://reactjs.org/docs/react-dom-server.html#renderToPipeableStream).",
               "redirects": "If you are using React Router, minimize usage of the `<Redirect>` component for [route navigations](https://reacttraining.com/react-router/web/api/Redirect).",
               "user-timings": "Use the React DevTools Profiler, which makes use of the Profiler API, to measure the rendering performance of your components. [Learn more.](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html)",
               "dom-size": "Consider using a \"windowing\" library like `react-window` to minimize the number of DOM nodes created if you are rendering many repeated elements on the page. [Learn more](https://web.dev/virtualize-long-lists-react-window/). Also, minimize unnecessary re-renders using [`shouldComponentUpdate`](https://reactjs.org/docs/optimizing-performance.html#shouldcomponentupdate-in-action), [`PureComponent`](https://reactjs.org/docs/react-api.html#reactpurecomponent), or [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) and [skip effects](https://reactjs.org/docs/hooks-effect.html#tip-optimizing-performance-by-skipping-effects) only until certain dependencies have changed if you are using the `Effect` hook to improve runtime performance."

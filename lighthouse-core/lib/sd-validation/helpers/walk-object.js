@@ -12,7 +12,7 @@
  * @param {function(string, any, Array<string>, any): void} callback
  * @param {Array<string>} path
  */
-module.exports = function walkObject(obj, callback, path = []) {
+export default function walkObject(obj, callback, path = []) {
   if (obj === null) {
     return;
   }
@@ -27,4 +27,4 @@ module.exports = function walkObject(obj, callback, path = []) {
       walkObject(fieldValue, callback, newPath);
     }
   });
-};
+}

@@ -29,6 +29,7 @@ import puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 import {getChromePath} from 'chrome-launcher';
+import esMain from 'es-main';
 
 import {parseChromeFlags} from '../../lighthouse-cli/run.js';
 
@@ -53,9 +54,61 @@ const argv_ = y
   .argv;
 
 const argv = /** @type {Awaited<typeof argv_>} */ (argv_);
-/** @type {LH.Config.Json=} */
-const config = argv.config ? JSON.parse(argv.config) : undefined;
 
+/**
+ * Ideally we would use `page.evaluate` instead of this,
+ * but we can't get a Puppeteer page object for the DevTools frontend.
+ * This is a light re-implementation of `page.evaluate`.
+ *
+ * @template R [unknown]
+ * @param {puppeteer.CDPSession} session
+ * @param {string|(() => (R|Promise<R>))} fn
+ * @param {Function[]} [deps]
+ * @return {Promise<R>}
+ */
+async function evaluateInSession(session, fn, deps) {
+  const depsSerialized = deps ? deps.join('\n') : '';
+
+  const expression = `(() => {
+    ${depsSerialized}
+    return (${fn.toString()})();
+  })()`;
+  const {result, exceptionDetails} = await session.send('Runtime.evaluate', {
+    awaitPromise: true,
+    returnByValue: true,
+    expression,
+  });
+
+  if (exceptionDetails) {
+    const text = exceptionDetails.exception?.description || exceptionDetails.text;
+    const name = typeof fn === 'string' ? '<stringified>' : fn.name;
+    throw new Error(`Evaluation exception: ${text}\n    at ${name} (Runtime.evaluate)`);
+  }
+
+  return result.value;
+}
+
+/**
+ * Similar to {@link evaluateInSession}, this is a light re-implementation of Puppeteer's `page.waitForFunction`.
+ *
+ * @template R [unknown]
+ * @param {puppeteer.CDPSession} session
+ * @param {() => (R|Promise<R>)} fn
+ * @param {Function[]} [deps]
+ * @return {Promise<R>}
+ */
+async function waitForFunction(session, fn, deps) {
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
+    try {
+      return await evaluateInSession(session, fn, deps);
+    } catch {
+      await new Promise(r => setTimeout(r, 500));
+    }
+  }
+}
+
+/* eslint-disable */
 /**
  * https://source.chromium.org/chromium/chromium/src/+/main:third_party/devtools-frontend/src/front_end/test_runner/TestRunner.js;l=170;drc=f59e6de269f4f50bca824f8ca678d5906c7d3dc8
  * @param {Record<string, function>} receiver
@@ -89,57 +142,33 @@ function addSniffer(receiver, methodName, override) {
   };
 }
 
-const sniffLhr = `
-new Promise(resolve => {
-  const panel = UI.panels.lighthouse || UI.panels.audits;
-  const methodName = panel.__proto__.buildReportUI ?
-    'buildReportUI' : '_buildReportUI';
-  (${addSniffer.toString()})(
-    panel.__proto__,
-    methodName,
-    (lhr, artifacts) => resolve({lhr, artifacts})
-  );
-});
-`;
-
-const sniffLighthouseStarted = `
-new Promise(resolve => {
-  const panel = UI.panels.lighthouse || UI.panels.audits;
-  const protocolService = panel.protocolService || panel._protocolService;
-  const functionName = protocolService.__proto__.startLighthouse ?
-    'startLighthouse' :
-    'collectLighthouseResults';
-  (${addSniffer.toString()})(
-    protocolService.__proto__,
-    functionName,
-    (inspectedURL) => resolve(inspectedURL)
-  );
-});
-`;
-
-const startLighthouse = `
-(async () => {
+async function waitForLighthouseReady() {
+  // @ts-expect-error global
   const viewManager = UI.viewManager || (UI.ViewManager.ViewManager || UI.ViewManager).instance();
   const views = viewManager.views || viewManager._views;
   const panelName = views.has('lighthouse') ? 'lighthouse' : 'audits';
   await viewManager.showView(panelName);
 
+  // @ts-expect-error global
   const panel = UI.panels.lighthouse || UI.panels.audits;
   const button = panel.contentElement.querySelector('button');
   if (button.disabled) throw new Error('Start button disabled');
 
+  // @ts-expect-error global
   UI.dockController.setDockSide('undocked');
 
   // Give the main target model a moment to be available.
   // Otherwise, 'SDK.TargetManager.TargetManager.instance().mainTarget()' is null.
+  // @ts-expect-error global
   if (self.runtime && self.runtime.loadLegacyModule) {
     // This exposes TargetManager via self.SDK.
     try {
+    // @ts-expect-error global
       await self.runtime.loadLegacyModule('core/sdk/sdk-legacy.js');
     } catch {}
   }
-  const targetManager =
-    SDK.targetManager || (SDK.TargetManager.TargetManager || SDK.TargetManager).instance();
+  // @ts-expect-error global
+  const targetManager = SDK.targetManager || (SDK.TargetManager.TargetManager || SDK.TargetManager).instance();
   if (targetManager.mainTarget() === null) {
     if (targetManager?.observeTargets) {
       await new Promise(resolve => targetManager.observeTargets({
@@ -152,122 +181,168 @@ const startLighthouse = `
       }
     }
   }
+}
 
+async function runLighthouse() {
+  // @ts-expect-error global
+  const panel = UI.panels.lighthouse || UI.panels.audits;
+
+  /** @type {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>} */
+  const resultPromise = new Promise((resolve, reject) => {
+    const methodName = panel.__proto__.buildReportUI ? 'buildReportUI' : '_buildReportUI';
+    addSniffer(
+      panel.__proto__,
+      methodName,
+      /**
+       * @param {LH.Result} lhr
+       * @param {LH.Artifacts} artifacts
+       */
+      (lhr, artifacts) => resolve({lhr, artifacts})
+    );
+
+    addSniffer(
+      panel.statusView.__proto__,
+      'renderBugReport',
+      reject,
+    );
+  });
+
+  const button = panel.contentElement.querySelector('button');
   button.click();
-})()
-`;
+
+  return resultPromise;
+}
+
+function disableLegacyNavigation() {
+  // @ts-expect-error global
+  const panel = UI.panels.lighthouse || UI.panels.audits;
+  const toolbarRoot = panel.contentElement.querySelector('.lighthouse-settings-pane .toolbar').shadowRoot;
+  const checkboxRoot = toolbarRoot.querySelector('span[is="dt-checkbox"]').shadowRoot;
+  const checkboxEl = checkboxRoot.querySelector('input');
+  checkboxEl.checked = false;
+  checkboxEl.dispatchEvent(new Event('change'));
+}
+/* eslint-enable */
 
 /**
- * @param {string} url
+ * @param {puppeteer.Browser} browser
+ * @param {puppeteer.CDPSession} inspectorSession
+ * @param {LH.Config.Json} config
  */
-function isValidUrl(url) {
-  try {
-    new URL(url);
-    return true;
-  } catch {
-    return false;
+async function installCustomLighthouseConfig(browser, inspectorSession, config) {
+  // Prevent modification for tests that are retried.
+  config = JSON.parse(JSON.stringify(config));
+
+  // Screen emulation is handled by DevTools, so we should avoid adding our own.
+  if (config.settings?.screenEmulation) {
+    throw new Error(
+      'Configs that modify device emulation are unsupported in DevTools:\n' +
+      JSON.stringify(config, null, 2)
+    );
   }
+  if (!config.settings) config.settings = {};
+  config.settings.screenEmulation = {disabled: true};
+
+  const workerTarget = await browser.waitForTarget(t => t.url().includes('lighthouse_worker'));
+
+  // Ensure the inspector is paused once the worker is initialized so Lighthouse doesn't start prematurely.
+  await Promise.all([
+    inspectorSession.send('Runtime.enable'),
+    inspectorSession.send('Debugger.enable'),
+  ]);
+  await inspectorSession.send('Debugger.pause');
+
+  const workerSession = await workerTarget.createCDPSession();
+  await Promise.all([
+    workerSession.send('Runtime.enable'),
+    workerSession.send('Debugger.enable'),
+    workerSession.send('Runtime.runIfWaitingForDebugger'),
+    new Promise(resolve => {
+      workerSession.once('Debugger.scriptParsed', resolve);
+    }),
+  ]);
+  await evaluateInSession(workerSession,
+    `self.createConfig = () => (${JSON.stringify(config)})`
+  );
+
+  await inspectorSession.send('Debugger.resume');
 }
 
 /**
- * @param {LH.Puppeteer.Page} page
- * @param {LH.Puppeteer.Browser} browser
- * @param {string} url
- * @param {LH.Config.Json=} config
- * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>}
+ * @param {puppeteer.CDPSession} inspectorSession
+ * @param {string[]} logs
  */
-async function testPage(page, browser, url, config) {
-  const targets = await browser.targets();
-  const inspectorTarget = targets.filter(t => t.url().includes('devtools'))[1];
-  if (!inspectorTarget) throw new Error('No inspector found.');
+async function installConsoleListener(inspectorSession, logs) {
+  inspectorSession.on('Log.entryAdded', ({entry}) => {
+    if (entry.level === 'verbose') return;
+    logs.push(`LOG[${entry.level}]: ${entry.text}\n`);
+  });
+  inspectorSession.on('Runtime.exceptionThrown', ({exceptionDetails}) => {
+    const text = exceptionDetails.exception?.description || exceptionDetails.text;
+    logs.push(`EXCEPTION: ${text}\n`);
+  });
+  await inspectorSession.send('Log.enable');
+}
 
-  const session = await inspectorTarget.createCDPSession();
-  await session.send('Runtime.enable');
+/**
+ * @param {string} url
+ * @param {{config?: LH.Config.Json, chromeFlags?: string[], useLegacyNavigation?: boolean}} [options]
+ * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, logs: string[]}>}
+ */
+async function testUrlFromDevtools(url, options = {}) {
+  const {config, chromeFlags, useLegacyNavigation} = options;
 
-  // Navigate to page and wait for initial HTML to be parsed before trying to start LH.
-  await new Promise((resolve, reject) => {
-    page.target().createCDPSession()
-      .then(session => {
-        session.send('Page.enable').then(() => {
-          session.once('Page.domContentEventFired', resolve);
-          page.goto(url);
-        });
-      })
-      .catch(reject);
+  const browser = await puppeteer.launch({
+    executablePath: getChromePath(),
+    args: chromeFlags,
+    devtools: true,
   });
 
-  if (config) {
-    // Must attach to the Lighthouse worker target and override the `self.createConfig`
-    // function, allowing us to use any config we want.
-    session.send('Target.setAutoAttach', {
-      autoAttach: true, flatten: true, waitForDebuggerOnStart: false,
-    });
-    session.once('Target.attachedToTarget', async (event) => {
-      if (event.targetInfo.type !== 'worker') throw new Error('expected lighthouse worker');
+  try {
+    if ((await browser.version()).startsWith('Headless')) {
+      throw new Error('You cannot use headless');
+    }
 
-      const targets = await browser.targets();
-      const workerTarget = targets.find(t => t._targetId === event.targetInfo.targetId);
-      if (!workerTarget) throw new Error('No lighthouse worker target found.');
+    const page = (await browser.pages())[0];
 
-      const workerSession = await workerTarget.createCDPSession();
-      await Promise.all([
-        workerSession.send('Runtime.enable'),
-        workerSession.send('Debugger.enable'),
-        new Promise(resolve => {
-          workerSession.once('Debugger.scriptParsed', resolve);
-        }),
-      ]);
-      await workerSession.send('Debugger.pause');
-      await workerSession.send('Runtime.evaluate', {
-        expression: `self.createConfig = () => (${JSON.stringify(config)});`,
+    const inspectorTarget = await browser.waitForTarget(t => t.url().includes('devtools'));
+    const inspectorSession = await inspectorTarget.createCDPSession();
+
+    /** @type {string[]} */
+    const logs = [];
+    await installConsoleListener(inspectorSession, logs);
+
+    await page.goto(url, {waitUntil: ['domcontentloaded']});
+
+    await waitForFunction(inspectorSession, waitForLighthouseReady);
+
+    if (!useLegacyNavigation) {
+      await evaluateInSession(inspectorSession, disableLegacyNavigation);
+    }
+
+    let configPromise = Promise.resolve();
+    if (config) {
+      // Must attach to the Lighthouse worker target and override the `self.createConfig`
+      // function, allowing us to use any config we want.
+      // This needs to be done *before* starting Lighthouse, otherwise the config may not be installed in time.
+      await inspectorSession.send('Target.setAutoAttach', {
+        autoAttach: true,
+        flatten: true,
+        waitForDebuggerOnStart: true,
       });
-      await workerSession.send('Debugger.resume');
-    });
-  }
 
-  /** @type {Omit<LH.Puppeteer.Protocol.Runtime.EvaluateResponse, 'result'>|undefined} */
-  let startLHResponse;
-  while (!startLHResponse || startLHResponse.exceptionDetails) {
-    if (startLHResponse) await new Promise(resolve => setTimeout(resolve, 1000));
-    startLHResponse = await session.send('Runtime.evaluate', {
-      expression: startLighthouse,
-      awaitPromise: true,
-    }).catch(err => ({exceptionDetails: err}));
-  }
+      configPromise = installCustomLighthouseConfig(browser, inspectorSession, config);
+    }
 
-  /** @type {LH.Puppeteer.Protocol.Runtime.EvaluateResponse} */
-  const lhStartedResponse = await session.send('Runtime.evaluate', {
-    expression: sniffLighthouseStarted,
-    awaitPromise: true,
-    returnByValue: true,
-  }).catch(err => err);
-  // Verify the first parameter to `startLighthouse`, which should be a url.
-  // In M100 the LHR is returned on `collectLighthouseResults` which has just 1 options parameter containing `inspectedUrl`.
-  // Don't try to check the exact value (because of redirects and such), just
-  // make sure it exists.
-  if (
-    !isValidUrl(lhStartedResponse.result.value) &&
-    !isValidUrl(lhStartedResponse.result.value.inspectedURL)
-  ) {
-    throw new Error(`Lighthouse did not start correctly. Got unexpected value for url: ${
-      JSON.stringify(lhStartedResponse.result.value)}`);
-  }
+    const [result] = await Promise.all([
+      evaluateInSession(inspectorSession, runLighthouse, [addSniffer]),
+      configPromise,
+    ]);
 
-  /** @type {LH.Puppeteer.Protocol.Runtime.EvaluateResponse} */
-  const remoteLhrResponse = await session.send('Runtime.evaluate', {
-    expression: sniffLhr,
-    awaitPromise: true,
-    returnByValue: true,
-  }).catch(err => err);
-
-  if (!remoteLhrResponse.result?.value?.lhr) {
-    throw new Error('Problem sniffing LHR.');
+    return {...result, logs};
+  } finally {
+    await browser.close();
   }
-  if (!remoteLhrResponse.result?.value?.artifacts) {
-    throw new Error('Problem sniffing artifacts.');
-  }
-
-  return remoteLhrResponse.result.value;
 }
 
 /**
@@ -288,9 +363,11 @@ async function readUrlList() {
   return new Promise(resolve => rl.on('close', () => resolve(urlList)));
 }
 
-async function run() {
+async function main() {
   const chromeFlags = parseChromeFlags(argv['chromeFlags']);
   const outputDir = argv['output-dir'];
+  /** @type {LH.Config.Json=} */
+  const config = argv.config ? JSON.parse(argv.config) : undefined;
 
   // Create output directory.
   if (fs.existsSync(outputDir)) {
@@ -316,20 +393,9 @@ async function run() {
     }
   }
 
-  const browser = await puppeteer.launch({
-    executablePath: getChromePath(),
-    args: chromeFlags,
-    devtools: true,
-  });
-
-  if ((await browser.version()).startsWith('Headless')) {
-    throw new Error('You cannot use headless');
-  }
-
   let errorCount = 0;
   const urlList = await readUrlList();
   for (let i = 0; i < urlList.length; ++i) {
-    const page = await browser.newPage();
     try {
       /** @type {NodeJS.Timeout} */
       let timeout;
@@ -337,7 +403,7 @@ async function run() {
         timeout = setTimeout(reject, 100_000, new Error('Timed out waiting for Lighthouse to run'));
       });
       const {lhr, artifacts} = await Promise.race([
-        testPage(page, browser, urlList[i], config),
+        testUrlFromDevtools(urlList[i], {config, chromeFlags}),
         timeoutPromise,
       ]).finally(() => {
         clearTimeout(timeout);
@@ -349,17 +415,16 @@ async function run() {
       errorCount += 1;
       console.error(error.message);
       fs.writeFileSync(`${argv.o}/lhr-${i}.json`, JSON.stringify({error: error.message}, null, 2));
-    } finally {
-      try {
-        await page.close();
-      } catch {}
     }
   }
   console.log(`${urlList.length - errorCount} / ${urlList.length} urls run successfully.`);
   console.log(`Results saved to ${argv.o}`);
 
-  await browser.close();
-
   if (errorCount) process.exit(1);
 }
-run();
+
+if (esMain(import.meta)) {
+  await main();
+}
+
+export {testUrlFromDevtools};

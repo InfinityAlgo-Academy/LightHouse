@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const serviceWorkers = require('../driver/service-workers.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+import * as serviceWorkers from '../driver/service-workers.js';
 
 class ServiceWorker extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
@@ -42,4 +42,4 @@ class ServiceWorker extends FRGatherer {
   }
 }
 
-module.exports = ServiceWorker;
+export default ServiceWorker;

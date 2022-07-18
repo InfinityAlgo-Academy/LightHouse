@@ -19,7 +19,7 @@ before(async () => {
     (await import('../../../../gather/gatherers/dobetterweb/response-compression.js')).default;
 });
 
-const mocks = mockDriverSubmodules();
+const mocks = await mockDriverSubmodules();
 
 const networkRecords = [
   {

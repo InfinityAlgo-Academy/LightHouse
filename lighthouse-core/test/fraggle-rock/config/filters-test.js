@@ -6,10 +6,10 @@
 
 import log from 'lighthouse-logger';
 
-import BaseAudit from '../../../audits/audit.js';
+import {Audit as BaseAudit} from '../../../audits/audit.js';
 import BaseGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 import {defaultSettings, defaultNavigationConfig} from '../../../config/constants.js';
-import filters from '../../../fraggle-rock/config/filters.js';
+import * as filters from '../../../fraggle-rock/config/filters.js';
 import {initializeConfig} from '../../../fraggle-rock/config/config.js';
 
 describe('Fraggle Rock Config Filtering', () => {

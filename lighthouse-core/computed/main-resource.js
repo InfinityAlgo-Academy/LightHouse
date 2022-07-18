@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
-const NetworkRecords = require('./network-records.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import {NetworkAnalyzer} from '../lib/dependency-graph/simulator/network-analyzer.js';
+import NetworkRecords from './network-records.js';
 
 /**
  * @fileoverview This artifact identifies the main resource on the page. Current solution assumes
@@ -32,4 +32,4 @@ class MainResource {
   }
 }
 
-module.exports = makeComputedArtifact(MainResource, ['URL', 'devtoolsLog']);
+export default makeComputedArtifact(MainResource, ['URL', 'devtoolsLog']);

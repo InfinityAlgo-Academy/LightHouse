@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const NetworkRequest = require('./network-request.js');
-const EventEmitter = require('events').EventEmitter;
+import log from 'lighthouse-logger';
+import {NetworkRequest} from './network-request.js';
+import {EventEmitter} from 'events';
 
 /**
  * @typedef {{
@@ -325,4 +325,4 @@ class NetworkRecorder extends RequestEventEmitter {
   }
 }
 
-module.exports = NetworkRecorder;
+export {NetworkRecorder};

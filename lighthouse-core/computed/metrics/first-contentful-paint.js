@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const NavigationMetric = require('./navigation-metric.js');
-const LanternFirstContentfulPaint = require('./lantern-first-contentful-paint.js');
+import {makeComputedArtifact} from '../computed-artifact.js';
+import NavigationMetric from './navigation-metric.js';
+import LanternFirstContentfulPaint from './lantern-first-contentful-paint.js';
 
 class FirstContentfulPaint extends NavigationMetric {
   /**
@@ -34,7 +34,7 @@ class FirstContentfulPaint extends NavigationMetric {
   }
 }
 
-module.exports = makeComputedArtifact(
+export default makeComputedArtifact(
   FirstContentfulPaint,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

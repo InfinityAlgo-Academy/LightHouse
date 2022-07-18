@@ -9,10 +9,10 @@ import {
   getAttributableURLForTask,
   getExecutionTimingsByURL,
 } from '../../../lib/tracehouse/task-summary.js';
-import NetworkRecorder from '../../../lib/network-recorder.js';
-import MainThreadTasks from '../../../lib/tracehouse/main-thread-tasks.js';
-import TraceProcessor from '../../../lib/tracehouse/trace-processor.js';
-import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import {NetworkRecorder} from '../../../lib/network-recorder.js';
+import {MainThreadTasks} from '../../../lib/tracehouse/main-thread-tasks.js';
+import {TraceProcessor} from '../../../lib/tracehouse/trace-processor.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 import {taskGroups} from '../../../lib/tracehouse/task-groups.js';
 import {readJson} from '../../test-utils.js';
 

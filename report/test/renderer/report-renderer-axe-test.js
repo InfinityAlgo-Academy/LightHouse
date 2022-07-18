@@ -7,7 +7,7 @@
 import puppeteer from 'puppeteer';
 
 import reportGenerator from '../../generator/report-generator.js';
-import axeLib from '../../../lighthouse-core/lib/axe.js';
+import {axeSource} from '../../../lighthouse-core/lib/axe.js';
 import {readJson} from '../../../lighthouse-core/test/test-utils.js';
 
 const sampleResults = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);
@@ -52,7 +52,7 @@ describe('ReportRendererAxe', () => {
         },
       };
 
-      await page.evaluate(axeLib.source);
+      await page.evaluate(axeSource);
       // eslint-disable-next-line no-undef
       const axeResults = await page.evaluate(config => axe.run(config), config);
 

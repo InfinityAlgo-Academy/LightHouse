@@ -7,10 +7,11 @@
 
 /** @fileoverview This file is no longer used internally, but remains here for backcompat with plugins. */
 
-const log = require('lighthouse-logger');
-const makeComputedArtifact = require('./computed-artifact.js');
-const ProcessedTrace = require('./processed-trace.js');
-const ProcessedNavigation = require('./processed-navigation.js');
+import log from 'lighthouse-logger';
+
+import {makeComputedArtifact} from './computed-artifact.js';
+import ProcessedTrace from './processed-trace.js';
+import ProcessedNavigation from './processed-navigation.js';
 
 class TraceOfTab {
   /**
@@ -26,5 +27,5 @@ class TraceOfTab {
 }
 
 log.warn(`trace-of-tab`, `trace-of-tab is deprecated, use processed-trace / processed-navigation instead`); // eslint-disable-line max-len
-module.exports = makeComputedArtifact(TraceOfTab, null);
+export default makeComputedArtifact(TraceOfTab, null);
 

@@ -7,7 +7,7 @@
 
 /* global window */
 
-const pageFunctions = require('../../lib/page-functions.js');
+import {pageFunctions} from '../../lib/page-functions.js';
 
 class ExecutionContext {
   /** @param {LH.Gatherer.FRProtocolSession} session */
@@ -249,4 +249,4 @@ class ExecutionContext {
   }
 }
 
-module.exports = ExecutionContext;
+export {ExecutionContext};

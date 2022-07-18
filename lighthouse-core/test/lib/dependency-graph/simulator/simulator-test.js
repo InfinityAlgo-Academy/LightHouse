@@ -6,10 +6,10 @@
 
 import {strict as assert} from 'assert';
 
-import NetworkNode from '../../../../lib/dependency-graph/network-node.js';
-import CpuNode from '../../../../lib/dependency-graph/cpu-node.js';
-import Simulator from '../../../../lib/dependency-graph/simulator/simulator.js';
-import DNSCache from '../../../../lib/dependency-graph/simulator/dns-cache.js';
+import {NetworkNode} from '../../../../lib/dependency-graph/network-node.js';
+import {CPUNode} from '../../../../lib/dependency-graph/cpu-node.js';
+import {Simulator} from '../../../../lib/dependency-graph/simulator/simulator.js';
+import {DNSCache} from '../../../../lib/dependency-graph/simulator/dns-cache.js';
 import PageDependencyGraph from '../../../../computed/page-dependency-graph.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../../test-utils.js';
 
@@ -74,7 +74,7 @@ describe('DependencyGraph/Simulator', () => {
 
     it('should simulate basic mixed graphs', () => {
       const rootNode = new NetworkNode(request({}));
-      const cpuNode = new CpuNode(cpuTask({duration: 200}));
+      const cpuNode = new CPUNode(cpuTask({duration: 200}));
       cpuNode.addDependency(rootNode);
 
       const simulator = new Simulator({
@@ -141,9 +141,9 @@ describe('DependencyGraph/Simulator', () => {
 
     it('should simulate basic CPU queue graphs', () => {
       const nodeA = new NetworkNode(request({}));
-      const nodeB = new CpuNode(cpuTask({duration: 100}));
-      const nodeC = new CpuNode(cpuTask({duration: 600}));
-      const nodeD = new CpuNode(cpuTask({duration: 300}));
+      const nodeB = new CPUNode(cpuTask({duration: 100}));
+      const nodeC = new CPUNode(cpuTask({duration: 600}));
+      const nodeD = new CPUNode(cpuTask({duration: 300}));
 
       nodeA.addDependent(nodeB);
       nodeA.addDependent(nodeC);
@@ -167,8 +167,8 @@ describe('DependencyGraph/Simulator', () => {
       const nodeB = new NetworkNode(request({}));
       const nodeC = new NetworkNode(request({}));
       const nodeD = new NetworkNode(request({}));
-      const nodeE = new CpuNode(cpuTask({duration: 1000}));
-      const nodeF = new CpuNode(cpuTask({duration: 1000}));
+      const nodeE = new CPUNode(cpuTask({duration: 1000}));
+      const nodeF = new CPUNode(cpuTask({duration: 1000}));
 
       nodeA.addDependent(nodeB);
       nodeB.addDependent(nodeC);

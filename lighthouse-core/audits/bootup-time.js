@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const {taskGroups} = require('../lib/tracehouse/task-groups.js');
-const i18n = require('../lib/i18n/i18n.js');
-const NetworkRecords = require('../computed/network-records.js');
-const MainThreadTasks = require('../computed/main-thread-tasks.js');
-const {getExecutionTimingsByURL} = require('../lib/tracehouse/task-summary.js');
+import {Audit} from './audit.js';
+import {taskGroups} from '../lib/tracehouse/task-groups.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import NetworkRecords from '../computed/network-records.js';
+import MainThreadTasks from '../computed/main-thread-tasks.js';
+import {getExecutionTimingsByURL} from '../lib/tracehouse/task-summary.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the time spent executing javascript files during the load. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -32,7 +32,7 @@ const UIStrings = {
     'Try auditing the page in incognito mode or from a Chrome profile without extensions.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class BootupTime extends Audit {
   /**
@@ -148,5 +148,5 @@ class BootupTime extends Audit {
   }
 }
 
-module.exports = BootupTime;
-module.exports.UIStrings = UIStrings;
+export default BootupTime;
+export {UIStrings};

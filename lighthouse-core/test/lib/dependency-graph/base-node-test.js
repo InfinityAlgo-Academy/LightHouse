@@ -6,8 +6,8 @@
 
 import {strict as assert} from 'assert';
 
-import BaseNode from '../../../lib/dependency-graph/base-node.js';
-import NetworkNode from '../../../lib/dependency-graph/network-node.js';
+import {BaseNode} from '../../../lib/dependency-graph/base-node.js';
+import {NetworkNode} from '../../../lib/dependency-graph/network-node.js';
 
 function sortedById(nodeArray) {
   return nodeArray.sort((node1, node2) => node1.id.localeCompare(node2.id));

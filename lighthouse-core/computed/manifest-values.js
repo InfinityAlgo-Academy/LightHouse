@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const icons = require('../lib/icons.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import * as icons from '../lib/icons.js';
 
 const PWA_DISPLAY_VALUES = ['minimal-ui', 'fullscreen', 'standalone'];
 
@@ -132,4 +132,4 @@ class ManifestValues {
   }
 }
 
-module.exports = makeComputedArtifact(ManifestValues, ['InstallabilityErrors', 'WebAppManifest']);
+export default makeComputedArtifact(ManifestValues, ['InstallabilityErrors', 'WebAppManifest']);

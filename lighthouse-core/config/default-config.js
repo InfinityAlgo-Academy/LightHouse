@@ -7,9 +7,10 @@
 
 /* eslint-disable max-len */
 
-const constants = require('./constants.js');
-const i18n = require('../lib/i18n/i18n.js');
-const m2a = require('./metrics-to-audits.js');
+import * as constants from './constants.js';
+
+import * as i18n from '../lib/i18n/i18n.js';
+import {metricsToAudits} from './metrics-to-audits.js';
 
 const UIStrings = {
   /** Title of the Performance category of audits. Equivalent to 'Web performance', this term is inclusive of all web page speed and loading optimization topics. Also used as a label of a score gauge; try to limit to 20 characters. */
@@ -120,58 +121,162 @@ const UIStrings = {
   pwaOptimizedGroupTitle: 'PWA Optimized',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+
+// Ensure all artifact IDs match the typedefs.
+/** @type {Record<keyof LH.FRArtifacts, string>} */
+const artifacts = {
+  DevtoolsLog: '',
+  Trace: '',
+  Accessibility: '',
+  AnchorElements: '',
+  CacheContents: '',
+  ConsoleMessages: '',
+  CSSUsage: '',
+  Doctype: '',
+  DOMStats: '',
+  EmbeddedContent: '',
+  FontSize: '',
+  Inputs: '',
+  FullPageScreenshot: '',
+  GlobalListeners: '',
+  IFrameElements: '',
+  ImageElements: '',
+  InstallabilityErrors: '',
+  InspectorIssues: '',
+  JsUsage: '',
+  LinkElements: '',
+  MainDocumentContent: '',
+  MetaElements: '',
+  NetworkUserAgent: '',
+  OptimizedImages: '',
+  PasswordInputsWithPreventedPaste: '',
+  ResponseCompression: '',
+  RobotsTxt: '',
+  ServiceWorker: '',
+  ScriptElements: '',
+  Scripts: '',
+  SourceMaps: '',
+  Stacks: '',
+  TagsBlockingFirstPaint: '',
+  TapTargets: '',
+  TraceElements: '',
+  ViewportDimensions: '',
+  WebAppManifest: '',
+  devtoolsLogs: '',
+  traces: '',
+};
+
+for (const key of Object.keys(artifacts)) {
+  artifacts[/** @type {keyof typeof artifacts} */ (key)] = key;
+}
 
 /** @type {LH.Config.Json} */
 const defaultConfig = {
   settings: constants.defaultSettings,
-  passes: [{
-    passName: 'defaultPass',
-    recordTrace: true,
-    useThrottling: true,
-    pauseAfterFcpMs: 1000,
-    pauseAfterLoadMs: 1000,
-    networkQuietThresholdMs: 1000,
-    cpuQuietThresholdMs: 1000,
-    gatherers: [
-      'css-usage',
-      'js-usage',
-      'viewport-dimensions',
-      'console-messages',
-      'anchor-elements',
-      'image-elements',
-      'link-elements',
-      'meta-elements',
-      'script-elements',
-      'scripts',
-      'iframe-elements',
-      'inputs',
-      'main-document-content',
-      'global-listeners',
-      'dobetterweb/doctype',
-      'dobetterweb/domstats',
-      'dobetterweb/optimized-images',
-      'dobetterweb/password-inputs-with-prevented-paste',
-      'dobetterweb/response-compression',
-      'dobetterweb/tags-blocking-first-paint',
-      'seo/font-size',
-      'seo/embedded-content',
-      'seo/robots-txt',
-      'seo/tap-targets',
-      'accessibility',
-      'trace-elements',
-      'inspector-issues',
-      'source-maps',
-      'full-page-screenshot',
-    ],
-  },
-  {
-    passName: 'offlinePass',
-    loadFailureMode: 'ignore',
-    gatherers: [
-      'service-worker',
-    ],
-  }],
+  artifacts: [
+    // Artifacts which can be depended on come first.
+    {id: artifacts.DevtoolsLog, gatherer: 'devtools-log'},
+    {id: artifacts.Trace, gatherer: 'trace'},
+
+    {id: artifacts.Accessibility, gatherer: 'accessibility'},
+    {id: artifacts.AnchorElements, gatherer: 'anchor-elements'},
+    {id: artifacts.CacheContents, gatherer: 'cache-contents'},
+    {id: artifacts.ConsoleMessages, gatherer: 'console-messages'},
+    {id: artifacts.CSSUsage, gatherer: 'css-usage'},
+    {id: artifacts.Doctype, gatherer: 'dobetterweb/doctype'},
+    {id: artifacts.DOMStats, gatherer: 'dobetterweb/domstats'},
+    {id: artifacts.EmbeddedContent, gatherer: 'seo/embedded-content'},
+    {id: artifacts.FontSize, gatherer: 'seo/font-size'},
+    {id: artifacts.Inputs, gatherer: 'inputs'},
+    {id: artifacts.GlobalListeners, gatherer: 'global-listeners'},
+    {id: artifacts.IFrameElements, gatherer: 'iframe-elements'},
+    {id: artifacts.ImageElements, gatherer: 'image-elements'},
+    {id: artifacts.InstallabilityErrors, gatherer: 'installability-errors'},
+    {id: artifacts.InspectorIssues, gatherer: 'inspector-issues'},
+    {id: artifacts.JsUsage, gatherer: 'js-usage'},
+    {id: artifacts.LinkElements, gatherer: 'link-elements'},
+    {id: artifacts.MainDocumentContent, gatherer: 'main-document-content'},
+    {id: artifacts.MetaElements, gatherer: 'meta-elements'},
+    {id: artifacts.NetworkUserAgent, gatherer: 'network-user-agent'},
+    {id: artifacts.OptimizedImages, gatherer: 'dobetterweb/optimized-images'},
+    {id: artifacts.PasswordInputsWithPreventedPaste, gatherer: 'dobetterweb/password-inputs-with-prevented-paste'},
+    {id: artifacts.ResponseCompression, gatherer: 'dobetterweb/response-compression'},
+    {id: artifacts.RobotsTxt, gatherer: 'seo/robots-txt'},
+    {id: artifacts.ServiceWorker, gatherer: 'service-worker'},
+    {id: artifacts.ScriptElements, gatherer: 'script-elements'},
+    {id: artifacts.Scripts, gatherer: 'scripts'},
+    {id: artifacts.SourceMaps, gatherer: 'source-maps'},
+    {id: artifacts.Stacks, gatherer: 'stacks'},
+    {id: artifacts.TagsBlockingFirstPaint, gatherer: 'dobetterweb/tags-blocking-first-paint'},
+    {id: artifacts.TapTargets, gatherer: 'seo/tap-targets'},
+    {id: artifacts.TraceElements, gatherer: 'trace-elements'},
+    {id: artifacts.ViewportDimensions, gatherer: 'viewport-dimensions'},
+    {id: artifacts.WebAppManifest, gatherer: 'web-app-manifest'},
+
+    // Artifact copies are renamed for compatibility with legacy artifacts.
+    {id: artifacts.devtoolsLogs, gatherer: 'devtools-log-compat'},
+    {id: artifacts.traces, gatherer: 'trace-compat'},
+
+    // FullPageScreenshot comes at the very end so all other node analysis is captured.
+    {id: artifacts.FullPageScreenshot, gatherer: 'full-page-screenshot'},
+  ],
+  navigations: [
+    {
+      id: 'default',
+      pauseAfterFcpMs: 1000,
+      pauseAfterLoadMs: 1000,
+      networkQuietThresholdMs: 1000,
+      cpuQuietThresholdMs: 1000,
+      artifacts: [
+        // Artifacts which can be depended on come first.
+        artifacts.DevtoolsLog,
+        artifacts.Trace,
+
+        artifacts.Accessibility,
+        artifacts.AnchorElements,
+        artifacts.CacheContents,
+        artifacts.ConsoleMessages,
+        artifacts.CSSUsage,
+        artifacts.Doctype,
+        artifacts.DOMStats,
+        artifacts.EmbeddedContent,
+        artifacts.FontSize,
+        artifacts.Inputs,
+        artifacts.GlobalListeners,
+        artifacts.IFrameElements,
+        artifacts.ImageElements,
+        artifacts.InstallabilityErrors,
+        artifacts.InspectorIssues,
+        artifacts.JsUsage,
+        artifacts.LinkElements,
+        artifacts.MainDocumentContent,
+        artifacts.MetaElements,
+        artifacts.NetworkUserAgent,
+        artifacts.OptimizedImages,
+        artifacts.PasswordInputsWithPreventedPaste,
+        artifacts.ResponseCompression,
+        artifacts.RobotsTxt,
+        artifacts.ServiceWorker,
+        artifacts.ScriptElements,
+        artifacts.Scripts,
+        artifacts.SourceMaps,
+        artifacts.Stacks,
+        artifacts.TagsBlockingFirstPaint,
+        artifacts.TapTargets,
+        artifacts.TraceElements,
+        artifacts.ViewportDimensions,
+        artifacts.WebAppManifest,
+
+        // Compat artifacts come last.
+        artifacts.devtoolsLogs,
+        artifacts.traces,
+
+        // FullPageScreenshot comes at the very end so all other node analysis is captured.
+        artifacts.FullPageScreenshot,
+      ],
+    },
+  ],
   audits: [
     'is-on-https',
     'service-worker',
@@ -185,6 +290,7 @@ const defaultConfig = {
     'metrics/total-blocking-time',
     'metrics/max-potential-fid',
     'metrics/cumulative-layout-shift',
+    'metrics/experimental-interaction-to-next-paint',
     'errors-in-console',
     'server-response-time',
     'metrics/interactive',
@@ -301,6 +407,7 @@ const defaultConfig = {
     'byte-efficiency/efficient-animated-content',
     'byte-efficiency/duplicated-javascript',
     'byte-efficiency/legacy-javascript',
+    'byte-efficiency/uses-responsive-images-snapshot',
     'dobetterweb/doctype',
     'dobetterweb/charset',
     'dobetterweb/dom-size',
@@ -325,8 +432,8 @@ const defaultConfig = {
     'seo/plugins',
     'seo/canonical',
     'seo/manual/structured-data',
+    'work-during-interaction',
   ],
-
   groups: {
     'metrics': {
       title: str_(UIStrings.metricGroupTitle),
@@ -413,12 +520,13 @@ const defaultConfig = {
       title: str_(UIStrings.performanceCategoryTitle),
       supportedModes: ['navigation', 'timespan', 'snapshot'],
       auditRefs: [
-        {id: 'first-contentful-paint', weight: 10, group: 'metrics', acronym: 'FCP', relevantAudits: m2a.fcpRelevantAudits},
+        {id: 'first-contentful-paint', weight: 10, group: 'metrics', acronym: 'FCP', relevantAudits: metricsToAudits.fcpRelevantAudits},
         {id: 'interactive', weight: 10, group: 'metrics', acronym: 'TTI'},
         {id: 'speed-index', weight: 10, group: 'metrics', acronym: 'SI'},
-        {id: 'total-blocking-time', weight: 30, group: 'metrics', acronym: 'TBT', relevantAudits: m2a.tbtRelevantAudits},
-        {id: 'largest-contentful-paint', weight: 25, group: 'metrics', acronym: 'LCP', relevantAudits: m2a.lcpRelevantAudits},
-        {id: 'cumulative-layout-shift', weight: 15, group: 'metrics', acronym: 'CLS', relevantAudits: m2a.clsRelevantAudits},
+        {id: 'total-blocking-time', weight: 30, group: 'metrics', acronym: 'TBT', relevantAudits: metricsToAudits.tbtRelevantAudits},
+        {id: 'largest-contentful-paint', weight: 25, group: 'metrics', acronym: 'LCP', relevantAudits: metricsToAudits.lcpRelevantAudits},
+        {id: 'cumulative-layout-shift', weight: 15, group: 'metrics', acronym: 'CLS', relevantAudits: metricsToAudits.clsRelevantAudits},
+        {id: 'experimental-interaction-to-next-paint', weight: 0, group: 'metrics', acronym: 'INP', relevantAudits: metricsToAudits.inpRelevantAudits},
 
         // These are our "invisible" metrics. Not displayed, but still in the LHR.
         {id: 'max-potential-fid', weight: 0, group: 'hidden'},
@@ -465,6 +573,8 @@ const defaultConfig = {
         {id: 'unsized-images', weight: 0},
         {id: 'viewport', weight: 0},
         {id: 'no-unload-listeners', weight: 0},
+        {id: 'uses-responsive-images-snapshot', weight: 0},
+        {id: 'work-during-interaction', weight: 0},
 
         // Budget audits.
         {id: 'performance-budget', weight: 0, group: 'budgets'},
@@ -624,10 +734,10 @@ const defaultConfig = {
   },
 };
 
-module.exports = defaultConfig;
+export default defaultConfig;
 
 // Use `defineProperty` so that the strings are accesible from original but ignored when we copy it
-Object.defineProperty(module.exports, 'UIStrings', {
+Object.defineProperty(defaultConfig, 'UIStrings', {
   enumerable: false,
   get: () => UIStrings,
 });

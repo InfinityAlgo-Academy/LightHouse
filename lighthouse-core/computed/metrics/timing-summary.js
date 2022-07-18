@@ -5,20 +5,20 @@
  */
 'use strict';
 
-const ProcessedTrace = require('../processed-trace.js');
-const ProcessedNavigation = require('../processed-navigation.js');
-const Speedline = require('../speedline.js');
-const FirstContentfulPaint = require('./first-contentful-paint.js');
-const FirstContentfulPaintAllFrames = require('./first-contentful-paint-all-frames.js');
-const FirstMeaningfulPaint = require('./first-meaningful-paint.js');
-const LargestContentfulPaint = require('./largest-contentful-paint.js');
-const LargestContentfulPaintAllFrames = require('./largest-contentful-paint-all-frames.js');
-const Interactive = require('./interactive.js');
-const CumulativeLayoutShift = require('./cumulative-layout-shift.js');
-const SpeedIndex = require('./speed-index.js');
-const MaxPotentialFID = require('./max-potential-fid.js');
-const TotalBlockingTime = require('./total-blocking-time.js');
-const makeComputedArtifact = require('../computed-artifact.js');
+import ProcessedTrace from '../processed-trace.js';
+import ProcessedNavigation from '../processed-navigation.js';
+import Speedline from '../speedline.js';
+import FirstContentfulPaint from './first-contentful-paint.js';
+import FirstContentfulPaintAllFrames from './first-contentful-paint-all-frames.js';
+import FirstMeaningfulPaint from './first-meaningful-paint.js';
+import LargestContentfulPaint from './largest-contentful-paint.js';
+import LargestContentfulPaintAllFrames from './largest-contentful-paint-all-frames.js';
+import Interactive from './interactive.js';
+import CumulativeLayoutShift from './cumulative-layout-shift.js';
+import SpeedIndex from './speed-index.js';
+import MaxPotentialFID from './max-potential-fid.js';
+import TotalBlockingTime from './total-blocking-time.js';
+import {makeComputedArtifact} from '../computed-artifact.js';
 
 class TimingSummary {
   /**
@@ -151,7 +151,7 @@ class TimingSummary {
   }
 }
 
-module.exports = makeComputedArtifact(
+export default makeComputedArtifact(
   TimingSummary,
   ['devtoolsLog', 'gatherContext', 'settings', 'trace', 'URL']
 );

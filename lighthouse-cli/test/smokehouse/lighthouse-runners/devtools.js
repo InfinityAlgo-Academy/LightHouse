@@ -10,60 +10,29 @@
 
 import fs from 'fs';
 import os from 'os';
-import {spawn} from 'child_process';
+import {execFileSync} from 'child_process';
 
 import {LH_ROOT} from '../../../../root.js';
+import {testUrlFromDevtools} from '../../../../lighthouse-core/scripts/pptr-run-devtools.js';
 
 const devtoolsDir =
   process.env.DEVTOOLS_PATH || `${LH_ROOT}/.tmp/chromium-web-tests/devtools/devtools-frontend`;
 
 /**
- * @param {string[]} logs
- * @param {string} command
- * @param {string[]} args
- * @return {Promise<boolean>} true if command exited successfully.
- */
-function spawnAndLog(logs, command, args) {
-  return new Promise((resolve) => {
-    const spawnHandle = spawn(command, args);
-    spawnHandle.on('close', code => {
-      if (code) {
-        logs.push(`[FAILURE] Command exited with code: ${code}\n`);
-      } else {
-        logs.push('[SUCCESS] Command exited with code: 0\n');
-      }
-      resolve(code === 0);
-    });
-    spawnHandle.on('error', (error) => {
-      logs.push(`ERROR: ${error.toString()}`);
-    });
-    spawnHandle.stdout.setEncoding('utf8');
-    spawnHandle.stdout.on('data', data => {
-      process.stdout.write(data);
-      logs.push(`STDOUT: ${data}`);
-    });
-    spawnHandle.stderr.setEncoding('utf8');
-    spawnHandle.stderr.on('data', data => {
-      process.stderr.write(data);
-      logs.push(`STDERR: ${data}`);
-    });
-  });
-}
-
-/** @type {Promise<boolean>} */
-let buildDevtoolsPromise;
-/**
  * Download/pull latest DevTools, build Lighthouse for DevTools, roll to DevTools, and build DevTools.
- * @param {string[]} logs
  */
-async function buildDevtools(logs) {
-  if (process.env.CI) return true;
+async function setup() {
+  if (process.env.CI) return;
 
   process.env.DEVTOOLS_PATH = devtoolsDir;
-  const success =
-    await spawnAndLog(logs, 'bash', ['lighthouse-core/test/devtools-tests/download-devtools.sh']) &&
-    await spawnAndLog(logs, 'bash', ['lighthouse-core/test/devtools-tests/roll-devtools.sh']);
-  return success;
+  execFileSync('bash',
+    ['lighthouse-core/test/devtools-tests/download-devtools.sh'],
+    {stdio: 'inherit'}
+  );
+  execFileSync('bash',
+    ['lighthouse-core/test/devtools-tests/roll-devtools.sh'],
+    {stdio: 'inherit'}
+  );
 }
 
 /**
@@ -73,41 +42,24 @@ async function buildDevtools(logs) {
  * CHROME_PATH determines which Chrome is used–otherwise the default is puppeteer's chrome binary.
  * @param {string} url
  * @param {LH.Config.Json=} configJson
- * @param {{isDebug?: boolean}=} testRunnerOptions
+ * @param {{isDebug?: boolean, useLegacyNavigation?: boolean}=} testRunnerOptions
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
  */
 async function runLighthouse(url, configJson, testRunnerOptions = {}) {
-  /** @type {string[]} */
-  const logs = [];
-
-  if (!buildDevtoolsPromise) buildDevtoolsPromise = buildDevtools(logs);
-  if (!await buildDevtoolsPromise) {
-    const log = logs.join('') + '\n';
-    throw new Error(`failed to build devtools:\n${log}`);
-  }
-
-  const outputDir = fs.mkdtempSync(os.tmpdir() + '/lh-smoke-cdt-runner-');
   const chromeFlags = [
     `--custom-devtools-frontend=file://${devtoolsDir}/out/Default/gen/front_end`,
   ];
-  const args = [
-    'run-devtools',
-    url,
-    `--chrome-flags=${chromeFlags.join(' ')}`,
-    '--output-dir', outputDir,
-  ];
-  if (configJson) {
-    args.push('--config', JSON.stringify(configJson));
-  }
-
-  await spawnAndLog(logs, 'yarn', args);
-  const lhr = JSON.parse(fs.readFileSync(`${outputDir}/lhr-0.json`, 'utf-8'));
-  const artifacts = JSON.parse(fs.readFileSync(`${outputDir}/artifacts-0.json`, 'utf-8'));
+  const {lhr, artifacts, logs} = await testUrlFromDevtools(url, {
+    config: configJson,
+    chromeFlags,
+    useLegacyNavigation: testRunnerOptions.useLegacyNavigation,
+  });
 
   if (testRunnerOptions.isDebug) {
+    const outputDir = fs.mkdtempSync(os.tmpdir() + '/lh-smoke-cdt-runner-');
+    fs.writeFileSync(`${outputDir}/lhr.json`, JSON.stringify(lhr));
+    fs.writeFileSync(`${outputDir}/artifacts.json`, JSON.stringify(artifacts));
     console.log(`${url} results saved at ${outputDir}`);
-  } else {
-    fs.rmSync(outputDir, {recursive: true, force: true});
   }
 
   const log = logs.join('') + '\n';
@@ -116,4 +68,5 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
 
 export {
   runLighthouse,
+  setup,
 };

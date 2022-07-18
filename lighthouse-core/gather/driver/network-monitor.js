@@ -10,11 +10,12 @@
  * status inspection state.
  */
 
-const log = require('lighthouse-logger');
-const {EventEmitter} = require('events');
-const NetworkRecorder = require('../../lib/network-recorder.js');
-const NetworkRequest = require('../../lib/network-request.js');
-const URL = require('../../lib/url-shim.js');
+import log from 'lighthouse-logger';
+
+import {EventEmitter} from 'events';
+import {NetworkRecorder} from '../../lib/network-recorder.js';
+import {NetworkRequest} from '../../lib/network-request.js';
+import URL from '../../lib/url-shim.js';
 
 /** @typedef {import('../../lib/network-recorder.js').NetworkRecorderEventMap} NetworkRecorderEventMap */
 /** @typedef {'network-2-idle'|'network-critical-idle'|'networkidle'|'networkbusy'|'network-critical-busy'|'network-2-busy'} NetworkMonitorEvent_ */
@@ -256,4 +257,4 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
   }
 }
 
-module.exports = NetworkMonitor;
+export {NetworkMonitor};

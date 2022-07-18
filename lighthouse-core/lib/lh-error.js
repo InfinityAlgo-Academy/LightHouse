@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const i18n = require('./i18n/i18n.js');
+import * as i18n from './i18n/i18n.js';
 
 /* eslint-disable max-len */
 const UIStrings = {
@@ -89,7 +89,7 @@ const UIStrings = {
   oldChromeDoesNotSupportFeature: 'This version of Chrome is too old to support \'{featureName}\'. Use a newer version to see full results.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 
 /**
@@ -417,5 +417,5 @@ const ERRORS = {
 LighthouseError.errors = ERRORS;
 LighthouseError.NO_ERROR = 'NO_ERROR';
 LighthouseError.UNKNOWN_ERROR = 'UNKNOWN_ERROR';
-module.exports = LighthouseError;
-module.exports.UIStrings = UIStrings;
+
+export {LighthouseError, UIStrings};

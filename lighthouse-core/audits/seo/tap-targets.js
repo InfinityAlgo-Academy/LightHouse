@@ -9,18 +9,21 @@
  * @fileoverview Checks that links, buttons, etc. are sufficiently large and that there's
  * no other tap target that's too close so that the user might accidentally tap on.
  */
-const Audit = require('../audit.js');
-const ComputedViewportMeta = require('../../computed/viewport-meta.js');
-const {
+import {Audit} from '../audit.js';
+
+import ComputedViewportMeta from '../../computed/viewport-meta.js';
+
+import {
   rectsTouchOrOverlap,
   getRectOverlapArea,
   getRectAtCenter,
   allRectsContainedWithinEachOther,
   getLargestRect,
   getBoundingRectWithPadding,
-} = require('../../lib/rect-helpers.js');
-const {getTappableRectsFromClientRects} = require('../../lib/tappable-rects.js');
-const i18n = require('../../lib/i18n/i18n.js');
+} from '../../lib/rect-helpers.js';
+
+import {getTappableRectsFromClientRects} from '../../lib/tappable-rects.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on whether tap targets (like buttons and links) on a page are big enough so they can easily be tapped on a mobile device. This descriptive title is shown when tap targets are easy to tap on. */
@@ -40,7 +43,7 @@ const UIStrings = {
   displayValue: '{decimalProportion, number, percent} appropriately sized tap targets',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 const FINGER_SIZE_PX = 48;
 // Ratio of the finger area tapping on an unintended element
@@ -317,8 +320,8 @@ class TapTargets extends Audit {
 
 TapTargets.FINGER_SIZE_PX = FINGER_SIZE_PX;
 
-module.exports = TapTargets;
-module.exports.UIStrings = UIStrings;
+export default TapTargets;
+export {UIStrings};
 
 
 /** @typedef {{

@@ -5,24 +5,27 @@
  */
 'use strict';
 
-const isDeepEqual = require('lodash/isEqual.js');
-const Driver = require('./gather/driver.js');
-const GatherRunner = require('./gather/gather-runner.js');
-const ReportScoring = require('./scoring.js');
-const Audit = require('./audits/audit.js');
-const log = require('lighthouse-logger');
-const format = require('../shared/localization/format.js');
-const stackPacks = require('./lib/stack-packs.js');
-const assetSaver = require('./lib/asset-saver.js');
-const fs = require('fs');
-const path = require('path');
-const Sentry = require('./lib/sentry.js');
-const generateReport = require('../report/generator/report-generator.js').generateReport;
-const LighthouseError = require('./lib/lh-error.js');
-const {version: lighthouseVersion} = require('../package.json');
+import isDeepEqual from 'lodash/isEqual.js';
+import {Driver} from './gather/driver.js';
+import {GatherRunner} from './gather/gather-runner.js';
+import {ReportScoring} from './scoring.js';
+import {Audit} from './audits/audit.js';
+import log from 'lighthouse-logger';
+import format from '../shared/localization/format.js';
+import * as stackPacks from './lib/stack-packs.js';
+import * as assetSaver from './lib/asset-saver.js';
+import fs from 'fs';
+import path from 'path';
+import {Sentry} from './lib/sentry.js';
+import ReportGenerator from '../report/generator/report-generator.js';
+import {LighthouseError} from './lib/lh-error.js';
+import {lighthouseVersion} from '../root.js';
+import {getModuleDirectory} from '../esm-utils.js';
 
-/** @typedef {import('./gather/connections/connection.js')} Connection */
-/** @typedef {import('./lib/arbitrary-equality-map.js')} ArbitraryEqualityMap */
+const moduleDir = getModuleDirectory(import.meta);
+
+/** @typedef {import('./gather/connections/connection.js').Connection} Connection */
+/** @typedef {import('./lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
 /** @typedef {LH.Config.Config} Config */
 
 class Runner {
@@ -123,7 +126,7 @@ class Runner {
       }
 
       // Create the HTML, JSON, and/or CSV string
-      const report = generateReport(lhr, settings.output);
+      const report = ReportGenerator.generateReport(lhr, settings.output);
 
       return {lhr, artifacts, report};
     } catch (err) {
@@ -364,7 +367,7 @@ class Runner {
         // If artifact was an error, output error result on behalf of audit.
         if (artifacts[artifactName] instanceof Error) {
           /** @type {Error} */
-          // @ts-expect-error An artifact *could* be an Error, but caught here, so ignore elsewhere.
+          // @ts-expect-error: TODO why is this a type error now?
           const artifactError = artifacts[artifactName];
 
           Sentry.captureException(artifactError, {
@@ -436,8 +439,10 @@ class Runner {
     ];
 
     for (const possibleErrorArtifact of possibleErrorArtifacts) {
+      const isError = possibleErrorArtifact instanceof LighthouseError;
+
       // eslint-disable-next-line max-len
-      if (possibleErrorArtifact instanceof LighthouseError && possibleErrorArtifact.lhrRuntimeError) {
+      if (isError && possibleErrorArtifact.lhrRuntimeError) {
         const errorMessage = possibleErrorArtifact.friendlyMessage || possibleErrorArtifact.message;
 
         return {
@@ -465,18 +470,18 @@ class Runner {
     ];
 
     const fileList = [
-      ...fs.readdirSync(path.join(__dirname, './audits')),
-      ...fs.readdirSync(path.join(__dirname, './audits/dobetterweb')).map(f => `dobetterweb/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/metrics')).map(f => `metrics/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/seo')).map(f => `seo/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/seo/manual')).map(f => `seo/manual/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/accessibility'))
+      ...fs.readdirSync(path.join(moduleDir, './audits')),
+      ...fs.readdirSync(path.join(moduleDir, './audits/dobetterweb')).map(f => `dobetterweb/${f}`),
+      ...fs.readdirSync(path.join(moduleDir, './audits/metrics')).map(f => `metrics/${f}`),
+      ...fs.readdirSync(path.join(moduleDir, './audits/seo')).map(f => `seo/${f}`),
+      ...fs.readdirSync(path.join(moduleDir, './audits/seo/manual')).map(f => `seo/manual/${f}`),
+      ...fs.readdirSync(path.join(moduleDir, './audits/accessibility'))
           .map(f => `accessibility/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/accessibility/manual'))
+      ...fs.readdirSync(path.join(moduleDir, './audits/accessibility/manual'))
           .map(f => `accessibility/manual/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/byte-efficiency'))
+      ...fs.readdirSync(path.join(moduleDir, './audits/byte-efficiency'))
           .map(f => `byte-efficiency/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './audits/manual')).map(f => `manual/${f}`),
+      ...fs.readdirSync(path.join(moduleDir, './audits/manual')).map(f => `manual/${f}`),
     ];
     return fileList.filter(f => {
       return /\.js$/.test(f) && !ignoredFiles.includes(f);
@@ -489,9 +494,9 @@ class Runner {
    */
   static getGathererList() {
     const fileList = [
-      ...fs.readdirSync(path.join(__dirname, './gather/gatherers')),
-      ...fs.readdirSync(path.join(__dirname, './gather/gatherers/seo')).map(f => `seo/${f}`),
-      ...fs.readdirSync(path.join(__dirname, './gather/gatherers/dobetterweb'))
+      ...fs.readdirSync(path.join(moduleDir, './gather/gatherers')),
+      ...fs.readdirSync(path.join(moduleDir, './gather/gatherers/seo')).map(f => `seo/${f}`),
+      ...fs.readdirSync(path.join(moduleDir, './gather/gatherers/dobetterweb'))
           .map(f => `dobetterweb/${f}`),
     ];
     return fileList.filter(f => /\.js$/.test(f) && f !== 'gatherer.js').sort();
@@ -513,4 +518,5 @@ class Runner {
   }
 }
 
-module.exports = Runner;
+// TODO(esmodules): make this not a class.
+export {Runner};

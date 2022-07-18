@@ -6,10 +6,10 @@
 
 import {strict as assert} from 'assert';
 
-import ByteEfficiencyAudit_ from '../../../audits/byte-efficiency/byte-efficiency-audit.js';
-import NetworkNode from '../../../lib/dependency-graph/network-node.js';
-import CPUNode from '../../../lib/dependency-graph/cpu-node.js';
-import Simulator from '../../../lib/dependency-graph/simulator/simulator.js';
+import {ByteEfficiencyAudit as ByteEfficiencyAudit_} from '../../../audits/byte-efficiency/byte-efficiency-audit.js';
+import {NetworkNode} from '../../../lib/dependency-graph/network-node.js';
+import {CPUNode} from '../../../lib/dependency-graph/cpu-node.js';
+import {Simulator} from '../../../lib/dependency-graph/simulator/simulator.js';
 import PageDependencyGraph from '../../../computed/page-dependency-graph.js';
 import LoadSimulator from '../../../computed/load-simulator.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';

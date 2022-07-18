@@ -9,7 +9,7 @@
  * @fileoverview Base class for boolean audits that can have multiple reasons for failure
  */
 
-const Audit = require('./audit.js');
+import {Audit} from './audit.js';
 
 class MultiCheckAudit extends Audit {
   /**
@@ -80,4 +80,4 @@ class MultiCheckAudit extends Audit {
   /* eslint-enable no-unused-vars */
 }
 
-module.exports = MultiCheckAudit;
+export default MultiCheckAudit;

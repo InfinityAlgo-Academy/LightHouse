@@ -5,16 +5,12 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const Driver = require('./driver.js');
-const Runner = require('../../runner.js');
-const {
-  getEmptyArtifactState,
-  collectPhaseArtifacts,
-  awaitArtifacts,
-} = require('./runner-helpers.js');
-const {initializeConfig} = require('../config/config.js');
-const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
+import log from 'lighthouse-logger';
+import {Driver} from './driver.js';
+import {Runner} from '../../runner.js';
+import {getEmptyArtifactState, collectPhaseArtifacts, awaitArtifacts} from './runner-helpers.js';
+import {initializeConfig} from '../config/config.js';
+import {getBaseArtifacts, finalizeArtifacts} from './base-artifacts.js';
 
 /**
  * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
@@ -65,6 +61,6 @@ async function snapshotGather(options) {
   return {artifacts, runnerOptions};
 }
 
-module.exports = {
+export {
   snapshotGather,
 };

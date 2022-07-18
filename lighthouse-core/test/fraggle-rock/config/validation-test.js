@@ -5,11 +5,11 @@
  */
 
 import {defaultSettings, defaultNavigationConfig} from '../../../config/constants.js';
-import defaultConfig from '../../../fraggle-rock/config/default-config.js';
-import BaseAudit from '../../../audits/audit.js';
+import defaultConfig from '../../../config/default-config.js';
+import {Audit as BaseAudit} from '../../../audits/audit.js';
 import BaseFRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
-import BaseLegacyGatherer from '../../../gather/gatherers/gatherer.js';
-import validation from '../../../fraggle-rock/config/validation.js';
+import {Gatherer as BaseLegacyGatherer} from '../../../gather/gatherers/gatherer.js';
+import * as validation from '../../../fraggle-rock/config/validation.js';
 
 /** @typedef {LH.Gatherer.GathererMeta['supportedModes']} SupportedModes */
 

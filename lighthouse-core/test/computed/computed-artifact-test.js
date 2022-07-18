@@ -6,7 +6,7 @@
 
 import {strict as assert} from 'assert';
 
-import makeComputedArtifact from '../../computed/computed-artifact.js';
+import {makeComputedArtifact} from '../../computed/computed-artifact.js';
 
 describe('ComputedArtifact base class', () => {
   it('caches computed artifacts by strict equality', async () => {

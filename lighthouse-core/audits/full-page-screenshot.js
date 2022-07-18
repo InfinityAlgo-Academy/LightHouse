@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
+import {Audit} from './audit.js';
 
 class FullPageScreenshot extends Audit {
   /**
@@ -40,4 +40,4 @@ class FullPageScreenshot extends Audit {
   }
 }
 
-module.exports = FullPageScreenshot;
+export default FullPageScreenshot;

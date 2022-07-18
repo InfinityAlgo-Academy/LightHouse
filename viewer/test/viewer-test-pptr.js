@@ -124,10 +124,16 @@ describe('Lighthouse Viewer', () => {
     });
 
     it('should contain audits of all categories', async () => {
+      const nonNavigationAudits = [
+        'experimental-interaction-to-next-paint',
+        'uses-responsive-images-snapshot',
+        'work-during-interaction',
+      ];
       for (const category of lighthouseCategories) {
         let expected = getAuditsOfCategory(category);
         if (category === 'performance') {
-          expected = getAuditsOfCategory(category).filter(a => a.group !== 'hidden');
+          expected = getAuditsOfCategory(category)
+            .filter(a => a.group !== 'hidden' && !nonNavigationAudits.includes(a.id));
         }
         expected = expected.map(audit => audit.id);
         const elementIds = await getAuditElementsIds({category, selector: selectors.audits});

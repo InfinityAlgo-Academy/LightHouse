@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const constants = require('./constants.js');
+import * as constants from './constants.js';
 
 /** @type {LH.Config.Json} */
 const config = {
@@ -18,4 +18,4 @@ const config = {
   },
 };
 
-module.exports = config;
+export default config;

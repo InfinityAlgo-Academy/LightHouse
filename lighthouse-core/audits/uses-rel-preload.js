@@ -5,15 +5,15 @@
  */
 'use strict';
 
-const URL = require('../lib/url-shim.js');
-const NetworkRequest = require('../lib/network-request.js');
-const Audit = require('./audit.js');
-const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit.js');
-const CriticalRequestChains = require('../computed/critical-request-chains.js');
-const i18n = require('../lib/i18n/i18n.js');
-const MainResource = require('../computed/main-resource.js');
-const PageDependencyGraph = require('../computed/page-dependency-graph.js');
-const LoadSimulator = require('../computed/load-simulator.js');
+import URL from '../lib/url-shim.js';
+import {NetworkRequest} from '../lib/network-request.js';
+import {Audit} from './audit.js';
+import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
+import CriticalRequestChains from '../computed/critical-request-chains.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import MainResource from '../computed/main-resource.js';
+import PageDependencyGraph from '../computed/page-dependency-graph.js';
+import LoadSimulator from '../computed/load-simulator.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to use <link rel=preload> to initiate important network requests earlier during page load. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -29,7 +29,7 @@ const UIStrings = {
     'by the browser. Check that you are using the `crossorigin` attribute properly.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 const THRESHOLD_IN_MS = 100;
 
@@ -242,7 +242,7 @@ class UsesRelPreloadAudit extends Audit {
     const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
 
     return {
-      score: UnusedBytes.scoreForWastedMs(wastedMs),
+      score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
       numericValue: wastedMs,
       numericUnit: 'millisecond',
       displayValue: wastedMs ?
@@ -263,5 +263,5 @@ class UsesRelPreloadAudit extends Audit {
   }
 }
 
-module.exports = UsesRelPreloadAudit;
-module.exports.UIStrings = UIStrings;
+export default UsesRelPreloadAudit;
+export {UIStrings};

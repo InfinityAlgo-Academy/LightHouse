@@ -5,8 +5,8 @@
  */
 
 
-import Driver from '../../../gather/driver.js';
-import Connection from '../../../gather/connections/connection.js';
+import {Driver} from '../../../gather/driver.js';
+import {Connection} from '../../../gather/connections/connection.js';
 import SourceMaps from '../../../gather/gatherers/source-maps.js';
 import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
 import {flushAllTimersAndMicrotasks, fnAny, timers} from '../../test-utils.js';

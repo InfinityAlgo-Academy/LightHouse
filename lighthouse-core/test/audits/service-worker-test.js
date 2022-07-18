@@ -8,7 +8,7 @@ import {strict as assert} from 'assert';
 
 import ServiceWorker from '../../audits/service-worker.js';
 import URL from '../../lib/url-shim.js';
-import manifestParser from '../../lib/manifest-parser.js';
+import {parseManifest} from '../../lib/manifest-parser.js';
 
 function getBaseDirectory(urlStr) {
   const url = new URL(urlStr);
@@ -54,7 +54,7 @@ function createArtifacts(swOpts, mainDocumentUrl, manifestJsonOrObject) {
   } else {
     const manifestJson = typeof manifestJsonOrObject === 'object' ?
       JSON.stringify(manifestJsonOrObject) : manifestJsonOrObject;
-    WebAppManifest = manifestParser(manifestJson, manifestUrl, mainDocumentUrl);
+    WebAppManifest = parseManifest(manifestJson, manifestUrl, mainDocumentUrl);
   }
 
   return {

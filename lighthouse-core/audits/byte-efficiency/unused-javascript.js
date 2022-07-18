@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const UnusedJavaScriptSummary = require('../../computed/unused-javascript-summary.js');
-const JsBundles = require('../../computed/js-bundles.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const {getRequestForScript} = require('../../lib/script-helpers.js');
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
+import UnusedJavaScriptSummary from '../../computed/unused-javascript-summary.js';
+import JsBundles from '../../computed/js-bundles.js';
+import * as i18n from '../../lib/i18n/i18n.js';
+import {getRequestForScript} from '../../lib/script-helpers.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to reduce JavaScript that is never evaluated during page load. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -19,7 +19,7 @@ const UIStrings = {
     'decrease bytes consumed by network activity. [Learn more](https://web.dev/unused-javascript/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 const UNUSED_BYTES_IGNORE_THRESHOLD = 20 * 1024;
 const UNUSED_BYTES_IGNORE_BUNDLE_SOURCE_THRESHOLD = 512;
@@ -77,7 +77,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
-   * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
+   * @return {Promise<import('./byte-efficiency-audit.js').ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
     const bundles = await JsBundles.request(artifacts, context);
@@ -160,5 +160,5 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = UnusedJavaScript;
-module.exports.UIStrings = UIStrings;
+export default UnusedJavaScript;
+export {UIStrings};

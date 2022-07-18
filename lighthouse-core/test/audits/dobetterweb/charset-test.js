@@ -6,8 +6,10 @@
 
 import {strict as assert} from 'assert';
 
-import CharsetDefinedAudit from '../../../audits/dobetterweb/charset.js';
-import networkRecordsToDevtoolsLog from '../../network-records-to-devtools-log.js';
+import CharsetDefinedAudit, {
+  CHARSET_HTML_REGEX, CHARSET_HTTP_REGEX, IANA_REGEX,
+} from '../../../audits/dobetterweb/charset.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 
 const HTML_PRE = '<!doctype html><head>';
 const HTML_POST = '</head><body><h1>hello';
@@ -113,9 +115,8 @@ describe('Charset defined audit', () => {
 });
 
 describe('Charset regex check', () => {
-  const HTML_REGEX = CharsetDefinedAudit.CHARSET_HTML_REGEX;
-  const HTTP_REGEX = CharsetDefinedAudit.CHARSET_HTTP_REGEX;
-  const IANA_REGEX = CharsetDefinedAudit.IANA_REGEX;
+  const HTML_REGEX = CHARSET_HTML_REGEX;
+  const HTTP_REGEX = CHARSET_HTTP_REGEX;
 
   it('handles html correctly', () => {
     // Positive cases

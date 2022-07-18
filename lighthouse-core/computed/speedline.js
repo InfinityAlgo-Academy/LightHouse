@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const speedline = require('speedline-core');
-const LighthouseError = require('../lib/lh-error.js');
-const ProcessedTrace = require('./processed-trace.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import speedline from 'speedline-core';
+import {LighthouseError} from '../lib/lh-error.js';
+import ProcessedTrace from './processed-trace.js';
 
 class Speedline {
   /**
@@ -51,4 +51,4 @@ class Speedline {
   }
 }
 
-module.exports = makeComputedArtifact(Speedline, null);
+export default makeComputedArtifact(Speedline, null);

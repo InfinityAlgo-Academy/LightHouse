@@ -11,8 +11,9 @@
  * https://docs.google.com/document/d/1XKcJP2CKmNKfOcDsVvliAQ-e1H9C1nf2H-pzTdyafAA/edit?usp=sharing
  */
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a diagnostic LH audit that provides details on animations that are not composited. */
@@ -45,7 +46,7 @@ const UIStrings = {
   unsupportedTimingParameters: 'Effect has unsupported timing parameters',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * Each failure reason is represented by a bit flag. The bit shift operator '<<' is used to define which bit corresponds to each failure reason.
@@ -202,5 +203,5 @@ class NonCompositedAnimations extends Audit {
   }
 }
 
-module.exports = NonCompositedAnimations;
-module.exports.UIStrings = UIStrings;
+export default NonCompositedAnimations;
+export {UIStrings};

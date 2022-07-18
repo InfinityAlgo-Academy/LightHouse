@@ -7,8 +7,8 @@
 import {strict as assert} from 'assert';
 
 import UsesRelPreconnect from '../../audits/uses-rel-preconnect.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
-import createTestTrace from '../create-test-trace.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
+import {createTestTrace} from '../create-test-trace.js';
 
 const mainResource = {
   url: 'https://www.example.com/',

@@ -10,23 +10,23 @@ import {createRequire} from 'module';
 
 import log from 'lighthouse-logger';
 
-import Config from '../../config/config.js';
-import defaultConfig from '../../config/default-config.js';
-import constants from '../../config/constants.js';
-import Gatherer from '../../gather/gatherers/gatherer.js';
-import Audit from '../../audits/audit.js';
-import i18n from '../../lib/i18n/i18n.js';
+import {Config} from '../../config/config.js';
+import legacyDefaultConfig from '../../config/legacy-default-config.js';
+import * as constants from '../../config/constants.js';
+import {Gatherer} from '../../gather/gatherers/gatherer.js';
+import {Audit} from '../../audits/audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 import format from '../../../shared/localization/format.js';
-import {getModuleDirectory, getModulePath} from '../../../esm-utils.mjs';
+import {getModuleDirectory, getModulePath} from '../../../esm-utils.js';
 
 const require = createRequire(import.meta.url);
-const modulePath = getModulePath(import.meta);
 const moduleDir = getModuleDirectory(import.meta);
+const modulePath = getModulePath(import.meta);
 
 describe('Config', () => {
   let origConfig;
   beforeEach(() => {
-    origConfig = JSON.parse(JSON.stringify(defaultConfig));
+    origConfig = JSON.parse(JSON.stringify(legacyDefaultConfig));
   });
 
   it('returns new object', async () => {
@@ -361,19 +361,36 @@ describe('Config', () => {
   });
 
   it('throws on a non-absolute config path', async () => {
-    const configPath = '../../config/default-config.js';
+    const configPath = '../../config/legacy-default-config.js';
 
     await assert.rejects(Config.fromJson({
       audits: [],
     }, {configPath}), /absolute path/);
   });
 
-  it('loads an audit relative to a config path', () => {
-    const configPath = modulePath;
+  ['', '.js', '.cjs'].forEach(variant => {
+    describe(`loads an audit (${variant})`, () => {
+      it('loads an audit relative to a config path', async () => {
+        const configPath = modulePath;
 
-    return assert.doesNotThrow(_ => Config.fromJson({
-      audits: ['../fixtures/valid-custom-audit'],
-    }, {configPath}));
+        return assert.doesNotReject(Config.fromJson({
+          audits: ['../fixtures/valid-custom-audit' + variant],
+        }, {configPath}));
+      });
+
+      it('loads an audit relative to the working directory', async () => {
+        // Construct an audit URL relative to current working directory, regardless
+        // of where test was started from.
+        const absoluteAuditPath =
+          path.resolve(moduleDir, '../fixtures/valid-custom-audit' + variant);
+        assert.doesNotThrow(() => require.resolve(absoluteAuditPath));
+        const relativePath = path.relative(process.cwd(), absoluteAuditPath);
+
+        return assert.doesNotReject(Config.fromJson({
+          audits: [relativePath],
+        }));
+      });
+    });
   });
 
   it('loads an audit from node_modules/', async () => {
@@ -386,25 +403,16 @@ describe('Config', () => {
     });
   });
 
-  it('loads an audit relative to the working directory', async () => {
-    // Construct an audit URL relative to current working directory, regardless
-    // of where test was started from.
-    const absoluteAuditPath = path.resolve(moduleDir, '../fixtures/valid-custom-audit');
-    assert.doesNotThrow(_ => require.resolve(absoluteAuditPath));
-    const relativePath = path.relative(process.cwd(), absoluteAuditPath);
-
-    return assert.doesNotThrow(_ => Config.fromJson({
-      audits: [relativePath],
-    }));
-  });
-
   it('throws but not for missing audit when audit has a dependency error', async () => {
     await assert.rejects(Config.fromJson({
       audits: [path.resolve(moduleDir, '../fixtures/invalid-audits/require-error.js')],
     }), function(err) {
       // We're expecting not to find parent class Audit, so only reject on our
       // own custom locate audit error, not the usual MODULE_NOT_FOUND.
-      return !/locate audit/.test(err) && err.code === 'MODULE_NOT_FOUND';
+      // TODO(esmodules): Test migration note:
+      //      "custom locate audit error" ??? But this is just a normal Error...
+      //      comment is 4 yr old maybe just stale? we refactoring config require code a lot since then
+      return !/locate audit/.test(err) && err.code === 'ERR_MODULE_NOT_FOUND';
     });
   });
 
@@ -893,7 +901,7 @@ describe('Config', () => {
   });
 
   it('is idempotent when accepting a canonicalized Config as valid ConfigJson input', async () => {
-    const config = await Config.fromJson(defaultConfig);
+    const config = await Config.fromJson(legacyDefaultConfig);
     const configAgain = await Config.fromJson(config);
     assert.deepEqual(config, configAgain);
   });
@@ -1346,21 +1354,25 @@ describe('Config', () => {
       assert.equal(typeof gatherer.instance.beforePass, 'function');
     });
 
-    it('loads gatherers from custom paths', async () => {
-      const customPath = path.resolve(moduleDir, '../fixtures/valid-custom-gatherer');
-      const gatherer = await loadGatherer(customPath);
-      assert.equal(gatherer.instance.name, 'CustomGatherer');
-      assert.equal(typeof gatherer.instance.beforePass, 'function');
-    });
+    ['', '.js', '.cjs'].forEach(variant => {
+      describe(`loads custom gatherer (variant: "${variant}")`, () => {
+        it('loads gatherers from custom paths', async () => {
+          const customPath = path.resolve(moduleDir, '../fixtures/valid-custom-gatherer' + variant);
+          const gatherer = await loadGatherer(customPath);
+          assert.equal(gatherer.instance.name, 'CustomGatherer');
+          assert.equal(typeof gatherer.instance.beforePass, 'function');
+        });
 
-    it('loads a gatherer relative to a config path', async () => {
-      const config = await Config.fromJson({
-        passes: [{gatherers: ['../fixtures/valid-custom-gatherer']}],
-      }, {configPath: modulePath});
-      const gatherer = config.passes[0].gatherers[0];
+        it('loads a gatherer relative to a config path', async () => {
+          const config = await Config.fromJson({
+            passes: [{gatherers: ['../fixtures/valid-custom-gatherer' + variant]}],
+          }, {configPath: modulePath});
+          const gatherer = config.passes[0].gatherers[0];
 
-      assert.equal(gatherer.instance.name, 'CustomGatherer');
-      assert.equal(typeof gatherer.instance.beforePass, 'function');
+          assert.equal(gatherer.instance.name, 'CustomGatherer');
+          assert.equal(typeof gatherer.instance.beforePass, 'function');
+        });
+      });
     });
 
     it('returns gatherer when gatherer class, not package-name string, is provided', async () => {
@@ -1415,7 +1427,7 @@ describe('Config', () => {
           function(err) {
             // We're expecting not to find parent class Gatherer, so only reject on
             // our own custom locate gatherer error, not the usual MODULE_NOT_FOUND.
-            return !/locate gatherer/.test(err) && err.code === 'MODULE_NOT_FOUND';
+            return !/locate gatherer/.test(err) && err.code === 'ERR_MODULE_NOT_FOUND';
           });
     });
 
@@ -1470,7 +1482,7 @@ describe('Config', () => {
     });
 
     it('prints localized category titles', async () => {
-      const printed = (await Config.fromJson(defaultConfig)).getPrintString();
+      const printed = (await Config.fromJson(legacyDefaultConfig)).getPrintString();
       const printedConfig = JSON.parse(printed);
       let localizableCount = 0;
 
@@ -1488,7 +1500,7 @@ describe('Config', () => {
 
     it('prints a valid ConfigJson that can make an identical Config', async () => {
       // depends on defaultConfig having a `path` for all gatherers and audits.
-      const firstConfig = await Config.fromJson(defaultConfig);
+      const firstConfig = await Config.fromJson(legacyDefaultConfig);
       const firstPrint = firstConfig.getPrintString();
 
       const secondConfig = await Config.fromJson(JSON.parse(firstPrint));

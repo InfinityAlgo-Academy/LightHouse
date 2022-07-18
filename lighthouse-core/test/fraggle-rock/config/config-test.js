@@ -6,13 +6,13 @@
 
 import jestMock from 'jest-mock';
 
-import BaseAudit from '../../../audits/audit.js';
-import constants from '../../../config/constants.js';
+import {Audit as BaseAudit} from '../../../audits/audit.js';
+import * as constants from '../../../config/constants.js';
 import BaseGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 import {initializeConfig, getConfigDisplayString} from '../../../fraggle-rock/config/config.js';
 import {LH_ROOT} from '../../../../root.js';
 import format from '../../../../shared/localization/format.js';
-import defaultConfig from '../../../fraggle-rock/config/default-config.js';
+import defaultConfig from '../../../config/default-config.js';
 
 const {nonSimulatedPassConfigOverrides} = constants;
 
@@ -480,8 +480,15 @@ describe('Fraggle Rock Config', () => {
       artifacts: [{id: 'artifact', gatherer: {instance: new BaseGatherer()}}],
     };
 
-    expect(initializeConfig(extensionConfig, {gatherMode: 'navigation'}))
-      .rejects.toThrow(/did not support any gather modes/);
+    // https://github.com/facebook/jest/issues/11438
+    // expect(initializeConfig(extensionConfig, {gatherMode: 'navigation'}))
+    //   .rejects.toThrow(/did not support any gather modes/);
+    try {
+      await initializeConfig(extensionConfig, {gatherMode: 'navigation'});
+      throw new Error('did not throw');
+    } catch (err) {
+      expect(err.message).toMatch(/did not support any gather modes/);
+    }
   });
 });
 

@@ -1,6 +1,7 @@
 {
   "name": "custom-lighthouse-recipe",
   "private": true,
+  "type": "module",
   "scripts": {},
   "devDependencies": {
     "lighthouse": "^9.5.0"

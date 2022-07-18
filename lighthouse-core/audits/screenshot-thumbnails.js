@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const LighthouseError = require('../lib/lh-error.js');
-const jpeg = require('jpeg-js');
-const Speedline = require('../computed/speedline.js');
+import {Audit} from './audit.js';
+import {LighthouseError} from '../lib/lh-error.js';
+import jpeg from 'jpeg-js';
+import Speedline from '../computed/speedline.js';
 
 const NUMBER_OF_THUMBNAILS = 10;
 const THUMBNAIL_WIDTH = 120;
@@ -160,4 +160,4 @@ class ScreenshotThumbnails extends Audit {
   }
 }
 
-module.exports = ScreenshotThumbnails;
+export default ScreenshotThumbnails;

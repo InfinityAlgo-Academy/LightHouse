@@ -7,9 +7,10 @@
 
 /* global document, window, getComputedStyle, getElementsInDocument, Node, getNodeDetails, getRectCenterPoint */
 
-const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../../lib/page-functions.js');
-const RectHelpers = require('../../../lib/rect-helpers.js');
+import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+
+import {pageFunctions} from '../../../lib/page-functions.js';
+import * as RectHelpers from '../../../lib/rect-helpers.js';
 
 const TARGET_SELECTORS = [
   'button',
@@ -367,4 +368,4 @@ class TapTargets extends FRGatherer {
   }
 }
 
-module.exports = TapTargets;
+export default TapTargets;

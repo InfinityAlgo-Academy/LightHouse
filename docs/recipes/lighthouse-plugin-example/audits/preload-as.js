@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Audit = require('lighthouse').Audit;
+import {Audit} from 'lighthouse';
 
 /**
  * @fileoverview A fake additional check of the robots.txt file.
@@ -43,4 +43,4 @@ class PreloadAsAudit extends Audit {
   }
 }
 
-module.exports = PreloadAsAudit;
+export default PreloadAsAudit;

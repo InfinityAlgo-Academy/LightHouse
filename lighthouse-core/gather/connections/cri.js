@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const Connection = require('./connection.js');
-const WebSocket = require('ws');
-const http = require('http');
-const log = require('lighthouse-logger');
-const LighthouseError = require('../../lib/lh-error.js');
+import {Connection} from './connection.js';
+import WebSocket from 'ws';
+import http from 'http';
+import log from 'lighthouse-logger';
+import {LighthouseError} from '../../lib/lh-error.js';
 
 const DEFAULT_HOSTNAME = '127.0.0.1';
 const CONNECT_TIMEOUT = 10000;
@@ -158,4 +158,4 @@ class CriConnection extends Connection {
   }
 }
 
-module.exports = CriConnection;
+export {CriConnection};

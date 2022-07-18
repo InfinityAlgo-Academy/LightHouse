@@ -5,7 +5,7 @@
  */
 
 import FontDisplayAudit from '../../audits/font-display.js';
-import networkRecordsToDevtoolsLog from '../network-records-to-devtools-log.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
 describe('Performance: Font Display audit', () => {
   let networkRecords;

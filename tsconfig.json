@@ -13,8 +13,11 @@
   ],
   "include": [
     "root.js",
+    "esm-utils.js",
     "lighthouse-cli/**/*.js",
     "lighthouse-core/**/*.js",
+    "lighthouse-core/index.cjs",
+    "lighthouse-core/util.cjs",
     "clients/**/*.js",
     "build/**/*.js",
     "./types/**/*.d.ts",
@@ -30,7 +33,6 @@
     "third-party/snyk/snapshot.json",
     "lighthouse-core/audits/byte-efficiency/polyfill-graph-data.json",
     "shared/localization/locales/en-US.json",
-    "esm-utils.mjs",
   ],
   "exclude": [
     "lighthouse-core/test/audits/**/*.js",

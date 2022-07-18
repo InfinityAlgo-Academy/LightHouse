@@ -6,7 +6,7 @@
 
 import {strict as assert} from 'assert';
 
-import ReportScoring from '../scoring.js';
+import {ReportScoring} from '../scoring.js';
 
 describe('ReportScoring', () => {
   describe('#arithmeticMean', () => {

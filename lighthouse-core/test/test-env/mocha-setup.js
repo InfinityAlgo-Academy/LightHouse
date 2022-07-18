@@ -139,72 +139,78 @@ let mochaCurrentTest;
 /** @type {any[]} */
 const failedTests = [];
 
-export default {
-  mochaHooks: {
-    /** @this {Mocha.Context} */
-    beforeEach() {
-      if (!this.currentTest) throw new Error('unexpected value');
+const rootHooks = {
+  /** @this {Mocha.Context} */
+  beforeEach() {
+    if (!this.currentTest) throw new Error('unexpected value');
 
-      // Needed so `expect` extension method can access information about the current test.
-      mochaCurrentTest = this.currentTest;
-    },
-    /** @this {Mocha.Context} */
-    afterEach() {
-      if (!this.currentTest) throw new Error('unexpected value');
-
-      const {file, title, state} = this.currentTest;
-      if (!file) throw new Error('unexpected value');
-
-      if (state === 'failed') {
-        failedTests.push({
-          file: path.relative(LH_ROOT, file),
-          title,
-          error: this.currentTest.err?.toString(),
-        });
-      }
-    },
-    async afterAll() {
-      timers.dispose();
-      td.reset();
-
-      for (const snapshotState of snapshotStatesByTestFile.values()) {
-        // Jest adds `file://` to inline snapshot paths, and uses its own fs module to read things,
-        // falling back to fs.readFileSync if not defined. node `fs` does not support
-        // protocols in the path specifier, so we remove it here.
-        // @ts-expect-error - private property.
-        for (const snapshot of snapshotState._inlineSnapshots) {
-          snapshot.frame.file = snapshot.frame.file.replace('file://', '');
-        }
-
-        snapshotState.save();
-      }
-
-      if (!process.env.SNAPSHOT_UPDATE && snapshotTestFailed) {
-        process.on('exit', () => {
-          console.log('To update snapshots, run again with `yarn mocha -u`');
-        });
-      }
-
-      if (process.env.LH_FAILED_TESTS_FILE && failedTests.length) {
-        fs.writeFileSync(process.env.LH_FAILED_TESTS_FILE, JSON.stringify(failedTests, null, 2));
-      }
-    },
+    // Needed so `expect` extension method can access information about the current test.
+    mochaCurrentTest = this.currentTest;
   },
-  mochaGlobalSetup() {
-    for (const plugin of testPlugins) {
-      try {
-        fs.symlinkSync(
-          `${LH_ROOT}/lighthouse-core/test/fixtures/config-plugins/${plugin}`,
-          `${LH_ROOT}/node_modules/${plugin}`
-        );
-      } catch {
-        // Might exist already because process was killed before tests finished.
-      }
+  /** @this {Mocha.Context} */
+  afterEach() {
+    if (!this.currentTest) throw new Error('unexpected value');
+
+    const {file, title, state} = this.currentTest;
+    if (!file) throw new Error('unexpected value');
+
+    if (state === 'failed') {
+      failedTests.push({
+        file: path.relative(LH_ROOT, file),
+        title,
+        error: this.currentTest.err?.toString(),
+      });
     }
   },
-  mochaGlobalTeardown() {
-    for (const plugin of testPlugins) {
-      fs.unlinkSync(`${LH_ROOT}/node_modules/${plugin}`);
+  async afterAll() {
+    timers.dispose();
+    td.reset();
+
+    for (const snapshotState of snapshotStatesByTestFile.values()) {
+      // Jest adds `file://` to inline snapshot paths, and uses its own fs module to read things,
+      // falling back to fs.readFileSync if not defined. node `fs` does not support
+      // protocols in the path specifier, so we remove it here.
+      // @ts-expect-error - private property.
+      for (const snapshot of snapshotState._inlineSnapshots) {
+        snapshot.frame.file = snapshot.frame.file.replace('file://', '');
+      }
+
+      snapshotState.save();
+    }
+
+    if (!process.env.SNAPSHOT_UPDATE && snapshotTestFailed) {
+      process.on('exit', () => {
+        console.log('To update snapshots, run again with `yarn mocha -u`');
+      });
+    }
+
+    if (process.env.LH_FAILED_TESTS_FILE && failedTests.length) {
+      fs.writeFileSync(process.env.LH_FAILED_TESTS_FILE, JSON.stringify(failedTests, null, 2));
     }
   },
+};
+
+function mochaGlobalSetup() {
+  for (const plugin of testPlugins) {
+    try {
+      fs.symlinkSync(
+        `${LH_ROOT}/lighthouse-core/test/fixtures/config-plugins/${plugin}`,
+        `${LH_ROOT}/node_modules/${plugin}`
+      );
+    } catch {
+      // Might exist already because process was killed before tests finished.
+    }
+  }
+}
+
+function mochaGlobalTeardown() {
+  for (const plugin of testPlugins) {
+    fs.unlinkSync(`${LH_ROOT}/node_modules/${plugin}`);
+  }
+}
+
+export {
+  rootHooks,
+  mochaGlobalSetup,
+  mochaGlobalTeardown,
 };

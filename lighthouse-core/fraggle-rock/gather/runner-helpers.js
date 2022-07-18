@@ -7,7 +7,7 @@
 
 /**
  * @typedef CollectPhaseArtifactOptions
- * @property {import('./driver.js')} driver
+ * @property {import('./driver.js').Driver} driver
  * @property {Array<LH.Config.AnyArtifactDefn>} artifactDefinitions
  * @property {ArtifactState} artifactState
  * @property {LH.FRBaseArtifacts} baseArtifacts
@@ -23,7 +23,7 @@
 
 /** @typedef {LH.Gatherer.FRTransitionalContext<LH.Gatherer.DependencyKey>['dependencies']} Dependencies */
 
-const log = require('lighthouse-logger');
+import log from 'lighthouse-logger';
 
 /**
  *
@@ -149,7 +149,7 @@ async function awaitArtifacts(artifactState) {
   return artifacts;
 }
 
-module.exports = {
+export {
   getEmptyArtifactState,
   awaitArtifacts,
   collectPhaseArtifacts,

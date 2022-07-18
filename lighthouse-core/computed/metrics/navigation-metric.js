@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Metric = require('./metric.js');
+import Metric from './metric.js';
 
 /**
  * @fileOverview Enforces that a metric can only be computed on navigations.
@@ -43,4 +43,4 @@ class NavigationMetric extends Metric {
   }
 }
 
-module.exports = NavigationMetric;
+export default NavigationMetric;

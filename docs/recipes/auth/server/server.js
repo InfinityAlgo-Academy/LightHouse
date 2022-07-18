@@ -10,13 +10,18 @@
  * page. See docs/recipes/auth/README.md for more.
  */
 
-const createError = require('http-errors');
-const express = require('express');
-const morgan = require('morgan');
-const session = require('express-session');
-const http = require('http');
-const path = require('path');
-const PUBLIC_DIR = path.join(__dirname, 'public');
+import createError from 'http-errors';
+
+import express from 'express';
+import morgan from 'morgan';
+import session from 'express-session';
+import http from 'http';
+import path from 'path';
+import url from 'url';
+import esMain from 'es-main';
+
+const moduleDir = path.dirname(url.fileURLToPath(import.meta.url));
+const PUBLIC_DIR = path.join(moduleDir, 'public');
 
 const app = express();
 
@@ -78,8 +83,9 @@ app.use(function(err, req, res, next) {
 });
 
 const server = http.createServer(app);
-if (require.main === module) {
+
+if (esMain(import.meta)) {
   server.listen(10632);
-} else {
-  module.exports = server;
 }
+
+export default server;

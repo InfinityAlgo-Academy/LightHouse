@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const EventEmitter = require('events').EventEmitter;
-const LighthouseError = require('../../lib/lh-error.js');
+import EventEmitter from 'events';
+import {LighthouseError} from '../../lib/lh-error.js';
 
 // Controls how long to wait for a response after sending a DevTools protocol command.
 const DEFAULT_PROTOCOL_TIMEOUT = 30000;
@@ -111,4 +111,4 @@ class ProtocolSession extends CrdpEventEmitter {
   }
 }
 
-module.exports = ProtocolSession;
+export {ProtocolSession};

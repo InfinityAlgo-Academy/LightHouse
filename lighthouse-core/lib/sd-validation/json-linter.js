@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const jsonlint = require('jsonlint-mod');
+import jsonlint from 'jsonlint-mod';
 
 /**
  * @param {string} input
  * @return {{message: string, lineNumber: number|null}|null}
  */
-module.exports = function parseJSON(input) {
+export default function parseJSON(input) {
   try {
     jsonlint.parse(input);
   } catch (error) {
@@ -46,4 +46,4 @@ module.exports = function parseJSON(input) {
   }
 
   return null;
-};
+}

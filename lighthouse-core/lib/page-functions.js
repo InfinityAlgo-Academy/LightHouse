@@ -537,7 +537,8 @@ const getNodeDetailsString = `function getNodeDetails(element) {
   return (${getNodeDetails.toString()})(element);
 }`;
 
-module.exports = {
+// TODO(esmodules): should this be refactored to export each function individually?
+export const pageFunctions = {
   wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   wrapRuntimeEvalErrorInBrowser,
   getElementsInDocument,

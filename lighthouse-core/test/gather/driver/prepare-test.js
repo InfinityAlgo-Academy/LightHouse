@@ -9,7 +9,7 @@ import * as td from 'testdouble';
 import {createMockSession, createMockDriver} from '../../fraggle-rock/gather/mock-driver.js';
 import {flushAllTimersAndMicrotasks, fnAny, timers} from '../../test-utils.js';
 // import prepare from '../../../gather/driver/prepare.js';
-import constants from '../../../config/constants.js';
+import * as constants from '../../../config/constants.js';
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
@@ -26,7 +26,7 @@ const storageMock = {
   clearBrowserCaches: fnAny(),
   getImportantStorageWarning: fnAny(),
 };
-td.replace('../../../gather/driver/storage.js', storageMock);
+await td.replaceEsm('../../../gather/driver/storage.js', storageMock);
 
 const url = 'https://example.com';
 let sessionMock = createMockSession();
@@ -38,9 +38,9 @@ beforeEach(() => {
     .mockResponse('Emulation.setCPUThrottlingRate')
     .mockResponse('Network.setBlockedURLs')
     .mockResponse('Network.setExtraHTTPHeaders');
-  storageMock.clearBrowserCaches = fnAny();
-  storageMock.clearDataForOrigin = fnAny();
-  storageMock.getImportantStorageWarning = fnAny();
+  storageMock.clearDataForOrigin.mockReset();
+  storageMock.clearBrowserCaches.mockReset();
+  storageMock.getImportantStorageWarning.mockReset();
 });
 
 afterEach(() => {

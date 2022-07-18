@@ -12,11 +12,15 @@
 
 'use strict';
 
-const Audit = require('../audit.js');
-const Sentry = require('../../lib/sentry.js');
-const semver = require('semver');
-const snykDatabase = require('../../../third-party/snyk/snapshot.json');
-const i18n = require('../../lib/i18n/i18n.js');
+import fs from 'fs';
+import {Audit} from '../audit.js';
+import {Sentry} from '../../lib/sentry.js';
+import semver from 'semver';
+import * as i18n from '../../lib/i18n/i18n.js';
+import {LH_ROOT} from '../../../root.js';
+
+const snykDatabase = JSON.parse(
+  fs.readFileSync(`${LH_ROOT}/third-party/snyk/snapshot.json`, 'utf-8'));
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on Javascript libraries the page uses. This descriptive title is shown to users when all Javascript libraries are free of known security vulnerabilities. */
@@ -42,7 +46,7 @@ const UIStrings = {
   columnSeverity: 'Highest Severity',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 const SEMVER_REGEX = /^(\d+\.\d+\.\d+)[^-0-9]+/;
 
@@ -221,5 +225,5 @@ class NoVulnerableLibrariesAudit extends Audit {
   }
 }
 
-module.exports = NoVulnerableLibrariesAudit;
-module.exports.UIStrings = UIStrings;
+export default NoVulnerableLibrariesAudit;
+export {UIStrings};

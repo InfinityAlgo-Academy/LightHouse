@@ -1,4 +1,0 @@
-{
-  "type": "commonjs",
-  "//": "All fixtures are commonjs until core/ is modules."
-}

@@ -21,32 +21,35 @@ fs.writeFileSync(`${LH_ROOT}/node_modules/@testing-library/preact/dist/esm/packa
 fs.writeFileSync(`${LH_ROOT}/node_modules/@testing-library/preact-hooks/src/package.json`,
   '{"type": "module"}');
 
-// @ts-expect-error
-global.React = preact;
-
-export default {
-  mochaHooks: {
-    beforeEach() {
-      const {window} = new JSDOM(undefined, {
-        url: 'file:///Users/example/report.html/',
-      });
-      global.window = window as any;
-      global.document = window.document;
-      global.location = window.location;
-      global.self = global.window;
-
-      // Use JSDOM types as necessary.
-      global.Blob = window.Blob;
-      global.HTMLInputElement = window.HTMLInputElement;
-
-      // Functions not implemented in JSDOM.
-      window.Element.prototype.scrollIntoView = jestMock.fn();
-      global.self.matchMedia = jestMock.fn<any, any>(() => ({
-        addListener: jestMock.fn(),
-      }));
-
-      // @ts-expect-error: for @testing-library/preact-hooks
-      global.MessageChannel = MessageChannel;
-    },
+const rootHooks = {
+  beforeAll() {
+    // @ts-expect-error
+    global.React = preact;
   },
+  beforeEach() {
+    const {window} = new JSDOM(undefined, {
+      url: 'file:///Users/example/report.html/',
+    });
+    global.window = window as any;
+    global.document = window.document;
+    global.location = window.location;
+    global.self = global.window;
+
+    // Use JSDOM types as necessary.
+    global.Blob = window.Blob;
+    global.HTMLInputElement = window.HTMLInputElement;
+
+    // Functions not implemented in JSDOM.
+    window.Element.prototype.scrollIntoView = jestMock.fn();
+    global.self.matchMedia = jestMock.fn<any, any>(() => ({
+      addListener: jestMock.fn(),
+    }));
+
+    // @ts-expect-error: for @testing-library/preact-hooks
+    global.MessageChannel = MessageChannel;
+  },
+};
+
+export {
+  rootHooks,
 };

@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const NavigationMetric = require('./navigation-metric.js');
+import {makeComputedArtifact} from '../computed-artifact.js';
+import NavigationMetric from './navigation-metric.js';
 
 class FirstContentfulPaintAllFrames extends NavigationMetric {
   /**
@@ -31,7 +31,7 @@ class FirstContentfulPaintAllFrames extends NavigationMetric {
   }
 }
 
-module.exports = makeComputedArtifact(
+export default makeComputedArtifact(
   FirstContentfulPaintAllFrames,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

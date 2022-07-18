@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const NetworkRequest = require('../lib/network-request.js');
-const MainResource = require('./main-resource.js');
-const PageDependencyGraph = require('./page-dependency-graph.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import {NetworkRequest} from '../lib/network-request.js';
+import MainResource from './main-resource.js';
+import PageDependencyGraph from './page-dependency-graph.js';
 
 class CriticalRequestChains {
   /**
@@ -139,4 +139,4 @@ class CriticalRequestChains {
   }
 }
 
-module.exports = makeComputedArtifact(CriticalRequestChains, ['URL', 'devtoolsLog', 'trace']);
+export default makeComputedArtifact(CriticalRequestChains, ['URL', 'devtoolsLog', 'trace']);

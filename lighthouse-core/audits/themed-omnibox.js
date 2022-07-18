@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const MultiCheckAudit = require('./multi-check-audit.js');
-const ManifestValues = require('../computed/manifest-values.js');
-const cssParsers = require('cssstyle/lib/parsers');
-const i18n = require('../lib/i18n/i18n.js');
+import MultiCheckAudit from './multi-check-audit.js';
+import ManifestValues from '../computed/manifest-values.js';
+import cssParsers from 'cssstyle/lib/parsers.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the theme color the web page has set for the browser's address bar. This descriptive title is shown to users when an address-bar theme color has been set. */
@@ -20,7 +20,7 @@ const UIStrings = {
     '[Learn more](https://web.dev/themed-omnibox/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview
@@ -106,5 +106,5 @@ class ThemedOmnibox extends MultiCheckAudit {
   }
 }
 
-module.exports = ThemedOmnibox;
-module.exports.UIStrings = UIStrings;
+export default ThemedOmnibox;
+export {UIStrings};

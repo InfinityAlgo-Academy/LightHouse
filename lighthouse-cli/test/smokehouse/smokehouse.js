@@ -58,9 +58,18 @@ async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
     retries = DEFAULT_RETRIES,
     lighthouseRunner = Object.assign(cliLighthouseRunner, {runnerName: 'cli'}),
     takeNetworkRequestUrls,
+    setup,
   } = smokehouseOptions;
   assertPositiveInteger('jobs', jobs);
   assertNonNegativeInteger('retries', retries);
+
+  try {
+    await setup?.();
+  } catch (err) {
+    console.error(log.redify('\nERROR DURING SETUP:'));
+    console.error(log.redify(err.stack || err));
+    return {success: false, testResults: []};
+  }
 
   // Run each testDefn in parallel based on the concurrencyLimit.
   const concurrentMapper = new ConcurrentMapper();
@@ -251,7 +260,7 @@ function logChildProcessError(localConsole, err) {
     localConsole.adoptStdStrings(err);
   }
 
-  localConsole.log(log.redify('Error: ') + err + '\n' + err.stack);
+  localConsole.log(log.redify(err.stack || err.message));
 }
 
 /**
