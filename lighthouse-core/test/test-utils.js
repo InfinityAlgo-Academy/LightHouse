@@ -182,35 +182,35 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
  * shouldn't concern themselves about.
  */
 async function makeMocksForGatherRunner() {
-  await td.replaceEsm(require.resolve('../gather/driver/environment.js'), {
+  await td.replaceEsm('../gather/driver/environment.js', {
     getBenchmarkIndex: () => Promise.resolve(150),
     getBrowserVersion: async () => ({userAgent: 'Chrome', milestone: 80}),
     getEnvironmentWarnings: () => [],
   });
-  await td.replaceEsm(require.resolve('../gather/gatherers/stacks.js'), undefined, {
+  await td.replaceEsm('../gather/gatherers/stacks.js', undefined, {
     collectStacks: () => Promise.resolve([]),
   });
-  await td.replaceEsm(require.resolve('../gather/gatherers/installability-errors.js'), undefined, {
+  await td.replaceEsm('../gather/gatherers/installability-errors.js', undefined, {
     getInstallabilityErrors: async () => ({errors: []}),
   });
-  await td.replaceEsm(require.resolve('../gather/gatherers/web-app-manifest.js'), undefined, {
+  await td.replaceEsm('../gather/gatherers/web-app-manifest.js', undefined, {
     getWebAppManifest: async () => null,
   });
-  await td.replaceEsm(require.resolve('../lib/emulation.js'), {
+  await td.replaceEsm('../lib/emulation.js', {
     emulate: jestMock.fn(),
     throttle: jestMock.fn(),
     clearThrottling: jestMock.fn(),
   });
-  await td.replaceEsm(require.resolve('../gather/driver/prepare.js'), {
+  await td.replaceEsm('../gather/driver/prepare.js', {
     prepareTargetForNavigationMode: jestMock.fn(),
     prepareTargetForIndividualNavigation: jestMock.fn().mockResolvedValue({warnings: []}),
   });
-  await td.replaceEsm(require.resolve('../gather/driver/storage.js'), {
+  await td.replaceEsm('../gather/driver/storage.js', {
     clearDataForOrigin: jestMock.fn(),
     cleanBrowserCaches: jestMock.fn(),
     getImportantStorageWarning: jestMock.fn(),
   });
-  await td.replaceEsm(require.resolve('../gather/driver/navigation.js'), {
+  await td.replaceEsm('../gather/driver/navigation.js', {
     gotoURL: jestMock.fn().mockResolvedValue({
       mainDocumentUrl: 'http://example.com',
       warnings: [],

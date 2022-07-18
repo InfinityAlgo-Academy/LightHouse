@@ -187,7 +187,7 @@ const runnerMock = {
   },
 };
 async function mockRunnerModule() {
-  await td.replaceEsm(`${LH_ROOT}/lighthouse-core/runner.js`, {Runner: runnerMock});
+  await td.replaceEsm('../../../runner.js', {Runner: runnerMock});
   return runnerMock;
 }
 
