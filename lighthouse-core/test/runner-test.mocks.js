@@ -8,7 +8,6 @@ import jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
 import {makeMocksForGatherRunner} from './test-utils.js';
-import * as assetSaver from '../lib/asset-saver.js';
 
 await makeMocksForGatherRunner();
 
@@ -20,15 +19,20 @@ let saveLhrSpy;
 let loadArtifactsSpy;
 
 await td.replaceEsm('../lib/asset-saver.js', {
-  saveArtifacts: saveArtifactsSpy = jestMock.fn(assetSaver.saveArtifacts),
+  saveArtifacts: saveArtifactsSpy = jestMock.fn((...args) => assetSaver.saveArtifacts(...args)),
   saveLhr: saveLhrSpy = jestMock.fn(),
-  loadArtifacts: loadArtifactsSpy = jestMock.fn(assetSaver.loadArtifacts),
+  loadArtifacts: loadArtifactsSpy = jestMock.fn((...args) => assetSaver.loadArtifacts(...args)),
 });
 
 await td.replaceEsm('../gather/driver/service-workers.js', {
   getServiceWorkerVersions: jestMock.fn().mockResolvedValue({versions: []}),
   getServiceWorkerRegistrations: jestMock.fn().mockResolvedValue({registrations: []}),
 });
+
+// All mocks must come first, then we can load the "original" version of asset-saver (which will
+// contain references to all the correct mocked modules, and have the same LighthouseError class
+// that the test file uses).
+const assetSaver = await import('../lib/asset-saver.js?__quibbleoriginal');
 
 /** @typedef {typeof testContext} TestContext */
 const testContext = {
