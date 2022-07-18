@@ -8,13 +8,13 @@
 
 set -eux
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+LH_ROOT="$SCRIPT_DIR/../.."
+
 ARGS=(
   --testMatch='{flow-report/**/*-test.ts,flow-report/**/*-test.tsx}'
-  --require=flow-report/test/setup/env-setup.ts
-  --loader=@esbuild-kit/esm-loader
-  # util-test.tsx won't finish on its own because of an open MessagePort, so help it out.
-  # See https://github.com/jsdom/jsdom/issues/2448#issuecomment-802288244
-  --exit
+  --require="$LH_ROOT/flow-report/test/setup/env-setup.ts"
 )
 
-yarn mocha ${ARGS[*]} "$@"
+cd "$LH_ROOT"
+node --loader=@esbuild-kit/esm-loader lighthouse-core/test/scripts/run-mocha-tests.js ${ARGS[*]} "$@"
