@@ -215,7 +215,7 @@
   "resolutions": {
     "puppeteer/**/devtools-protocol": "0.0.995287",
     "puppeteer-core/**/devtools-protocol": "0.0.995287",
-    "testdouble/**/quibble": "connorjclark/quibble#fix-win"
+    "testdouble/**/quibble": "connorjclark/quibble#fork"
   },
   "repository": "GoogleChrome/lighthouse",
   "keywords": [
