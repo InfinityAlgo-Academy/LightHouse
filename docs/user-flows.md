@@ -21,8 +21,8 @@ Lighthouse can now run in three modes: navigations, timespans, and snapshots. Ea
 | | |
 |:---:|---|
 | Navigation <br> <img src="https://user-images.githubusercontent.com/39191/170560057-4f7cab97-ee6b-497f-8e18-1f84ba3616dd.png" height="96" width="141">  | **Use Cases** <br>  ✅ Obtain a Lighthouse Performance score and all performance metrics.<br>✅ Assess Progressive Web App capabilities.<br>✅ Analyze accessibility immediately after page load.<br><br> **Limitations** <br>  🤔 Cannot analyze form submissions or single page app transitions.<br>🤔 Cannot analyze content that isn't available immediately on page load. |
-| Timespan <br> <img src="https://user-images.githubusercontent.com/39191/170560049-a6b630a2-187a-4233-9f8b-8d7fb276f51e.png" height="96" width="141">  | **Use Cases** <br> ✅ Measure layout shifts and JavaScript execution time over a timerange including interactions.<br>✅ Discover performance opportunities to improve the experience for long-lived pages and SPAs.<br><br> **Limitations** <br>  🤔 Does not provide an overall performance score.<br>🤔 Cannot analyze moment-based performance metrics (e.g. Largest Contentful Paint).<br>🤔 Cannot analyze state-of-the-page issues (e.g. no Accessibility category) |
-| Snapshot <br> <img src="https://user-images.githubusercontent.com/39191/170560055-fb599418-c94d-44bf-9921-be4dce6abccf.png" height="96" width="141">  | **Use Cases** <br> ✅ Analyze the page in its current state.<br> ✅ Find accessibility issues deep within SPAs or complex forms.<br>✅ Evaluate best practices of menus and UI elements hidden behind interaction.<br><br> **Limitations** <br>  🤔 Does not provide an overall performance score or metrics.<br>🤔 Cannot analyze any issues outside the current DOM (e.g. no network, main-thread, or performance analysis). |
+| Timespan <br> <img src="https://user-images.githubusercontent.com/39191/170560055-fb599418-c94d-44bf-9921-be4dce6abccf.png" height="96" width="141">  | **Use Cases** <br> ✅ Measure layout shifts and JavaScript execution time over a timerange including interactions.<br>✅ Discover performance opportunities to improve the experience for long-lived pages and SPAs.<br><br> **Limitations** <br>  🤔 Does not provide an overall performance score.<br>🤔 Cannot analyze moment-based performance metrics (e.g. Largest Contentful Paint).<br>🤔 Cannot analyze state-of-the-page issues (e.g. no Accessibility category) |
+| Snapshot <br> <img src="https://user-images.githubusercontent.com/39191/170560049-a6b630a2-187a-4233-9f8b-8d7fb276f51e.png" height="96" width="141">  | **Use Cases** <br> ✅ Analyze the page in its current state.<br> ✅ Find accessibility issues deep within SPAs or complex forms.<br>✅ Evaluate best practices of menus and UI elements hidden behind interaction.<br><br> **Limitations** <br>  🤔 Does not provide an overall performance score or metrics.<br>🤔 Cannot analyze any issues outside the current DOM (e.g. no network, main-thread, or performance analysis). |
 
 
 ### Navigation mode
@@ -79,7 +79,7 @@ The `startNavigation`/`endNavigation` functions _must_ surround an action that t
 
 ### Timespan
 
-<img src="https://user-images.githubusercontent.com/39191/170560049-a6b630a2-187a-4233-9f8b-8d7fb276f51e.png">
+<img src="https://user-images.githubusercontent.com/39191/170560055-fb599418-c94d-44bf-9921-be4dce6abccf.png">
 
 In DevTools, select "Timespan" as the mode and click _Start timespan_. Record whatever timerange or interactions is desired and then click _End timespan_.
 
@@ -113,7 +113,7 @@ import lighthouse from 'lighthouse/lighthouse-core/fraggle-rock/api.js';
 
 ### Snapshot
 
-<img src="https://user-images.githubusercontent.com/39191/170560055-fb599418-c94d-44bf-9921-be4dce6abccf.png">
+<img src="https://user-images.githubusercontent.com/39191/170560049-a6b630a2-187a-4233-9f8b-8d7fb276f51e.png">
 
 In DevTools, select "Snapshot" as the mode. Set up the page in the state you want to evaluate. Then, click _Analyze page state_.
 
