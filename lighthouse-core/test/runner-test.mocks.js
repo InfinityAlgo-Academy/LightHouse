@@ -32,6 +32,7 @@ await td.replaceEsm('../gather/driver/service-workers.js', {
 // All mocks must come first, then we can load the "original" version of asset-saver (which will
 // contain references to all the correct mocked modules, and have the same LighthouseError class
 // that the test file uses).
+// @ts-expect-error
 const assetSaver = await import('../lib/asset-saver.js?__quibbleoriginal');
 
 /** @typedef {typeof testContext} TestContext */
