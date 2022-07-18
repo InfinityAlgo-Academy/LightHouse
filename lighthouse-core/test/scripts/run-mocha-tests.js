@@ -213,7 +213,7 @@ function getTestFiles() {
     const failedTests = getFailedTests();
     if (failedTests.length === 0) throw new Error('no tests failed');
 
-    const titles = getFailedTests().map(failed => failed.title);
+    const titles = failedTests.map(failed => failed.title);
     grep = new RegExp(titles.map(escapeRegex).join('|'));
 
     filteredTests = filteredTests.filter(file => failedTests.some(failed => failed.file === file));
@@ -227,32 +227,10 @@ function getTestFiles() {
   return {filteredTests, grep};
 }
 
-const {filteredTests: testsToRun, grep} = getTestFiles();
-const testsToRunTogether = [];
-const testsToRunIsolated = [];
-for (const test of testsToRun) {
-  if (argv.isolation && testsToIsolate.has(test)) {
-    testsToRunIsolated.push(test);
-  } else {
-    testsToRunTogether.push(test);
-  }
-}
-
-// If running only a single test file, no need for isolation at all. Move
-// the singular test to `testsToRunTogether` so that it's run in-process,
-// allowing for better DX when doing a `node --inspect-brk` workflow.
-if (testsToRunTogether.length === 0 && testsToRunIsolated.length === 1) {
-  testsToRunTogether.push(testsToRunIsolated[0]);
-  testsToRunIsolated.splice(0, 1);
-}
-
-fs.rmSync(failedTestsDir, {recursive: true, force: true});
-fs.mkdirSync(failedTestsDir, {recursive: true});
-
 /**
- * @param {{numberFailures: number}} params
+ * @param {{numberFailures: number, numberMochaInvocations: number}} params
  */
-function exit({numberFailures}) {
+function exit({numberFailures, numberMochaInvocations}) {
   if (!numberFailures) {
     console.log('Tests passed');
     process.exit(0);
@@ -290,8 +268,16 @@ function exit({numberFailures}) {
 }
 
 /**
+ * @typedef OurMochaArgs
+ * @property {RegExp | undefined} grep
+ * @property {boolean} bail
+ * @property {boolean} parallel
+ * @property {string | undefined} require
+ */
+
+/**
  * @param {string[]} tests
- * @param {typeof mochaArgs} mochaArgs
+ * @param {OurMochaArgs} mochaArgs
  * @param {number} invocationNumber
  */
 async function runMocha(tests, mochaArgs, invocationNumber) {
@@ -335,47 +321,76 @@ async function runMocha(tests, mochaArgs, invocationNumber) {
   }
 }
 
-const mochaArgs = {
-  grep,
-  bail: argv.bail,
-  parallel: argv.parallel,
-  require: argv.require,
-};
+async function main() {
+  process.env.SNAPSHOT_UPDATE = argv.update ? '1' : '';
 
-mochaGlobalSetup();
-let numberMochaInvocations = 0;
-let numberFailures = 0;
-try {
-  if (testsToRunTogether.length) {
-    numberFailures += await runMocha(testsToRunTogether, mochaArgs, numberMochaInvocations);
-    numberMochaInvocations += 1;
-    if (numberFailures && argv.bail) exit({numberFailures});
-  }
-
-  for (const test of testsToRunIsolated) {
-    console.log(`Running test in isolation: ${test}`);
-    const worker = new Worker(new URL(import.meta.url), {
-      workerData: {
-        test,
-        mochaArgs,
-        numberMochaInvocations,
-      },
-    });
-
-    try {
-      const [workerResponse] = await once(worker, 'message');
-      numberFailures += workerResponse.numberFailures;
-      if (numberFailures && argv.bail) exit({numberFailures});
-    } catch (err) {
-      // `once` throws an error if the underlying event emitter produces an 'error' message.
-      console.error(err);
-      numberFailures += 1;
-    } finally {
-      numberMochaInvocations += 1;
+  const {filteredTests: testsToRun, grep} = getTestFiles();
+  const testsToRunTogether = [];
+  const testsToRunIsolated = [];
+  for (const test of testsToRun) {
+    if (argv.isolation && testsToIsolate.has(test)) {
+      testsToRunIsolated.push(test);
+    } else {
+      testsToRunTogether.push(test);
     }
   }
-} finally {
-  mochaGlobalTeardown();
+
+  // If running only a single test file, no need for isolation at all. Move
+  // the singular test to `testsToRunTogether` so that it's run in-process,
+  // allowing for better DX when doing a `node --inspect-brk` workflow.
+  if (testsToRunTogether.length === 0 && testsToRunIsolated.length === 1) {
+    testsToRunTogether.push(testsToRunIsolated[0]);
+    testsToRunIsolated.splice(0, 1);
+  }
+
+  fs.rmSync(failedTestsDir, {recursive: true, force: true});
+  fs.mkdirSync(failedTestsDir, {recursive: true});
+
+  /** @type {OurMochaArgs} */
+  const mochaArgs = {
+    grep,
+    bail: argv.bail,
+    parallel: argv.parallel,
+    require: argv.require,
+  };
+
+  mochaGlobalSetup();
+  let numberMochaInvocations = 0;
+  let numberFailures = 0;
+  try {
+    if (testsToRunTogether.length) {
+      numberFailures += await runMocha(testsToRunTogether, mochaArgs, numberMochaInvocations);
+      numberMochaInvocations += 1;
+      if (numberFailures && argv.bail) exit({numberFailures, numberMochaInvocations});
+    }
+
+    for (const test of testsToRunIsolated) {
+      console.log(`Running test in isolation: ${test}`);
+      const worker = new Worker(new URL(import.meta.url), {
+        workerData: {
+          test,
+          mochaArgs,
+          numberMochaInvocations,
+        },
+      });
+
+      try {
+        const [workerResponse] = await once(worker, 'message');
+        numberFailures += workerResponse.numberFailures;
+      } catch (err) {
+        // `once` throws an error if the underlying event emitter produces an 'error' message.
+        console.error(err);
+        numberFailures += 1;
+      }
+
+      numberMochaInvocations += 1;
+      if (numberFailures && argv.bail) exit({numberFailures, numberMochaInvocations});
+    }
+  } finally {
+    mochaGlobalTeardown();
+  }
+
+  exit({numberFailures, numberMochaInvocations});
 }
 
-exit({numberFailures});
+await main();

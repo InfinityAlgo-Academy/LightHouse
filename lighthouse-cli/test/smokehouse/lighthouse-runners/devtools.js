@@ -42,14 +42,18 @@ async function setup() {
  * CHROME_PATH determines which Chrome is used–otherwise the default is puppeteer's chrome binary.
  * @param {string} url
  * @param {LH.Config.Json=} configJson
- * @param {{isDebug?: boolean}=} testRunnerOptions
+ * @param {{isDebug?: boolean, useLegacyNavigation?: boolean}=} testRunnerOptions
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
  */
 async function runLighthouse(url, configJson, testRunnerOptions = {}) {
   const chromeFlags = [
     `--custom-devtools-frontend=file://${devtoolsDir}/out/Default/gen/front_end`,
   ];
-  const {lhr, artifacts, logs} = await testUrlFromDevtools(url, configJson, chromeFlags);
+  const {lhr, artifacts, logs} = await testUrlFromDevtools(url, {
+    config: configJson,
+    chromeFlags,
+    useLegacyNavigation: testRunnerOptions.useLegacyNavigation,
+  });
 
   if (testRunnerOptions.isDebug) {
     const outputDir = fs.mkdtempSync(os.tmpdir() + '/lh-smoke-cdt-runner-');
