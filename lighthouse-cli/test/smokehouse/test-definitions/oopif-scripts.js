@@ -66,13 +66,15 @@ const expectations = {
               {url: 'http://localhost:10503/simple-script.js', resourceType: 'Fetch'},
               {url: 'http://localhost:10200/simple-worker.js'},
               {url: 'http://localhost:10503/simple-worker.js'},
-              // For some reason, we only see these when running in DevTools!
-              {_runner: 'devtools', url: 'http://localhost:10200/simple-worker.mjs'},
-              {_runner: 'devtools', url: 'http://localhost:10503/simple-worker.mjs'},
-              {_runner: 'devtools', url: 'http://localhost:10200/simple-script.js?esm', resourceType: 'Script'},
-              {_runner: 'devtools', url: 'http://localhost:10503/simple-script.js?esm', resourceType: 'Script'},
-              {_runner: 'devtools', url: 'http://localhost:10200/simple-script.js?importScripts', resourceType: 'Other'},
-              {_runner: 'devtools', url: 'http://localhost:10503/simple-script.js?importScripts', resourceType: 'Other'},
+              // These requests are emitted in workers so Lighthouse doesn't capture them.
+              // For some reason, legacy navigations in DevTools still pick them up.
+              // https://github.com/GoogleChrome/lighthouse/issues/14211
+              {_legacyOnly: true, _runner: 'devtools', url: 'http://localhost:10200/simple-worker.mjs'},
+              {_legacyOnly: true, _runner: 'devtools', url: 'http://localhost:10503/simple-worker.mjs'},
+              {_legacyOnly: true, _runner: 'devtools', url: 'http://localhost:10200/simple-script.js?esm', resourceType: 'Script'},
+              {_legacyOnly: true, _runner: 'devtools', url: 'http://localhost:10503/simple-script.js?esm', resourceType: 'Script'},
+              {_legacyOnly: true, _runner: 'devtools', url: 'http://localhost:10200/simple-script.js?importScripts', resourceType: 'Other'},
+              {_legacyOnly: true, _runner: 'devtools', url: 'http://localhost:10503/simple-script.js?importScripts', resourceType: 'Other'},
             ],
             // Ensure the above is exhaustive (except for favicon, which won't be fetched in devtools/LR).
             _excludes: [
