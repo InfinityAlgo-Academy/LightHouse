@@ -5,7 +5,7 @@
  */
 'use strict';
 
-import defaultConfig from './default-config.js';
+import legacyDefaultConfig from './legacy-default-config.js';
 import * as constants from './constants.js';
 import format from '../../shared/localization/format.js';
 import * as validation from './../fraggle-rock/config/validation.js';
@@ -24,7 +24,7 @@ import {
 } from './config-helpers.js';
 import {getModuleDirectory} from '../../esm-utils.js';
 
-const defaultConfigPath = './default-config.js';
+const defaultConfigPath = './legacy-default-config.js';
 
 /** @typedef {typeof import('../gather/gatherers/gatherer.js').Gatherer} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
@@ -168,7 +168,7 @@ class Config {
     let configPath = flags?.configPath;
 
     if (!configJSON) {
-      configJSON = defaultConfig;
+      configJSON = legacyDefaultConfig;
       configPath = path.resolve(getModuleDirectory(import.meta), defaultConfigPath);
     }
 
@@ -184,7 +184,7 @@ class Config {
       if (configJSON.extends !== 'lighthouse:default') {
         throw new Error('`lighthouse:default` is the only valid extension method.');
       }
-      configJSON = Config.extendConfigJSON(deepCloneConfigJson(defaultConfig), configJSON);
+      configJSON = Config.extendConfigJSON(deepCloneConfigJson(legacyDefaultConfig), configJSON);
     }
 
     // The directory of the config path, if one was provided.

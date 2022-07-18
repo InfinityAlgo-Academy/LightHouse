@@ -11,7 +11,7 @@ import {createRequire} from 'module';
 import log from 'lighthouse-logger';
 
 import {Config} from '../../config/config.js';
-import defaultConfig from '../../config/default-config.js';
+import legacyDefaultConfig from '../../config/legacy-default-config.js';
 import * as constants from '../../config/constants.js';
 import {Gatherer} from '../../gather/gatherers/gatherer.js';
 import {Audit} from '../../audits/audit.js';
@@ -26,7 +26,7 @@ const modulePath = getModulePath(import.meta);
 describe('Config', () => {
   let origConfig;
   beforeEach(() => {
-    origConfig = JSON.parse(JSON.stringify(defaultConfig));
+    origConfig = JSON.parse(JSON.stringify(legacyDefaultConfig));
   });
 
   it('returns new object', async () => {
@@ -361,7 +361,7 @@ describe('Config', () => {
   });
 
   it('throws on a non-absolute config path', async () => {
-    const configPath = '../../config/default-config.js';
+    const configPath = '../../config/legacy-default-config.js';
 
     await assert.rejects(Config.fromJson({
       audits: [],
@@ -901,7 +901,7 @@ describe('Config', () => {
   });
 
   it('is idempotent when accepting a canonicalized Config as valid ConfigJson input', async () => {
-    const config = await Config.fromJson(defaultConfig);
+    const config = await Config.fromJson(legacyDefaultConfig);
     const configAgain = await Config.fromJson(config);
     assert.deepEqual(config, configAgain);
   });
@@ -1482,7 +1482,7 @@ describe('Config', () => {
     });
 
     it('prints localized category titles', async () => {
-      const printed = (await Config.fromJson(defaultConfig)).getPrintString();
+      const printed = (await Config.fromJson(legacyDefaultConfig)).getPrintString();
       const printedConfig = JSON.parse(printed);
       let localizableCount = 0;
 
@@ -1500,7 +1500,7 @@ describe('Config', () => {
 
     it('prints a valid ConfigJson that can make an identical Config', async () => {
       // depends on defaultConfig having a `path` for all gatherers and audits.
-      const firstConfig = await Config.fromJson(defaultConfig);
+      const firstConfig = await Config.fromJson(legacyDefaultConfig);
       const firstPrint = firstConfig.getPrintString();
 
       const secondConfig = await Config.fromJson(JSON.parse(firstPrint));

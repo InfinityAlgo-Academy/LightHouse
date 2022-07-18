@@ -8,7 +8,7 @@
 import path from 'path';
 import log from 'lighthouse-logger';
 import {Runner} from '../../runner.js';
-import defaultConfig from './default-config.js';
+import defaultConfig from '../../config/default-config.js';
 import {defaultNavigationConfig, nonSimulatedPassConfigOverrides} from '../../config/constants.js'; // eslint-disable-line max-len
 
 import {
@@ -35,7 +35,10 @@ import {
 import {getModuleDirectory} from '../../../esm-utils.js';
 import * as format from '../../../shared/localization/format.js';
 
-const defaultConfigPath = path.join(getModuleDirectory(import.meta), './default-config.js');
+const defaultConfigPath = path.join(
+  getModuleDirectory(import.meta),
+  '../../config/default-config.js'
+);
 
 /** @typedef {LH.Config.FRContext & {gatherMode: LH.Gatherer.GatherMode}} ConfigContext */
 
