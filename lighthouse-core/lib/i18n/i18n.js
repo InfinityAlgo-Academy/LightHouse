@@ -8,6 +8,7 @@
 /** @typedef {import('../../../shared/localization/locales').LhlMessages} LhlMessages */
 
 import path from 'path';
+import url from 'url';
 
 import lookupClosestLocale from 'lookup-closest-locale';
 import {getAvailableLocales} from '../../../shared/localization/format.js';
@@ -170,7 +171,7 @@ function lookupLocale(locales, possibleLocales) {
  * @param {Record<string, string>} fileStrings
  */
 function createIcuMessageFn(filename, fileStrings) {
-  filename = filename.replace('file://', '');
+  if (filename.startsWith('file://')) filename = url.fileURLToPath(filename);
 
   /**
    * Combined so fn can access both caller's strings and i18n.UIStrings shared across LH.
