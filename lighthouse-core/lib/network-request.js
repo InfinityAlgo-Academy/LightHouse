@@ -18,7 +18,7 @@
     |-------[xxxxxXXXXXX]-|
        (1)    (2)    (3) (4)
 
-  (1) DNS, SSL, connection setup cost
+  (1) Queuing (delta between renderer knowing about request and network manager knowing about it), DNS, SSL, connection setup cost
       CDP: left whisker edge is Network.requestWillBeSent timestamp
   (2) light shaded region. browser network manager has initiated the request, hasn't recieved any bytes back yet
       Note: even with early-hint response, only the "real" response is considered here
