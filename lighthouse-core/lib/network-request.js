@@ -15,16 +15,24 @@
     |-------[xxxxxXXXXXX]-|
        (1)    (2)    (3) (4)
 
-  (1) Queuing (delta between renderer knowing about request and network manager knowing about it), DNS, SSL, connection setup cost
+  (1) Queuing (delta between renderer knowing about request and network manager knowing about it),
+      DNS, SSL, connection setup cost
+
       CDP: left whisker edge is Network.requestWillBeSent timestamp
+
   (2) light shaded region. browser network manager has initiated the request, hasn't recieved any bytes back yet
       Note: even with early-hint response, only the "real" response is considered here
+
       CDP: Network.responseRecieved timings.requestStart + timing.sendStart
+
   (3) dark shaded region. browser network manager has recieved the very first header byte
+
       CDP: Network.responseRecieved timings.requestStart + timing.recievedHeadersEnd
       CDP: (right edge of box) Network.finished/Network.failed timestamp
+
   (4) Trailing whisker: marks time when render process has used the resource.
-      Trace: ResourceFinished trace event finishedTime. Currently don't care about this. Technically, could be
+
+      Trace: ResourceFinished trace event finishedTime. Currently don't care about this. Could be
       long if main thread is busy.
  */
 
