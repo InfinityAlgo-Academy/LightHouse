@@ -11,6 +11,26 @@
  * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/sdk/NetworkManager.js
  */
 
+/**
+
+  DevTools box-whisker
+
+    |-------[xxxxxXXXXXX]-|
+       (1)    (2)    (3) (4)
+
+  (1) DNS, SSL, connection setup cost
+      CDP: left whisker edge is Network.requestWillBeSent timestamp
+  (2) light shaded region. browser network manager has initiated the request, hasn't recieved any bytes back yet
+      Note: even with early-hint response, only the "real" response is considered here
+      CDP: Network.responseRecieved timing.sendStart + ???
+  (3) dark shaded region. browser network manager has recieved the very first header byte
+      CDP: Network.responseRecieved timing.recievedHeadersEnd + timings.requestStart
+      CDP: (right edge of box) Network.finished/Network.failed timestamp
+  (4) Trailing whisker: marks time when render process has used the resource.
+      Trace: ResourceFinished trace event finishedTime. Currently don't care about this. Technically, could be
+      long if main thread is busy.
+ */
+
 import URL from './url-shim.js';
 
 // Lightrider X-Header names for timing information.
@@ -321,6 +341,7 @@ class NetworkRequest {
     if (timing.requestTime === 0 || timing.receiveHeadersEnd === -1) return;
     // Take startTime and responseReceivedTime from timing data for better accuracy.
     // Timing's requestTime is a baseline in seconds, rest of the numbers there are ticks in millis.
+    // TODO: This skips the "queuing time" before the netstack has taken over ... is this a mistake?
     this.startTime = timing.requestTime;
     const headersReceivedTime = timing.requestTime + timing.receiveHeadersEnd / 1000;
     if (!this.responseReceivedTime || this.responseReceivedTime < 0) {
