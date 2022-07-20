@@ -9,9 +9,6 @@
  * @fileoverview Fills most of the role of NetworkManager and NetworkRequest classes from DevTools.
  * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/sdk/NetworkRequest.js
  * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/sdk/NetworkManager.js
- */
-
-/**
 
   DevTools box-whisker
 
