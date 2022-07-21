@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 /**
  * @fileoverview Audits if a page has an `apple-touch-icon` link element with a valid href.
@@ -20,13 +20,13 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user that having an apple-touch-icon allows websites to include an app icon to their installed progressive web apps, similar to a native app. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. "apple-touch-icon" is an HTML attribute value and should not be translated. */
   description: 'For ideal appearance on iOS when users add a progressive web app to the home ' +
     'screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) ' +
-    'square PNG. [Learn More](https://web.dev/apple-touch-icon/).',
+    'square PNG. [Learn more about `apple-touch-icon`](https://web.dev/apple-touch-icon/).',
   /** Warning that HTML attribute `apple-touch-icon-precomposed` should not be used in favor of `apple-touch-icon`.  "apple-touch-icon-precomposed" and "apple-touch-icon" are HTML attribute values and should not be translated. */
   precomposedWarning: '`apple-touch-icon-precomposed` is out of date; ' +
     '`apple-touch-icon` is preferred.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class AppleTouchIcon extends Audit {
   /**
@@ -68,5 +68,5 @@ class AppleTouchIcon extends Audit {
   }
 }
 
-module.exports = AppleTouchIcon;
-module.exports.UIStrings = UIStrings;
+export default AppleTouchIcon;
+export {UIStrings};

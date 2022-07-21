@@ -4,13 +4,9 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-'use strict';
-
-/* eslint-env jest */
-
-const PreloadLCPImage = require('../../audits/preload-lcp-image.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const createTestTrace = require('../create-test-trace.js');
+import PreloadLCPImage from '../../audits/preload-lcp-image.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
+import {createTestTrace} from '../create-test-trace.js';
 
 const rootNodeUrl = 'http://example.com:3000';
 const mainDocumentNodeUrl = 'http://www.example.com:3000';
@@ -139,6 +135,16 @@ describe('Performance: preload-lcp audit', () => {
     expect(results.details.overallSavingsMs).toEqual(180);
     expect(results.details.items[0].url).toEqual(imageUrl);
     expect(results.details.items[0].wastedMs).toEqual(180);
+
+    // debugData should be included even if image shouldn't be preloaded.
+    expect(results.details.debugData).toMatchObject({
+      initiatorPath: [
+        {url: 'http://www.example.com/image.png', initiatorType: 'script'},
+        {url: 'http://www.example.com/script.js', initiatorType: 'parser'},
+        {url: 'http://www.example.com:3000', initiatorType: 'other'},
+      ],
+      pathLength: 3,
+    });
   });
 
   it('should suggest preloading when LCP is waiting on the image', async () => {
@@ -163,5 +169,13 @@ describe('Performance: preload-lcp audit', () => {
     expect(results.details.overallSavingsMs).toEqual(30);
     expect(results.details.items[0].url).toEqual(imageUrl);
     expect(results.details.items[0].wastedMs).toEqual(30);
+    expect(results.details.debugData).toMatchObject({
+      initiatorPath: [
+        {url: 'http://www.example.com/image.png', initiatorType: 'script'},
+        {url: 'http://www.example.com/script.js', initiatorType: 'parser'},
+        {url: 'http://www.example.com:3000', initiatorType: 'other'},
+      ],
+      pathLength: 3,
+    });
   });
 });

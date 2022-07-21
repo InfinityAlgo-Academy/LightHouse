@@ -11,8 +11,8 @@
 
 'use strict';
 
-const ViolationAudit = require('../violation-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import ViolationAudit from '../violation-audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the page's use of passive event listeners used to improve the scrolling performance of the page. This descriptive title is shown to users when the page does use passive listeners. */
@@ -22,10 +22,10 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user why they should use passive event listeners on the page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Consider marking your touch and wheel event listeners as `passive` ' +
       'to improve your page\'s scroll performance. ' +
-      '[Learn more](https://web.dev/uses-passive-event-listeners/).',
+      '[Learn more about adopting passive event listeners](https://web.dev/uses-passive-event-listeners/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class PassiveEventsAudit extends ViolationAudit {
   /**
@@ -64,5 +64,5 @@ class PassiveEventsAudit extends ViolationAudit {
   }
 }
 
-module.exports = PassiveEventsAudit;
-module.exports.UIStrings = UIStrings;
+export default PassiveEventsAudit;
+export {UIStrings};

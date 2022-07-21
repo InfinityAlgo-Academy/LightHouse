@@ -3,17 +3,16 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {strict as assert} from 'assert';
 
-const MainThreadTasks = require('../../../lib/tracehouse/main-thread-tasks.js');
-const TraceProcessor = require('../../../lib/tracehouse/trace-processor.js');
-const taskGroups = require('../../../lib/tracehouse/task-groups.js').taskGroups;
-const pwaTrace = require('../../fixtures/traces/progressive-app.json');
-const noTracingStartedTrace = require('../../fixtures/traces/no-tracingstarted-m74.json');
-const TracingProcessor = require('../../../lib/tracehouse/trace-processor.js');
-const assert = require('assert').strict;
+import {MainThreadTasks} from '../../../lib/tracehouse/main-thread-tasks.js';
+import {TraceProcessor} from '../../../lib/tracehouse/trace-processor.js';
+import {taskGroups} from '../../../lib/tracehouse/task-groups.js';
+import {readJson} from '../../test-utils.js';
+
+const pwaTrace = readJson('../../fixtures/traces/progressive-app.json', import.meta);
+const noTracingStartedTrace = readJson('../../fixtures/traces/no-tracingstarted-m74.json', import.meta);
 
 describe('Main Thread Tasks', () => {
   const pid = 1;
@@ -55,7 +54,7 @@ describe('Main Thread Tasks', () => {
     while (queue.length) {
       const task = queue.shift();
       totalTime += task.selfTime;
-      totalTopLevelTime += TracingProcessor.isScheduleableTask(task.event) ? task.duration : 0;
+      totalTopLevelTime += TraceProcessor.isScheduleableTask(task.event) ? task.duration : 0;
       allTasks.push(task);
       queue.push(...task.children);
     }

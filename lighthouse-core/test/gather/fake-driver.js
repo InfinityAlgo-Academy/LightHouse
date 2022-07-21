@@ -3,9 +3,8 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {fnAny, readJson} from '../test-utils.js';
 
 /**
  * @param {{protocolGetVersionResponse: LH.CrdpCommands['Browser.getVersion']['returnType']}} param0
@@ -15,15 +14,13 @@ function makeFakeDriver({protocolGetVersionResponse}) {
 
   return {
     get fetcher() {
-      return {
-        disable: () => Promise.resolve(),
-      };
+      return {};
     },
     get defaultSession() {
       return this;
     },
-    on: jest.fn(),
-    sendCommand: jest.fn().mockResolvedValue(undefined),
+    on: fnAny(),
+    sendCommand: fnAny().mockResolvedValue(undefined),
     getBrowserVersion() {
       return Promise.resolve(Object.assign({}, protocolGetVersionResponse, {milestone: 71}));
     },
@@ -71,15 +68,13 @@ function makeFakeDriver({protocolGetVersionResponse}) {
       return Promise.resolve();
     },
     endTrace() {
-      // Minimal indirection so TypeScript doesn't crash trying to infer a type.
-      const modulePath = '../fixtures/traces/progressive-app.json';
-      return Promise.resolve(require(modulePath));
+      return Promise.resolve(
+        readJson('lighthouse-core/test/fixtures/traces/progressive-app.json'));
     },
     beginDevtoolsLog() {},
     endDevtoolsLog() {
-      // Minimal indirection so TypeScript doesn't crash trying to infer a type.
-      const modulePath = '../fixtures/artifacts/perflog/defaultPass.devtoolslog.json';
-      return require(modulePath);
+      return readJson(
+        'lighthouse-core/test/fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
     },
     registerRequestIdleCallbackWrap() {
       return Promise.resolve();
@@ -99,7 +94,6 @@ const protocolGetVersionResponse = {
   userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3577.0 Safari/537.36',
   jsVersion: '7.1.314',
 };
-const fakeDriver = makeFakeDriver({protocolGetVersionResponse});
 
 const fakeDriverUsingRealMobileDevice = makeFakeDriver({
   protocolGetVersionResponse: {
@@ -109,8 +103,9 @@ const fakeDriverUsingRealMobileDevice = makeFakeDriver({
   },
 });
 
-module.exports = {
-  ...fakeDriver,
+// TODO(esmodules): fix awkward export.
+export const fakeDriver = {
+  ...makeFakeDriver({protocolGetVersionResponse}),
   fakeDriverUsingRealMobileDevice,
   protocolGetVersionResponse,
 };

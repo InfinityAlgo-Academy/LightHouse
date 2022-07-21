@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const ByteEfficiencyAudit = require('../audits/byte-efficiency/byte-efficiency-audit.js');
-const NetworkRecords = require('./network-records.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import {ByteEfficiencyAudit} from '../audits/byte-efficiency/byte-efficiency-audit.js';
+import NetworkRecords from './network-records.js';
 
 const PREVIEW_LENGTH = 100;
 
@@ -120,12 +120,11 @@ class UnusedCSS {
 
   /**
    * @param {StyleSheetInfo} stylesheetInfo The stylesheetInfo object.
-   * @param {string} pageUrl The URL of the page, used to identify inline styles.
    * @return {LH.Audit.ByteEfficiencyItem}
    */
-  static mapSheetToResult(stylesheetInfo, pageUrl) {
+  static mapSheetToResult(stylesheetInfo) {
     let url = stylesheetInfo.header.sourceURL;
-    if (!url || url === pageUrl) {
+    if (!url || stylesheetInfo.header.isInline) {
       const contentPreview = UnusedCSS.determineContentPreview(stylesheetInfo.content);
       url = contentPreview;
     }
@@ -135,20 +134,20 @@ class UnusedCSS {
   }
 
   /**
-   * @param {{CSSUsage: LH.Artifacts['CSSUsage'], URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
+   * @param {{CSSUsage: LH.Artifacts['CSSUsage'], devtoolsLog: LH.DevtoolsLog}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<LH.Audit.ByteEfficiencyItem[]>}
   */
   static async compute_(data, context) {
-    const {CSSUsage, URL, devtoolsLog} = data;
+    const {CSSUsage, devtoolsLog} = data;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const indexedSheets = UnusedCSS.indexStylesheetsById(CSSUsage.stylesheets, networkRecords);
     UnusedCSS.indexUsedRules(CSSUsage.rules, indexedSheets);
 
     const items = Object.keys(indexedSheets)
-      .map(sheetId => UnusedCSS.mapSheetToResult(indexedSheets[sheetId], URL.finalUrl));
+      .map(sheetId => UnusedCSS.mapSheetToResult(indexedSheets[sheetId]));
     return items;
   }
 }
 
-module.exports = makeComputedArtifact(UnusedCSS, ['CSSUsage', 'URL', 'devtoolsLog']);
+export default makeComputedArtifact(UnusedCSS, ['CSSUsage', 'devtoolsLog']);

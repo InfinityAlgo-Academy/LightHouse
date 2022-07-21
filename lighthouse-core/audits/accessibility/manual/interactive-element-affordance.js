@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit.js');
+import ManualAudit from '../../manual/manual-audit.js';
 
 /**
  * @fileoverview Manual A11y audit for interactive element affordance.
@@ -19,10 +19,10 @@ class InteractiveElementAffordance extends ManualAudit {
   static get meta() {
     return Object.assign({
       id: 'interactive-element-affordance',
-      description: 'Interactive elements, such as links and buttons, should indicate their state and be distinguishable from non-interactive elements. [Learn more](https://web.dev/interactive-element-affordance/).',
+      description: 'Interactive elements, such as links and buttons, should indicate their state and be distinguishable from non-interactive elements. [Learn how to decorate interactive elements with affordance hints](https://web.dev/interactive-element-affordance/).',
       title: 'Interactive elements indicate their purpose and state',
     }, super.partialMeta);
   }
 }
 
-module.exports = InteractiveElementAffordance;
+export default InteractiveElementAffordance;

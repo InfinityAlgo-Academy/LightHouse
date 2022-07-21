@@ -7,9 +7,11 @@
 
 /** @typedef {LH.Artifacts.FontSize['analyzedFailingNodesData'][0]} FailingNodeData */
 
-const i18n = require('../../lib/i18n/i18n.js');
-const Audit = require('../audit.js');
-const ComputedViewportMeta = require('../../computed/viewport-meta.js');
+import * as i18n from '../../lib/i18n/i18n.js';
+
+import {Audit} from '../audit.js';
+import ComputedViewportMeta from '../../computed/viewport-meta.js';
+
 const MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT = 60;
 
 const UIStrings = {
@@ -18,7 +20,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the font sizes used on the page. This descriptive title is shown to users when there is a font that may be too small to be read by users. */
   failureTitle: 'Document doesn\'t use legible font sizes',
   /** Description of a Lighthouse audit that tells the user *why* they need to use a larger font size. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more](https://web.dev/font-size/).',
+  description: 'Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more about legible font sizes](https://web.dev/font-size/).',
   /** Label for the audit identifying font sizes that are too small. */
   displayValue: '{decimalProportion, number, extendedPercent} legible text',
   /** Explanatory message stating that there was a failure in an audit caused by a missing page viewport meta tag configuration. "viewport" and "meta" are HTML terms and should not be translated. */
@@ -36,7 +38,7 @@ const UIStrings = {
   columnFontSize: 'Font Size',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @param {Array<FailingNodeData>} fontSizeArtifact
@@ -340,5 +342,5 @@ class FontSize extends Audit {
   }
 }
 
-module.exports = FontSize;
-module.exports.UIStrings = UIStrings;
+export default FontSize;
+export {UIStrings};

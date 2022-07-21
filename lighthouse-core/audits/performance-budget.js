@@ -5,18 +5,19 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const ResourceSummary = require('../computed/resource-summary.js');
-const MainResource = require('../computed/main-resource.js');
-const Budget = require('../config/budget.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+import ResourceSummary from '../computed/resource-summary.js';
+import MainResource from '../computed/main-resource.js';
+import {Budget} from '../config/budget.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that compares the size and quantity of page resources against targets set by the user. These targets are thought of as "performance budgets" because these metrics impact page performance (i.e. how quickly a page loads). */
   title: 'Performance budget',
   /** Description of a Lighthouse audit where a user sets budgets for the quantity and size of page resources. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Keep the quantity and size of network requests under the targets ' +
-    'set by the provided performance budget. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).',
+    'set by the provided performance budget. ' +
+    '[Learn more about performance budgets](https://developers.google.com/web/tools/lighthouse/audits/budgets).',
   /** [ICU Syntax] Entry in a data table identifying the number of network requests of a particular type. Count will be a whole number. String should be as short as possible to be able to fit well into the table. */
   requestCountOverBudget: `{count, plural,
     =1 {1 request}
@@ -24,7 +25,7 @@ const UIStrings = {
    }`,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /** @typedef {import('../computed/resource-summary.js').ResourceEntry} ResourceEntry */
 /** @typedef {{resourceType: LH.Budget.ResourceType, label: LH.IcuMessage, requestCount: number, transferSize: number, sizeOverBudget: number | undefined, countOverBudget: LH.IcuMessage | undefined}} BudgetItem */
@@ -150,5 +151,5 @@ class ResourceBudget extends Audit {
   }
 }
 
-module.exports = ResourceBudget;
-module.exports.UIStrings = UIStrings;
+export default ResourceBudget;
+export {UIStrings};

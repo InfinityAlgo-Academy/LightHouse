@@ -3,17 +3,14 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const log = require('lighthouse-logger');
+import log from 'lighthouse-logger';
 
-const BaseAudit = require('../../../audits/audit.js');
-const BaseGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const {defaultSettings, defaultNavigationConfig} = require('../../../config/constants.js');
-const filters = require('../../../fraggle-rock/config/filters.js');
-const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
-
-/* eslint-env jest */
+import {Audit as BaseAudit} from '../../../audits/audit.js';
+import BaseGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+import {defaultSettings, defaultNavigationConfig} from '../../../config/constants.js';
+import * as filters from '../../../fraggle-rock/config/filters.js';
+import {initializeConfig} from '../../../fraggle-rock/config/config.js';
 
 describe('Fraggle Rock Config Filtering', () => {
   const snapshotGatherer = new BaseGatherer();
@@ -528,8 +525,36 @@ describe('Fraggle Rock Config Filtering', () => {
       });
     });
 
-    it('should preserve full-page-screenshot', () => {
-      config = initializeConfig(undefined, {gatherMode: 'navigation'}).config;
+    it('should keep all audits if there are no categories', () => {
+      config = {
+        ...config,
+        audits: [
+          ...audits,
+          {implementation: NavigationOnlyAudit, options: {}},
+        ],
+        categories: {},
+      };
+
+      const filtered = filters.filterConfigByExplicitFilters(config, {
+        onlyAudits: null,
+        onlyCategories: null,
+        skipAudits: null,
+      });
+      expect(filtered).toMatchObject({
+        navigations: [{id: 'firstPass'}],
+        artifacts: [{id: 'Snapshot'}, {id: 'Timespan'}],
+        audits: [
+          {implementation: SnapshotAudit},
+          {implementation: TimespanAudit},
+          {implementation: NavigationAudit},
+          {implementation: ManualAudit},
+          {implementation: NavigationOnlyAudit},
+        ],
+      });
+    });
+
+    it('should preserve full-page-screenshot', async () => {
+      config = (await initializeConfig(undefined, {gatherMode: 'navigation'})).config;
 
       const filtered = filters.filterConfigByExplicitFilters(config, {
         onlyAudits: ['color-contrast'],

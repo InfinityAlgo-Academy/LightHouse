@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const NetworkRequest = require('../lib/network-request.js');
-const {taskGroups} = require('../lib/tracehouse/task-groups.js');
-const i18n = require('../lib/i18n/i18n.js');
-const NetworkRecords = require('../computed/network-records.js');
-const MainThreadTasks = require('../computed/main-thread-tasks.js');
+import {Audit} from './audit.js';
+import {taskGroups} from '../lib/tracehouse/task-groups.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import NetworkRecords from '../computed/network-records.js';
+import MainThreadTasks from '../computed/main-thread-tasks.js';
+import {getExecutionTimingsByURL} from '../lib/tracehouse/task-summary.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the time spent executing javascript files during the load. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -19,8 +19,8 @@ const UIStrings = {
   failureTitle: 'Reduce JavaScript execution time',
   /** Description of a Lighthouse audit that tells the user that they should reduce the amount of time spent executing javascript and one method of doing so. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Consider reducing the time spent parsing, compiling, and executing JS. ' +
-    'You may find delivering smaller JS payloads helps with this. [Learn ' +
-    'more](https://web.dev/bootup-time/).',
+    'You may find delivering smaller JS payloads helps with this. ' +
+    '[Learn how to reduce Javascript execution time](https://web.dev/bootup-time/).',
   /** Label for the total time column in a data table; entries will be the number of milliseconds spent executing per resource loaded by the page. */
   columnTotal: 'Total CPU Time',
   /** Label for a time column in a data table; entries will be the number of milliseconds spent evaluating script for every script loaded by the page. */
@@ -32,19 +32,7 @@ const UIStrings = {
     'Try auditing the page in incognito mode or from a Chrome profile without extensions.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
-
-// These trace events, when not triggered by a script inside a particular task, are just general Chrome overhead.
-const BROWSER_TASK_NAMES_SET = new Set([
-  'CpuProfiler::StartProfiling',
-]);
-
-// These trace events, when not triggered by a script inside a particular task, are GC Chrome overhead.
-const BROWSER_GC_TASK_NAMES_SET = new Set([
-  'V8.GCCompactor',
-  'MajorGC',
-  'MinorGC',
-]);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class BootupTime extends Audit {
   /**
@@ -75,61 +63,6 @@ class BootupTime extends Audit {
   }
 
   /**
-   * @param {LH.Artifacts.NetworkRequest[]} records
-   */
-  static getJavaScriptURLs(records) {
-    /** @type {Set<string>} */
-    const urls = new Set();
-    for (const record of records) {
-      if (record.resourceType === NetworkRequest.TYPES.Script) {
-        urls.add(record.url);
-      }
-    }
-
-    return urls;
-  }
-
-  /**
-   * @param {LH.Artifacts.TaskNode} task
-   * @param {Set<string>} jsURLs
-   * @return {string}
-   */
-  static getAttributableURLForTask(task, jsURLs) {
-    const jsURL = task.attributableURLs.find(url => jsURLs.has(url));
-    const fallbackURL = task.attributableURLs[0];
-    let attributableURL = jsURL || fallbackURL;
-    // If we can't find what URL was responsible for this execution, attribute it to the root page
-    // or Chrome depending on the type of work.
-    if (!attributableURL || attributableURL === 'about:blank') {
-      if (BROWSER_TASK_NAMES_SET.has(task.event.name)) attributableURL = 'Browser';
-      else if (BROWSER_GC_TASK_NAMES_SET.has(task.event.name)) attributableURL = 'Browser GC';
-      else attributableURL = 'Unattributable';
-    }
-
-    return attributableURL;
-  }
-
-  /**
-   * @param {LH.Artifacts.TaskNode[]} tasks
-   * @param {Set<string>} jsURLs
-   * @return {Map<string, Object<string, number>>}
-   */
-  static getExecutionTimingsByURL(tasks, jsURLs) {
-    /** @type {Map<string, Object<string, number>>} */
-    const result = new Map();
-
-    for (const task of tasks) {
-      const attributableURL = BootupTime.getAttributableURLForTask(task, jsURLs);
-      const timingByGroupId = result.get(attributableURL) || {};
-      const originalTime = timingByGroupId[task.group.id] || 0;
-      timingByGroupId[task.group.id] = originalTime + task.selfTime;
-      result.set(attributableURL, timingByGroupId);
-    }
-
-    return result;
-  }
-
-  /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
@@ -143,8 +76,7 @@ class BootupTime extends Audit {
     const multiplier = settings.throttlingMethod === 'simulate' ?
       settings.throttling.cpuSlowdownMultiplier : 1;
 
-    const jsURLs = BootupTime.getJavaScriptURLs(networkRecords);
-    const executionTimings = BootupTime.getExecutionTimingsByURL(tasks, jsURLs);
+    const executionTimings = getExecutionTimingsByURL(tasks, networkRecords);
 
     let hadExcessiveChromeExtension = false;
     let totalBootupTime = 0;
@@ -216,5 +148,5 @@ class BootupTime extends Audit {
   }
 }
 
-module.exports = BootupTime;
-module.exports.UIStrings = UIStrings;
+export default BootupTime;
+export {UIStrings};

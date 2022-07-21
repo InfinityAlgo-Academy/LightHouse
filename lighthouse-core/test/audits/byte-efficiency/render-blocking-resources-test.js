@@ -3,25 +3,23 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const RenderBlockingResourcesAudit = require('../../../audits/byte-efficiency/render-blocking-resources.js'); // eslint-disable-line max-len
+import {strict as assert} from 'assert';
 
-const mobileSlow4G = require('../../../config/constants.js').throttling.mobileSlow4G;
-const NetworkNode = require('../../../lib/dependency-graph/network-node.js');
-const CPUNode = require('../../../lib/dependency-graph/cpu-node.js');
-const Simulator = require('../../../lib/dependency-graph/simulator/simulator.js');
-const NetworkRequest = require('../../../lib/network-request.js');
-const assert = require('assert').strict;
-const {getURLArtifactFromDevtoolsLog} = require('../../test-utils.js');
+import RenderBlockingResourcesAudit from '../../../audits/byte-efficiency/render-blocking-resources.js'; // eslint-disable-line max-len
+import * as constants from '../../../config/constants.js';
+import {NetworkNode} from '../../../lib/dependency-graph/network-node.js';
+import {CPUNode} from '../../../lib/dependency-graph/cpu-node.js';
+import {Simulator} from '../../../lib/dependency-graph/simulator/simulator.js';
+import {NetworkRequest} from '../../../lib/network-request.js';
+import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 
-const trace = require('../../fixtures/traces/progressive-app-m60.json');
-const devtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
+const trace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const ampTrace = readJson('../../fixtures/traces/amp-m86.trace.json', import.meta);
+const ampDevtoolsLog = readJson('../../fixtures/traces/amp-m86.devtoolslog.json', import.meta);
 
-const ampTrace = require('../../fixtures/traces/amp-m86.trace.json');
-const ampDevtoolsLog = require('../../fixtures/traces/amp-m86.devtoolslog.json');
-
-/* eslint-env jest */
+const mobileSlow4G = constants.throttling.mobileSlow4G;
 
 describe('Render blocking resources audit', () => {
   it('evaluates http2 input correctly', async () => {

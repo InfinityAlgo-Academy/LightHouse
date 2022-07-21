@@ -3,28 +3,29 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
-
-/* eslint-env jest */
 
 import puppeteer from 'puppeteer';
 
-import sampleResults from '../../../lighthouse-core/test/results/sample_v2.json';
 import reportGenerator from '../../generator/report-generator.js';
-import axeLib from '../../../lighthouse-core/lib/axe.js';
+import {axeSource} from '../../../lighthouse-core/lib/axe.js';
+import {readJson} from '../../../lighthouse-core/test/test-utils.js';
+
+const sampleResults = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);
 
 describe('ReportRendererAxe', () => {
   describe('with aXe', () => {
     let browser;
 
-    beforeAll(async () => {
+    before(async () => {
       browser = await puppeteer.launch();
     });
 
-    afterAll(async () => {
+    after(async () => {
       await browser.close();
     });
 
+    // This test takes 10s on fast hardware, but can take longer in CI.
+    // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#timeout-issues
     it('renders without axe violations', async () => {
       const page = await browser.newPage();
       const htmlReport = reportGenerator.generateReportHtml(sampleResults);
@@ -46,10 +47,12 @@ describe('ReportRendererAxe', () => {
           'heading-order': {enabled: true},
           'meta-viewport': {enabled: true},
           'aria-treeitem-name': {enabled: true},
+          // TODO: re-enable. https://github.com/GoogleChrome/lighthouse/issues/13918
+          'color-contrast': {enabled: false},
         },
       };
 
-      await page.evaluate(axeLib.source);
+      await page.evaluate(axeSource);
       // eslint-disable-next-line no-undef
       const axeResults = await page.evaluate(config => axe.run(config), config);
 
@@ -76,25 +79,7 @@ describe('ReportRendererAxe', () => {
           message: v.nodes.map((n) => n.failureSummary).join('\n'),
         };
       });
-      expect(axeSummary).toMatchInlineSnapshot(`
-Array [
-  Object {
-    "id": "duplicate-id",
-    "message": "Fix any of the following:
-  Document has multiple static elements with the same id attribute: viewport
-Fix any of the following:
-  Document has multiple static elements with the same id attribute: image-alt
-Fix any of the following:
-  Document has multiple static elements with the same id attribute: document-title",
-  },
-]
-`);
-
-      expect(axeResults.violations).toMatchSnapshot();
-    },
-    // This test takes 10s on fast hardware, but can take longer in CI.
-    // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#timeout-issues
-    /* timeout= */ 20_000
-    );
+      expect(axeSummary).toMatchSnapshot();
+    });
   });
 });

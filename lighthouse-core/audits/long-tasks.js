@@ -5,13 +5,13 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const NetworkRecords = require('../computed/network-records.js');
-const i18n = require('../lib/i18n/i18n.js');
-const MainThreadTasks = require('../computed/main-thread-tasks.js');
-const BootupTime = require('./bootup-time.js');
-const PageDependencyGraph = require('../computed/page-dependency-graph.js');
-const LoadSimulator = require('../computed/load-simulator.js');
+import {Audit} from './audit.js';
+import NetworkRecords from '../computed/network-records.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import MainThreadTasks from '../computed/main-thread-tasks.js';
+import PageDependencyGraph from '../computed/page-dependency-graph.js';
+import LoadSimulator from '../computed/load-simulator.js';
+import {getJavaScriptURLs, getAttributableURLForTask} from '../lib/tracehouse/task-summary.js';
 
 /** We don't always have timing data for short tasks, if we're missing timing data. Treat it as though it were 0ms. */
 const DEFAULT_TIMING = {startTime: 0, endTime: 0, duration: 0};
@@ -22,7 +22,7 @@ const UIStrings = {
   /** Description of a diagnostic LH audit that shows the user the longest running tasks that occur when the page loads. */
   description: 'Lists the longest tasks on the main thread, ' +
     'useful for identifying worst contributors to input delay. ' +
-    '[Learn more](https://web.dev/long-tasks-devtools/)',
+    '[Learn how to avoid long main-thread tasks](https://web.dev/long-tasks-devtools/)',
   /** [ICU Syntax] Label identifying the number of long-running CPU tasks that occurred while loading a web page. */
   displayValue: `{itemCount, plural,
   =1 {# long task found}
@@ -30,7 +30,7 @@ const UIStrings = {
   }`,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class LongTasks extends Audit {
   /**
@@ -78,7 +78,7 @@ class LongTasks extends Audit {
       }
     }
 
-    const jsURLs = BootupTime.getJavaScriptURLs(networkRecords);
+    const jsURLs = getJavaScriptURLs(networkRecords);
     // Only consider up to 20 long, top-level (no parent) tasks that have an explicit endTime
     const longtasks = tasks
       .map(t => {
@@ -91,7 +91,7 @@ class LongTasks extends Audit {
 
     // TODO(beytoven): Add start time that matches with the simulated throttling
     const results = longtasks.map(task => ({
-      url: BootupTime.getAttributableURLForTask(task, jsURLs),
+      url: getAttributableURLForTask(task, jsURLs),
       duration: task.duration,
       startTime: task.startTime,
     }));
@@ -121,5 +121,5 @@ class LongTasks extends Audit {
   }
 }
 
-module.exports = LongTasks;
-module.exports.UIStrings = UIStrings;
+export default LongTasks;
+export {UIStrings};

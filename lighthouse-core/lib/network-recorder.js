@@ -5,13 +5,20 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const NetworkRequest = require('./network-request.js');
-const EventEmitter = require('events').EventEmitter;
+import log from 'lighthouse-logger';
+import {NetworkRequest} from './network-request.js';
+import {EventEmitter} from 'events';
 
-/** @typedef {'requeststarted'|'requestloaded'} NetworkRecorderEvent */
+/**
+ * @typedef {{
+ *   requeststarted: [NetworkRequest],
+ *   requestfinished: [NetworkRequest],
+ * }} NetworkRecorderEventMap
+ */
+/** @typedef {LH.Protocol.StrictEventEmitterClass<NetworkRecorderEventMap>} RequestEmitter */
+const RequestEventEmitter = /** @type {RequestEmitter} */ (EventEmitter);
 
-class NetworkRecorder extends EventEmitter {
+class NetworkRecorder extends RequestEventEmitter {
   /**
    * Creates an instance of NetworkRecorder.
    */
@@ -36,22 +43,6 @@ class NetworkRecorder extends EventEmitter {
   }
 
   /**
-   * @param {NetworkRecorderEvent} event
-   * @param {*} listener
-   */
-  on(event, listener) {
-    return super.on(event, listener);
-  }
-
-  /**
-   * @param {NetworkRecorderEvent} event
-   * @param {*} listener
-   */
-  once(event, listener) {
-    return super.once(event, listener);
-  }
-
-  /**
    * Listener for the DevTools SDK NetworkManager's RequestStarted event, which includes both
    * web socket and normal request creation.
    * @param {NetworkRequest} request
@@ -71,7 +62,7 @@ class NetworkRecorder extends EventEmitter {
    * @private
    */
   onRequestFinished(request) {
-    this.emit('requestloaded', request);
+    this.emit('requestfinished', request);
   }
 
   // The below methods proxy network data into the NetworkRequest object which mimics the
@@ -334,4 +325,4 @@ class NetworkRecorder extends EventEmitter {
   }
 }
 
-module.exports = NetworkRecorder;
+export {NetworkRecorder};

@@ -4,11 +4,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-'use strict';
 
-const LighthouseAudit = require('../../audits/audit.js');
+import {Audit} from '../../audits/audit.js';
 
-class ValidCustomAudit extends LighthouseAudit {
+class ValidCustomAudit extends Audit {
   static get meta() {
     return {
       id: 'valid-audit',
@@ -22,4 +21,4 @@ class ValidCustomAudit extends LighthouseAudit {
   static audit() {}
 }
 
-module.exports = ValidCustomAudit;
+export default ValidCustomAudit;

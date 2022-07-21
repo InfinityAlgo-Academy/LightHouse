@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../lib/page-functions.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+import {pageFunctions} from '../../lib/page-functions.js';
 
 /* globals getElementsInDocument getNodeDetails */
 
@@ -65,4 +65,4 @@ class MetaElements extends FRGatherer {
   }
 }
 
-module.exports = MetaElements;
+export default MetaElements;

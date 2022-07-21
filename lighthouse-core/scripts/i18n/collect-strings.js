@@ -4,25 +4,25 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable no-console, max-len */
 
 import fs from 'fs';
 import path from 'path';
+import {pathToFileURL} from 'url';
 
 import glob from 'glob';
-import expect from 'expect';
+import {expect} from 'expect';
 import tsc from 'typescript';
 import MessageParser from 'intl-messageformat-parser';
 import esMain from 'es-main';
 
-import {Util} from '../../../lighthouse-core/util-commonjs.js';
+import {Util} from '../../util.cjs';
 import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';
 import {pruneObsoleteLhlMessages} from './prune-obsolete-lhl-messages.js';
 import {countTranslatedMessages} from './count-translated.js';
 import {LH_ROOT} from '../../../root.js';
-import {resolveModulePath} from '../esm-utils.js';
+import {resolveModulePath} from '../../../esm-utils.js';
 
 // Match declarations of UIStrings, terminating in either a `};\n` (very likely to always be right)
 // or `}\n\n` (allowing semicolon to be optional, but insisting on a double newline so that an
@@ -553,7 +553,7 @@ async function collectAllStringsInDir(dir) {
     if (!process.env.CI) console.log('Collecting from', relativeToRootPath);
 
     const content = fs.readFileSync(absolutePath, 'utf8');
-    const exportVars = await import(absolutePath);
+    const exportVars = await import(pathToFileURL(absolutePath).href);
     const regexMatch = content.match(UISTRINGS_REGEX);
     const exportedUIStrings = exportVars.UIStrings || exportVars.default?.UIStrings;
 
@@ -653,6 +653,8 @@ function resolveMessageCollisions(strings) {
 
   try {
     expect(collidingMessages).toEqual([
+      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use $MARKDOWN_SNIPPET_1$ or $MARKDOWN_SNIPPET_2$ instead.',
+      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use $MARKDOWN_SNIPPET_1$ or $MARKDOWN_SNIPPET_2$ instead.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
@@ -664,8 +666,6 @@ function resolveMessageCollisions(strings) {
       'Consider uploading your GIF to a service which will make it available to embed as an HTML5 video.',
       'Consider uploading your GIF to a service which will make it available to embed as an HTML5 video.',
       'Consider uploading your GIF to a service which will make it available to embed as an HTML5 video.',
-      'Consider using a $LINK_START_0$plugin$LINK_END_0$ or service that will automatically convert your uploaded images to the optimal formats.',
-      'Consider using a $LINK_START_0$plugin$LINK_END_0$ or service that will automatically convert your uploaded images to the optimal formats.',
       'Document has a valid $MARKDOWN_SNIPPET_0$',
       'Document has a valid $MARKDOWN_SNIPPET_0$',
       'Failing Elements',
@@ -674,6 +674,8 @@ function resolveMessageCollisions(strings) {
       'Name',
       'Potential Savings',
       'Potential Savings',
+      'Use the $MARKDOWN_SNIPPET_0$ component and set the appropriate $MARKDOWN_SNIPPET_1$. $LINK_START_0$Learn more$LINK_END_0$.',
+      'Use the $MARKDOWN_SNIPPET_0$ component and set the appropriate $MARKDOWN_SNIPPET_1$. $LINK_START_0$Learn more$LINK_END_0$.',
     ]);
   } catch (err) {
     console.log('The number of duplicate strings has changed. Consider duplicating the `description` to match existing strings so they\'re translated together or update this assertion if they must absolutely be translated separately');
@@ -725,10 +727,7 @@ async function main() {
 
 // Test if called from the CLI or as a module.
 if (esMain(import.meta)) {
-  main().catch(err => {
-    console.error(err.stack);
-    process.exit(1);
-  });
+  await main();
 }
 
 export {

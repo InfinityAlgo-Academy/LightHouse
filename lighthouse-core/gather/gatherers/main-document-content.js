@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const DevtoolsLog = require('./devtools-log.js');
-const {fetchResponseBodyFromCache} = require('../driver/network.js');
-const MainResource = require('../../computed/main-resource.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+import DevtoolsLog from './devtools-log.js';
+import {fetchResponseBodyFromCache} from '../driver/network.js';
+import MainResource from '../../computed/main-resource.js';
 
 /**
  * Collects the content of the main html document.
@@ -21,7 +21,6 @@ class MainDocumentContent extends FRGatherer {
   };
 
   /**
-   *
    * @param {LH.Gatherer.FRTransitionalContext} context
    * @param {LH.Artifacts['DevtoolsLog']} devtoolsLog
    * @return {Promise<LH.Artifacts['MainDocumentContent']>}
@@ -34,7 +33,6 @@ class MainDocumentContent extends FRGatherer {
   }
 
   /**
-   *
    * @param {LH.Gatherer.FRTransitionalContext<'DevtoolsLog'>} context
    * @return {Promise<LH.Artifacts['MainDocumentContent']>}
    */
@@ -53,4 +51,4 @@ class MainDocumentContent extends FRGatherer {
   }
 }
 
-module.exports = MainDocumentContent;
+export default MainDocumentContent;

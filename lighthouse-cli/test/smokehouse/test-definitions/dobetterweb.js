@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /** @type {LH.Config.Json} */
 const config = {
@@ -202,7 +201,6 @@ const expectations = {
     finalUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
     audits: {
       'errors-in-console': {
-        _minChromiumMilestone: 95,
         score: 0,
         details: {
           items: {
@@ -308,11 +306,12 @@ const expectations = {
         },
       },
       'deprecations': {
+        // see https://github.com/GoogleChrome/lighthouse/issues/13895
         score: 0,
         details: {
           items: [
             {
-              value: /'window.webkitStorageInfo' is deprecated/,
+              value: /`window.webkitStorageInfo` is deprecated/,
               source: {
                 type: 'source-location',
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.js',
@@ -320,9 +319,10 @@ const expectations = {
                 line: '>0',
                 column: 9,
               },
+              subItems: undefined,
             },
             {
-              value: /Synchronous XMLHttpRequest on the main thread is deprecated/,
+              value: /Synchronous `XMLHttpRequest` on the main thread is deprecated/,
               source: {
                 type: 'source-location',
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
@@ -330,6 +330,7 @@ const expectations = {
                 line: '>0',
                 column: 6,
               },
+              subItems: undefined,
             },
           ],
         },
@@ -426,12 +427,13 @@ const expectations = {
             width: 360,
             // Allow for differences in platforms.
             height: '1350±100',
-            data: /^data:image\/jpeg;.{500,}/,
+            data: /^data:image\/webp;.{500,}/,
           },
           nodes: {
             // Test that the numbers for individual elements are in the ballpark.
             // Exact ordering and IDs between FR and legacy differ, so fork the expectations.
-            'page-0-IMG': {
+            '4-11-IMG': {
+              _minChromiumVersion: '104',
               _legacyOnly: true,
               top: '650±50',
               bottom: '650±50',
@@ -440,7 +442,18 @@ const expectations = {
               width: '120±20',
               height: '20±20',
             },
-            'page-2-IMG': {
+            // Legacy runner execution context ID changed after 104.0.5100.0
+            '5-11-IMG': {
+              _maxChromiumVersion: '103',
+              _legacyOnly: true,
+              top: '650±50',
+              bottom: '650±50',
+              left: '10±10',
+              right: '120±20',
+              width: '120±20',
+              height: '20±20',
+            },
+            '9-1-IMG': {
               _fraggleRockOnly: true,
               top: '650±50',
               bottom: '650±50',

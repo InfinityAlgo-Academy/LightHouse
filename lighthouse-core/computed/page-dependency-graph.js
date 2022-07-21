@@ -5,15 +5,15 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const NetworkNode = require('../lib/dependency-graph/network-node.js');
-const CPUNode = require('../lib/dependency-graph/cpu-node.js');
-const TracingProcessor = require('../lib/tracehouse/trace-processor.js');
-const NetworkRequest = require('../lib/network-request.js');
-const ProcessedTrace = require('./processed-trace.js');
-const NetworkRecords = require('./network-records.js');
-const NetworkAnalyzer = require('../lib/dependency-graph/simulator/network-analyzer.js');
-const ReportScoring = require('../scoring.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import {NetworkNode} from '../lib/dependency-graph/network-node.js';
+import {CPUNode} from '../lib/dependency-graph/cpu-node.js';
+import {TraceProcessor} from '../lib/tracehouse/trace-processor.js';
+import {NetworkRequest} from '../lib/network-request.js';
+import ProcessedTrace from './processed-trace.js';
+import NetworkRecords from './network-records.js';
+import {NetworkAnalyzer} from '../lib/dependency-graph/simulator/network-analyzer.js';
+import {ReportScoring} from '../scoring.js';
 
 // TODO: extract to maths lib?
 const {arithmeticMean} = ReportScoring;
@@ -115,12 +115,14 @@ class PageDependencyGraph {
     const nodes = [];
     let i = 0;
 
+    TraceProcessor.assertHasToplevelEvents(mainThreadEvents);
+
     while (i < mainThreadEvents.length) {
       const evt = mainThreadEvents[i];
       i++;
 
       // Skip all trace events that aren't schedulable tasks with sizable duration
-      if (!TracingProcessor.isScheduleableTask(evt) || !evt.dur) {
+      if (!TraceProcessor.isScheduleableTask(evt) || !evt.dur) {
         continue;
       }
 
@@ -444,11 +446,12 @@ class PageDependencyGraph {
    * @return {Node}
    */
   static createGraph(processedTrace, networkRecords, URL) {
-    TracingProcessor.assertHasToplevelEvents(processedTrace.mainThreadEvents);
+    TraceProcessor.assertHasToplevelEvents(processedTrace.mainThreadEvents);
 
     const networkNodeOutput = PageDependencyGraph.getNetworkNodeOutput(networkRecords);
     const cpuNodes = PageDependencyGraph.getCPUNodes(processedTrace);
     const {requestedUrl, mainDocumentUrl} = URL;
+    if (!requestedUrl) throw new Error('requestedUrl is required to get the root request');
     if (!mainDocumentUrl) throw new Error('mainDocumentUrl is required to get the main resource');
 
     const rootRequest = NetworkAnalyzer.findResourceForUrl(networkRecords, requestedUrl);
@@ -558,7 +561,7 @@ class PageDependencyGraph {
   }
 }
 
-module.exports = makeComputedArtifact(PageDependencyGraph, ['devtoolsLog', 'trace', 'URL']);
+export default makeComputedArtifact(PageDependencyGraph, ['devtoolsLog', 'trace', 'URL']);
 
 /**
  * @typedef {Object} NetworkNodeOutput

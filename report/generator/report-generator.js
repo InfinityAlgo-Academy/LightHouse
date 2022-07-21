@@ -105,7 +105,7 @@ class ReportGenerator {
 
     // First we have metadata about the LHR.
     rows.push(rowFormatter(topLevelKeys));
-    rows.push(rowFormatter(topLevelKeys.map(key => lhr[key])));
+    rows.push(rowFormatter(topLevelKeys.map(key => lhr[key] ?? null)));
 
     // Some spacing.
     rows.push([]);

@@ -3,13 +3,16 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const ThemedOmniboxAudit = require('../../audits/themed-omnibox.js');
-const assert = require('assert').strict;
-const manifestParser = require('../../lib/manifest-parser.js');
+import {strict as assert} from 'assert';
 
-const manifestSrc = JSON.stringify(require('../fixtures/manifest.json'));
+import ThemedOmniboxAudit from '../../audits/themed-omnibox.js';
+import {parseManifest} from '../../lib/manifest-parser.js';
+import {readJson} from '../test-utils.js';
+
+const manifest = readJson('../fixtures/manifest.json', import.meta);
+
+const manifestSrc = JSON.stringify(manifest);
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
 
@@ -17,7 +20,7 @@ const EXAMPLE_DOC_URL = 'https://example.com/index.html';
  * @param {string} src
  */
 function generateMockArtifacts(src = manifestSrc) {
-  const exampleManifest = manifestParser(src, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+  const exampleManifest = parseManifest(src, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 
   return {
     WebAppManifest: exampleManifest,
@@ -31,8 +34,6 @@ function generateMockAuditContext() {
     computedCache: new Map(),
   };
 }
-
-/* eslint-env jest */
 describe('PWA: themed omnibox audit', () => {
   it('fails if page had no manifest', () => {
     const artifacts = generateMockArtifacts();

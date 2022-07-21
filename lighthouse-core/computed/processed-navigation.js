@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const LHTraceProcessor = require('../lib/lh-trace-processor.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import LHTraceProcessor from '../lib/lh-trace-processor.js';
 
 class ProcessedNavigation {
   /**
@@ -18,4 +18,4 @@ class ProcessedNavigation {
   }
 }
 
-module.exports = makeComputedArtifact(ProcessedNavigation, null);
+export default makeComputedArtifact(ProcessedNavigation, null);

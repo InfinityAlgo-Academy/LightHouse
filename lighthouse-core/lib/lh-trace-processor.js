@@ -5,17 +5,17 @@
  */
 'use strict';
 
-const LHError = require('../lib/lh-error.js');
-const TraceProcessor = require('../lib/tracehouse/trace-processor.js');
+import {LighthouseError} from '../lib/lh-error.js';
+import {TraceProcessor} from '../lib/tracehouse/trace-processor.js';
 
-// TraceProcessor throws generic errors, but we'd like our special localized and code-specific LHError
+// TraceProcessor throws generic errors, but we'd like our special localized and code-specific LighthouseError
 // objects to be thrown instead.
 class LHTraceProcessor extends TraceProcessor {
   /**
    * @return {Error}
    */
   static createNoNavstartError() {
-    return new LHError(LHError.errors.NO_NAVSTART);
+    return new LighthouseError(LighthouseError.errors.NO_NAVSTART);
   }
 
   /**
@@ -25,22 +25,22 @@ class LHTraceProcessor extends TraceProcessor {
    * @return {Error}
    */
   static createNoResourceSendRequestError() {
-    return new LHError(LHError.errors.NO_RESOURCE_REQUEST);
+    return new LighthouseError(LighthouseError.errors.NO_RESOURCE_REQUEST);
   }
 
   /**
    * @return {Error}
    */
   static createNoTracingStartedError() {
-    return new LHError(LHError.errors.NO_TRACING_STARTED);
+    return new LighthouseError(LighthouseError.errors.NO_TRACING_STARTED);
   }
 
   /**
    * @return {Error}
    */
   static createNoFirstContentfulPaintError() {
-    return new LHError(LHError.errors.NO_FCP);
+    return new LighthouseError(LighthouseError.errors.NO_FCP);
   }
 }
 
-module.exports = LHTraceProcessor;
+export default LHTraceProcessor;

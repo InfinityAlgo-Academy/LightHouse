@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const URL = require('./url-shim.js');
+import URL from './url-shim.js';
 
 /**
  * @param {NonNullable<LH.Artifacts.Manifest['value']>} manifest
@@ -78,7 +78,7 @@ function containsMaskableIcon(manifest) {
   });
 }
 
-module.exports = {
+export {
   doExist,
   pngSizedAtLeast,
   containsMaskableIcon,

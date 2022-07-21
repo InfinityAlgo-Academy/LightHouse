@@ -7,7 +7,7 @@
 
 /* global caches */
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 /**
  * @return {Promise<Array<string>>}
@@ -56,4 +56,4 @@ class CacheContents extends FRGatherer {
   }
 }
 
-module.exports = CacheContents;
+export default CacheContents;

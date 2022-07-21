@@ -3,19 +3,17 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview An assertion library for comparing smoke-test expectations
  * against the results actually collected from Lighthouse.
  */
 
-import _ from 'lodash';
+import cloneDeep from 'lodash/cloneDeep.js';
 import log from 'lighthouse-logger';
 
 import {LocalConsole} from './lib/local-console.js';
-
-const {cloneDeep} = _;
+import {chromiumVersionCheck} from './version-check.js';
 
 /**
  * @typedef Difference
@@ -30,7 +28,7 @@ const {cloneDeep} = _;
  * @property {any} actual
  * @property {any} expected
  * @property {boolean} equal
- * @property {Difference|null} [diff]
+ * @property {Difference[]|null} diffs
  */
 
 const NUMBER_REGEXP = /(?:\d|\.)+/.source;
@@ -88,9 +86,9 @@ function matchesExpectation(actual, expected) {
  * @param {string} path
  * @param {*} actual
  * @param {*} expected
- * @return {(Difference|null)}
+ * @return {Difference[]|null}
  */
-function findDifference(path, actual, expected) {
+function findDifferences(path, actual, expected) {
   if (matchesExpectation(actual, expected)) {
     return null;
   }
@@ -98,13 +96,15 @@ function findDifference(path, actual, expected) {
   // If they aren't both an object we can't recurse further, so this is the difference.
   if (actual === null || expected === null || typeof actual !== 'object' ||
       typeof expected !== 'object' || expected instanceof RegExp) {
-    return {
+    return [{
       path,
       actual,
       expected,
-    };
+    }];
   }
 
+  /** @type {Difference[]} */
+  const diffs = [];
   let inclExclCopy;
 
   // We only care that all expected's own properties are on actual (and not the other way around).
@@ -120,27 +120,27 @@ function findDifference(path, actual, expected) {
 
       if (!Array.isArray(expectedValue)) throw new Error('Array subset must be array');
       if (!Array.isArray(actual)) {
-        return {
+        diffs.push({
           path,
           actual: 'Actual value is not an array',
           expected,
-        };
+        });
       }
 
       for (const expectedEntry of expectedValue) {
         const matchingIndex =
           inclExclCopy.findIndex(actualEntry =>
-            !findDifference(keyPath, actualEntry, expectedEntry));
+            !findDifferences(keyPath, actualEntry, expectedEntry));
         if (matchingIndex !== -1) {
           inclExclCopy.splice(matchingIndex, 1);
           continue;
         }
 
-        return {
+        diffs.push({
           path,
           actual: 'Item not found in array',
           expected: expectedEntry,
-        };
+        });
       }
 
       continue;
@@ -157,16 +157,16 @@ function findDifference(path, actual, expected) {
       const expectedExclusions = expectedValue;
       for (const expectedExclusion of expectedExclusions) {
         const matchingIndex = arrToCheckAgainst.findIndex(actualEntry =>
-            !findDifference(keyPath, actualEntry, expectedExclusion));
+            !findDifferences(keyPath, actualEntry, expectedExclusion));
         if (matchingIndex !== -1) {
-          return {
+          diffs.push({
             path,
             actual: arrToCheckAgainst[matchingIndex],
             expected: {
               message: 'Expected to not find matching entry via _excludes',
               expectedExclusion,
             },
-          };
+          });
         }
       }
 
@@ -174,12 +174,8 @@ function findDifference(path, actual, expected) {
     }
 
     const actualValue = actual[key];
-    const subDifference = findDifference(keyPath, actualValue, expectedValue);
-
-    // Break on first difference found.
-    if (subDifference) {
-      return subDifference;
-    }
+    const subDifferences = findDifferences(keyPath, actualValue, expectedValue);
+    if (subDifferences) diffs.push(...subDifferences);
   }
 
   // If the expected value is an array, assert the length as well.
@@ -187,14 +183,15 @@ function findDifference(path, actual, expected) {
   // but requires using an object literal (ex: {0: x, 1: y, 2: z} matches [x, y, z, q, w, e] and
   // {0: x, 1: y, 2: z, length: 5} does not match [x, y, z].
   if (Array.isArray(expected) && actual.length !== expected.length) {
-    return {
+    diffs.push({
       path: `${path}.length`,
       actual,
       expected,
-    };
+    });
   }
 
-  return null;
+  if (diffs.length === 0) return null;
+  return diffs;
 }
 
 /**
@@ -204,14 +201,14 @@ function findDifference(path, actual, expected) {
  * @return {Comparison}
  */
 function makeComparison(name, actualResult, expectedResult) {
-  const diff = findDifference(name, actualResult, expectedResult);
+  const diffs = findDifferences(name, actualResult, expectedResult);
 
   return {
     name,
     actual: actualResult,
     expected: expectedResult,
-    equal: !diff,
-    diff,
+    equal: !diffs,
+    diffs,
   };
 }
 
@@ -220,30 +217,34 @@ function makeComparison(name, actualResult, expectedResult) {
  * @param {LocalConsole} localConsole
  * @param {LH.Result} lhr
  * @param {Smokehouse.ExpectedRunnerResult} expected
- * @param {{runner?: string, isBundled?: boolean}=} reportOptions
+ * @param {{runner?: string, isBundled?: boolean, useLegacyNavigation?: boolean}=} reportOptions
  */
 function pruneExpectations(localConsole, lhr, expected, reportOptions) {
-  const isFraggleRock = lhr.configSettings.channel === 'fraggle-rock-cli';
+  const isLegacyNavigation = reportOptions?.useLegacyNavigation;
   const isBundled = reportOptions?.isBundled;
 
   /**
    * Lazily compute the Chrome version because some reports are explicitly asserting error conditions.
-   * @returns {number}
+   * @returns {string}
    */
-  function getChromeVersion() {
+  function getChromeVersionString() {
     const userAgent = lhr.environment.hostUserAgent;
-    const userAgentMatch = /Chrome\/(\d+)/.exec(userAgent); // Chrome/85.0.4174.0
+    const userAgentMatch = /Chrome\/([\d.]+)/.exec(userAgent); // Chrome/85.0.4174.0
     if (!userAgentMatch) throw new Error('Could not get chrome version.');
-    return Number(userAgentMatch[1]);
+    const versionString = userAgentMatch[1];
+    if (versionString.split('.').length !== 4) throw new Error(`unexpected ua: ${userAgent}`);
+    return versionString;
   }
 
   /**
    * @param {*} obj
    */
   function failsChromeVersionCheck(obj) {
-    if (obj._minChromiumMilestone && getChromeVersion() < obj._minChromiumMilestone) return true;
-    if (obj._maxChromiumMilestone && getChromeVersion() > obj._maxChromiumMilestone) return true;
-    return false;
+    return !chromiumVersionCheck({
+      version: getChromeVersionString(),
+      min: obj._minChromiumVersion,
+      max: obj._maxChromiumVersion,
+    });
   }
 
   /**
@@ -272,16 +273,16 @@ function pruneExpectations(localConsole, lhr, expected, reportOptions) {
         localConsole.log([
           `[${key}] failed chrome version check, pruning expectation:`,
           JSON.stringify(value, null, 2),
-          `Actual Chromium version: ${getChromeVersion()}`,
+          `Actual Chromium version: ${getChromeVersionString()}`,
         ].join(' '));
         remove(key);
-      } else if (value._legacyOnly && isFraggleRock) {
+      } else if (value._legacyOnly && !isLegacyNavigation) {
         localConsole.log([
           `[${key}] marked legacy only but run is Fraggle Rock, pruning expectation:`,
           JSON.stringify(value, null, 2),
         ].join(' '));
         remove(key);
-      } else if (value._fraggleRockOnly && !isFraggleRock) {
+      } else if (value._fraggleRockOnly && isLegacyNavigation) {
         localConsole.log([
           `[${key}] marked Fraggle Rock only but run is legacy, pruning expectation:`,
           JSON.stringify(value, null, 2),
@@ -308,8 +309,8 @@ function pruneExpectations(localConsole, lhr, expected, reportOptions) {
     delete obj._legacyOnly;
     delete obj._fraggleRockOnly;
     delete obj._skipInBundled;
-    delete obj._minChromiumMilestone;
-    delete obj._maxChromiumMilestone;
+    delete obj._minChromiumVersion;
+    delete obj._maxChromiumVersion;
     delete obj._runner;
   }
 
@@ -425,19 +426,21 @@ function reportAssertion(localConsole, assertion) {
           log.greenify(assertion.actual));
     }
   } else {
-    if (assertion.diff) {
-      const diff = assertion.diff;
-      const fullActual = String(JSON.stringify(assertion.actual, null, 2))
-          .replace(/\n/g, '\n      ');
-      const msg = `
+    if (assertion.diffs?.length) {
+      for (const diff of assertion.diffs) {
+        const msg = `
   ${log.redify(log.cross)} difference at ${log.bold}${diff.path}${log.reset}
               expected: ${JSON.stringify(diff.expected)}
-                 found: ${JSON.stringify(diff.actual)}
+                 found: ${JSON.stringify(diff.actual)}\n`;
+        localConsole.log(msg);
+      }
 
-          found result:
+      const fullActual = assertion.actual !== undefined ?
+        JSON.stringify(assertion.actual, null, 2).replace(/\n/g, '\n      ') :
+        'undefined\n      ';
+      localConsole.log(`          found result:
       ${log.redify(fullActual)}
-`;
-      localConsole.log(msg);
+  `);
     } else {
       localConsole.log(`  ${log.redify(log.cross)} ${assertion.name}:
               expected: ${JSON.stringify(assertion.expected)}
@@ -456,7 +459,7 @@ function reportAssertion(localConsole, assertion) {
  * summary. Returns count of passed and failed tests.
  * @param {{lhr: LH.Result, artifacts: LH.Artifacts, networkRequests?: string[]}} actual
  * @param {Smokehouse.ExpectedRunnerResult} expected
- * @param {{runner?: string, isDebug?: boolean, isBundled?: boolean}=} reportOptions
+ * @param {{runner?: string, isDebug?: boolean, isBundled?: boolean, useLegacyNavigation?: boolean}=} reportOptions
  * @return {{passed: number, failed: number, log: string}}
  */
 function getAssertionReport(actual, expected, reportOptions = {}) {
@@ -487,4 +490,7 @@ function getAssertionReport(actual, expected, reportOptions = {}) {
   };
 }
 
-export {getAssertionReport};
+export {
+  getAssertionReport,
+  findDifferences,
+};

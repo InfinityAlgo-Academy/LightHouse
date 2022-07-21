@@ -7,16 +7,15 @@
 
 /** @typedef {import('../../../shared/localization/locales').LhlMessages} LhlMessages */
 
-const path = require('path');
-const lookupClosestLocale = require('lookup-closest-locale');
-const {getAvailableLocales} = require('../../../shared/localization/format.js');
-const log = require('lighthouse-logger');
-const {LH_ROOT} = require('../../../root.js');
-const {
-  isIcuMessage,
-  formatMessage,
-  DEFAULT_LOCALE,
-} = require('../../../shared/localization/format.js');
+import path from 'path';
+import url from 'url';
+
+import lookupClosestLocale from 'lookup-closest-locale';
+import {getAvailableLocales} from '../../../shared/localization/format.js';
+import log from 'lighthouse-logger';
+import {LH_ROOT} from '../../../root.js';
+import {isIcuMessage, formatMessage, DEFAULT_LOCALE} from '../../../shared/localization/format.js';
+import {getModulePath} from '../../../esm-utils.js';
 
 const UIStrings = {
   /** Used to show the duration in milliseconds that something lasted. The `{timeInMs}` placeholder will be replaced with the time duration, shown in milliseconds (e.g. 63 ms) */
@@ -105,6 +104,8 @@ const UIStrings = {
   largestContentfulPaintMetric: 'Largest Contentful Paint',
   /** The name of the metric "Cumulative Layout Shift" that indicates how much the page changes its layout while it loads. If big segments of the page shift their location during load, the Cumulative Layout Shift will be higher. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
   cumulativeLayoutShiftMetric: 'Cumulative Layout Shift',
+  /** The name of the "Interaction to Next Paint" metric that measures the time between a user interaction and when the browser displays a response on screen. Shown to users as the label for the numeric metric value. Ideally fits within a ~40 character limit. */
+  interactionToNextPaint: 'Interaction to Next Paint',
   /** Table item value for the severity of a small, or low impact vulnerability. Part of a ranking scale in the form: low, medium, high. */
   itemSeverityLow: 'Low',
   /** Table item value for the severity of a vulnerability. Part of a ranking scale in the form: low, medium, high. */
@@ -170,6 +171,8 @@ function lookupLocale(locales, possibleLocales) {
  * @param {Record<string, string>} fileStrings
  */
 function createIcuMessageFn(filename, fileStrings) {
+  if (filename.startsWith('file://')) filename = url.fileURLToPath(filename);
+
   /**
    * Combined so fn can access both caller's strings and i18n.UIStrings shared across LH.
    * @type {Record<string, string>}
@@ -186,7 +189,7 @@ function createIcuMessageFn(filename, fileStrings) {
     const keyname = Object.keys(mergedStrings).find(key => mergedStrings[key] === message);
     if (!keyname) throw new Error(`Could not locate: ${message}`);
 
-    const filenameToLookup = keyname in fileStrings ? filename : __filename;
+    const filenameToLookup = keyname in fileStrings ? filename : getModulePath(import.meta);
     const unixStyleFilename = path.relative(LH_ROOT, filenameToLookup).replace(/\\/g, '/');
     const i18nId = `${unixStyleFilename} | ${keyname}`;
 
@@ -209,11 +212,11 @@ function isStringOrIcuMessage(value) {
   return typeof value === 'string' || isIcuMessage(value);
 }
 
-module.exports = {
+export {
   UIStrings,
   lookupLocale,
   createIcuMessageFn,
   isStringOrIcuMessage,
   // TODO: exported for backwards compatibility. Consider removing on future breaking change.
-  createMessageInstanceIdFn: createIcuMessageFn,
+  createIcuMessageFn as createMessageInstanceIdFn,
 };

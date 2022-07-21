@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const URL = require('../lib/url-shim.js');
-const NetworkRequest = require('../lib/network-request.js');
-const NetworkRecords = require('../computed/network-records.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+import URL from '../lib/url-shim.js';
+import {NetworkRequest} from '../lib/network-request.js';
+import NetworkRecords from '../computed/network-records.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the useage of HTTPS on a page. This descriptive title is shown to users when all requests on a page are fufilled using HTTPS. */
@@ -23,7 +23,7 @@ const UIStrings = {
       'over HTTPS. HTTPS prevents intruders from tampering with or passively listening ' +
       'in on the communications between your app and your users, and is a prerequisite for ' +
       'HTTP/2 and many new web platform APIs. ' +
-      '[Learn more](https://web.dev/is-on-https/).',
+      '[Learn more about HTTPS](https://web.dev/is-on-https/).',
   /** [ICU Syntax] Label identifying the number of insecure network requests found by an audit of a web page. */
   displayValue: `{itemCount, plural,
     =1 {1 insecure request found}
@@ -49,7 +49,7 @@ const resolutionToString = {
   MixedContentWarning: UIStrings.warning,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 
 class HTTPS extends Audit {
@@ -121,5 +121,5 @@ class HTTPS extends Audit {
   }
 }
 
-module.exports = HTTPS;
-module.exports.UIStrings = UIStrings;
+export default HTTPS;
+export {UIStrings};

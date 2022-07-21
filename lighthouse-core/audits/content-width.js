@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the content size of a web site compared to the viewport, which is the size of the screen the site is displayed on. This descriptive title is shown to users when the site's content is sized appropriately. */
@@ -16,7 +16,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user why they should care that a site's content size should match its viewport size, which is the size of the screen the site is displayed on. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'If the width of your app\'s content doesn\'t match the width ' +
     'of the viewport, your app might not be optimized for mobile screens. ' +
-    '[Learn more](https://web.dev/content-width/).',
+    '[Learn how to size content for the viewport](https://web.dev/content-width/).',
   /**
    * @description Explanatory message stating that the viewport size and window size differ.
    * @example {100} innerWidth
@@ -26,7 +26,7 @@ const UIStrings = {
     'size of {outerWidth}px.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class ContentWidth extends Audit {
   /**
@@ -73,5 +73,5 @@ class ContentWidth extends Audit {
   }
 }
 
-module.exports = ContentWidth;
-module.exports.UIStrings = UIStrings;
+export default ContentWidth;
+export {UIStrings};

@@ -5,11 +5,11 @@
  */
 'use strict';
 
-const parseJSON = require('./json-linter.js');
-const validateJsonLD = require('./jsonld-keyword-validator.js');
-const expandAsync = require('./json-expander.js');
-const validateSchemaOrg = require('./schema-validator.js');
-const getLineNumberFromJsonLDPath = require('./line-number-from-jsonld-path.js');
+import parseJSON from './json-linter.js';
+import validateJsonLD from './jsonld-keyword-validator.js';
+import expandAsync from './json-expander.js';
+import validateSchemaOrg from './schema-validator.js';
+import getLineNumberFromJsonLDPath from './line-number-from-jsonld-path.js';
 
 /**
  * Validates JSON-LD input. Returns array of error objects.
@@ -17,7 +17,7 @@ const getLineNumberFromJsonLDPath = require('./line-number-from-jsonld-path.js')
  * @param {string} textInput
  * @return {Promise<Array<LH.StructuredData.ValidationError>>}
  */
-module.exports = async function validate(textInput) {
+export default async function validate(textInput) {
   // STEP 1: VALIDATE JSON
   const parseError = parseJSON(textInput);
 
@@ -73,5 +73,5 @@ module.exports = async function validate(textInput) {
   }
 
   return [];
-};
+}
 

@@ -5,21 +5,24 @@
  */
 'use strict';
 
-const path = require('path');
-const log = require('lighthouse-logger');
-const Runner = require('../../runner.js');
-const defaultConfig = require('./default-config.js');
-const {defaultNavigationConfig, nonSimulatedPassConfigOverrides} = require('../../config/constants.js'); // eslint-disable-line max-len
-const {
+import path from 'path';
+import log from 'lighthouse-logger';
+import {Runner} from '../../runner.js';
+import defaultConfig from '../../config/default-config.js';
+import {defaultNavigationConfig, nonSimulatedPassConfigOverrides} from '../../config/constants.js'; // eslint-disable-line max-len
+
+import {
   isFRGathererDefn,
   throwInvalidDependencyOrder,
   isValidArtifactDependency,
   throwInvalidArtifactDependency,
   assertArtifactTopologicalOrder,
   assertValidConfig,
-} = require('./validation.js');
-const {filterConfigByGatherMode, filterConfigByExplicitFilters} = require('./filters.js');
-const {
+} from './validation.js';
+
+import {filterConfigByGatherMode, filterConfigByExplicitFilters} from './filters.js';
+
+import {
   deepCloneConfigJson,
   resolveSettings,
   resolveAuditsToDefns,
@@ -27,8 +30,15 @@ const {
   mergePlugins,
   mergeConfigFragment,
   mergeConfigFragmentArrayByKey,
-} = require('../../config/config-helpers.js');
-const defaultConfigPath = path.join(__dirname, './default-config.js');
+} from '../../config/config-helpers.js';
+
+import {getModuleDirectory} from '../../../esm-utils.js';
+import * as format from '../../../shared/localization/format.js';
+
+const defaultConfigPath = path.join(
+  getModuleDirectory(import.meta),
+  '../../config/default-config.js'
+);
 
 /** @typedef {LH.Config.FRContext & {gatherMode: LH.Gatherer.GatherMode}} ConfigContext */
 
@@ -121,9 +131,9 @@ function resolveArtifactDependencies(artifact, gatherer, artifactDefnsBySymbol) 
  *
  * @param {LH.Config.ArtifactJson[]|null|undefined} artifacts
  * @param {string|undefined} configDir
- * @return {LH.Config.AnyArtifactDefn[] | null}
+ * @return {Promise<LH.Config.AnyArtifactDefn[] | null>}
  */
-function resolveArtifactsToDefns(artifacts, configDir) {
+async function resolveArtifactsToDefns(artifacts, configDir) {
   if (!artifacts) return null;
 
   const status = {msg: 'Resolve artifact definitions', id: 'lh:config:resolveArtifactsToDefns'};
@@ -133,12 +143,13 @@ function resolveArtifactsToDefns(artifacts, configDir) {
   const artifactDefnsBySymbol = new Map();
 
   const coreGathererList = Runner.getGathererList();
-  const artifactDefns = artifacts.map(artifactJson => {
+  const artifactDefns = [];
+  for (const artifactJson of artifacts) {
     /** @type {LH.Config.GathererJson} */
     // @ts-expect-error - remove when legacy runner path is removed.
     const gathererJson = artifactJson.gatherer;
 
-    const gatherer = resolveGathererToDefn(gathererJson, coreGathererList, configDir);
+    const gatherer = await resolveGathererToDefn(gathererJson, coreGathererList, configDir);
     if (!isFRGathererDefn(gatherer)) {
       throw new Error(`${gatherer.instance.name} gatherer does not have a Fraggle Rock meta obj`);
     }
@@ -154,8 +165,8 @@ function resolveArtifactsToDefns(artifacts, configDir) {
 
     const symbol = artifact.gatherer.instance.meta.symbol;
     if (symbol) artifactDefnsBySymbol.set(symbol, artifact);
-    return artifact;
-  });
+    artifactDefns.push(artifact);
+  }
 
   log.timeEnd(status);
   return artifactDefns;
@@ -242,28 +253,28 @@ function resolveNavigationsToDefns(navigations, artifactDefns, settings) {
 /**
  * @param {LH.Config.Json|undefined} configJSON
  * @param {ConfigContext} context
- * @return {{config: LH.Config.FRConfig, warnings: string[]}}
+ * @return {Promise<{config: LH.Config.FRConfig, warnings: string[]}>}
  */
-function initializeConfig(configJSON, context) {
+async function initializeConfig(configJSON, context) {
   const status = {msg: 'Initialize config', id: 'lh:config'};
   log.time(status, 'verbose');
 
   let {configWorkingCopy, configDir} = resolveWorkingCopy(configJSON, context); // eslint-disable-line prefer-const
 
   configWorkingCopy = resolveExtensions(configWorkingCopy);
-  configWorkingCopy = mergePlugins(configWorkingCopy, configDir, context.settingsOverrides);
+  configWorkingCopy = await mergePlugins(configWorkingCopy, configDir, context.settingsOverrides);
 
   const settings = resolveSettings(configWorkingCopy.settings || {}, context.settingsOverrides);
   overrideSettingsForGatherMode(settings, context);
 
-  const artifacts = resolveArtifactsToDefns(configWorkingCopy.artifacts, configDir);
+  const artifacts = await resolveArtifactsToDefns(configWorkingCopy.artifacts, configDir);
   const navigations = resolveNavigationsToDefns(configWorkingCopy.navigations, artifacts, settings);
 
   /** @type {LH.Config.FRConfig} */
   let config = {
     artifacts,
     navigations,
-    audits: resolveAuditsToDefns(configWorkingCopy.audits, configDir),
+    audits: await resolveAuditsToDefns(configWorkingCopy.audits, configDir),
     categories: configWorkingCopy.categories || null,
     groups: configWorkingCopy.groups || null,
     settings,
@@ -278,4 +289,51 @@ function initializeConfig(configJSON, context) {
   return {config, warnings};
 }
 
-module.exports = {resolveWorkingCopy, initializeConfig};
+/**
+ * @param {LH.Config.FRConfig} config
+ * @return {string}
+ */
+function getConfigDisplayString(config) {
+  /** @type {LH.Config.FRConfig} */
+  const jsonConfig = JSON.parse(JSON.stringify(config));
+
+  if (jsonConfig.navigations) {
+    for (const navigation of jsonConfig.navigations) {
+      for (let i = 0; i < navigation.artifacts.length; ++i) {
+        // @ts-expect-error Breaking the Config.AnyArtifactDefn type.
+        navigation.artifacts[i] = navigation.artifacts[i].id;
+      }
+    }
+  }
+
+  if (jsonConfig.artifacts) {
+    for (const artifactDefn of jsonConfig.artifacts) {
+      // @ts-expect-error Breaking the Config.AnyArtifactDefn type.
+      artifactDefn.gatherer = artifactDefn.gatherer.path;
+      // Dependencies are not declared on Config JSON
+      artifactDefn.dependencies = undefined;
+    }
+  }
+
+  if (jsonConfig.audits) {
+    for (const auditDefn of jsonConfig.audits) {
+      // @ts-expect-error Breaking the Config.AuditDefn type.
+      auditDefn.implementation = undefined;
+      if (Object.keys(auditDefn.options).length === 0) {
+        // @ts-expect-error Breaking the Config.AuditDefn type.
+        auditDefn.options = undefined;
+      }
+    }
+  }
+
+  // Printed config is more useful with localized strings.
+  format.replaceIcuMessages(jsonConfig, jsonConfig.settings.locale);
+
+  return JSON.stringify(jsonConfig, null, 2);
+}
+
+export {
+  resolveWorkingCopy,
+  initializeConfig,
+  getConfigDisplayString,
+};

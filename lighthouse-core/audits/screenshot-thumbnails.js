@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const LHError = require('../lib/lh-error.js');
-const jpeg = require('jpeg-js');
-const Speedline = require('../computed/speedline.js');
+import {Audit} from './audit.js';
+import {LighthouseError} from '../lib/lh-error.js';
+import jpeg from 'jpeg-js';
+import Speedline from '../computed/speedline.js';
 
 const NUMBER_OF_THUMBNAILS = 10;
 const THUMBNAIL_WIDTH = 120;
@@ -88,7 +88,7 @@ class ScreenshotThumbnails extends Audit {
     const timelineEnd = Math.max(maxFrameTime, minimumTimelineDuration);
 
     if (!analyzedFrames.length || !Number.isFinite(timelineEnd)) {
-      throw new LHError(LHError.errors.INVALID_SPEEDLINE);
+      throw new LighthouseError(LighthouseError.errors.INVALID_SPEEDLINE);
     }
 
     for (let i = 1; i <= NUMBER_OF_THUMBNAILS; i++) {
@@ -144,10 +144,10 @@ class ScreenshotThumbnails extends Audit {
       return await this._audit(artifacts, context);
     } catch (err) {
       const noFramesErrors = new Set([
-        LHError.errors.NO_SCREENSHOTS.code,
-        LHError.errors.SPEEDINDEX_OF_ZERO.code,
-        LHError.errors.NO_SPEEDLINE_FRAMES.code,
-        LHError.errors.INVALID_SPEEDLINE.code,
+        LighthouseError.errors.NO_SCREENSHOTS.code,
+        LighthouseError.errors.SPEEDINDEX_OF_ZERO.code,
+        LighthouseError.errors.NO_SPEEDLINE_FRAMES.code,
+        LighthouseError.errors.INVALID_SPEEDLINE.code,
       ]);
 
       // If a timespan didn't happen to contain frames, that's fine. Just mark not applicable.
@@ -160,4 +160,4 @@ class ScreenshotThumbnails extends Audit {
   }
 }
 
-module.exports = ScreenshotThumbnails;
+export default ScreenshotThumbnails;

@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const i18n = require('../lib/i18n/i18n.js');
+import * as i18n from '../lib/i18n/i18n.js';
 
 /**
  * @param {unknown} arr
@@ -21,6 +21,24 @@ function isArrayOfUnknownObjects(arr) {
  */
 function isObjectOfUnknownProperties(val) {
   return typeof val === 'object' && val !== null && !Array.isArray(val);
+}
+
+/**
+ * @param {unknown} str
+ * @return {str is LH.Gatherer.GatherMode}
+ */
+function objectIsGatherMode(str) {
+  if (typeof str !== 'string') return false;
+  return str === 'navigation' || str === 'timespan' || str === 'snapshot';
+}
+
+/**
+ * @param {unknown} arr
+ * @return {arr is Array<LH.Gatherer.GatherMode>}
+ */
+function isArrayOfGatherModes(arr) {
+  if (!Array.isArray(arr)) return false;
+  return arr.every(objectIsGatherMode);
 }
 
 /**
@@ -124,6 +142,7 @@ class ConfigPlugin {
       description,
       manualDescription,
       auditRefs: auditRefsJson,
+      supportedModes,
       ...invalidRest
     } = categoryJson;
 
@@ -138,6 +157,12 @@ class ConfigPlugin {
     if (!i18n.isStringOrIcuMessage(manualDescription) && manualDescription !== undefined) {
       throw new Error(`${pluginName} has an invalid category manualDescription.`);
     }
+    if (!isArrayOfGatherModes(supportedModes) && supportedModes !== undefined) {
+      throw new Error(
+        `${pluginName} supportedModes must be an array, ` +
+        `valid array values are "navigation", "timespan", and "snapshot".`
+      );
+    }
     const auditRefs = ConfigPlugin._parseAuditRefsList(auditRefsJson, pluginName);
 
     return {
@@ -145,6 +170,7 @@ class ConfigPlugin {
       auditRefs,
       description: description,
       manualDescription: manualDescription,
+      supportedModes,
     };
   }
 
@@ -222,4 +248,4 @@ class ConfigPlugin {
   }
 }
 
-module.exports = ConfigPlugin;
+export default ConfigPlugin;

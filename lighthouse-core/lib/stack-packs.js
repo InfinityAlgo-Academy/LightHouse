@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const stackPacks = require('lighthouse-stack-packs');
-const i18n = require('./i18n/i18n.js');
+import log from 'lighthouse-logger';
+import stackPacks from 'lighthouse-stack-packs';
+import * as i18n from './i18n/i18n.js';
 
 /**
  * Pairs consisting of a stack pack's ID and the set of stacks needed to be
@@ -19,11 +19,10 @@ const stackPacksToInclude = [
     packId: 'wordpress',
     requiredStacks: ['js:wordpress'],
   },
-  // waiting for https://github.com/johnmichel/Library-Detector-for-Chrome/pull/193
-  // {
-  //   packId: 'ezoic',
-  //   requiredStacks: ['js:ezoic'],
-  // },
+  {
+    packId: 'ezoic',
+    requiredStacks: ['js:ezoic'],
+  },
   {
     packId: 'drupal',
     requiredStacks: ['js:drupal'],
@@ -47,6 +46,10 @@ const stackPacksToInclude = [
   {
     packId: 'next.js',
     requiredStacks: ['js:next'],
+  },
+  {
+    packId: 'nuxt',
+    requiredStacks: ['js:nuxt'],
   },
   {
     packId: 'angular',
@@ -111,7 +114,7 @@ function getStackPacks(pageStacks) {
   return packs;
 }
 
-module.exports = {
+export {
   getStackPacks,
   stackPacksToInclude,
 };

@@ -10,26 +10,27 @@
  * origin are over the http/2 protocol.
  */
 
-/** @typedef {import('../../lib/dependency-graph/simulator/simulator')} Simulator */
+/** @typedef {import('../../lib/dependency-graph/simulator/simulator').Simulator} Simulator */
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
-const Audit = require('../audit.js');
-const ThirdParty = require('../../lib/third-party-web.js');
-const URL = require('../../lib/url-shim.js');
-const ByteEfficiencyAudit = require('../byte-efficiency/byte-efficiency-audit.js');
-const Interactive = require('../../computed/metrics/lantern-interactive.js');
-const NetworkRequest = require('../../lib/network-request.js');
-const NetworkRecords = require('../../computed/network-records.js');
-const LoadSimulator = require('../../computed/load-simulator.js');
-const PageDependencyGraph = require('../../computed/page-dependency-graph.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {Audit} from '../audit.js';
+
+import ThirdParty from '../../lib/third-party-web.js';
+import URL from '../../lib/url-shim.js';
+import {ByteEfficiencyAudit} from '../byte-efficiency/byte-efficiency-audit.js';
+import Interactive from '../../computed/metrics/lantern-interactive.js';
+import {NetworkRequest} from '../../lib/network-request.js';
+import NetworkRecords from '../../computed/network-records.js';
+import LoadSimulator from '../../computed/load-simulator.js';
+import PageDependencyGraph from '../../computed/page-dependency-graph.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to enable HTTP/2. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Use HTTP/2',
   /** Description of a Lighthouse audit that tells the user why they should use HTTP/2. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'HTTP/2 offers many benefits over HTTP/1.1, including binary headers and ' +
-      'multiplexing. [Learn more](https://web.dev/uses-http2/).',
+      'multiplexing. [Learn more about HTTP/2](https://web.dev/uses-http2/).',
   /** [ICU Syntax] Label identifying the number of network requests that were not served with HTTP/2. */
   displayValue: `{itemCount, plural,
     =1 {1 request not served via HTTP/2}
@@ -39,7 +40,7 @@ const UIStrings = {
   columnProtocol: 'Protocol',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /** @type {Set<LH.Artifacts.NetworkRequest['resourceType']>} */
 const STATIC_RESOURCE_TYPES = new Set([
@@ -255,5 +256,5 @@ class UsesHTTP2Audit extends Audit {
   }
 }
 
-module.exports = UsesHTTP2Audit;
-module.exports.UIStrings = UIStrings;
+export default UsesHTTP2Audit;
+export {UIStrings};

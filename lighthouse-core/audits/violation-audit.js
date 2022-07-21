@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const JsBundles = require('../computed/js-bundles.js');
+import {Audit} from './audit.js';
+import JsBundles from '../computed/js-bundles.js';
 
 class ViolationAudit extends Audit {
   /**
@@ -47,4 +47,4 @@ class ViolationAudit extends Audit {
   }
 }
 
-module.exports = ViolationAudit;
+export default ViolationAudit;

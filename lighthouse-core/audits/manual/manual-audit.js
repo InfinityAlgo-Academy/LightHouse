@@ -10,7 +10,7 @@
  * their site.
  */
 
-const Audit = require('../audit.js');
+import {Audit} from '../audit.js';
 
 class ManualAudit extends Audit {
   /**
@@ -34,4 +34,4 @@ class ManualAudit extends Audit {
   }
 }
 
-module.exports = ManualAudit;
+export default ManualAudit;

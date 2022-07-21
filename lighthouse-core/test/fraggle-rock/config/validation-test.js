@@ -3,16 +3,13 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const {defaultSettings, defaultNavigationConfig} = require('../../../config/constants.js');
-const defaultConfig = require('../../../fraggle-rock/config/default-config.js');
-const BaseAudit = require('../../../audits/audit.js');
-const BaseFRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const BaseLegacyGatherer = require('../../../gather/gatherers/gatherer.js');
-const validation = require('../../../fraggle-rock/config/validation.js');
-
-/* eslint-env jest */
+import {defaultSettings, defaultNavigationConfig} from '../../../config/constants.js';
+import defaultConfig from '../../../config/default-config.js';
+import {Audit as BaseAudit} from '../../../audits/audit.js';
+import BaseFRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+import {Gatherer as BaseLegacyGatherer} from '../../../gather/gatherers/gatherer.js';
+import * as validation from '../../../fraggle-rock/config/validation.js';
 
 /** @typedef {LH.Gatherer.GathererMeta['supportedModes']} SupportedModes */
 

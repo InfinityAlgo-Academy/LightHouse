@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const TraceProcessor = require('../tracehouse/trace-processor.js');
+import log from 'lighthouse-logger';
+import {TraceProcessor} from '../tracehouse/trace-processor.js';
 
 /**
  * @param {LH.Result['audits']} auditResults
@@ -197,4 +197,5 @@ class Metrics {
   }
 }
 
-module.exports = Metrics;
+// TODO(esmodule): rename?
+export {Metrics};

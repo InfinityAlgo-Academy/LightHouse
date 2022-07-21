@@ -5,18 +5,17 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const ComputedLcp = require('../../computed/metrics/largest-contentful-paint.js');
-const LHError = require('../../lib/lh-error.js');
+import {Audit} from '../audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
+import ComputedLcp from '../../computed/metrics/largest-contentful-paint.js';
 
 const UIStrings = {
   /** Description of the Largest Contentful Paint (LCP) metric, which marks the time at which the largest text or image is painted by the browser. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Largest Contentful Paint marks the time at which the largest text or image is ' +
-      `painted. [Learn more](https://web.dev/lighthouse-largest-contentful-paint/)`,
+      `painted. [Learn more about the Largest Contentful Paint metric](https://web.dev/lighthouse-largest-contentful-paint/)`,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class LargestContentfulPaint extends Audit {
   /**
@@ -77,27 +76,8 @@ class LargestContentfulPaint extends Audit {
     const metricComputationData = {trace, devtoolsLog, gatherContext,
       settings: context.settings, URL: artifacts.URL};
 
-    let metricResult;
-    try {
-      metricResult = await ComputedLcp.request(metricComputationData, context);
-    } catch (err) {
-      const match = artifacts.HostUserAgent.match(/Chrome\/(\d+)/);
-      if (!match) throw err;
-      const milestone = Number(match[1]);
-
-      // m79 is the minimum version which supports LCP
-      // https://chromium.googlesource.com/chromium/src/+/master/docs/speed/metrics_changelog/lcp.md
-      if (milestone < 79 && err.code === 'NO_LCP') {
-        throw new LHError(
-          LHError.errors.UNSUPPORTED_OLD_CHROME,
-          {featureName: 'Largest Contentful Paint'}
-        );
-      }
-      throw err;
-    }
-
+    const metricResult = await ComputedLcp.request(metricComputationData, context);
     const options = context.options[context.settings.formFactor];
-
 
     return {
       score: Audit.computeLogNormalScore(
@@ -111,5 +91,5 @@ class LargestContentfulPaint extends Audit {
   }
 }
 
-module.exports = LargestContentfulPaint;
-module.exports.UIStrings = UIStrings;
+export default LargestContentfulPaint;
+export {UIStrings};

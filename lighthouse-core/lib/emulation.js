@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const {version: lighthouseVersion} = require('../../package.json');
+import {lighthouseVersion} from '../../root.js';
 
 const NO_THROTTLING_METRICS = {
   latency: 0,
@@ -153,7 +153,7 @@ function clearCPUThrottling(session) {
   return session.sendCommand('Emulation.setCPUThrottlingRate', NO_CPU_THROTTLE_METRICS);
 }
 
-module.exports = {
+export {
   emulate,
   throttle,
   clearThrottling,

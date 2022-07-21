@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
+import log from 'lighthouse-logger';
 
 /** @typedef {import('@sentry/node').Breadcrumb} Breadcrumb */
 /** @typedef {import('@sentry/node').NodeClient} NodeClient */
@@ -48,7 +48,7 @@ const sentryDelegate = {
  * When called, replaces noops with actual Sentry implementation.
  * @param {{url: string, flags: LH.CliFlags, environmentData: NodeOptions}} opts
  */
-function init(opts) {
+async function init(opts) {
   // If error reporting is disabled, leave the functions as a noop
   if (!opts.flags.enableErrorReporting) {
     return;
@@ -60,7 +60,7 @@ function init(opts) {
   }
 
   try {
-    const Sentry = require('@sentry/node');
+    const Sentry = await import('@sentry/node');
     Sentry.init({
       ...opts.environmentData,
       dsn: SENTRY_URL,
@@ -108,14 +108,14 @@ function init(opts) {
       const sampledErrorMatch = SAMPLED_ERRORS.find(sample => sample.pattern.test(err.message));
       if (sampledErrorMatch && sampledErrorMatch.rate <= Math.random()) return;
 
-      // @ts-expect-error - properties added to protocol method LHErrors.
+      // @ts-expect-error - properties added to protocol method LighthouseErrors.
       if (err.protocolMethod) {
         // Protocol errors all share same stack trace, so add more to fingerprint
-        // @ts-expect-error - properties added to protocol method LHErrors.
+        // @ts-expect-error - properties added to protocol method LighthouseErrors.
         opts.fingerprint = ['{{ default }}', err.protocolMethod, err.protocolError];
 
         opts.tags = opts.tags || {};
-        // @ts-expect-error - properties added to protocol method LHErrors.
+        // @ts-expect-error - properties added to protocol method LighthouseErrors.
         opts.tags.protocolMethod = err.protocolMethod;
       }
 
@@ -141,4 +141,4 @@ function init(opts) {
   }
 }
 
-module.exports = sentryDelegate;
+export const Sentry = sentryDelegate;

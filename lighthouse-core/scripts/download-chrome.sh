@@ -32,5 +32,5 @@ fi
 if [ -e "$CHROME_PATH" ]; then
   echo "cached chrome found"
 else
-  wget "$url" --no-check-certificate -q -O chrome.zip && unzip -q chrome.zip
+  curl "$url" -Lo chrome.zip && unzip -q chrome.zip
 fi

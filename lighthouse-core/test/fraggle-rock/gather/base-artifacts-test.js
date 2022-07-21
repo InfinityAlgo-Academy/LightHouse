@@ -3,17 +3,11 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
-
-const {
-  getBaseArtifacts,
-  finalizeArtifacts,
-} = require('../../../fraggle-rock/gather/base-artifacts.js');
-const {initializeConfig} = require('../../../fraggle-rock/config/config.js');
-const {createMockDriver} = require('./mock-driver.js');
-const LighthouseError = require('../../../lib/lh-error.js');
+import {getBaseArtifacts, finalizeArtifacts} from '../../../fraggle-rock/gather/base-artifacts.js';
+import {initializeConfig} from '../../../fraggle-rock/config/config.js';
+import {createMockDriver} from './mock-driver.js';
+import {LighthouseError} from '../../../lib/lh-error.js';
 
 function getMockDriverForArtifacts() {
   const driverMock = createMockDriver();
@@ -36,20 +30,20 @@ describe('getBaseArtifacts', () => {
   });
 
   it('should fetch benchmark index', async () => {
-    const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
+    const {config} = await initializeConfig(undefined, {gatherMode: 'navigation'});
     const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
     expect(artifacts.BenchmarkIndex).toEqual(500);
   });
 
   it('should fetch host user agent', async () => {
-    const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
+    const {config} = await initializeConfig(undefined, {gatherMode: 'navigation'});
     const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
     expect(artifacts.HostUserAgent).toContain('Macintosh');
     expect(artifacts.HostFormFactor).toEqual('desktop');
   });
 
   it('should return settings', async () => {
-    const {config} = initializeConfig(undefined, {gatherMode: 'navigation'});
+    const {config} = await initializeConfig(undefined, {gatherMode: 'navigation'});
     const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
     expect(artifacts.settings).toEqual(config.settings);
   });
@@ -62,10 +56,10 @@ describe('finalizeArtifacts', () => {
   let gathererArtifacts = {};
 
   beforeEach(async () => {
-    const {config} = initializeConfig(undefined, {gatherMode});
+    const {config} = await initializeConfig(undefined, {gatherMode});
     const driver = getMockDriverForArtifacts().asDriver();
     baseArtifacts = await getBaseArtifacts(config, driver, {gatherMode});
-    baseArtifacts.URL = {initialUrl: 'about:blank', requestedUrl: 'http://example.com', finalUrl: 'https://example.com'};
+    baseArtifacts.URL = {initialUrl: 'about:blank', finalUrl: 'https://example.com'};
     gathererArtifacts = {};
   });
 
@@ -133,24 +127,21 @@ describe('finalizeArtifacts', () => {
   it('should throw if URL was not set', () => {
     const run = () => finalizeArtifacts(baseArtifacts, gathererArtifacts);
 
-    baseArtifacts.URL = {initialUrl: 'about:blank', requestedUrl: '', finalUrl: ''};
-    expect(run).toThrowError(/requestedUrl/);
+    baseArtifacts.URL = {initialUrl: 'about:blank', finalUrl: 'https://example.com'};
+    expect(run).not.toThrow();
 
-    baseArtifacts.URL = {initialUrl: '', requestedUrl: '', finalUrl: ''};
+    baseArtifacts.URL = {initialUrl: '', finalUrl: ''};
     expect(run).toThrowError(/initialUrl/);
 
-    baseArtifacts.URL = {initialUrl: 'about:blank', requestedUrl: '', finalUrl: 'https://example.com'};
-    expect(run).toThrowError(/requestedUrl/);
-
-    baseArtifacts.URL = {initialUrl: 'about:blank', requestedUrl: 'https://example.com', finalUrl: ''};
+    baseArtifacts.URL = {initialUrl: 'about:blank', finalUrl: ''};
     expect(run).toThrowError(/finalUrl/);
   });
 
   it('should not throw if URL was not set for an error reason', () => {
     const run = () => finalizeArtifacts(baseArtifacts, gathererArtifacts);
 
-    baseArtifacts.URL = {initialUrl: 'about:blank', requestedUrl: 'http://example.com', finalUrl: ''};
+    baseArtifacts.URL = {initialUrl: 'about:blank', finalUrl: ''};
     baseArtifacts.PageLoadError = new LighthouseError(LighthouseError.errors.PAGE_HUNG);
-    expect(run).not.toThrowError(/requestedUrl/);
+    expect(run).not.toThrow();
   });
 });

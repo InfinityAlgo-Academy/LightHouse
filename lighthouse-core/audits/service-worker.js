@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const URL = require('../lib/url-shim.js');
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
+import URL from '../lib/url-shim.js';
+import {Audit} from './audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on a page's service worker. This descriptive title is shown to users when a service worker is registered and valid. */
@@ -17,7 +17,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user why they should use a service worker. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'The service worker is the technology that enables your app to use many ' +
     'Progressive Web App features, such as offline, add to homescreen, and push ' +
-    'notifications. [Learn more](https://web.dev/service-worker/).',
+    'notifications. [Learn more about Service Workers](https://web.dev/service-worker/).',
   /**
    * @description Message explaining that the website may have service workers, but none are in scope to control the tested web page.
    * @example {https://example.com/} pageUrl
@@ -39,7 +39,7 @@ const UIStrings = {
     'the `start_url` ({startUrl}) is not in the service worker\'s scope ({scopeUrl})',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class ServiceWorker extends Audit {
   /**
@@ -51,6 +51,7 @@ class ServiceWorker extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
+      supportedModes: ['navigation'],
       requiredArtifacts: ['URL', 'ServiceWorker', 'WebAppManifest'],
     };
   }
@@ -128,8 +129,12 @@ class ServiceWorker extends Audit {
    * @return {LH.Audit.Product}
    */
   static audit(artifacts) {
-    // Match against artifacts.URL.finalUrl so audit accounts for any redirects.
-    const pageUrl = new URL(artifacts.URL.finalUrl);
+    // Match against `artifacts.URL.mainDocumentUrl` so audit accounts for any redirects.
+    // Service workers won't control network requests if the page uses `history.pushState` to "enter" the SW scope.
+    // For this reason it is better to evaluate the SW in relation to the main document url rather than the final frame url.
+    const {mainDocumentUrl} = artifacts.URL;
+    if (!mainDocumentUrl) throw new Error('mainDocumentUrl must exist in navigation mode');
+    const pageUrl = new URL(mainDocumentUrl);
     const {versions, registrations} = artifacts.ServiceWorker;
 
     const versionsForOrigin = ServiceWorker.getVersionsForOrigin(versions, pageUrl);
@@ -175,5 +180,5 @@ class ServiceWorker extends Audit {
   }
 }
 
-module.exports = ServiceWorker;
-module.exports.UIStrings = UIStrings;
+export default ServiceWorker;
+export {UIStrings};

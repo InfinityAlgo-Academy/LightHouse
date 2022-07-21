@@ -13,8 +13,8 @@
 
 'use strict';
 
-const FRGatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../../lib/page-functions.js');
+import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+import {pageFunctions} from '../../../lib/page-functions.js';
 
 /**
  * Calculates the maximum tree depth of the DOM.
@@ -100,4 +100,4 @@ class DOMStats extends FRGatherer {
   }
 }
 
-module.exports = DOMStats;
+export default DOMStats;

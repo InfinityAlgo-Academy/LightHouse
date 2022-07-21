@@ -3,17 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
 
-jest.useFakeTimers();
+import {Driver} from '../../../gather/driver.js';
+import {Connection} from '../../../gather/connections/connection.js';
+import SourceMaps from '../../../gather/gatherers/source-maps.js';
+import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
+import {flushAllTimersAndMicrotasks, fnAny, timers} from '../../test-utils.js';
 
-const Driver = require('../../../gather/driver.js');
-const Connection = require('../../../gather/connections/connection.js');
-const SourceMaps = require('../../../gather/gatherers/source-maps.js');
-const {createMockSendCommandFn, createMockOnFn} = require('../mock-commands.js');
-const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
+timers.useFakeTimers();
 
 const mapJson = JSON.stringify({
   version: 3,
@@ -46,10 +44,8 @@ describe('SourceMaps gatherer', () => {
     const sendCommandMock = createMockSendCommandFn()
       .mockResponse('Debugger.enable', {})
       .mockResponse('Debugger.disable', {})
-      .mockResponse('Network.enable', {})
-      .mockResponse('Fetch.enable', {})
-      .mockResponse('Fetch.disable', {});
-    const fetchMock = jest.fn();
+      .mockResponse('Network.enable', {});
+    const fetchMock = fnAny();
 
     for (const mapAndEvents of mapsAndEvents) {
       const {

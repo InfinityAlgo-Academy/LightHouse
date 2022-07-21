@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {Audit} from '../audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the web page's document meta description. This descriptive title is shown when the document has a meta description. "meta" should be left untranslated because it refers to an HTML element. */
@@ -16,12 +16,12 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they need to have meta descriptions on their page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Meta descriptions may be included in search results to concisely summarize ' +
       'page content. ' +
-      '[Learn more](https://web.dev/meta-description/).',
+      '[Learn more about the meta description](https://web.dev/meta-description/).',
   /** Explanatory message stating that there was a failure in an audit caused by the page's meta description text being empty. */
   explanation: 'Description text is empty.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class Description extends Audit {
   /**
@@ -63,5 +63,5 @@ class Description extends Audit {
   }
 }
 
-module.exports = Description;
-module.exports.UIStrings = UIStrings;
+export default Description;
+export {UIStrings};

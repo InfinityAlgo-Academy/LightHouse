@@ -5,21 +5,20 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
-
-const LanternFcp = require('../computed/metrics/lantern-first-contentful-paint.js');
-const LanternFmp = require('../computed/metrics/lantern-first-meaningful-paint.js');
-const LanternInteractive = require('../computed/metrics/lantern-interactive.js');
-const LanternSpeedIndex = require('../computed/metrics/lantern-speed-index.js');
-const LanternLcp = require('../computed/metrics/lantern-largest-contentful-paint.js');
+import {Audit} from './audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import LanternFcp from '../computed/metrics/lantern-first-contentful-paint.js';
+import LanternFmp from '../computed/metrics/lantern-first-meaningful-paint.js';
+import LanternInteractive from '../computed/metrics/lantern-interactive.js';
+import LanternSpeedIndex from '../computed/metrics/lantern-speed-index.js';
+import LanternLcp from '../computed/metrics/lantern-largest-contentful-paint.js';
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 //   https://www.desmos.com/calculator/bksgkihhj8
 const SCORING_P10 = 3651;
 const SCORING_MEDIAN = 10000;
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, {});
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, {});
 
 class PredictivePerf extends Audit {
   /**
@@ -99,4 +98,4 @@ class PredictivePerf extends Audit {
   }
 }
 
-module.exports = PredictivePerf;
+export default PredictivePerf;

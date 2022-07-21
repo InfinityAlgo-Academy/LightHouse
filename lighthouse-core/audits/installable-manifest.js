@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
-const ManifestValues = require('../computed/manifest-values.js');
+import {Audit} from './audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import ManifestValues from '../computed/manifest-values.js';
 
 /* eslint-disable max-len */
 const UIStrings = {
@@ -16,7 +16,8 @@ const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on if a website is installable as an application. This descriptive title is shown to users when a webapp is not installable. */
   'failureTitle': 'Web app manifest or service worker do not meet the installability requirements',
   /** Description of a Lighthouse audit that tells the user why installability is important for webapps. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  'description': `Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more](https://web.dev/installable-manifest/).`,
+  'description': `Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. ' +
+  '[Learn more about manifest installability requirements](https://web.dev/installable-manifest/).`,
   /** Description Table column header for the observed value of the Installability failure reason statistic. */
   'columnValue': 'Failure reason',
   /**
@@ -97,10 +98,15 @@ const UIStrings = {
   'protocol-timeout': `Lighthouse could not determine if there was a service worker. Please try with a newer version of Chrome.`,
   /** Message logged when the web app has been uninstalled o desktop, signalling that the install banner state is being reset. */
   'pipeline-restarted': 'PWA has been uninstalled and installability checks resetting.',
+  /**
+   * @description Error message explaining that the URL of the manifest uses a scheme that is not supported on Android.
+   * @example {data:} scheme
+   */
+  'scheme-not-supported-for-webapk': 'The manifest URL scheme ({scheme}) is not supported on Android.',
 };
 /* eslint-enable max-len */
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview
@@ -155,6 +161,17 @@ class InstallableManifest extends Audit {
 
       // @ts-expect-error errorIds from protocol should match up against the strings dict
       const matchingString = UIStrings[err.errorId];
+
+      if (err.errorId === 'scheme-not-supported-for-webapk') {
+        // If there was no manifest, then there will be at lest one other installability error.
+        // We can ignore this error if that's the case.
+        const manifestUrl = artifacts.WebAppManifest?.url;
+        if (!manifestUrl) continue;
+
+        const scheme = new URL(manifestUrl).protocol;
+        i18nErrors.push(str_(matchingString, {scheme}));
+        continue;
+      }
 
       // Handle an errorId we don't recognize.
       if (matchingString === undefined) {
@@ -246,5 +263,5 @@ class InstallableManifest extends Audit {
   }
 }
 
-module.exports = InstallableManifest;
-module.exports.UIStrings = UIStrings;
+export default InstallableManifest;
+export {UIStrings};

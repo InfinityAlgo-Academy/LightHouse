@@ -3,16 +3,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
-
-const {
-  createMockContext,
-  mockDriverSubmodules,
-} = require('../../fraggle-rock/gather/mock-driver.js');
-const mocks = mockDriverSubmodules();
-const FullPageScreenshotGatherer = require('../../../gather/gatherers/full-page-screenshot.js');
+import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
+import FullPageScreenshotGatherer from '../../../gather/gatherers/full-page-screenshot.js';
 
 // Headless's default value is (1024 * 16), but this varies by device
 const maxTextureSizeMock = 1024 * 8;
@@ -24,8 +17,6 @@ let screenSize;
 /** @type {string[]} */
 let screenshotData;
 let mockContext = createMockContext();
-
-jest.setTimeout(10_000);
 
 beforeEach(() => {
   contentSize = {width: 100, height: 100};
@@ -69,7 +60,6 @@ beforeEach(() => {
       throw new Error(`unexpected fn ${fn.name}`);
     }
   });
-  mocks.reset();
 });
 
 describe('FullPageScreenshot gatherer', () => {
@@ -79,6 +69,7 @@ describe('FullPageScreenshot gatherer', () => {
     screenSize = {width: 412, height: 412};
 
     mockContext.settings = {
+      ...mockContext.settings,
       formFactor: 'mobile',
       screenEmulation: {
         height: screenSize.height,
@@ -87,11 +78,12 @@ describe('FullPageScreenshot gatherer', () => {
         disabled: false,
       },
     };
+
     const artifact = await fpsGatherer.getArtifact(mockContext.asContext());
 
     expect(artifact).toEqual({
       screenshot: {
-        data: 'data:image/jpeg;base64,abc',
+        data: 'data:image/webp;base64,abc',
         height: 2000,
         width: 412,
       },
@@ -105,6 +97,7 @@ describe('FullPageScreenshot gatherer', () => {
     screenSize = {width: 412, height: 412};
 
     mockContext.settings = {
+      ...mockContext.settings,
       formFactor: 'mobile',
       screenEmulation: {
         height: screenSize.height,
@@ -116,19 +109,18 @@ describe('FullPageScreenshot gatherer', () => {
 
     await fpsGatherer.getArtifact(mockContext.asContext());
 
-    const expectedArgs = {
-      formFactor: 'mobile',
-      screenEmulation: {
+    // Lighthouse-controlled emulation.emulate() sets touch emulation.
+    const emulationInvocations = mockContext.driver.defaultSession.sendCommand
+        .findAllInvocations('Emulation.setTouchEmulationEnabled');
+    expect(emulationInvocations).toHaveLength(1);
+
+    expect(mockContext.driver.defaultSession.sendCommand).toHaveBeenCalledWith(
+      'Emulation.setDeviceMetricsOverride',
+      expect.objectContaining({
         height: 412,
         width: 412,
-        disabled: false,
         mobile: true,
-      },
-    };
-    expect(mocks.emulationMock.emulate).toHaveBeenCalledTimes(1);
-    expect(mocks.emulationMock.emulate).toHaveBeenCalledWith(
-      mockContext.driver.defaultSession,
-      expectedArgs
+      })
     );
   });
 
@@ -137,6 +129,7 @@ describe('FullPageScreenshot gatherer', () => {
     contentSize = {width: 500, height: 1500};
     screenSize = {width: 500, height: 500, dpr: 2};
     mockContext.settings = {
+      ...mockContext.settings,
       screenEmulation: {
         height: screenSize.height,
         width: screenSize.width,
@@ -147,6 +140,11 @@ describe('FullPageScreenshot gatherer', () => {
     };
 
     await fpsGatherer.getArtifact(mockContext.asContext());
+
+    // If not Lighthouse controlled, no touch emulation.
+    const emulationInvocations = mockContext.driver.defaultSession.sendCommand
+        .findAllInvocations('Emulation.setTouchEmulationEnabled');
+    expect(emulationInvocations).toHaveLength(0);
 
     // Setting up for screenshot.
     expect(mockContext.driver.defaultSession.sendCommand).toHaveBeenCalledWith(
@@ -177,6 +175,7 @@ describe('FullPageScreenshot gatherer', () => {
     contentSize = {width: 412, height: 100000};
     screenSize = {width: 412, height: 412, dpr: 1};
     mockContext.settings = {
+      ...mockContext.settings,
       formFactor: 'mobile',
       screenEmulation: {
         height: screenSize.height,

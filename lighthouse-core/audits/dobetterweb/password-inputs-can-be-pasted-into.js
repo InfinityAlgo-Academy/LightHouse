@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {Audit} from '../audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the ability to paste into password fields. This descriptive title is shown to users when the page allows pasting of content into password fields. */
@@ -15,10 +15,10 @@ const UIStrings = {
   failureTitle: 'Prevents users to paste into password fields',
   /** Description of a Lighthouse audit that tells the user why they should allow pasting of content into password fields. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Preventing password pasting undermines good security policy. ' +
-      '[Learn more](https://web.dev/password-inputs-can-be-pasted-into/).',
+      '[Learn more about user-friendly password fields](https://web.dev/password-inputs-can-be-pasted-into/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class PasswordInputsCanBePastedIntoAudit extends Audit {
   /**
@@ -62,5 +62,5 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
   }
 }
 
-module.exports = PasswordInputsCanBePastedIntoAudit;
-module.exports.UIStrings = UIStrings;
+export default PasswordInputsCanBePastedIntoAudit;
+export {UIStrings};

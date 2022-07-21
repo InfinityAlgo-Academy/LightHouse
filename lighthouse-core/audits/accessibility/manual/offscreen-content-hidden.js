@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit.js');
+import ManualAudit from '../../manual/manual-audit.js';
 
 /**
  * @fileoverview Manual A11y audit to check that offscreen content is hidden from
@@ -20,10 +20,10 @@ class OffscreenContentHidden extends ManualAudit {
   static get meta() {
     return Object.assign({
       id: 'offscreen-content-hidden',
-      description: 'Offscreen content is hidden with display: none or aria-hidden=true. [Learn more](https://web.dev/offscreen-content-hidden/).',
+      description: 'Offscreen content is hidden with display: none or aria-hidden=true. [Learn how to properly hide offscreen content](https://web.dev/offscreen-content-hidden/).',
       title: 'Offscreen content is hidden from assistive technology',
     }, super.partialMeta);
   }
 }
 
-module.exports = OffscreenContentHidden;
+export default OffscreenContentHidden;

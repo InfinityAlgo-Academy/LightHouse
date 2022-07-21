@@ -11,6 +11,7 @@ declare module 'lighthouse-logger' {
     args?: any[];
   }
   export function setLevel(level: string): void;
+  export function isVerbose(): boolean;
   export function formatProtocol(prefix: string, data: Object, level?: string): void;
   export function log(title: string, ...args: any[]): void;
   export function warn(title: string, ...args: any[]): void;

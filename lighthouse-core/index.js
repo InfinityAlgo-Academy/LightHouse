@@ -5,13 +5,17 @@
  */
 'use strict';
 
-const Runner = require('./runner.js');
-const log = require('lighthouse-logger');
-const ChromeProtocol = require('./gather/connections/cri.js');
-const Config = require('./config/config.js');
-const URL = require('./lib/url-shim.js');
+import {Runner} from './runner.js';
+import log from 'lighthouse-logger';
+import {CriConnection} from './gather/connections/cri.js';
+import {Config} from './config/config.js';
+import URL from './lib/url-shim.js';
+import * as fraggleRock from './fraggle-rock/api.js';
+import {Driver} from './gather/driver.js';
+import {flagsToFRContext} from './config/config-helpers.js';
+import {initializeConfig} from './fraggle-rock/config/config.js';
 
-/** @typedef {import('./gather/connections/connection.js')} Connection */
+/** @typedef {import('./gather/connections/connection.js').Connection} Connection */
 
 /*
  * The relationship between these root modules:
@@ -33,18 +37,35 @@ const URL = require('./lib/url-shim.js');
  *   they will override any settings in the config.
  * @param {LH.Config.Json=} configJSON Configuration for the Lighthouse run. If
  *   not present, the default config is used.
+ * @param {LH.Puppeteer.Page=} page
+ * @return {Promise<LH.RunnerResult|undefined>}
+ */
+async function lighthouse(url, flags = {}, configJSON, page) {
+  const configContext = flagsToFRContext(flags);
+  return fraggleRock.navigation(url, {page, config: configJSON, configContext});
+}
+
+/**
+ * Run Lighthouse using the legacy navigation runner.
+ * This is left in place for any clients that don't support FR navigations yet (e.g. Lightrider)
+ * @deprecated
+ * @param {string=} url The URL to test. Optional if running in auditMode.
+ * @param {LH.Flags=} flags Optional settings for the Lighthouse run. If present,
+ *   they will override any settings in the config.
+ * @param {LH.Config.Json=} configJSON Configuration for the Lighthouse run. If
+ *   not present, the default config is used.
  * @param {Connection=} userConnection
  * @return {Promise<LH.RunnerResult|undefined>}
  */
-async function lighthouse(url, flags = {}, configJSON, userConnection) {
+async function legacyNavigation(url, flags = {}, configJSON, userConnection) {
   // set logging preferences, assume quiet
   flags.logLevel = flags.logLevel || 'error';
   log.setLevel(flags.logLevel);
 
-  const config = generateConfig(configJSON, flags);
+  const config = await generateLegacyConfig(configJSON, flags);
   const computedCache = new Map();
   const options = {config, computedCache};
-  const connection = userConnection || new ChromeProtocol(flags.port, flags.hostname);
+  const connection = userConnection || new CriConnection(flags.port, flags.hostname);
 
   // kick off a lighthouse run
   const artifacts = await Runner.gather(() => {
@@ -60,21 +81,41 @@ async function lighthouse(url, flags = {}, configJSON, userConnection) {
  *   not present, the default config is used.
  * @param {LH.Flags=} flags Optional settings for the Lighthouse run. If present,
  *   they will override any settings in the config.
- * @return {Config}
+ * @param {LH.Gatherer.GatherMode=} gatherMode Gather mode used to collect artifacts. If present
+ *   the config may override certain settings based on the mode.
+ * @return {Promise<LH.Config.FRConfig>}
  */
-function generateConfig(configJson, flags) {
-  return new Config(configJson, flags);
+async function generateConfig(configJson, flags = {}, gatherMode = 'navigation') {
+  const configContext = flagsToFRContext(flags);
+  const {config} = await initializeConfig(configJson, {...configContext, gatherMode});
+  return config;
 }
 
-lighthouse.generateConfig = generateConfig;
-lighthouse.getAuditList = Runner.getAuditList;
-lighthouse.traceCategories = require('./gather/driver.js').traceCategories;
-lighthouse.Audit = require('./audits/audit.js');
-lighthouse.Gatherer = require('./gather/gatherers/gatherer.js');
+/**
+ * Generate a legacy Lighthouse Config.
+ * @deprecated
+ * @param {LH.Config.Json=} configJson Configuration for the Lighthouse run. If
+ *   not present, the default config is used.
+ * @param {LH.Flags=} flags Optional settings for the Lighthouse run. If present,
+ *   they will override any settings in the config.
+ * @return {Promise<Config>}
+ */
+function generateLegacyConfig(configJson, flags) {
+  return Config.fromJson(configJson, flags);
+}
 
-// Explicit type reference (hidden by makeComputedArtifact) for d.ts export.
-// TODO(esmodules): should be a workaround for module.export and can be removed when in esm.
-/** @type {typeof import('./computed/network-records.js')} */
-lighthouse.NetworkRecords = require('./computed/network-records.js');
+function getAuditList() {
+  return Runner.getAuditList();
+}
 
-module.exports = lighthouse;
+export default lighthouse;
+export {Audit} from './audits/audit.js';
+export {default as Gatherer} from './fraggle-rock/gather/base-gatherer.js';
+export {default as NetworkRecords} from './computed/network-records.js';
+export {
+  legacyNavigation,
+  generateConfig,
+  generateLegacyConfig,
+  getAuditList,
+};
+export const traceCategories = Driver.traceCategories;

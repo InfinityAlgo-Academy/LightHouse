@@ -3,18 +3,19 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const NetworkRecorder = require('../../lib/network-recorder.js');
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const assert = require('assert').strict;
-const devtoolsLogItems = require('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json');
-const prefetchedScriptDevtoolsLog = require('../fixtures/prefetched-script.devtoolslog.json');
-const redirectsDevtoolsLog = require('../fixtures/wikipedia-redirect.devtoolslog.json');
-const redirectsScriptDevtoolsLog = require('../fixtures/redirects-from-script.devtoolslog.json');
-const lrRequestDevtoolsLog = require('../fixtures/lr.devtoolslog.json');
+import {strict as assert} from 'assert';
 
-/* eslint-env jest */
+import {NetworkRecorder} from '../../lib/network-recorder.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
+import {readJson} from '../test-utils.js';
+
+const devtoolsLogItems = readJson('../fixtures/artifacts/perflog/defaultPass.devtoolslog.json', import.meta);
+const prefetchedScriptDevtoolsLog = readJson('../fixtures/prefetched-script.devtoolslog.json', import.meta);
+const redirectsDevtoolsLog = readJson('../fixtures/wikipedia-redirect.devtoolslog.json', import.meta);
+const redirectsScriptDevtoolsLog = readJson('../fixtures/redirects-from-script.devtoolslog.json', import.meta);
+const lrRequestDevtoolsLog = readJson('../fixtures/lr.devtoolslog.json', import.meta);
+
 describe('network recorder', function() {
   it('recordsFromLogs expands into records', function() {
     assert.equal(devtoolsLogItems.length, 555);

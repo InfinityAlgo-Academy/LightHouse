@@ -9,9 +9,9 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const URL = require('../../lib/url-shim.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
+import URL from '../../lib/url-shim.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to enable text compression (like gzip) in order to enhance the performance of a page. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -19,10 +19,10 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* their text-based resources should be served with compression (like gzip). This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Text-based resources should be served with compression (gzip, deflate or' +
     ' brotli) to minimize total network bytes.' +
-    ' [Learn more](https://web.dev/uses-text-compression/).',
+    ' [Learn more about text compression](https://web.dev/uses-text-compression/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 1400;
 const IGNORE_THRESHOLD_IN_PERCENT = 0.1;
@@ -43,7 +43,7 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
+   * @return {import('./byte-efficiency-audit.js').ByteEfficiencyProduct}
    */
   static audit_(artifacts) {
     const uncompressedResponses = artifacts.ResponseCompression;
@@ -96,5 +96,5 @@ class ResponsesAreCompressed extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = ResponsesAreCompressed;
-module.exports.UIStrings = UIStrings;
+export default ResponsesAreCompressed;
+export {UIStrings};

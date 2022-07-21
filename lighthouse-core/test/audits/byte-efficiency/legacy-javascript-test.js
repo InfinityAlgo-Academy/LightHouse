@@ -3,10 +3,10 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const LegacyJavascript = require('../../../audits/byte-efficiency/legacy-javascript.js');
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+import LegacyJavascript from '../../../audits/byte-efficiency/legacy-javascript.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
+import {readJson} from '../../test-utils.js';
 
 /**
  * @param {Array<{url: string, code: string, map?: LH.Artifacts.RawSourceMap}>} scripts
@@ -63,8 +63,6 @@ const createVariants = codeSnippets => {
 
   return variants;
 };
-
-/* eslint-env jest */
 describe('LegacyJavaScript audit', () => {
   it('passes code with no polyfills', async () => {
     const result = await getResult([
@@ -258,7 +256,8 @@ describe('LegacyJavaScript audit', () => {
 describe('LegacyJavaScript signals', () => {
   it('expect babel-preset-env = true variant to not have any signals', () => {
     for (const summaryFilename of ['summary-signals.json', 'summary-signals-nomaps.json']) {
-      const signalSummary = require(`../../../scripts/legacy-javascript/${summaryFilename}`);
+      const signalSummary =
+        readJson(`lighthouse-core/scripts/legacy-javascript/${summaryFilename}`);
       const expectedMissingSignals = [
         'core-js-2-preset-env-esmodules/true',
         'core-js-3-preset-env-esmodules/true',

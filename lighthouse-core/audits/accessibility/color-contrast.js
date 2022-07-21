@@ -11,8 +11,9 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import AxeAudit from './axe-audit.js';
+
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of an accesibility audit that evaluates if all foreground colors are distinct enough from their background colors to be legible for users. This title is descriptive of the successful state and is shown to users when no user action is required. */
@@ -22,10 +23,10 @@ const UIStrings = {
       'sufficient contrast ratio.',
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Low-contrast text is difficult or impossible for many users to read. ' +
-      '[Learn more](https://web.dev/color-contrast/).',
+      '[Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.4/color-contrast).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class ColorContrast extends AxeAudit {
   /**
@@ -42,5 +43,5 @@ class ColorContrast extends AxeAudit {
   }
 }
 
-module.exports = ColorContrast;
-module.exports.UIStrings = UIStrings;
+export default ColorContrast;
+export {UIStrings};

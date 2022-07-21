@@ -3,12 +3,10 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {strict as assert} from 'assert';
 
-const assert = require('assert').strict;
-const UnusedCSS = require('../../computed/unused-css.js');
+import UnusedCSS from '../../computed/unused-css.js';
 
 describe('UnusedCSS computed artifact', () => {
   function generate(content, length) {
@@ -43,7 +41,7 @@ describe('UnusedCSS computed artifact', () => {
             body {
               color: white;
             }
-    
+
             html {
               content: '${generate('random', 50)}';
             }
@@ -110,8 +108,8 @@ describe('UnusedCSS computed artifact', () => {
 
     it('correctly computes url', () => {
       const expectedPreview = 'dummy';
-      assert.strictEqual(map({header: {sourceURL: ''}}).url, expectedPreview);
-      assert.strictEqual(map({header: {sourceURL: 'a'}}, 'http://g.co/a').url, expectedPreview);
+      assert.strictEqual(map({header: {sourceURL: '', isInline: false}}).url, expectedPreview);
+      assert.strictEqual(map({header: {sourceURL: 'a', isInline: true}}, 'http://g.co/a').url, expectedPreview);
       assert.equal(map({header: {sourceURL: 'foobar'}}).url, 'http://g.co/foobar');
     });
   });

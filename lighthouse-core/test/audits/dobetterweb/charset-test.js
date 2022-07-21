@@ -3,21 +3,21 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const CharsetDefinedAudit = require('../../../audits/dobetterweb/charset.js');
-const assert = require('assert').strict;
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
+import {strict as assert} from 'assert';
 
-/* eslint-env jest */
+import CharsetDefinedAudit, {
+  CHARSET_HTML_REGEX, CHARSET_HTTP_REGEX, IANA_REGEX,
+} from '../../../audits/dobetterweb/charset.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 
 const HTML_PRE = '<!doctype html><head>';
 const HTML_POST = '</head><body><h1>hello';
 
 function generateArtifacts(htmlContent, contentTypeValue = 'text/html') {
-  const finalUrl = 'https://example.com/';
+  const mainDocumentUrl = 'https://example.com/';
   const mainResource = {
-    url: finalUrl,
+    url: mainDocumentUrl,
     responseHeaders: [
       {name: 'content-type', value: contentTypeValue},
     ],
@@ -26,7 +26,7 @@ function generateArtifacts(htmlContent, contentTypeValue = 'text/html') {
   const context = {computedCache: new Map()};
   return [{
     devtoolsLogs: {[CharsetDefinedAudit.DEFAULT_PASS]: devtoolsLog},
-    URL: {finalUrl},
+    URL: {mainDocumentUrl},
     MainDocumentContent: htmlContent,
     MetaElements: [],
   }, context];
@@ -115,9 +115,8 @@ describe('Charset defined audit', () => {
 });
 
 describe('Charset regex check', () => {
-  const HTML_REGEX = CharsetDefinedAudit.CHARSET_HTML_REGEX;
-  const HTTP_REGEX = CharsetDefinedAudit.CHARSET_HTTP_REGEX;
-  const IANA_REGEX = CharsetDefinedAudit.IANA_REGEX;
+  const HTML_REGEX = CHARSET_HTML_REGEX;
+  const HTTP_REGEX = CHARSET_HTTP_REGEX;
 
   it('handles html correctly', () => {
     // Positive cases

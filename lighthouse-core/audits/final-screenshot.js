@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const LHError = require('../lib/lh-error.js');
-const ProcessedTrace = require('../computed/processed-trace.js');
-const Screenshots = require('../computed/screenshots.js');
+import {Audit} from './audit.js';
+import {LighthouseError} from '../lib/lh-error.js';
+import ProcessedTrace from '../computed/processed-trace.js';
+import Screenshots from '../computed/screenshots.js';
 
 class FinalScreenshot extends Audit {
   /**
@@ -41,7 +41,7 @@ class FinalScreenshot extends Audit {
       if (artifacts.GatherContext.gatherMode === 'timespan') return {notApplicable: true, score: 1};
 
       // If it was another mode, that's a fatal error.
-      throw new LHError(LHError.errors.NO_SCREENSHOTS);
+      throw new LighthouseError(LighthouseError.errors.NO_SCREENSHOTS);
     }
 
     return {
@@ -56,4 +56,4 @@ class FinalScreenshot extends Audit {
   }
 }
 
-module.exports = FinalScreenshot;
+export default FinalScreenshot;

@@ -5,26 +5,23 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const Driver = require('./driver.js');
-const Runner = require('../../runner.js');
-const {
-  getEmptyArtifactState,
-  collectPhaseArtifacts,
-  awaitArtifacts,
-} = require('./runner-helpers.js');
-const {initializeConfig} = require('../config/config.js');
-const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
+import log from 'lighthouse-logger';
+import {Driver} from './driver.js';
+import {Runner} from '../../runner.js';
+import {getEmptyArtifactState, collectPhaseArtifacts, awaitArtifacts} from './runner-helpers.js';
+import {initializeConfig} from '../config/config.js';
+import {getBaseArtifacts, finalizeArtifacts} from './base-artifacts.js';
 
 /**
- * @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
+ * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
  * @return {Promise<LH.Gatherer.FRGatherResult>}
  */
 async function snapshotGather(options) {
   const {configContext = {}} = options;
   log.setLevel(configContext.logLevel || 'error');
 
-  const {config} = initializeConfig(options.config, {...configContext, gatherMode: 'snapshot'});
+  const {config} =
+    await initializeConfig(options.config, {...configContext, gatherMode: 'snapshot'});
   const driver = new Driver(options.page);
   await driver.connect();
 
@@ -38,15 +35,12 @@ async function snapshotGather(options) {
       const baseArtifacts = await getBaseArtifacts(config, driver, {gatherMode: 'snapshot'});
       baseArtifacts.URL = {
         initialUrl: url,
-        // TODO: Remove `requestedUrl` from snapshot mode.
-        requestedUrl: url,
         finalUrl: url,
       };
 
       const artifactDefinitions = config.artifacts || [];
       const artifactState = getEmptyArtifactState();
       await collectPhaseArtifacts({
-        url,
         phase: 'getArtifact',
         gatherMode: 'snapshot',
         driver,
@@ -67,6 +61,6 @@ async function snapshotGather(options) {
   return {artifacts, runnerOptions};
 }
 
-module.exports = {
+export {
   snapshotGather,
 };

@@ -3,16 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const CumulativeLayoutShift = require('../../../computed/metrics/cumulative-layout-shift.js'); // eslint-disable-line max-len
-const jumpyClsTrace = require('../../fixtures/traces/jumpy-cls-m90.json');
-const oldMetricsTrace = require('../../fixtures/traces/frame-metrics-m89.json');
-const allFramesMetricsTrace = require('../../fixtures/traces/frame-metrics-m90.json');
-const preClsTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const createTestTrace = require('../../create-test-trace.js');
+import CumulativeLayoutShift from '../../../computed/metrics/cumulative-layout-shift.js';
+import {createTestTrace} from '../../create-test-trace.js';
+import {readJson} from '../../test-utils.js';
 
-/* eslint-env jest */
+const jumpyClsTrace = readJson('../../fixtures/traces/jumpy-cls-m90.json', import.meta);
+const oldMetricsTrace = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
+const allFramesMetricsTrace = readJson('../../fixtures/traces/frame-metrics-m90.json', import.meta);
+const preClsTrace = readJson('../../fixtures/traces/progressive-app-m60.json', import.meta);
 
 const childFrameId = 'CAF4634127666E186C9C8B35627DBF0B';
 
@@ -298,13 +297,12 @@ describe('Metrics: CLS', () => {
 
       it('ignores layout shift data from other tabs', async () => {
         const trace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
-        const mainFrame = trace.traceEvents[0].args.frame;
+        const mainFrame = trace.traceEvents.find(e => e.name === 'navigationStart').args.frame;
         const childFrame = 'CHILDFRAME';
         const otherMainFrame = 'ANOTHERTABOPEN';
         const cat = 'loading,rail,devtools.timeline';
         trace.traceEvents.push(
           /* eslint-disable max-len */
-          {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: mainFrame, url: 'https://example.com'}}},
           {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: childFrame, parent: mainFrame, url: 'https://frame.com'}}},
           {name: 'FrameCommittedInBrowser', cat, args: {data: {frame: otherMainFrame, url: 'https://example.com'}}},
           {name: 'LayoutShift', cat, args: {frame: mainFrame, data: {had_recent_input: false, score: 1, weighted_score_delta: 1, is_main_frame: true}}},

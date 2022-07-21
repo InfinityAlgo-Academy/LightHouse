@@ -5,7 +5,7 @@
  */
 
 module.exports = {
-  extends: '../.eslintrc.js',
+  extends: '../.eslintrc.cjs',
   env: {
     node: true,
     browser: true,

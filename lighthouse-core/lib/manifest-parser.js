@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const URL = require('./url-shim.js');
-const cssParsers = require('cssstyle/lib/parsers');
+import URL from './url-shim.js';
+import cssParsers from 'cssstyle/lib/parsers.js';
 
 const ALLOWED_DISPLAY_VALUES = [
   'fullscreen',
@@ -458,7 +458,7 @@ function parseBackgroundColor(jsonInput) {
  * @param {string} manifestUrl URL of manifest file.
  * @param {string} documentUrl URL of document containing manifest link element.
  */
-function parse(string, manifestUrl, documentUrl) {
+function parseManifest(string, manifestUrl, documentUrl) {
   if (manifestUrl === undefined || documentUrl === undefined) {
     throw new Error('Manifest and document URLs required for manifest parsing.');
   }
@@ -510,4 +510,4 @@ function parse(string, manifestUrl, documentUrl) {
   };
 }
 
-module.exports = parse;
+export {parseManifest};

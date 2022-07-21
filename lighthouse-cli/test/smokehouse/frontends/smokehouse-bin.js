@@ -4,7 +4,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview A smokehouse frontend for running from the command line. Parse
@@ -17,7 +16,7 @@ import path from 'path';
 import fs from 'fs';
 import url from 'url';
 
-import _ from 'lodash';
+import cloneDeep from 'lodash/cloneDeep.js';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 import log from 'lighthouse-logger';
@@ -25,8 +24,6 @@ import log from 'lighthouse-logger';
 import {runSmokehouse, getShardedDefinitions} from '../smokehouse.js';
 import {updateTestDefnFormat} from './back-compat-util.js';
 import {LH_ROOT} from '../../../../root.js';
-
-const {cloneDeep} = _;
 
 const coreTestDefnsPath =
   path.join(LH_ROOT, 'lighthouse-cli/test/smokehouse/core-tests.js');
@@ -138,10 +135,10 @@ async function begin() {
         default: false,
         describe: 'Save test artifacts and output verbose logs',
       },
-      'fraggle-rock': {
+      'legacy-navigation': {
         type: 'boolean',
         default: false,
-        describe: 'Use the new Fraggle Rock runner',
+        describe: 'Use the legacy navigation runner',
       },
       'jobs': {
         type: 'number',
@@ -187,7 +184,7 @@ async function begin() {
   if (argv.runner === 'bundle') {
     console.log('\n✨ Be sure to have recently run this: yarn build-all');
   }
-  const {runLighthouse} = await import(runnerPath);
+  const {runLighthouse, setup} = await import(runnerPath);
   runLighthouse.runnerName = argv.runner;
 
   // Find test definition file and filter by requestedTestIds.
@@ -209,8 +206,8 @@ async function begin() {
     // If running the core tests, spin up the test server.
     if (testDefnPath === coreTestDefnsPath) {
       ({server, serverForOffline} = await import('../../fixtures/static-server.js'));
-      server.listen(10200, 'localhost');
-      serverForOffline.listen(10503, 'localhost');
+      await server.listen(10200, 'localhost');
+      await serverForOffline.listen(10503, 'localhost');
       takeNetworkRequestUrls = server.takeRequestUrls.bind(server);
     }
 
@@ -219,9 +216,10 @@ async function begin() {
       jobs,
       retries,
       isDebug: argv.debug,
-      useFraggleRock: argv.fraggleRock,
+      useLegacyNavigation: argv.legacyNavigation,
       lighthouseRunner: runLighthouse,
       takeNetworkRequestUrls,
+      setup,
     };
 
     smokehouseResult = (await runSmokehouse(prunedTestDefns, options));
@@ -258,7 +256,4 @@ async function begin() {
   process.exit(exitCode);
 }
 
-begin().catch(e => {
-  console.error(e);
-  process.exit(1);
-});
+await begin();

@@ -9,9 +9,10 @@
  * Call this script to update assets/schema-tree.json with the latest schema.org spec
  */
 
-const fetch = require('node-fetch');
-const path = require('path');
-const fs = require('fs');
+import fetch from 'node-fetch';
+
+import path from 'path';
+import fs from 'fs';
 
 const SCHEMA_ORG_URL = 'https://schema.org/version/latest/schema.jsonld';
 const SCHEMA_TREE_FILE = path.join(__dirname, '../assets/schema-tree.json');

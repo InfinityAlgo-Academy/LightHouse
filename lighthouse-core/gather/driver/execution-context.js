@@ -7,7 +7,7 @@
 
 /* global window */
 
-const pageFunctions = require('../../lib/page-functions.js');
+import {pageFunctions} from '../../lib/page-functions.js';
 
 class ExecutionContext {
   /** @param {LH.Gatherer.FRProtocolSession} session */
@@ -215,6 +215,7 @@ class ExecutionContext {
       window.__nativePerformance = window.performance;
       window.__nativeFetch = window.fetch;
       window.__ElementMatches = window.Element.prototype.matches;
+      window.__HTMLElementBoundingClientRect = window.HTMLElement.prototype.getBoundingClientRect;
       // Ensure the native `performance.now` is not overwritable.
       const performance = window.performance;
       const performanceNow = window.performance.now;
@@ -248,4 +249,4 @@ class ExecutionContext {
   }
 }
 
-module.exports = ExecutionContext;
+export {ExecutionContext};

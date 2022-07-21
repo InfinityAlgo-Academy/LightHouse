@@ -3,21 +3,31 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const {createMockDriver, mockTargetManagerModule} = require('../../fraggle-rock/gather/mock-driver.js'); // eslint-disable-line max-len
-const targetManagerMock = mockTargetManagerModule();
-
-const {gotoURL, getNavigationWarnings} = require('../../../gather/driver/navigation.js');
-const {
-  createMockOnceFn,
+import {createMockDriver} from '../../fraggle-rock/gather/mock-driver.js';
+import {
+  mockCommands,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
-} = require('../../test-utils.js');
+  timers,
+} from '../../test-utils.js';
+// import {gotoURL, getNavigationWarnings} from '../../../gather/driver/navigation.js';
 
-/* eslint-env jest */
+const {createMockOnceFn} = mockCommands;
 
-jest.useFakeTimers();
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+/** @type {import('../../../gather/driver/navigation.js')['gotoURL']} */
+let gotoURL;
+/** @type {import('../../../gather/driver/navigation.js')['getNavigationWarnings']} */
+let getNavigationWarnings;
+
+before(async () => {
+  ({gotoURL, getNavigationWarnings} = (await import('../../../gather/driver/navigation.js')));
+});
+
+timers.useFakeTimers();
 
 describe('.gotoURL', () => {
   /** @type {LH.Gatherer.FRTransitionalDriver} */
@@ -28,7 +38,6 @@ describe('.gotoURL', () => {
   beforeEach(() => {
     mockDriver = createMockDriver();
     driver = mockDriver.asDriver();
-    targetManagerMock.mockEnable(driver.defaultSession);
 
     mockDriver.defaultSession.sendCommand
       .mockResponse('Page.enable') // network monitor's Page.enable
@@ -38,10 +47,6 @@ describe('.gotoURL', () => {
       .mockResponse('Page.navigate')
       .mockResponse('Runtime.evaluate')
       .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: 'ABC'}}});
-  });
-
-  afterEach(() => {
-    targetManagerMock.reset();
   });
 
   it('will track redirects through gotoURL load with warning', async () => {

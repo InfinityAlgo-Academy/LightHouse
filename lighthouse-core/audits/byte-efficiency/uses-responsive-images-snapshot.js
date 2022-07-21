@@ -11,10 +11,10 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const UsesResponsiveImages = require('./uses-responsive-images.js');
-const URL = require('../../lib/url-shim.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {Audit} from '../audit.js';
+import * as UsesResponsiveImages from './uses-responsive-images.js';
+import URL from '../../lib/url-shim.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Descriptive title of a Lighthouse audit that checks if images match their displayed dimensions. This is displayed when the audit is passing. */
@@ -27,7 +27,7 @@ const UIStrings = {
   columnActualDimensions: 'Actual dimensions',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 // Based on byte threshold of 4096, with 3 bytes per pixel.
 const IGNORE_THRESHOLD_IN_PIXELS = 1365;
@@ -58,7 +58,7 @@ class UsesResponsiveImagesSnapshot extends Audit {
     for (const image of artifacts.ImageElements) {
       if (!image.naturalDimensions) continue;
       const actual = image.naturalDimensions;
-      const displayed = UsesResponsiveImages.getDisplayedDimensions(
+      const displayed = UsesResponsiveImages.default.getDisplayedDimensions(
         {...image, naturalWidth: actual.width, naturalHeight: actual.height},
         artifacts.ViewportDimensions
       );
@@ -96,5 +96,5 @@ class UsesResponsiveImagesSnapshot extends Audit {
   }
 }
 
-module.exports = UsesResponsiveImagesSnapshot;
-module.exports.UIStrings = UIStrings;
+export default UsesResponsiveImagesSnapshot;
+export {UIStrings};

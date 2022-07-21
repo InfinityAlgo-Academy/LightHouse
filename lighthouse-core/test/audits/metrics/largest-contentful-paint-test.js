@@ -3,17 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const LCPAudit = require('../../../audits/metrics/largest-contentful-paint.js');
+import LCPAudit from '../../../audits/metrics/largest-contentful-paint.js';
+import * as constants from '../../../config/constants.js';
+import {readJson} from '../../test-utils.js';
+
+const trace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
+const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', import.meta);
+
 const defaultOptions = LCPAudit.defaultOptions;
-const constants = require('../../../config/constants.js');
-
-const trace = require('../../fixtures/traces/lcp-m78.json');
-const devtoolsLog = require('../../fixtures/traces/lcp-m78.devtools.log.json');
-
-const preLcpTrace = require('../../fixtures/traces/progressive-app-m60.json');
-const preLcpDevtoolsLog = require('../../fixtures/traces/progressive-app-m60.devtools.log.json');
 
 function generateArtifacts({trace, devtoolsLog, HostUserAgent}) {
   return {
@@ -40,8 +38,6 @@ const getFakeContext = ({formFactor, throttlingMethod}) => ({
   },
 });
 
-/* eslint-env jest */
-
 describe('Performance: largest-contentful-paint audit', () => {
   it('adjusts scoring based on form factor', async () => {
     const artifactsMobile = generateArtifacts({
@@ -65,30 +61,5 @@ describe('Performance: largest-contentful-paint audit', () => {
     expect(outputDesktop.numericValue).toBeCloseTo(1121.711, 1);
     expect(outputDesktop.score).toBe(0.92);
     expect(outputDesktop.displayValue).toBeDisplayString('1.1\xa0s');
-  });
-
-  it('throws error when old Chrome does not support LCP', async () => {
-    const artifactsOldChrome = generateArtifacts({
-      trace: preLcpTrace,
-      devtoolsLog: preLcpDevtoolsLog,
-      HostUserAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) ' +
-        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.78 ' +
-        'Mobile Safari/537.36 Chrome-Lighthouse',
-    });
-    const contextOldChrome = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
-
-    await expect(LCPAudit.audit(artifactsOldChrome, contextOldChrome))
-      .rejects.toThrow(/UNSUPPORTED_OLD_CHROME/);
-
-    const artifactsNewChrome = generateArtifacts({
-      trace: preLcpTrace,
-      devtoolsLog: preLcpDevtoolsLog,
-      HostUserAgent: 'Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5 Build/MRA58N) ' +
-        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 ' +
-        'Mobile Safari/537.36 Chrome-Lighthouse',
-    });
-    const contextNewChrome = getFakeContext({formFactor: 'mobile', throttlingMethod: 'provided'});
-
-    await expect(LCPAudit.audit(artifactsNewChrome, contextNewChrome)).rejects.toThrow(/NO_LCP/);
   });
 });

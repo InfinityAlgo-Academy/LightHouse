@@ -3,14 +3,10 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
-
-/* eslint-env jest */
 
 import fs from 'fs';
 import assert from 'assert';
 
-import {jest} from '@jest/globals';
 import puppeteer from 'puppeteer';
 
 import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
@@ -26,10 +22,6 @@ const sampleFlowResult = LH_ROOT + '/lighthouse-core/test/fixtures/fraggle-rock/
 
 const lighthouseCategories = Object.keys(defaultConfig.categories);
 const getAuditsOfCategory = category => defaultConfig.categories[category].auditRefs;
-
-// These tests run in Chromium and have their own timeouts.
-// Make sure we get the more helpful test-specific timeout error instead of jest's generic one.
-jest.setTimeout(35_000);
 
 // TODO: should be combined in some way with clients/test/extension/extension-test.js
 describe('Lighthouse Viewer', () => {
@@ -63,7 +55,7 @@ describe('Lighthouse Viewer', () => {
       });
   }
 
-  beforeAll(async () => {
+  before(async () => {
     await server.listen(portNumber, 'localhost');
 
     // start puppeteer
@@ -74,7 +66,7 @@ describe('Lighthouse Viewer', () => {
     viewerPage.on('pageerror', pageError => pageErrors.push(pageError));
   });
 
-  afterAll(async function() {
+  after(async function() {
     // Log any page load errors encountered in case before() failed.
     // eslint-disable-next-line no-console
     if (pageErrors.length > 0) console.error(pageErrors);
@@ -86,7 +78,7 @@ describe('Lighthouse Viewer', () => {
   });
 
   describe('Renders the flow report', () => {
-    beforeAll(async () => {
+    before(async () => {
       await viewerPage.goto(viewerUrl, {waitUntil: 'networkidle2', timeout: 30000});
       const fileInput = await viewerPage.$('#hidden-file-input');
       await fileInput.uploadFile(sampleFlowResult);
@@ -111,7 +103,7 @@ describe('Lighthouse Viewer', () => {
   });
 
   describe('Renders the report', () => {
-    beforeAll(async function() {
+    before(async () => {
       await viewerPage.goto(viewerUrl, {waitUntil: 'networkidle2', timeout: 30000});
       const fileInput = await viewerPage.$('#hidden-file-input');
       await fileInput.uploadFile(sampleLhr);
@@ -132,10 +124,16 @@ describe('Lighthouse Viewer', () => {
     });
 
     it('should contain audits of all categories', async () => {
+      const nonNavigationAudits = [
+        'experimental-interaction-to-next-paint',
+        'uses-responsive-images-snapshot',
+        'work-during-interaction',
+      ];
       for (const category of lighthouseCategories) {
         let expected = getAuditsOfCategory(category);
         if (category === 'performance') {
-          expected = getAuditsOfCategory(category).filter(a => a.group !== 'hidden');
+          expected = getAuditsOfCategory(category)
+            .filter(a => a.group !== 'hidden' && !nonNavigationAudits.includes(a.id));
         }
         expected = expected.map(audit => audit.id);
         const elementIds = await getAuditElementsIds({category, selector: selectors.audits});
@@ -283,12 +281,12 @@ describe('Lighthouse Viewer', () => {
       }
     }
 
-    beforeAll(async () => {
+    before(async () => {
       await viewerPage.setRequestInterception(true);
       viewerPage.on('request', onRequest);
     });
 
-    afterAll(async () => {
+    after(async () => {
       viewerPage.off('request', onRequest);
       await viewerPage.setRequestInterception(false);
     });

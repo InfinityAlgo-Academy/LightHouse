@@ -5,9 +5,11 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const regular3G = require('../../config/constants.js').throttling.mobileRegular3G;
-const ComputedFcp = require('../../computed/metrics/first-contentful-paint.js');
+import {Audit} from '../audit.js';
+import ComputedFcp from '../../computed/metrics/first-contentful-paint.js';
+import * as constants from '../../config/constants.js';
+
+const regular3G = constants.throttling.mobileRegular3G;
 
 class FirstContentfulPaint3G extends Audit {
   /**
@@ -18,7 +20,8 @@ class FirstContentfulPaint3G extends Audit {
       id: 'first-contentful-paint-3g',
       title: 'First Contentful Paint (3G)',
       description: 'First Contentful Paint 3G marks the time at which the first text or image is ' +
-        `painted while on a 3G network. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).`,
+        'painted while on a 3G network. ' +
+        '[Learn more about the First Contentful Paint (3G) metric](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint).',
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
       supportedModes: ['navigation'],
       requiredArtifacts: ['traces', 'devtoolsLogs', 'GatherContext', 'URL'],
@@ -64,4 +67,4 @@ class FirstContentfulPaint3G extends Audit {
   }
 }
 
-module.exports = FirstContentfulPaint3G;
+export default FirstContentfulPaint3G;

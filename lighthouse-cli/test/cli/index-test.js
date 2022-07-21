@@ -3,9 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
-
-/* eslint-env jest */
 
 import {strict as assert} from 'assert';
 import {spawnSync} from 'child_process';
@@ -85,21 +82,31 @@ describe('CLI Tests', function() {
   });
 
   describe('print-config', () => {
-    it('should print the default config and exit immediately after', () => {
-      const ret = spawnSync('node', [indexPath, '--print-config'], {encoding: 'utf8'});
+    describe('fraggle rock', () => {
+      it('should print the overridden config and exit immediately after', () => {
+        const flags = [
+          '--print-config', '-A',
+          '--output', 'json',
+          '--only-audits', 'metrics',
+        ];
+        const ret = spawnSync('node', [indexPath, ...flags], {encoding: 'utf8'});
 
-      const config = JSON.parse(ret.stdout);
-      assert.strictEqual(config.settings.output[0], 'html');
-      assert.strictEqual(config.settings.auditMode, false);
+        const config = JSON.parse(ret.stdout);
+        assert.strictEqual(config.settings.output[0], 'json');
+        assert.strictEqual(config.settings.auditMode, true);
+        // FR config doesn't exclude full-page-screenshot with --only-audits
+        assert.strictEqual(config.audits.length, 2);
 
-      expect(config).toMatchSnapshot();
+        expect(config).toMatchSnapshot();
+      });
     });
 
     it('should print the overridden config and exit immediately after', () => {
       const flags = [
         '--print-config', '-A',
         '--output', 'json',
-        '--only-audits', 'metrics',
+        '--only-audits', 'charset',
+        '--legacy-navigation',
       ];
       const ret = spawnSync('node', [indexPath, ...flags], {encoding: 'utf8'});
 

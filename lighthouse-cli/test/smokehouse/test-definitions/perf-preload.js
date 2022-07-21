@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /** @type {LH.Config.Json} */
 const config = {
@@ -79,6 +78,11 @@ const expectations = {
       'network-requests': {
         details: {
           items: {
+            _includes: [
+              {url: 'http://localhost:10200/preload.html', isLinkPreload: undefined, experimentalFromMainFrame: true},
+              {url: 'http://localhost:10200/perf/level-2.js?warning&delay=500', isLinkPreload: true, experimentalFromMainFrame: true},
+              {url: 'http://localhost:10200/perf/preload_tester.js', isLinkPreload: undefined, experimentalFromMainFrame: true},
+            ],
             length: '>5',
           },
         },

@@ -5,13 +5,10 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const MainResource = require('../computed/main-resource.js');
-const i18n = require('../lib/i18n/i18n.js');
-const {
-  evaluateRawCspsForXss,
-  getTranslatedDescription,
-} = require('../lib/csp-evaluator.js');
+import {Audit} from './audit.js';
+import MainResource from '../computed/main-resource.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import {evaluateRawCspsForXss, getTranslatedDescription} from '../lib/csp-evaluator.js';
 
 /** @typedef {import('../lib/csp-evaluator.js').Finding} Finding */
 
@@ -21,7 +18,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that evaluates the security of a page's CSP. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. "CSP" stands for "Content Security Policy". "XSS" stands for "Cross Site Scripting". "CSP" and "XSS" do not need to be translated. */
   description: 'A strong Content Security Policy (CSP) significantly ' +
     'reduces the risk of cross-site scripting (XSS) attacks. ' +
-    '[Learn more](https://web.dev/csp-xss/)',
+    '[Learn how to use a CSP to prevent XSS](https://web.dev/csp-xss/)',
   /** Summary text for the results of a Lighthouse audit that evaluates the security of a page's CSP. This is displayed if no CSP is being enforced. "CSP" stands for "Content Security Policy". "CSP" does not need to be translated. */
   noCsp: 'No CSP found in enforcement mode',
   /** Message shown when one or more CSPs are defined in a <meta> tag. Shown in a table with a list of other CSP bypasses and warnings. "CSP" stands for "Content Security Policy". "CSP" and "HTTP" do not need to be translated. */
@@ -35,7 +32,7 @@ const UIStrings = {
   itemSeveritySyntax: 'Syntax',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class CspXss extends Audit {
   /**
@@ -182,5 +179,5 @@ class CspXss extends Audit {
   }
 }
 
-module.exports = CspXss;
-module.exports.UIStrings = UIStrings;
+export default CspXss;
+export {UIStrings};

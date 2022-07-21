@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const SettingsController = require('./settings-controller.js');
+import * as SettingsController from './settings-controller.js';
 
 const VIEWER_URL = 'https://googlechrome.github.io/lighthouse/viewer/';
 const optionsVisibleClass = 'main--options-visible';
@@ -53,10 +53,11 @@ function createOptionItem(text, id, isChecked) {
   }
 
   const label = document.createElement('label');
-  label.appendChild(input);
-  label.appendChild(document.createElement('span')).textContent = text;
+  const span = document.createElement('span');
+  span.textContent = text;
+  label.append(input, span);
   const listItem = document.createElement('li');
-  listItem.appendChild(label);
+  listItem.append(label);
 
   return listItem;
 }
@@ -87,11 +88,11 @@ function generateOptionsList(settings) {
 
   SettingsController.DEFAULT_CATEGORIES.forEach(category => {
     const isChecked = settings.selectedCategories.includes(category.id);
-    frag.appendChild(createOptionItem(category.title, category.id, isChecked));
+    frag.append(createOptionItem(category.title, category.id, isChecked));
   });
 
   const optionsCategoriesList = find('.options__categories');
-  optionsCategoriesList.appendChild(frag);
+  optionsCategoriesList.append(frag);
 }
 
 function fillDevToolsShortcut() {

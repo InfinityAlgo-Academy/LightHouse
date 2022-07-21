@@ -5,15 +5,15 @@
  */
 'use strict';
 
-const {UserFlow, auditGatherSteps} = require('./user-flow.js');
-const {snapshotGather} = require('./gather/snapshot-runner.js');
-const {startTimespanGather} = require('./gather/timespan-runner.js');
-const {navigationGather} = require('./gather/navigation-runner.js');
-const {generateFlowReportHtml} = require('../../report/generator/report-generator.js');
-const Runner = require('../runner.js');
+import {UserFlow, auditGatherSteps} from './user-flow.js';
+import {snapshotGather} from './gather/snapshot-runner.js';
+import {startTimespanGather} from './gather/timespan-runner.js';
+import {navigationGather} from './gather/navigation-runner.js';
+import ReportGenerator from '../../report/generator/report-generator.js';
+import {Runner} from '../runner.js';
 
 /**
- * @param {import('puppeteer').Page} page
+ * @param {LH.Puppeteer.Page} page
  * @param {ConstructorParameters<LH.UserFlow>[1]} [options]
  */
 async function startFlow(page, options) {
@@ -55,7 +55,7 @@ async function startTimespan(...params) {
  * @param {LH.FlowResult} flowResult
  */
 async function generateFlowReport(flowResult) {
-  return generateFlowReportHtml(flowResult);
+  return ReportGenerator.generateFlowReportHtml(flowResult);
 }
 
 /**
@@ -67,7 +67,7 @@ async function auditFlowArtifacts(flowArtifacts, config) {
   return await auditGatherSteps(gatherSteps, {name, config});
 }
 
-module.exports = {
+export {
   snapshot,
   startTimespan,
   navigation,

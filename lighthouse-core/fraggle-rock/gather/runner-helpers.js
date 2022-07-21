@@ -7,7 +7,7 @@
 
 /**
  * @typedef CollectPhaseArtifactOptions
- * @property {import('./driver.js')} driver
+ * @property {import('./driver.js').Driver} driver
  * @property {Array<LH.Config.AnyArtifactDefn>} artifactDefinitions
  * @property {ArtifactState} artifactState
  * @property {LH.FRBaseArtifacts} baseArtifacts
@@ -15,7 +15,6 @@
  * @property {LH.Gatherer.GatherMode} gatherMode
  * @property {Map<string, LH.ArbitraryEqualityMap>} computedCache
  * @property {LH.Config.Settings} settings
- * @property {string} url
  */
 
 /** @typedef {Record<string, Promise<any>>} IntermediateArtifacts */
@@ -24,7 +23,7 @@
 
 /** @typedef {LH.Gatherer.FRTransitionalContext<LH.Gatherer.DependencyKey>['dependencies']} Dependencies */
 
-const log = require('lighthouse-logger');
+import log from 'lighthouse-logger';
 
 /**
  *
@@ -75,7 +74,6 @@ async function collectPhaseArtifacts(options) {
     gatherMode,
     computedCache,
     settings,
-    url,
   } = options;
   const priorPhase = phaseToPriorPhase[phase];
   const priorPhaseArtifacts = (priorPhase && artifactState[priorPhase]) || {};
@@ -92,7 +90,6 @@ async function collectPhaseArtifacts(options) {
         : /** @type {Dependencies} */ ({});
 
       return gatherer[phase]({
-        url,
         gatherMode,
         driver,
         baseArtifacts,
@@ -152,7 +149,7 @@ async function awaitArtifacts(artifactState) {
   return artifacts;
 }
 
-module.exports = {
+export {
   getEmptyArtifactState,
   awaitArtifacts,
   collectPhaseArtifacts,

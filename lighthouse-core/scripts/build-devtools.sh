@@ -12,7 +12,7 @@ set -euo pipefail
 # 2) Rolls to local devtools repo. By default, this is the temporary checkout in .tmp
 # 3) Builds devtools frontend with new Lighthouse roll
 # 
-# Run `bash lighthouse-core/test/chromium-web-tests/setup.sh` first to update the temporary devtools checkout.
+# Run `bash lighthouse-core/test/devtools-tests/setup.sh` first to update the temporary devtools checkout.
 # Specify `$DEVTOOLS_PATH` to use a different devtools repo.
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -35,15 +35,12 @@ fi
 if ! which gn ; then
   # If the contributor doesn't have a separate depot tools in their path, use the tmp copy.
   DEPOT_TOOLS_PATH="$TEST_DIR/depot-tools"
-  BLINK_TOOLS_PATH="$TEST_DIR/blink_tools"
   export PATH=$DEPOT_TOOLS_PATH:$PATH
-  # Add typ to python path. The regular method assumes there is a Chromium checkout.
-  export PYTHONPATH="${PYTHONPATH:-}:$BLINK_TOOLS_PATH/latest/third_party/typ"
 fi
 
 yarn devtools "$DEVTOOLS_PATH"
 
 cd "$DEVTOOLS_PATH"
-gn gen out/Default
+gn gen out/Default --args='devtools_dcheck_always_on=true is_debug=false'
 gclient sync
 autoninja -C out/Default

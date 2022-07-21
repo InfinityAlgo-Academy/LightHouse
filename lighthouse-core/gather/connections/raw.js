@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Connection = require('./connection.js');
+import {Connection} from './connection.js';
 
 /* eslint-disable no-unused-vars */
 
@@ -55,4 +55,4 @@ class RawConnection extends Connection {
   }
 }
 
-module.exports = RawConnection;
+export {RawConnection};

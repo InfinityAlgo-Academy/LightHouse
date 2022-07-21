@@ -13,11 +13,11 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const NetworkRequest = require('../../lib/network-request.js');
-const ImageRecords = require('../../computed/image-records.js');
-const URL = require('../../lib/url-shim.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
+import {NetworkRequest} from '../../lib/network-request.js';
+import ImageRecords from '../../computed/image-records.js';
+import URL from '../../lib/url-shim.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to resize images to match the display dimensions. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -26,12 +26,15 @@ const UIStrings = {
   description:
   'Serve images that are appropriately-sized to save cellular data ' +
   'and improve load time. ' +
-  '[Learn more](https://web.dev/uses-responsive-images/).',
+  '[Learn how to size images](https://web.dev/uses-responsive-images/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 4096;
+
+// Ignore up to 12KB of waste if an effort was made with breakpoints.
+const IGNORE_THRESHOLD_IN_BYTES_BREAKPOINTS_PRESENT = 12288;
 
 class UsesResponsiveImages extends ByteEfficiencyAudit {
   /**
@@ -112,11 +115,23 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     };
   }
 
+
+  /**
+   * @param {LH.Artifacts.ImageElement} image
+   * @return {number};
+   */
+  static determineAllowableWaste(image) {
+    if (image.srcset || image.isPicture) {
+      return IGNORE_THRESHOLD_IN_BYTES_BREAKPOINTS_PRESENT;
+    }
+    return IGNORE_THRESHOLD_IN_BYTES;
+  }
+
   /**
    * @param {LH.Artifacts} artifacts
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Audit.Context} context
-   * @return {Promise<ByteEfficiencyAudit.ByteEfficiencyProduct>}
+   * @return {Promise<import('./byte-efficiency-audit.js').ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
     const images = await ImageRecords.request({
@@ -126,6 +141,8 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     const ViewportDimensions = artifacts.ViewportDimensions;
     /** @type {Map<string, LH.Audit.ByteEfficiencyItem>} */
     const resultsMap = new Map();
+    /** @type {Array<string>} */
+    const passedImageList = [];
     for (const image of images) {
       // Give SVG a free pass because creating a "responsive" SVG is of questionable value.
       // Ignore CSS images because it's difficult to determine what is a spritesheet,
@@ -147,15 +164,23 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
         );
       if (!processed) continue;
 
-      // Don't warn about an image that was later used appropriately
+      // Verify the image wastes more than the minimum.
+      const exceedsAllowableWaste = processed.wastedBytes > this.determineAllowableWaste(image);
+
       const existing = resultsMap.get(processed.url);
-      if (!existing || existing.wastedBytes > processed.wastedBytes) {
-        resultsMap.set(processed.url, processed);
+      // Don't warn about an image that was later used appropriately, or wastes a trivial amount of data.
+      if (exceedsAllowableWaste && !passedImageList.includes(processed.url)) {
+        if ((!existing || existing.wastedBytes > processed.wastedBytes)) {
+          resultsMap.set(processed.url, processed);
+        }
+      } else {
+        // Ensure this url passes for future tests.
+        resultsMap.delete(processed.url);
+        passedImageList.push(processed.url);
       }
     }
 
-    const items = Array.from(resultsMap.values())
-        .filter(item => item.wastedBytes > IGNORE_THRESHOLD_IN_BYTES);
+    const items = Array.from(resultsMap.values());
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
@@ -172,6 +197,5 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = UsesResponsiveImages;
-module.exports.UIStrings = UIStrings;
-module.exports.str_ = str_;
+export default UsesResponsiveImages;
+export {UIStrings, str_};

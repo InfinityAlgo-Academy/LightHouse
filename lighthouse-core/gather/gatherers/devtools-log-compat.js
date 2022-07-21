@@ -11,8 +11,9 @@
  * when devtools logs and traces were special-cased.
  */
 
-const DevtoolsLogGatherer = require('./devtools-log.js');
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+import DevtoolsLogGatherer from './devtools-log.js';
+
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 /** @implements {LH.Gatherer.FRGathererInstance<'DevtoolsLog'>} */
 class DevtoolsLogCompat extends FRGatherer {
@@ -33,4 +34,4 @@ class DevtoolsLogCompat extends FRGatherer {
   }
 }
 
-module.exports = DevtoolsLogCompat;
+export default DevtoolsLogCompat;

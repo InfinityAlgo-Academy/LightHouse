@@ -5,20 +5,15 @@
  */
 'use strict';
 
-const Fetcher = require('./fetcher.js');
-const ExecutionContext = require('./driver/execution-context.js');
-const LHError = require('../lib/lh-error.js');
-const {fetchResponseBodyFromCache} = require('../gather/driver/network.js');
-const EventEmitter = require('events').EventEmitter;
-
-const log = require('lighthouse-logger');
-const DevtoolsLog = require('./devtools-log.js');
-const TraceGatherer = require('./gatherers/trace.js');
-
-// Pulled in for Connection type checking.
-// eslint-disable-next-line no-unused-vars
-const Connection = require('./connections/connection.js');
-const {getBrowserVersion} = require('./driver/environment.js');
+import {Fetcher} from './fetcher.js';
+import {ExecutionContext} from './driver/execution-context.js';
+import {LighthouseError} from '../lib/lh-error.js';
+import {fetchResponseBodyFromCache} from '../gather/driver/network.js';
+import {EventEmitter} from 'events';
+import log from 'lighthouse-logger';
+import {DevtoolsMessageLog} from './gatherers/devtools-log.js';
+import TraceGatherer from './gatherers/trace.js';
+import {getBrowserVersion} from './driver/environment.js';
 
 // Controls how long to wait for a response after sending a DevTools protocol command.
 const DEFAULT_PROTOCOL_TIMEOUT = 30000;
@@ -41,7 +36,7 @@ class Driver {
    * @private
    * Used to save network and lifecycle protocol traffic. Just Page and Network are needed.
    */
-  _devtoolsLog = new DevtoolsLog(/^(Page|Network)\./);
+  _devtoolsLog = new DevtoolsMessageLog(/^(Page|Network|Target|Runtime)\./);
 
   /**
    * @private
@@ -64,10 +59,10 @@ class Driver {
   defaultSession = this;
 
   // eslint-disable-next-line no-invalid-this
-  fetcher = new Fetcher(this.defaultSession, this.executionContext);
+  fetcher = new Fetcher(this.defaultSession);
 
   /**
-   * @param {Connection} connection
+   * @param {import('./connections/connection.js').Connection} connection
    */
   constructor(connection) {
     this._connection = connection;
@@ -96,6 +91,30 @@ class Driver {
     this.evaluate = this.executionContext.evaluate.bind(this.executionContext);
     /** @private @deprecated Only available for plugin backcompat. */
     this.evaluateAsync = this.executionContext.evaluateAsync.bind(this.executionContext);
+
+    // A shim for sufficient coverage of targetManager functionality. Exposes the target
+    // management that legacy driver already handles (see this._handleTargetAttached).
+    this.targetManager = {
+      rootSession: () => {
+        return this.defaultSession;
+      },
+      /**
+       * Bind to *any* protocol event.
+       * @param {'protocolevent'} event
+       * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
+       */
+      on: (event, callback) => {
+        this._connection.on('protocolevent', callback);
+      },
+      /**
+       * Unbind to *any* protocol event.
+       * @param {'protocolevent'} event
+       * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
+       */
+      off: (event, callback) => {
+        this._connection.off('protocolevent', callback);
+      },
+    };
   }
 
   /** @deprecated - Not available on Fraggle Rock driver. */
@@ -187,34 +206,8 @@ class Driver {
     this._eventEmitter.removeListener(eventName, cb);
   }
 
-  /**
-   * Bind to *any* protocol event.
-   * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
-   */
-  addProtocolMessageListener(callback) {
-    this._connection.on('protocolevent', callback);
-  }
-
-  /**
-   * Unbind to *any* protocol event.
-   * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
-   */
-  removeProtocolMessageListener(callback) {
-    this._connection.off('protocolevent', callback);
-  }
-
   /** @param {LH.Crdp.Target.TargetInfo} targetInfo */
   setTargetInfo(targetInfo) { // eslint-disable-line no-unused-vars
-    // OOPIF handling in legacy driver is implicit.
-  }
-
-  /** @param {(session: LH.Gatherer.FRProtocolSession) => void} callback */
-  addSessionAttachedListener(callback) { // eslint-disable-line no-unused-vars
-    // OOPIF handling in legacy driver is implicit.
-  }
-
-  /** @param {(session: LH.Gatherer.FRProtocolSession) => void} callback */
-  removeSessionAttachedListener(callback) { // eslint-disable-line no-unused-vars
     // OOPIF handling in legacy driver is implicit.
   }
 
@@ -304,20 +297,27 @@ class Driver {
       return;
     }
 
-    // Events from subtargets will be stringified and sent back on `Target.receivedMessageFromTarget`.
-    // We want to receive information about network requests from iframes, so enable the Network domain.
-    await this.sendCommandToSession('Network.enable', event.sessionId);
+    // Note: This is only reached for _out of process_ iframes (OOPIFs).
+    // If the iframe is in the same process as its embedding document, that means they
+    // share the same target.
 
-    // We also want to receive information about subtargets of subtargets, so make sure we autoattach recursively.
-    await this.sendCommandToSession('Target.setAutoAttach', event.sessionId, {
-      autoAttach: true,
-      flatten: true,
-      // Pause targets on startup so we don't miss anything
-      waitForDebuggerOnStart: true,
-    });
-
-    // We suspended the target when we auto-attached, so make sure it goes back to being normal.
-    await this.sendCommandToSession('Runtime.runIfWaitingForDebugger', event.sessionId);
+    // A target won't acknowledge/respond to protocol methods (or, at least for Network.enable)
+    // until it is resumed. But also we're paranoid about sending Network.enable _slightly_ too late,
+    // so we issue that method first. Therefore, we don't await on this serially, but await all at once.
+    await Promise.all([
+      // Events from subtargets will be stringified and sent back on `Target.receivedMessageFromTarget`.
+      // We want to receive information about network requests from iframes, so enable the Network domain.
+      this.sendCommandToSession('Network.enable', event.sessionId),
+      // We also want to receive information about subtargets of subtargets, so make sure we autoattach recursively.
+      this.sendCommandToSession('Target.setAutoAttach', event.sessionId, {
+        autoAttach: true,
+        flatten: true,
+        // Pause targets on startup so we don't miss anything
+        waitForDebuggerOnStart: true,
+      }),
+      // We suspended the target when we auto-attached, so make sure it goes back to being normal.
+      this.sendCommandToSession('Runtime.runIfWaitingForDebugger', event.sessionId),
+    ]);
   }
 
   /**
@@ -338,7 +338,8 @@ class Driver {
     let asyncTimeout;
     const timeoutPromise = new Promise((resolve, reject) => {
       if (timeout === Infinity) return;
-      asyncTimeout = setTimeout(reject, timeout, new LHError(LHError.errors.PROTOCOL_TIMEOUT, {
+      // eslint-disable-next-line max-len
+      asyncTimeout = setTimeout(reject, timeout, new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
         protocolMethod: method,
       }));
     });
@@ -477,4 +478,4 @@ class Driver {
   }
 }
 
-module.exports = Driver;
+export {Driver};

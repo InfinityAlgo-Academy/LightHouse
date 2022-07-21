@@ -5,22 +5,23 @@
  */
 'use strict';
 
-const URL = require('../lib/url-shim.js');
-const NetworkRequest = require('../lib/network-request.js');
-const Audit = require('./audit.js');
-const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit.js');
-const CriticalRequestChains = require('../computed/critical-request-chains.js');
-const i18n = require('../lib/i18n/i18n.js');
-const MainResource = require('../computed/main-resource.js');
-const PageDependencyGraph = require('../computed/page-dependency-graph.js');
-const LoadSimulator = require('../computed/load-simulator.js');
+import URL from '../lib/url-shim.js';
+import {NetworkRequest} from '../lib/network-request.js';
+import {Audit} from './audit.js';
+import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
+import CriticalRequestChains from '../computed/critical-request-chains.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import MainResource from '../computed/main-resource.js';
+import PageDependencyGraph from '../computed/page-dependency-graph.js';
+import LoadSimulator from '../computed/load-simulator.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to use <link rel=preload> to initiate important network requests earlier during page load. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Preload key requests',
   /** Description of a Lighthouse audit that tells the user *why* they should preload important network requests. The associated network requests are started halfway through pageload (or later) but should be started at the beginning. This is displayed after a user expands the section to see more. No character length limits. '<link rel=preload>' is the html code the user would include in their page and shouldn't be translated. 'Learn More' becomes link text to additional documentation. */
   description: 'Consider using `<link rel=preload>` to prioritize fetching resources that are ' +
-    'currently requested later in page load. [Learn more](https://web.dev/uses-rel-preload/).',
+    'currently requested later in page load. ' +
+    '[Learn how to preload key requests](https://web.dev/uses-rel-preload/).',
   /**
    * @description A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected. Forgetting to set the `crossorigin` HTML attribute, or setting it to an incorrect value, on the link is a common mistake when adding preload links.
    * @example {https://example.com} preloadURL
@@ -29,7 +30,7 @@ const UIStrings = {
     'by the browser. Check that you are using the `crossorigin` attribute properly.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 const THRESHOLD_IN_MS = 100;
 
@@ -242,7 +243,7 @@ class UsesRelPreloadAudit extends Audit {
     const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
 
     return {
-      score: UnusedBytes.scoreForWastedMs(wastedMs),
+      score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
       numericValue: wastedMs,
       numericUnit: 'millisecond',
       displayValue: wastedMs ?
@@ -263,5 +264,5 @@ class UsesRelPreloadAudit extends Audit {
   }
 }
 
-module.exports = UsesRelPreloadAudit;
-module.exports.UIStrings = UIStrings;
+export default UsesRelPreloadAudit;
+export {UIStrings};

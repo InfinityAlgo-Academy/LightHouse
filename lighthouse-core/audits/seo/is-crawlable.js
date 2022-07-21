@@ -5,18 +5,20 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-// TODO(esmodules): cast can be removed when this switches to import.
-const robotsParser = /** @type {typeof import('robots-parser').default} */ (/** @type {unknown} */(require('robots-parser'))); // eslint-disable-line max-len
-const URL = require('../../lib/url-shim.js');
-const MainResource = require('../../computed/main-resource.js');
+import {Audit} from '../audit.js';
+
+import robotsParser from 'robots-parser';
+
+import URL from '../../lib/url-shim.js';
+import MainResource from '../../computed/main-resource.js';
+import * as i18n from '../../lib/i18n/i18n.js';
+
 const BLOCKLIST = new Set([
   'noindex',
   'none',
 ]);
 const ROBOTS_HEADER = 'x-robots-tag';
 const UNAVAILABLE_AFTER = 'unavailable_after';
-const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on if search-engine crawlers are blocked from indexing the page. This title is shown when the page is not blocked from indexing and can be crawled. */
@@ -25,10 +27,10 @@ const UIStrings = {
   failureTitle: 'Page is blocked from indexing',
   /** Description of a Lighthouse audit that tells the user *why* allowing search-engine crawling of their page is beneficial. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Search engines are unable to include your pages in search results ' +
-      'if they don\'t have permission to crawl them. [Learn more](https://web.dev/is-crawable/).',
+      'if they don\'t have permission to crawl them. [Learn more about crawler directives](https://web.dev/is-crawable/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * Checks if given directive is a valid unavailable_after directive with a date in the past
@@ -151,5 +153,5 @@ class IsCrawlable extends Audit {
   }
 }
 
-module.exports = IsCrawlable;
-module.exports.UIStrings = UIStrings;
+export default IsCrawlable;
+export {UIStrings};

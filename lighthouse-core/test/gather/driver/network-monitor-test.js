@@ -3,30 +3,25 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const {mockDriverSubmodules} = require('../../fraggle-rock/gather/mock-driver.js');
-const mocks = mockDriverSubmodules();
+import {createMockCdpSession} from '../../fraggle-rock/gather/mock-driver.js';
+import {NetworkMonitor} from '../../../gather/driver/network-monitor.js';
+import {NetworkRequest} from '../../../lib/network-request.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
+import {TargetManager} from '../../../gather/driver/target-manager.js';
 
-const NetworkMonitor = require('../../../gather/driver/network-monitor.js');
-const NetworkRequest = require('../../../lib/network-request.js');
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
-const {createMockSendCommandFn: createMockSendCommandFn_} = require('../../test-utils.js');
-
-/* eslint-env jest */
-
-jest.useFakeTimers();
-
-// This can be removed when FR becomes the default.
-const createMockSendCommandFn = createMockSendCommandFn_.bind(null, {useSessionId: false});
-
-const tscErr = new Error('Typecheck constrait failed');
+const tscErr = new Error('Typecheck constraint failed');
 
 describe('NetworkMonitor', () => {
-  /** @type {ReturnType<typeof createMockSendCommandFn>} */
-  let sendCommandMock;
-  /** @type {LH.Gatherer.FRProtocolSession & {dispatch: (event: LH.Protocol.RawEventMessage | undefined) => void}} */
-  let sessionMock;
+  /** @type {ReturnType<createMockCdpSession>} */
+  let rootCdpSessionMock;
+  /**
+   * Dispatch events on the root CDPSession.
+   * @type {(event: {method: string, params: unknown}) => void}
+   */
+  let rootDispatch;
+  /** @type {TargetManager} */
+  let targetManager;
   /** @type {Array<LH.Protocol.RawEventMessage>} */
   let devtoolsLog;
   /** @type {NetworkMonitor} */
@@ -34,35 +29,68 @@ describe('NetworkMonitor', () => {
   /** @type {string[]} */
   let statusLog = [];
 
-  function createMockSession() {
-    /** @type {any} */
-    const session = {};
-    session.off = jest.fn();
-    session.removeProtocolMessageListener = jest.fn();
-
-    const on = (session.on = jest.fn());
-    const addProtocolMessageListener = (session.addProtocolMessageListener = jest.fn());
-    sendCommandMock = session.sendCommand = createMockSendCommandFn()
+  /**
+   * Mock a Puppeteer CDPSession, including the commands needed to attach to the
+   * target manager.
+   * @param {{id: string, targetType: 'page'|'iframe'|'other'}} args
+   */
+  function mockAttachingSession({id, targetType}) {
+    const cdpSessionMock = createMockCdpSession(id);
+    cdpSessionMock.send
       .mockResponse('Page.enable')
-      .mockResponse('Network.enable');
-    /** @type {(event: LH.Protocol.RawEventMessage) => void} */
-    session.dispatch = event => {
-      const relevantOnListeners = on.mock.calls.filter(call => call[0] === event.method);
-      for (const call of relevantOnListeners) {
-        if (typeof call[1] === 'function') call[1](event.params);
+      .mockResponse('Target.getTargetInfo', {targetInfo: {type: targetType, targetId: id}})
+      .mockResponse('Network.enable')
+      .mockResponse('Target.setAutoAttach')
+      .mockResponse('Runtime.runIfWaitingForDebugger');
+
+    return cdpSessionMock;
+  }
+
+  /** @param {ReturnType<typeof createMockCdpSession>} cdpSession */
+  function createSessionDispatch(cdpSession) {
+    const on = cdpSession.on;
+
+    /** @param {{method: string, params: unknown}} args */
+    function dispatch({method, params}) {
+      // Get live listeners in case they change.
+      const eventListeners = on.mock.calls.filter(call => call[0] === method).map(call => call[1]);
+      for (const listener of eventListeners) {
+        listener(params);
       }
 
-      for (const call of addProtocolMessageListener.mock.calls) {
-        if (typeof call[0] === 'function') call[0](event);
+      const starListeners = on.mock.calls.filter(call => call[0] === '*').map(call => call[1]);
+      for (const listener of starListeners) {
+        listener(method, params);
       }
-    };
-    return session;
+    }
+
+    return dispatch;
+  }
+
+  /** Use requestIdPrefix to ensure unique requests if used more than once in a test. */
+  function getDevtoolsLog(requestIdPrefix = '36185') {
+    const log = networkRecordsToDevtoolsLog([
+      {url: 'http://example.com', priority: 'VeryHigh', requestId: `${requestIdPrefix}.1`},
+      {url: 'http://example.com/xhr', priority: 'High', requestId: `${requestIdPrefix}.2`},
+      {url: 'http://example.com/css', priority: 'VeryHigh', requestId: `${requestIdPrefix}.3`},
+      {url: 'http://example.com/offscreen', priority: 'Low', requestId: `${requestIdPrefix}.4`},
+    ]);
+
+    // Bring the starting events forward in the log.
+    const startEvents = log.filter(m => m.method === 'Network.requestWillBeSent');
+    const restEvents = log.filter(m => !startEvents.includes(m));
+    return [...startEvents, ...restEvents];
   }
 
   beforeEach(async () => {
-    sessionMock = createMockSession();
+    rootCdpSessionMock = mockAttachingSession({id: 'root', targetType: 'page'});
+
+    rootDispatch = createSessionDispatch(rootCdpSessionMock);
+    targetManager = new TargetManager(rootCdpSessionMock.asCdpSession());
+    await targetManager.enable();
+    monitor = new NetworkMonitor(targetManager);
+
     statusLog = [];
-    monitor = new NetworkMonitor(sessionMock);
     monitor.on('networkbusy', () => statusLog.push('networkbusy'));
     monitor.on('networkidle', () => statusLog.push('networkidle'));
     monitor.on('network-2-busy', () => statusLog.push('network-2-busy'));
@@ -70,90 +98,66 @@ describe('NetworkMonitor', () => {
     monitor.on('network-critical-busy', () => statusLog.push('network-critical-busy'));
     monitor.on('network-critical-idle', () => statusLog.push('network-critical-idle'));
 
-    mocks.targetManagerMock.enable.mockImplementation(async () => {
-      for (const call of mocks.targetManagerMock.addTargetAttachedListener.mock.calls) {
-        await call[0]({target: {type: 'page', targetId: 'page'}, session: sessionMock});
-      }
-    });
-
-    const log = networkRecordsToDevtoolsLog([
-      {url: 'http://example.com', priority: 'VeryHigh'},
-      {url: 'http://example.com/xhr', priority: 'High'},
-      {url: 'http://example.com/css', priority: 'VeryHigh'},
-      {url: 'http://example.com/offscreen', priority: 'Low'},
-    ]);
-
-    const startEvents = log.filter(m => m.method === 'Network.requestWillBeSent');
-    const restEvents = log.filter(m => !startEvents.includes(m));
-    devtoolsLog = [...startEvents, ...restEvents];
-  });
-
-  afterEach(() => {
-    mocks.targetManagerMock.reset();
+    devtoolsLog = getDevtoolsLog();
   });
 
   describe('.enable() / .disable()', () => {
     it('should not record anything when disabled', async () => {
-      for (const message of devtoolsLog) sessionMock.dispatch(message);
+      for (const message of devtoolsLog) rootDispatch(message);
       expect(statusLog).toEqual([]);
     });
 
     it('should record once enabled', async () => {
       await monitor.enable();
-      for (const message of devtoolsLog) sessionMock.dispatch(message);
-      expect(sessionMock.on).toHaveBeenCalled();
-      expect(sessionMock.addProtocolMessageListener).toHaveBeenCalled();
-      expect(mocks.targetManagerMock.enable).toHaveBeenCalled();
+      for (const message of devtoolsLog) rootDispatch(message);
       expect(statusLog.length).toBeGreaterThan(0);
     });
 
     it('should not record after enable/disable cycle', async () => {
-      sendCommandMock.mockResponse('Network.disable');
       await monitor.enable();
       await monitor.disable();
-      for (const message of devtoolsLog) sessionMock.dispatch(message);
-      expect(sessionMock.on).toHaveBeenCalled();
-      expect(sessionMock.off).toHaveBeenCalled();
-      expect(sessionMock.addProtocolMessageListener).toHaveBeenCalled();
-      expect(sessionMock.removeProtocolMessageListener).toHaveBeenCalled();
-      expect(mocks.targetManagerMock.enable).toHaveBeenCalled();
-      expect(mocks.targetManagerMock.disable).toHaveBeenCalled();
+      for (const message of devtoolsLog) rootDispatch(message);
       expect(statusLog).toEqual([]);
     });
 
     it('should listen on every unique target', async () => {
       await monitor.enable();
-      expect(mocks.targetManagerMock.addTargetAttachedListener).toHaveBeenCalledTimes(1);
-      expect(mocks.targetManagerMock.enable).toHaveBeenCalledTimes(1);
 
-      const targetListener = mocks.targetManagerMock.addTargetAttachedListener.mock.calls[0][0];
-      expect(sessionMock.addProtocolMessageListener).toHaveBeenCalledTimes(1);
-      expect(sendCommandMock).toHaveBeenCalledTimes(2);
-      sendCommandMock
-        .mockResponse('Network.enable')
-        .mockResponse('Network.enable')
-        .mockResponse('Network.enable');
+      for (const message of devtoolsLog) rootDispatch(message);
+      const rootStatusLogLength = statusLog.length;
+      expect(rootStatusLogLength).toBeGreaterThan(0);
 
-      targetListener({target: {type: 'page', targetId: 'page-2'}, session: sessionMock}); // new
-      expect(sessionMock.addProtocolMessageListener).toHaveBeenCalledTimes(2);
-      expect(sendCommandMock).toHaveBeenCalledTimes(3);
+      // Add an iframe through a pretend 'sessionattached' event.
+      const iframe1Session = mockAttachingSession({id: 'iframe1', targetType: 'iframe'});
+      await targetManager._onSessionAttached(iframe1Session.asCdpSession());
 
-      targetListener({target: {type: 'page', targetId: 'page-3'}, session: sessionMock}); // new
-      expect(sessionMock.addProtocolMessageListener).toHaveBeenCalledTimes(3);
-      expect(sendCommandMock).toHaveBeenCalledTimes(4);
+      // Dispatch the same count of network requests.
+      const iframe1Dispatch = createSessionDispatch(iframe1Session);
+      const iframe1DevtoolsLog = getDevtoolsLog('iframe1'); // Need unique requestIds.
+      for (const message of iframe1DevtoolsLog) iframe1Dispatch(message);
 
-      expect(sessionMock.removeProtocolMessageListener).toHaveBeenCalledTimes(0);
-      await monitor.disable();
-      expect(sessionMock.removeProtocolMessageListener).toHaveBeenCalledTimes(3);
+      expect(statusLog.length).toBe(rootStatusLogLength * 2);
+
+      // Add another iframe through a pretend 'sessionattached' event.
+      const iframe2Session = mockAttachingSession({id: 'iframe2', targetType: 'iframe'});
+      await targetManager._onSessionAttached(iframe2Session.asCdpSession());
+
+      // Dispatch the same count of network requests.
+      const iframe2Dispatch = createSessionDispatch(iframe2Session);
+      const iframe2DevtoolsLog = getDevtoolsLog('iframe2'); // Need unique requestIds.
+      for (const message of iframe2DevtoolsLog) iframe2Dispatch(message);
+
+      expect(statusLog.length).toBe(rootStatusLogLength * 3);
     });
 
     it('should have idempotent enable', async () => {
+      const initialListenerCount = targetManager.listenerCount('protocolevent');
       await monitor.enable();
       await monitor.enable();
       await monitor.enable();
-      expect(sessionMock.on).toHaveBeenCalledTimes(1);
-      expect(sessionMock.addProtocolMessageListener).toHaveBeenCalledTimes(1);
-      expect(sendCommandMock).toHaveBeenCalledTimes(2);
+      await monitor.enable();
+      // Only one more listener added for `monitor.enable()`.
+      expect(targetManager.listenerCount('protocolevent')).toBe(initialListenerCount + 1);
     });
   });
 
@@ -163,14 +167,18 @@ describe('NetworkMonitor', () => {
     });
 
     it('should return the first and last navigation', async () => {
-      sendCommandMock.mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1'}}});
+      rootCdpSessionMock.send
+        .mockResponse('Target.setAutoAttach')
+        .mockResponse('Target.setAutoAttach')
+        .mockResponse('Target.setAutoAttach')
+        .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1'}}});
       await monitor.enable();
 
       const type = 'Navigation';
       const frame = /** @type {*} */ ({id: '1', url: 'https://page.example.com'});
-      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://example.com'}, type}}); // eslint-disable-line max-len
-      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://intermediate.example.com'}, type}}); // eslint-disable-line max-len
-      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame, type}});
+      rootDispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://example.com'}, type}}); // eslint-disable-line max-len
+      rootDispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://intermediate.example.com'}, type}}); // eslint-disable-line max-len
+      rootDispatch({method: 'Page.frameNavigated', params: {frame, type}});
 
       expect(await monitor.getNavigationUrls()).toEqual({
         requestedUrl: 'https://example.com',
@@ -179,7 +187,10 @@ describe('NetworkMonitor', () => {
     });
 
     it('should handle server redirects', async () => {
-      sendCommandMock.mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1'}}});
+      rootCdpSessionMock.send
+        .mockResponse('Target.setAutoAttach')
+        .mockResponse('Target.setAutoAttach')
+        .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1'}}});
       await monitor.enable();
 
       // One server redirect followed by a client redirect
@@ -189,13 +200,13 @@ describe('NetworkMonitor', () => {
         {requestId: '2', startTime: 300, url: 'https://page.example.com', priority: 'VeryHigh'},
       ]);
       for (const event of devtoolsLog) {
-        sessionMock.dispatch(event);
+        rootDispatch(event);
       }
 
       const type = 'Navigation';
       const frame = /** @type {*} */ ({id: '1', url: 'https://page.example.com'});
-      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://intermediate.example.com'}, type}}); // eslint-disable-line max-len
-      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame, type}});
+      rootDispatch({method: 'Page.frameNavigated', params: {frame: {...frame, url: 'https://intermediate.example.com'}, type}}); // eslint-disable-line max-len
+      rootDispatch({method: 'Page.frameNavigated', params: {frame, type}});
 
       expect(await monitor.getNavigationUrls()).toEqual({
         requestedUrl: 'https://example.com',
@@ -204,14 +215,17 @@ describe('NetworkMonitor', () => {
     });
 
     it('should ignore non-main-frame navigations', async () => {
-      sendCommandMock.mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1'}}});
+      rootCdpSessionMock.send
+        .mockResponse('Target.setAutoAttach')
+        .mockResponse('Target.setAutoAttach')
+        .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1'}}});
       await monitor.enable();
 
       const type = 'Navigation';
       const frame = /** @type {*} */ ({id: '1', url: 'https://page.example.com'});
-      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame, type}});
+      rootDispatch({method: 'Page.frameNavigated', params: {frame, type}});
       const iframe = /** @type {*} */ ({id: '2', url: 'https://iframe.example.com'});
-      sessionMock.dispatch({method: 'Page.frameNavigated', params: {frame: iframe, type}});
+      rootDispatch({method: 'Page.frameNavigated', params: {frame: iframe, type}});
 
       expect(await monitor.getNavigationUrls()).toEqual({
         requestedUrl: 'https://page.example.com',
@@ -221,22 +235,22 @@ describe('NetworkMonitor', () => {
   });
 
   describe('EventEmitter', () => {
-    it('should reemit the requeststarted / requestloaded events', async () => {
+    it('should reemit the requeststarted / requestfinished events', async () => {
       await monitor.enable();
       /** @type {Array<string>} */
       const startedLog = [];
       /** @type {Array<string>} */
       const loadedLog = [];
       monitor.on('requeststarted', /** @param {*} r */ r => startedLog.push(r));
-      monitor.on('requestloaded', /** @param {*} r */ r => loadedLog.push(r));
-      for (const message of devtoolsLog) sessionMock.dispatch(message);
+      monitor.on('requestfinished', /** @param {*} r */ r => loadedLog.push(r));
+      for (const message of devtoolsLog) rootDispatch(message);
       expect(startedLog).toHaveLength(4);
       expect(loadedLog).toHaveLength(4);
     });
 
     it('should emit the cycle of network status events', async () => {
       await monitor.enable();
-      for (const message of devtoolsLog) sessionMock.dispatch(message);
+      for (const message of devtoolsLog) rootDispatch(message);
 
       expect(statusLog).toEqual([
         // First request starts.
@@ -288,14 +302,15 @@ describe('NetworkMonitor', () => {
 
     it('should capture single high-pri request state in getters', () => {
       const startMessage = devtoolsLog.find(event => event.method === 'Network.requestWillBeSent');
-      sessionMock.dispatch(startMessage);
+      if (!startMessage) throw new Error('startMessage not found');
+      rootDispatch(startMessage);
       expect(monitor.isIdle()).toBe(false);
       expect(monitor.is2Idle()).toBe(true);
       expect(monitor.isCriticalIdle()).toBe(false);
     });
 
     it('should not consider cross frame requests critical', () => {
-      for (const message of devtoolsLog) sessionMock.dispatch(message);
+      for (const message of devtoolsLog) rootDispatch(message);
       expect(monitor.isIdle()).toBe(true);
       expect(monitor.is2Idle()).toBe(true);
       expect(monitor.isCriticalIdle()).toBe(true);
@@ -304,7 +319,8 @@ describe('NetworkMonitor', () => {
         {requestId: '5', url: 'http://3p.example.com', priority: 'VeryHigh', frameId: 'OOPIF'},
       ]);
       const startMessage = crossFrameLog.find(e => e.method === 'Network.requestWillBeSent');
-      sessionMock.dispatch(startMessage);
+      if (!startMessage) throw new Error('startMessage not found');
+      rootDispatch(startMessage);
 
       expect(monitor.isIdle()).toBe(false);
       expect(monitor.is2Idle()).toBe(true);
@@ -315,7 +331,7 @@ describe('NetworkMonitor', () => {
       const startMessage = devtoolsLog.find(event => event.method === 'Network.requestWillBeSent');
       if (!startMessage || startMessage.method !== 'Network.requestWillBeSent') throw tscErr;
       startMessage.params.request.initialPriority = 'Low';
-      sessionMock.dispatch(startMessage);
+      rootDispatch(startMessage);
       expect(monitor.isIdle()).toBe(false);
       expect(monitor.is2Idle()).toBe(true);
       expect(monitor.isCriticalIdle()).toBe(true);
@@ -323,7 +339,7 @@ describe('NetworkMonitor', () => {
 
     it('should capture multiple request state in getters', () => {
       const messages = devtoolsLog.filter(event => event.method === 'Network.requestWillBeSent');
-      for (const message of messages) sessionMock.dispatch(message);
+      for (const message of messages) rootDispatch(message);
       expect(monitor.isIdle()).toBe(false);
       expect(monitor.is2Idle()).toBe(false);
       expect(monitor.isCriticalIdle()).toBe(false);
@@ -334,7 +350,7 @@ describe('NetworkMonitor', () => {
       for (const message of messages) {
         if (message.method !== 'Network.requestWillBeSent') throw tscErr;
         message.params.request.initialPriority = 'Low';
-        sessionMock.dispatch(message);
+        rootDispatch(message);
       }
 
       expect(monitor.isIdle()).toBe(false);

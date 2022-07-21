@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit.js');
+import ManualAudit from '../../manual/manual-audit.js';
 
 /**
  * @fileoverview Manual A11y audit to assert custom controls have associated labels.
@@ -19,10 +19,10 @@ class CustomControlsLabels extends ManualAudit {
   static get meta() {
     return Object.assign({
       id: 'custom-controls-labels',
-      description: 'Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more](https://web.dev/custom-controls-labels/).',
+      description: 'Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more about custom controls and labels](https://web.dev/custom-controls-labels/).',
       title: 'Custom controls have associated labels',
     }, super.partialMeta);
   }
 }
 
-module.exports = CustomControlsLabels;
+export default CustomControlsLabels;

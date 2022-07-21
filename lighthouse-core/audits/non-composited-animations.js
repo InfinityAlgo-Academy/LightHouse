@@ -11,15 +11,16 @@
  * https://docs.google.com/document/d/1XKcJP2CKmNKfOcDsVvliAQ-e1H9C1nf2H-pzTdyafAA/edit?usp=sharing
  */
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a diagnostic LH audit that provides details on animations that are not composited. */
   title: 'Avoid non-composited animations',
   /** Description of a diagnostic LH audit that shows the user animations that are not composited. Janky means frames may be skipped and the animation will look bad. Acceptable alternatives here might be 'poor', or 'slow'. */
   description: 'Animations which are not composited can be janky and increase CLS. ' +
-    '[Learn more](https://web.dev/non-composited-animations)',
+    '[Learn how to avoid non-composited animations](https://web.dev/non-composited-animations)',
   /** [ICU Syntax] Label identifying the number of animated elements that are not composited. */
   displayValue: `{itemCount, plural,
   =1 {# animated element found}
@@ -45,7 +46,7 @@ const UIStrings = {
   unsupportedTimingParameters: 'Effect has unsupported timing parameters',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * Each failure reason is represented by a bit flag. The bit shift operator '<<' is used to define which bit corresponds to each failure reason.
@@ -202,5 +203,5 @@ class NonCompositedAnimations extends Audit {
   }
 }
 
-module.exports = NonCompositedAnimations;
-module.exports.UIStrings = UIStrings;
+export default NonCompositedAnimations;
+export {UIStrings};

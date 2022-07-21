@@ -11,8 +11,8 @@
 
 'use strict';
 
-const ViolationAudit = require('../violation-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import ViolationAudit from '../violation-audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on geolocation permission requests while the page is loading. This descriptive title is shown to users when the page does not ask for geolocation permissions on load. */
@@ -22,10 +22,10 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user why they should not ask for geolocation permissions on load. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Users are mistrustful of or confused by sites that request their ' +
     'location without context. Consider tying the request to a user action instead. ' +
-    '[Learn more](https://web.dev/geolocation-on-start/).',
+    '[Learn more about the geolocation permission](https://web.dev/geolocation-on-start/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class GeolocationOnStart extends ViolationAudit {
   /**
@@ -66,5 +66,5 @@ class GeolocationOnStart extends ViolationAudit {
   }
 }
 
-module.exports = GeolocationOnStart;
-module.exports.UIStrings = UIStrings;
+export default GeolocationOnStart;
+export {UIStrings};

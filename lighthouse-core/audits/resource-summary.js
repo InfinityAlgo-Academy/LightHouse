@@ -5,23 +5,24 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const ComputedResourceSummary = require('../computed/resource-summary.js');
-const i18n = require('../lib/i18n/i18n.js');
+import {Audit} from './audit.js';
+import ComputedResourceSummary from '../computed/resource-summary.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to minimize the size and quantity of resources used to load the page. */
   title: 'Keep request counts low and transfer sizes small',
   /** Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'To set budgets for the quantity and size of page resources,' +
-    ' add a budget.json file. [Learn more](https://web.dev/use-lighthouse-for-performance-budgets/).',
+    ' add a budget.json file. ' +
+    '[Learn more about performance budgets](https://web.dev/use-lighthouse-for-performance-budgets/).',
   /** [ICU Syntax] Label for an audit identifying the number of requests and kibibytes used to load the page. */
   displayValue: `{requestCount, plural, ` +
     `=1 {1 request • {byteCount, number, bytes} KiB} ` +
     `other {# requests • {byteCount, number, bytes} KiB}}`,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class ResourceSummary extends Audit {
   /**
@@ -100,5 +101,5 @@ class ResourceSummary extends Audit {
   }
 }
 
-module.exports = ResourceSummary;
-module.exports.UIStrings = UIStrings;
+export default ResourceSummary;
+export {UIStrings};

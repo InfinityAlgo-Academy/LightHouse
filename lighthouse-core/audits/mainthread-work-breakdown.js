@@ -10,10 +10,10 @@
 
 'use strict';
 
-const Audit = require('./audit.js');
-const {taskGroups} = require('../lib/tracehouse/task-groups.js');
-const i18n = require('../lib/i18n/i18n.js');
-const MainThreadTasks = require('../computed/main-thread-tasks.js');
+import {Audit} from './audit.js';
+import {taskGroups} from '../lib/tracehouse/task-groups.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import MainThreadTasks from '../computed/main-thread-tasks.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the main thread work the browser did to load the page. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -23,12 +23,12 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should reduce JS execution times. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Consider reducing the time spent parsing, compiling and executing JS. ' +
     'You may find delivering smaller JS payloads helps with this. ' +
-    '[Learn more](https://web.dev/mainthread-work-breakdown/)',
+    '[Learn how to minimize main-thread work](https://web.dev/mainthread-work-breakdown/)',
   /** Label for the Main Thread Category column in data tables, rows will have a main thread Category and main thread Task Name. */
   columnCategory: 'Category',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /** @typedef {import('../lib/tracehouse/task-groups.js').TaskGroupIds} TaskGroupIds */
 
@@ -130,5 +130,5 @@ class MainThreadWorkBreakdown extends Audit {
   }
 }
 
-module.exports = MainThreadWorkBreakdown;
-module.exports.UIStrings = UIStrings;
+export default MainThreadWorkBreakdown;
+export {UIStrings};

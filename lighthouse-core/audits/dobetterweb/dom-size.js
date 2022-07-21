@@ -12,8 +12,8 @@
 
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {Audit} from '../audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM elements and greatest DOM depth. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -23,7 +23,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should reduce the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM elements and greatest DOM depth. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'A large DOM will increase memory usage, cause longer ' +
     '[style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), ' +
-    'and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn more](https://web.dev/dom-size/).',
+    'and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn how to avoid an excessive DOM size](https://web.dev/dom-size/).',
   /** Table column header for the type of statistic. These statistics describe how big the DOM is (count of DOM elements, children, depth). */
   columnStatistic: 'Statistic',
   /** Table column header for the observed value of the DOM statistic. */
@@ -41,7 +41,7 @@ const UIStrings = {
   statisticDOMWidth: 'Maximum Child Elements',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class DOMSize extends Audit {
   /**
@@ -119,5 +119,5 @@ class DOMSize extends Audit {
   }
 }
 
-module.exports = DOMSize;
-module.exports.UIStrings = UIStrings;
+export default DOMSize;
+export {UIStrings};

@@ -3,79 +3,22 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import fs from 'fs';
+import path from 'path';
+import url from 'url';
+import {createRequire} from 'module';
 
-const fs = require('fs');
-const format = require('../../shared/localization/format.js');
-const mockCommands = require('./gather/mock-commands.js');
-const {default: {toBeCloseTo}} = require('expect/build/matchers.js');
-const {LH_ROOT} = require('../../root.js');
-const NetworkRecorder = require('../lib/network-recorder.js');
+import * as td from 'testdouble';
+import jestMock from 'jest-mock';
 
-expect.extend({
-  toBeDisplayString(received, expected) {
-    if (!format.isIcuMessage(received)) {
-      const message = () =>
-      [
-        `${this.utils.matcherHint('.toBeDisplayString')}\n`,
-        `Expected object to be an ${this.utils.printExpected('LH.IcuMessage')}`,
-        `Received ${typeof received}`,
-        `  ${this.utils.printReceived(received)}`,
-      ].join('\n');
+import {LH_ROOT} from '../../root.js';
+import * as mockCommands from './gather/mock-commands.js';
+import {NetworkRecorder} from '../lib/network-recorder.js';
+import {timers} from './test-env/fake-timers.js';
+import {getModuleDirectory} from '../../esm-utils.js';
 
-      return {message, pass: false};
-    }
-
-    const actual = format.getFormatted(received, 'en-US');
-    const pass = expected instanceof RegExp ?
-      expected.test(actual) :
-      actual === expected;
-
-    const message = () =>
-      [
-        `${this.utils.matcherHint('.toBeDisplayString')}\n`,
-        `Expected object to be a display string matching:`,
-        `  ${this.utils.printExpected(expected)}`,
-        `Received:`,
-        `  ${this.utils.printReceived(actual)}`,
-      ].join('\n');
-
-    return {message, pass};
-  },
-
-  // Expose toBeCloseTo() so it can be used as an asymmetric matcher.
-  toBeApproximately(...args) {
-    // If called asymmetrically, a fake matcher `this` object needs to be passed
-    // in (see https://github.com/facebook/jest/issues/8295). There's no effect
-    // because it's only used for the printing of full failures, which isn't
-    // done for asymmetric matchers anyways.
-    const thisObj = (this && this.utils) ? this :
-        {isNot: false, promise: ''};
-    // @ts-expect-error
-    return toBeCloseTo.call(thisObj, ...args);
-  },
-  /**
-    * Asserts that an inspectable promise created by makePromiseInspectable is currently resolved or rejected.
-    * This is useful for situations where we want to test that we are actually waiting for a particular event.
-    *
-    * @param {ReturnType<typeof makePromiseInspectable>} received
-    * @param {string} failureMessage
-    */
-  toBeDone(received, failureMessage) {
-    const pass = received.isDone();
-
-    const message = () =>
-      [
-        `${this.utils.matcherHint('.toBeDone')}\n`,
-        `Expected promise to be resolved: ${this.utils.printExpected(failureMessage)}`,
-        `  ${this.utils.printReceived(received.getDebugValues())}`,
-      ].join('\n');
-
-    return {message, pass};
-  },
-});
+const require = createRequire(import.meta.url);
 
 /**
  * Some tests use the result of a LHR processed by our proto serialization.
@@ -117,7 +60,7 @@ function getProtoRoundTrip() {
  * @return {{map: LH.Artifacts.RawSourceMap, content: string}}
  */
 function loadSourceMapFixture(name) {
-  const dir = `${__dirname}/fixtures/source-maps`;
+  const dir = `${LH_ROOT}/lighthouse-core/test/fixtures/source-maps`;
   const mapJson = fs.readFileSync(`${dir}/${name}.js.map`, 'utf-8');
   const content = fs.readFileSync(`${dir}/${name}.js`, 'utf-8');
   return {
@@ -131,7 +74,7 @@ function loadSourceMapFixture(name) {
  * @return {{map: LH.Artifacts.RawSourceMap, content: string, usage: LH.Crdp.Profiler.ScriptCoverage}}
  */
 function loadSourceMapAndUsageFixture(name) {
-  const dir = `${__dirname}/fixtures/source-maps`;
+  const dir = `${LH_ROOT}/lighthouse-core/test/fixtures/source-maps`;
   const usagePath = `${dir}/${name}.usage.json`;
   const usageJson = fs.readFileSync(usagePath, 'utf-8');
 
@@ -229,7 +172,7 @@ function createDecomposedPromise() {
  */
 async function flushAllTimersAndMicrotasks(ms = 1000) {
   for (let i = 0; i < ms; i++) {
-    jest.advanceTimersByTime(1);
+    timers.advanceTimersByTime(1);
     await Promise.resolve();
   }
 }
@@ -238,40 +181,49 @@ async function flushAllTimersAndMicrotasks(ms = 1000) {
  * Mocks gatherers for BaseArtifacts that tests for components using GatherRunner
  * shouldn't concern themselves about.
  */
-function makeMocksForGatherRunner() {
-  jest.mock('../gather/driver/environment.js', () => ({
+async function makeMocksForGatherRunner() {
+  await td.replaceEsm(require.resolve('../gather/driver/environment.js'), {
     getBenchmarkIndex: () => Promise.resolve(150),
     getBrowserVersion: async () => ({userAgent: 'Chrome', milestone: 80}),
     getEnvironmentWarnings: () => [],
-  }));
-  jest.mock('../gather/gatherers/stacks.js', () => ({collectStacks: () => Promise.resolve([])}));
-  jest.mock('../gather/gatherers/installability-errors.js', () => ({
+  });
+  await td.replaceEsm(require.resolve('../gather/gatherers/stacks.js'), undefined, {
+    collectStacks: () => Promise.resolve([]),
+  });
+  await td.replaceEsm(require.resolve('../gather/gatherers/installability-errors.js'), undefined, {
     getInstallabilityErrors: async () => ({errors: []}),
-  }));
-  jest.mock('../gather/gatherers/web-app-manifest.js', () => ({
+  });
+  await td.replaceEsm(require.resolve('../gather/gatherers/web-app-manifest.js'), undefined, {
     getWebAppManifest: async () => null,
-  }));
-  jest.mock('../lib/emulation.js', () => ({
-    emulate: jest.fn(),
-    throttle: jest.fn(),
-    clearThrottling: jest.fn(),
-  }));
-  jest.mock('../gather/driver/prepare.js', () => ({
-    prepareTargetForNavigationMode: jest.fn(),
-    prepareTargetForIndividualNavigation: jest.fn().mockResolvedValue({warnings: []}),
-  }));
-  jest.mock('../gather/driver/storage.js', () => ({
-    clearDataForOrigin: jest.fn(),
-    cleanBrowserCaches: jest.fn(),
-    getImportantStorageWarning: jest.fn(),
-  }));
-  jest.mock('../gather/driver/navigation.js', () => ({
-    gotoURL: jest.fn().mockResolvedValue({
+  });
+  await td.replaceEsm(require.resolve('../lib/emulation.js'), {
+    emulate: jestMock.fn(),
+    throttle: jestMock.fn(),
+    clearThrottling: jestMock.fn(),
+  });
+  await td.replaceEsm(require.resolve('../gather/driver/prepare.js'), {
+    prepareTargetForNavigationMode: jestMock.fn(),
+    prepareTargetForIndividualNavigation: jestMock.fn().mockResolvedValue({warnings: []}),
+  });
+  await td.replaceEsm(require.resolve('../gather/driver/storage.js'), {
+    clearDataForOrigin: jestMock.fn(),
+    cleanBrowserCaches: jestMock.fn(),
+    getImportantStorageWarning: jestMock.fn(),
+  });
+  await td.replaceEsm(require.resolve('../gather/driver/navigation.js'), {
+    gotoURL: jestMock.fn().mockResolvedValue({
       mainDocumentUrl: 'http://example.com',
       warnings: [],
     }),
-  }));
+  });
 }
+
+/**
+ * Same as jestMock.fn(), but uses `any` instead of `unknown`.
+ */
+const fnAny = () => {
+  return /** @type {Mock<any, any>} */ (jestMock.fn());
+};
 
 /**
  * @param {Partial<LH.Artifacts.Script>} script
@@ -320,7 +272,61 @@ function getURLArtifactFromDevtoolsLog(devtoolsLog) {
   return {initialUrl: 'about:blank', requestedUrl, mainDocumentUrl, finalUrl: mainDocumentUrl};
 }
 
-module.exports = {
+/**
+ * Use to import a module in tests with Mock types.
+ * Asserts that the module is actually a mock.
+ * Resolves module path relative to importMeta.url.
+ *
+ * @param {string} modulePath
+ * @param {ImportMeta} importMeta
+ * @return {Promise<Record<string, Mock<any, any>>>}
+ */
+async function importMock(modulePath, importMeta) {
+  const dir = path.dirname(url.fileURLToPath(importMeta.url));
+  modulePath = path.resolve(dir, modulePath);
+  const mock = await import(modulePath);
+  if (!Object.keys(mock).some(key => mock[key]?.mock)) {
+    throw new Error(`${modulePath} was not mocked!`);
+  }
+  return mock;
+}
+
+/**
+ * Same as importMock, but uses require instead to avoid
+ * an unnecessary `.default` or Promise return value.
+ *
+ * @param {string} modulePath
+ * @param {ImportMeta} importMeta
+ * @return {Record<string, Mock<any, any>>}
+ */
+function requireMock(modulePath, importMeta) {
+  const dir = path.dirname(url.fileURLToPath(importMeta.url));
+  modulePath = path.resolve(dir, modulePath);
+  const mock = require(modulePath);
+  if (!Object.keys(mock).some(key => mock[key]?.mock)) {
+    throw new Error(`${modulePath} was not mocked!`);
+  }
+  return mock;
+}
+
+/**
+ * Return parsed json object.
+ * Resolves path relative to importMeta.url (if provided) or LH_ROOT (if not provided).
+ *
+ * Note: Do not use this in lighthouse-core/ outside tests or scripts, as it
+ * will not be inlined when bundled. Instead, use `fs.readFileSync`.
+ *
+ * @param {string} filePath Can be an absolute or relative path.
+ * @param {ImportMeta=} importMeta
+ */
+function readJson(filePath, importMeta) {
+  const dir = importMeta ? getModuleDirectory(importMeta) : LH_ROOT;
+  filePath = path.resolve(dir, filePath);
+  return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+}
+
+export {
+  timers,
   getProtoRoundTrip,
   loadSourceMapFixture,
   loadSourceMapAndUsageFixture,
@@ -329,7 +335,11 @@ module.exports = {
   createDecomposedPromise,
   flushAllTimersAndMicrotasks,
   makeMocksForGatherRunner,
+  fnAny,
+  mockCommands,
   createScript,
   getURLArtifactFromDevtoolsLog,
-  ...mockCommands,
+  importMock,
+  requireMock,
+  readJson,
 };

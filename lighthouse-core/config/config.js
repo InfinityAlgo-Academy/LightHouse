@@ -5,16 +5,15 @@
  */
 'use strict';
 
-const defaultConfigPath = './default-config.js';
-const defaultConfig = require('./default-config.js');
-const constants = require('./constants.js');
-const format = require('../../shared/localization/format.js');
-const validation = require('./../fraggle-rock/config/validation.js');
+import legacyDefaultConfig from './legacy-default-config.js';
+import * as constants from './constants.js';
+import format from '../../shared/localization/format.js';
+import * as validation from './../fraggle-rock/config/validation.js';
+import log from 'lighthouse-logger';
+import path from 'path';
+import {Runner} from '../runner.js';
 
-const log = require('lighthouse-logger');
-const path = require('path');
-const Runner = require('../runner.js');
-const {
+import {
   mergePlugins,
   mergeConfigFragment,
   resolveSettings,
@@ -22,9 +21,12 @@ const {
   resolveGathererToDefn,
   deepClone,
   deepCloneConfigJson,
-} = require('./config-helpers.js');
+} from './config-helpers.js';
+import {getModuleDirectory} from '../../esm-utils.js';
 
-/** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
+const defaultConfigPath = './legacy-default-config.js';
+
+/** @typedef {typeof import('../gather/gatherers/gatherer.js').Gatherer} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
 
 /**
@@ -38,6 +40,7 @@ const BASE_ARTIFACT_BLANKS = {
   HostUserAgent: '',
   NetworkUserAgent: '',
   BenchmarkIndex: '',
+  BenchmarkIndexes: '',
   WebAppManifest: '',
   GatherContext: '',
   InstallabilityErrors: '',
@@ -148,24 +151,25 @@ function assertValidFlags(flags) {
   }
 }
 
-
 /**
  * @implements {LH.Config.Config}
  */
 class Config {
   /**
-   * @constructor
-   * @param {LH.Config.Json=} configJSON
+   * Resolves the provided config (inherits from extended config, if set), resolves
+   * all referenced modules, and validates.
+   * @param {LH.Config.Json=} configJSON If not provided, uses the default config.
    * @param {LH.Flags=} flags
+   * @return {Promise<Config>}
    */
-  constructor(configJSON, flags) {
+  static async fromJson(configJSON, flags) {
     const status = {msg: 'Create config', id: 'lh:init:config'};
     log.time(status, 'verbose');
     let configPath = flags?.configPath;
 
     if (!configJSON) {
-      configJSON = defaultConfig;
-      configPath = path.resolve(__dirname, defaultConfigPath);
+      configJSON = legacyDefaultConfig;
+      configPath = path.resolve(getModuleDirectory(import.meta), defaultConfigPath);
     }
 
     if (configPath && !path.isAbsolute(configPath)) {
@@ -180,14 +184,14 @@ class Config {
       if (configJSON.extends !== 'lighthouse:default') {
         throw new Error('`lighthouse:default` is the only valid extension method.');
       }
-      configJSON = Config.extendConfigJSON(deepCloneConfigJson(defaultConfig), configJSON);
+      configJSON = Config.extendConfigJSON(deepCloneConfigJson(legacyDefaultConfig), configJSON);
     }
 
     // The directory of the config path, if one was provided.
     const configDir = configPath ? path.dirname(configPath) : undefined;
 
     // Validate and merge in plugins (if any).
-    configJSON = mergePlugins(configJSON, configDir, flags);
+    configJSON = await mergePlugins(configJSON, configDir, flags);
 
     if (flags) {
       assertValidFlags(flags);
@@ -197,14 +201,28 @@ class Config {
     // Augment passes with necessary defaults and require gatherers.
     const passesWithDefaults = Config.augmentPassesWithDefaults(configJSON.passes);
     Config.adjustDefaultPassForThrottling(settings, passesWithDefaults);
-    const passes = Config.requireGatherers(passesWithDefaults, configDir);
+    const passes = await Config.requireGatherers(passesWithDefaults, configDir);
 
+    const audits = await Config.requireAudits(configJSON.audits, configDir);
+
+    const config = new Config(configJSON, {settings, passes, audits});
+    log.timeEnd(status);
+    return config;
+  }
+
+  /**
+   * @deprecated `Config.fromJson` should be used instead.
+   * @constructor
+   * @param {LH.Config.Json} configJSON
+   * @param {{settings: LH.Config.Settings, passes: ?LH.Config.Pass[], audits: ?LH.Config.AuditDefn[]}} opts
+   */
+  constructor(configJSON, opts) {
     /** @type {LH.Config.Settings} */
-    this.settings = settings;
+    this.settings = opts.settings;
     /** @type {?Array<LH.Config.Pass>} */
-    this.passes = passes;
+    this.passes = opts.passes;
     /** @type {?Array<LH.Config.AuditDefn>} */
-    this.audits = Config.requireAudits(configJSON.audits, configDir);
+    this.audits = opts.audits;
     /** @type {?Record<string, LH.Config.Category>} */
     this.categories = configJSON.categories || null;
     /** @type {?Record<string, LH.Config.Group>} */
@@ -214,8 +232,6 @@ class Config {
 
     assertValidPasses(this.passes, this.audits);
     validation.assertValidCategories(this.categories, this.audits, this.groups);
-
-    log.timeEnd(status);
   }
 
   /**
@@ -498,12 +514,12 @@ class Config {
    * leaving only an array of AuditDefns.
    * @param {LH.Config.Json['audits']} audits
    * @param {string=} configDir
-   * @return {Config['audits']}
+   * @return {Promise<Config['audits']>}
    */
-  static requireAudits(audits, configDir) {
+  static async requireAudits(audits, configDir) {
     const status = {msg: 'Requiring audits', id: 'lh:config:requireAudits'};
     log.time(status, 'verbose');
-    const auditDefns = resolveAuditsToDefns(audits, configDir);
+    const auditDefns = await resolveAuditsToDefns(audits, configDir);
     log.timeEnd(status);
     return auditDefns;
   }
@@ -514,9 +530,9 @@ class Config {
    * provided) using `resolveModulePath`, returning an array of full Passes.
    * @param {?Array<Required<LH.Config.PassJson>>} passes
    * @param {string=} configDir
-   * @return {Config['passes']}
+   * @return {Promise<Config['passes']>}
    */
-  static requireGatherers(passes, configDir) {
+  static async requireGatherers(passes, configDir) {
     if (!passes) {
       return null;
     }
@@ -524,9 +540,11 @@ class Config {
     log.time(status, 'verbose');
 
     const coreList = Runner.getGathererList();
-    const fullPasses = passes.map(pass => {
-      const gathererDefns = pass.gatherers
-        .map(gatherer => resolveGathererToDefn(gatherer, coreList, configDir));
+    const fullPassesPromises = passes.map(async (pass) => {
+      const gathererDefns = await Promise.all(
+        pass.gatherers
+          .map(gatherer => resolveGathererToDefn(gatherer, coreList, configDir))
+      );
 
       // De-dupe gatherers by artifact name because artifact IDs must be unique at runtime.
       const uniqueDefns = Array.from(
@@ -536,9 +554,11 @@ class Config {
 
       return Object.assign(pass, {gatherers: uniqueDefns});
     });
+    const fullPasses = await Promise.all(fullPassesPromises);
+
     log.timeEnd(status);
     return fullPasses;
   }
 }
 
-module.exports = Config;
+export {Config};

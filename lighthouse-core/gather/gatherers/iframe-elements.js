@@ -7,8 +7,9 @@
 
 /* global getNodeDetails */
 
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../lib/page-functions.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+
+import {pageFunctions} from '../../lib/page-functions.js';
 
 /* eslint-env browser, node */
 
@@ -17,10 +18,13 @@ const pageFunctions = require('../../lib/page-functions.js');
  */
 /* c8 ignore start */
 function collectIFrameElements() {
+  const realBoundingClientRect = window.__HTMLElementBoundingClientRect ||
+    window.HTMLElement.prototype.getBoundingClientRect;
+
   // @ts-expect-error - put into scope via stringification
   const iFrameElements = getElementsInDocument('iframe'); // eslint-disable-line no-undef
   return iFrameElements.map(/** @param {HTMLIFrameElement} node */ (node) => {
-    const clientRect = node.getBoundingClientRect();
+    const clientRect = realBoundingClientRect.call(node);
     const {top, bottom, left, right, width, height} = clientRect;
     return {
       id: node.id,
@@ -62,4 +66,4 @@ class IFrameElements extends FRGatherer {
   }
 }
 
-module.exports = IFrameElements;
+export default IFrameElements;

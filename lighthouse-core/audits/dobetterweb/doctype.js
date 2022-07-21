@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {Audit} from '../audit.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the doctype of a page. This descriptive title is shown to users when the pages's doctype is set to HTML. */
@@ -16,18 +16,20 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user why they should define an HTML doctype. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Specifying a doctype prevents the browser ' +
     'from switching to quirks-mode. ' +
-    '[Learn more](https://web.dev/doctype/).',
+    '[Learn more about the doctype declaration](https://web.dev/doctype/).',
   /** Explanatory message stating that the document has no doctype. */
   explanationNoDoctype: 'Document must contain a doctype',
+  /** Explanatory message stating that the document has wrong doctype */
+  explanationWrongDoctype: 'Document contains a doctype that triggers quirks-mode',
   /** Explanatory message stating that the publicId field is not empty. */
   explanationPublicId: 'Expected publicId to be an empty string',
   /** Explanatory message stating that the systemId field is not empty. */
   explanationSystemId: 'Expected systemId to be an empty string',
   /** Explanatory message stating that the doctype is set, but is not "html" and is therefore invalid. */
-  explanationBadDoctype: 'Doctype name must be the lowercase string `html`',
+  explanationBadDoctype: 'Doctype name must be the string `html`',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class Doctype extends Audit {
   /**
@@ -56,9 +58,10 @@ class Doctype extends Audit {
     }
 
     // only set constants once we know there is a doctype
-    const doctypeName = artifacts.Doctype.name.trim();
+    const doctypeName = artifacts.Doctype.name;
     const doctypePublicId = artifacts.Doctype.publicId;
     const doctypeSystemId = artifacts.Doctype.systemId;
+    const compatMode = artifacts.Doctype.documentCompatMode;
 
     if (doctypePublicId !== '') {
       return {
@@ -74,21 +77,29 @@ class Doctype extends Audit {
       };
     }
 
-    /* Note that the value for name is case sensitive,
-       and must be the string `html`. For details see:
-       https://html.spec.whatwg.org/multipage/parsing.html#the-initial-insertion-mode */
-    if (doctypeName === 'html') {
-      return {
-        score: 1,
-      };
-    } else {
+    /* Note that the casing of this property is normalized to be lowercase.
+       see: https://html.spec.whatwg.org/#doctype-name-state */
+    if (doctypeName !== 'html') {
       return {
         score: 0,
         explanation: str_(UIStrings.explanationBadDoctype),
       };
     }
+
+    // Catch-all for any quirks-mode situations the above checks didn't get.
+    // https://github.com/GoogleChrome/lighthouse/issues/10030
+    if (compatMode === 'BackCompat') {
+      return {
+        score: 0,
+        explanation: str_(UIStrings.explanationWrongDoctype),
+      };
+    } else {
+      return {
+        score: 1,
+      };
+    }
   }
 }
 
-module.exports = Doctype;
-module.exports.UIStrings = UIStrings;
+export default Doctype;
+export {UIStrings};

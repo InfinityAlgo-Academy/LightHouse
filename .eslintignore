@@ -8,9 +8,8 @@ lighthouse-cli/test/fixtures/byte-efficiency/bundle.js
 
 coverage/**
 
-!.eslintrc.js
+!.eslintrc.cjs
 
-lighthouse-core/lib/cdt/generated/SourceMap.js
 lighthouse-core/scripts/legacy-javascript/variants
 
 third-party/**

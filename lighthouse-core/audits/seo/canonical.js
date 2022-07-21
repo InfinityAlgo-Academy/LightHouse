@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const URL = require('../../lib/url-shim.js');
-const MainResource = require('../../computed/main-resource.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {Audit} from '../audit.js';
+import URL from '../../lib/url-shim.js';
+import MainResource from '../../computed/main-resource.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on a page's rel=canonical link. This descriptive title is shown to users when the rel=canonical link is valid. "rel=canonical" is an HTML attribute and value and so should not be translated. */
@@ -17,7 +17,7 @@ const UIStrings = {
   failureTitle: 'Document does not have a valid `rel=canonical`',
   /** Description of a Lighthouse audit that tells the user *why* they need to have a valid rel=canonical link. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Canonical links suggest which URL to show in search results. ' +
-    '[Learn more](https://web.dev/canonical/).',
+    '[Learn more about canonical links](https://web.dev/canonical/).',
   /**
    * @description Explanatory message stating that there was a failure in an audit caused by multiple URLs conflicting with each other.
    * @example {https://example.com, https://example2.com} urlList
@@ -43,7 +43,7 @@ const UIStrings = {
     'instead of an equivalent page of content',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @typedef CanonicalURLData
@@ -214,5 +214,5 @@ class Canonical extends Audit {
   }
 }
 
-module.exports = Canonical;
-module.exports.UIStrings = UIStrings;
+export default Canonical;
+export {UIStrings};

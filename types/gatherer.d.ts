@@ -4,13 +4,13 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import _NetworkNode = require('../lighthouse-core/lib/dependency-graph/network-node');
-import _CPUNode = require('../lighthouse-core/lib/dependency-graph/cpu-node');
-import _Simulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator');
-import Driver = require('../lighthouse-core/gather/driver');
-import ExecutionContext = require('../lighthouse-core/gather/driver/execution-context');
-import Fetcher = require('../lighthouse-core/gather/fetcher');
-import ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equality-map');
+import {NetworkNode as _NetworkNode} from '../lighthouse-core/lib/dependency-graph/network-node';
+import {CPUNode as _CPUNode} from '../lighthouse-core/lib/dependency-graph/cpu-node';
+import {Simulator as _Simulator} from '../lighthouse-core/lib/dependency-graph/simulator/simulator';
+import {Driver} from '../lighthouse-core/gather/driver';
+import {ExecutionContext} from '../lighthouse-core/gather/driver/execution-context';
+import {Fetcher} from '../lighthouse-core/gather/fetcher';
+import {ArbitraryEqualityMap} from '../lighthouse-core/lib/arbitrary-equality-map';
 
 import {Artifacts, BaseArtifacts, FRBaseArtifacts, GathererArtifacts} from './artifacts';
 import Config from './config';
@@ -28,10 +28,6 @@ declare module Gatherer {
     setNextProtocolTimeout(ms: number): void;
     on<TEvent extends keyof LH.CrdpEvents>(event: TEvent, callback: (...args: LH.CrdpEvents[TEvent]) => void): void;
     once<TEvent extends keyof LH.CrdpEvents>(event: TEvent, callback: (...args: LH.CrdpEvents[TEvent]) => void): void;
-    addProtocolMessageListener(callback: (payload: Protocol.RawEventMessage) => void): void
-    removeProtocolMessageListener(callback: (payload: Protocol.RawEventMessage) => void): void
-    addSessionAttachedListener(callback: (session: FRProtocolSession) => void): void
-    removeSessionAttachedListener(callback: (session: FRProtocolSession) => void): void
     off<TEvent extends keyof LH.CrdpEvents>(event: TEvent, callback: (...args: LH.CrdpEvents[TEvent]) => void): void;
     sendCommand<TMethod extends keyof LH.CrdpCommands>(method: TMethod, ...params: LH.CrdpCommands[TMethod]['paramsType']): Promise<LH.CrdpCommands[TMethod]['returnType']>;
     dispose(): Promise<void>;
@@ -43,12 +39,15 @@ declare module Gatherer {
     executionContext: ExecutionContext;
     fetcher: Fetcher;
     url: () => Promise<string>;
+    targetManager: {
+      rootSession(): FRProtocolSession;
+      on(event: 'protocolevent', callback: (payload: Protocol.RawEventMessage) => void): void
+      off(event: 'protocolevent', callback: (payload: Protocol.RawEventMessage) => void): void
+    };
   }
 
   /** The limited context interface shared between pre and post Fraggle Rock Lighthouse. */
   interface FRTransitionalContext<TDependencies extends DependencyKey = DefaultDependenciesKey> {
-    /** The URL of the page that is currently active. Might be `about:blank` in the before phases */
-    url: string;
     /** The gather mode Lighthouse is currently in. */
     gatherMode: GatherMode;
     /** The connection to the page being analyzed. */

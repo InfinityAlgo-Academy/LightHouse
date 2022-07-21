@@ -98,7 +98,7 @@ function linearInterpolation(x0, y0, x1, y1, x) {
   return y0 + (x - x0) * slope;
 }
 
-module.exports = {
+export {
   linearInterpolation,
   getLogNormalScore,
 };

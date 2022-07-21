@@ -3,21 +3,21 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const Driver = require('../../gather/driver.js');
-const Connection = require('../../gather/connections/connection.js');
-const {protocolGetVersionResponse} = require('./fake-driver.js');
-const {
-  createMockSendCommandFn,
+import {Driver} from '../../gather/driver.js';
+import {Connection} from '../../gather/connections/connection.js';
+import {fakeDriver} from './fake-driver.js';
+import {
+  mockCommands,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
-} = require('../test-utils.js');
+  fnAny,
+  timers,
+} from '../test-utils.js';
 
-/* eslint-env jest */
+const {createMockSendCommandFn} = mockCommands;
 
-jest.useFakeTimers();
-
+timers.useFakeTimers();
 
 /**
  * @typedef DriverMockMethods
@@ -48,7 +48,7 @@ describe('.getRequestContent', () => {
     const mockTimeout = 5000;
     const driverTimeout = 1000;
     // @ts-expect-error
-    connectionStub.sendCommand = jest.fn()
+    connectionStub.sendCommand = fnAny()
       .mockImplementation(() => new Promise(r => setTimeout(r, mockTimeout)));
 
     // Fail if we don't reach our two assertions in the catch block
@@ -86,7 +86,7 @@ describe('.evaluateAsync', () => {
     driver.setNextProtocolTimeout(5000);
     const evaluatePromise = makePromiseInspectable(driver.evaluateAsync('1 + 1'));
 
-    jest.advanceTimersByTime(5001);
+    timers.advanceTimersByTime(5001);
     await flushAllTimersAndMicrotasks();
     expect(evaluatePromise).toBeDone();
     await expect(evaluatePromise).rejects.toBeTruthy();
@@ -97,12 +97,12 @@ describe('.sendCommand', () => {
   it('.sendCommand timesout when commands take too long', async () => {
     const mockTimeout = 5000;
     // @ts-expect-error
-    connectionStub.sendCommand = jest.fn()
+    connectionStub.sendCommand = fnAny()
       .mockImplementation(() => new Promise(r => setTimeout(r, mockTimeout)));
 
     driver.setNextProtocolTimeout(10000);
     const pageEnablePromise = driver.sendCommand('Page.enable');
-    jest.advanceTimersByTime(mockTimeout + 1);
+    timers.advanceTimersByTime(mockTimeout + 1);
     await pageEnablePromise;
 
     const driverTimeout = 5;
@@ -119,7 +119,7 @@ describe('.sendCommand', () => {
 describe('.beginTrace', () => {
   beforeEach(() => {
     connectionStub.sendCommand = createMockSendCommandFn()
-      .mockResponse('Browser.getVersion', protocolGetVersionResponse)
+      .mockResponse('Browser.getVersion', fakeDriver.protocolGetVersionResponse)
       .mockResponse('Page.enable')
       .mockResponse('Tracing.start');
   });

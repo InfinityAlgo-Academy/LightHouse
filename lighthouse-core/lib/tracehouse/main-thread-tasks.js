@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const {taskGroups, taskNameToGroup} = require('./task-groups.js');
+import {taskGroups, taskNameToGroup} from './task-groups.js';
 
 /**
  * @fileoverview
@@ -684,4 +684,4 @@ class MainThreadTasks {
   }
 }
 
-module.exports = MainThreadTasks;
+export {MainThreadTasks};

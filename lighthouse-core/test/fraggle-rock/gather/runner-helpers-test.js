@@ -3,14 +3,11 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const helpers = require('../../../fraggle-rock/gather/runner-helpers.js');
-const Gatherer = require('../../../fraggle-rock/gather/base-gatherer.js');
-const {defaultSettings} = require('../../../config/constants.js');
-const {createMockDriver, createMockGathererInstance, createMockBaseArtifacts} = require('./mock-driver.js'); // eslint-disable-line max-len
-
-/* eslint-env jest */
+import * as helpers from '../../../fraggle-rock/gather/runner-helpers.js';
+import Gatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+import {defaultSettings} from '../../../config/constants.js';
+import {createMockDriver, createMockGathererInstance, createMockBaseArtifacts} from './mock-driver.js'; // eslint-disable-line max-len
 
 describe('collectArtifactDependencies', () => {
   /** @type {LH.Config.AnyArtifactDefn} */
@@ -132,7 +129,6 @@ describe('collectPhaseArtifacts', () => {
       it(`should run the ${phase} phase of gatherers in ${gatherMode} mode`, async () => {
         const {artifactDefinitions, gatherers} = createGathererSet();
         await helpers.collectPhaseArtifacts({
-          url: 'https://example.com',
           driver,
           artifactDefinitions,
           artifactState,
@@ -157,7 +153,6 @@ describe('collectPhaseArtifacts', () => {
   it('should gather the artifacts', async () => {
     const {artifactDefinitions} = createGathererSet();
     await helpers.collectPhaseArtifacts({
-      url: 'https://example.com',
       driver,
       artifactDefinitions,
       artifactState,
@@ -190,7 +185,6 @@ describe('collectPhaseArtifacts', () => {
     ];
 
     await helpers.collectPhaseArtifacts({
-      url: 'https://example.com',
       driver,
       artifactDefinitions,
       artifactState,
@@ -224,7 +218,6 @@ describe('collectPhaseArtifacts', () => {
 
     const {artifactDefinitions, gatherers} = createGathererSet();
     await helpers.collectPhaseArtifacts({
-      url: 'https://example.com',
       driver,
       artifactDefinitions,
       artifactState,

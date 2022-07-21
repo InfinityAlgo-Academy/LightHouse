@@ -3,19 +3,21 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
+
+/* global document */
 
 import fs from 'fs';
 import assert from 'assert';
 
 import open from 'open';
 import waitForExpect from 'wait-for-expect';
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
+import {getChromePath} from 'chrome-launcher';
 
 import {LH_ROOT} from '../../root.js';
-import api from '../fraggle-rock/api.js';
-import assetSaver from '../lib/asset-saver.js';
+import * as api from '../fraggle-rock/api.js';
+import * as assetSaver from '../lib/asset-saver.js';
 
 const ARTIFACTS_PATH =
   `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/artifacts/sample-flow-artifacts.json`;
@@ -39,7 +41,7 @@ const args = yargs(process.argv.slice(2))
   })
   .parseSync();
 
-/** @param {puppeteer.Page} page */
+/** @param {LH.Puppeteer.Page} page */
 async function waitForImagesToLoad(page) {
   const TIMEOUT = 30_000;
   const QUIET_WINDOW = 3_000;
@@ -82,7 +84,7 @@ const config = {
 async function rebaselineArtifacts(artifactKeys) {
   const browser = await puppeteer.launch({
     ignoreDefaultArgs: ['--enable-automation'],
-    executablePath: process.env.CHROME_PATH,
+    executablePath: getChromePath(),
     headless: false,
   });
 
@@ -149,15 +151,7 @@ async function generateFlowResult() {
   }
 }
 
-(async () => {
-  try {
-    if (args.rebaselineArtifacts) {
-      await rebaselineArtifacts(args.rebaselineArtifacts);
-    }
-    await generateFlowResult();
-  } catch (err) {
-    console.error(err);
-    process.exit(1);
-  }
-})();
-
+if (args.rebaselineArtifacts) {
+  await rebaselineArtifacts(args.rebaselineArtifacts);
+}
+await generateFlowResult();

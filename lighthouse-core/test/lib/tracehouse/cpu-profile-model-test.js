@@ -3,17 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import {CpuProfileModel} from '../../../lib/tracehouse/cpu-profile-model.js';
+import {TraceProcessor} from '../../../lib/tracehouse/trace-processor.js';
+import {MainThreadTasks} from '../../../lib/tracehouse/main-thread-tasks.js';
+import {readJson} from '../../test-utils.js';
 
-const CpuProfileModel = require('../../../lib/tracehouse/cpu-profile-model.js');
-const TraceProcessor = require('../../../lib/tracehouse/trace-processor.js');
-const MainThreadTasks = require('../../../lib/tracehouse/main-thread-tasks.js');
-const profilerTrace = require('../../fixtures/traces/cpu-profiler-m86.trace.json');
-const CpuProfilerModel = require('../../../lib/tracehouse/cpu-profile-model.js');
+const profilerTrace = readJson('../../fixtures/traces/cpu-profiler-m86.trace.json', import.meta);
 
-describe('CPU Profiler Model', () => {
+describe('CPU Profile Model', () => {
   /** @type {LH.TraceCpuProfile} */
   let profile;
 
@@ -45,7 +43,7 @@ describe('CPU Profiler Model', () => {
   });
 
   describe('#_findEffectiveTimestamp', () => {
-    const findTimestamp = CpuProfilerModel._findEffectiveTimestamp.bind(CpuProfilerModel);
+    const findTimestamp = CpuProfileModel._findEffectiveTimestamp.bind(CpuProfileModel);
     let defaultData;
 
     function createTask(startProfilerRange, endProfilerRange) {
@@ -200,7 +198,7 @@ describe('CPU Profiler Model', () => {
   describe('#synthesizeTraceEvents', () => {
     it('should create events in order', () => {
       const ts = x => profile.startTime + x;
-      const events = CpuProfilerModel.synthesizeTraceEvents(profile);
+      const events = CpuProfileModel.synthesizeTraceEvents(profile);
 
       expect(events).toMatchObject([
         {ph: 'B', ts: ts(10e3), args: {data: {callFrame: {functionName: '(root)'}}}},
@@ -234,7 +232,7 @@ describe('CPU Profiler Model', () => {
         {startTime: 15.7, endTime: 16.8},
       ];
 
-      const events = CpuProfilerModel.synthesizeTraceEvents(profile, tasks);
+      const events = CpuProfileModel.synthesizeTraceEvents(profile, tasks);
 
       expect(events).toMatchObject([
         {ph: 'B', ts: ts(8.0e3), args: {data: {callFrame: {functionName: '(root)'}}}},
@@ -297,7 +295,7 @@ describe('CPU Profiler Model', () => {
         {startTime: 92, endTime: 103},
       ];
 
-      const events = CpuProfilerModel.synthesizeTraceEvents(profile, tasks);
+      const events = CpuProfileModel.synthesizeTraceEvents(profile, tasks);
 
       expect(events).toMatchObject([
         {ph: 'B', ts: ts(0.5e3), args: {data: {callFrame: {functionName: '(root)'}}}},
@@ -334,7 +332,7 @@ describe('CPU Profiler Model', () => {
 
       const ts = x => profile.startTime + x;
 
-      const events = CpuProfilerModel.synthesizeTraceEvents(profile, []);
+      const events = CpuProfileModel.synthesizeTraceEvents(profile, []);
 
       expect(events).toMatchObject([
         {ph: 'B', ts: ts(0.5e3), args: {data: {callFrame: {functionName: '(rootA)'}}}},
@@ -354,7 +352,7 @@ describe('CPU Profiler Model', () => {
 
     it('should create main-thread-task parseable events', () => {
       const ts = x => profile.startTime + x;
-      const events = CpuProfilerModel.synthesizeTraceEvents(profile);
+      const events = CpuProfileModel.synthesizeTraceEvents(profile);
 
       const tasks = MainThreadTasks.getMainThreadTasks(events, [], ts(19e3));
       expect(tasks).toHaveLength(6);

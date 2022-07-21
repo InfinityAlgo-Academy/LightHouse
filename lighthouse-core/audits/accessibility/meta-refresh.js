@@ -10,8 +10,9 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import AxeAudit from './axe-audit.js';
+
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of an accesibility audit that evaluates if the page uses a meta tag that refreshes the page automatically. This title is descriptive of the successful state and is shown to users when no user action is required. */
@@ -22,10 +23,10 @@ const UIStrings = {
   description: 'Users do not expect a page to refresh automatically, and doing so will move ' +
       'focus back to the top of the page. This may create a frustrating or ' +
       'confusing experience. ' +
-      '[Learn more](https://web.dev/meta-refresh/).',
+      '[Learn more about the refresh meta tag](https://dequeuniversity.com/rules/axe/4.4/meta-refresh).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class MetaRefresh extends AxeAudit {
   /**
@@ -42,5 +43,5 @@ class MetaRefresh extends AxeAudit {
   }
 }
 
-module.exports = MetaRefresh;
-module.exports.UIStrings = UIStrings;
+export default MetaRefresh;
+export {UIStrings};

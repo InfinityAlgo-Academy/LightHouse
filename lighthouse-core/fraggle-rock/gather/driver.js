@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const ProtocolSession = require('./session.js');
-const ExecutionContext = require('../../gather/driver/execution-context.js');
-const Fetcher = require('../../gather/fetcher.js');
+import log from 'lighthouse-logger';
+import {ExecutionContext} from '../../gather/driver/execution-context.js';
+import {TargetManager} from '../../gather/driver/target-manager.js';
+import {Fetcher} from '../../gather/fetcher.js';
 
 /** @return {*} */
 const throwNotConnectedFn = () => {
@@ -16,7 +16,7 @@ const throwNotConnectedFn = () => {
 };
 
 /** @type {LH.Gatherer.FRProtocolSession} */
-const defaultSession = {
+const throwingSession = {
   setTargetInfo: throwNotConnectedFn,
   hasNextProtocolTimeout: throwNotConnectedFn,
   getNextProtocolTimeout: throwNotConnectedFn,
@@ -24,10 +24,6 @@ const defaultSession = {
   on: throwNotConnectedFn,
   once: throwNotConnectedFn,
   off: throwNotConnectedFn,
-  addProtocolMessageListener: throwNotConnectedFn,
-  removeProtocolMessageListener: throwNotConnectedFn,
-  addSessionAttachedListener: throwNotConnectedFn,
-  removeSessionAttachedListener: throwNotConnectedFn,
   sendCommand: throwNotConnectedFn,
   dispose: throwNotConnectedFn,
 };
@@ -35,18 +31,18 @@ const defaultSession = {
 /** @implements {LH.Gatherer.FRTransitionalDriver} */
 class Driver {
   /**
-   * @param {import('puppeteer').Page} page
+   * @param {LH.Puppeteer.Page} page
    */
   constructor(page) {
     this._page = page;
-    /** @type {LH.Gatherer.FRProtocolSession|undefined} */
-    this._session = undefined;
+    /** @type {TargetManager|undefined} */
+    this._targetManager = undefined;
     /** @type {ExecutionContext|undefined} */
     this._executionContext = undefined;
     /** @type {Fetcher|undefined} */
     this._fetcher = undefined;
 
-    this.defaultSession = defaultSession;
+    this.defaultSession = throwingSession;
   }
 
   /** @return {LH.Gatherer.FRTransitionalDriver['executionContext']} */
@@ -61,6 +57,11 @@ class Driver {
     return this._fetcher;
   }
 
+  get targetManager() {
+    if (!this._targetManager) return throwNotConnectedFn();
+    return this._targetManager;
+  }
+
   /** @return {Promise<string>} */
   async url() {
     return this._page.url();
@@ -68,21 +69,24 @@ class Driver {
 
   /** @return {Promise<void>} */
   async connect() {
-    if (this._session) return;
+    if (this.defaultSession !== throwingSession) return;
     const status = {msg: 'Connecting to browser', id: 'lh:driver:connect'};
     log.time(status);
-    const session = await this._page.target().createCDPSession();
-    this._session = this.defaultSession = new ProtocolSession(session);
-    this._executionContext = new ExecutionContext(this._session);
-    this._fetcher = new Fetcher(this._session, this._executionContext);
+    const cdpSession = await this._page.target().createCDPSession();
+    this._targetManager = new TargetManager(cdpSession);
+    await this._targetManager.enable();
+    this.defaultSession = this._targetManager.rootSession();
+    this._executionContext = new ExecutionContext(this.defaultSession);
+    this._fetcher = new Fetcher(this.defaultSession);
     log.timeEnd(status);
   }
 
   /** @return {Promise<void>} */
   async disconnect() {
-    if (!this._session) return;
-    await this._session.dispose();
+    if (this.defaultSession === throwingSession) return;
+    this._targetManager?.disable();
+    await this.defaultSession.dispose();
   }
 }
 
-module.exports = Driver;
+export {Driver};

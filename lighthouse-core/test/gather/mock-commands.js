@@ -3,13 +3,13 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
+
 
 /**
  * @fileoverview Refer to driver-test.js and source-maps-test.js for intended usage.
  */
 
-/* eslint-env jest */
+import {fnAny} from '../test-utils.js';
 
 /**
  * @template {keyof LH.CrdpCommands} C
@@ -30,6 +30,8 @@
  *    - `findInvocation` which asserts that `sendCommand` was invoked with the given command and
  *      returns the protocol message argument.
  *
+ * To mock an error response, use `send.mockResponse('Command', () => Promise.reject(error))`.
+ *
  * There are two variants of sendCommand, one that expects a sessionId as the second positional
  * argument (legacy Lighthouse `Connection.sendCommand`) and one that does not (Fraggle Rock
  * `ProtocolSession.sendCommand`).
@@ -47,7 +49,7 @@ function createMockSendCommandFn(options) {
    * @type {Array<{command: C|any, sessionId?: string, response?: MockResponse<C>, delay?: number}>}
    */
   const mockResponses = [];
-  const mockFnImpl = jest.fn().mockImplementation(
+  const mockFnImpl = fnAny().mockImplementation(
     /**
      * @template {keyof LH.CrdpCommands} C
      * @param {C} command
@@ -135,7 +137,7 @@ function createMockOnceFn() {
    * @type {Array<{event: E|any, response?: MockEvent<E>}>}
    */
   const mockEvents = [];
-  const mockFnImpl = jest.fn().mockImplementation((eventName, listener) => {
+  const mockFnImpl = fnAny().mockImplementation((eventName, listener) => {
     const indexOfResponse = mockEvents.findIndex(entry => entry.event === eventName);
     if (indexOfResponse === -1) return;
     const {response} = mockEvents[indexOfResponse];
@@ -182,7 +184,7 @@ function createMockOnFn() {
    * @type {Array<{event: E|any, response?: MockEvent<E>}>}
    */
   const mockEvents = [];
-  const mockFnImpl = jest.fn().mockImplementation((eventName, listener) => {
+  const mockFnImpl = fnAny().mockImplementation((eventName, listener) => {
     const events = mockEvents.filter(entry => entry.event === eventName);
     if (!events.length) return;
     for (const event of events) {
@@ -225,7 +227,7 @@ function createMockOnFn() {
   return mockFn;
 }
 
-module.exports = {
+export {
   createMockSendCommandFn,
   createMockOnceFn,
   createMockOnFn,

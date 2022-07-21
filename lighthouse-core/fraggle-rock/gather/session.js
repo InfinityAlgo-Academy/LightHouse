@@ -5,41 +5,45 @@
  */
 'use strict';
 
-const LHError = require('../../lib/lh-error.js');
-const SessionEmitMonkeypatch = Symbol('monkeypatch');
+import EventEmitter from 'events';
+import {LighthouseError} from '../../lib/lh-error.js';
 
 // Controls how long to wait for a response after sending a DevTools protocol command.
 const DEFAULT_PROTOCOL_TIMEOUT = 30000;
 
+/** @typedef {LH.Protocol.StrictEventEmitterClass<LH.CrdpEvents>} CrdpEventMessageEmitter */
+const CrdpEventEmitter = /** @type {CrdpEventMessageEmitter} */ (EventEmitter);
+
 /** @implements {LH.Gatherer.FRProtocolSession} */
-class ProtocolSession {
+class ProtocolSession extends CrdpEventEmitter {
   /**
-   * @param {import('puppeteer').CDPSession} session
+   * @param {LH.Puppeteer.CDPSession} cdpSession
    */
-  constructor(session) {
-    this._session = session;
+  constructor(cdpSession) {
+    super();
+
+    this._cdpSession = cdpSession;
     /** @type {LH.Crdp.Target.TargetInfo|undefined} */
     this._targetInfo = undefined;
     /** @type {number|undefined} */
     this._nextProtocolTimeout = undefined;
-    /** @type {WeakMap<any, any>} */
-    this._callbackMap = new WeakMap();
 
-    // FIXME: Monkeypatch puppeteer to be able to listen to *all* protocol events.
-    // This patched method will now emit a copy of every event on `*`.
-    const originalEmit = session.emit;
-    // @ts-expect-error - Test for the monkeypatch.
-    if (originalEmit[SessionEmitMonkeypatch]) return;
-    session.emit = (method, ...args) => {
-      // OOPIF sessions need to emit their sessionId so downstream processors can recognize
-      // the target the event came from.
-      const sessionId = this._targetInfo && this._targetInfo.type === 'iframe' ?
-        this._targetInfo.targetId : undefined;
-      originalEmit.call(session, '*', {method, params: args[0], sessionId});
-      return originalEmit.call(session, method, ...args);
-    };
-    // @ts-expect-error - It's monkeypatching 🤷‍♂️.
-    session.emit[SessionEmitMonkeypatch] = true;
+    this._handleProtocolEvent = this._handleProtocolEvent.bind(this);
+    this._cdpSession.on('*', this._handleProtocolEvent);
+  }
+
+  id() {
+    return this._cdpSession.id();
+  }
+
+  /**
+   * Re-emit protocol events from the underlying CDPSession.
+   * @template {keyof LH.CrdpEvents} E
+   * @param {E} method
+   * @param {LH.CrdpEvents[E]} params
+   */
+  _handleProtocolEvent(method, ...params) {
+    this.emit(method, ...params);
   }
 
   /** @param {LH.Crdp.Target.TargetInfo} targetInfo */
@@ -69,73 +73,6 @@ class ProtocolSession {
   }
 
   /**
-   * Bind listeners for protocol events.
-   * @template {keyof LH.CrdpEvents} E
-   * @param {E} eventName
-   * @param {(...args: LH.CrdpEvents[E]) => void} callback
-   */
-  on(eventName, callback) {
-    this._session.on(eventName, /** @type {*} */ (callback));
-  }
-
-  /**
-   * Bind listeners for protocol events.
-   * @template {keyof LH.CrdpEvents} E
-   * @param {E} eventName
-   * @param {(...args: LH.CrdpEvents[E]) => void} callback
-   */
-  once(eventName, callback) {
-    this._session.once(eventName, /** @type {*} */ (callback));
-  }
-
-  /**
-   * Bind to the puppeteer `sessionattached` listener and return an LH ProtocolSession.
-   * @param {(session: ProtocolSession) => void} callback
-   */
-  addSessionAttachedListener(callback) {
-    /** @param {import('puppeteer').CDPSession} session */
-    const listener = session => callback(new ProtocolSession(session));
-    this._callbackMap.set(callback, listener);
-    this._session.connection().on('sessionattached', listener);
-  }
-
-  /**
-   * Unbind to the puppeteer `sessionattached` listener.
-   * @param {(session: ProtocolSession) => void} callback
-   */
-  removeSessionAttachedListener(callback) {
-    const listener = this._callbackMap.get(callback);
-    if (!listener) return;
-    this._session.connection().off('sessionattached', listener);
-  }
-
-  /**
-   * Bind to our custom event that fires for *any* protocol event.
-   * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
-   */
-  addProtocolMessageListener(callback) {
-    this._session.on('*', /** @type {*} */ (callback));
-  }
-
-  /**
-   * Unbind to our custom event that fires for *any* protocol event.
-   * @param {(payload: LH.Protocol.RawEventMessage) => void} callback
-   */
-  removeProtocolMessageListener(callback) {
-    this._session.off('*', /** @type {*} */ (callback));
-  }
-
-  /**
-   * Bind listeners for protocol events.
-   * @template {keyof LH.CrdpEvents} E
-   * @param {E} eventName
-   * @param {(...args: LH.CrdpEvents[E]) => void} callback
-   */
-  off(eventName, callback) {
-    this._session.off(eventName, /** @type {*} */ (callback));
-  }
-
-  /**
    * @template {keyof LH.CrdpCommands} C
    * @param {C} method
    * @param {LH.CrdpCommands[C]['paramsType']} params
@@ -150,12 +87,13 @@ class ProtocolSession {
     const timeoutPromise = new Promise((resolve, reject) => {
       if (timeoutMs === Infinity) return;
 
-      timeout = setTimeout(reject, timeoutMs, new LHError(LHError.errors.PROTOCOL_TIMEOUT, {
+      // eslint-disable-next-line max-len
+      timeout = setTimeout(reject, timeoutMs, new LighthouseError(LighthouseError.errors.PROTOCOL_TIMEOUT, {
         protocolMethod: method,
       }));
     });
 
-    const resultPromise = this._session.send(method, ...params);
+    const resultPromise = this._cdpSession.send(method, ...params);
     const resultWithTimeoutPromise = Promise.race([resultPromise, timeoutPromise]);
 
     return resultWithTimeoutPromise.finally(() => {
@@ -168,9 +106,9 @@ class ProtocolSession {
    * @return {Promise<void>}
    */
   async dispose() {
-    this._session.removeAllListeners();
-    await this._session.detach();
+    this._cdpSession.off('*', this._handleProtocolEvent);
+    await this._cdpSession.detach();
   }
 }
 
-module.exports = ProtocolSession;
+export {ProtocolSession};

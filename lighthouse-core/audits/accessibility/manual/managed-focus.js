@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit.js');
+import ManualAudit from '../../manual/manual-audit.js';
 
 /**
  * @fileoverview Manual A11y audit for focusing new content that's added to the page.
@@ -19,10 +19,10 @@ class ManagedFocus extends ManualAudit {
   static get meta() {
     return Object.assign({
       id: 'managed-focus',
-      description: 'If new content, such as a dialog, is added to the page, the user\'s focus is directed to it. [Learn more](https://web.dev/managed-focus/).',
+      description: 'If new content, such as a dialog, is added to the page, the user\'s focus is directed to it. [Learn how to direct focus to new content](https://web.dev/managed-focus/).',
       title: 'The user\'s focus is directed to new content added to the page',
     }, super.partialMeta);
   }
 }
 
-module.exports = ManagedFocus;
+export default ManagedFocus;

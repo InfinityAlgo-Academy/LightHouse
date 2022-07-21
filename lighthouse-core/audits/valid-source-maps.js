@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const thirdPartyWeb = require('../lib/third-party-web.js');
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
+import thirdPartyWeb from '../lib/third-party-web.js';
+import {Audit} from './audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on HTTP to HTTPS redirects. This descriptive title is shown to users when HTTP traffic is redirected to HTTPS. */
@@ -18,7 +18,7 @@ const UIStrings = {
   description: 'Source maps translate minified code to the original source code. This helps ' +
     'developers debug in production. In addition, Lighthouse is able to provide further ' +
     'insights. Consider deploying source maps to take advantage of these benefits. ' +
-    '[Learn more](https://developers.google.com/web/tools/chrome-devtools/javascript/source-maps).',
+    '[Learn more about source maps](https://developers.google.com/web/tools/chrome-devtools/javascript/source-maps).',
   /** Label for a column in a data table. Entries will be URLs to JavaScript source maps. */
   columnMapURL: 'Map URL',
   /** Label for a possible error message indicating that a source map for a large, first-party JavaScript script is missing. */
@@ -30,7 +30,7 @@ const UIStrings = {
     }`,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 const LARGE_JS_BYTE_THRESHOLD = 500 * 1024;
 
@@ -151,5 +151,5 @@ class ValidSourceMaps extends Audit {
   }
 }
 
-module.exports = ValidSourceMaps;
-module.exports.UIStrings = UIStrings;
+export default ValidSourceMaps;
+export {UIStrings};

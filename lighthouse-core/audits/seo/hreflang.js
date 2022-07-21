@@ -9,9 +9,10 @@
 /** @typedef {{source: Source, subItems: {type: 'subitems', items: SubItem[]}}} InvalidHreflang */
 /** @typedef {{reason: LH.IcuMessage}} SubItem */
 
-const Audit = require('../audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const {isValidLang} = require('../../../third-party/axe/valid-langs.js');
+import {Audit} from '../audit.js';
+
+import * as i18n from '../../lib/i18n/i18n.js';
+import {isValidLang} from '../../../third-party/axe/valid-langs.js';
 
 const NO_LANGUAGE = 'x-default';
 
@@ -22,7 +23,7 @@ const UIStrings = {
   failureTitle: 'Document doesn\'t have a valid `hreflang`',
   /** Description of a Lighthouse audit that tells the user *why* they need to have an hreflang link on their page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. "hreflang" is an HTML attribute and should not be translated. */
   description: 'hreflang links tell search engines what version of a page they should ' +
-    'list in search results for a given language or region. [Learn more]' +
+    'list in search results for a given language or region. [Learn more about `hreflang`]' +
     '(https://web.dev/hreflang/).',
   /** A failure reason for a Lighthouse audit that flags incorrect use of the `hreflang` attribute on `link` elements. This failure reason is shown when the hreflang language code is unexpected. */
   unexpectedLanguage: 'Unexpected language code',
@@ -30,7 +31,7 @@ const UIStrings = {
   notFullyQualified: 'Relative href value',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @param {string} href
@@ -145,5 +146,5 @@ class Hreflang extends Audit {
   }
 }
 
-module.exports = Hreflang;
-module.exports.UIStrings = UIStrings;
+export default Hreflang;
+export {UIStrings};

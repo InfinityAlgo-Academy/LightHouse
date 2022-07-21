@@ -9,9 +9,10 @@
  * @fileoverview Computed Largest Contentful Paint (LCP) for all frames.
  */
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const NavigationMetric = require('./navigation-metric.js');
-const LHError = require('../../lib/lh-error.js');
+import {makeComputedArtifact} from '../computed-artifact.js';
+
+import NavigationMetric from './navigation-metric.js';
+import {LighthouseError} from '../../lib/lh-error.js';
 
 class LargestContentfulPaintAllFrames extends NavigationMetric {
   /**
@@ -29,7 +30,7 @@ class LargestContentfulPaintAllFrames extends NavigationMetric {
   static async computeObservedMetric(data) {
     const {processedNavigation} = data;
     if (processedNavigation.timings.largestContentfulPaintAllFrames === undefined) {
-      throw new LHError(LHError.errors.NO_LCP_ALL_FRAMES);
+      throw new LighthouseError(LighthouseError.errors.NO_LCP_ALL_FRAMES);
     }
 
     return {
@@ -39,7 +40,7 @@ class LargestContentfulPaintAllFrames extends NavigationMetric {
   }
 }
 
-module.exports = makeComputedArtifact(
+export default makeComputedArtifact(
   LargestContentfulPaintAllFrames,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

@@ -157,7 +157,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
       ...requestData,
       decodedBodyLength: record.resourceSize,
       didFail: !!record.failed,
-      finishTime: endTime,
+      finishTime: toMicroseconds(endTime) / (1000 * 1000),
     };
 
     /** @type {LH.TraceEvent[]} */
@@ -189,7 +189,7 @@ function convertNodeTimingsToTrace(nodeTimings) {
   }
 }
 
-module.exports = {
+export default {
   simulationNamesToIgnore: [
     'unlabeled',
     // These node timings should be nearly identical to the ones produced for Interactive

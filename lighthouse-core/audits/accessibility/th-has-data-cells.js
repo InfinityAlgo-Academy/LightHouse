@@ -10,8 +10,9 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import AxeAudit from './axe-audit.js';
+
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of an accesibility audit that evaluates if all table header elements have children. This title is descriptive of the successful state and is shown to users when no user action is required. */
@@ -24,10 +25,10 @@ const UIStrings = {
   description: 'Screen readers have features to make navigating tables easier. Ensuring ' +
       'table headers always refer to some set of cells may improve the experience for screen ' +
       'reader users. ' +
-      '[Learn more](https://web.dev/th-has-data-cells/).',
+      '[Learn more about table headers](https://dequeuniversity.com/rules/axe/4.4/th-has-data-cells).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class THHasDataCells extends AxeAudit {
   /**
@@ -44,5 +45,5 @@ class THHasDataCells extends AxeAudit {
   }
 }
 
-module.exports = THHasDataCells;
-module.exports.UIStrings = UIStrings;
+export default THHasDataCells;
+export {UIStrings};

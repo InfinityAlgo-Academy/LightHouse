@@ -5,17 +5,17 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const linearInterpolation = require('../../lib/statistics.js').linearInterpolation;
-const Interactive = require('../../computed/metrics/lantern-interactive.js');
-const i18n = require('../../lib/i18n/i18n.js');
-const NetworkRecords = require('../../computed/network-records.js');
-const LoadSimulator = require('../../computed/load-simulator.js');
-const PageDependencyGraph = require('../../computed/page-dependency-graph.js');
+import {Audit} from '../audit.js';
+import {linearInterpolation} from '../../lib/statistics.js';
+import Interactive from '../../computed/metrics/lantern-interactive.js';
+import * as i18n from '../../lib/i18n/i18n.js';
+import NetworkRecords from '../../computed/network-records.js';
+import LoadSimulator from '../../computed/load-simulator.js';
+import PageDependencyGraph from '../../computed/page-dependency-graph.js';
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, {});
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, {});
 
-/** @typedef {import('../../lib/dependency-graph/simulator/simulator')} Simulator */
+/** @typedef {import('../../lib/dependency-graph/simulator/simulator').Simulator} Simulator */
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
 const WASTED_MS_FOR_AVERAGE = 300;
@@ -36,7 +36,7 @@ const WASTED_MS_FOR_SCORE_OF_ZERO = 5000;
  * @overview Used as the base for all byte efficiency audits. Computes total bytes
  *    and estimated time saved. Subclass and override `audit_` to return results.
  */
-class UnusedBytes extends Audit {
+class ByteEfficiencyAudit extends Audit {
   /**
    * Creates a score based on the wastedMs value using linear interpolation between control points.
    *
@@ -236,7 +236,7 @@ class UnusedBytes extends Audit {
       displayValue,
       numericValue: wastedMs,
       numericUnit: 'millisecond',
-      score: UnusedBytes.scoreForWastedMs(wastedMs),
+      score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
       details,
     };
   }
@@ -256,4 +256,4 @@ class UnusedBytes extends Audit {
   /* eslint-enable no-unused-vars */
 }
 
-module.exports = UnusedBytes;
+export {ByteEfficiencyAudit};

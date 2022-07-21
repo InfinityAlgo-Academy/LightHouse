@@ -5,14 +5,14 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('../computed-artifact.js');
-const LanternMetric = require('./lantern-metric.js');
-const BaseNode = require('../../lib/dependency-graph/base-node.js');
-const LanternFirstContentfulPaint = require('./lantern-first-contentful-paint.js');
-const LanternInteractive = require('./lantern-interactive.js');
-const {BLOCKING_TIME_THRESHOLD, calculateSumOfBlockingTime} = require('./tbt-utils.js');
+import {makeComputedArtifact} from '../computed-artifact.js';
+import LanternMetric from './lantern-metric.js';
+import {BaseNode} from '../../lib/dependency-graph/base-node.js';
+import LanternFirstContentfulPaint from './lantern-first-contentful-paint.js';
+import LanternInteractive from './lantern-interactive.js';
+import {BLOCKING_TIME_THRESHOLD, calculateSumOfBlockingTime} from './tbt-utils.js';
 
-/** @typedef {BaseNode.Node} Node */
+/** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
 class LanternTotalBlockingTime extends LanternMetric {
   /**
@@ -120,7 +120,7 @@ class LanternTotalBlockingTime extends LanternMetric {
   }
 }
 
-module.exports = makeComputedArtifact(
+export default makeComputedArtifact(
   LanternTotalBlockingTime,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );

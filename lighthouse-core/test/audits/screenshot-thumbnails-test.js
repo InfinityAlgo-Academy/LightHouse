@@ -3,18 +3,19 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const assert = require('assert').strict;
+import fs from 'fs';
+import path from 'path';
+import {strict as assert} from 'assert';
 
-const ScreenshotThumbnailsAudit = require('../../audits/screenshot-thumbnails.js');
-const pwaTrace = require('../fixtures/traces/progressive-app-m60.json');
+import ScreenshotThumbnailsAudit from '../../audits/screenshot-thumbnails.js';
+import {LH_ROOT} from '../../../root.js';
+import {readJson} from '../test-utils.js';
+
+const pwaTrace = readJson('../fixtures/traces/progressive-app-m60.json', import.meta);
+const pwaDevtoolsLog = readJson('../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+
 const noScreenshotsTrace = {traceEvents: pwaTrace.traceEvents.filter(e => e.name !== 'Screenshot')};
-const pwaDevtoolsLog = require('../fixtures/traces/progressive-app-m60.devtools.log.json');
-
-/* eslint-env jest */
 
 describe('Screenshot thumbnails', () => {
   it('should extract thumbnails from a trace', () => {
@@ -29,8 +30,8 @@ describe('Screenshot thumbnails', () => {
     const context = {settings, options, computedCache: new Map()};
     return ScreenshotThumbnailsAudit.audit(artifacts, context).then(results => {
       results.details.items.forEach((result, index) => {
-        const framePath = path.join(__dirname,
-            `../fixtures/traces/screenshots/progressive-app-frame-${index}.jpg`);
+        const framePath = path.join(LH_ROOT,
+          `lighthouse-core/test/fixtures/traces/screenshots/progressive-app-frame-${index}.jpg`);
         const expectedData = fs.readFileSync(framePath, 'base64');
         const actualData = result.data.slice('data:image/jpeg;base64,'.length);
         expect(actualData).toEqual(expectedData);

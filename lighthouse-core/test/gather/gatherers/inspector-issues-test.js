@@ -3,17 +3,14 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import InspectorIssues from '../../../gather/gatherers/inspector-issues.js';
+import {NetworkRequest} from '../../../lib/network-request.js';
+import {createMockContext} from '../../fraggle-rock/gather/mock-driver.js';
+import {flushAllTimersAndMicrotasks, timers} from '../../test-utils.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 
-const InspectorIssues = require('../../../gather/gatherers/inspector-issues.js');
-const NetworkRequest = require('../../../lib/network-request.js');
-const {createMockContext} = require('../../fraggle-rock/gather/mock-driver.js');
-const {flushAllTimersAndMicrotasks} = require('../../test-utils.js');
-const networkRecordsToDevtoolsLog = require('../../network-records-to-devtools-log.js');
-
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 /**
  * @param {Partial<LH.Artifacts.NetworkRequest>=} partial
@@ -132,16 +129,15 @@ function mockCSP(details) {
 }
 
 /**
- * @param {string} text
+ * @param {LH.Crdp.Audits.DeprecationIssueType} type
  * @return {LH.Crdp.Audits.InspectorIssue}
  */
-function mockDeprecation(text) {
+function mockDeprecation(type) {
   return {
     code: 'DeprecationIssue',
     details: {
       deprecationIssueDetails: {
-        message: text,
-        deprecationType: 'test',
+        type,
         sourceCodeLocation: {
           url: 'https://www.example.com',
           lineNumber: 10,
@@ -186,7 +182,7 @@ describe('_getArtifact', () => {
       mockBlockedByResponse({request: {requestId: '3'}}),
       mockHeavyAd(),
       mockCSP(),
-      mockDeprecation('some warning'),
+      mockDeprecation('AuthorizationCoveredByWildcard'),
     ];
     const networkRecords = [
       mockRequest({requestId: '1'}),
@@ -231,8 +227,7 @@ describe('_getArtifact', () => {
         contentSecurityPolicyViolationType: 'kInlineViolation',
       }],
       deprecationIssue: [{
-        message: 'some warning',
-        deprecationType: 'test',
+        type: 'AuthorizationCoveredByWildcard',
         sourceCodeLocation: {
           url: 'https://www.example.com',
           columnNumber: 10,

@@ -9,10 +9,10 @@
   */
 'use strict';
 
-const log = require('lighthouse-logger');
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
-const pageFunctions = require('../../lib/page-functions.js');
-const FontSize = require('./seo/font-size.js');
+import log from 'lighthouse-logger';
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+import {pageFunctions} from '../../lib/page-functions.js';
+import * as FontSize from './seo/font-size.js';
 
 /* global window, getElementsInDocument, Image, getNodeDetails, ShadowRoot */
 
@@ -258,6 +258,7 @@ class ImageElements extends FRGatherer {
         driver.defaultSession.setNextProtocolTimeout(250);
         size = await driver.executionContext.evaluate(determineNaturalSize, {
           args: [url],
+          useIsolation: true,
         });
         this._naturalSizeCache.set(url, size);
       } catch (_) {
@@ -340,6 +341,7 @@ class ImageElements extends FRGatherer {
 
     const elements = await executionContext.evaluate(collectImageElementInfo, {
       args: [],
+      useIsolation: true,
       deps: [
         pageFunctions.getElementsInDocumentString,
         pageFunctions.getBoundingClientRectString,
@@ -372,4 +374,4 @@ class ImageElements extends FRGatherer {
   }
 }
 
-module.exports = ImageElements;
+export default ImageElements;

@@ -5,28 +5,25 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const Driver = require('./driver.js');
-const Runner = require('../../runner.js');
-const {
-  getEmptyArtifactState,
-  collectPhaseArtifacts,
-  awaitArtifacts,
-} = require('./runner-helpers.js');
-const prepare = require('../../gather/driver/prepare.js');
-const {gotoURL} = require('../../gather/driver/navigation.js');
-const storage = require('../../gather/driver/storage.js');
-const emulation = require('../../lib/emulation.js');
-const {defaultNavigationConfig} = require('../../config/constants.js');
-const {initializeConfig} = require('../config/config.js');
-const {getBaseArtifacts, finalizeArtifacts} = require('./base-artifacts.js');
-const format = require('../../../shared/localization/format.js');
-const LighthouseError = require('../../lib/lh-error.js');
-const URL = require('../../lib/url-shim.js');
-const {getPageLoadError} = require('../../lib/navigation-error.js');
-const Trace = require('../../gather/gatherers/trace.js');
-const DevtoolsLog = require('../../gather/gatherers/devtools-log.js');
-const NetworkRecords = require('../../computed/network-records.js');
+import puppeteer from 'puppeteer-core';
+import log from 'lighthouse-logger';
+import {Driver} from './driver.js';
+import {Runner} from '../../runner.js';
+import {getEmptyArtifactState, collectPhaseArtifacts, awaitArtifacts} from './runner-helpers.js';
+import * as prepare from '../../gather/driver/prepare.js';
+import {gotoURL} from '../../gather/driver/navigation.js';
+import * as storage from '../../gather/driver/storage.js';
+import * as emulation from '../../lib/emulation.js';
+import {defaultNavigationConfig} from '../../config/constants.js';
+import {initializeConfig} from '../config/config.js';
+import {getBaseArtifacts, finalizeArtifacts} from './base-artifacts.js';
+import format from '../../../shared/localization/format.js';
+import {LighthouseError} from '../../lib/lh-error.js';
+import URL from '../../lib/url-shim.js';
+import {getPageLoadError} from '../../lib/navigation-error.js';
+import Trace from '../../gather/gatherers/trace.js';
+import DevtoolsLog from '../../gather/gatherers/devtools-log.js';
+import NetworkRecords from '../../computed/network-records.js';
 
 /** @typedef {{skipAboutBlank?: boolean}} InternalOptions */
 
@@ -42,6 +39,9 @@ const NetworkRecords = require('../../computed/network-records.js');
  */
 
 /** @typedef {Omit<Parameters<typeof collectPhaseArtifacts>[0], 'phase'>} PhaseState */
+
+const DEFAULT_HOSTNAME = '127.0.0.1';
+const DEFAULT_PORT = 9222;
 
 /**
  * @param {{driver: Driver, config: LH.Config.FRConfig, options?: InternalOptions}} args
@@ -144,11 +144,11 @@ async function _collectDebugData(navigationContext, phaseState) {
   const getArtifactState = phaseState.artifactState.getArtifact;
 
   const devtoolsLogArtifactId = devtoolsLogArtifactDefn?.id;
-  const devtoolsLog = devtoolsLogArtifactId && await getArtifactState[devtoolsLogArtifactId];
-  const records = devtoolsLog && await NetworkRecords.request(devtoolsLog, navigationContext);
+  const devtoolsLog = devtoolsLogArtifactId && (await getArtifactState[devtoolsLogArtifactId]);
+  const records = devtoolsLog && (await NetworkRecords.request(devtoolsLog, navigationContext));
 
   const traceArtifactId = traceArtifactDefn?.id;
-  const trace = traceArtifactId && await getArtifactState[traceArtifactId];
+  const trace = traceArtifactId && (await getArtifactState[traceArtifactId]);
 
   return {devtoolsLog, records, trace};
 }
@@ -174,6 +174,7 @@ async function _computeNavigationResult(
       url: mainDocumentUrl,
       loadFailureMode: navigationContext.navigation.loadFailureMode,
       networkRecords: debugData.records,
+      warnings,
     })
     : navigationError;
 
@@ -229,9 +230,8 @@ async function _navigation(navigationContext) {
   const navigateResult = await _navigate(navigationContext);
 
   // Every required url is initialized to an empty string in `getBaseArtifacts`.
-  // If we haven't set the required urls yet, set them here.
-  const {URL} = phaseState.baseArtifacts;
-  if (!URL.finalUrl || !URL.initialUrl) {
+  // If we haven't set all the required urls yet, set them here.
+  if (!Object.values(phaseState.baseArtifacts).every(Boolean)) {
     phaseState.baseArtifacts.URL = {
       initialUrl,
       requestedUrl: navigateResult.requestedUrl,
@@ -299,33 +299,46 @@ async function _cleanup({requestedUrl, driver, config}) {
 }
 
 /**
- * @param {LH.NavigationRequestor} requestor
- * @param {{page: import('puppeteer').Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
+ * @param {LH.NavigationRequestor|undefined} requestor
+ * @param {{page?: LH.Puppeteer.Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
  * @return {Promise<LH.Gatherer.FRGatherResult>}
  */
 async function navigationGather(requestor, options) {
-  const {page, configContext = {}} = options;
+  const {configContext = {}} = options;
   log.setLevel(configContext.logLevel || 'error');
 
-  const {config} = initializeConfig(options.config, {...configContext, gatherMode: 'navigation'});
+  const {config} =
+    await initializeConfig(options.config, {...configContext, gatherMode: 'navigation'});
   const computedCache = new Map();
   const internalOptions = {
     skipAboutBlank: configContext.skipAboutBlank,
   };
 
   // We can't trigger the navigation through user interaction if we reset the page before starting.
-  if (typeof requestor !== 'string') {
+  const isCallback = typeof requestor === 'function';
+  if (isCallback) {
     internalOptions.skipAboutBlank = true;
   }
 
   const runnerOptions = {config, computedCache};
   const artifacts = await Runner.gather(
     async () => {
+      let {page} = options;
+      const normalizedRequestor = isCallback ? requestor : URL.normalizeUrl(requestor);
+
+      // For navigation mode, we shouldn't connect to a browser in audit mode,
+      // therefore we connect to the browser in the gatherFn callback.
+      if (!page) {
+        const {hostname = DEFAULT_HOSTNAME, port = DEFAULT_PORT} = configContext;
+        const browser = await puppeteer.connect({browserURL: `http://${hostname}:${port}`});
+        page = await browser.newPage();
+      }
+
       const driver = new Driver(page);
       const context = {
         driver,
         config,
-        requestor: typeof requestor === 'string' ? URL.normalizeUrl(requestor) : requestor,
+        requestor: normalizedRequestor,
         options: internalOptions,
       };
       const {baseArtifacts} = await _setup(context);
@@ -339,7 +352,7 @@ async function navigationGather(requestor, options) {
   return {artifacts, runnerOptions};
 }
 
-module.exports = {
+export {
   navigationGather,
   _setup,
   _setupNavigation,

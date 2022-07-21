@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /** @type {LH.Config.Json} */
 const config = {
@@ -28,8 +27,8 @@ const config = {
     // to complete.
     maxWaitForLoad: 180000,
   },
-  passes: [{
-    passName: 'defaultPass',
+  navigations: [{
+    id: 'default',
     // CI machines are pretty weak which lead to many more long tasks than normal.
     // Reduce our requirement for CPU quiet.
     cpuQuietThresholdMs: 500,
@@ -46,13 +45,33 @@ const expectations = {
     finalUrl: 'http://localhost:10200/oopif-requests.html',
     audits: {
       'network-requests': {
+        // Multiple session attach handling fixed in M105
+        // https://chromiumdash.appspot.com/commit/f42337f1d623ec913397610ccf01b5526e9e919d
+        _minChromiumVersion: '105',
         details: {
           items: {
-          // We want to make sure we are finding the iframe's requests (paulirish.com) *AND*
-          // the iframe's iframe's iframe's requests (youtube.com/doubleclick/etc).
-          // - paulirish.com ~40-60 requests
-          // - paulirish.com + all descendant iframes ~80-90 requests
-            length: '>70',
+            // We want to make sure we are finding the iframe's requests (paulirish.com) *AND*
+            // the iframe's iframe's iframe's requests (youtube.com/doubleclick/etc).
+            _includes: [
+              {url: 'http://localhost:10200/oopif-requests.html', finished: true, statusCode: 200, resourceType: 'Document', experimentalFromMainFrame: true},
+
+              // Paulirish iframe and subresource
+              {url: 'https://www.paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/', finished: true, statusCode: 200, resourceType: 'Document', experimentalFromMainFrame: undefined},
+              {url: 'https://www.paulirish.com/avatar150.jpg', finished: true, statusCode: 200, resourceType: 'Image', experimentalFromMainFrame: undefined},
+              {url: 'https://www.googletagmanager.com/gtag/js?id=G-PGXNGYWP8E', finished: true, statusCode: 200, resourceType: 'Script', experimentalFromMainFrame: undefined},
+              {url: /^https:\/\/fonts\.googleapis\.com\/css/, finished: true, statusCode: 200, resourceType: 'Stylesheet', experimentalFromMainFrame: undefined},
+
+              // Youtube iframe (OOPIF) and some subresources
+              // FYI: Youtube has a ServiceWorker which sometimes cancels the document request. As a result, there will sometimes be multiple requests for this file.
+              {url: 'https://www.youtube.com/embed/NZelrwd_iRs', finished: true, statusCode: 200, resourceType: 'Document'},
+              {url: /^https:\/\/www\.youtube\.com\/.*?player.*?css/, finished: true, statusCode: 200, resourceType: 'Stylesheet'},
+              {url: /^https:\/\/www\.youtube\.com\/.*?\/embed.js/, finished: true, statusCode: 200, resourceType: 'Script', experimentalFromMainFrame: undefined},
+
+              // Disqus iframe (OOPIF)
+              {url: /^https:\/\/disqus\.com\/embed\/comments\//, finished: true, statusCode: 200, resourceType: 'Document'},
+              // Disqus subframe (that's a new OOPIF)
+              {url: 'https://accounts.google.com/o/oauth2/iframe', finished: true, statusCode: 200, resourceType: 'Document'},
+            ],
           },
         },
       },

@@ -5,8 +5,10 @@
  */
 'use strict';
 
-const Audit = require('../audit.js');
-const URL = require('../../lib/url-shim.js');
+import {Audit} from '../audit.js';
+import URL from '../../lib/url-shim.js';
+import * as i18n from '../../lib/i18n/i18n.js';
+
 const BLOCKLIST = new Set([
   // English
   'click here',
@@ -74,7 +76,6 @@ const BLOCKLIST = new Set([
   'mer info',
   'mer information',
 ]);
-const i18n = require('../../lib/i18n/i18n.js');
 
 const UIStrings = {
   /** Title of a Lighthouse audit that tests if each link on a page contains a sufficient description of what a user will find when they click it. Generic, non-descriptive text like "click here" doesn't give an indication of what the link leads to. This descriptive title is shown when all links on the page have sufficient textual descriptions. */
@@ -83,7 +84,7 @@ const UIStrings = {
   failureTitle: 'Links do not have descriptive text',
   /** Description of a Lighthouse audit that tells the user *why* they need to have descriptive text on the links in their page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Descriptive link text helps search engines understand your content. ' +
-  '[Learn more](https://web.dev/link-text/).',
+  '[Learn how to make links more accessible](https://web.dev/link-text/).',
   /** [ICU Syntax] Label for the audit identifying the number of links found. "link" here refers to the links in a web page to other web pages. */
   displayValue: `{itemCount, plural,
     =1 {1 link found}
@@ -91,7 +92,7 @@ const UIStrings = {
     }`,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class LinkText extends Audit {
   /**
@@ -119,6 +120,8 @@ class LinkText extends Audit {
         if (
           href.startsWith('javascript:') ||
           href.startsWith('mailto:') ||
+          // This line prevents the audit from flagging anchor links.
+          // In this case it is better to use `finalUrl` than `mainDocumentUrl`.
           URL.equalWithExcludedFragments(link.href, artifacts.URL.finalUrl)
         ) {
           return false;
@@ -154,5 +157,5 @@ class LinkText extends Audit {
   }
 }
 
-module.exports = LinkText;
-module.exports.UIStrings = UIStrings;
+export default LinkText;
+export {UIStrings};

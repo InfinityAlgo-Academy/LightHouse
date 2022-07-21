@@ -6,7 +6,7 @@
  */
 'use strict';
 
-const ManualAudit = require('../../manual/manual-audit.js');
+import ManualAudit from '../../manual/manual-audit.js';
 
 /**
  * @fileoverview Manual A11y audit to assert custom controls have associated roles.
@@ -19,10 +19,10 @@ class CustomControlsRoles extends ManualAudit {
   static get meta() {
     return Object.assign({
       id: 'custom-controls-roles',
-      description: 'Custom interactive controls have appropriate ARIA roles. [Learn more](https://web.dev/custom-control-roles/).',
+      description: 'Custom interactive controls have appropriate ARIA roles. [Learn how to add roles to custom controls](https://web.dev/custom-control-roles/).',
       title: 'Custom controls have ARIA roles',
     }, super.partialMeta);
   }
 }
 
-module.exports = CustomControlsRoles;
+export default CustomControlsRoles;

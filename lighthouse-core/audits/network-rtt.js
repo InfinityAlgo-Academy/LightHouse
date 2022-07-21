@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
-const NetworkRecords = require('../computed/network-records.js');
-const NetworkAnalysisComputed = require('../computed/network-analysis.js');
+import {Audit} from './audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import NetworkRecords from '../computed/network-records.js';
+import NetworkAnalysisComputed from '../computed/network-analysis.js';
 
 const UIStrings = {
   /** Descriptive title of a Lighthouse audit that tells the user the round trip times to each origin the page connected to. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -16,10 +16,10 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user that a high network round trip time (RTT) can effect their website's performance because the server is physically far away from them thus making the RTT high. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Network round trip times (RTT) have a large impact on performance. ' +
     'If the RTT to an origin is high, it\'s an indication that servers closer to the user could ' +
-    'improve performance. [Learn more](https://hpbn.co/primer-on-latency-and-bandwidth/).',
+    'improve performance. [Learn more about the Round Trip Time](https://hpbn.co/primer-on-latency-and-bandwidth/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class NetworkRTT extends Audit {
   /**
@@ -86,5 +86,5 @@ class NetworkRTT extends Audit {
   }
 }
 
-module.exports = NetworkRTT;
-module.exports.UIStrings = UIStrings;
+export default NetworkRTT;
+export {UIStrings};

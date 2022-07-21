@@ -10,91 +10,59 @@
  * status inspection state.
  */
 
-const log = require('lighthouse-logger');
-const {EventEmitter} = require('events');
-const NetworkRecorder = require('../../lib/network-recorder.js');
-const NetworkRequest = require('../../lib/network-request.js');
-const URL = require('../../lib/url-shim.js');
-const TargetManager = require('./target-manager.js');
+import log from 'lighthouse-logger';
 
-/** @typedef {import('../../lib/network-recorder.js').NetworkRecorderEvent} NetworkRecorderEvent */
+import {EventEmitter} from 'events';
+import {NetworkRecorder} from '../../lib/network-recorder.js';
+import {NetworkRequest} from '../../lib/network-request.js';
+import URL from '../../lib/url-shim.js';
+
+/** @typedef {import('../../lib/network-recorder.js').NetworkRecorderEventMap} NetworkRecorderEventMap */
 /** @typedef {'network-2-idle'|'network-critical-idle'|'networkidle'|'networkbusy'|'network-critical-busy'|'network-2-busy'} NetworkMonitorEvent_ */
-/** @typedef {NetworkRecorderEvent|NetworkMonitorEvent_} NetworkMonitorEvent */
-/** @typedef {Record<NetworkMonitorEvent_, []> & Record<NetworkRecorderEvent, [NetworkRequest]> & {protocolmessage: [LH.Protocol.RawEventMessage]}} NetworkMonitorEventMap */
-/** @typedef {LH.Protocol.StrictEventEmitter<NetworkMonitorEventMap>} NetworkMonitorEmitter */
+/** @typedef {Record<NetworkMonitorEvent_, []> & NetworkRecorderEventMap} NetworkMonitorEventMap */
+/** @typedef {keyof NetworkMonitorEventMap} NetworkMonitorEvent */
+/** @typedef {LH.Protocol.StrictEventEmitterClass<NetworkMonitorEventMap>} NetworkMonitorEmitter */
+const NetworkMonitorEventEmitter = /** @type {NetworkMonitorEmitter} */ (EventEmitter);
 
-/** @implements {NetworkMonitorEmitter} */
-class NetworkMonitor {
+class NetworkMonitor extends NetworkMonitorEventEmitter {
   /** @type {NetworkRecorder|undefined} */
   _networkRecorder = undefined;
-  /** @type {TargetManager|undefined} */
-  _targetManager = undefined;
   /** @type {Array<LH.Crdp.Page.Frame>} */
   _frameNavigations = [];
 
-  /** @param {LH.Gatherer.FRProtocolSession} session */
-  constructor(session) {
-    this._session = session;
+  // TODO(FR-COMPAT): switch to real TargetManager when legacy removed.
+  /** @param {LH.Gatherer.FRTransitionalDriver['targetManager']} targetManager */
+  constructor(targetManager) {
+    super();
 
-    this._onTargetAttached = this._onTargetAttached.bind(this);
+    /** @type {LH.Gatherer.FRTransitionalDriver['targetManager']} */
+    this._targetManager = targetManager;
 
-    /** @type {Map<string, LH.Gatherer.FRProtocolSession>} */
-    this._sessions = new Map();
+    /** @type {LH.Gatherer.FRProtocolSession} */
+    this._session = targetManager.rootSession();
 
     /** @param {LH.Crdp.Page.FrameNavigatedEvent} event */
     this._onFrameNavigated = event => this._frameNavigations.push(event.frame);
 
     /** @param {LH.Protocol.RawEventMessage} event */
     this._onProtocolMessage = event => {
-      this.emit('protocolmessage', event);
       if (!this._networkRecorder) return;
       this._networkRecorder.dispatch(event);
     };
-
-    // Attach the event emitter types to this class.
-    const emitter = /** @type {NetworkMonitorEmitter} */ (new EventEmitter());
-    /** @type {typeof emitter['emit']} */
-    this.emit = emitter.emit.bind(emitter);
-    /** @type {typeof emitter['on']} */
-    this.on = emitter.on.bind(emitter);
-    /** @type {typeof emitter['once']} */
-    this.once = emitter.once.bind(emitter);
-    /** @type {typeof emitter['off']} */
-    this.off = emitter.off.bind(emitter);
-    /** @type {typeof emitter['addListener']} */
-    this.addListener = emitter.addListener.bind(emitter);
-    /** @type {typeof emitter['removeListener']} */
-    this.removeListener = emitter.removeListener.bind(emitter);
-    /** @type {typeof emitter['removeAllListeners']} */
-    this.removeAllListeners = emitter.removeAllListeners.bind(emitter);
-  }
-
-  /**
-   * @param {{target: {targetId: string}, session: LH.Gatherer.FRProtocolSession}} session
-   */
-  async _onTargetAttached({session, target}) {
-    const targetId = target.targetId;
-
-    this._sessions.set(targetId, session);
-    session.addProtocolMessageListener(this._onProtocolMessage);
-
-    await session.sendCommand('Network.enable');
   }
 
   /**
    * @return {Promise<void>}
    */
   async enable() {
-    if (this._targetManager) return;
+    if (this._networkRecorder) return;
 
     this._frameNavigations = [];
-    this._sessions = new Map();
     this._networkRecorder = new NetworkRecorder();
-    this._targetManager = new TargetManager(this._session);
 
     /**
      * Reemit the same network recorder events.
-     * @param {NetworkRecorderEvent} event
+     * @param {keyof NetworkRecorderEventMap} event
      * @return {(r: NetworkRequest) => void}
      */
     const reEmit = event => r => {
@@ -103,34 +71,23 @@ class NetworkMonitor {
     };
 
     this._networkRecorder.on('requeststarted', reEmit('requeststarted'));
-    this._networkRecorder.on('requestloaded', reEmit('requestloaded'));
+    this._networkRecorder.on('requestfinished', reEmit('requestfinished'));
 
     this._session.on('Page.frameNavigated', this._onFrameNavigated);
-    this._targetManager.addTargetAttachedListener(this._onTargetAttached);
-
-    await this._session.sendCommand('Page.enable');
-    await this._targetManager.enable();
+    this._targetManager.on('protocolevent', this._onProtocolMessage);
   }
 
   /**
    * @return {Promise<void>}
    */
   async disable() {
-    if (!this._targetManager) return;
+    if (!this._networkRecorder) return;
 
     this._session.off('Page.frameNavigated', this._onFrameNavigated);
-    this._targetManager.removeTargetAttachedListener(this._onTargetAttached);
-
-    for (const session of this._sessions.values()) {
-      session.removeProtocolMessageListener(this._onProtocolMessage);
-    }
-
-    await this._targetManager.disable();
+    this._targetManager.off('protocolevent', this._onProtocolMessage);
 
     this._frameNavigations = [];
     this._networkRecorder = undefined;
-    this._targetManager = undefined;
-    this._sessions = new Map();
   }
 
   /** @return {Promise<{requestedUrl?: string, mainDocumentUrl?: string}>} */
@@ -300,4 +257,4 @@ class NetworkMonitor {
   }
 }
 
-module.exports = NetworkMonitor;
+export {NetworkMonitor};

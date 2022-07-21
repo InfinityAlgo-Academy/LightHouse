@@ -10,8 +10,9 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import AxeAudit from './axe-audit.js';
+
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of an accesibility audit that evaluates if all list elements have a valid structure containing only list items. This title is descriptive of the successful state and is shown to users when no user action is required. */
@@ -23,10 +24,10 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Screen readers have a specific way of announcing lists. Ensuring proper list ' +
       'structure aids screen reader output. ' +
-      '[Learn more](https://web.dev/list/).',
+      '[Learn more about proper list structure](https://dequeuniversity.com/rules/axe/4.4/list).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class List extends AxeAudit {
   /**
@@ -43,5 +44,5 @@ class List extends AxeAudit {
   }
 }
 
-module.exports = List;
-module.exports.UIStrings = UIStrings;
+export default List;
+export {UIStrings};

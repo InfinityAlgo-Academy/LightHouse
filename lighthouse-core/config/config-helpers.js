@@ -5,17 +5,21 @@
  */
 'use strict';
 
-const path = require('path');
-const {isEqual: isDeepEqual} = require('lodash');
-const constants = require('./constants.js');
-const Budget = require('./budget.js');
-const ConfigPlugin = require('./config-plugin.js');
-const Runner = require('../runner.js');
-const i18n = require('../lib/i18n/i18n.js');
-const validation = require('../fraggle-rock/config/validation.js');
+import path from 'path';
+import {createRequire} from 'module';
+import isDeepEqual from 'lodash/isEqual.js';
+import * as constants from './constants.js';
+import {Budget} from './budget.js';
+import ConfigPlugin from './config-plugin.js';
+import {Runner} from '../runner.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import * as validation from '../fraggle-rock/config/validation.js';
+import {getModuleDirectory} from '../../esm-utils.js';
 
-/** @typedef {typeof import('../gather/gatherers/gatherer.js')} GathererConstructor */
-/** @typedef {typeof import('../audits/audit.js')} Audit */
+const require = createRequire(import.meta.url);
+
+/** @typedef {typeof import('../gather/gatherers/gatherer.js').Gatherer} GathererConstructor */
+/** @typedef {typeof import('../audits/audit.js')['Audit']} Audit */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
 
 function isBundledEnvironment() {
@@ -203,25 +207,50 @@ function expandAuditShorthand(audit) {
   }
 }
 
-/** @type {Map<string, any>} */
+/** @type {Map<string, Promise<any>>} */
 const bundledModules = new Map(/* BUILD_REPLACE_BUNDLED_MODULES */);
 
 /**
- * Wraps `require` with an entrypoint for bundled dynamic modules.
+ * Wraps `import`/`require` with an entrypoint for bundled dynamic modules.
  * See build-bundle.js
  * @param {string} requirePath
  */
-function requireWrapper(requirePath) {
-  return bundledModules.get(requirePath) || require(requirePath);
+async function requireWrapper(requirePath) {
+  /** @type {any} */
+  let module;
+  if (bundledModules.has(requirePath)) {
+    module = await bundledModules.get(requirePath);
+  } else if (requirePath.match(/\.(js|mjs|cjs)$/)) {
+    module = await import(requirePath);
+  } else {
+    requirePath += '.js';
+    module = await import(requirePath);
+  }
+
+  if (module.default) return module.default;
+
+  // Find a valid named export.
+  // TODO(esmodules): actually make all the audits/gatherers use named exports
+  const methods = new Set(['meta']);
+  const possibleNamedExports = Object.keys(module).filter(key => {
+    if (!(module[key] && module[key] instanceof Object)) return false;
+    return Object.getOwnPropertyNames(module[key]).some(method => methods.has(method));
+  });
+  if (possibleNamedExports.length === 1) return possibleNamedExports[0];
+  if (possibleNamedExports.length > 1) {
+    throw new Error(`module '${requirePath}' has too many possible exports`);
+  }
+
+  throw new Error(`module '${requirePath}' missing default export`);
 }
 
 /**
  * @param {string} gathererPath
  * @param {Array<string>} coreGathererList
  * @param {string=} configDir
- * @return {LH.Config.GathererDefn}
+ * @return {Promise<LH.Config.GathererDefn>}
  */
-function requireGatherer(gathererPath, coreGathererList, configDir) {
+async function requireGatherer(gathererPath, coreGathererList, configDir) {
   const coreGatherer = coreGathererList.find(a => a === `${gathererPath}.js`);
 
   let requirePath = `../gather/gatherers/${gathererPath}`;
@@ -230,7 +259,7 @@ function requireGatherer(gathererPath, coreGathererList, configDir) {
     requirePath = resolveModulePath(gathererPath, configDir, 'gatherer');
   }
 
-  const GathererClass = /** @type {GathererConstructor} */ (requireWrapper(requirePath));
+  const GathererClass = /** @type {GathererConstructor} */ (await requireWrapper(requirePath));
 
   return {
     instance: new GathererClass(),
@@ -243,7 +272,7 @@ function requireGatherer(gathererPath, coreGathererList, configDir) {
  * @param {string} auditPath
  * @param {Array<string>} coreAuditList
  * @param {string=} configDir
- * @return {LH.Config.AuditDefn['implementation']}
+ * @return {Promise<LH.Config.AuditDefn['implementation']>}
  */
 function requireAudit(auditPath, coreAuditList, configDir) {
   // See if the audit is a Lighthouse core audit.
@@ -258,7 +287,7 @@ function requireAudit(auditPath, coreAuditList, configDir) {
       // Otherwise, attempt to find it elsewhere. This throws if not found.
       const absolutePath = resolveModulePath(auditPath, configDir, 'audit');
       // Use a relative path so bundler can easily expose it.
-      requirePath = path.relative(__dirname, absolutePath);
+      requirePath = path.relative(getModuleDirectory(import.meta), absolutePath);
     }
   }
 
@@ -328,9 +357,9 @@ function resolveSettings(settingsJson = {}, overrides = undefined) {
  * @param {LH.Config.Json} configJSON
  * @param {string | undefined} configDir
  * @param {{plugins?: string[]} | undefined} flags
- * @return {LH.Config.Json}
+ * @return {Promise<LH.Config.Json>}
  */
-function mergePlugins(configJSON, configDir, flags) {
+async function mergePlugins(configJSON, configDir, flags) {
   const configPlugins = configJSON.plugins || [];
   const flagPlugins = flags?.plugins || [];
   const pluginNames = new Set([...configPlugins, ...flagPlugins]);
@@ -342,7 +371,7 @@ function mergePlugins(configJSON, configDir, flags) {
     const pluginPath = isBundledEnvironment() ?
         pluginName :
         resolveModulePath(pluginName, configDir, 'plugin');
-    const rawPluginJson = requireWrapper(pluginPath);
+    const rawPluginJson = await requireWrapper(pluginPath);
     const pluginJson = ConfigPlugin.parsePlugin(rawPluginJson, pluginName);
 
     configJSON = mergeConfigFragment(configJSON, pluginJson);
@@ -360,9 +389,9 @@ function mergePlugins(configJSON, configDir, flags) {
  * @param {LH.Config.GathererJson} gathererJson
  * @param {Array<string>} coreGathererList
  * @param {string=} configDir
- * @return {LH.Config.GathererDefn}
+ * @return {Promise<LH.Config.GathererDefn>}
  */
-function resolveGathererToDefn(gathererJson, coreGathererList, configDir) {
+async function resolveGathererToDefn(gathererJson, coreGathererList, configDir) {
   const gathererDefn = expandGathererShorthand(gathererJson);
   if (gathererDefn.instance) {
     return {
@@ -391,21 +420,21 @@ function resolveGathererToDefn(gathererJson, coreGathererList, configDir) {
  * leaving only an array of AuditDefns.
  * @param {LH.Config.Json['audits']} audits
  * @param {string=} configDir
- * @return {Array<LH.Config.AuditDefn>|null}
+ * @return {Promise<Array<LH.Config.AuditDefn>|null>}
  */
-function resolveAuditsToDefns(audits, configDir) {
+async function resolveAuditsToDefns(audits, configDir) {
   if (!audits) {
     return null;
   }
 
   const coreList = Runner.getAuditList();
-  const auditDefns = audits.map(auditJson => {
+  const auditDefnsPromises = audits.map(async (auditJson) => {
     const auditDefn = expandAuditShorthand(auditJson);
     let implementation;
     if ('implementation' in auditDefn) {
       implementation = auditDefn.implementation;
     } else {
-      implementation = requireAudit(auditDefn.path, coreList, configDir);
+      implementation = await requireAudit(auditDefn.path, coreList, configDir);
     }
 
     return {
@@ -414,6 +443,7 @@ function resolveAuditsToDefns(audits, configDir) {
       options: auditDefn.options || {},
     };
   });
+  const auditDefns = await Promise.all(auditDefnsPromises);
 
   const mergedAuditDefns = mergeOptionsOfItems(auditDefns);
   mergedAuditDefns.forEach(audit => validation.assertValidAudit(audit));
@@ -476,8 +506,8 @@ function resolveModulePath(moduleIdentifier, configDir, category) {
 
   const errorString = 'Unable to locate ' + (category ? `${category}: ` : '') +
     `\`${moduleIdentifier}\`.
-     Tried to require() from these locations:
-       ${__dirname}
+     Tried to resolve the module from these locations:
+       ${getModuleDirectory(import.meta)}
        ${cwdPath}`;
 
   if (!configDir) {
@@ -576,7 +606,21 @@ function deepCloneConfigJson(json) {
   return cloned;
 }
 
-module.exports = {
+/**
+ * @param {LH.Flags} flags
+ * @return {LH.Config.FRContext}
+ */
+function flagsToFRContext(flags) {
+  return {
+    configPath: flags?.configPath,
+    settingsOverrides: flags,
+    logLevel: flags?.logLevel,
+    hostname: flags?.hostname,
+    port: flags?.port,
+  };
+}
+
+export {
   deepClone,
   deepCloneConfigJson,
   mergeConfigFragment,
@@ -587,4 +631,5 @@ module.exports = {
   resolveGathererToDefn,
   resolveModulePath,
   resolveSettings,
+  flagsToFRContext,
 };

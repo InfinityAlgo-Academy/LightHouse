@@ -5,12 +5,12 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const BootupTime = require('./bootup-time.js');
-const i18n = require('../lib/i18n/i18n.js');
-const thirdPartyWeb = require('../lib/third-party-web.js');
-const NetworkRecords = require('../computed/network-records.js');
-const MainThreadTasks = require('../computed/main-thread-tasks.js');
+import {Audit} from './audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import thirdPartyWeb from '../lib/third-party-web.js';
+import NetworkRecords from '../computed/network-records.js';
+import MainThreadTasks from '../computed/main-thread-tasks.js';
+import {getJavaScriptURLs, getAttributableURLForTask} from '../lib/tracehouse/task-summary.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides details about the code on a web page that the user doesn't control (referred to as "third-party code"). This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -20,7 +20,8 @@ const UIStrings = {
   /** Description of a Lighthouse audit that identifies the code on the page that the user doesn't control. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Third-party code can significantly impact load performance. ' +
     'Limit the number of redundant third-party providers and try to load third-party code after ' +
-    'your page has primarily finished loading. [Learn more](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/).',
+    'your page has primarily finished loading. ' +
+    '[Learn how to minimize third-party impact](https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/loading-third-party-javascript/).',
   /** Label for a table column that displays the name of a third-party provider that potentially links to their website. */
   columnThirdParty: 'Third-Party',
   /** Summary text for the result of a Lighthouse audit that identifies the code on a web page that the user doesn't control (referred to as "third-party code"). This text summarizes the number of distinct entities that were found on the page. */
@@ -28,7 +29,7 @@ const UIStrings = {
     `{timeInMs, number, milliseconds}\xa0ms`,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 // A page passes when all third-party code blocks for less than 250 ms.
 const PASS_THRESHOLD_IN_MS = 250;
@@ -98,10 +99,10 @@ class ThirdPartySummary extends Audit {
       byURL.set(request.url, urlSummary);
     }
 
-    const jsURLs = BootupTime.getJavaScriptURLs(networkRecords);
+    const jsURLs = getJavaScriptURLs(networkRecords);
 
     for (const task of mainThreadTasks) {
-      const attributableURL = BootupTime.getAttributableURLForTask(task, jsURLs);
+      const attributableURL = getAttributableURLForTask(task, jsURLs);
 
       const urlSummary = byURL.get(attributableURL) || {...defaultSummary};
       const taskDuration = task.selfTime * cpuMultiplier;
@@ -255,5 +256,5 @@ class ThirdPartySummary extends Audit {
   }
 }
 
-module.exports = ThirdPartySummary;
-module.exports.UIStrings = UIStrings;
+export default ThirdPartySummary;
+export {UIStrings};

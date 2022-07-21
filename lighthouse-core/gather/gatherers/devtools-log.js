@@ -11,9 +11,7 @@
  * This protocol log can be used to recreate the network records using lib/network-recorder.js.
  */
 
-const NetworkMonitor = require('../driver/network-monitor.js');
-const MessageLog = require('../devtools-log.js');
-const FRGatherer = require('../../fraggle-rock/gather/base-gatherer.js');
+import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 
 class DevtoolsLog extends FRGatherer {
   static symbol = Symbol('DevtoolsLog');
@@ -27,10 +25,7 @@ class DevtoolsLog extends FRGatherer {
   constructor() {
     super();
 
-    /** @type {NetworkMonitor|undefined} */
-    this._networkMonitor = undefined;
-
-    this._messageLog = new MessageLog(/^(Page|Network)\./);
+    this._messageLog = new DevtoolsMessageLog(/^(Page|Network|Target|Runtime)\./);
 
     /** @param {LH.Protocol.RawEventMessage} e */
     this._onProtocolMessage = e => this._messageLog.record(e);
@@ -43,16 +38,16 @@ class DevtoolsLog extends FRGatherer {
     this._messageLog.reset();
     this._messageLog.beginRecording();
 
-    this._networkMonitor = new NetworkMonitor(driver.defaultSession);
-    this._networkMonitor.on('protocolmessage', this._onProtocolMessage);
-    this._networkMonitor.enable();
+    driver.targetManager.on('protocolevent', this._onProtocolMessage);
+    await driver.defaultSession.sendCommand('Page.enable');
   }
 
-  async stopSensitiveInstrumentation() {
-    if (!this._networkMonitor) return;
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} passContext
+   */
+  async stopSensitiveInstrumentation({driver}) {
     this._messageLog.endRecording();
-    this._networkMonitor.disable();
-    this._networkMonitor.off('protocolmessage', this._onProtocolMessage);
+    driver.targetManager.off('protocolevent', this._onProtocolMessage);
   }
 
   /**
@@ -63,4 +58,59 @@ class DevtoolsLog extends FRGatherer {
   }
 }
 
-module.exports = DevtoolsLog;
+
+/**
+ * This class saves all protocol messages whose method match a particular
+ * regex filter. Used when saving assets for later analysis by another tool such as
+ * Webpagetest.
+ */
+class DevtoolsMessageLog {
+  /**
+   * @param {RegExp=} regexFilter
+   */
+  constructor(regexFilter) {
+    this._filter = regexFilter;
+
+    /** @type {LH.DevtoolsLog} */
+    this._messages = [];
+    this._isRecording = false;
+  }
+
+  /**
+   * @return {LH.DevtoolsLog}
+   */
+  get messages() {
+    return this._messages;
+  }
+
+  reset() {
+    this._messages = [];
+  }
+
+  beginRecording() {
+    this._isRecording = true;
+  }
+
+  endRecording() {
+    this._isRecording = false;
+  }
+
+  /**
+   * Records a message if method matches filter and recording has been started.
+   * @param {LH.Protocol.RawEventMessage} message
+   */
+  record(message) {
+    // We're not recording, skip the rest of the checks.
+    if (!this._isRecording) return;
+    // The event was likely an internal puppeteer method that uses Symbols.
+    if (typeof message.method !== 'string') return;
+    // The event didn't pass our filter, do not record it.
+    if (this._filter && !this._filter.test(message.method)) return;
+
+    // We passed all the checks, record the message.
+    this._messages.push(message);
+  }
+}
+
+export default DevtoolsLog;
+export {DevtoolsMessageLog};

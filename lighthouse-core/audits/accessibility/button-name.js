@@ -10,8 +10,9 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import AxeAudit from './axe-audit.js';
+
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of an accesibility audit that evaluates if all button elements have names accessible to screen readers. This title is descriptive of the successful state and is shown to users when no user action is required. */
@@ -21,10 +22,10 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'When a button doesn\'t have an accessible name, screen readers announce it ' +
       'as "button", making it unusable for users who rely on screen readers. ' +
-      '[Learn more](https://web.dev/button-name/).',
+      '[Learn how to make buttons more accessible](https://dequeuniversity.com/rules/axe/4.4/button-name).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class ButtonName extends AxeAudit {
   /**
@@ -41,5 +42,5 @@ class ButtonName extends AxeAudit {
   }
 }
 
-module.exports = ButtonName;
-module.exports.UIStrings = UIStrings;
+export default ButtonName;
+export {UIStrings};

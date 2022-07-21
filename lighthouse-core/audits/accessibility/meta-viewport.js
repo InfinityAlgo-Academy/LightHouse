@@ -10,8 +10,9 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import AxeAudit from './axe-audit.js';
+
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of an accesibility audit that evaluates if the page has limited the scaling properties of the page in a way that harms users with low vision. This title is descriptive of the successful state and is shown to users when no user action is required. */
@@ -23,10 +24,10 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Disabling zooming is problematic for users with low vision who rely on ' +
       'screen magnification to properly see the contents of a web page. ' +
-      '[Learn more](https://web.dev/meta-viewport/).',
+      '[Learn more about the viewport meta tag](https://dequeuniversity.com/rules/axe/4.4/meta-viewport).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class MetaViewport extends AxeAudit {
   /**
@@ -43,5 +44,5 @@ class MetaViewport extends AxeAudit {
   }
 }
 
-module.exports = MetaViewport;
-module.exports.UIStrings = UIStrings;
+export default MetaViewport;
+export {UIStrings};

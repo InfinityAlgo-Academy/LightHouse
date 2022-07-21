@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview  A runner that executes Lighthouse via the Lighthouse CLI to
@@ -18,7 +17,7 @@ import {execFile} from 'child_process';
 
 import log from 'lighthouse-logger';
 
-import assetSaver from '../../../../lighthouse-core/lib/asset-saver.js';
+import * as assetSaver from '../../../../lighthouse-core/lib/asset-saver.js';
 import {LocalConsole} from '../lib/local-console.js';
 import {ChildProcessError} from '../lib/child-process-error.js';
 import {LH_ROOT} from '../../../../root.js';
@@ -43,29 +42,15 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
 }
 
 /**
- * @param {LH.Config.Json=} configJson
- * @return {LH.Config.Json|undefined}
- */
-function convertToFraggleRockConfig(configJson) {
-  if (!configJson) return configJson;
-  if (!configJson.passes) return configJson;
-
-  return {
-    ...configJson,
-    navigations: configJson.passes.map(pass => ({...pass, id: pass.passName})),
-  };
-}
-
-/**
  * Internal runner.
  * @param {string} url
  * @param {string} tmpPath
  * @param {LH.Config.Json=} configJson
- * @param {{isDebug?: boolean, useFraggleRock?: boolean}=} options
+ * @param {{isDebug?: boolean, useLegacyNavigation?: boolean}=} options
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
  */
 async function internalRun(url, tmpPath, configJson, options) {
-  const {isDebug = false, useFraggleRock = false} = options || {};
+  const {isDebug = false, useLegacyNavigation = false} = options || {};
   const localConsole = new LocalConsole();
 
   const outputPath = `${tmpPath}/smokehouse.report.json`;
@@ -82,9 +67,8 @@ async function internalRun(url, tmpPath, configJson, options) {
     '--quiet',
   ];
 
-  if (useFraggleRock) {
-    args.push('--fraggle-rock');
-    configJson = convertToFraggleRockConfig(configJson);
+  if (useLegacyNavigation) {
+    args.push('--legacy-navigation');
   }
 
   // Config can be optionally provided.

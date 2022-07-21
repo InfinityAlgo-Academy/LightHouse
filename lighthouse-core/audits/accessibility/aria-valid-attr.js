@@ -10,8 +10,9 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import AxeAudit from './axe-audit.js';
+
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of an accesibility audit that evaluates if all elements with ARIA HTML attributes have spelled the name of attribute correctly. This title is descriptive of the successful state and is shown to users when no user action is required. */
@@ -21,10 +22,10 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Assistive technologies, like screen readers, can\'t interpret ARIA ' +
       'attributes with invalid names. [Learn ' +
-      'more](https://web.dev/aria-valid-attr/).',
+      'more about valid ARIA attributes](https://dequeuniversity.com/rules/axe/4.4/aria-valid-attr).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class ARIAValidAttr extends AxeAudit {
   /**
@@ -41,5 +42,5 @@ class ARIAValidAttr extends AxeAudit {
   }
 }
 
-module.exports = ARIAValidAttr;
-module.exports.UIStrings = UIStrings;
+export default ARIAValidAttr;
+export {UIStrings};

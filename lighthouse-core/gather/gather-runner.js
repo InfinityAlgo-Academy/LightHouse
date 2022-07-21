@@ -5,25 +5,26 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const NetworkRecords = require('../computed/network-records.js');
-const {getPageLoadError} = require('../lib/navigation-error.js');
-const emulation = require('../lib/emulation.js');
-const constants = require('../config/constants.js');
-const format = require('../../shared/localization/format.js');
-const {getBenchmarkIndex, getEnvironmentWarnings} = require('./driver/environment.js');
-const prepare = require('./driver/prepare.js');
-const storage = require('./driver/storage.js');
-const navigation = require('./driver/navigation.js');
-const serviceWorkers = require('./driver/service-workers.js');
-const WebAppManifest = require('./gatherers/web-app-manifest.js');
-const InstallabilityErrors = require('./gatherers/installability-errors.js');
-const NetworkUserAgent = require('./gatherers/network-user-agent.js');
-const Stacks = require('./gatherers/stacks.js');
-const {finalizeArtifacts} = require('../fraggle-rock/gather/base-artifacts.js');
+import log from 'lighthouse-logger';
+import NetworkRecords from '../computed/network-records.js';
+import {getPageLoadError} from '../lib/navigation-error.js';
+import * as emulation from '../lib/emulation.js';
+import * as constants from '../config/constants.js';
+import format from '../../shared/localization/format.js';
+import {getBenchmarkIndex, getEnvironmentWarnings} from './driver/environment.js';
+import * as prepare from './driver/prepare.js';
+import * as storage from './driver/storage.js';
+import * as navigation from './driver/navigation.js';
+import * as serviceWorkers from './driver/service-workers.js';
+import WebAppManifest from './gatherers/web-app-manifest.js';
+import InstallabilityErrors from './gatherers/installability-errors.js';
+import NetworkUserAgent from './gatherers/network-user-agent.js';
+import Stacks from './gatherers/stacks.js';
+import {finalizeArtifacts} from '../fraggle-rock/gather/base-artifacts.js';
+import URLShim from '../lib/url-shim.js';
 
-/** @typedef {import('../gather/driver.js')} Driver */
-/** @typedef {import('../lib/arbitrary-equality-map.js')} ArbitraryEqualityMap */
+/** @typedef {import('../gather/driver.js').Driver} Driver */
+/** @typedef {import('../lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
 
 /**
  * Each entry in each gatherer result array is the output of a gatherer phase:
@@ -89,7 +90,7 @@ class GatherRunner {
         passContext.LighthouseRunWarnings.push(...warnings);
       }
     } catch (err) {
-      // If it's one of our loading-based LHErrors, we'll treat it as a page load error.
+      // If it's one of our loading-based LighthouseErrors, we'll treat it as a page load error.
       if (err.code === 'NO_FCP' || err.code === 'PAGE_HUNG') {
         return {navigationError: err};
       }
@@ -182,11 +183,6 @@ class GatherRunner {
       const session = driver.defaultSession;
       const resetStorage = !options.settings.disableStorageReset;
       if (resetStorage) await storage.clearDataForOrigin(session, options.requestedUrl);
-
-      // Disable fetcher, in case a gatherer enabled it.
-      // This cleanup should be removed once the only usage of
-      // fetcher (fetching arbitrary URLs) is replaced by new protocol support.
-      await driver.fetcher.disable();
 
       await driver.disconnect();
     } catch (err) {
@@ -496,6 +492,20 @@ class GatherRunner {
       const baseArtifacts = await GatherRunner.initializeBaseArtifacts(options);
       baseArtifacts.BenchmarkIndex = await getBenchmarkIndex(driver.executionContext);
 
+      // Hack for running benchmarkIndex extra times.
+      // Add a `bidx=20` query param, eg: https://www.example.com/?bidx=50
+      const parsedUrl = URLShim.isValid(options.requestedUrl) && new URL(options.requestedUrl);
+      if (options.settings.channel === 'lr' && parsedUrl && parsedUrl.searchParams.has('bidx')) {
+        const bidxRunCount = parsedUrl.searchParams.get('bidx') || 0;
+        // Add the first bidx into the new set
+        const indexes = [baseArtifacts.BenchmarkIndex];
+        for (let i = 0; i < bidxRunCount; i++) {
+          const bidx = await getBenchmarkIndex(driver.executionContext);
+          indexes.push(bidx);
+        }
+        baseArtifacts.BenchmarkIndexes = indexes;
+      }
+
       await GatherRunner.setupDriver(driver, options);
 
       let isFirstPass = true;
@@ -524,12 +534,6 @@ class GatherRunner {
           await GatherRunner.populateBaseArtifacts(passContext);
           isFirstPass = false;
         }
-
-        // Disable fetcher for every pass, in case a gatherer enabled it.
-        // Noop if fetcher was never enabled.
-        // This cleanup should be removed once the only usage of
-        // fetcher (fetching arbitrary URLs) is replaced by new protocol support.
-        await driver.fetcher.disable();
       }
 
       await GatherRunner.disposeDriver(driver, options);
@@ -600,6 +604,7 @@ class GatherRunner {
       url: passContext.url,
       loadFailureMode: passConfig.loadFailureMode,
       networkRecords: loadData.networkRecords,
+      warnings: passContext.LighthouseRunWarnings,
     });
     if (pageLoadError) {
       const localizedMessage = format.getFormatted(pageLoadError.friendlyMessage,
@@ -626,4 +631,4 @@ class GatherRunner {
   }
 }
 
-module.exports = GatherRunner;
+export {GatherRunner};

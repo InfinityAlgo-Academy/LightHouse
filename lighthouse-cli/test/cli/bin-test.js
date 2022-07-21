@@ -3,45 +3,39 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
-
-/* eslint-env jest */
 
 import fs from 'fs';
 
-import {jest} from '@jest/globals';
+import * as td from 'testdouble';
+import jestMock from 'jest-mock';
 
 import {LH_ROOT} from '../../../root.js';
+import {readJson} from '../../../lighthouse-core/test/test-utils.js';
 
-const mockRunLighthouse = jest.fn();
-
-jest.unstable_mockModule('../../run.js', () => {
-  return {runLighthouse: mockRunLighthouse};
-});
-
-const mockGetFlags = jest.fn();
-jest.unstable_mockModule('../../cli-flags.js', () => {
-  return {getFlags: mockGetFlags};
-});
-
-const mockAskPermission = jest.fn();
-jest.unstable_mockModule('../../sentry-prompt.js', () => {
-  return {askPermission: mockAskPermission};
-});
-
-const mockSentryInit = jest.fn();
-jest.mock('../../../lighthouse-core/lib/sentry.js', () => {
-  return {init: mockSentryInit};
-});
-
-const mockLoggerSetLevel = jest.fn();
-jest.unstable_mockModule('lighthouse-logger', () => {
-  return {default: {setLevel: mockLoggerSetLevel}};
-});
+const mockRunLighthouse = jestMock.fn();
+const mockGetFlags = jestMock.fn();
+const mockAskPermission = jestMock.fn();
+const mockSentryInit = jestMock.fn();
+const mockLoggerSetLevel = jestMock.fn();
 
 /** @type {import('../../bin.js')} */
 let bin;
-beforeAll(async () => {
+before(async () => {
+  await td.replaceEsm('../../run.js', {
+    runLighthouse: mockRunLighthouse,
+  });
+  await td.replaceEsm('../../cli-flags.js', {
+    getFlags: mockGetFlags,
+  });
+  await td.replaceEsm('../../sentry-prompt.js', {
+    askPermission: mockAskPermission,
+  });
+  await td.replaceEsm('../../../lighthouse-core/lib/sentry.js', {
+    Sentry: {
+      init: mockSentryInit,
+    },
+  });
+  await td.replaceEsm('lighthouse-logger', undefined, {setLevel: mockLoggerSetLevel});
   bin = await import('../../bin.js');
 });
 
@@ -65,7 +59,7 @@ beforeEach(async () => {
     view: false,
     verbose: false,
     quiet: false,
-    fraggleRock: false,
+    legacyNavigation: false,
     port: 0,
     hostname: '',
     // Command modes
@@ -180,7 +174,7 @@ describe('CLI bin', function() {
       await bin.begin();
 
       expect(getRunLighthouseArgs()[1]).toMatchObject({
-        precomputedLanternData: (await import(lanternDataFile)).default,
+        precomputedLanternData: readJson(lanternDataFile),
         precomputedLanternDataPath: lanternDataFile,
       });
     });

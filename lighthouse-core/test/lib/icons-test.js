@@ -3,16 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const icons = require('../../lib/icons.js');
-const assert = require('assert').strict;
-const manifestParser = require('../../lib/manifest-parser.js');
+import {strict as assert} from 'assert';
+
+import * as icons from '../../lib/icons.js';
+import {parseManifest} from '../../lib/manifest-parser.js';
 
 const EXAMPLE_MANIFEST_URL = 'https://example.com/manifest.json';
 const EXAMPLE_DOC_URL = 'https://example.com/index.html';
 
-/* global describe, it */
 describe('Icons helper', () => {
   describe('icons exist check', () => {
     it('copes when no manifest is provided', () => {
@@ -23,7 +22,7 @@ describe('Icons helper', () => {
       const manifestSrc = JSON.stringify({
         name: 'NoIconsHere',
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
 
       assert.equal(icons.doExist(manifest.value), false);
     });
@@ -32,7 +31,7 @@ describe('Icons helper', () => {
       const manifestSrc = JSON.stringify({
         icons: [],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.doExist(manifest.value), false);
     });
 
@@ -42,7 +41,7 @@ describe('Icons helper', () => {
           src: 'icon.png',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.doExist(manifest.value), true);
     });
   });
@@ -55,7 +54,7 @@ describe('Icons helper', () => {
           sizes: '192x192',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       // /* manifest looks like this: */
       // {
       //   icons: {
@@ -79,7 +78,7 @@ describe('Icons helper', () => {
           src: 'icon-no-size.png',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 0);
     });
 
@@ -90,7 +89,7 @@ describe('Icons helper', () => {
           sizes: '192x192',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(144, manifest.value).length, 1);
     });
 
@@ -101,7 +100,7 @@ describe('Icons helper', () => {
           sizes: '192x192',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(256, manifest.value).length, 0);
     });
 
@@ -112,7 +111,7 @@ describe('Icons helper', () => {
           sizes: '72x72 96x96 128x128 256x256',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 1);
     });
 
@@ -125,7 +124,7 @@ describe('Icons helper', () => {
           sizes: '256x256',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 1);
     });
 
@@ -137,7 +136,7 @@ describe('Icons helper', () => {
           sizes: '200x220',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 0);
     });
 
@@ -148,7 +147,7 @@ describe('Icons helper', () => {
           sizes: 'any',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 0);
     });
 
@@ -159,7 +158,7 @@ describe('Icons helper', () => {
           sizes: '256x256',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 0);
     });
 
@@ -178,7 +177,7 @@ describe('Icons helper', () => {
           sizes: '256x256',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 0);
     });
 
@@ -197,7 +196,7 @@ describe('Icons helper', () => {
           sizes: '100x100',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 1);
     });
 
@@ -208,7 +207,7 @@ describe('Icons helper', () => {
           sizes: '200x200',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 1);
     });
 
@@ -219,7 +218,7 @@ describe('Icons helper', () => {
           sizes: '200x200',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 1);
     });
 
@@ -230,7 +229,7 @@ describe('Icons helper', () => {
           sizes: '200x200',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 1);
     });
 
@@ -242,7 +241,7 @@ describe('Icons helper', () => {
           type: 'image/png',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 1);
     });
 
@@ -263,7 +262,7 @@ describe('Icons helper', () => {
           sizes: '200x200',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 1);
     });
 
@@ -275,7 +274,7 @@ describe('Icons helper', () => {
           type: 'image/jpg',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 0);
     });
 
@@ -287,7 +286,7 @@ describe('Icons helper', () => {
           type: 'image/png',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 1);
     });
 
@@ -301,7 +300,7 @@ describe('Icons helper', () => {
           type: 'image/png',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 1);
     });
 
@@ -313,7 +312,7 @@ describe('Icons helper', () => {
           type: 'image/png',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 1);
     });
 
@@ -325,7 +324,7 @@ describe('Icons helper', () => {
           type: 'image/png',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.pngSizedAtLeast(192, manifest.value).length, 1);
     });
   });
@@ -344,7 +343,7 @@ describe('Icons helper', () => {
           purpose: 'maskable',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.containsMaskableIcon(manifest.value), true);
     });
 
@@ -361,7 +360,7 @@ describe('Icons helper', () => {
           purpose: 'maskable',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.containsMaskableIcon(manifest.value), true);
     });
 
@@ -378,7 +377,7 @@ describe('Icons helper', () => {
           purpose: 'any',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.containsMaskableIcon(manifest.value), true);
     });
 
@@ -394,7 +393,7 @@ describe('Icons helper', () => {
           sizes: '100x100',
         }],
       });
-      const manifest = manifestParser(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
+      const manifest = parseManifest(manifestSrc, EXAMPLE_MANIFEST_URL, EXAMPLE_DOC_URL);
       assert.equal(icons.containsMaskableIcon(manifest.value), false);
     });
   });

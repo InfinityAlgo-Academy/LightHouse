@@ -3,25 +3,26 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const wait = require('../../../gather/driver/wait-for-condition.js');
-const {
-  createMockOnceFn,
+import * as wait from '../../../gather/driver/wait-for-condition.js';
+import {
+  mockCommands,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
   createDecomposedPromise,
-} = require('../../test-utils.js');
+  fnAny,
+  timers,
+} from '../../test-utils.js';
 
-/* eslint-env jest */
+const {createMockOnceFn} = mockCommands;
 
-jest.useFakeTimers();
+timers.useFakeTimers();
 
 function createMockWaitForFn() {
   const {promise, resolve, reject} = createDecomposedPromise();
 
-  const mockCancelFn = jest.fn();
-  const mockFn = jest.fn().mockReturnValue({promise, cancel: mockCancelFn});
+  const mockCancelFn = fnAny();
+  const mockFn = fnAny().mockReturnValue({promise, cancel: mockCancelFn});
 
   return Object.assign(mockFn, {
     mockResolve: resolve,
@@ -38,8 +39,8 @@ function createMockWaitForFn() {
 function createMockMultipleInvocationWaitForFn() {
   /** @type {Array<{arguments: Array<*>, mockResolve(): void, mockReject(): void}>} */
   const calls = [];
-  const mockCancelFn = jest.fn();
-  const mockFn = jest.fn().mockImplementation((...args) => {
+  const mockCancelFn = fnAny();
+  const mockFn = fnAny().mockImplementation((...args) => {
     const {promise, resolve, reject} = createDecomposedPromise();
     calls.push({
       arguments: args,
@@ -59,7 +60,7 @@ describe('waitForFullyLoaded()', () => {
   let options;
 
   beforeEach(() => {
-    session = {sendCommand: jest.fn().mockResolvedValue(), setNextProtocolTimeout: jest.fn()};
+    session = {sendCommand: fnAny().mockResolvedValue(), setNextProtocolTimeout: fnAny()};
     networkMonitor = {};
 
     const overrides = {
@@ -193,7 +194,7 @@ describe('waitForFullyLoaded()', () => {
     await flushAllTimersAndMicrotasks();
     expect(loadPromise).not.toBeDone(`Did not wait for CPU idle`);
 
-    jest.advanceTimersByTime(60001);
+    timers.advanceTimersByTime(60001);
     await flushAllTimersAndMicrotasks();
     expect(loadPromise).toBeDone(`Did not wait for timeout`);
     // Check that we cancelled all our listeners
@@ -226,10 +227,10 @@ describe('waitForFcp()', () => {
 
   beforeEach(() => {
     session = {
-      on: jest.fn(),
-      once: jest.fn(),
-      off: jest.fn(),
-      sendCommand: jest.fn(),
+      on: fnAny(),
+      once: fnAny(),
+      off: fnAny(),
+      sendCommand: fnAny(),
     };
   });
 
@@ -266,7 +267,7 @@ describe('waitForFcp()', () => {
     await flushAllTimersAndMicrotasks();
     expect(waitPromise).not.toBeDone('Did not wait for pauseAfterFcpMs');
 
-    jest.advanceTimersByTime(5001);
+    timers.advanceTimersByTime(5001);
     await flushAllTimersAndMicrotasks();
     expect(waitPromise).toBeDone('Did not resolve after pauseAfterFcpMs');
 
@@ -281,7 +282,7 @@ describe('waitForFcp()', () => {
     await flushAllTimersAndMicrotasks();
     expect(waitPromise).not.toBeDone('Resolved before timeout');
 
-    jest.advanceTimersByTime(5001);
+    timers.advanceTimersByTime(5001);
     await flushAllTimersAndMicrotasks();
     expect(waitPromise).toBeDone('Did not resolve after timeout');
     await expect(waitPromise).rejects.toMatchObject({code: 'NO_FCP'});
@@ -289,7 +290,7 @@ describe('waitForFcp()', () => {
 
   it('should be cancellable', async () => {
     session.on = session.once = createMockOnceFn();
-    session.off = jest.fn();
+    session.off = fnAny();
 
     const {promise: rawPromise, cancel} = wait.waitForFcp(session, 0, 5000);
     const waitPromise = makePromiseInspectable(rawPromise);

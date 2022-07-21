@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const MainThreadTasks = require('./main-thread-tasks.js');
+import {MainThreadTasks} from './main-thread-tasks.js';
 
 const SAMPLER_TRACE_EVENT_NAME = 'FunctionCall-SynthesizedByProfilerModel';
 
@@ -48,7 +48,7 @@ const SAMPLER_TRACE_EVENT_NAME = 'FunctionCall-SynthesizedByProfilerModel';
 /** @typedef {LH.TraceEvent & {args: {data: {_syntheticProfilerRange: ProfilerRange}}}} SynthethicEvent */
 /** @typedef {Omit<LH.Artifacts.TaskNode, 'event'> & {event: SynthethicEvent, endEvent: SynthethicEvent}} SynthethicTaskNode */
 
-class CpuProfilerModel {
+class CpuProfileModel {
   /**
    * @param {CpuProfile} profile
    */
@@ -193,8 +193,8 @@ class CpuProfilerModel {
    * @return {task is SynthethicTaskNode}
    */
   static isSyntheticTask(task) {
-    return CpuProfilerModel.isSyntheticEvent(task.event) &&
-      CpuProfilerModel.isSyntheticEvent(task.endEvent);
+    return CpuProfileModel.isSyntheticEvent(task.event) &&
+      CpuProfileModel.isSyntheticEvent(task.endEvent);
   }
 
   /**
@@ -474,7 +474,7 @@ class CpuProfilerModel {
       const allEventsAtTs = syntheticEventsByTs.get(event.ts);
       if (!allEventsAtTs) throw new Error('Impossible - we just mapped every event');
 
-      const effectiveTimestampData = CpuProfilerModel._findEffectiveTimestamp({
+      const effectiveTimestampData = CpuProfileModel._findEffectiveTimestamp({
         eventType: event.ph === 'B' ? 'start' : 'end',
         syntheticTask,
         allEventsAtTs,
@@ -524,7 +524,7 @@ class CpuProfilerModel {
       // We'll also create tasks for our naive events so we have the B/E pairs readily available.
       const naiveProfilerTasks = MainThreadTasks.getMainThreadTasks(naiveEvents, [], Infinity)
         .map(rebaseTaskTime(naiveEvents[0].ts))
-        .filter(CpuProfilerModel.isSyntheticTask);
+        .filter(CpuProfileModel.isSyntheticTask);
       if (!naiveProfilerTasks.length) throw new Error('Failed to create naive profiler tasks');
 
       finalEvents = this._refineTraceEventsWithTasks(knownTasks, naiveProfilerTasks, naiveEvents);
@@ -541,7 +541,7 @@ class CpuProfilerModel {
    * @return {Array<LH.TraceEvent>}
    */
   static synthesizeTraceEvents(profile, tasks) {
-    const model = new CpuProfilerModel(profile);
+    const model = new CpuProfileModel(profile);
     return model.synthesizeTraceEvents(tasks);
   }
 
@@ -589,4 +589,4 @@ class CpuProfilerModel {
   }
 }
 
-module.exports = CpuProfilerModel;
+export {CpuProfileModel};

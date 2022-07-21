@@ -5,23 +5,27 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const i18n = require('../lib/i18n/i18n.js');
-const NetworkRequest = require('../lib/network-request.js');
-const MainResource = require('../computed/main-resource.js');
-const LanternLCP = require('../computed/metrics/lantern-largest-contentful-paint.js');
-const LoadSimulator = require('../computed/load-simulator.js');
-const UnusedBytes = require('./byte-efficiency/byte-efficiency-audit.js');
+import {Audit} from './audit.js';
+import * as i18n from '../lib/i18n/i18n.js';
+import {NetworkRequest} from '../lib/network-request.js';
+import MainResource from '../computed/main-resource.js';
+import LanternLCP from '../computed/metrics/lantern-largest-contentful-paint.js';
+import LoadSimulator from '../computed/load-simulator.js';
+import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
 
 const UIStrings = {
   /** Title of a lighthouse audit that tells a user to preload an image in order to improve their LCP time. */
   title: 'Preload Largest Contentful Paint image',
   /** Description of a lighthouse audit that tells a user to preload an image in order to improve their LCP time.  */
   description: 'If the LCP element is dynamically added to the page, you should preload the ' +
-    'image in order to improve LCP. [Learn more](https://web.dev/optimize-lcp/#preload-important-resources).',
+    'image in order to improve LCP. [Learn more about preloading LCP elements](https://web.dev/optimize-lcp/#preload-important-resources).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+
+/**
+ * @typedef {Array<{url: string, initiatorType: string}>} InitiatorPath
+ */
 
 class PreloadLCPImageAudit extends Audit {
   /**
@@ -86,22 +90,33 @@ class PreloadLCPImageAudit extends Audit {
    * @param {LH.Gatherer.Simulation.GraphNode} graph
    * @param {LH.Artifacts.TraceElement|undefined} lcpElement
    * @param {Array<LH.Artifacts.ImageElement>} imageElements
-   * @return {LH.Gatherer.Simulation.GraphNetworkNode|undefined}
+   * @return {{lcpNodeToPreload?: LH.Gatherer.Simulation.GraphNetworkNode, initiatorPath?: InitiatorPath}}
    */
   static getLCPNodeToPreload(mainResource, graph, lcpElement, imageElements) {
-    if (!lcpElement) return undefined;
+    if (!lcpElement) return {};
 
     const lcpImageElement = imageElements.find(elem => {
       return elem.node.devtoolsNodePath === lcpElement.node.devtoolsNodePath;
     });
 
-    if (!lcpImageElement) return undefined;
+    if (!lcpImageElement) return {};
     const lcpUrl = lcpImageElement.src;
     const {lcpNode, path} = PreloadLCPImageAudit.findLCPNode(graph, lcpUrl);
-    if (!lcpNode || !path) return undefined;
+    if (!lcpNode || !path) return {};
+
     // eslint-disable-next-line max-len
     const shouldPreload = PreloadLCPImageAudit.shouldPreloadRequest(lcpNode.record, mainResource, path);
-    return shouldPreload ? lcpNode : undefined;
+    const lcpNodeToPreload = shouldPreload ? lcpNode : undefined;
+
+    const initiatorPath = [
+      {url: lcpNode.record.url, initiatorType: lcpNode.initiatorType},
+      ...path.map(n => ({url: n.record.url, initiatorType: n.initiatorType})),
+    ];
+
+    return {
+      lcpNodeToPreload,
+      initiatorPath,
+    };
   }
 
   /**
@@ -215,10 +230,10 @@ class PreloadLCPImageAudit extends Audit {
 
     const graph = lanternLCP.pessimisticGraph;
     // eslint-disable-next-line max-len
-    const lcpNode = PreloadLCPImageAudit.getLCPNodeToPreload(mainResource, graph, lcpElement, artifacts.ImageElements);
+    const {lcpNodeToPreload, initiatorPath} = PreloadLCPImageAudit.getLCPNodeToPreload(mainResource, graph, lcpElement, artifacts.ImageElements);
 
     const {results, wastedMs} =
-      PreloadLCPImageAudit.computeWasteWithGraph(lcpElement, lcpNode, graph, simulator);
+      PreloadLCPImageAudit.computeWasteWithGraph(lcpElement, lcpNodeToPreload, graph, simulator);
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
@@ -228,8 +243,19 @@ class PreloadLCPImageAudit extends Audit {
     ];
     const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
 
+    // If LCP element was an image and had valid network records (regardless of
+    // if it should be preloaded), it will be found first in the `initiatorPath`.
+    // Otherwise path and length will be undefined.
+    if (initiatorPath) {
+      details.debugData = {
+        type: 'debugdata',
+        initiatorPath,
+        pathLength: initiatorPath.length,
+      };
+    }
+
     return {
-      score: UnusedBytes.scoreForWastedMs(wastedMs),
+      score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
       numericValue: wastedMs,
       numericUnit: 'millisecond',
       displayValue: wastedMs ? str_(i18n.UIStrings.displayValueMsSavings, {wastedMs}) : '',
@@ -238,5 +264,5 @@ class PreloadLCPImageAudit extends Audit {
   }
 }
 
-module.exports = PreloadLCPImageAudit;
-module.exports.UIStrings = UIStrings;
+export default PreloadLCPImageAudit;
+export {UIStrings};

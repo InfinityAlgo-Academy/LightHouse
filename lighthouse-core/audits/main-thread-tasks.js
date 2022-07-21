@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const MainThreadTasksComputed = require('../computed/main-thread-tasks.js');
+import {Audit} from './audit.js';
+import MainThreadTasksComputed from '../computed/main-thread-tasks.js';
 
 class MainThreadTasks extends Audit {
   /**
@@ -56,4 +56,4 @@ class MainThreadTasks extends Audit {
   }
 }
 
-module.exports = MainThreadTasks;
+export default MainThreadTasks;

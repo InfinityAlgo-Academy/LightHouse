@@ -1,8 +1,6 @@
 {
   "extends": "./tsconfig-base.json",
   "compilerOptions": {
-    "outDir": ".tmp/tsbuildinfo/",
-
     // TODO(esmodules): included to support require('file.json'). Remove on the switch to ES Modules.
     "resolveJsonModule": true,
   },
@@ -11,15 +9,19 @@
     {"path": "./report/"},
     {"path": "./report/generator/"},
     {"path": "./shared/"},
+    {"path": "./treemap/"},
   ],
   "include": [
     "root.js",
+    "esm-utils.js",
     "lighthouse-cli/**/*.js",
     "lighthouse-core/**/*.js",
+    "lighthouse-core/index.cjs",
+    "lighthouse-core/util.cjs",
     "clients/**/*.js",
     "build/**/*.js",
     "./types/**/*.d.ts",
-    "eslint-local-rules.js",
+    "eslint-local-rules.cjs",
     "third-party/axe/valid-langs.js",
 
     // TODO(esmodules): JSON files included via resolveJsonModule. Removable on the switch to ES Modules.
@@ -39,7 +41,6 @@
     "clients/test/**/*.js",
     "lighthouse-cli/test/fixtures/**/*.js",
     "lighthouse-core/scripts/legacy-javascript/variants",
-    "lighthouse-core/test/chromium-web-tests/webtests",
     // These test files require further changes before they can be type checked.
     "lighthouse-core/test/config/budget-test.js",
     "lighthouse-core/test/config/config-helpers-test.js",
@@ -47,11 +48,11 @@
     "lighthouse-core/test/config/config-test.js",
     "lighthouse-core/test/config/default-config-test.js",
     "lighthouse-core/test/create-test-trace.js",
-    "lighthouse-core/test/gather/devtools-log-test.js",
     "lighthouse-core/test/gather/driver/wait-for-condition-test.js",
     "lighthouse-core/test/gather/gatherers/accessibility-test.js",
     "lighthouse-core/test/gather/gatherers/cache-contents-test.js",
     "lighthouse-core/test/gather/gatherers/console-messages-test.js",
+    "lighthouse-core/test/gather/gatherers/devtools-log-test.js",
     "lighthouse-core/test/gather/gatherers/dobetterweb/optimized-images-test.js",
     "lighthouse-core/test/gather/gatherers/dobetterweb/password-inputs-with-prevented-paste-test.js",
     "lighthouse-core/test/gather/gatherers/dobetterweb/response-compression-test.js",
@@ -99,6 +100,7 @@
     "lighthouse-core/test/lib/timing-trace-saver-test.js",
     "lighthouse-core/test/lib/tracehouse/cpu-profile-model-test.js",
     "lighthouse-core/test/lib/tracehouse/main-thread-tasks-test.js",
+    "lighthouse-core/test/lib/tracehouse/task-summary-test.js",
     "lighthouse-core/test/lib/tracehouse/trace-processor-test.js",
     "lighthouse-core/test/lib/traces/pwmetrics-events-test.js",
     "lighthouse-core/test/lib/url-shim-test.js",

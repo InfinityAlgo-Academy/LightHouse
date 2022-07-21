@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const log = require('lighthouse-logger');
-const storage = require('./storage.js');
-const emulation = require('../../lib/emulation.js');
-const pageFunctions = require('../../lib/page-functions.js');
+import log from 'lighthouse-logger';
+import * as storage from './storage.js';
+import * as emulation from '../../lib/emulation.js';
+import {pageFunctions} from '../../lib/page-functions.js';
 
 /**
  * Enables `Debugger` domain to receive async stacktrace information on network request initiators.
@@ -218,7 +218,7 @@ async function prepareTargetForIndividualNavigation(session, settings, navigatio
   return {warnings};
 }
 
-module.exports = {
+export {
   prepareThrottlingAndNetwork,
   prepareTargetForTimespanMode,
   prepareTargetForNavigationMode,

@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const speedline = require('speedline-core');
-const LHError = require('../lib/lh-error.js');
-const ProcessedTrace = require('./processed-trace.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import speedline from 'speedline-core';
+import {LighthouseError} from '../lib/lh-error.js';
+import ProcessedTrace from './processed-trace.js';
 
 class Speedline {
   /**
@@ -33,17 +33,17 @@ class Speedline {
       });
     }).catch(err => {
       if (/No screenshots found in trace/.test(err.message)) {
-        throw new LHError(LHError.errors.NO_SCREENSHOTS);
+        throw new LighthouseError(LighthouseError.errors.NO_SCREENSHOTS);
       }
 
       throw err;
     }).then(speedline => {
       if (speedline.frames.length === 0) {
-        throw new LHError(LHError.errors.NO_SPEEDLINE_FRAMES);
+        throw new LighthouseError(LighthouseError.errors.NO_SPEEDLINE_FRAMES);
       }
 
       if (speedline.speedIndex === 0) {
-        throw new LHError(LHError.errors.SPEEDINDEX_OF_ZERO);
+        throw new LighthouseError(LighthouseError.errors.SPEEDINDEX_OF_ZERO);
       }
 
       return speedline;
@@ -51,4 +51,4 @@ class Speedline {
   }
 }
 
-module.exports = makeComputedArtifact(Speedline, null);
+export default makeComputedArtifact(Speedline, null);

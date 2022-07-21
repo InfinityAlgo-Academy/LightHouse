@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const NetworkAnalyzer = require('./network-analyzer.js');
-const TcpConnection = require('./tcp-connection.js');
+import {NetworkAnalyzer} from './network-analyzer.js';
+import {TcpConnection} from './tcp-connection.js';
 
 const DEFAULT_SERVER_RESPONSE_TIME = 30;
 const TLS_SCHEMES = ['https', 'wss'];
@@ -15,7 +15,7 @@ const TLS_SCHEMES = ['https', 'wss'];
 // https://cs.chromium.org/chromium/src/net/socket/client_socket_pool_manager.cc?type=cs&q="int+g_max_sockets_per_group"
 const CONNECTIONS_PER_ORIGIN = 6;
 
-module.exports = class ConnectionPool {
+export class ConnectionPool {
   /**
    * @param {LH.Artifacts.NetworkRequest[]} records
    * @param {Required<LH.Gatherer.Simulation.Options>} options
@@ -168,4 +168,4 @@ module.exports = class ConnectionPool {
     this._connectionsByRecord.delete(record);
     this._connectionsInUse.delete(connection);
   }
-};
+}

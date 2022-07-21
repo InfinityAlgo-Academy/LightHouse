@@ -10,8 +10,9 @@
  * See base class in axe-audit.js for audit() implementation.
  */
 
-const AxeAudit = require('./axe-audit.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import AxeAudit from './axe-audit.js';
+
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of an accesibility audit that evaluates if all form elements have corresponding label elements. This title is descriptive of the successful state and is shown to users when no user action is required. */
@@ -21,10 +22,10 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Labels ensure that form controls are announced properly by assistive ' +
       'technologies, like screen readers. [Learn ' +
-      'more](https://web.dev/label/).',
+      'more about form element labels](https://dequeuniversity.com/rules/axe/4.4/label).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class Label extends AxeAudit {
   /**
@@ -41,5 +42,5 @@ class Label extends AxeAudit {
   }
 }
 
-module.exports = Label;
-module.exports.UIStrings = UIStrings;
+export default Label;
+export {UIStrings};

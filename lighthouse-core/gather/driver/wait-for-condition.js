@@ -7,11 +7,12 @@
 
 /* global window */
 
-const log = require('lighthouse-logger');
-const LHError = require('../../lib/lh-error.js');
-const ExecutionContext = require('./execution-context.js');
+import log from 'lighthouse-logger';
 
-/** @typedef {import('./network-monitor.js')} NetworkMonitor */
+import {LighthouseError} from '../../lib/lh-error.js';
+import {ExecutionContext} from './execution-context.js';
+
+/** @typedef {InstanceType<import('./network-monitor.js')['NetworkMonitor']>} NetworkMonitor */
 /** @typedef {import('./network-monitor.js').NetworkMonitorEvent} NetworkMonitorEvent */
 /** @typedef {{promise: Promise<void>, cancel: function(): void}} CancellableWait */
 
@@ -75,7 +76,7 @@ function waitForFcp(session, pauseAfterFcpMs, maxWaitForFcpMs) {
   /** @type {Promise<void>} */
   const promise = new Promise((resolve, reject) => {
     const maxWaitTimeout = setTimeout(() => {
-      reject(new LHError(LHError.errors.NO_FCP));
+      reject(new LighthouseError(LighthouseError.errors.NO_FCP));
     }, maxWaitForFcpMs);
     /** @type {NodeJS.Timeout|undefined} */
     let loadTimeout;
@@ -164,7 +165,8 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
       const inflightRecords = networkMonitor.getInflightRequests();
       // If there are more than 20 inflight requests, load is still in full swing.
       // Wait until it calms down a bit to be a little less spammy.
-      if (inflightRecords.length < 20) {
+      if (log.isVerbose() && inflightRecords.length < 20 && inflightRecords.length > 0) {
+        log.verbose('waitFor', `=== Waiting on ${inflightRecords.length} requests to finish`);
         for (const record of inflightRecords) {
           log.verbose('waitFor', `Waiting on ${record.url.slice(0, 120)} to finish`);
         }
@@ -172,7 +174,7 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
     };
 
     networkMonitor.on('requeststarted', logStatus);
-    networkMonitor.on('requestloaded', logStatus);
+    networkMonitor.on('requestfinished', logStatus);
     networkMonitor.on(busyEvent, logStatus);
 
     if (!networkQuietOptions.pretendDCLAlreadyFired) {
@@ -192,7 +194,7 @@ function waitForNetworkIdle(session, networkMonitor, networkQuietOptions) {
       networkMonitor.removeListener(busyEvent, onBusy);
       networkMonitor.removeListener(idleEvent, onIdle);
       networkMonitor.removeListener('requeststarted', logStatus);
-      networkMonitor.removeListener('requestloaded', logStatus);
+      networkMonitor.removeListener('requestfinished', logStatus);
       networkMonitor.removeListener(busyEvent, logStatus);
     };
   });
@@ -475,7 +477,7 @@ async function waitForFullyLoaded(session, networkMonitor, options) {
         log.warn('waitFor', 'Page appears to be hung, killing JavaScript...');
         await session.sendCommand('Emulation.setScriptExecutionDisabled', {value: true});
         await session.sendCommand('Runtime.terminateExecution');
-        throw new LHError(LHError.errors.PAGE_HUNG);
+        throw new LighthouseError(LighthouseError.errors.PAGE_HUNG);
       }
 
       return {timedOut: true};
@@ -523,7 +525,7 @@ function waitForUserToContinue(driver) {
   return driver.executionContext.evaluate(createInPagePromise, {args: []});
 }
 
-module.exports = {
+export {
   waitForNothing,
   waitForFrameNavigated,
   waitForFcp,

@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const MultiCheckAudit = require('./multi-check-audit.js');
-const ManifestValues = require('../computed/manifest-values.js');
-const i18n = require('../lib/i18n/i18n.js');
+import MultiCheckAudit from './multi-check-audit.js';
+import ManifestValues from '../computed/manifest-values.js';
+import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on splash screens. This descriptive title is shown to users when the site has a custom splash screen. */
@@ -16,11 +16,11 @@ const UIStrings = {
   failureTitle: 'Is not configured for a custom splash screen',
   /** Description of a Lighthouse audit that tells the user why they should configure a custom splash screen. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'A themed splash screen ensures a high-quality experience when ' +
-    'users launch your app from their homescreens. [Learn ' +
-    'more](https://web.dev/splash-screen/).',
+    'users launch your app from their homescreens. ' +
+    '[Learn more about splash screens](https://web.dev/splash-screen/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview
@@ -95,5 +95,5 @@ class SplashScreen extends MultiCheckAudit {
   }
 }
 
-module.exports = SplashScreen;
-module.exports.UIStrings = UIStrings;
+export default SplashScreen;
+export {UIStrings};

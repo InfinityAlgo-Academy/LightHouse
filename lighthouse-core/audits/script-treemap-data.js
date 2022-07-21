@@ -15,10 +15,12 @@
  * @typedef {Omit<LH.Treemap.Node, 'name'|'children'>} SourceData
  */
 
-const Audit = require('./audit.js');
-const JsBundles = require('../computed/js-bundles.js');
-const UnusedJavaScriptSummary = require('../computed/unused-javascript-summary.js');
-const ModuleDuplication = require('../computed/module-duplication.js');
+import {Audit} from './audit.js';
+
+import JsBundles from '../computed/js-bundles.js';
+import UnusedJavaScriptSummary from '../computed/unused-javascript-summary.js';
+import ModuleDuplication from '../computed/module-duplication.js';
+import {isInline} from '../lib/script-helpers.js';
 
 class ScriptTreemapDataAudit extends Audit {
   /**
@@ -236,8 +238,7 @@ class ScriptTreemapDataAudit extends Audit {
 
       // If this is an inline script, place the node inside a top-level (aka depth-one) node.
       // Also separate each iframe / the main page's inline scripts into their own top-level nodes.
-      const isInlineHtmlScript = script.startColumn || script.startLine;
-      if (isInlineHtmlScript) {
+      if (isInline(script)) {
         let htmlNode = htmlNodesByFrameId.get(script.executionContextAuxData.frameId);
         if (!htmlNode) {
           htmlNode = {
@@ -285,4 +286,4 @@ class ScriptTreemapDataAudit extends Audit {
   }
 }
 
-module.exports = ScriptTreemapDataAudit;
+export default ScriptTreemapDataAudit;

@@ -5,14 +5,14 @@
  */
 'use strict';
 
-const Audit = require('./audit.js');
-const URL = require('../lib/url-shim.js');
+import {Audit} from './audit.js';
+import URL from '../lib/url-shim.js';
 const PASSING_FONT_DISPLAY_REGEX = /^(block|fallback|optional|swap)$/;
 const CSS_URL_REGEX = /url\((.*?)\)/;
 const CSS_URL_GLOBAL_REGEX = new RegExp(CSS_URL_REGEX, 'g');
-const i18n = require('../lib/i18n/i18n.js');
-const Sentry = require('../lib/sentry.js');
-const NetworkRecords = require('../computed/network-records.js');
+import * as i18n from '../lib/i18n/i18n.js';
+import {Sentry} from '../lib/sentry.js';
+import NetworkRecords from '../computed/network-records.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on if all the text on a webpage was visible while the page was loading its webfonts. This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -21,9 +21,9 @@ const UIStrings = {
   failureTitle: 'Ensure text remains visible during webfont load',
   /** Description of a Lighthouse audit that tells the user *why* they should use the font-display CSS feature. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description:
-    'Leverage the font-display CSS feature to ensure text is user-visible while ' +
+    'Leverage the `font-display` CSS feature to ensure text is user-visible while ' +
     'webfonts are loading. ' +
-    '[Learn more](https://web.dev/font-display/).',
+    '[Learn more about `font-display`](https://web.dev/font-display/).',
   /**
    * @description [ICU Syntax] A warning message that is shown when Lighthouse couldn't automatically check some of the page's fonts, telling the user that they will need to manually check the fonts coming from a certain URL origin.
    * @example {https://font.cdn.com/} fontOrigin
@@ -36,7 +36,7 @@ const UIStrings = {
     'other {Lighthouse was unable to automatically check the `font-display` values for the origin {fontOrigin}.}}',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 class FontDisplay extends Audit {
   /**
@@ -189,5 +189,5 @@ class FontDisplay extends Audit {
   }
 }
 
-module.exports = FontDisplay;
-module.exports.UIStrings = UIStrings;
+export default FontDisplay;
+export {UIStrings};

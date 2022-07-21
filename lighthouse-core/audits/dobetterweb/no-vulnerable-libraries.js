@@ -12,11 +12,15 @@
 
 'use strict';
 
-const Audit = require('../audit.js');
-const Sentry = require('../../lib/sentry.js');
-const semver = require('semver');
-const snykDatabase = require('../../../third-party/snyk/snapshot.json');
-const i18n = require('../../lib/i18n/i18n.js');
+import fs from 'fs';
+import {Audit} from '../audit.js';
+import {Sentry} from '../../lib/sentry.js';
+import semver from 'semver';
+import * as i18n from '../../lib/i18n/i18n.js';
+import {LH_ROOT} from '../../../root.js';
+
+const snykDatabase = JSON.parse(
+  fs.readFileSync(`${LH_ROOT}/third-party/snyk/snapshot.json`, 'utf-8'));
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on Javascript libraries the page uses. This descriptive title is shown to users when all Javascript libraries are free of known security vulnerabilities. */
@@ -28,7 +32,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user why they should be concerned about the third party Javascript libraries that they use. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Some third-party scripts may contain known security vulnerabilities ' +
     'that are easily identified and exploited by attackers. ' +
-    '[Learn more](https://web.dev/no-vulnerable-libraries/).',
+    '[Learn more about vulnerable libraries](https://web.dev/no-vulnerable-libraries/).',
   /** [ICU Syntax] Label for the audit identifying the number of vulnerable Javascript libraries found. */
   displayValue: `{itemCount, plural,
     =1 {1 vulnerability detected}
@@ -42,7 +46,7 @@ const UIStrings = {
   columnSeverity: 'Highest Severity',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 const SEMVER_REGEX = /^(\d+\.\d+\.\d+)[^-0-9]+/;
 
@@ -221,5 +225,5 @@ class NoVulnerableLibrariesAudit extends Audit {
   }
 }
 
-module.exports = NoVulnerableLibrariesAudit;
-module.exports.UIStrings = UIStrings;
+export default NoVulnerableLibrariesAudit;
+export {UIStrings};

@@ -3,17 +3,14 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
-
-const {
+import {
   getNetworkError,
   getInterstitialError,
   getPageLoadError,
   getNonHtmlError,
-} = require('../../lib/navigation-error.js');
-const NetworkRequest = require('../../lib/network-request.js');
+} from '../../lib/navigation-error.js';
+import {NetworkRequest} from '../../lib/network-request.js';
 
 const LoadFailureMode = /** @type {const} */ ({
   fatal: 'fatal',
@@ -211,6 +208,15 @@ describe('#getNonHtmlError', () => {
     expect(getNonHtmlError(mainRecord)).toBeUndefined();
   });
 
+  it('passes when the page is of MIME type application/xhtml+xml', () => {
+    const url = 'http://the-page.com';
+    const mainRecord = new NetworkRequest();
+    const mimeType = 'application/xhtml+xml';
+    mainRecord.url = url;
+    mainRecord.mimeType = mimeType;
+    expect(getNonHtmlError(mainRecord)).toBeUndefined();
+  });
+
   it('fails when the page is not of MIME type text/html', () => {
     const url = 'http://the-page.com';
     const mimeType = 'application/xml';
@@ -248,6 +254,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
     mainRecord.url = context.url;
     mainRecord.mimeType = 'text/html';
@@ -261,6 +268,7 @@ describe('#getPageLoadError', () => {
       url: 'http://example.com/#/page/list',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
     mainRecord.url = 'http://example.com';
     mainRecord.mimeType = 'text/html';
@@ -274,6 +282,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.ignore,
+      warnings: [],
     };
     mainRecord.url = context.url;
     mainRecord.failed = true;
@@ -288,6 +297,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
     const finalRecord = new NetworkRequest();
 
@@ -307,6 +317,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord, interstitialRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
 
     mainRecord.url = context.url;
@@ -324,6 +335,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
 
     mainRecord.url = context.url;
@@ -339,6 +351,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
 
     mainRecord.url = context.url;
@@ -348,12 +361,31 @@ describe('#getPageLoadError', () => {
     expect(error.message).toEqual('NOT_HTML');
   });
 
+  it('warns with XHTML type', () => {
+    const mainRecord = new NetworkRequest();
+    const context = {
+      url: 'http://the-page.com',
+      networkRecords: [mainRecord],
+      loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
+    };
+
+    mainRecord.url = context.url;
+    mainRecord.mimeType = 'application/xhtml+xml';
+
+    const error = getPageLoadError(undefined, context);
+    expect(error).toBeUndefined();
+    expect(context.warnings[0]).toBeDisplayString(
+      'The page MIME type is XHTML: Lighthouse does not explicitly support this document type');
+  });
+
   it('fails with nav error last', () => {
     const mainRecord = new NetworkRequest();
     const context = {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
 
     mainRecord.url = context.url;
@@ -369,6 +401,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.warn,
+      warnings: [],
     };
 
     mainRecord.url = context.url;
@@ -384,6 +417,7 @@ describe('#getPageLoadError', () => {
       url: 'http://the-page.com',
       networkRecords: [mainRecord],
       loadFailureMode: LoadFailureMode.fatal,
+      warnings: [],
     };
     const finalRecord = new NetworkRequest();
 

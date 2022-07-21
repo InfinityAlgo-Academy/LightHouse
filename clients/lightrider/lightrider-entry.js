@@ -8,11 +8,12 @@
 /* global globalThis */
 
 import {Buffer} from 'buffer';
+import log from 'lighthouse-logger';
 
-import lighthouse from '../../lighthouse-core/index.js';
-import LHError from '../../lighthouse-core/lib/lh-error.js';
-import preprocessor from '../../lighthouse-core/lib/proto-preprocessor.js';
-import assetSaver from '../../lighthouse-core/lib/asset-saver.js';
+import {legacyNavigation} from '../../lighthouse-core/index.js';
+import {LighthouseError} from '../../lighthouse-core/lib/lh-error.js';
+import {processForProto} from '../../lighthouse-core/lib/proto-preprocessor.js';
+import * as assetSaver from '../../lighthouse-core/lib/asset-saver.js';
 
 import mobileConfig from '../../lighthouse-core/config/lr-mobile-config.js';
 import desktopConfig from '../../lighthouse-core/config/lr-desktop-config.js';
@@ -23,7 +24,7 @@ const LR_PRESETS = {
   desktop: desktopConfig,
 };
 
-/** @typedef {import('../../lighthouse-core/gather/connections/connection.js')} Connection */
+/** @typedef {import('../../lighthouse-core/gather/connections/connection.js').Connection} Connection */
 
 // Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
 // (`parseSourceMapFromDataUrl` breaks without this)
@@ -63,11 +64,11 @@ export async function runLighthouseInLR(connection, url, flags, lrOpts) {
   }
 
   try {
-    const runnerResult = await lighthouse(url, flags, config, connection);
+    const runnerResult = await legacyNavigation(url, flags, config, connection);
     if (!runnerResult) throw new Error('Lighthouse finished without a runnerResult');
 
     // pre process the LHR for proto
-    const preprocessedLhr = preprocessor.processForProto(runnerResult.lhr);
+    const preprocessedLhr = processForProto(runnerResult.lhr);
 
     // When LR is called with |internal: {keep_raw_response: true, save_lighthouse_assets: true}|,
     // we log artifacts to raw_response.artifacts.
@@ -85,9 +86,9 @@ export async function runLighthouseInLR(connection, url, flags, lrOpts) {
   } catch (err) {
     // If an error ruined the entire lighthouse run, attempt to return a meaningful error.
     let runtimeError;
-    if (!(err instanceof LHError) || !err.lhrRuntimeError) {
+    if (!(err instanceof LighthouseError) || !err.lhrRuntimeError) {
       runtimeError = {
-        code: LHError.UNKNOWN_ERROR,
+        code: LighthouseError.UNKNOWN_ERROR,
         message: `Unknown error encountered with message '${err.message}'`,
       };
     } else {
@@ -103,8 +104,16 @@ export async function runLighthouseInLR(connection, url, flags, lrOpts) {
   }
 }
 
+/** @param {(status: [string, string, string]) => void} listenCallback */
+function listenForStatus(listenCallback) {
+  log.events.addListener('status', listenCallback);
+  log.events.addListener('warning', listenCallback);
+}
+
 // Expose on window for browser-residing consumers of file.
 if (typeof window !== 'undefined') {
   // @ts-expect-error - not worth typing a property on `window`.
   window.runLighthouseInLR = runLighthouseInLR;
+  // @ts-expect-error
+  self.listenForStatus = listenForStatus;
 }

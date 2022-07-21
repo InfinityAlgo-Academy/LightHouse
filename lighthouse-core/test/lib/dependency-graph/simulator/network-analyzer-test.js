@@ -3,18 +3,16 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const assert = require('assert').strict;
+import {strict as assert} from 'assert';
 
-const NetworkAnalyzer = require('../../../../lib/dependency-graph/simulator/network-analyzer.js');
-const NetworkRecords = require('../../../../computed/network-records.js');
-const devtoolsLog = require('../../../fixtures/traces/progressive-app-m60.devtools.log.json');
-const devtoolsLogWithRedirect = require(
-  '../../../fixtures/traces/site-with-redirect.devtools.log.json'
-);
+import {NetworkAnalyzer} from '../../../../lib/dependency-graph/simulator/network-analyzer.js';
+import NetworkRecords from '../../../../computed/network-records.js';
+import {readJson} from '../../../test-utils.js';
 
-/* eslint-env jest */
+const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
+const devtoolsLogWithRedirect = readJson('../../../fixtures/traces/site-with-redirect.devtools.log.json', import.meta);
+
 describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   let recordId;
 

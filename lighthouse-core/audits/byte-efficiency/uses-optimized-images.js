@@ -9,19 +9,19 @@
  */
 'use strict';
 
-const ByteEfficiencyAudit = require('./byte-efficiency-audit.js');
-const URL = require('../../lib/url-shim.js');
-const i18n = require('../../lib/i18n/i18n.js');
+import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
+import URL from '../../lib/url-shim.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to encode images with optimization (better compression). This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Efficiently encode images',
   /** Description of a Lighthouse audit that tells the user *why* they need to efficiently encode images. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Optimized images load faster and consume less cellular data. ' +
-  '[Learn more](https://web.dev/uses-optimized-images/).',
+  '[Learn how to efficiently encode images](https://web.dev/uses-optimized-images/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 4096;
 
@@ -66,7 +66,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {ByteEfficiencyAudit.ByteEfficiencyProduct}
+   * @return {import('./byte-efficiency-audit.js').ByteEfficiencyProduct}
    */
   static audit_(artifacts) {
     const pageURL = artifacts.URL.finalUrl;
@@ -141,5 +141,5 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
   }
 }
 
-module.exports = UsesOptimizedImages;
-module.exports.UIStrings = UIStrings;
+export default UsesOptimizedImages;
+export {UIStrings};

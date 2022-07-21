@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const makeComputedArtifact = require('./computed-artifact.js');
-const constants = require('../config/constants.js');
-const Simulator = require('../lib/dependency-graph/simulator/simulator.js');
-const NetworkAnalysis = require('./network-analysis.js');
+import {makeComputedArtifact} from './computed-artifact.js';
+import * as constants from '../config/constants.js';
+import {Simulator} from '../lib/dependency-graph/simulator/simulator.js';
+import NetworkAnalysis from './network-analysis.js';
 
 class LoadSimulator {
   /**
@@ -89,4 +89,7 @@ class LoadSimulator {
   }
 }
 
-module.exports = makeComputedArtifact(LoadSimulator, ['devtoolsLog', 'settings']);
+// TODO(esmodules): For all computed artifacts:
+//   const LoadSimulatorComputed = makeComputedArtifact(LoadSimulator, ['devtoolsLog', 'settings']);
+//   export {LoadSimulator as LoadSimulatorComputed};
+export default makeComputedArtifact(LoadSimulator, ['devtoolsLog', 'settings']);

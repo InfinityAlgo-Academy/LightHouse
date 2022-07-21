@@ -3,14 +3,12 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const RedirectsAudit = require('../../audits/redirects.js');
-const assert = require('assert').strict;
-const networkRecordsToDevtoolsLog = require('../network-records-to-devtools-log.js');
-const createTestTrace = require('../create-test-trace.js');
+import {strict as assert} from 'assert';
 
-/* eslint-env jest */
+import RedirectsAudit from '../../audits/redirects.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
+import {createTestTrace} from '../create-test-trace.js';
 
 const FAILING_THREE_REDIRECTS = [{
   requestId: '1',
@@ -107,10 +105,11 @@ const FAILING_CLIENTSIDE = [
 describe('Performance: Redirects audit', () => {
   const mockArtifacts = (networkRecords, finalUrl) => {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
+    const frameUrl = networkRecords[0].url;
 
     return {
       GatherContext: {gatherMode: 'navigation'},
-      traces: {defaultPass: createTestTrace({traceEnd: 5000})},
+      traces: {defaultPass: createTestTrace({frameUrl, traceEnd: 5000})},
       devtoolsLogs: {defaultPass: devtoolsLog},
       URL: {
         initialUrl: 'about:blank',
