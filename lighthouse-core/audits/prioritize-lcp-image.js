@@ -5,11 +5,14 @@
  */
 'use strict';
 
+// LANTERN_DEBUG=1 node lighthouse-cli http://localhost:10200/prioritize-none.html --only-audits="prioritize-lcp-image,largest-contentful-paint" --save-assets -A --output-path=./tmp/report.html
+
 import {Audit} from './audit.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import MainResource from '../computed/main-resource.js';
 import LanternLCP from '../computed/metrics/lantern-largest-contentful-paint.js';
+import LoadSimulator from '../computed/load-simulator.js';
 import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
 
 const UIStrings = {
@@ -44,15 +47,13 @@ class PrioritizeLCPImageAudit extends Audit {
   }
 
   /**
-   *
    * @param {LH.Artifacts.NetworkRequest} request
    * @param {LH.Artifacts.NetworkRequest} mainResource
    * @return {boolean}
    */
   static shouldPrioritizeRequest(request, mainResource) {
     // If it's already prioritized, no need to recommend it.
-    // TODO
-    // if (request.isLinkPrioritize) return false;
+    if (['VeryHigh', 'High'].includes(request.initialPriority)) return false;
     // It's not a request loaded over the network, don't recommend it.
     if (NetworkRequest.isNonNetworkRequest(request)) return false;
     // Finally, return whether or not it belongs to the main frame
@@ -101,7 +102,7 @@ class PrioritizeLCPImageAudit extends Audit {
     if (!lcpNode || !path) return;
 
     // eslint-disable-next-line max-len
-    const shouldPrioritize = PrioritizeLCPImageAudit.shouldPrioritizeRequest(lcpNode.record, mainResource, path);
+    const shouldPrioritize = PrioritizeLCPImageAudit.shouldPrioritizeRequest(lcpNode.record, mainResource);
     return shouldPrioritize ? lcpNode : undefined;
   }
 
@@ -121,13 +122,14 @@ class PrioritizeLCPImageAudit extends Audit {
       };
     }
 
-    const sendStart = lcpNode.record.timing.sendStart;
-    if (sendStart < 0.100) {
-      return {
-        wastedMs: 0,
-        results: [],
-      };
-    }
+    // TODO
+    // const sendStart = lcpNode.record.timing.sendStart;
+    // if (sendStart < 0.100) {
+    //   return {
+    //     wastedMs: 0,
+    //     results: [],
+    //   };
+    // }
 
     const modifiedGraph = graph.cloneWithRelationships();
 
@@ -165,11 +167,17 @@ class PrioritizeLCPImageAudit extends Audit {
 
     // Prioritize will request the resource as soon as its discovered in the main document.
     // Reflect this change in the dependencies in our modified graph.
-    modifiedLCPNode.removeAllDependencies();
-    modifiedLCPNode.addDependency(mainDocumentNode);
+    // modifiedLCPNode.removeAllDependencies();
+    // modifiedLCPNode.addDependency(mainDocumentNode);
 
-    const simulationBeforeChanges = simulator.simulate(graph, {flexibleOrdering: true});
-    const simulationAfterChanges = simulator.simulate(modifiedGraph, {flexibleOrdering: true});
+    const simulationBeforeChanges = simulator.simulate(graph, {
+      flexibleOrdering: true,
+      label: 'prioritize-lcp-image-before',
+    });
+    const simulationAfterChanges = simulator.simulate(modifiedGraph, {
+      flexibleOrdering: true,
+      label: 'prioritize-lcp-image-after',
+    });
     const lcpTimingsBefore = simulationBeforeChanges.nodeTimings.get(lcpNode);
     if (!lcpTimingsBefore) throw new Error('Impossible - node timings should never be undefined');
     const lcpTimingsAfter = simulationAfterChanges.nodeTimings.get(modifiedLCPNode);
@@ -178,7 +186,7 @@ class PrioritizeLCPImageAudit extends Audit {
     const modifiedNodesById = Array.from(simulationAfterChanges.nodeTimings.keys())
       .reduce((map, node) => map.set(node.id, node), new Map());
 
-    // Even with prioritize, the image can't be painted before it's even inserted into the DOM.
+    // Even with a higher priority, the image can't be painted before it's even inserted into the DOM.
     // New LCP time will be the max of image download and image in DOM (endTime of its deps).
     let maxDependencyEndTime = 0;
     for (const nodeId of Array.from(dependenciesIds)) {
@@ -191,6 +199,11 @@ class PrioritizeLCPImageAudit extends Audit {
 
     const wastedMs = lcpTimingsBefore.endTime -
       Math.max(lcpTimingsAfter.endTime, maxDependencyEndTime);
+
+    console.log({
+      beforeLcp: lcpTimingsBefore.endTime,
+      afterLcp: lcpTimingsAfter.endTime,
+    });
 
     return {
       wastedMs,
@@ -216,26 +229,17 @@ class PrioritizeLCPImageAudit extends Audit {
     const lcpElement = artifacts.TraceElements
       .find(element => element.traceEventType === 'largest-contentful-paint');
 
-    const [mainResource, lanternLCP] = await Promise.all([
+    const [mainResource, lanternLCP, simulator] = await Promise.all([
       MainResource.request({devtoolsLog, URL}, context),
       LanternLCP.request(metricData, context),
+      LoadSimulator.request({devtoolsLog, settings: context.settings}, context),
     ]);
 
     const graph = lanternLCP.pessimisticGraph;
     // eslint-disable-next-line max-len
-    const lcpNode = PrioritizeLCPImageAudit.getLCPNodeToPrioritize(mainResource, graph, lcpElement, artifacts.ImageElements);
-
-    if (!lcpNode || !lcpElement || !lcpNode.record.timing?.sendStart) {
-      return {score: null, notApplicable: true};
-    }
-
-    // TODO: lantern.
-    const wastedMs = lcpNode.record.timing.sendStart;
-    const results = [{
-      node: Audit.makeNodeItem(lcpElement.node),
-      url: lcpNode.record.url,
-      wastedMs,
-    }];
+    const lcpNodeToPrioritize = PrioritizeLCPImageAudit.getLCPNodeToPrioritize(mainResource, graph, lcpElement, artifacts.ImageElements);
+    // eslint-disable-next-line max-len
+    const {results, wastedMs} = PrioritizeLCPImageAudit.computeWasteWithGraph(lcpElement, lcpNodeToPrioritize, graph, simulator);
 
     /** @type {LH.Audit.Details.Opportunity['headings']} */
     const headings = [
