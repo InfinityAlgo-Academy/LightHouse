@@ -13,7 +13,9 @@ import {Audit} from './audit.js';
 
 import JsBundles from '../computed/js-bundles.js';
 import * as i18n from '../lib/i18n/i18n.js';
+import {getIssueDetailDescription} from '../lib/deprecations-strings.js';
 
+/* eslint-disable max-len */
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the use of deprecated APIs. This descriptive title is shown to users when the page does not use deprecated APIs. */
   title: 'Avoids deprecated APIs',
@@ -32,6 +34,7 @@ const UIStrings = {
   /** Table column header for line of code (eg. 432) that is using a deprecated API. */
   columnLine: 'Line',
 };
+/* eslint-enable max-len */
 
 const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
 
@@ -58,17 +61,35 @@ class Deprecations extends Audit {
     const bundles = await JsBundles.request(artifacts, context);
 
     const deprecations = artifacts.InspectorIssues.deprecationIssue
-      // TODO: translate these strings.
-      // see https://github.com/GoogleChrome/lighthouse/issues/13895
-      .filter(deprecation => !deprecation.type || deprecation.type === 'Untranslated')
       .map(deprecation => {
         const {scriptId, url, lineNumber, columnNumber} = deprecation.sourceCodeLocation;
         const bundle = bundles.find(bundle => bundle.script.scriptId === scriptId);
-        return {
-          value: deprecation.message || '',
+        const deprecationMeta = getIssueDetailDescription(deprecation);
+
+        /** @type {LH.Audit.Details.TableSubItems=} */
+        let subItems = undefined;
+        if (deprecationMeta.links.length) {
+          subItems = {
+            type: 'subitems',
+            items: deprecationMeta.links.map(link => ({
+              type: 'link',
+              url: link.link,
+              text: link.linkTitle,
+            })),
+          };
+        }
+
+        // @ts-expect-error: The english string used to be included on the protocol, but no longer is.
+        const legacyMessage = deprecation.message;
+
+        /** @type {LH.Audit.Details.TableItem} */
+        const item = {
+          value: deprecationMeta.message || legacyMessage || deprecation.type,
           // Protocol.Audits.SourceCodeLocation.columnNumber is 1-indexed, but we use 0-indexed.
           source: Audit.makeSourceLocation(url, lineNumber, columnNumber - 1, bundle),
+          subItems,
         };
+        return item;
       });
 
     /** @type {LH.Audit.Details.Table['headings']} */

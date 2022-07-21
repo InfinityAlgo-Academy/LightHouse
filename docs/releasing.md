@@ -47,6 +47,8 @@ In general, Lighthouse should be using the latest version of all of these depend
 1. `axe-core`
 1. `js-library-detector`
 1. `chrome-launcher`
+1. `chrome-devtools-frontend`
+1. `devtools-protocol`
 
 ### On the scheduled release date
 
