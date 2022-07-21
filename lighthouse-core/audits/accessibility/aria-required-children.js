@@ -25,7 +25,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Some ARIA parent roles must contain specific child roles to perform ' +
       'their intended accessibility functions. ' +
-      '[Learn more](https://dequeuniversity.com/rules/axe/4.4/aria-required-children).',
+      '[Learn more about roles and required children elements](https://dequeuniversity.com/rules/axe/4.4/aria-required-children).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);

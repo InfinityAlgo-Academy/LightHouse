@@ -18,7 +18,7 @@ const UIStrings = {
   description: 'Source maps translate minified code to the original source code. This helps ' +
     'developers debug in production. In addition, Lighthouse is able to provide further ' +
     'insights. Consider deploying source maps to take advantage of these benefits. ' +
-    '[Learn more](https://developers.google.com/web/tools/chrome-devtools/javascript/source-maps).',
+    '[Learn more about source maps](https://developers.google.com/web/tools/chrome-devtools/javascript/source-maps).',
   /** Label for a column in a data table. Entries will be URLs to JavaScript source maps. */
   columnMapURL: 'Map URL',
   /** Label for a possible error message indicating that a source map for a large, first-party JavaScript script is missing. */

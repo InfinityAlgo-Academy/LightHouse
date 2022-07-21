@@ -22,7 +22,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Labels ensure that form controls are announced properly by assistive ' +
       'technologies, like screen readers. [Learn ' +
-      'more](https://dequeuniversity.com/rules/axe/4.4/label).',
+      'more about form element labels](https://dequeuniversity.com/rules/axe/4.4/label).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);

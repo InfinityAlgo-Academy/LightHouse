@@ -16,7 +16,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user that a high network round trip time (RTT) can effect their website's performance because the server is physically far away from them thus making the RTT high. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Network round trip times (RTT) have a large impact on performance. ' +
     'If the RTT to an origin is high, it\'s an indication that servers closer to the user could ' +
-    'improve performance. [Learn more](https://hpbn.co/primer-on-latency-and-bandwidth/).',
+    'improve performance. [Learn more about the Round Trip Time](https://hpbn.co/primer-on-latency-and-bandwidth/).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);

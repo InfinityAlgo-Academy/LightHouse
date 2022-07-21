@@ -21,9 +21,9 @@ const UIStrings = {
   failureTitle: 'Ensure text remains visible during webfont load',
   /** Description of a Lighthouse audit that tells the user *why* they should use the font-display CSS feature. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description:
-    'Leverage the font-display CSS feature to ensure text is user-visible while ' +
+    'Leverage the `font-display` CSS feature to ensure text is user-visible while ' +
     'webfonts are loading. ' +
-    '[Learn more](https://web.dev/font-display/).',
+    '[Learn more about `font-display`](https://web.dev/font-display/).',
   /**
    * @description [ICU Syntax] A warning message that is shown when Lighthouse couldn't automatically check some of the page's fonts, telling the user that they will need to manually check the fonts coming from a certain URL origin.
    * @example {https://font.cdn.com/} fontOrigin

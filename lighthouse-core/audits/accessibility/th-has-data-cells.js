@@ -25,7 +25,7 @@ const UIStrings = {
   description: 'Screen readers have features to make navigating tables easier. Ensuring ' +
       'table headers always refer to some set of cells may improve the experience for screen ' +
       'reader users. ' +
-      '[Learn more](https://dequeuniversity.com/rules/axe/4.4/th-has-data-cells).',
+      '[Learn more about table headers](https://dequeuniversity.com/rules/axe/4.4/th-has-data-cells).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);

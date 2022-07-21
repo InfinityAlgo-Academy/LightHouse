@@ -33,7 +33,7 @@ const UIStrings = {
   description:
     'Consider adding `preconnect` or `dns-prefetch` resource hints to establish early ' +
     'connections to important third-party origins. ' +
-    '[Learn more](https://web.dev/uses-rel-preconnect/).',
+    '[Learn how to preconnect to required origins](https://web.dev/uses-rel-preconnect/).',
   /**
    * @description A warning message that is shown when the user tried to follow the advice of the audit, but it's not working as expected.
    * @example {https://example.com} securityOrigin

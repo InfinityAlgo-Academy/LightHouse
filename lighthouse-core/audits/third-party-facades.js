@@ -36,7 +36,8 @@ const UIStrings = {
   failureTitle: 'Some third-party resources can be lazy loaded with a facade',
   /** Description of a Lighthouse audit that identifies the third-party code on the page that can be lazy loaded with a facade alternative. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. A facade is a lightweight component which looks like the desired resource. Lazy loading means resources are deferred until they are needed. Third-party code refers to resources that are not within the control of the site owner. */
   description: 'Some third-party embeds can be lazy loaded. ' +
-    'Consider replacing them with a facade until they are required. [Learn more](https://web.dev/third-party-facades/).',
+    'Consider replacing them with a facade until they are required. ' +
+    '[Learn how to defer third-parties with a facade](https://web.dev/third-party-facades/).',
   /** Summary text for the result of a Lighthouse audit that identifies the third-party code on a web page that can be lazy loaded with a facade alternative. This text summarizes the number of lazy loading facades that can be used on the page. A facade is a lightweight component which looks like the desired resource. */
   displayValue: `{itemCount, plural,
   =1 {# facade alternative available}

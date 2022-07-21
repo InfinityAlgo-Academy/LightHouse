@@ -14,7 +14,7 @@ const UIStrings = {
   /** Descriptive title of a Lighthouse audit that provides detail on whether links have potentially-crawlable href attributes. This descriptive title is shown when there are href attributes which are not crawlable by search engines. */
   failureTitle: 'Links are not crawlable',
   /** Description of a Lighthouse audit that tells the user why href attributes on links should be crawlable. This is displayed after a user expands the section to see more. 'Learn More' becomes link text to additional documentation. */
-  description: 'Search engines may use `href` attributes on links to crawl websites. Ensure that the `href` attribute of anchor elements links to an appropriate destination, so more pages of the site can be discovered. [Learn More](https://support.google.com/webmasters/answer/9112205)',
+  description: 'Search engines may use `href` attributes on links to crawl websites. Ensure that the `href` attribute of anchor elements links to an appropriate destination, so more pages of the site can be discovered. [Learn how to make links crawlable](https://support.google.com/webmasters/answer/9112205)',
   /** Label for a column in a data table; entries will be the HTML anchor elements that failed the audit. Anchors are DOM elements that are links. */
   columnFailingLink: 'Uncrawlable Link',
 };

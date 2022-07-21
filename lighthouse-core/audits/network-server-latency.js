@@ -16,7 +16,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user that server latency can effect their website's performance negatively. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Server latencies can impact web performance. ' +
     'If the server latency of an origin is high, it\'s an indication the server is overloaded ' +
-    'or has poor backend performance. [Learn more](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall).',
+    'or has poor backend performance. [Learn more about server response time](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);

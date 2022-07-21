@@ -22,7 +22,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'When a button doesn\'t have an accessible name, screen readers announce it ' +
       'as "button", making it unusable for users who rely on screen readers. ' +
-      '[Learn more](https://dequeuniversity.com/rules/axe/4.4/button-name).',
+      '[Learn how to make buttons more accessible](https://dequeuniversity.com/rules/axe/4.4/button-name).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);

@@ -23,7 +23,8 @@ const UIStrings = {
   failureTitle: 'Serves images with low resolution',
   /** Description of a Lighthouse audit that tells the user why they should maintain an appropriate size for all images. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Image natural dimensions should be proportional to the display size and the ' +
-    'pixel ratio to maximize image clarity. [Learn more](https://web.dev/serve-responsive-images/).',
+    'pixel ratio to maximize image clarity. ' +
+    '[Learn how to provide responsive images](https://web.dev/serve-responsive-images/).',
   /**  Label for a column in a data table; entries in the column will be a string representing the displayed size of the image. */
   columnDisplayed: 'Displayed size',
   /**  Label for a column in a data table; entries in the column will be a string representing the actual size of the image. */

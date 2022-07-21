@@ -16,7 +16,7 @@ const UIStrings = {
   title: 'Reduce unused JavaScript',
   /** Description of a Lighthouse audit that tells the user *why* they should reduce JavaScript that is never needed/evaluated by the browser. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Reduce unused JavaScript and defer loading scripts until they are required to ' +
-    'decrease bytes consumed by network activity. [Learn more](https://web.dev/unused-javascript/).',
+    'decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://web.dev/unused-javascript/).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);

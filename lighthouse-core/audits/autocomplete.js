@@ -25,7 +25,7 @@ const UIStrings = {
   description: '`autocomplete` helps users submit forms quicker. To reduce user ' +
    'effort, consider enabling by setting the `autocomplete` ' +
    'attribute to a valid value.' +
-  ' [Learn more](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)',
+  ' [Learn more about `autocomplete` in forms](https://developers.google.com/web/fundamentals/design-and-ux/input/forms#use_metadata_to_enable_auto-complete)',
   /** Label for a column in a data table; entries will be the autocomplete token suggestions based on heuristics. */
   columnSuggestions: 'Suggested Token',
   /** Label for a column in a data table; entries will be the incorrect optional autocomplete tokens or prompting user to review them. */

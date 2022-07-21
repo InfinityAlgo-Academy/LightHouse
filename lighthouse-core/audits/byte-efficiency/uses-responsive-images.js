@@ -26,7 +26,7 @@ const UIStrings = {
   description:
   'Serve images that are appropriately-sized to save cellular data ' +
   'and improve load time. ' +
-  '[Learn more](https://web.dev/uses-responsive-images/).',
+  '[Learn how to size images](https://web.dev/uses-responsive-images/).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);

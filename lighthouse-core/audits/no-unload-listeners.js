@@ -15,7 +15,7 @@ const UIStrings = {
   /** Descriptive title of a Lighthouse audit that checks if a web page has 'unload' event listeners and finds that it is using them. */
   failureTitle: 'Registers an `unload` listener',
   /** Description of a Lighthouse audit that tells the user why pages should not use the 'unload' event. This is displayed after a user expands the section to see more. 'Learn More' becomes link text to additional documentation. */
-  description: 'The `unload` event does not fire reliably and listening for it can prevent browser optimizations like the Back-Forward Cache. Use `pagehide` or `visibilitychange` events instead. [Learn more](https://web.dev/bfcache/#never-use-the-unload-event)',
+  description: 'The `unload` event does not fire reliably and listening for it can prevent browser optimizations like the Back-Forward Cache. Use `pagehide` or `visibilitychange` events instead. [Learn more about unload event listeners](https://web.dev/bfcache/#never-use-the-unload-event)',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);

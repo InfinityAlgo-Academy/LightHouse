@@ -19,7 +19,7 @@ class FocusTraps extends ManualAudit {
   static get meta() {
     return Object.assign({
       id: 'focus-traps',
-      description: 'A user can tab into and out of any control or region without accidentally trapping their focus. [Learn more](https://web.dev/focus-traps/).',
+      description: 'A user can tab into and out of any control or region without accidentally trapping their focus. [Learn how to avoid focus traps](https://web.dev/focus-traps/).',
       title: 'User focus is not accidentally trapped in a region',
     }, super.partialMeta);
   }

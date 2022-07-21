@@ -15,7 +15,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that compares how quickly the page loads against targets set by the user. Timing budgets are a type of performance budget. */
   title: 'Timing budget',
   /** Description of a Lighthouse audit where a user sets budgets for how quickly the page loads. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Set a timing budget to help you keep an eye on the performance of your site. Performant sites load fast and respond to user input events quickly. [Learn more](https://developers.google.com/web/tools/lighthouse/audits/budgets).',
+  description: 'Set a timing budget to help you keep an eye on the performance of your site. Performant sites load fast and respond to user input events quickly. [Learn more about performance budgets](https://developers.google.com/web/tools/lighthouse/audits/budgets).',
   /** Label for a column in a data table; entries will be the names of different timing metrics, e.g. "Time to Interactive", "First Contentful Paint", etc. */
   columnTimingMetric: 'Metric',
   /** Label for a column in a data table; entries will be the measured value of a particular timing metric. Most entries will have a unit of milliseconds, but units could be other things as well. */

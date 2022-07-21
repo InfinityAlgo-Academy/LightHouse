@@ -15,7 +15,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should defer loading any content in CSS that isn’t needed at page load. This is displayed after a user expands the section to see more. No word length limits. 'Learn More' becomes link text to additional documentation. */
   description: 'Reduce unused rules from stylesheets and defer CSS not used for ' +
     'above-the-fold content to decrease bytes consumed by network activity. ' +
-    '[Learn more](https://web.dev/unused-css-rules/).',
+    '[Learn how to reduce unused CSS](https://web.dev/unused-css-rules/).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);

@@ -19,7 +19,7 @@ class FocusableControls extends ManualAudit {
   static get meta() {
     return Object.assign({
       id: 'focusable-controls',
-      description: 'Custom interactive controls are keyboard focusable and display a focus indicator. [Learn more](https://web.dev/focusable-controls/).',
+      description: 'Custom interactive controls are keyboard focusable and display a focus indicator. [Learn how to make custom controls focusable](https://web.dev/focusable-controls/).',
       title: 'Interactive controls are keyboard focusable',
     }, super.partialMeta);
   }

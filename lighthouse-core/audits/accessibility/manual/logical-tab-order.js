@@ -19,7 +19,7 @@ class LogicalTabOrder extends ManualAudit {
   static get meta() {
     return Object.assign({
       id: 'logical-tab-order',
-      description: 'Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more](https://web.dev/logical-tab-order/).',
+      description: 'Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more about logical tab ordering](https://web.dev/logical-tab-order/).',
       title: 'The page has a logical tab order',
     }, super.partialMeta);
   }

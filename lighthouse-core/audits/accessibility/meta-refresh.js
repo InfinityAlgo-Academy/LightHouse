@@ -23,7 +23,7 @@ const UIStrings = {
   description: 'Users do not expect a page to refresh automatically, and doing so will move ' +
       'focus back to the top of the page. This may create a frustrating or ' +
       'confusing experience. ' +
-      '[Learn more](https://dequeuniversity.com/rules/axe/4.4/meta-refresh).',
+      '[Learn more about the refresh meta tag](https://dequeuniversity.com/rules/axe/4.4/meta-refresh).',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
