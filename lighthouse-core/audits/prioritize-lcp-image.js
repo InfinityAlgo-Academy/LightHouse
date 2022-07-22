@@ -166,15 +166,11 @@ class PrioritizeLCPImageAudit extends Audit {
       throw new Error('Could not find the LCP node');
     }
 
-    // Prioritize will request the resource as soon as its discovered in the main document.
-    // Reflect this change in the dependencies in our modified graph.
-    modifiedLCPNode.removeAllDependencies(); // TODO: we want this?
-    modifiedLCPNode.addDependency(mainDocumentNode); // TODO: we want this?
     modifiedLCPNode.weightedPriority = 1;
+    console.log('modifiedLCPNode.weightedPriority', modifiedLCPNode.weightedPriority);
+    console.log('lcpNode.weightedPriority', lcpNode.weightedPriority);
 
-    console.log('modifiedLCPNode.priority', modifiedLCPNode.priority);
-    console.log('lcpNode.priority', lcpNode.priority);
-
+    console.log('---');
     const simulationBeforeChanges = simulator.simulate(graph, {
       flexibleOrdering: true,
       label: 'prioritize-lcp-image-before',

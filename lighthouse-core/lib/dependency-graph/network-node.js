@@ -16,8 +16,6 @@ class NetworkNode extends BaseNode {
     super(networkRecord.requestId);
     /** @private */
     this._record = networkRecord;
-    /** @private */
-    this._priority = networkRecord.priority;
     /**
      * Value 0-1 where 0 is VeryLow and 1 is VeryHigh, weighted over time
      * as a network resource's priority is elevated as marked by ResourceChangePriority
@@ -35,10 +33,6 @@ class NetworkNode extends BaseNode {
    */
   get priority() {
     return this._record.priority;
-  }
-
-  set priority(priority) {
-    this._priority = priority;
   }
 
   /**
