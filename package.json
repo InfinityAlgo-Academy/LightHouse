@@ -1,6 +1,6 @@
 {
   "name": "lighthouse",
-  "version": "9.6.3",
+  "version": "9.6.4",
   "description": "Automated auditing, performance metrics, and best practices for the web.",
   "main": "./lighthouse-core/index.js",
   "bin": {
