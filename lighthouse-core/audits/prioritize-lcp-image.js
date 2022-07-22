@@ -53,7 +53,8 @@ class PrioritizeLCPImageAudit extends Audit {
    */
   static shouldPrioritizeRequest(request, mainResource) {
     // If it's already prioritized, no need to recommend it.
-    if (['VeryHigh', 'High'].includes(request.initialPriority)) return false;
+    const priority = request.initialPriority;
+    if (priority && ['VeryHigh', 'High'].includes(priority)) return false;
     // It's not a request loaded over the network, don't recommend it.
     if (NetworkRequest.isNonNetworkRequest(request)) return false;
     // Finally, return whether or not it belongs to the main frame
@@ -167,13 +168,18 @@ class PrioritizeLCPImageAudit extends Audit {
 
     // Prioritize will request the resource as soon as its discovered in the main document.
     // Reflect this change in the dependencies in our modified graph.
-    // modifiedLCPNode.removeAllDependencies();
-    // modifiedLCPNode.addDependency(mainDocumentNode);
+    modifiedLCPNode.removeAllDependencies(); // TODO: we want this?
+    modifiedLCPNode.addDependency(mainDocumentNode); // TODO: we want this?
+    modifiedLCPNode.weightedPriority = 1;
+
+    console.log('modifiedLCPNode.priority', modifiedLCPNode.priority);
+    console.log('lcpNode.priority', lcpNode.priority);
 
     const simulationBeforeChanges = simulator.simulate(graph, {
       flexibleOrdering: true,
       label: 'prioritize-lcp-image-before',
     });
+    console.log('---');
     const simulationAfterChanges = simulator.simulate(modifiedGraph, {
       flexibleOrdering: true,
       label: 'prioritize-lcp-image-after',

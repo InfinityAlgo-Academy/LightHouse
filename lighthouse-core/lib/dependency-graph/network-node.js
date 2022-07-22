@@ -16,10 +16,29 @@ class NetworkNode extends BaseNode {
     super(networkRecord.requestId);
     /** @private */
     this._record = networkRecord;
+    /** @private */
+    this._priority = networkRecord.priority;
+    /**
+     * Value 0-1 where 0 is VeryLow and 1 is VeryHigh, weighted over time
+     * as a network resource's priority is elevated as marked by ResourceChangePriority
+     * trace events.
+     */
+    this.weightedPriority = 0; // Is really initialized by createGraph.
   }
 
   get type() {
     return BaseNode.TYPES.NETWORK;
+  }
+
+  /**
+   * Final priority of the network record.
+   */
+  get priority() {
+    return this._record.priority;
+  }
+
+  set priority(priority) {
+    this._priority = priority;
   }
 
   /**
@@ -78,7 +97,7 @@ class NetworkNode extends BaseNode {
    * @return {boolean}
    */
   hasRenderBlockingPriority() {
-    const priority = this._record.priority;
+    const priority = this.priority;
     const isScript = this._record.resourceType === NetworkRequest.TYPES.Script;
     const isDocument = this._record.resourceType === NetworkRequest.TYPES.Document;
     const isBlockingScript = priority === 'High' && isScript;
@@ -91,6 +110,7 @@ class NetworkNode extends BaseNode {
    */
   cloneWithoutRelationships() {
     const node = new NetworkNode(this._record);
+    node.weightedPriority = this.weightedPriority;
     node.setIsMainDocument(this._isMainDocument);
     return node;
   }

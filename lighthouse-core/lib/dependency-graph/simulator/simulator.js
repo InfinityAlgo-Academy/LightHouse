@@ -518,7 +518,28 @@ class Simulator {
    */
   static _computeNodeStartPosition(node) {
     if (node.type === 'cpu') return node.startTime;
-    return node.startTime + (PriorityStartTimePenalty[node.record.priority] * 1000 * 1000 || 0);
+
+    // TODO: lantern currently uses `node.priority`, which is the _final_ priority observed for
+    // a resource, to determine this start position tie-breaker. We want to use _initial_ priority
+    // for the prioritize-lcp-image audit, but are deferring changing the logic for all other lantern
+    // usages for a later time. To do that, select the highest priority of the two.
+    // const priorities = ['VeryLow', 'Low', 'Medium', 'High', 'VeryHigh'];
+    // const finalPriorityRank = priorities.indexOf(node.priority);
+    // const priority =
+    //   node.initialPriority && finalPriorityRank < priorities.indexOf(node.initialPriority) ?
+    //     node.initialPriority :
+    //     node.priority;
+
+    if (node.record.url === 'http://localhost:10200/launcher-icon-4x.png') {
+      console.log(node.priority);
+      // console.log(node.startTime + (PriorityStartTimePenalty[node.priority] * 1000 * 1000 || 0));
+    }
+
+
+    // TODO: perhaps use a "weighted" priority value, to account for priority changing as a page loads?
+    // return node.startTime + (PriorityStartTimePenalty[node.priority] * 1000 * 1000 || 0);
+    const penalty = (1 - node.weightedPriority) * 2.0 * (1000 * 1000);
+    return node.startTime + (penalty || 0);
   }
 }
 
