@@ -116,21 +116,12 @@ class PrioritizeLCPImageAudit extends Audit {
    * @return {{wastedMs: number, results: Array<{node: LH.Audit.Details.NodeValue, url: string, wastedMs: number}>}}
    */
   static computeWasteWithGraph(lcpElement, lcpNode, graph, simulator) {
-    if (!lcpElement || !lcpNode || !lcpNode.record.timing) {
+    if (!lcpElement || !lcpNode) {
       return {
         wastedMs: 0,
         results: [],
       };
     }
-
-    // TODO
-    // const sendStart = lcpNode.record.timing.sendStart;
-    // if (sendStart < 0.100) {
-    //   return {
-    //     wastedMs: 0,
-    //     results: [],
-    //   };
-    // }
 
     const modifiedGraph = graph.cloneWithRelationships();
 
