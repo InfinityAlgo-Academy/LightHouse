@@ -32,7 +32,7 @@ describe('Metrics: CLS', () => {
 
     it('throws if layout shift events are found without weighted_score_delta', async () => {
       expect(_ => CumulativeLayoutShift.request(oldMetricsTrace, context)).rejects
-          .toThrow('UNSUPPORTED_OLD_CHROME');
+          .toThrow('CLS missing weighted_score_delta');
     });
 
     it('calculates CLS values for a trace with CLS events over more than one frame', async () => {
