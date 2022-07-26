@@ -21,6 +21,7 @@ lighthouse-logger/
 # keep a few scripts useful for CI
 !lighthouse-core/scripts/manual-chrome-launcher.js
 !lighthouse-core/scripts/download-chrome.sh
+!lighthouse-core/scripts/package.json
 
 # Exclude the CLI smoketests but keep the smoketest runner that is used
 # by downstream projects (e.g. publisher ads).
