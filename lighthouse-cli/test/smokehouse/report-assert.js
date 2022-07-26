@@ -217,11 +217,10 @@ function makeComparison(name, actualResult, expectedResult) {
  * @param {LocalConsole} localConsole
  * @param {LH.Result} lhr
  * @param {Smokehouse.ExpectedRunnerResult} expected
- * @param {{runner?: string, isBundled?: boolean, useLegacyNavigation?: boolean}=} reportOptions
+ * @param {{runner?: string, useLegacyNavigation?: boolean}=} reportOptions
  */
 function pruneExpectations(localConsole, lhr, expected, reportOptions) {
   const isLegacyNavigation = reportOptions?.useLegacyNavigation;
-  const isBundled = reportOptions?.isBundled;
 
   /**
    * Lazily compute the Chrome version because some reports are explicitly asserting error conditions.
@@ -289,15 +288,15 @@ function pruneExpectations(localConsole, lhr, expected, reportOptions) {
           `Actual channel: ${lhr.configSettings.channel}`,
         ].join(' '));
         remove(key);
-      } else if (value._skipInBundled && !isBundled) {
-        localConsole.log([
-          `[${key}] marked as skip in bundled and runner is bundled, pruning expectation:`,
-          JSON.stringify(value, null, 2),
-        ].join(' '));
-        remove(key);
       } else if (value._runner && reportOptions?.runner !== value._runner) {
         localConsole.log([
           `[${key}] is only for runner ${value._runner}, pruning expectation:`,
+          JSON.stringify(value, null, 2),
+        ].join(' '));
+        remove(key);
+      } else if (value._excludeRunner && reportOptions?.runner === value._excludeRunner) {
+        localConsole.log([
+          `[${key}] is excluded for runner ${value._excludeRunner}, pruning expectation:`,
           JSON.stringify(value, null, 2),
         ].join(' '));
         remove(key);
@@ -312,6 +311,7 @@ function pruneExpectations(localConsole, lhr, expected, reportOptions) {
     delete obj._minChromiumVersion;
     delete obj._maxChromiumVersion;
     delete obj._runner;
+    delete obj._excludeRunner;
   }
 
   const cloned = cloneDeep(expected);
@@ -459,7 +459,7 @@ function reportAssertion(localConsole, assertion) {
  * summary. Returns count of passed and failed tests.
  * @param {{lhr: LH.Result, artifacts: LH.Artifacts, networkRequests?: string[]}} actual
  * @param {Smokehouse.ExpectedRunnerResult} expected
- * @param {{runner?: string, isDebug?: boolean, isBundled?: boolean, useLegacyNavigation?: boolean}=} reportOptions
+ * @param {{runner?: string, isDebug?: boolean, useLegacyNavigation?: boolean}=} reportOptions
  * @return {{passed: number, failed: number, log: string}}
  */
 function getAssertionReport(actual, expected, reportOptions = {}) {

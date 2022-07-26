@@ -54,6 +54,8 @@ const config = {
  */
 const expectations = {
   networkRequests: {
+    // DevTools loads the page three times, so this request count will not be accurate.
+    _excludeRunner: 'devtools',
     // 8 requests made for normal page testing.
     // 1 extra request made because stylesheets are evicted from the cache by the time DT opens.
     length: 9,

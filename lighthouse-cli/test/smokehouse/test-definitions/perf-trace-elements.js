@@ -54,6 +54,8 @@ const config = {
  */
 const expectations = {
   networkRequests: {
+    // DevTools loads the page three times, so this request count will not be accurate.
+    _excludeRunner: 'devtools',
     length: 3,
   },
   artifacts: {

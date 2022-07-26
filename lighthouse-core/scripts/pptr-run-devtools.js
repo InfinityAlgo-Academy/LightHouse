@@ -213,6 +213,14 @@ async function runLighthouse() {
   return resultPromise;
 }
 
+function enableDevToolsThrottling() {
+  // @ts-expect-error global
+  const panel = UI.panels.lighthouse || UI.panels.audits;
+  const toolbarRoot = panel.contentElement.querySelector('.lighthouse-settings-pane .toolbar').shadowRoot;
+  toolbarRoot.querySelector('option[value="devtools"]').selected = true;
+  toolbarRoot.querySelector('select').dispatchEvent(new Event('change'));
+}
+
 function disableLegacyNavigation() {
   // @ts-expect-error global
   const panel = UI.panels.lighthouse || UI.panels.audits;
@@ -330,6 +338,11 @@ async function testUrlFromDevtools(url, options = {}) {
         flatten: true,
         waitForDebuggerOnStart: true,
       });
+
+      // The throttling flag set via the Lighthouse panel will override whatever value is in the config.
+      if (config.settings?.throttlingMethod === 'devtools') {
+        await evaluateInSession(inspectorSession, enableDevToolsThrottling);
+      }
 
       configPromise = installCustomLighthouseConfig(browser, inspectorSession, config);
     }
