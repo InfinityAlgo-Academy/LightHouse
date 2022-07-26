@@ -6764,8 +6764,8 @@
     },
     "pwa": {
       "title": "PWA",
-      "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://developers.google.com/web/progressive-web-apps/checklist).",
-      "manualDescription": "These checks are required by the baseline [PWA Checklist](https://developers.google.com/web/progressive-web-apps/checklist) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
+      "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://web.dev/pwa-checklist/).",
+      "manualDescription": "These checks are required by the baseline [PWA Checklist](https://web.dev/pwa-checklist/) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
       "supportedModes": [
         "navigation"
       ],
