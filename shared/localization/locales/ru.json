@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Элементы `<video>` содержат элемент `<track>` с атрибутом `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Чтобы современное веб-приложение лучше смотрелось на главном экране iOS, задайте значение для атрибута `apple-touch-icon`. Он должен указывать на непрозрачное квадратное PNG-изображение со стороной 192 или 180 пикселей. [Подробнее…](https://web.dev/apple-touch-icon/)"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Не содержит действительный атрибут `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "Атрибут `apple-touch-icon-precomposed` устарел. Используйте атрибут `apple-touch-icon`."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Содержит действительный атрибут `apple-touch-icon`"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Текущее значение"
   },

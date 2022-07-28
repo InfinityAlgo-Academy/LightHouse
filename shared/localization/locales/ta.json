@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` உறுப்புகளில் `[kind=\"captions\"]` உள்ள`<track>` உறுப்பு உள்ளது"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "முகப்புத் திரையில் நவீன இணைய ஆப்ஸை பயனர்கள் சேர்க்கும் போது iOSஸில் சிறப்பாகத் தோன்ற `apple-touch-icon` ஒன்றை வரையறுக்கவும். அது ஒளிபுகுத்தன்மையற்ற 192 பிகசல் (அல்லது 180 பிக்சல்) அளவுள்ள கட்ட வடிவத்திலான PNGயைக் காட்ட வேண்டும். [மேலும் அறிக](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "செல்லுபடியாகும் `apple-touch-icon`ஐ வழங்கவில்லை"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "`apple-touch-icon-precomposed` காலாவதியாகிவிட்டது; `apple-touch-icon` பரிந்துரைக்கப்படுகிறது."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "செல்லுபடியாகும் `apple-touch-icon`ஐ வழங்குகிறது"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "தற்போதைய மதிப்பு"
   },

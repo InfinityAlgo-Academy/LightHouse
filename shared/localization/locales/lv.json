@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elementi “`<video>`” ietver elementu “`<track>`” ar parametru “`[kind=\"captions\"]`”"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Lai iegūtu ideālu izskatu iOS ierīcē, lietotājiem pievienojot progresīvo tīmekļa lietotni sākuma ekrānam, definējiet atribūtu `apple-touch-icon`. Tam ir jānorāda uz necaurspīdīgu 192 pikseļu (vai 180 pikseļu) kvadrātveida PNG. [Uzziniet vairāk](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Netiek nodrošināts derīgs atribūts “`apple-touch-icon`”"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "Atribūts “`apple-touch-icon-precomposed`” ir novecojis; ieteicams izmantot atribūtu “`apple-touch-icon`”."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Nodrošina derīgu atribūtu “`apple-touch-icon`”"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Pašreizējā vērtība"
   },

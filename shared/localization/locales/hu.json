@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "A(z) `<video>` elemekhez `[kind=\"captions\"]` tartalmú `<track>` elem tartozik"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Ha azt szeretné, hogy a megjelenés ideális legyen iOS rendszeren, amikor a felhasználók progresszív webes alkalmazást adnak hozzá a kezdőképernyőhöz, határozzon meg egy `apple-touch-icon` elemet. Az ikonnak 192 képpont (vagy 180 képpont) méretű, nem átlátszó, négyzetes PNG-re kell mutatnia. [További információ](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Nincs érvényes `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "A(z) `apple-touch-icon-precomposed` elavult; a(z) `apple-touch-icon` használandó helyette."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Érvényes `apple-touch-icon` elemet tartalmaz"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Jelenlegi érték"
   },

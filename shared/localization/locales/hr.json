@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elementi `<video>` sadržavaju element `<track>` s `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Za idealan izgled na iOS-u kad korisnici na početni zaslon dodaju progresivnu web-aplikaciju definirajte `apple-touch-icon`. Mora ukazivati na neprozirni kvadratni PNG od 192 px (ili 180 px). [Saznajte više](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Ne pruža valjani `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "`apple-touch-icon-precomposed` je zastario; prednost ima `apple-touch-icon`."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Ima valjanu ikonu `apple-touch-icon`"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Trenutačna vrijednost"
   },

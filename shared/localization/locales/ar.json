@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "عناصر `<video>` تحتوي على عنصر `<track>` مع `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "للحصول على المظهر المثالي على نظام التشغيل iOS عند إضافة المستخدمين تطبيق ويب تقدّمي إلى الشاشة الرئيسية، يمكنك تحديد `apple-touch-icon`. يجب أن تشير هذه السمة إلى مربع غير شفاف بتنسيق PNG مقاسه 192 بكسل (أو 180 بكسل). [مزيد من المعلومات](https://web.dev/apple-touch-icon/)"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "لا يتم تقديم رمز `apple-touch-icon` صالح"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "سمة `apple-touch-icon-precomposed` هي قديمة، ويُفضّل استخدام سمة `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "يتم تقديم رمز `apple-touch-icon` صالح"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "القيمة الحالية"
   },

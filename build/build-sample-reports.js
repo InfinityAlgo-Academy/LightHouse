@@ -191,14 +191,6 @@ async function generateErrorLHR() {
   offscreenImagesAudit.errorMessage = undefined;
   offscreenImagesAudit.scoreDisplayMode = 'binary';
   offscreenImagesAudit.score = 1;
-  // pwa-apple-touch-icon - set as passing but with a warning
-  const appleTouchIconAudit = errorLhr.audits['apple-touch-icon'];
-  appleTouchIconAudit.warnings = [
-    '`apple-touch-icon-precomposed` is out of date; `apple-touch-icon` is preferred.',
-  ];
-  appleTouchIconAudit.errorMessage = undefined;
-  appleTouchIconAudit.scoreDisplayMode = 'binary';
-  appleTouchIconAudit.score = 1;
 
   fs.rmSync(TMP, {recursive: true, force: true});
   return errorLhr;

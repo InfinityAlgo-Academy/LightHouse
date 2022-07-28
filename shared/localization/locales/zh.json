@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` 元素包含带 `[kind=\"captions\"]` 的 `<track>` 元素"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "请定义一个 `apple-touch-icon`，以在 iOS 用户向主屏幕添加渐进式 Web 应用时获得理想的外观。它必须指向一张不透明的 192px（或 180px）方形 PNG 图片。[了解详情](https://web.dev/apple-touch-icon/)。"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "未提供有效的 `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "`apple-touch-icon-precomposed` 不是最新版本，建议使用 `apple-touch-icon`。"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "提供了有效的 `apple-touch-icon`"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "当前值"
   },

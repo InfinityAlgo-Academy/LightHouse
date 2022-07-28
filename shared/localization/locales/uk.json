@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Елементи `<video>` містять елемент `<track>` з атрибутом `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Налаштуйте параметр `apple-touch-icon` для ідеального вигляду на пристроях iOS, коли користувачі додають прогресивний веб-додаток на головний екран. Цей параметр має вказувати на непрозоре квадратне зображення PNG розміром 192 пікс. (або 180 пікс.). [Докладніше](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Не містить дійсного значка `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "Атрибут `apple-touch-icon-precomposed` застарів. Радимо використовувати `apple-touch-icon`."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Містить дійсний значок `apple-touch-icon`"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Поточне значення"
   },

@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Alla `<video>`-element innehåller ett `<track>`-element med `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Definiera en `apple-touch-icon` för att få bästa möjliga utseende i iOS när användare lägger till en progressiv webbapp på startskärmen. Den måste peka på en icke-transparent, kvadratisk PNG med sidan 192 pixlar (eller 180 pixlar). [Läs mer](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Anger inte ett giltigt `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "Attributet `apple-touch-icon-precomposed` är inaktuellt. `apple-touch-icon` är att föredra."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Anger en giltig `apple-touch-icon`"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Aktuellt värde"
   },

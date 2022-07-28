@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elementy `<video>` zawierają element `<track>` z atrybutem `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Zdefiniuj element `apple-touch-icon`, by Twoja progresywna aplikacja internetowa wyglądała idealnie na iOS, gdy użytkownicy dodadzą ją do ekranu głównego. Element musi wskazywać kwadratowy obraz PNG o rozmiarze 192 (lub 180) pikseli bez przezroczystości. [Więcej informacji](https://web.dev/apple-touch-icon/)"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Nie dostarcza prawidłowego atrybutu `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "Atrybut `apple-touch-icon-precomposed` jest przestarzały. Preferowany jest `apple-touch-icon`."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Dostarcza prawidłowy atrybut `apple-touch-icon`"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Bieżąca wartość"
   },

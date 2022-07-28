@@ -40,9 +40,6 @@ const expectations = {
       'content-width': {
         score: 1,
       },
-      'apple-touch-icon': {
-        score: 1,
-      },
 
       // "manual" audits. Just verify in the results.
       'pwa-cross-browser': {

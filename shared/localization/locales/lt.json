@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elementuose „`<video>`“ yra elementas „`<track>`“ su atributu „`[kind=\"captions\"]`“"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Kad būtų tinkamai rodoma sistemoje „iOS“, kai naudotojai prideda laipsniškąją žiniatinklio programą prie pagrindinio ekrano, nurodykite `apple-touch-icon`. Ji turi nukreipti į neskaidrų 192 tšk. (arba 180 tšk.) kvadratinį PNG failą. [Sužinokite daugiau](https://web.dev/apple-touch-icon/)"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Nepateikiama tinkama piktograma „`apple-touch-icon`“"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "„`apple-touch-icon-precomposed`“ paseno, verčiau naudokite „`apple-touch-icon`“."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Pateikiama tinkama piktograma „`apple-touch-icon`“"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Dabartinė vertė"
   },

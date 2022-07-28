@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elementele `<video>` conțin un element `<track>` cu `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Pentru un aspect ideal în iOS atunci când utilizatorii adaugă o aplicație web progresivă în ecranul de pornire, definește o `apple-touch-icon`. Aceasta trebuie să indice spre un PNG pătrat netransparent, de 192 px (sau 180 px). [Află mai multe](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Nu oferă o `apple-touch-icon` validă"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "`apple-touch-icon-precomposed` este învechit; se preferă `apple-touch-icon`."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Oferă o `apple-touch-icon` validă"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Valoare actuală"
   },

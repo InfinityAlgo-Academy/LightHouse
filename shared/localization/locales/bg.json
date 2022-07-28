@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Елементите `<video>` съдържат елемент `<track>` с `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "За най-добро изобразяване под iOS, когато потребителите добавят прогресивно уеб приложение (PWA) към началния екран, дефинирайте атрибут `apple-touch-icon`. Той трябва да сочи към непрозрачен квадратен PNG файл със страна от 192 (или 180) пиксела. [Научете повече](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Не осигурява валиден атрибут `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "Атрибутът `apple-touch-icon-precomposed` не е актуален, препоръчва се `apple-touch-icon`."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Съдържа валиден атрибут `apple-touch-icon`"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Текуща стойност"
   },

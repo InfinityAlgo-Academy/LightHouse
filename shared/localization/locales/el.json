@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Τα στοιχεία `<video>` περιέχουν ένα στοιχείο `<track>` με `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Για ιδανική εμφάνιση στο iOS όταν οι χρήστες προσθέτουν μια προηγμένη εφαρμογή ιστού στην αρχική οθόνη, ορίστε ένα `apple-touch-icon`. Το εικονίδιο πρέπει να παραπέμπει σε μια μη διαφανή, τετράγωνη εικόνα PNG 192px (ή 180px). [Μάθετε περισσότερα](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Δεν παρέχει ένα έγκυρο `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "Το `apple-touch-icon-precomposed` δεν είναι ενημερωμένο. Συνιστάται η χρήση του `apple-touch-icon`."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Παρέχει ένα έγκυρο `apple-touch-icon`"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Τρέχουσα τιμή"
   },

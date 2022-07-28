@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` 요소에 `[kind=\"captions\"]` 지원 `<track>` 요소가 포함됨"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "프로그레시브 웹 앱을 홈 화면에 추가했을 때 iOS에서 제대로 표시되려면 `apple-touch-icon`을(를) 정의해야 합니다. 투명하지 않은 192px 또는 180px 정사각형 PNG로 설정되어야 합니다. [자세히 알아보기](https://web.dev/apple-touch-icon/)"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "유효한 `apple-touch-icon`이(가) 제공되지 않음"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "`apple-touch-icon-precomposed`이(가) 최신 버전이 아니므로 `apple-touch-icon`이(가) 적합합니다."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "유효한 `apple-touch-icon` 제공"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "현재 값"
   },

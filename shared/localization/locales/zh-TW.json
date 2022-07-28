@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` 元素包含帶有 `[kind=\"captions\"]` 的 `<track>` 元素"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "請定義「`apple-touch-icon`」，這樣一來，當 iOS 使用者將漸進式網頁應用程式新增到主螢幕時，系統才會顯示正確圖示。apple-touch-icon 必須指向大小為 192 像素 (或 180 像素) 的不透明正方形 PNG。[瞭解詳情](https://web.dev/apple-touch-icon/)。"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "未提供有效的 `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "`apple-touch-icon-precomposed` 版本過舊，建議使用 `apple-touch-icon`。"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "具備有效的 `apple-touch-icon`"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "目前的值"
   },

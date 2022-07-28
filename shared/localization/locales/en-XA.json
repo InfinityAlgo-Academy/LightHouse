@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "[ᐅ`<video>`ᐊ éļéméñţš çöñţåîñ å ᐅ`<track>`ᐊ éļéméñţ ŵîţĥ ᐅ`[kind=\"captions\"]`ᐊ one two three four five six seven eight nine]"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "[Föŕ îðéåļ åþþéåŕåñçé öñ îÖŠ ŵĥéñ ûšéŕš åðð å þŕöĝŕéššîvé ŵéб åþþ ţö ţĥé ĥömé šçŕééñ, ðéƒîñé åñ ᐅ`apple-touch-icon`ᐊ. Îţ mûšţ þöîñţ ţö å ñöñ-ţŕåñšþåŕéñţ 192þx (öŕ 180þx) šqûåŕé ÞÑĜ. ᐅ[ᐊĻéåŕñ Möŕéᐅ](https://web.dev/apple-touch-icon/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive]"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "[Ðöéš ñöţ þŕövîðé å våļîð ᐅ`apple-touch-icon`ᐊ one two three four five six]"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "[ᐅ`apple-touch-icon-precomposed`ᐊ îš öûţ öƒ ðåţé; ᐅ`apple-touch-icon`ᐊ îš þŕéƒéŕŕéð. one two three four five six seven eight]"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "[Þŕövîðéš å våļîð ᐅ`apple-touch-icon`ᐊ one two three four five]"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "[Çûŕŕéñţ Våļûé one two]"
   },

@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Elemen `<video>` memuat elemen `<track>` dengan `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Untuk tampilan ideal pada iOS saat pengguna menambahkan progressive web app ke layar utama, tentukan `apple-touch-icon`. Ikon harus mengarah ke PNG persegi 192 piksel (atau 180 piksel) yang tidak transparan. [Pelajari Lebih Lanjut](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Tidak menyediakan `apple-touch-icon` yang valid"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "`apple-touch-icon-precomposed` sudah usang; `apple-touch-icon` dipilih."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Memberikan `apple-touch-icon` yang valid"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Nilai Saat Ini"
   },

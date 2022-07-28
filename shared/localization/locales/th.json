@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "องค์ประกอบ `<video>` มีองค์ประกอบ `<track>` ที่มี `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "ให้ระบุ `apple-touch-icon` เพื่อให้ปรากฏใน iOS ได้อย่างดีที่สุดเมื่อผู้ใช้เพิ่ม Progressive Web App ลงในหน้าจอหลัก โดยต้องชี้ไปที่สี่เหลี่ยมจตุรัสแบบไม่โปร่งใสขนาด 192 พิกเซล (หรือ 180 พิกเซล) รูปแบบ PNG [ดูข้อมูลเพิ่มเติม](https://web.dev/apple-touch-icon/)"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "ไม่ได้ให้ `apple-touch-icon` ที่ถูกต้อง"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "`apple-touch-icon-precomposed` ไม่อัปเดต แนะนำให้ใช้ `apple-touch-icon` จะดีกว่า"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "มี `apple-touch-icon` ที่ถูกต้อง"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "ค่าปัจจุบัน"
   },

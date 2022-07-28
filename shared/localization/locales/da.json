@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>`-elementerne indeholder et `<track>`-element med `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Angiv et `apple-touch-icon` for at optimere iOS-brugerfladen, når brugere føjer en progressiv app til startskærmen. Det skal føre til en ikke-transparent firkantet PNG på 192 px (eller 180 px). [Få flere oplysninger](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Angiver ikke en gyldig `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "`apple-touch-icon-precomposed` er forældet, og `apple-touch-icon` foretrækkes."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Angiver et gyldigt `apple-touch-icon`"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Aktuel værdi"
   },

@@ -1257,7 +1257,7 @@ describe('Config', () => {
         extends: 'lighthouse:default',
         settings: {
           onlyCategories: ['pwa'],
-          onlyAudits: ['apple-touch-icon'],
+          onlyAudits: ['viewport'],
         },
       };
       const config = await Config.fromJson(extended);

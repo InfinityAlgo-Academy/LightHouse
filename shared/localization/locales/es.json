@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Los elementos `<video>` contienen un elemento `<track>` con el atributo `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Para que el aspecto en iOS sea perfecto cuando los usuarios añadan una aplicación web progresiva a la pantalla de inicio, define un `apple-touch-icon`. Debe apuntar a una imagen PNG cuadrada de 192 px (o 180 px) que sea opaca. [Más información](https://web.dev/apple-touch-icon/)"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "No proporciona un `apple-touch-icon` válido"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "`apple-touch-icon-precomposed` está obsoleto; se recomienda usar `apple-touch-icon`."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Proporciona un `apple-touch-icon` válido"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Valor actual"
   },

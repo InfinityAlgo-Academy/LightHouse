@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` 要素に `[kind=\"captions\"]` が指定された `<track>` 要素が含まれています"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "ユーザーがプログレッシブ ウェブアプリを iOS のホーム画面に追加したとき、アプリが希望どおりのデザインで表示されるようにするには、`apple-touch-icon` を定義します。参照先は不透明な 192 ピクセル（または 180 ピクセル）の正方形の PNG 画像とする必要があります。[詳細](https://web.dev/apple-touch-icon/)"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "有効な `apple-touch-icon` が提供されていません"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "`apple-touch-icon-precomposed` は古いバージョンです。`apple-touch-icon` を使用することをおすすめします。"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "有効な `apple-touch-icon` が提供されています"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "現在の値"
   },

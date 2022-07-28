@@ -298,7 +298,6 @@ const defaultConfig = {
     'critical-request-chains',
     'redirects',
     'installable-manifest',
-    'apple-touch-icon',
     'splash-screen',
     'themed-omnibox',
     'maskable-icon',
@@ -723,7 +722,6 @@ const defaultConfig = {
         {id: 'themed-omnibox', weight: 1, group: 'pwa-optimized'},
         {id: 'content-width', weight: 1, group: 'pwa-optimized'},
         {id: 'viewport', weight: 2, group: 'pwa-optimized'},
-        {id: 'apple-touch-icon', weight: 1, group: 'pwa-optimized'},
         {id: 'maskable-icon', weight: 1, group: 'pwa-optimized'},
         // Manual audits
         {id: 'pwa-cross-browser', weight: 0},

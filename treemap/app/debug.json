@@ -504,14 +504,6 @@
           }
         }
       },
-      "apple-touch-icon": {
-        "id": "apple-touch-icon",
-        "title": "Provides a valid `apple-touch-icon`",
-        "description": "For ideal appearance on iOS when users add a progressive web app to the home screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) square PNG. [Learn More](https://web.dev/apple-touch-icon/).",
-        "score": 1,
-        "scoreDisplayMode": "binary",
-        "warnings": []
-      },
       "splash-screen": {
         "id": "splash-screen",
         "title": "Configured for a custom splash screen",
@@ -20232,11 +20224,6 @@
             "group": "pwa-optimized"
           },
           {
-            "id": "apple-touch-icon",
-            "weight": 1,
-            "group": "pwa-optimized"
-          },
-          {
             "id": "maskable-icon",
             "weight": 1,
             "group": "pwa-optimized"
@@ -20722,12 +20709,6 @@
           "startTime": 1809.93,
           "name": "lh:audit:installable-manifest",
           "duration": 3.09,
-          "entryType": "measure"
-        },
-        {
-          "startTime": 1813.45,
-          "name": "lh:audit:apple-touch-icon",
-          "duration": 1.26,
           "entryType": "measure"
         },
         {
@@ -22887,12 +22868,6 @@
         ],
         "lighthouse-core/audits/installable-manifest.js | no-matching-service-worker": [
           "audits[installable-manifest].details.items[0].reason"
-        ],
-        "lighthouse-core/audits/apple-touch-icon.js | title": [
-          "audits[apple-touch-icon].title"
-        ],
-        "lighthouse-core/audits/apple-touch-icon.js | description": [
-          "audits[apple-touch-icon].description"
         ],
         "lighthouse-core/audits/splash-screen.js | title": [
           "audits[splash-screen].title"

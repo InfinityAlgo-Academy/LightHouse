@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Els elements `<video>` contenen un element `<track>` amb `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Perquè l'aspecte a iOS sigui l'ideal quan els usuaris afegeixin una aplicació web progressiva a la pantalla d'inici, defineix un atribut `apple-touch-icon`. Ha de dirigir a una imatge PNG quadrada de 192 píxels o de 180 píxels que no sigui transparent. [Obtén més informació](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "No conté un atribut `apple-touch-icon` vàlid"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "L'atribut `apple-touch-icon-precomposed` no està actualitzat. És preferible l'atribut `apple-touch-icon`."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Proporciona una `apple-touch-icon` vàlida"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Valor actual"
   },

@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "רכיבי `<video>` מכילים רכיב `<track>` עם `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "כדי שהדף יוצג למשתמשים באופן אידיאלי ב-iOS לאחר הוספת Progressive Web App למסך הבית, מומלץ להגדיר `apple-touch-icon`. המאפיין חייב להפנות לתמונת PNG לא שקופה בפורמט ריבוע בגודל 192 פיקסלים (או 180 פיקסלים). [מידע נוסף](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "הדף לא מכיל `apple-touch-icon` חוקי"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "`apple-touch-icon-precomposed` לא עדכני; עדיף להשתמש ב-`apple-touch-icon`."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "האתר מכיל `apple-touch-icon` חוקי"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "ערך נוכחי"
   },

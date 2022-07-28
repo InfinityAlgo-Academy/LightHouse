@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "`<video>` एलिमेंट में `[kind=\"captions\"]` वाला एक `<track>` एलिमेंट है"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "उपयोगकर्ता जब होम स्क्रीन पर प्रगतिशील वेब ऐप्लिकेशन जोड़ें, तो iOS पर वह अच्छे से नज़र आए, इसके लिए `apple-touch-icon` तय करें. यह ज़रूरी है कि यह आइकॉन किसी ऐसे 192px (या 180px) के वर्गाकार PNG की तरफ़ इशारा करे जिसके आर-पार न देखा जा सके. [ज़्यादा जानें](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "एक सही `apple-touch-icon` नहीं उपलब्ध कराता"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "`apple-touch-icon-precomposed` पुराना हो गया है; `apple-touch-icon` को प्राथमिकता दी जाती है."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "एक सही `apple-touch-icon` देता है"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "मौजूदा मान"
   },

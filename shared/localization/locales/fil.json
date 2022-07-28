@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Naglalaman ng element na `<track>` na may `[kind=\"captions\"]` ang mga element ng `<video>`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Para sa magandang hitsura sa iOS kapag nagdagdag ang mga user ng progressive web app sa home screen, tumukoy ng `apple-touch-icon`. Dapat itong nakadirekta sa isang hindi transparent na kuwadradong 192px (o 180px) PNG. [Matuto Pa](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Hindi nagbibigay ng valid na `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "Hindi napapanahon ang `apple-touch-icon-precomposed`; mas gusto ang `apple-touch-icon`."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Nagbibigay ng valid na `apple-touch-icon`"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Kasalukuyang Value"
   },

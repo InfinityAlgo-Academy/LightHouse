@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Елементи `<video>` садрже елемент `<track>` са атрибутом `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Да би изглед на iOS-у био идеалан када корисници додају прогресивну веб-апликацију на почетни екран, дефинишите икону `apple-touch-icon`. Она мора да усмерава на нетранспарентни квадратни PNG од 192 пиксела (или 180 пиксела). [Сазнајте више](https://web.dev/apple-touch-icon/)."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Не пружа важећи атрибут `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "Атрибут `apple-touch-icon-precomposed` је застарео; препоручује се `apple-touch-icon`."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Пружа важећи атрибут `apple-touch-icon`"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Актуелна вредност"
   },

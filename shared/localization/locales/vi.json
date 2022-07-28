@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Các phần tử `<video>` chứa phần tử `<track>` có `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Hãy xác định `apple-touch-icon` để khi người dùng thêm một ứng dụng web tiến bộ vào màn hình chính trên iOS, biểu tượng ứng dụng sẽ hiển thị chính xác. Thuộc tính này phải trỏ đến ảnh PNG vuông có kích thước 192px (hoặc 180px) ở dạng không trong suốt. [Tìm hiểu thêm](https://web.dev/apple-touch-icon/)"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Chưa cung cấp `apple-touch-icon` hợp lệ"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "`apple-touch-icon-precomposed` đã lỗi thời, nên dùng `apple-touch-icon`."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Hãy cung cấp `apple-touch-icon` hợp lệ"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Giá trị hiện tại"
   },

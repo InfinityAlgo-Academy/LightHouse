@@ -530,18 +530,6 @@
   "lighthouse-core/audits/accessibility/video-caption.js | title": {
     "message": "Prvky `<video>` obsahují prvek `<track>` s atributem `[kind=\"captions\"]`"
   },
-  "lighthouse-core/audits/apple-touch-icon.js | description": {
-    "message": "Pro ideální vzhled po přidání progresivní webové aplikace na plochu v systému iOS definujte atribut `apple-touch-icon`. Musí odkazovat na neprůhledný čtvercový obrázek PNG se stranami o délce 192 px (nebo 180 px). [Další informace](https://web.dev/apple-touch-icon/)"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | failureTitle": {
-    "message": "Neobsahuje platný atribut `apple-touch-icon`"
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | precomposedWarning": {
-    "message": "Atribut `apple-touch-icon-precomposed` je zastaralý. Je preferován atribut `apple-touch-icon`."
-  },
-  "lighthouse-core/audits/apple-touch-icon.js | title": {
-    "message": "Obsahuje platný atribut `apple-touch-icon`"
-  },
   "lighthouse-core/audits/autocomplete.js | columnCurrent": {
     "message": "Současná hodnota"
   },
