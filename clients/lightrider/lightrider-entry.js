@@ -8,12 +8,16 @@
 /* global globalThis */
 
 import {Buffer} from 'buffer';
-
 import log from 'lighthouse-logger';
+
+import {Browser} from 'puppeteer-core/lib/cjs/puppeteer/common/Browser.js';
+import {Connection as PptrConnection} from 'puppeteer-core/lib/cjs/puppeteer/common/Connection.js';
+
 import lighthouse from '../../lighthouse-core/index.js';
-import LHError from '../../lighthouse-core/lib/lh-error.js';
-import preprocessor from '../../lighthouse-core/lib/proto-preprocessor.js';
-import assetSaver from '../../lighthouse-core/lib/asset-saver.js';
+import LighthouseError from '../../lighthouse-core/lib/lh-error.js';
+import {processForProto} from '../../lighthouse-core/lib/proto-preprocessor.js';
+import * as assetSaver from '../../lighthouse-core/lib/asset-saver.js';
+import {navigation} from '../../lighthouse-core/fraggle-rock/api.js';
 
 import mobileConfig from '../../lighthouse-core/config/lr-mobile-config.js';
 import desktopConfig from '../../lighthouse-core/config/lr-desktop-config.js';
@@ -32,13 +36,47 @@ const LR_PRESETS = {
 globalThis.Buffer = Buffer;
 
 /**
+ * @param {Connection} connection
+ * @return {Promise<import('puppeteer-core').Page>}
+ */
+async function getPageFromConnection(connection) {
+  await connection.connect();
+  const {targetInfo: mainTargetInfo} =
+    await connection.sendCommand('Target.getTargetInfo', undefined);
+  const {frameTree} = await connection.sendCommand('Page.getFrameTree', undefined);
+
+  const pptrConnection = new PptrConnection(
+    mainTargetInfo.url,
+    // @ts-expect-error Hack to access the WRS transport layer.
+    connection.channel_.root_.transport_
+  );
+
+  const browser = await Browser.create(
+    pptrConnection,
+    [] /* contextIds */,
+    false /* ignoreHTTPSErrors */,
+    undefined /* defaultViewport */,
+    undefined /* process */,
+    undefined /* closeCallback */,
+    targetInfo => targetInfo.targetId === mainTargetInfo.targetId
+  );
+
+  const pages = await browser.pages();
+  const page = pages.find(p => p.mainFrame()._id === frameTree.frame.id);
+  if (!page) throw new Error('Could not find relevant puppeteer page');
+
+  // @ts-expect-error Page has a slightly different type when importing the browser module directly.
+  return page;
+}
+
+/**
  * Run lighthouse for connection and provide similar results as in CLI.
  *
  * If configOverride is provided, lrDevice and categoryIDs are ignored.
  * @param {Connection} connection
  * @param {string} url
  * @param {LH.Flags} flags Lighthouse flags
- * @param {{lrDevice?: 'desktop'|'mobile', categoryIDs?: Array<string>, logAssets: boolean, configOverride?: LH.Config.Json}} lrOpts Options coming from Lightrider
+ * @param {{lrDevice?: 'desktop'|'mobile', categoryIDs?: Array<string>, logAssets: boolean, configOverride?: LH.Config.Json, useFraggleRock?: boolean}} lrOpts Options coming from Lightrider
  * @return {Promise<string>}
  */
 export async function runLighthouseInLR(connection, url, flags, lrOpts) {
@@ -64,11 +102,27 @@ export async function runLighthouseInLR(connection, url, flags, lrOpts) {
   }
 
   try {
-    const runnerResult = await lighthouse(url, flags, config, connection);
+    let runnerResult;
+    if (lrOpts.useFraggleRock) {
+      const page = await getPageFromConnection(connection);
+      runnerResult = await navigation(url, {
+        // @ts-expect-error
+        page,
+        configContext: {
+          configPath: flags.configPath,
+          logLevel: flags.logLevel,
+          settingsOverrides: flags,
+        },
+        config
+      });
+    } else {
+      runnerResult = await lighthouse(url, flags, config, connection);
+    }
+
     if (!runnerResult) throw new Error('Lighthouse finished without a runnerResult');
 
     // pre process the LHR for proto
-    const preprocessedLhr = preprocessor.processForProto(runnerResult.lhr);
+    const preprocessedLhr = processForProto(runnerResult.lhr);
 
     // When LR is called with |internal: {keep_raw_response: true, save_lighthouse_assets: true}|,
     // we log artifacts to raw_response.artifacts.
@@ -86,9 +140,9 @@ export async function runLighthouseInLR(connection, url, flags, lrOpts) {
   } catch (err) {
     // If an error ruined the entire lighthouse run, attempt to return a meaningful error.
     let runtimeError;
-    if (!(err instanceof LHError) || !err.lhrRuntimeError) {
+    if (!(err instanceof LighthouseError) || !err.lhrRuntimeError) {
       runtimeError = {
-        code: LHError.UNKNOWN_ERROR,
+        code: LighthouseError.UNKNOWN_ERROR,
         message: `Unknown error encountered with message '${err.message}'`,
       };
     } else {
