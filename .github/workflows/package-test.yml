@@ -23,7 +23,7 @@ jobs:
     - run: yarn build-report
     - run: sudo apt-get install xvfb
 
-    - run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/lighthouse-core/scripts/release/package-test.sh
+    - run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/core/scripts/release/package-test.sh
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
@@ -45,7 +45,7 @@ jobs:
     - run: yarn build-report
     - run: sudo apt-get install xvfb
 
-    - run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/lighthouse-core/scripts/release/package-test.sh --legacy-navigation
+    - run: xvfb-run --auto-servernum bash $GITHUB_WORKSPACE/core/scripts/release/package-test.sh --legacy-navigation
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code

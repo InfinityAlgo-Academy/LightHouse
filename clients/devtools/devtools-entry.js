@@ -9,15 +9,15 @@
 
 import {Buffer} from 'buffer';
 
-import lighthouse, {legacyNavigation} from '../../lighthouse-core/index.js';
-import {navigation, startTimespan, snapshot} from '../../lighthouse-core/fraggle-rock/api.js';
-import {RawConnection} from '../../lighthouse-core/gather/connections/raw.js';
+import lighthouse, {legacyNavigation} from '../../core/index.js';
+import {navigation, startTimespan, snapshot} from '../../core/fraggle-rock/api.js';
+import {RawConnection} from '../../core/gather/connections/raw.js';
 import log from 'lighthouse-logger';
-import {lookupLocale} from '../../lighthouse-core/lib/i18n/i18n.js';
+import {lookupLocale} from '../../core/lib/i18n/i18n.js';
 import {registerLocaleData, getCanonicalLocales} from '../../shared/localization/format.js';
-import * as constants from '../../lighthouse-core/config/constants.js';
+import * as constants from '../../core/config/constants.js';
 
-/** @typedef {import('../../lighthouse-core/gather/connections/connection.js')} Connection */
+/** @typedef {import('../../core/gather/connections/connection.js')} Connection */
 
 // Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
 // (`parseSourceMapFromDataUrl` breaks without this)
@@ -59,7 +59,7 @@ function createConfig(categoryIDs, device) {
 }
 
 /**
- * @param {import('../../lighthouse-core/gather/connections/raw.js').Port} port
+ * @param {import('../../core/gather/connections/raw.js').Port} port
  * @return {RawConnection}
  */
 function setUpWorkerConnection(port) {

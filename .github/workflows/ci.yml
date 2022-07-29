@@ -18,7 +18,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         fetch-depth: 100
-    - run: bash lighthouse-core/scripts/github-actions-commit-range.sh
+    - run: bash core/scripts/github-actions-commit-range.sh
       env:
         GITHUB_CONTEXT_PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
         GITHUB_CONTEXT_BASE_SHA: ${{ github.event.before }}
@@ -36,7 +36,7 @@ jobs:
       run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
     - name: Install Chrome ToT
       working-directory: /home/runner
-      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     # Run tests that require headfull Chrome.
     - run: sudo apt-get install xvfb
@@ -57,7 +57,7 @@ jobs:
     - run: yarn test-legacy-javascript
     - run: yarn i18n:checks
     - run: yarn dogfood-lhci
-    - run: bash lighthouse-core/scripts/copy-util-commonjs.sh
+    - run: bash core/scripts/copy-util-commonjs.sh
 
     # Fail if any changes were written to any source files or generated untracked files (ex, from: build/build-cdt-lib.js).
     - run: git add -A && git diff --cached --exit-code

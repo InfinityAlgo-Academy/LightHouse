@@ -7,7 +7,7 @@
 
 import fetch from 'node-fetch';
 
-import {UIStrings} from '../../lighthouse-core/audits/installable-manifest.js';
+import {UIStrings} from '../../core/audits/installable-manifest.js';
 
 describe('installabilityErrors', () => {
   let chromiumErrorIds;

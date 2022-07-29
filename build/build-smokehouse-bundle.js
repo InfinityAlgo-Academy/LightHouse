@@ -11,8 +11,8 @@ import {LH_ROOT} from '../root.js';
 
 const distDir = `${LH_ROOT}/dist`;
 const bundleOutFile = `${distDir}/smokehouse-bundle.js`;
-const smokehouseLibFilename = './lighthouse-cli/test/smokehouse/frontends/lib.js';
-const smokehouseCliFilename = `${LH_ROOT}/lighthouse-cli/test/smokehouse/lighthouse-runners/cli.js`;
+const smokehouseLibFilename = './cli/test/smokehouse/frontends/lib.js';
+const smokehouseCliFilename = `${LH_ROOT}/cli/test/smokehouse/lighthouse-runners/cli.js`;
 
 async function main() {
   const bundle = await rollup({

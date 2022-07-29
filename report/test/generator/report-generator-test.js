@@ -15,8 +15,8 @@ const csvValidator = require('csv-validator');
 const ReportGenerator = require('../../generator/report-generator.js');
 // const {readJson} = require('../../../root.js');
 // TODO(esmodules): remove when this folder is esm
-// const sampleResults = readJson('lighthouse-core/test/results/sample_v2.json');
-const sampleResults = require('../../../lighthouse-core/test/results/sample_v2.json');
+// const sampleResults = readJson('core/test/results/sample_v2.json');
+const sampleResults = require('../../../core/test/results/sample_v2.json');
 
 describe('ReportGenerator', () => {
   describe('#replaceStrings', () => {

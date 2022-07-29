@@ -59,12 +59,12 @@ jobs:
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/download-depot-tools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
     - name: Download DevTools Frontend
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/download-devtools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-devtools.sh
 
     - name: Roll Lighthouse + build DevTools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/roll-devtools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/roll-devtools.sh
 
     - name: Cache build artifacts
       id: devtools-build-artifacts
@@ -98,7 +98,7 @@ jobs:
       run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
     # For vpython.
     - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/download-depot-tools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
 
     - name: Load build artifacts
       id: devtools-build-artifacts
@@ -111,7 +111,7 @@ jobs:
         key: devtools-build-artifacts-${{ github.run_id }}
 
     - name: Run e2e tests
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/run-e2e-tests.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/run-e2e-tests.sh
 
   smoke:
     needs: [build]
@@ -156,7 +156,7 @@ jobs:
       run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
     - name: Install Chrome ToT
       working-directory: /home/runner
-      run: bash ${{ github.workspace }}/lighthouse/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+      run: bash ${{ github.workspace }}/lighthouse/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: mkdir latest-run
       working-directory: ${{ github.workspace }}/lighthouse

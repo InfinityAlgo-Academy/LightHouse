@@ -85,7 +85,7 @@ The passes property controls how to load the requested URL and what information 
 
 Each `passes` entry defines basic settings such as how long to wait for the page to load and whether to record a trace file. Additionally a list of **gatherers** to use is defined per pass. Gatherers can read information from the page to generate artifacts which are later used by audits to provide you with a Lighthouse report. For more information on implementing a custom gatherer and the role they play in building a Lighthouse report, refer to the [recipes](https://github.com/GoogleChrome/lighthouse/blob/master/docs/recipes/custom-audit). Also note that `artifacts.devtoolsLogs` will be automatically populated for every pass. Gatherers also have access to this data within the `afterPass` as `traceData.devtoolsLog` (However, most will find the higher-level `traceData.networkRecords` more useful).
 
-For list of default pass values, see [our config constants](https://github.com/GoogleChrome/lighthouse/blob/8f500e00243e07ef0a80b39334bedcc8ddc8d3d0/lighthouse-core/config/constants.js#L50-L61).
+For list of default pass values, see [our config constants](https://github.com/GoogleChrome/lighthouse/blob/master/core/config/constants.js).
 
 #### Example
 ```js
@@ -195,7 +195,7 @@ The groups property controls how to visually group audits within a category. For
 
 The stock Lighthouse configurations can be extended if you only need to make small tweaks, such as adding an audit or skipping an audit, but wish to still run most of what Lighthouse offers. When adding the `extends: 'lighthouse:default'` property to your config, the default passes, audits, groups, and categories will be automatically included, allowing you modify settings or add additional audits to a pass.
 
-Please note that the `extends` property only supports extension of `lighthouse:default`. Other internal configs found in the [lighthouse-core/config](https://github.com/GoogleChrome/lighthouse/tree/master/lighthouse-core/config) directory can be used by importing the config object from file reference, or by using the [`--preset`](https://github.com/GoogleChrome/lighthouse#cli-options) CLI flag.
+Please note that the `extends` property only supports extension of `lighthouse:default`. Other internal configs found in the [core/config](https://github.com/GoogleChrome/lighthouse/tree/master/core/config) directory can be used by importing the config object from file reference, or by using the [`--preset`](https://github.com/GoogleChrome/lighthouse#cli-options) CLI flag.
 
 See [more examples below](#more-examples) to view different types of extensions in action.
 
@@ -205,9 +205,9 @@ See [more examples below](#more-examples) to view different types of extensions 
 
 The best examples are the ones Lighthouse uses itself! There are several reference configuration files that are maintained as part of Lighthouse.
 
-* [lighthouse-core/config/default-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/default-config.js)
-* [lighthouse-core/config/lr-desktop-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/lr-desktop-config.js)
-* [lighthouse-core/config/lr-mobile-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/lr-mobile-config.js)
-* [lighthouse-core/config/perf-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/lighthouse-core/config/perf-config.js)
+* [core/config/default-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/core/config/default-config.js)
+* [core/config/lr-desktop-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/core/config/lr-desktop-config.js)
+* [core/config/lr-mobile-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/core/config/lr-mobile-config.js)
+* [core/config/perf-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/core/config/perf-config.js)
 * [docs/recipes/custom-audit/custom-config.js](https://github.com/GoogleChrome/lighthouse/blob/master/docs/recipes/custom-audit/custom-config.js)
 * [pwmetrics](https://github.com/paulirish/pwmetrics/blob/v4.1.1/lib/perf-config.ts)

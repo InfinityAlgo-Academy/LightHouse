@@ -44,7 +44,7 @@ jobs:
     - name: Install Chrome ToT
       if: matrix.chrome-channel == 'ToT'
       working-directory: /home/runner
-      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
@@ -96,7 +96,7 @@ jobs:
 
     # Chrome Stable is already installed by default.
     - name: Install Chrome ToT
-      run: bash ${env:GITHUB_WORKSPACE}\lighthouse-core\scripts\download-chrome.sh
+      run: bash ${env:GITHUB_WORKSPACE}\core\scripts\download-chrome.sh
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
@@ -146,7 +146,7 @@ jobs:
 
     - name: Install Chrome ToT
       working-directory: /home/runner
-      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: sudo apt-get install xvfb
     - name: yarn smoke --fraggle-rock
@@ -193,7 +193,7 @@ jobs:
 
     - name: Install Chrome ToT
       working-directory: /home/runner
-      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: sudo apt-get install xvfb
     - name: yarn test-bundle
@@ -240,7 +240,7 @@ jobs:
 
     - name: Install Chrome ToT
       working-directory: /home/runner
-      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: sudo apt-get install xvfb
     - name: yarn test-bundle

@@ -2,9 +2,9 @@
 
 These tests are rolled into the Chromium DevTools Frontend codebase. They "belong" to the devtools frontend, but are truly defined in this Lighthouse repo.
 
-Run with `sh lighthouse-core/test/devtools-tests/test-locally.sh`.
+Run with `sh core/test/devtools-tests/test-locally.sh`.
 
-See `lighthouse-core/test/devtools-tests/README.md` for more.
+See `core/test/devtools-tests/README.md` for more.
 
 ## Sync
 

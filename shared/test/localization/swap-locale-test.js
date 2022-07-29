@@ -7,7 +7,7 @@
 
 const swapLocale = require('../../localization/swap-locale.js');
 
-const lhr = require('../../../lighthouse-core/test/results/sample_v2.json');
+const lhr = require('../../../core/test/results/sample_v2.json');
 
 describe('swap-locale', () => {
   it('does not mutate the original lhr', () => {
@@ -76,11 +76,11 @@ toMatchInlineSnapshot(`"2,2 s"`);
       },
       i18n: {
         icuMessagePaths: {
-          'lighthouse-core/audits/redirects.js | title': ['audits.redirects.title'],
+          'core/audits/redirects.js | title': ['audits.redirects.title'],
           // File that exists, but `doesntExist` message within it does not.
-          'lighthouse-core/audits/redirects.js | doesntExist': ['audits.redirects.doesntExist'],
+          'core/audits/redirects.js | doesntExist': ['audits.redirects.doesntExist'],
           // File and message which do not exist.
-          'lighthouse-core/audits/fakeaudit.js | title': ['audits.fakeaudit.title'],
+          'core/audits/fakeaudit.js | title': ['audits.fakeaudit.title'],
         },
       },
     };
@@ -89,8 +89,8 @@ toMatchInlineSnapshot(`"2,2 s"`);
     // Updated strings are not found, so these remain in the original language
     expect(missingIcuMessageIds).toMatchInlineSnapshot(`
 Array [
-  "lighthouse-core/audits/redirects.js | doesntExist",
-  "lighthouse-core/audits/fakeaudit.js | title",
+  "core/audits/redirects.js | doesntExist",
+  "core/audits/fakeaudit.js | title",
 ]
 `);
   });
@@ -110,9 +110,9 @@ Array [
       i18n: {
         icuMessagePaths: {
           // Points to audit object, not string.
-          'lighthouse-core/audits/redirects.js | title': ['audits.redirects'],
+          'core/audits/redirects.js | title': ['audits.redirects'],
           // Path does not point to anything in LHR.
-          'lighthouse-core/audits/redirects.js | description': ['gatherers..X'],
+          'core/audits/redirects.js | description': ['gatherers..X'],
         },
       },
     };

@@ -21,9 +21,9 @@ import {rollup} from 'rollup';
 // import PubAdsPlugin from 'lighthouse-plugin-publisher-ads/plugin.js';
 
 import * as rollupPlugins from './rollup-plugins.js';
-import {Runner} from '../lighthouse-core/runner.js';
+import {Runner} from '../core/runner.js';
 import {LH_ROOT} from '../root.js';
-import {readJson} from '../lighthouse-core/test/test-utils.js';
+import {readJson} from '../core/test/test-utils.js';
 
 const require = createRequire(import.meta.url);
 
@@ -98,7 +98,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
 
   /** @type {Record<string, string>} */
   const shimsObj = {
-    [require.resolve('../lighthouse-core/gather/connections/cri.js')]:
+    [require.resolve('../core/gather/connections/cri.js')]:
       'export const CriConnection = {}',
     [require.resolve('../package.json')]: `export const version = '${pkg.version}';`,
   };
@@ -167,7 +167,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         ...shimsObj,
         // Allows for plugins to import lighthouse.
         'lighthouse': `
-          import {Audit} from '${require.resolve('../lighthouse-core/audits/audit.js')}';
+          import {Audit} from '${require.resolve('../core/audits/audit.js')}';
           export {Audit};
         `,
         'url': `

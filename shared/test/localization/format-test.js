@@ -14,8 +14,8 @@ const locales = require('../../localization/locales.js');
 let i18n;
 let constants;
 before(async () => {
-  i18n = await import('../../../lighthouse-core/lib/i18n/i18n.js');
-  constants = await import('../../../lighthouse-core/config/constants.js');
+  i18n = await import('../../../core/lib/i18n/i18n.js');
+  constants = await import('../../../core/config/constants.js');
 });
 
 describe('format', () => {
@@ -190,8 +190,8 @@ describe('format', () => {
     });
 
     it('overwrites existing locale strings', async () => {
-      const filename = 'lighthouse-core/audits/is-on-https.js';
-      const {UIStrings} = await import('../../../lighthouse-core/audits/is-on-https.js');
+      const filename = 'core/audits/is-on-https.js';
+      const {UIStrings} = await import('../../../core/audits/is-on-https.js');
       const str_ = i18n.createMessageInstanceIdFn(filename, UIStrings);
 
       // To start with, we get back the intended string..
@@ -202,7 +202,7 @@ describe('format', () => {
 
       // Now we declare and register the new string...
       const localeData = {
-        'lighthouse-core/audits/is-on-https.js | title': {
+        'core/audits/is-on-https.js | title': {
           'message': 'new string for es-419 uses https!',
         },
       };

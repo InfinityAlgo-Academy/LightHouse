@@ -10,7 +10,7 @@ import {LH_ROOT} from '../root.js';
 
 // eslint-disable-next-line max-len
 const inFile = `${LH_ROOT}/node_modules/chrome-devtools-frontend/front_end/models/issues_manager/DeprecationIssue.ts`;
-const outFile = `${LH_ROOT}/lighthouse-core/lib/deprecations-strings.js`;
+const outFile = `${LH_ROOT}/core/lib/deprecations-strings.js`;
 
 const code = fs.readFileSync(inFile, 'utf-8');
 

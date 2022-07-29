@@ -9,25 +9,25 @@ coverage/
 proto/
 docs/
 
-lighthouse-core/lib/sd-validation/
-lighthouse-core/scripts/*
-lighthouse-core/test/
+core/lib/sd-validation/
+core/scripts/*
+core/test/
 viewer/
 treemap/
 clients/
-lighthouse-cli/results/
+cli/results/
 lighthouse-logger/
 
 # keep a few scripts useful for CI
-!lighthouse-core/scripts/manual-chrome-launcher.js
-!lighthouse-core/scripts/download-chrome.sh
-!lighthouse-core/scripts/package.json
+!core/scripts/manual-chrome-launcher.js
+!core/scripts/download-chrome.sh
+!core/scripts/package.json
 
 # Exclude the CLI smoketests but keep the smoketest runner that is used
 # by downstream projects (e.g. publisher ads).
-lighthouse-cli/test/*
-!lighthouse-cli/test/smokehouse/
-lighthouse-cli/test/smokehouse/test-definitions/
+cli/test/*
+!cli/test/smokehouse/
+cli/test/smokehouse/test-definitions/
 
 results/
 lantern-data/

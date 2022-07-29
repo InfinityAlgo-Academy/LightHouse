@@ -23,7 +23,7 @@ import {LH_ROOT} from '../root.js';
  * @property {string[]} variablesToRemove
  */
 
-const outDir = `${LH_ROOT}/lighthouse-core/lib/cdt/generated`;
+const outDir = `${LH_ROOT}/core/lib/cdt/generated`;
 
 /** @type {Modification[]} */
 const modifications = [
