@@ -4,6 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {expect} from 'expect';
+
 import MainThreadTasks from '../../computed/main-thread-tasks.js';
 import {readJson} from '../test-utils.js';
 
@@ -14,5 +16,18 @@ describe('MainThreadTasksComputed', () => {
     const context = {computedCache: new Map()};
     const tasks = await MainThreadTasks.request(pwaTrace, context);
     expect(tasks.length).toEqual(4784);
+  });
+
+  it('uses negative timestamps for tasks before navStart', async () => {
+    const context = {computedCache: new Map()};
+    const tasks = await MainThreadTasks.request(pwaTrace, context);
+    expect(tasks[0]).toMatchObject({
+      startTime: expect.toBeApproximately(-3, 1),
+      endTime: expect.toBeApproximately(-3, 1),
+    });
+    expect(tasks[1]).toMatchObject({
+      startTime: expect.toBeApproximately(-3, 1),
+      endTime: expect.toBeApproximately(-2.8, 1),
+    });
   });
 });

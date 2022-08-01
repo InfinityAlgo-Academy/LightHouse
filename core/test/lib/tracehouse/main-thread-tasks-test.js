@@ -69,6 +69,37 @@ describe('Main Thread Tasks', () => {
     expect(tasks).toHaveLength(425);
   });
 
+  it('should use the first task as time origin if no traceStartTs is given', () => {
+    const {mainThreadEvents, frames, timestamps} =
+        TraceProcessor.processTrace({traceEvents: pwaTrace});
+    const tasks = MainThreadTasks.getMainThreadTasks(mainThreadEvents, frames, timestamps.traceEnd);
+
+    expect(tasks[0]).toMatchObject({
+      startTime: 0,
+      endTime: expect.toBeApproximately(0.02),
+    });
+    expect(tasks[1]).toMatchObject({
+      startTime: expect.toBeApproximately(0.02),
+      endTime: expect.toBeApproximately(0.03),
+    });
+  });
+
+  it('should use traceStartTs as time origin if given', () => {
+    const {mainThreadEvents, frames, timestamps} =
+        TraceProcessor.processTrace({traceEvents: pwaTrace});
+    const tasks = MainThreadTasks.getMainThreadTasks(mainThreadEvents, frames, timestamps.traceEnd,
+        timestamps.timeOrigin);
+
+    expect(tasks[0]).toMatchObject({
+      startTime: expect.toBeApproximately(-15.02),
+      endTime: expect.toBeApproximately(-15),
+    });
+    expect(tasks[1]).toMatchObject({
+      startTime: expect.toBeApproximately(-15),
+      endTime: expect.toBeApproximately(-14.99),
+    });
+  });
+
   it('should compute parent/child correctly', () => {
     /*
     An artistic rendering of the below trace:

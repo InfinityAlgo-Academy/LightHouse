@@ -1171,35 +1171,35 @@
               "items": [
                 {
                   "duration": 9.057,
-                  "startTime": 748.485
+                  "startTime": 739.383
                 },
                 {
                   "duration": 5.516,
-                  "startTime": 757.682
+                  "startTime": 748.58
                 },
                 {
                   "duration": 5.176,
-                  "startTime": 763.285
+                  "startTime": 754.183
                 },
                 {
                   "duration": 36.813,
-                  "startTime": 906.673
+                  "startTime": 897.571
                 },
                 {
                   "duration": 10.155,
-                  "startTime": 972.313
+                  "startTime": 963.211
                 },
                 {
                   "duration": 15.789,
-                  "startTime": 1003.996
+                  "startTime": 994.894
                 },
                 {
                   "duration": 28.247,
-                  "startTime": 1115.8
+                  "startTime": 1106.698
                 },
                 {
                   "duration": 5.311,
-                  "startTime": 1191.301
+                  "startTime": 1182.199
                 }
               ]
             }
@@ -8250,107 +8250,107 @@
               "items": [
                 {
                   "duration": 55.073,
-                  "startTime": 11.328
+                  "startTime": 10.63
                 },
                 {
                   "duration": 10.795,
-                  "startTime": 72.701
+                  "startTime": 72.003
                 },
                 {
                   "duration": 8.441,
-                  "startTime": 85.749
+                  "startTime": 85.051
                 },
                 {
                   "duration": 8.48,
-                  "startTime": 96.294
+                  "startTime": 95.596
                 },
                 {
                   "duration": 13.941,
-                  "startTime": 107.64
+                  "startTime": 106.942
                 },
                 {
                   "duration": 8.502,
-                  "startTime": 122.72
+                  "startTime": 122.022
                 },
                 {
                   "duration": 9.046,
-                  "startTime": 133.192
+                  "startTime": 132.494
                 },
                 {
                   "duration": 8.882,
-                  "startTime": 146.061
+                  "startTime": 145.363
                 },
                 {
                   "duration": 7.095,
-                  "startTime": 156.508
+                  "startTime": 155.81
                 },
                 {
                   "duration": 10.088,
-                  "startTime": 167.398
+                  "startTime": 166.7
                 },
                 {
                   "duration": 9.653,
-                  "startTime": 180.47
+                  "startTime": 179.772
                 },
                 {
                   "duration": 8.539,
-                  "startTime": 192.018
+                  "startTime": 191.32
                 },
                 {
                   "duration": 7.717,
-                  "startTime": 236.437
+                  "startTime": 235.739
                 },
                 {
                   "duration": 9.973,
-                  "startTime": 244.165
+                  "startTime": 243.467
                 },
                 {
                   "duration": 16.563,
-                  "startTime": 255.058
+                  "startTime": 254.36
                 },
                 {
                   "duration": 35.152,
-                  "startTime": 853.004
+                  "startTime": 852.306
                 },
                 {
                   "duration": 13.307,
-                  "startTime": 888.596
+                  "startTime": 887.898
                 },
                 {
                   "duration": 8.093,
-                  "startTime": 902.596
+                  "startTime": 901.898
                 },
                 {
                   "duration": 5.438,
-                  "startTime": 911.958
+                  "startTime": 911.26
                 },
                 {
                   "duration": 8.586,
-                  "startTime": 917.434
+                  "startTime": 916.736
                 },
                 {
                   "duration": 5.453,
-                  "startTime": 926.691
+                  "startTime": 925.993
                 },
                 {
                   "duration": 14.123,
-                  "startTime": 1454.129
+                  "startTime": 1453.431
                 },
                 {
                   "duration": 5.701,
-                  "startTime": 1747.959
+                  "startTime": 1747.261
                 },
                 {
                   "duration": 75.734,
-                  "startTime": 1765.511
+                  "startTime": 1764.813
                 },
                 {
                   "duration": 9.896,
-                  "startTime": 1841.774
+                  "startTime": 1841.076
                 },
                 {
                   "duration": 6.119,
-                  "startTime": 1854.003
+                  "startTime": 1853.305
                 }
               ]
             }
@@ -8576,12 +8576,12 @@
                 {
                   "url": "https://www.mikescerealshack.co/",
                   "duration": 75.734,
-                  "startTime": 1765.511
+                  "startTime": 1764.813
                 },
                 {
                   "url": "https://www.mikescerealshack.co/",
                   "duration": 55.073,
-                  "startTime": 11.328
+                  "startTime": 10.63
                 }
               ]
             }
@@ -15389,19 +15389,19 @@
               "items": [
                 {
                   "duration": 11.62,
-                  "startTime": 129.762
+                  "startTime": 120.628
                 },
                 {
                   "duration": 10.402,
-                  "startTime": 166.603
+                  "startTime": 157.469
                 },
                 {
                   "duration": 9.63,
-                  "startTime": 182.736
+                  "startTime": 173.602
                 },
                 {
                   "duration": 22.974,
-                  "startTime": 273.238
+                  "startTime": 264.104
                 }
               ]
             }
