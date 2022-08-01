@@ -16,4 +16,17 @@ describe('MainThreadTasksComputed', () => {
     const tasks = await MainThreadTasks.request(pwaTrace, context);
     expect(tasks.length).toEqual(4784);
   });
+
+  it('uses negative timestamps for tasks before navStart', async () => {
+    const context = {computedCache: new Map()};
+    const tasks = await MainThreadTasks.request(pwaTrace, context);
+    expect(tasks[0]).toMatchObject({
+      startTime: expect.toBeApproximately(-3, 1),
+      endTime: expect.toBeApproximately(-3, 1),
+    });
+    expect(tasks[1]).toMatchObject({
+      startTime: expect.toBeApproximately(-3, 1),
+      endTime: expect.toBeApproximately(-2.8, 1),
+    });
+  });
 });
