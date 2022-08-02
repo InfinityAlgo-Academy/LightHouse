@@ -34,10 +34,9 @@ async function buildReportGenerator() {
       rollupPlugins.removeModuleDirCalls(),
       rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
       rollupPlugins.shim({
-        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
+        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export const flowReportAssets = {}',
         'fs': 'export default {}',
       }),
-      rollupPlugins.commonjs(),
     ],
   });
 

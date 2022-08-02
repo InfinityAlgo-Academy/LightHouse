@@ -6,7 +6,7 @@
 
 import puppeteer from 'puppeteer';
 
-import reportGenerator from '../../generator/report-generator.js';
+import {ReportGenerator} from '../../generator/report-generator.js';
 import {axeSource} from '../../../core/lib/axe.js';
 import {readJson} from '../../../core/test/test-utils.js';
 
@@ -28,7 +28,7 @@ describe('ReportRendererAxe', () => {
     // https://github.com/dequelabs/axe-core/tree/b573b1c1/doc/examples/jest_react#timeout-issues
     it('renders without axe violations', async () => {
       const page = await browser.newPage();
-      const htmlReport = reportGenerator.generateReportHtml(sampleResults);
+      const htmlReport = ReportGenerator.generateReportHtml(sampleResults);
       await page.setContent(htmlReport);
 
       // Superset of Lighthouse's aXe config

@@ -9,7 +9,7 @@ import {UserFlow, auditGatherSteps} from './user-flow.js';
 import {snapshotGather} from './gather/snapshot-runner.js';
 import {startTimespanGather} from './gather/timespan-runner.js';
 import {navigationGather} from './gather/navigation-runner.js';
-import ReportGenerator from '../../report/generator/report-generator.js';
+import {ReportGenerator} from '../../report/generator/report-generator.js';
 import {Runner} from '../runner.js';
 
 /**

@@ -5,9 +5,9 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
+import {strict as assert} from 'assert';
 
-const getLhrFilenamePrefix = require('../../generator/file-namer.js').getLhrFilenamePrefix;
+import {getLhrFilenamePrefix} from '../../generator/file-namer.js';
 
 describe('file-namer helper', () => {
   it('generates filename prefixes', () => {

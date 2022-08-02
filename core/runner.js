@@ -17,7 +17,7 @@ import * as assetSaver from './lib/asset-saver.js';
 import fs from 'fs';
 import path from 'path';
 import {Sentry} from './lib/sentry.js';
-import ReportGenerator from '../report/generator/report-generator.js';
+import {ReportGenerator} from '../report/generator/report-generator.js';
 import {LighthouseError} from './lib/lh-error.js';
 import {lighthouseVersion} from '../root.js';
 import {getModuleDirectory} from '../esm-utils.js';

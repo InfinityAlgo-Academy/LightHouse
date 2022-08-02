@@ -18,12 +18,11 @@ async function buildReportGenerator() {
   const bundle = await rollup({
     input: 'report/generator/report-generator.js',
     plugins: [
-      rollupPlugins.removeModuleDirCalls(),
       rollupPlugins.shim({
-        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
+        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export const flowReportAssets = {}',
       }),
-      rollupPlugins.commonjs(),
       rollupPlugins.nodeResolve(),
+      rollupPlugins.removeModuleDirCalls(),
       rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
     ],
   });
@@ -52,11 +51,27 @@ async function main() {
     ],
     javascripts: [
       reportGeneratorJs,
+      // TODO: https://github.com/GoogleChrome/lighthouse/pull/13429
+      'window.ReportGenerator = window.ReportGenerator.ReportGenerator',
       {path: require.resolve('pako/dist/pako_inflate.js')},
       {path: 'src/main.js', rollup: true, rollupPlugins: [
+        rollupPlugins.replace({
+          delimiters: ['', ''],
+          values: {
+            'getModuleDirectory(import.meta)': '""',
+          },
+        }),
         rollupPlugins.shim({
           './locales.js': 'export const locales = {};',
-          'module': 'export const createRequire = () => {throw new Error}',
+          'module': `
+            export const createRequire = () => {
+              return {
+                resolve() {
+                  throw new Error('createRequire.resolve is not supported in bundled Lighthouse');
+                },
+              };
+            };
+          `,
         }),
         rollupPlugins.typescript({
           tsconfig: 'flow-report/tsconfig.json',

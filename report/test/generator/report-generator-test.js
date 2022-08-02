@@ -7,16 +7,15 @@
 
 /* eslint-disable no-irregular-whitespace */
 
-const assert = require('assert').strict;
-const fs = require('fs');
+import {strict as assert} from 'assert';
+import fs from 'fs';
 
-const csvValidator = require('csv-validator');
+import csvValidator from 'csv-validator';
 
-const ReportGenerator = require('../../generator/report-generator.js');
-// const {readJson} = require('../../../root.js');
-// TODO(esmodules): remove when this folder is esm
-// const sampleResults = readJson('core/test/results/sample_v2.json');
-const sampleResults = require('../../../core/test/results/sample_v2.json');
+import {ReportGenerator} from '../../generator/report-generator.js';
+import {readJson} from '../../../core/test/test-utils.js';
+
+const sampleResults = readJson('core/test/results/sample_v2.json');
 
 describe('ReportGenerator', () => {
   describe('#replaceStrings', () => {
