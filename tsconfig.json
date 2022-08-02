@@ -1,7 +1,6 @@
 {
   "extends": "./tsconfig-base.json",
   "compilerOptions": {
-    // TODO(esmodules): included to support require('file.json'). Remove on the switch to ES Modules.
     "resolveJsonModule": true,
   },
   "references": [
@@ -24,8 +23,6 @@
     "eslint-local-rules.cjs",
     "third-party/axe/valid-langs.js",
 
-    // TODO(esmodules): JSON files included via resolveJsonModule. Removable on the switch to ES Modules.
-    "package.json",
     "core/test/results/sample_v2.json",
     "core/lib/sd-validation/assets/*.json",
     "core/test/fixtures/unresolved-perflog.json",
