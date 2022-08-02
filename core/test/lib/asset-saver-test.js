@@ -8,7 +8,7 @@ import {strict as assert} from 'assert';
 import fs from 'fs';
 
 import * as assetSaver from '../../lib/asset-saver.js';
-import {Metrics} from '../../lib/traces/pwmetrics-events.js';
+import {MetricTraceEvents} from '../../lib/traces/metric-trace-events.js';
 import {LighthouseError} from '../../lib/lh-error.js';
 import {Audit} from '../../audits/audit.js';
 import {LH_ROOT} from '../../../root.js';
@@ -81,7 +81,7 @@ describe('asset-saver helper', () => {
       const beforeCount = countEvents(dbwTrace);
       return assetSaver.prepareAssets(mockArtifacts, dbwResults.audits).then(preparedAssets => {
         const afterCount = countEvents(preparedAssets[0].traceData);
-        const metricsMinusTimeOrigin = Metrics.metricsDefinitions.length - 1;
+        const metricsMinusTimeOrigin = MetricTraceEvents.metricsDefinitions.length - 1;
         assert.equal(afterCount, beforeCount + (2 * metricsMinusTimeOrigin));
       });
     });

@@ -19,7 +19,7 @@ function getUberMetrics(auditResults) {
   return metricsAudit.details.items[0];
 }
 
-class Metrics {
+class MetricTraceEvents {
   /**
    * @param {Array<LH.TraceEvent>} traceEvents
    * @param {LH.Result['audits']} auditResults
@@ -100,7 +100,7 @@ class Metrics {
 
     /** @type {Array<{ts: number, id: string, name: string}>} */
     const resolvedMetrics = [];
-    Metrics.metricsDefinitions.forEach(metric => {
+    MetricTraceEvents.metricsDefinitions.forEach(metric => {
       // Skip if auditResults is missing a particular audit result
       const ts = uberMetrics[metric.tsKey];
       if (ts === undefined) {
@@ -197,5 +197,4 @@ class Metrics {
   }
 }
 
-// TODO(esmodule): rename?
-export {Metrics};
+export {MetricTraceEvents};
