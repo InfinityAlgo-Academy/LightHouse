@@ -1630,7 +1630,11 @@
             "resourceType": "Other",
             "experimentalFromMainFrame": true
           }
-        ]
+        ],
+        "debugData": {
+          "type": "debugdata",
+          "networkStartTimeTs": 8696703416
+        }
       }
     },
     "network-rtt": {
