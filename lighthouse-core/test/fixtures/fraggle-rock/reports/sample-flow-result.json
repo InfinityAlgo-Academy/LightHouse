@@ -1057,7 +1057,11 @@
                   "resourceType": "Other",
                   "experimentalFromMainFrame": true
                 }
-              ]
+              ],
+              "debugData": {
+                "type": "debugdata",
+                "networkStartTimeTs": 28621648277
+              }
             }
           },
           "network-rtt": {
@@ -8377,7 +8381,11 @@
                   "mimeType": "image/jpeg",
                   "resourceType": "Image"
                 }
-              ]
+              ],
+              "debugData": {
+                "type": "debugdata",
+                "networkStartTimeTs": 28632353955
+              }
             }
           },
           "network-rtt": {
@@ -16906,7 +16914,11 @@
                   "resourceType": "Script",
                   "experimentalFromMainFrame": true
                 }
-              ]
+              ],
+              "debugData": {
+                "type": "debugdata",
+                "networkStartTimeTs": 28653584680
+              }
             }
           },
           "network-rtt": {
