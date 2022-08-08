@@ -25,7 +25,7 @@ const UIStrings = {
       'how to match ARIA attributes to their roles](https://dequeuniversity.com/rules/axe/4.4/aria-allowed-attr).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class ARIAAllowedAttr extends AxeAudit {
   /**

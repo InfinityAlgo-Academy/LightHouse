@@ -28,7 +28,7 @@ const UIStrings = {
       '[Learn more about roles and required children elements](https://dequeuniversity.com/rules/axe/4.4/aria-required-children).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class AriaRequiredChildren extends AxeAudit {
   /**

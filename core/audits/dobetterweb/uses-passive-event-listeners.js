@@ -25,7 +25,7 @@ const UIStrings = {
       '[Learn more about adopting passive event listeners](https://web.dev/uses-passive-event-listeners/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class PassiveEventsAudit extends ViolationAudit {
   /**

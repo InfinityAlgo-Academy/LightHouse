@@ -19,7 +19,7 @@ const UIStrings = {
     'The page MIME type is XHTML: Lighthouse does not explicitly support this document type',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 // MIME types are case-insensitive but Chrome normalizes MIME types to be lowercase.
 const HTML_MIME_TYPE = 'text/html';

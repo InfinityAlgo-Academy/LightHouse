@@ -23,7 +23,7 @@ const UIStrings = {
   description: 'When a toggle field doesn\'t have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn more about toggle fields](https://dequeuniversity.com/rules/axe/4.4/aria-toggle-field-name).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class AriaToggleFieldName extends AxeAudit {
   /**

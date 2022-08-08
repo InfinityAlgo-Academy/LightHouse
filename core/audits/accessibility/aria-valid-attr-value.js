@@ -25,7 +25,7 @@ const UIStrings = {
       'more about valid values for ARIA attributes](https://dequeuniversity.com/rules/axe/4.4/aria-valid-attr-value).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class ARIAValidAttr extends AxeAudit {
   /**

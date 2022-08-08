@@ -201,7 +201,7 @@ describe('Runner', () => {
     it('serializes IcuMessages in gatherMode and is able to use them in auditMode', async () => {
       // Can use this to access shared UIStrings in i18n.js.
       // For future changes: exact messages aren't important, just choose ones with replacements.
-      const str_ = i18n.createMessageInstanceIdFn(import.meta.url, {});
+      const str_ = i18n.createIcuMessageFn(import.meta.url, {});
 
       // A gatherer that produces an IcuMessage runWarning and LighthouseError artifact.
       class WarningAndErrorGatherer extends Gatherer {

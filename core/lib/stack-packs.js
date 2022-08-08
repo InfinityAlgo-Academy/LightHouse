@@ -86,7 +86,7 @@ function getStackPacks(pageStacks) {
     }
 
     // Create i18n handler to get translated strings.
-    const str_ = i18n.createMessageInstanceIdFn(
+    const str_ = i18n.createIcuMessageFn(
       `node_modules/lighthouse-stack-packs/packs/${matchedPack.id}.js`,
       matchedPack.UIStrings
     );

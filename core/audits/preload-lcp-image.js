@@ -21,7 +21,7 @@ const UIStrings = {
     'image in order to improve LCP. [Learn more about preloading LCP elements](https://web.dev/optimize-lcp/#preload-important-resources).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
  * @typedef {Array<{url: string, initiatorType: string}>} InitiatorPath

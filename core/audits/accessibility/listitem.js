@@ -26,7 +26,7 @@ const UIStrings = {
       '[Learn more about proper list structure](https://dequeuniversity.com/rules/axe/4.4/listitem).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class ListItem extends AxeAudit {
   /**

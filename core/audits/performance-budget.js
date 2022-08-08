@@ -25,7 +25,7 @@ const UIStrings = {
    }`,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /** @typedef {import('../computed/resource-summary.js').ResourceEntry} ResourceEntry */
 /** @typedef {{resourceType: LH.Budget.ResourceType, label: LH.IcuMessage, requestCount: number, transferSize: number, sizeOverBudget: number | undefined, countOverBudget: LH.IcuMessage | undefined}} BudgetItem */

@@ -33,7 +33,7 @@ const UIStrings = {
   columnExpected: 'Expected size',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 // Factors used to allow for smaller effective density.
 // A factor of 1 means the actual device pixel density will be used.

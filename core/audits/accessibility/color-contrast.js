@@ -26,7 +26,7 @@ const UIStrings = {
       '[Learn how to provide sufficient color contrast](https://dequeuniversity.com/rules/axe/4.4/color-contrast).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class ColorContrast extends AxeAudit {
   /**

@@ -15,7 +15,7 @@ const UIStrings = {
   title: 'Structured data is valid',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview Manual SEO audit to check if structured data on page is valid.

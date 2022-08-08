@@ -25,7 +25,7 @@ const UIStrings = {
       '[Learn more about alt text for `object` elements](https://dequeuniversity.com/rules/axe/4.4/object-alt).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class ObjectAlt extends AxeAudit {
   /**

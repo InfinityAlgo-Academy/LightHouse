@@ -67,7 +67,7 @@ const UIStrings = {
   categorySocial: '{productName} (Social)',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /** @type {Record<string, string>} */
 const CATEGORY_UI_MAP = {

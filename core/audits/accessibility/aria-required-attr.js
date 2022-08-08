@@ -24,7 +24,7 @@ const UIStrings = {
       'of the element to screen readers. [Learn more about roles and required attributes](https://dequeuniversity.com/rules/axe/4.4/aria-required-attr).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class ARIARequiredAttr extends AxeAudit {
   /**

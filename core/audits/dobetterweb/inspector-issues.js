@@ -36,7 +36,7 @@ const UIStrings = {
   issueTypeHeavyAds: 'Heavy resource usage by ads',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class IssuesPanelEntries extends Audit {
   /**

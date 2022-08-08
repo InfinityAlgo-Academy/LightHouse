@@ -70,7 +70,7 @@ describe('ConfigPlugin', () => {
       title: 'this is a title',
       description: 'this is a description',
     };
-    const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+    const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
     const localizedPlugin = {
       groups: {

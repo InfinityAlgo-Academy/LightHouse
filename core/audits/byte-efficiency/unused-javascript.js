@@ -19,7 +19,7 @@ const UIStrings = {
     'decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://web.dev/unused-javascript/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 const UNUSED_BYTES_IGNORE_THRESHOLD = 20 * 1024;
 const UNUSED_BYTES_IGNORE_BUNDLE_SOURCE_THRESHOLD = 512;

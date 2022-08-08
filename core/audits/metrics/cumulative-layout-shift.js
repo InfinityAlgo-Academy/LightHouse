@@ -16,7 +16,7 @@ const UIStrings = {
                '[Learn more about the Cumulative Layout Shift metric](https://web.dev/cls/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview This metric represents the amount of visual shifting of DOM elements during page load.

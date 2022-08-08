@@ -217,6 +217,4 @@ export {
   lookupLocale,
   createIcuMessageFn,
   isStringOrIcuMessage,
-  // TODO: exported for backwards compatibility. Consider removing on future breaking change.
-  createIcuMessageFn as createMessageInstanceIdFn,
 };

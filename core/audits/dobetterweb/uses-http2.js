@@ -40,7 +40,7 @@ const UIStrings = {
   columnProtocol: 'Protocol',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /** @type {Set<LH.Artifacts.NetworkRequest['resourceType']>} */
 const STATIC_RESOURCE_TYPES = new Set([

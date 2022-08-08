@@ -22,7 +22,7 @@ const UIStrings = {
   columnMeasurement: 'Measurement',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /** @typedef {{metric: LH.Budget.TimingMetric, label: LH.IcuMessage, measurement?: LH.Audit.Details.NumericValue|number, overBudget?: LH.Audit.Details.NumericValue|number}} BudgetItem */
 

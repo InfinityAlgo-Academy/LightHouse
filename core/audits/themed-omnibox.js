@@ -20,7 +20,7 @@ const UIStrings = {
     '[Learn more about theming the address bar](https://web.dev/themed-omnibox/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview

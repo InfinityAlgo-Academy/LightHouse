@@ -43,7 +43,7 @@ const UIStrings = {
   displayValue: '{decimalProportion, number, percent} appropriately sized tap targets',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 const FINGER_SIZE_PX = 48;
 // Ratio of the finger area tapping on an unintended element

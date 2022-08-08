@@ -30,7 +30,7 @@ const UIStrings = {
     'by the browser. Check that you are using the `crossorigin` attribute properly.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 const THRESHOLD_IN_MS = 100;
 

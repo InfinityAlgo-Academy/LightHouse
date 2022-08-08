@@ -48,7 +48,7 @@ const UIStrings = {
   manualReview: 'Requires manual review',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /** @type {string[]} This array contains all acceptable autocomplete attributes from the WHATWG standard. More found at https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#autofill */
 const validAutocompleteTokens = ['name', 'honorific-prefix', 'given-name',

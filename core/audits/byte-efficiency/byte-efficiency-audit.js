@@ -13,7 +13,7 @@ import NetworkRecords from '../../computed/network-records.js';
 import LoadSimulator from '../../computed/load-simulator.js';
 import PageDependencyGraph from '../../computed/page-dependency-graph.js';
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, {});
+const str_ = i18n.createIcuMessageFn(import.meta.url, {});
 
 /** @typedef {import('../../lib/dependency-graph/simulator/simulator').Simulator} Simulator */
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */

@@ -121,7 +121,7 @@ const UIStrings = {
   pwaOptimizedGroupTitle: 'PWA Optimized',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 // Ensure all artifact IDs match the typedefs.
 /** @type {Record<keyof LH.FRArtifacts, string>} */

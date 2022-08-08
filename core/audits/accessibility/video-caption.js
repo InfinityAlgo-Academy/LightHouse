@@ -26,7 +26,7 @@ const UIStrings = {
       '[Learn more about video captions](https://dequeuniversity.com/rules/axe/4.4/video-caption).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class VideoCaption extends AxeAudit {
   /**

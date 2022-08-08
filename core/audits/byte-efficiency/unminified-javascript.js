@@ -18,7 +18,7 @@ const UIStrings = {
     '[Learn how to minify JavaScript](https://web.dev/unminified-javascript/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 const IGNORE_THRESHOLD_IN_PERCENT = 10;
 const IGNORE_THRESHOLD_IN_BYTES = 2048;

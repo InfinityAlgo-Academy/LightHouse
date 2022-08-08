@@ -32,7 +32,7 @@ const UIStrings = {
     'Try auditing the page in incognito mode or from a Chrome profile without extensions.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class BootupTime extends Audit {
   /**

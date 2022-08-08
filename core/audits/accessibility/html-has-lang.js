@@ -27,7 +27,7 @@ const UIStrings = {
       '[Learn more about the `lang` attribute](https://dequeuniversity.com/rules/axe/4.4/html-has-lang).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class HTMLHasLang extends AxeAudit {
   /**

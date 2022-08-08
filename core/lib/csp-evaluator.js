@@ -88,7 +88,7 @@ const UIStrings = {
     'Plain URL schemes allow scripts to be sourced from an unsafe domain.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /** @type {Record<number, string|LH.IcuMessage|Record<string, LH.IcuMessage>>} */
 const FINDING_TO_UI_STRING = {
