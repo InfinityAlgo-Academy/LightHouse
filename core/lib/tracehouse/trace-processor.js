@@ -429,6 +429,7 @@ class TraceProcessor {
   static findMainFrameIds(events) {
     // Prefer the newer TracingStartedInBrowser event first, if it exists
     const startedInBrowserEvt = events.find(e => e.name === 'TracingStartedInBrowser');
+    console.log(startedInBrowserEvt?.args.data);
     if (startedInBrowserEvt?.args.data?.frames) {
       const mainFrame = startedInBrowserEvt.args.data.frames.find(frame => !frame.parent);
       const frameId = mainFrame?.frame;
@@ -629,6 +630,8 @@ class TraceProcessor {
       }
     }
 
+    keyEvents.filter(e => e.name === 'FrameCommittedInBrowser').forEach(e => console.log('framecommitted', e));
+
     // Update known frames if FrameCommittedInBrowser events come in, typically
     // with updated `url`, as well as pid, etc. Some traces (like timespans) may
     // not have any committed frames.
@@ -640,6 +643,8 @@ class TraceProcessor {
           evt.args.data.url
         );
       }).forEach(evt => {
+        console.log('frame', evt.args.data.frame);
+
         framesById.set(evt.args.data.frame, {
           id: evt.args.data.frame,
           url: evt.args.data.url,
@@ -654,6 +659,7 @@ class TraceProcessor {
 
     // Filter to just events matching the main frame ID or any child frame IDs.
     let frameTreeEvents = [];
+    console.log({frameIdToRootFrameId, mainFrameIds});
     if (frameIdToRootFrameId.has(mainFrameIds.frameId)) {
       frameTreeEvents = keyEvents.filter(e => {
         return e.args.frame && frameIdToRootFrameId.get(e.args.frame) === mainFrameIds.frameId;
@@ -679,13 +685,20 @@ class TraceProcessor {
     // Subset all trace events to just our tab's process (incl threads other than main)
     // stable-sort events to keep them correctly nested.
     const processEvents = TraceProcessor
-      .filteredTraceSort(trace.traceEvents, e => e.pid === mainFrameIds.pid);
+      .filteredTraceSort(trace.traceEvents, e => e.pid === mainFrameIds.pid);  // currently 51, but should be mostly 74 (and maybe 51 too)
 
     const mainThreadEvents = processEvents
       .filter(e => e.tid === mainFrameIds.tid);
 
     // Ensure our traceEnd reflects all page activity.
     const traceEnd = this.computeTraceEnd(trace.traceEvents, timeOriginEvt);
+
+    const frameEventsLen = frameEvents.length;
+    const frameTreeEventsLen = frameTreeEvents.length;
+    const processEventsLen = processEvents.length;
+    const keyEventsLen = keyEvents.length;
+    const allEventsLen = trace.traceEvents.length;
+    console.log({frameEventsLen, frameTreeEventsLen, processEventsLen, keyEventsLen, allEventsLen, frames, mainFrameIds});
 
     // This could be much more concise with object spread, but the consensus is that explicitness is
     // preferred over brevity here.
