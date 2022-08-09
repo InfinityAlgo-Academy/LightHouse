@@ -491,6 +491,18 @@ class TraceProcessor {
   }
 
   /**
+   *
+   * @param {{pid: number, tid: number, frameId: string}} mainFrameIds
+   * @param {LH.TraceEvent[]} keyEvents
+   */
+  static findMainThread(mainFrameIds, keyEvents) {
+    const frameCommittedEvt = keyEvents.find(evt => evt.name === 'FrameCommittedInBrowser');
+    if (!frameCommittedEvt) throw new Error('No FrameCommittedInBrowser event');
+    const {pid, tid} = frameCommittedEvt;
+    return {pid, tid};
+  }
+
+  /**
    * @param {LH.TraceEvent} evt
    * @return {boolean}
    */
@@ -612,6 +624,7 @@ class TraceProcessor {
 
     // Find the inspected frame
     const mainFrameIds = this.findMainFrameIds(keyEvents);
+    const rendererIds = this.findMainThread(mainFrameIds, keyEvents);
 
     /** @type {Map<string, {id: string, url: string, parent?: string}>} */
     const framesById = new Map();
