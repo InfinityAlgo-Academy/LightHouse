@@ -121,7 +121,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
 
   // Don't include locales in DevTools.
   if (isDevtools(entryPath)) {
-    shimsObj['./locales.js'] = 'export default {}';
+    shimsObj['./locales.js'] = 'export const locales = {};';
   }
 
   for (const modulePath of modulesToIgnore) {
@@ -186,6 +186,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         `,
       }),
       rollupPlugins.json(),
+      rollupPlugins.removeModuleDirCalls(),
       rollupPlugins.inlineFs({verbose: false}),
       rollupPlugins.commonjs({
         // https://github.com/rollup/plugins/issues/922

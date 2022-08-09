@@ -39,6 +39,7 @@ async function buildReportGenerator() {
       }),
       rollupPlugins.commonjs(),
       rollupPlugins.nodeResolve(),
+      rollupPlugins.removeModuleDirCalls(),
       rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
     ],
   });

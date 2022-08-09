@@ -5,9 +5,10 @@
  */
 'use strict';
 
-const swapLocale = require('../../localization/swap-locale.js');
+import {swapLocale} from '../../localization/swap-locale.js';
+import {readJson} from '../../../core/test/test-utils.js';
 
-const lhr = require('../../../core/test/results/sample_v2.json');
+const lhr = readJson('core/test/results/sample_v2.json');
 
 describe('swap-locale', () => {
   it('does not mutate the original lhr', () => {

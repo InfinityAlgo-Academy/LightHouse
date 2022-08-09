@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const _set = require('lodash/set.js');
-const _get = require('lodash/get.js');
+import _set from 'lodash/set.js';
+import _get from 'lodash/get.js';
 
-const format = require('./format.js');
+import * as format from './format.js';
 
 /**
  * @fileoverview Use the lhr.i18n.icuMessagePaths object to change locales.
@@ -110,4 +110,4 @@ function swapLocale(lhr, requestedLocale) {
   };
 }
 
-module.exports = swapLocale;
+export {swapLocale};

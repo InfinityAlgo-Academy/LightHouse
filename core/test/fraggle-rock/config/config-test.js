@@ -11,7 +11,7 @@ import * as constants from '../../../config/constants.js';
 import BaseGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 import {initializeConfig, getConfigDisplayString} from '../../../fraggle-rock/config/config.js';
 import {LH_ROOT} from '../../../../root.js';
-import format from '../../../../shared/localization/format.js';
+import * as format from '../../../../shared/localization/format.js';
 import defaultConfig from '../../../config/default-config.js';
 
 const {nonSimulatedPassConfigOverrides} = constants;

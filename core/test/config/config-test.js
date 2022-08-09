@@ -16,7 +16,7 @@ import * as constants from '../../config/constants.js';
 import {Gatherer} from '../../gather/gatherers/gatherer.js';
 import {Audit} from '../../audits/audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import format from '../../../shared/localization/format.js';
+import * as format from '../../../shared/localization/format.js';
 import {getModuleDirectory, getModulePath} from '../../../esm-utils.js';
 
 const require = createRequire(import.meta.url);

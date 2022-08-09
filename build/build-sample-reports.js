@@ -10,8 +10,8 @@
 import fs from 'fs';
 import path from 'path';
 
-import swapLocale from '../shared/localization/swap-locale.js';
-import swapFlowLocale from '../shared/localization/swap-flow-locale.js';
+import {swapLocale} from '../shared/localization/swap-locale.js';
+import {swapFlowLocale} from '../shared/localization/swap-flow-locale.js';
 import ReportGenerator from '../report/generator/report-generator.js';
 import {defaultSettings} from '../core/config/constants.js';
 import lighthouse from '../core/index.js';

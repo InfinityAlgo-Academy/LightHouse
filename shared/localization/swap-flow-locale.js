@@ -5,16 +5,20 @@
  */
 'use strict';
 
-const swapLocale = require('./swap-locale.js');
+import {swapLocale} from './swap-locale.js';
 
 /**
  * @param {LH.FlowResult} flowResult
  * @param {LH.Locale} locale
  */
-module.exports = function swapFlowLocale(flowResult, locale) {
+function swapFlowLocale(flowResult, locale) {
   const localizedFlowResult = JSON.parse(JSON.stringify(flowResult));
   localizedFlowResult.steps = flowResult.steps.map(step => {
     return {...step, lhr: swapLocale(step.lhr, locale).lhr};
   });
   return localizedFlowResult;
+}
+
+export {
+  swapFlowLocale,
 };

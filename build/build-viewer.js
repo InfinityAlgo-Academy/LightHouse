@@ -18,6 +18,7 @@ async function buildReportGenerator() {
   const bundle = await rollup({
     input: 'report/generator/report-generator.js',
     plugins: [
+      rollupPlugins.removeModuleDirCalls(),
       rollupPlugins.shim({
         [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
       }),
@@ -54,7 +55,8 @@ async function main() {
       {path: require.resolve('pako/dist/pako_inflate.js')},
       {path: 'src/main.js', rollup: true, rollupPlugins: [
         rollupPlugins.shim({
-          './locales.js': 'export default {}',
+          './locales.js': 'export const locales = {};',
+          'module': 'export const createRequire = () => {throw new Error}',
         }),
         rollupPlugins.typescript({
           tsconfig: 'flow-report/tsconfig.json',
@@ -66,11 +68,6 @@ async function main() {
           declarationMap: false,
         }),
         rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
-        rollupPlugins.replace({
-          values: {
-            '__dirname': '""',
-          },
-        }),
         rollupPlugins.commonjs(),
         rollupPlugins.nodePolyfills(),
         rollupPlugins.nodeResolve({preferBuiltins: true}),

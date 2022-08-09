@@ -7,7 +7,7 @@
 
 import legacyDefaultConfig from './legacy-default-config.js';
 import * as constants from './constants.js';
-import format from '../../shared/localization/format.js';
+import * as format from '../../shared/localization/format.js';
 import * as validation from './../fraggle-rock/config/validation.js';
 import log from 'lighthouse-logger';
 import path from 'path';

@@ -10,7 +10,7 @@ import axeCore from 'axe-core';
 
 import AxeAudit from '../../../audits/accessibility/axe-audit.js';
 import Accesskeys from '../../../audits/accessibility/accesskeys.js';
-import format from '../../../../shared/localization/format.js';
+import * as format from '../../../../shared/localization/format.js';
 
 describe('Accessibility: axe-audit', () => {
   describe('audit()', () => {

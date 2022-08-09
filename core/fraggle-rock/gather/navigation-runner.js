@@ -17,7 +17,7 @@ import * as emulation from '../../lib/emulation.js';
 import {defaultNavigationConfig} from '../../config/constants.js';
 import {initializeConfig} from '../config/config.js';
 import {getBaseArtifacts, finalizeArtifacts} from './base-artifacts.js';
-import format from '../../../shared/localization/format.js';
+import * as format from '../../../shared/localization/format.js';
 import {LighthouseError} from '../../lib/lh-error.js';
 import URL from '../../lib/url-shim.js';
 import {getPageLoadError} from '../../lib/navigation-error.js';

@@ -11,7 +11,7 @@ import {GatherRunner} from './gather/gather-runner.js';
 import {ReportScoring} from './scoring.js';
 import {Audit} from './audits/audit.js';
 import log from 'lighthouse-logger';
-import format from '../shared/localization/format.js';
+import * as format from '../shared/localization/format.js';
 import * as stackPacks from './lib/stack-packs.js';
 import * as assetSaver from './lib/asset-saver.js';
 import fs from 'fs';
