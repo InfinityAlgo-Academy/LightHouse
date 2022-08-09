@@ -133,6 +133,14 @@ describe('findDiffersences', () => {
       expected: {prices: {_includes: [/\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}},
       diffs: null,
     },
+    '_includes (object)': {
+      actual: {'0-alpha': 1, '1-beta': 2, '3-gamma': 3},
+      expected: {_includes: [
+        ['0-alpha', '<2'],
+        [/[0-9]-beta/, 2],
+      ]},
+      diffs: null,
+    },
 
     '_excludes (1)': {
       actual: {prices: [0, 1, 2, 3, 4, 5]},
@@ -144,6 +152,16 @@ describe('findDiffersences', () => {
       expected: {prices: {_excludes: [2]}},
       diffs: [{path: '.prices', actual: 2, expected: {
         expectedExclusion: 2,
+        message: 'Expected to not find matching entry via _excludes',
+      }}],
+    },
+    '_excludes (object)': {
+      actual: {'0-alpha': 1, '1-beta': 2, '3-gamma': 3},
+      expected: {_excludes: [
+        [/[0-9]-beta/, 2],
+      ]},
+      diffs: [{path: '', actual: ['1-beta', 2], expected: {
+        expectedExclusion: [/[0-9]-beta/, 2],
         message: 'Expected to not find matching entry via _excludes',
       }}],
     },
@@ -167,6 +185,22 @@ describe('findDiffersences', () => {
       expected: {prices: {_includes: [2], _excludes: [2, 1]}},
       diffs: [{path: '.prices', actual: 1, expected: {
         expectedExclusion: 1,
+        message: 'Expected to not find matching entry via _excludes',
+      }}],
+    },
+    '_includes and _excludes (object)': {
+      actual: {'0-alpha': 1, '1-beta': 2, '3-gamma': 3},
+      expected: {
+        _includes: [
+          ['0-alpha', '<2'],
+        ],
+        _excludes: [
+          [/[0-9]-alpha/, 1],
+          [/[0-9]-beta/, 2],
+        ],
+      },
+      diffs: [{path: '', actual: ['1-beta', 2], expected: {
+        expectedExclusion: [/[0-9]-beta/, 2],
         message: 'Expected to not find matching entry via _excludes',
       }}],
     },

@@ -47,25 +47,12 @@ const expectations = {
         data: /data:image\/webp;base64,.{10000,}$/,
       },
       nodes: {
-        // Gathered with no execution context isolation, shared between both FR and legacy.
-        'page-0-P': {...elements.p},
-
-        // Legacy execution context IDs.
-        // Note: The first number (5) in these ids comes from an executionContextId, and has the potential to change.
-        // The following P is the same element as above but from a different JS context. This element
-        // starts with height ~18 and grows over time. See screenshot.html.
-        '5-0-BODY': {_legacyOnly: true, ...elements.body, _maxChromiumVersion: '103'},
-        '5-2-P': {_legacyOnly: true, ...elements.p, _maxChromiumVersion: '103'},
-        '5-3-HTML': {_legacyOnly: true, _maxChromiumVersion: '103'},
-        // Legacy runner execution context ID changed after 104.0.5100.0
-        '4-0-BODY': {_legacyOnly: true, ...elements.body, _minChromiumVersion: '104'},
-        '4-2-P': {_legacyOnly: true, ...elements.p, _minChromiumVersion: '104'},
-        '4-3-HTML': {_legacyOnly: true, _minChromiumVersion: '104'},
-
-        // Fraggle rock should contain the same elements just with different ids.
-        '9-0-P': {_fraggleRockOnly: true, ...elements.p},
-        '9-2-BODY': {_fraggleRockOnly: true, ...elements.body},
-        '9-1-HTML': {_fraggleRockOnly: true},
+        _includes: [
+          ['page-0-P', elements.p],
+          [/[0-9]-[0-9]-BODY/, elements.body],
+          [/[0-9]-[0-9]-P/, elements.p],
+          [/[0-9]-[0-9]-HTML/, {}],
+        ],
       },
     },
   },

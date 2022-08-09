@@ -13,6 +13,24 @@ const config = {
   ],
 };
 
+const imgA = {
+  top: '650±50',
+  bottom: '650±50',
+  left: '10±10',
+  right: '120±20',
+  width: '120±20',
+  height: '20±20',
+};
+
+const imgB = {
+  top: '575±50',
+  bottom: '650±50',
+  left: '130±10',
+  right: '250±20',
+  width: '120±20',
+  height: '80±20',
+};
+
 /**
  * @type {Smokehouse.ExpectedRunnerResult}
  * Expected Lighthouse audit values for Do Better Web tests.
@@ -430,39 +448,17 @@ const expectations = {
             data: /^data:image\/webp;.{500,}/,
           },
           nodes: {
-            // Test that the numbers for individual elements are in the ballpark.
-            // Exact ordering and IDs between FR and legacy differ, so fork the expectations.
-            '4-11-IMG': {
-              _minChromiumVersion: '104',
-              _legacyOnly: true,
-              top: '650±50',
-              bottom: '650±50',
-              left: '10±10',
-              right: '120±20',
-              width: '120±20',
-              height: '20±20',
-            },
-            // Legacy runner execution context ID changed after 104.0.5100.0
-            '5-11-IMG': {
-              _maxChromiumVersion: '103',
-              _legacyOnly: true,
-              top: '650±50',
-              bottom: '650±50',
-              left: '10±10',
-              right: '120±20',
-              width: '120±20',
-              height: '20±20',
-            },
-            '9-1-IMG': {
-              _fraggleRockOnly: true,
-              top: '650±50',
-              bottom: '650±50',
-              left: '10±10',
-              right: '120±20',
-              width: '120±20',
-              height: '20±20',
-            },
-            // And then many more nodes.
+            _includes: [
+              // Test that the numbers for individual elements are in the ballpark.
+              [/[0-9]-[0-9]+-IMG/, imgA],
+              [/[0-9]-[0-9]+-IMG/, imgB],
+              // And then many more nodes...
+            ],
+            _excludes: [
+              // Ensure that the nodes we found above are unique.
+              [/[0-9]-[0-9]+-IMG/, imgA],
+              [/[0-9]-[0-9]+-IMG/, imgB],
+            ],
           },
         },
       },
