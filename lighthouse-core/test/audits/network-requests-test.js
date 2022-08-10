@@ -57,6 +57,11 @@ describe('Network requests audit', () => {
       mimeType: 'application/javascript',
       resourceType: 'Script',
     });
+
+    expect(output.details.debugData).toStrictEqual({
+      type: 'debugdata',
+      networkStartTimeTs: 360725781425,
+    });
   });
 
   it('should handle times correctly', async () => {

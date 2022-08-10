@@ -1,3 +1,14 @@
+<a name="9.6.5"></a>
+# 9.6.5 (2022-08-01)
+[Full Changelog](https://github.com/compare/v9.6.4...v9.6.5)
+
+This is an npm-only release and affects only the raw JSON report. We have no plans to release this specific version to DevTools or PSI, but the changes will be rolled up into the next release in those clients.
+
+## Core
+
+* core(network-requests): include starting timestamp as debug data ([#14253](https://github.com/GoogleChrome/lighthouse/pull/14253))
+* core: use trace time origin for main-thread-task time origin ([#14252](https://github.com/GoogleChrome/lighthouse/pull/14252))
+
 <a name="9.6.4"></a>
 # 9.6.4 (2022-07-26)
 [Full Changelog](https://github.com/compare/v9.6.3...v9.6.4)

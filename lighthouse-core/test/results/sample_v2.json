@@ -1,5 +1,5 @@
 {
-  "lighthouseVersion": "9.6.4",
+  "lighthouseVersion": "9.6.5",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "fetchTime": "2021-09-07T20:11:11.853Z",
@@ -1638,7 +1638,11 @@
             "resourceType": "Other",
             "experimentalFromMainFrame": true
           }
-        ]
+        ],
+        "debugData": {
+          "type": "debugdata",
+          "networkStartTimeTs": 8696703416
+        }
       }
     },
     "network-rtt": {
@@ -1738,67 +1742,67 @@
         "items": [
           {
             "duration": 18.205,
-            "startTime": 577.894
+            "startTime": 575.062
           },
           {
             "duration": 13.115,
-            "startTime": 604.987
+            "startTime": 602.155
           },
           {
             "duration": 7.754,
-            "startTime": 618.358
+            "startTime": 615.526
           },
           {
             "duration": 6.866,
-            "startTime": 663.052
+            "startTime": 660.22
           },
           {
             "duration": 8.315,
-            "startTime": 2818.076
+            "startTime": 2815.244
           },
           {
             "duration": 49.24,
-            "startTime": 6769.397
+            "startTime": 6766.565
           },
           {
             "duration": 28.923,
-            "startTime": 6818.645
+            "startTime": 6815.813
           },
           {
             "duration": 1174.877,
-            "startTime": 6848.627
+            "startTime": 6845.795
           },
           {
             "duration": 6.514,
-            "startTime": 8023.518
+            "startTime": 8020.686
           },
           {
             "duration": 145.815,
-            "startTime": 8047.587
+            "startTime": 8044.755
           },
           {
             "duration": 8.377,
-            "startTime": 8193.425
+            "startTime": 8190.593
           },
           {
             "duration": 8.436,
-            "startTime": 8211.514
+            "startTime": 8208.682
           },
           {
             "duration": 5.248,
-            "startTime": 8531.242
+            "startTime": 8528.41
           },
           {
             "duration": 5.931,
-            "startTime": 8780.548
+            "startTime": 8777.716
           },
           {
             "duration": 11.936,
-            "startTime": 18938.384
+            "startTime": 18935.552
           },
           {
             "duration": 5.837,
-            "startTime": 24358.667
+            "startTime": 24355.835
           }
         ]
       }
@@ -2385,12 +2389,12 @@
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "duration": 1174.877,
-            "startTime": 6848.627
+            "startTime": 6845.795
           },
           {
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "duration": 145.815,
-            "startTime": 8047.587
+            "startTime": 8044.755
           }
         ]
       }

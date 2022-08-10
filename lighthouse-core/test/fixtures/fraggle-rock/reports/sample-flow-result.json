@@ -2,7 +2,7 @@
   "steps": [
     {
       "lhr": {
-        "lighthouseVersion": "9.6.1",
+        "lighthouseVersion": "9.6.5",
         "requestedUrl": "https://www.mikescerealshack.co/",
         "finalUrl": "https://www.mikescerealshack.co/",
         "fetchTime": "2022-03-08T15:35:57.356Z",
@@ -1057,7 +1057,11 @@
                   "resourceType": "Other",
                   "experimentalFromMainFrame": true
                 }
-              ]
+              ],
+              "debugData": {
+                "type": "debugdata",
+                "networkStartTimeTs": 28621648277
+              }
             }
           },
           "network-rtt": {
@@ -1173,43 +1177,43 @@
               "items": [
                 {
                   "duration": 9.06,
-                  "startTime": 212.665
+                  "startTime": 203.866
                 },
                 {
                   "duration": 5.668,
-                  "startTime": 221.909
+                  "startTime": 213.11
                 },
                 {
                   "duration": 6.24,
-                  "startTime": 227.679
+                  "startTime": 218.88
                 },
                 {
                   "duration": 35.001,
-                  "startTime": 285.755
+                  "startTime": 276.956
                 },
                 {
                   "duration": 16.457,
-                  "startTime": 321.262
+                  "startTime": 312.463
                 },
                 {
                   "duration": 9.424,
-                  "startTime": 357.426
+                  "startTime": 348.627
                 },
                 {
                   "duration": 23.147,
-                  "startTime": 392.512
+                  "startTime": 383.713
                 },
                 {
                   "duration": 10.796,
-                  "startTime": 2973.653
+                  "startTime": 2964.854
                 },
                 {
                   "duration": 6.275,
-                  "startTime": 3011.559
+                  "startTime": 3002.76
                 },
                 {
                   "duration": 30.474,
-                  "startTime": 3211.47
+                  "startTime": 3202.671
                 }
               ]
             }
@@ -7595,7 +7599,7 @@
     },
     {
       "lhr": {
-        "lighthouseVersion": "9.6.1",
+        "lighthouseVersion": "9.6.5",
         "requestedUrl": "https://www.mikescerealshack.co/",
         "finalUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "fetchTime": "2022-03-08T15:36:08.267Z",
@@ -8377,7 +8381,11 @@
                   "mimeType": "image/jpeg",
                   "resourceType": "Image"
                 }
-              ]
+              ],
+              "debugData": {
+                "type": "debugdata",
+                "networkStartTimeTs": 28632353955
+              }
             }
           },
           "network-rtt": {
@@ -8485,103 +8493,103 @@
               "items": [
                 {
                   "duration": 22.89,
-                  "startTime": 11.794
+                  "startTime": 10.796
                 },
                 {
                   "duration": 11.346,
-                  "startTime": 34.882
+                  "startTime": 33.884
                 },
                 {
                   "duration": 14.707,
-                  "startTime": 47.712
+                  "startTime": 46.714
                 },
                 {
                   "duration": 11.476,
-                  "startTime": 64.964
+                  "startTime": 63.966
                 },
                 {
                   "duration": 10.211,
-                  "startTime": 77.887
+                  "startTime": 76.889
                 },
                 {
                   "duration": 7.878,
-                  "startTime": 90.234
+                  "startTime": 89.236
                 },
                 {
                   "duration": 12.607,
-                  "startTime": 101.631
+                  "startTime": 100.633
                 },
                 {
                   "duration": 9.346,
-                  "startTime": 116.441
+                  "startTime": 115.443
                 },
                 {
                   "duration": 11.39,
-                  "startTime": 126.968
+                  "startTime": 125.97
                 },
                 {
                   "duration": 11.435,
-                  "startTime": 140.423
+                  "startTime": 139.425
                 },
                 {
                   "duration": 10.084,
-                  "startTime": 152.953
+                  "startTime": 151.955
                 },
                 {
                   "duration": 10.9,
-                  "startTime": 164.298
+                  "startTime": 163.3
                 },
                 {
                   "duration": 6.346,
-                  "startTime": 206.944
+                  "startTime": 205.946
                 },
                 {
                   "duration": 6.642,
-                  "startTime": 214.45
+                  "startTime": 213.452
                 },
                 {
                   "duration": 16.871,
-                  "startTime": 222.556
+                  "startTime": 221.558
                 },
                 {
                   "duration": 35.881,
-                  "startTime": 821.648
+                  "startTime": 820.65
                 },
                 {
                   "duration": 15.437,
-                  "startTime": 857.584
+                  "startTime": 856.586
                 },
                 {
                   "duration": 9.331,
-                  "startTime": 873.028
+                  "startTime": 872.03
                 },
                 {
                   "duration": 7.848,
-                  "startTime": 887.532
+                  "startTime": 886.534
                 },
                 {
                   "duration": 6.696,
-                  "startTime": 897.886
+                  "startTime": 896.888
                 },
                 {
                   "duration": 18.004,
-                  "startTime": 1423.407
+                  "startTime": 1422.409
                 },
                 {
                   "duration": 6.862,
-                  "startTime": 2249.903
+                  "startTime": 2248.905
                 },
                 {
                   "duration": 194.901,
-                  "startTime": 2256.773
+                  "startTime": 2255.775
                 },
                 {
                   "duration": 14.028,
-                  "startTime": 2451.719
+                  "startTime": 2450.721
                 },
                 {
                   "duration": 8.949,
-                  "startTime": 2467.956
+                  "startTime": 2466.958
                 }
               ]
             }
@@ -8814,7 +8822,7 @@
                 {
                   "url": "https://www.mikescerealshack.co/",
                   "duration": 194.901,
-                  "startTime": 2256.773
+                  "startTime": 2255.775
                 }
               ]
             }
@@ -11057,7 +11065,7 @@
     },
     {
       "lhr": {
-        "lighthouseVersion": "9.6.1",
+        "lighthouseVersion": "9.6.5",
         "requestedUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "finalUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "fetchTime": "2022-03-08T15:36:22.894Z",
@@ -15865,7 +15873,7 @@
     },
     {
       "lhr": {
-        "lighthouseVersion": "9.6.1",
+        "lighthouseVersion": "9.6.5",
         "requestedUrl": "https://www.mikescerealshack.co/corrections",
         "finalUrl": "https://www.mikescerealshack.co/corrections",
         "fetchTime": "2022-03-08T15:36:29.745Z",
@@ -16906,7 +16914,11 @@
                   "resourceType": "Script",
                   "experimentalFromMainFrame": true
                 }
-              ]
+              ],
+              "debugData": {
+                "type": "debugdata",
+                "networkStartTimeTs": 28653584680
+              }
             }
           },
           "network-rtt": {
@@ -17022,19 +17034,19 @@
               "items": [
                 {
                   "duration": 14.962,
-                  "startTime": 151.327
+                  "startTime": 138.885
                 },
                 {
                   "duration": 10.715,
-                  "startTime": 188.398
+                  "startTime": 175.956
                 },
                 {
                   "duration": 12.041,
-                  "startTime": 213.628
+                  "startTime": 201.186
                 },
                 {
                   "duration": 19.568,
-                  "startTime": 284.111
+                  "startTime": 271.669
                 }
               ]
             }
