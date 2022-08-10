@@ -16,7 +16,7 @@ const UIStrings = {
                '[Learn more about the Interaction to Next Paint metric](https://web.dev/inp/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview This metric gives a high-percentile measure of responsiveness to input.

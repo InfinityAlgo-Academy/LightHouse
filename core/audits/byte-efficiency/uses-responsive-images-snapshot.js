@@ -27,7 +27,7 @@ const UIStrings = {
   columnActualDimensions: 'Actual dimensions',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 // Based on byte threshold of 4096, with 3 bytes per pixel.
 const IGNORE_THRESHOLD_IN_PIXELS = 1365;

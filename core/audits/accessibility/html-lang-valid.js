@@ -26,7 +26,7 @@ const UIStrings = {
       '[Learn how to use the `lang` attribute](https://dequeuniversity.com/rules/axe/4.4/html-lang-valid).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class HTMLLangValid extends AxeAudit {
   /**

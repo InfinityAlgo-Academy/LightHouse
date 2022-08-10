@@ -26,7 +26,7 @@ const UIStrings = {
       '[Learn how to make links accessible](https://dequeuniversity.com/rules/axe/4.4/link-name).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class LinkName extends AxeAudit {
   /**

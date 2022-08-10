@@ -15,7 +15,7 @@ const UIStrings = {
       'visible. [Learn more about the First Meaningful Paint metric](https://web.dev/first-meaningful-paint/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class FirstMeaningfulPaint extends Audit {
   /**

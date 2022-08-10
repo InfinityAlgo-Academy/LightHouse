@@ -27,7 +27,7 @@ const UIStrings = {
     '[Learn how to defer offscreen images](https://web.dev/offscreen-images/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 // See https://github.com/GoogleChrome/lighthouse/issues/10471 for discussion about the thresholds here.
 const ALLOWABLE_OFFSCREEN_IN_PX = 100;

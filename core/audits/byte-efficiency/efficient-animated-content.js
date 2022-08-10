@@ -21,7 +21,7 @@ const UIStrings = {
     'network bytes. [Learn more about efficient video formats](https://web.dev/efficient-animated-content/)',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 // If GIFs are above this size, we'll flag them
 // See https://github.com/GoogleChrome/lighthouse/pull/4885#discussion_r178406623 and https://github.com/GoogleChrome/lighthouse/issues/4696#issuecomment-370979920

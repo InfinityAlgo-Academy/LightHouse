@@ -29,7 +29,7 @@ const UIStrings = {
     `{timeInMs, number, milliseconds}\xa0ms`,
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 // A page passes when all third-party code blocks for less than 250 ms.
 const PASS_THRESHOLD_IN_MS = 250;

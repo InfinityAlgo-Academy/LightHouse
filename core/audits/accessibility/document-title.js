@@ -25,7 +25,7 @@ const UIStrings = {
       '[Learn more about document titles](https://dequeuniversity.com/rules/axe/4.4/document-title).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class DocumentTitle extends AxeAudit {
   /**

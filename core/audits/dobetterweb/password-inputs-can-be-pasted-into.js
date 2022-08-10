@@ -18,7 +18,7 @@ const UIStrings = {
       '[Learn more about user-friendly password fields](https://web.dev/password-inputs-can-be-pasted-into/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class PasswordInputsCanBePastedIntoAudit extends Audit {
   /**

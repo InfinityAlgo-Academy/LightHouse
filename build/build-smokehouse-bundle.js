@@ -32,6 +32,7 @@ async function main() {
           };
         `,
       }),
+      rollupPlugins.removeModuleDirCalls(),
       rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
       rollupPlugins.commonjs(),
       rollupPlugins.nodePolyfills(),

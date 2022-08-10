@@ -15,11 +15,11 @@ import {getModuleDirectory} from '../../../../esm-utils.js';
 const moduleDir = getModuleDirectory(import.meta);
 
 describe('i18n', () => {
-  describe('#createMessageInstanceIdFn', () => {
+  describe('#createIcuMessageFn', () => {
     it('returns an IcuMessage reference', () => {
       const fakeFile = path.join(moduleDir, 'fake-file.js');
       const templates = {daString: 'use {x} me!'};
-      const formatter = i18n.createMessageInstanceIdFn(fakeFile, templates);
+      const formatter = i18n.createIcuMessageFn(fakeFile, templates);
 
       expect(formatter(templates.daString, {x: 1})).toStrictEqual({
         i18nId: 'core/test/lib/i18n/fake-file.js | daString',

@@ -26,7 +26,7 @@ const UIStrings = {
       '[Learn more about the refresh meta tag](https://dequeuniversity.com/rules/axe/4.4/meta-refresh).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class MetaRefresh extends AxeAudit {
   /**

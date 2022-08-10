@@ -25,7 +25,7 @@ const UIStrings = {
     '[Learn more about the geolocation permission](https://web.dev/geolocation-on-start/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class GeolocationOnStart extends ViolationAudit {
   /**

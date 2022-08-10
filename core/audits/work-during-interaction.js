@@ -44,7 +44,7 @@ const UIStrings = {
   eventTarget: 'Event target',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview This metric gives a high-percentile measure of responsiveness to input.

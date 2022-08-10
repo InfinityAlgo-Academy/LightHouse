@@ -16,7 +16,7 @@ const UIStrings = {
     'This experience is key to a user\'s perception of performance. [Learn more about page transitions](https://web.dev/pwa-page-transitions/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview Manual PWA audit for janky-free page transitions.

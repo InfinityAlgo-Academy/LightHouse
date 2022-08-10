@@ -25,7 +25,7 @@ const UIStrings = {
       '[Learn more about valid ARIA roles](https://dequeuniversity.com/rules/axe/4.4/aria-roles).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class AriaRoles extends AxeAudit {
   /**

@@ -42,7 +42,7 @@ const UIStrings = {
       '[Learn how to avoid document.write()](https://web.dev/no-document-write/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class NoDocWriteAudit extends ViolationAudit {
   /**

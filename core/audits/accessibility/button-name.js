@@ -25,7 +25,7 @@ const UIStrings = {
       '[Learn how to make buttons more accessible](https://dequeuniversity.com/rules/axe/4.4/button-name).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class ButtonName extends AxeAudit {
   /**

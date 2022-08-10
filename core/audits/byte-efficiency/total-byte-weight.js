@@ -23,7 +23,7 @@ const UIStrings = {
   displayValue: 'Total size was {totalBytes, number, bytes}\xa0KiB',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class TotalByteWeight extends Audit {
   /**

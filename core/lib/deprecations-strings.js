@@ -269,7 +269,7 @@ const UIStrings = {
       '`supportsSession()` is deprecated. Please use `isSessionSupported()` and check the resolved boolean value instead.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
  * @param {LH.Crdp.Audits.DeprecationIssueDetails} issueDetails

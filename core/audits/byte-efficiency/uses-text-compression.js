@@ -22,7 +22,7 @@ const UIStrings = {
     ' [Learn more about text compression](https://web.dev/uses-text-compression/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 const IGNORE_THRESHOLD_IN_BYTES = 1400;
 const IGNORE_THRESHOLD_IN_PERCENT = 0.1;

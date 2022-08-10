@@ -16,7 +16,7 @@ const UIStrings = {
       '[Learn more about the Total Blocking Time metric](https://web.dev/lighthouse-total-blocking-time/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class TotalBlockingTime extends Audit {
   /**

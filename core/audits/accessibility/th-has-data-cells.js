@@ -28,7 +28,7 @@ const UIStrings = {
       '[Learn more about table headers](https://dequeuniversity.com/rules/axe/4.4/th-has-data-cells).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class THHasDataCells extends AxeAudit {
   /**

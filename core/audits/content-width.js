@@ -26,7 +26,7 @@ const UIStrings = {
     'size of {outerWidth}px.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class ContentWidth extends Audit {
   /**

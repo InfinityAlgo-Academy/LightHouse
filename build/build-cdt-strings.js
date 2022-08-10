@@ -68,7 +68,7 @@ import * as i18n from '../lib/i18n/i18n.js';
 
 ${uiStringsDeclare}
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
  * @param {LH.Crdp.Audits.DeprecationIssueDetails} issueDetails

@@ -52,7 +52,7 @@ const UIStrings = {
    'These should be used sparingly and only to the most important origins.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class UsesRelPreconnectAudit extends Audit {
   /**

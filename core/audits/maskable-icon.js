@@ -20,7 +20,7 @@ const UIStrings = {
     'the app on a device. [Learn about maskable manifest icons](https://web.dev/maskable-icon-audit/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
  * @fileoverview

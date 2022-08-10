@@ -19,7 +19,7 @@ const UIStrings = {
   columnFailingLink: 'Uncrawlable Link',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class CrawlableAnchors extends Audit {
   /**

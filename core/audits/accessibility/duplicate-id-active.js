@@ -23,7 +23,7 @@ const UIStrings = {
   description: 'All focusable elements must have a unique `id` to ensure that they\'re visible to assistive technologies. [Learn how to fix duplicate `id`s](https://dequeuniversity.com/rules/axe/4.4/duplicate-id-active).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class DuplicateIdActive extends AxeAudit {
   /**

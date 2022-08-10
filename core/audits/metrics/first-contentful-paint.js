@@ -15,7 +15,7 @@ const UIStrings = {
       'painted. [Learn more about the First Contentful Paint metric](https://web.dev/first-contentful-paint/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class FirstContentfulPaint extends Audit {
   /**

@@ -28,7 +28,7 @@ const UIStrings = {
   'Results may be incomplete.',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 
 // Controls how long to wait after FCP before continuing

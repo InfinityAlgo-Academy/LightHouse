@@ -27,7 +27,7 @@ const UIStrings = {
     '[Learn more about this errors in console diagnostic audit](https://web.dev/errors-in-console/)',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /** @typedef {{ignoredPatterns?: Array<RegExp|string>}} AuditOptions */
 

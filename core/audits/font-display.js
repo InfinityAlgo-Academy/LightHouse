@@ -36,7 +36,7 @@ const UIStrings = {
     'other {Lighthouse was unable to automatically check the `font-display` values for the origin {fontOrigin}.}}',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class FontDisplay extends Audit {
   /**

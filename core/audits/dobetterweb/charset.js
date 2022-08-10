@@ -27,7 +27,7 @@ const UIStrings = {
     '[Learn more about declaring the character encoding](https://web.dev/charset/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 const CONTENT_TYPE_HEADER = 'content-type';
 // /^[a-zA-Z0-9-_:.()]{2,}$/ matches all known IANA charset names (https://www.iana.org/assignments/character-sets/character-sets.xhtml)

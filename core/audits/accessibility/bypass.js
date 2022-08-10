@@ -26,7 +26,7 @@ const UIStrings = {
       '[Learn more about bypass blocks](https://dequeuniversity.com/rules/axe/4.4/bypass).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class Bypass extends AxeAudit {
   /**

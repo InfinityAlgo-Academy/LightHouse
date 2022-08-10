@@ -27,7 +27,7 @@ const UIStrings = {
  */
 const SLOW_CPU_BENCHMARK_INDEX_THRESHOLD = 1000;
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /**
  * @param {LH.Gatherer.FRProtocolSession} session

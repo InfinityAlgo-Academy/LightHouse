@@ -22,7 +22,7 @@ const UIStrings = {
   '[Learn more about HTTP status codes](https://web.dev/http-status-code/).',
 };
 
-const str_ = i18n.createMessageInstanceIdFn(import.meta.url, UIStrings);
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 class HTTPStatusCode extends Audit {
   /**
