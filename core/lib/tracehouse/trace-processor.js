@@ -494,12 +494,15 @@ class TraceProcessor {
    *
    * @param {{pid: number, tid: number, frameId: string}} mainFrameIds
    * @param {LH.TraceEvent[]} keyEvents
+   * @return {number[]}
    */
-  static findMainThread(mainFrameIds, keyEvents) {
-    const frameCommittedEvt = keyEvents.find(evt => evt.name === 'FrameCommittedInBrowser');
-    if (!frameCommittedEvt) throw new Error('No FrameCommittedInBrowser event');
-    const {pid, tid} = frameCommittedEvt;
-    return {pid, tid};
+  static findMainThreadPids(mainFrameIds, keyEvents) {
+    const frameCommittedEvts = keyEvents.filter(evt =>
+      evt.name === 'FrameCommittedInBrowser' &&
+      evt.args?.data?.frame === mainFrameIds.frameId
+    );
+    if (frameCommittedEvts.length === 0) throw new Error('No FrameCommittedInBrowser event');
+    return frameCommittedEvts.map(e => e?.args?.data?.processId || 0);
   }
 
   /**
@@ -624,7 +627,13 @@ class TraceProcessor {
 
     // Find the inspected frame
     const mainFrameIds = this.findMainFrameIds(keyEvents);
-    const rendererIds = this.findMainThread(mainFrameIds, keyEvents);
+    const rendererPids = this.findMainThreadPids(mainFrameIds, keyEvents);
+
+    // Subset all trace events to just our tab's process (incl threads other than main)
+    // stable-sort events to keep them correctly nested.
+    const processEvents = TraceProcessor
+      .filteredTraceSort(trace.traceEvents, e => rendererPids.includes(e.pid)); // currently 51, but should be mostly 74 (and maybe 51 too)
+
 
     /** @type {Map<string, {id: string, url: string, parent?: string}>} */
     const framesById = new Map();
@@ -695,10 +704,6 @@ class TraceProcessor {
       timeOriginDeterminationMethod
     );
 
-    // Subset all trace events to just our tab's process (incl threads other than main)
-    // stable-sort events to keep them correctly nested.
-    const processEvents = TraceProcessor
-      .filteredTraceSort(trace.traceEvents, e => e.pid === mainFrameIds.pid);  // currently 51, but should be mostly 74 (and maybe 51 too)
 
     const mainThreadEvents = processEvents
       .filter(e => e.tid === mainFrameIds.tid);
@@ -710,8 +715,9 @@ class TraceProcessor {
     const frameTreeEventsLen = frameTreeEvents.length;
     const processEventsLen = processEvents.length;
     const keyEventsLen = keyEvents.length;
+    const mainThreadEventsLen = mainThreadEvents.length;
     const allEventsLen = trace.traceEvents.length;
-    console.log({frameEventsLen, frameTreeEventsLen, processEventsLen, keyEventsLen, allEventsLen, frames, mainFrameIds});
+    console.log({frameEventsLen, frameTreeEventsLen, processEventsLen, keyEventsLen, mainThreadEventsLen,  allEventsLen, frames, mainFrameIds});
 
     // This could be much more concise with object spread, but the consensus is that explicitness is
     // preferred over brevity here.
