@@ -295,16 +295,16 @@ class Runner {
         ...Object.keys(normalizedAuditSettings),
       ]);
       for (const k of keys) {
-        if (!isDeepEqual(normalizedGatherSettings[k], normalizedAuditSettings[k])) {
-          throw new Error(
-            `Cannot change settings between gathering and auditing. Difference found at: ${k}`);
-        }
+        // if (!isDeepEqual(normalizedGatherSettings[k], normalizedAuditSettings[k])) {
+        //   throw new Error(
+        //     `Cannot change settings between gathering and auditing. Difference found at: ${k}`);
+        // }
       }
 
       // Call `isDeepEqual` on the entire thing, just in case something was missed.
-      if (!isDeepEqual(normalizedGatherSettings, normalizedAuditSettings)) {
-        throw new Error('Cannot change settings between gathering and auditing');
-      }
+      // if (!isDeepEqual(normalizedGatherSettings, normalizedAuditSettings)) {
+      //   throw new Error('Cannot change settings between gathering and auditing');
+      // }
     }
 
     // Members of LH.Audit.Context that are shared across all audits.

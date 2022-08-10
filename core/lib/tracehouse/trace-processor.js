@@ -424,7 +424,7 @@ class TraceProcessor {
 
   /**
    * @param {LH.TraceEvent[]} events
-   * @return {{pid: number, tid: number, frameId: string}}
+   * @return {{startingPid: number, frameId: string}}
    */
   static findMainFrameIds(events) {
     // Prefer the newer TracingStartedInBrowser event first, if it exists
@@ -435,14 +435,9 @@ class TraceProcessor {
       const frameId = mainFrame?.frame;
       const pid = mainFrame?.processId;
 
-      const threadNameEvt = events.find(e => e.pid === pid && e.ph === 'M' &&
-        e.cat === '__metadata' && e.name === 'thread_name' && e.args.name === 'CrRendererMain');
-      const tid = threadNameEvt?.tid;
-
-      if (pid && tid && frameId) {
+      if (pid && frameId) {
         return {
-          pid,
-          tid,
+          startingPid: pid,
           frameId,
         };
       }
@@ -456,8 +451,7 @@ class TraceProcessor {
       const frameId = startedInPageEvt.args.data.page;
       if (frameId) {
         return {
-          pid: startedInPageEvt.pid,
-          tid: startedInPageEvt.tid,
+          startingPid: startedInPageEvt.pid,
           frameId,
         };
       }
@@ -480,8 +474,7 @@ class TraceProcessor {
       const frameId = navStartEvt.args.frame;
       if (frameId) {
         return {
-          pid: navStartEvt.pid,
-          tid: navStartEvt.tid,
+          startingPid: navStartEvt.pid,
           frameId,
         };
       }
@@ -492,17 +485,37 @@ class TraceProcessor {
 
   /**
    *
-   * @param {{pid: number, tid: number, frameId: string}} mainFrameIds
+   * @param {{startingPid: number, frameId: string}} mainFrameIds
    * @param {LH.TraceEvent[]} keyEvents
-   * @return {number[]}
+   * @return {Map<number, number>}
    */
-  static findMainThreadPids(mainFrameIds, keyEvents) {
+  static findMainFramePidTids(mainFrameIds, keyEvents) {
     const frameCommittedEvts = keyEvents.filter(evt =>
       evt.name === 'FrameCommittedInBrowser' &&
       evt.args?.data?.frame === mainFrameIds.frameId
     );
     if (frameCommittedEvts.length === 0) throw new Error('No FrameCommittedInBrowser event');
-    return frameCommittedEvts.map(e => e?.args?.data?.processId || 0);
+
+    const pidToTid = new Map();
+    frameCommittedEvts.forEach(e => {
+      const pid = e?.args?.data?.processId;
+
+      if (!pid) {
+        throw new Error('Missing processId in FrameCommittedInBrowser');
+      }
+      // While renderer tids are generally predictable, we'll doublecheck it
+      const threadNameEvt = keyEvents.find(e =>
+        e.cat === '__metadata' &&
+        e.pid === pid &&
+        e.ph === 'M' &&
+        e.name === 'thread_name' &&
+        e.args.name === 'CrRendererMain'
+      );
+      const tid = threadNameEvt?.tid;
+      if (!tid) throw new Error('Missing CrRenderer thread_name event and/or tid');
+      pidToTid.set(pid, tid);
+    });
+    return pidToTid;
   }
 
   /**
@@ -614,6 +627,7 @@ class TraceProcessor {
    * @return {LH.Artifacts.ProcessedTrace}
   */
   static processTrace(trace, options) {
+    console.time('processTrace');
     const {timeOriginDeterminationMethod = 'auto'} = options || {};
 
     // Parse the trace for our key events and sort them by timestamp. Note: sort
@@ -625,9 +639,13 @@ class TraceProcessor {
           e.cat === '__metadata';
     });
 
+
+
     // Find the inspected frame
     const mainFrameIds = this.findMainFrameIds(keyEvents);
-    const rendererPids = this.findMainThreadPids(mainFrameIds, keyEvents);
+    const rendererPidTids = this.findMainFramePidTids(mainFrameIds, keyEvents);
+    const rendererPids = [...rendererPidTids.keys()];
+
 
     // Subset all trace events to just our tab's process (incl threads other than main)
     // stable-sort events to keep them correctly nested.
@@ -721,10 +739,11 @@ class TraceProcessor {
     console.log({frameEventsLen, frameTreeEventsLen, processEventsLen, keyEventsLen, mainThreadEventsLen,  allEventsLen, frames, mainFrameIds});
 
     const pct = processEventsLen / keyEventsLen;
-    console.log(pct < 0.4 ? '❌ BAD' : '✅ GOOD', pct);
+    console.log(pct < 0.4 ? '❌ BAD' : '✅ GOOD', pct * 100);
     const pct2 = frameEventsLen / keyEventsLen;
-    console.log(pct2 < 0.4 ? '❌ BAD' : '✅ GOOD', pct2);
+    console.log(pct2 < 0.4 ? '❌ BAD' : '✅ GOOD', pct2 * 100);
 
+    console.timeEnd('processTrace');
     // This could be much more concise with object spread, but the consensus is that explicitness is
     // preferred over brevity here.
     return {
