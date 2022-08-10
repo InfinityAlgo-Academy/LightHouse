@@ -12,7 +12,6 @@ import {readJson} from '../../test-utils.js';
 
 const pwaTrace = readJson('../../fixtures/traces/progressive-app.json', import.meta);
 const badNavStartTrace = readJson('../../fixtures/traces/bad-nav-start-ts.json', import.meta);
-const lateTracingStartedTrace = readJson('../../fixtures/traces/tracingstarted-after-navstart.json', import.meta);
 const noTracingStartedTrace = readJson('../../fixtures/traces/no-tracingstarted-m74.json', import.meta);
 const preactTrace = readJson('../../fixtures/traces/preactjs.com_ts_of_undefined.json', import.meta);
 const noFMPtrace = readJson('../../fixtures/traces/no_fmp_event.json', import.meta);
@@ -24,7 +23,35 @@ const lcpTrace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
 const lcpAllFramesTrace = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
 const startedAfterNavstartTrace = readJson('../../fixtures/traces/tracingstarted-after-navstart.json', import.meta);
 
+const t91 = readJson('../../fixtures/traces/timespan-trace-m91.json', import.meta);
+
+
 describe('TraceProcessor', () => {
+  describe('traces', () => {
+    const trs = {
+      t91,
+      pwaTrace,
+      badNavStartTrace,
+      startedAfterNavstartTrace,
+      noTracingStartedTrace,
+      preactTrace,
+      noFMPtrace,
+      noFCPtrace,
+      timespanTrace,
+      noNavStartTrace,
+      backgroundTabTrace,
+      lcpTrace,
+      lcpAllFramesTrace,
+    };
+    for (const [name, trace] of Object.entries(trs)) {
+      const events = trace.traceEvents || trace;
+      console.assert(Array.isArray(events) && events.length);
+      const tracingStartedEvt = events.find(e => e.name === 'TracingStartedInBrowser');
+      const traceCommEvt = events.find(e => e.name === 'FrameCommittedInBrowser');
+      console.log(name, 'tracstarted', !!tracingStartedEvt, 'framecomm', !!traceCommEvt);
+    }
+  });
+
   describe('_riskPercentiles', () => {
     const defaultPercentiles = [0, 0.25, 0.5, 0.75, 0.9, 0.99, 1];
 
@@ -387,7 +414,7 @@ describe('TraceProcessor', () => {
 
   describe('.processTrace()', () => {
     it('gathers the events from the tab\'s process', () => {
-      const trace = TraceProcessor.processTrace(lateTracingStartedTrace);
+      const trace = TraceProcessor.processTrace(startedAfterNavstartTrace);
 
       const firstEvt = trace.processEvents[0];
       trace.processEvents.forEach(evt => {
@@ -399,13 +426,13 @@ describe('TraceProcessor', () => {
     });
 
     it('computes timings of each event', () => {
-      const trace = TraceProcessor.processTrace(lateTracingStartedTrace);
+      const trace = TraceProcessor.processTrace(startedAfterNavstartTrace);
       assert.equal(Math.round(trace.timings.timeOrigin), 0);
       assert.equal(Math.round(trace.timings.traceEnd), 649);
     });
 
     it('computes timestamps of each event', () => {
-      const trace = TraceProcessor.processTrace(lateTracingStartedTrace);
+      const trace = TraceProcessor.processTrace(startedAfterNavstartTrace);
       assert.equal(Math.round(trace.timestamps.timeOrigin), 29343540951);
       assert.equal(Math.round(trace.timestamps.traceEnd), 29344190232);
     });
@@ -464,7 +491,7 @@ describe('TraceProcessor', () => {
 
     describe('.processNavigation()', () => {
       it('gathers the events from the tab\'s process', () => {
-        const trace = TraceProcessor.processTrace(lateTracingStartedTrace);
+        const trace = TraceProcessor.processTrace(startedAfterNavstartTrace);
         const navigation = TraceProcessor.processNavigation(trace);
 
         assert.ok(trace.mainFrameIds.pid === navigation.firstContentfulPaintEvt.pid);
@@ -472,7 +499,7 @@ describe('TraceProcessor', () => {
       });
 
       it('computes timings of each event', () => {
-        const trace = TraceProcessor.processTrace(lateTracingStartedTrace);
+        const trace = TraceProcessor.processTrace(startedAfterNavstartTrace);
         const navigation = TraceProcessor.processNavigation(trace);
         assert.equal(Math.round(navigation.timings.timeOrigin), 0);
         assert.equal(Math.round(navigation.timings.firstPaint), 80);
@@ -482,7 +509,7 @@ describe('TraceProcessor', () => {
       });
 
       it('computes timestamps of each event', () => {
-        const trace = TraceProcessor.processTrace(lateTracingStartedTrace);
+        const trace = TraceProcessor.processTrace(startedAfterNavstartTrace);
         const navigation = TraceProcessor.processNavigation(trace);
         assert.equal(Math.round(navigation.timestamps.timeOrigin), 29343540951);
         assert.equal(Math.round(navigation.timestamps.firstPaint), 29343620997);
@@ -494,7 +521,7 @@ describe('TraceProcessor', () => {
 
     describe('.processNavigation() - FMP', () => {
       it('if there was a tracingStartedInPage after the frame\'s navStart', () => {
-        const trace = TraceProcessor.processTrace(lateTracingStartedTrace);
+        const trace = TraceProcessor.processTrace(startedAfterNavstartTrace);
         const navigation = TraceProcessor.processNavigation(trace);
         assert.equal(trace.mainFrameIds.frameId, '0x163736997740');
         assert.equal(trace.timeOriginEvt.ts, 29343540951);
