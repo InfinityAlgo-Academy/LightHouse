@@ -687,6 +687,20 @@ class TraceProcessor {
     // Ensure our traceEnd reflects all page activity.
     const traceEnd = this.computeTraceEnd(trace.traceEvents, timeOriginEvt);
 
+
+    const frameEventsLen = frameEvents.length;
+    const frameTreeEventsLen = frameTreeEvents.length;
+    const processEventsLen = processEvents.length;
+    const keyEventsLen = keyEvents.length;
+    const mainThreadEventsLen = mainThreadEvents.length;
+    const allEventsLen = trace.traceEvents.length;
+    console.log({frameEventsLen, frameTreeEventsLen, processEventsLen, keyEventsLen, mainThreadEventsLen,  allEventsLen, frames, mainFrameIds});
+
+    const pct = processEventsLen / keyEventsLen;
+    console.log(pct < 0.4 ? '❌ BAD' : '✅ GOOD', pct);
+    const pct2 = frameEventsLen / keyEventsLen;
+    console.log(pct2 < 0.4 ? '❌ BAD' : '✅ GOOD', pct2);
+
     // This could be much more concise with object spread, but the consensus is that explicitness is
     // preferred over brevity here.
     return {
