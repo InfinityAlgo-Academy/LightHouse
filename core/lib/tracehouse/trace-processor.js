@@ -660,7 +660,7 @@ class TraceProcessor {
     // Subset all trace events to just our tab's process (incl threads other than main)
     // stable-sort events to keep them correctly nested.
     const processEvents = TraceProcessor
-      .filteredTraceSort(trace.traceEvents, e => rendererPids.includes(e.pid)); // currently 51, but should be mostly 74 (and maybe 51 too)
+      .filteredTraceSort(trace.traceEvents, e => rendererPids.includes(e.pid));
 
 
     /** @type {Map<string, {id: string, url: string, parent?: string}>} */
@@ -703,16 +703,17 @@ class TraceProcessor {
     const frameIdToRootFrameId = this.resolveRootFrames(frames);
 
     // Filter to just events matching the main frame ID, just to make sure.
-    console.log('thisone', mainFrameIds.frameId)
-    const frameEvents = keyEvents.filter(e => e.args.frame === mainFrameIds.frameId);
+    /** @param {LH.TraceEvent} e */
+    function associatedToMainFrame(e) {
+      return e.args?.data?.frame === mainFrameIds.frameId ||
+      e.args.frame === mainFrameIds.frameId;
+    }
+    const frameEvents = keyEvents.filter(e => associatedToMainFrame(e));
 
     // Filter to just events matching the main frame ID or any child frame IDs.
     let frameTreeEvents = [];
-    console.log({frameIdToRootFrameId, mainFrameIds});
     if (frameIdToRootFrameId.has(mainFrameIds.frameId)) {
-      frameTreeEvents = keyEvents.filter(e => {
-        return e.args.frame && frameIdToRootFrameId.get(e.args.frame) === mainFrameIds.frameId;
-      });
+      frameTreeEvents = keyEvents.filter(e => associatedToMainFrame(e));
     } else {
       // In practice, there should always be TracingStartedInBrowser/FrameCommittedInBrowser events to
       // define the frame tree. Unfortunately, many test traces do not that frame info due to minification.
@@ -732,8 +733,7 @@ class TraceProcessor {
     );
 
 
-    const mainThreadEvents = processEvents
-      .filter(e => e.tid === mainFrameIds.tid);
+    const mainThreadEvents = processEvents.filter(e => e.tid === rendererPidTids.get(e.pid));
 
     // Ensure our traceEnd reflects all page activity.
     const traceEnd = this.computeTraceEnd(trace.traceEvents, timeOriginEvt);
@@ -747,10 +747,12 @@ class TraceProcessor {
     const allEventsLen = trace.traceEvents.length;
     console.log({frameEventsLen, frameTreeEventsLen, processEventsLen, keyEventsLen, mainThreadEventsLen,  allEventsLen, frames, mainFrameIds});
 
-    const pct = processEventsLen / keyEventsLen;
-    console.log(pct < 0.4 ? '❌ BAD' : '✅ GOOD', pct * 100);
+    const pct1 = processEventsLen / keyEventsLen;
+    console.log(pct1 < 0.4 ? '❌ BAD' : '✅ GOOD', pct1 * 100);
     const pct2 = frameEventsLen / keyEventsLen;
-    console.log(pct2 < 0.4 ? '❌ BAD' : '✅ GOOD', pct2 * 100);
+    console.log(pct2 < 0.1 ? '❌ BAD' : '✅ GOOD', pct2 * 100);
+    const pct3 = mainThreadEventsLen / keyEventsLen;
+    console.log(pct3 < 0.15 ? '❌ BAD' : '✅ GOOD', pct3 * 100);
 
     console.timeEnd('processTrace');
     // This could be much more concise with object spread, but the consensus is that explicitness is
