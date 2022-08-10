@@ -25,7 +25,7 @@ import fs from 'fs';
 import readline from 'readline';
 import {fileURLToPath} from 'url';
 
-import puppeteer from 'puppeteer-core';
+import puppeteer from 'puppeteer';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
 import {getChromePath} from 'chrome-launcher';
