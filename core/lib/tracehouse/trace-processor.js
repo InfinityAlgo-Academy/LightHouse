@@ -484,7 +484,7 @@ class TraceProcessor {
   }
 
   /**
-   *
+   * If there were multiple cross-origin navigations in the trace, there'll be more than one pid returned
    * @param {{startingPid: number, frameId: string}} mainFrameIds
    * @param {LH.TraceEvent[]} keyEvents
    * @return {Map<number, number>}
@@ -630,6 +630,19 @@ class TraceProcessor {
     console.time('processTrace');
     const {timeOriginDeterminationMethod = 'auto'} = options || {};
 
+    const allframeevts = trace.traceEvents.filter(e => e?.args?.data?.frame === '5A391419DEEC87928E2D2473343A3BF6');
+    console.log('allframeevts', allframeevts.length);
+    const allframeevts2 = trace.traceEvents.filter(e => e?.args?.frame === '5A391419DEEC87928E2D2473343A3BF6');
+    console.log('allframeevts2', allframeevts2.length);
+
+    const xx = allframeevts.reduce((acc, curr) => {
+      let sum = acc[curr.cat] || 0;
+      sum++;
+      acc[curr.cat] = sum;
+      return acc;
+    }, {});
+    console.log(xx);
+
     // Parse the trace for our key events and sort them by timestamp. Note: sort
     // *must* be stable to keep events correctly nested.
     const keyEvents = this.filteredTraceSort(trace.traceEvents, e => {
@@ -639,13 +652,10 @@ class TraceProcessor {
           e.cat === '__metadata';
     });
 
-
-
     // Find the inspected frame
     const mainFrameIds = this.findMainFrameIds(keyEvents);
     const rendererPidTids = this.findMainFramePidTids(mainFrameIds, keyEvents);
     const rendererPids = [...rendererPidTids.keys()];
-
 
     // Subset all trace events to just our tab's process (incl threads other than main)
     // stable-sort events to keep them correctly nested.
@@ -670,8 +680,6 @@ class TraceProcessor {
       }
     }
 
-    keyEvents.filter(e => e.name === 'FrameCommittedInBrowser').forEach(e => console.log('framecommitted', e));
-
     // Update known frames if FrameCommittedInBrowser events come in, typically
     // with updated `url`, as well as pid, etc. Some traces (like timespans) may
     // not have any committed frames.
@@ -695,6 +703,7 @@ class TraceProcessor {
     const frameIdToRootFrameId = this.resolveRootFrames(frames);
 
     // Filter to just events matching the main frame ID, just to make sure.
+    console.log('thisone', mainFrameIds.frameId)
     const frameEvents = keyEvents.filter(e => e.args.frame === mainFrameIds.frameId);
 
     // Filter to just events matching the main frame ID or any child frame IDs.
