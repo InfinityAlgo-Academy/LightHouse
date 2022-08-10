@@ -429,7 +429,7 @@ class TraceProcessor {
   static findMainFrameIds(events) {
     // Prefer the newer TracingStartedInBrowser event first, if it exists
     const startedInBrowserEvt = events.find(e => e.name === 'TracingStartedInBrowser');
-    console.log(startedInBrowserEvt?.args.data);
+    // console.log(startedInBrowserEvt?.args.data);
     if (startedInBrowserEvt?.args.data?.frames) {
       const mainFrame = startedInBrowserEvt.args.data.frames.find(frame => !frame.parent);
       const frameId = mainFrame?.frame;
@@ -494,15 +494,16 @@ class TraceProcessor {
       evt.name === 'FrameCommittedInBrowser' &&
       evt.args?.data?.frame === mainFrameIds.frameId
     );
-    if (frameCommittedEvts.length === 0) throw new Error('No FrameCommittedInBrowser event');
+
+    // "Modern" traces with a navigation have a FrameCommittedInBrowser event
+    const mainFramePids = frameCommittedEvts.length
+      ? frameCommittedEvts.map(e => e?.args?.data?.processId)
+      // …But old traces and some timespan traces may not. In these situations, we'll assume the
+      // priarmy process ID remains constant (as there were no navigations).
+      : [mainFrameIds.startingPid];
 
     const pidToTid = new Map();
-    frameCommittedEvts.forEach(e => {
-      const pid = e?.args?.data?.processId;
-
-      if (!pid) {
-        throw new Error('Missing processId in FrameCommittedInBrowser');
-      }
+    mainFramePids.forEach(pid => {
       // While renderer tids are generally predictable, we'll doublecheck it
       const threadNameEvt = keyEvents.find(e =>
         e.cat === '__metadata' &&
@@ -631,9 +632,9 @@ class TraceProcessor {
     const {timeOriginDeterminationMethod = 'auto'} = options || {};
 
     const allframeevts = trace.traceEvents.filter(e => e?.args?.data?.frame === '5A391419DEEC87928E2D2473343A3BF6');
-    console.log('allframeevts', allframeevts.length);
+    // console.log('allframeevts', allframeevts.length);
     const allframeevts2 = trace.traceEvents.filter(e => e?.args?.frame === '5A391419DEEC87928E2D2473343A3BF6');
-    console.log('allframeevts2', allframeevts2.length);
+    // console.log('allframeevts2', allframeevts2.length);
 
     const xx = allframeevts.reduce((acc, curr) => {
       let sum = acc[curr.cat] || 0;
@@ -641,7 +642,7 @@ class TraceProcessor {
       acc[curr.cat] = sum;
       return acc;
     }, {});
-    console.log(xx);
+    // console.log(xx);
 
     // Parse the trace for our key events and sort them by timestamp. Note: sort
     // *must* be stable to keep events correctly nested.
@@ -691,7 +692,7 @@ class TraceProcessor {
           evt.args.data.url
         );
       }).forEach(evt => {
-        console.log('frame', evt.args.data.frame);
+        // console.log('frame', evt.args.data.frame);
 
         framesById.set(evt.args.data.frame, {
           id: evt.args.data.frame,
@@ -745,14 +746,16 @@ class TraceProcessor {
     const keyEventsLen = keyEvents.length;
     const mainThreadEventsLen = mainThreadEvents.length;
     const allEventsLen = trace.traceEvents.length;
-    console.log({frameEventsLen, frameTreeEventsLen, processEventsLen, keyEventsLen, mainThreadEventsLen,  allEventsLen, frames, mainFrameIds});
 
     const pct1 = processEventsLen / keyEventsLen;
-    console.log(pct1 < 0.4 ? '❌ BAD' : '✅ GOOD', pct1 * 100);
     const pct2 = frameEventsLen / keyEventsLen;
-    console.log(pct2 < 0.1 ? '❌ BAD' : '✅ GOOD', pct2 * 100);
     const pct3 = mainThreadEventsLen / keyEventsLen;
-    console.log(pct3 < 0.15 ? '❌ BAD' : '✅ GOOD', pct3 * 100);
+
+    // console.log({frameEventsLen, frameTreeEventsLen, processEventsLen, keyEventsLen, mainThreadEventsLen,  allEventsLen, frames, mainFrameIds});
+    // console.log(pct1 < 0.4 ? '❌ BAD' : '✅ GOOD', pct1 * 100);
+    // console.log(pct2 < 0.1 ? '❌ BAD' : '✅ GOOD', pct2 * 100);
+    // console.log(pct3 < 0.15 ? '❌ BAD' : '✅ GOOD', pct3 * 100);
+
 
     console.timeEnd('processTrace');
     // This could be much more concise with object spread, but the consensus is that explicitness is
