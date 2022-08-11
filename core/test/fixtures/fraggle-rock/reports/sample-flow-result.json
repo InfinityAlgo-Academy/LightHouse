@@ -7599,7 +7599,7 @@
             "description": "Interaction to Next Paint measures page responsiveness, how long it takes the page to visibly respond to user input. [Learn more about the Interaction to Next Paint metric](https://web.dev/inp/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
-            "numericValue": 60,
+            "numericValue": 64,
             "numericUnit": "millisecond",
             "displayValue": "60 ms"
           },
@@ -9131,9 +9131,151 @@
             "id": "work-during-interaction",
             "title": "Minimizes work during key interaction",
             "description": "This is the thread-blocking work occurring during the Interaction to Next Paint measurement. [Learn more about the Interaction to Next Paint metric](https://web.dev/inp/).",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "This version of Chrome is too old to support 'detailed EventTiming trace events'. Use a newer version to see full results."
+            "score": 1,
+            "scoreDisplayMode": "numeric",
+            "displayValue": "60 ms spent on event 'keypress'",
+            "details": {
+              "type": "list",
+              "items": [
+                {
+                  "type": "table",
+                  "headings": [
+                    {
+                      "key": "phase",
+                      "itemType": "text",
+                      "subItemsHeading": {
+                        "key": "url",
+                        "itemType": "url"
+                      },
+                      "text": "Phase"
+                    },
+                    {
+                      "key": "total",
+                      "itemType": "ms",
+                      "subItemsHeading": {
+                        "key": "total",
+                        "granularity": 1,
+                        "itemType": "ms"
+                      },
+                      "granularity": 1,
+                      "text": "Total time"
+                    },
+                    {
+                      "key": null,
+                      "itemType": "ms",
+                      "subItemsHeading": {
+                        "key": "scripting",
+                        "granularity": 1,
+                        "itemType": "ms"
+                      },
+                      "text": "Script evaluation"
+                    },
+                    {
+                      "key": null,
+                      "itemType": "ms",
+                      "subItemsHeading": {
+                        "key": "layout",
+                        "granularity": 1,
+                        "itemType": "ms"
+                      },
+                      "text": "Style & Layout"
+                    },
+                    {
+                      "key": null,
+                      "itemType": "ms",
+                      "subItemsHeading": {
+                        "key": "render",
+                        "granularity": 1,
+                        "itemType": "ms"
+                      },
+                      "text": "Rendering"
+                    }
+                  ],
+                  "items": [
+                    {
+                      "phase": "Input delay",
+                      "total": 14,
+                      "subItems": {
+                        "type": "subitems",
+                        "items": [
+                          {
+                            "url": "https://www.mikescerealshack.co/_next/static/chunks/framework.9d524150d48315f49e80.js",
+                            "total": 11.665999986231327,
+                            "scripting": 9.986999996006489,
+                            "layout": 0,
+                            "render": 0
+                          },
+                          {
+                            "url": "https://www.mikescerealshack.co/",
+                            "total": 1.2910000085830688,
+                            "scripting": 0,
+                            "layout": 1.2370000034570694,
+                            "render": 0
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "phase": "Processing time",
+                      "total": 43,
+                      "subItems": {
+                        "type": "subitems",
+                        "items": [
+                          {
+                            "url": "https://www.mikescerealshack.co/_next/static/chunks/framework.9d524150d48315f49e80.js",
+                            "total": 37.968000024557114,
+                            "scripting": 35.80400001257658,
+                            "layout": 0,
+                            "render": 0
+                          },
+                          {
+                            "url": "https://www.mikescerealshack.co/",
+                            "total": 4.112999990582466,
+                            "scripting": 0.5260000005364418,
+                            "layout": 1.3629999905824661,
+                            "render": 0.3139999955892563
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "phase": "Presentation delay",
+                      "total": 7,
+                      "subItems": {
+                        "type": "subitems",
+                        "items": [
+                          {
+                            "url": "https://www.mikescerealshack.co/_next/static/chunks/framework.9d524150d48315f49e80.js",
+                            "total": 5.60700000077486,
+                            "scripting": 5.240000002086163,
+                            "layout": 0,
+                            "render": 0
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "type": "debugdata",
+                  "interactionType": "keypress",
+                  "phases": {
+                    "inputDelay": {
+                      "startTs": 49219856985,
+                      "endTs": 49219870985
+                    },
+                    "processingTime": {
+                      "startTs": 49219870985,
+                      "endTs": 49219913985
+                    },
+                    "presentationDelay": {
+                      "startTs": 49219913985,
+                      "endTs": 49219920985
+                    }
+                  }
+                }
+              ]
+            }
           }
         },
         "configSettings": {
@@ -10074,7 +10216,7 @@
               },
               {
                 "values": {
-                  "timeInMs": 60
+                  "timeInMs": 64
                 },
                 "path": "audits[experimental-interaction-to-next-paint].displayValue"
               },
@@ -10488,14 +10630,23 @@
             "core/audits/work-during-interaction.js | description": [
               "audits[work-during-interaction].description"
             ],
-            "core/lib/lh-error.js | oldChromeDoesNotSupportFeature": [
+            "core/audits/work-during-interaction.js | displayValue": [
               {
                 "values": {
-                  "errorCode": "UNSUPPORTED_OLD_CHROME",
-                  "featureName": "detailed EventTiming trace events"
+                  "timeInMs": 64,
+                  "interactionType": "keypress"
                 },
-                "path": "audits[work-during-interaction].errorMessage"
+                "path": "audits[work-during-interaction].displayValue"
               }
+            ],
+            "core/audits/work-during-interaction.js | inputDelay": [
+              "audits[work-during-interaction].details.items[0].items[0].phase"
+            ],
+            "core/audits/work-during-interaction.js | processingTime": [
+              "audits[work-during-interaction].details.items[0].items[1].phase"
+            ],
+            "core/audits/work-during-interaction.js | presentationDelay": [
+              "audits[work-during-interaction].details.items[0].items[2].phase"
             ],
             "core/config/default-config.js | performanceCategoryTitle": [
               "categories.performance.title"
