@@ -729,7 +729,8 @@ class TraceProcessor {
 
     /** @param {LH.TraceEvent} e */
     function associatedToAllFrames(e) {
-      return inspectedTreeFrameIds.includes(e.args?.data?.frame || e.args.frame);
+      const frameId = e.args?.data?.frame || e.args.frame;
+      return frameId ? inspectedTreeFrameIds.includes(frameId) : false;
     }
     const frameEvents = keyEvents.filter(e => associatedToMainFrame(e));
 
@@ -754,7 +755,6 @@ class TraceProcessor {
       {keyEvents, frameEvents, mainFrameIds},
       timeOriginDeterminationMethod
     );
-
 
     const mainThreadEvents = processEvents.filter(e => e.tid === rendererPidTids.get(e.pid));
 

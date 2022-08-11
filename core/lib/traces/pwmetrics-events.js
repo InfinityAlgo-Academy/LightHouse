@@ -128,7 +128,7 @@ class Metrics {
     if (!timeOriginMetric) return {errorMessage: 'timeorigin Metric not found in definitions'};
     try {
       const frameIds = TraceProcessor.findMainFrameIds(this._traceEvents);
-      return {pid: frameIds.pid, tid: frameIds.tid, ts: timeOriginMetric.ts};
+      return {pid: frameIds.startingPid, tid: 1, ts: timeOriginMetric.ts};
     } catch (err) {
       return {errorMessage: err.message};
     }
