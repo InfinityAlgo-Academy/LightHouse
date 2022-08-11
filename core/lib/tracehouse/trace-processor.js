@@ -429,7 +429,6 @@ class TraceProcessor {
   static findMainFrameIds(events) {
     // Prefer the newer TracingStartedInBrowser event first, if it exists
     const startedInBrowserEvt = events.find(e => e.name === 'TracingStartedInBrowser');
-    // console.log(startedInBrowserEvt?.args.data);
     if (startedInBrowserEvt?.args.data?.frames) {
       const mainFrame = startedInBrowserEvt.args.data.frames.find(frame => !frame.parent);
       const frameId = mainFrame?.frame;
@@ -698,8 +697,6 @@ class TraceProcessor {
           evt.args.data.url
         );
       }).forEach(evt => {
-        // console.log('frame', evt.args.data.frame);
-
         framesById.set(evt.args.data.frame, {
           id: evt.args.data.frame,
           url: evt.args.data.url,
