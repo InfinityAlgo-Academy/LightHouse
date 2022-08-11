@@ -246,6 +246,7 @@ describe('TraceProcessor', () => {
       const trace = TraceProcessor.processTrace(testTrace);
       expect(trace.frameTreeEvents.map(e => e.name)).toEqual([
         'navigationStart',
+        'FrameCommittedInBrowser',
         'domContentLoadedEventEnd',
         'firstContentfulPaint',
         'firstMeaningfulPaint',
@@ -270,6 +271,7 @@ describe('TraceProcessor', () => {
       const trace = TraceProcessor.processTrace(testTrace);
       expect(trace.frameTreeEvents.map(e => e.name)).toEqual([
         'navigationStart',
+        'FrameCommittedInBrowser', // WTF???
         'domContentLoadedEventEnd',
         'firstContentfulPaint',
         'firstMeaningfulPaint',
@@ -421,8 +423,8 @@ describe('TraceProcessor', () => {
         assert.equal(evt.pid, firstEvt.pid, 'A traceEvent is found from another process');
       });
 
-      assert.ok(firstEvt.pid === trace.mainFrameIds.pid);
-      assert.ok(firstEvt.pid === trace.timeOriginEvt.pid);
+      assert.equal(firstEvt.pid, trace.mainFrameIds.startingPid);
+      assert.equal(firstEvt.pid, trace.timeOriginEvt.pid);
     });
 
     it('computes timings of each event', () => {
@@ -494,8 +496,8 @@ describe('TraceProcessor', () => {
         const trace = TraceProcessor.processTrace(startedAfterNavstartTrace);
         const navigation = TraceProcessor.processNavigation(trace);
 
-        assert.ok(trace.mainFrameIds.pid === navigation.firstContentfulPaintEvt.pid);
-        assert.ok(trace.mainFrameIds.pid === navigation.firstMeaningfulPaintEvt.pid);
+        assert.equal(trace.mainFrameIds.startingPid, navigation.firstContentfulPaintEvt.pid);
+        assert.equal(trace.mainFrameIds.startingPid, navigation.firstMeaningfulPaintEvt.pid);
       });
 
       it('computes timings of each event', () => {
@@ -644,7 +646,7 @@ Object {
     });
 
     describe('.processNavigation() - All Frames', () => {
-      it('in a trace', () => {
+      it.only('in a trace', () => {
         const trace = TraceProcessor.processTrace(lcpAllFramesTrace);
         const navigation = TraceProcessor.processNavigation(trace);
         expect({
@@ -665,19 +667,19 @@ Object {
           'timings.largestContentfulPaintAllFrames': navigation.timings.largestContentfulPaintAllFrames, // eslint-disable-line max-len
         }).toMatchInlineSnapshot(`
           Object {
-            "firstContentfulPaintAllFramesEvt.ts": 23466705983,
+            "firstContentfulPaintAllFramesEvt.ts": 23466886143,
             "firstContentfulPaintEvt.ts": 23466886143,
-            "largestContentfulPaintAllFramesEvt.ts": 23466705983,
+            "largestContentfulPaintAllFramesEvt.ts": 23466886143,
             "largestContentfulPaintEvt.ts": 23466886143,
             "mainFrameIds.frameId": "207613A6AD77B492759226780A40F6F4",
             "timestamps.firstContentfulPaint": 23466886143,
-            "timestamps.firstContentfulPaintAllFrames": 23466705983,
+            "timestamps.firstContentfulPaintAllFrames": 23466886143,
             "timestamps.largestContentfulPaint": 23466886143,
-            "timestamps.largestContentfulPaintAllFrames": 23466705983,
+            "timestamps.largestContentfulPaintAllFrames": 23466886143,
             "timings.firstContentfulPaint": 863.013,
-            "timings.firstContentfulPaintAllFrames": 682.853,
+            "timings.firstContentfulPaintAllFrames": 863.013,
             "timings.largestContentfulPaint": 863.013,
-            "timings.largestContentfulPaintAllFrames": 682.853,
+            "timings.largestContentfulPaintAllFrames": 863.013,
           }
         `);
       });

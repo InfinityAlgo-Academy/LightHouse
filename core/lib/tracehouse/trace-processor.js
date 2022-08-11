@@ -792,9 +792,14 @@ class TraceProcessor {
     const frameTimings = this.computeNavigationTimingsForFrame(frameEvents, {timeOriginEvt});
 
     // Compute FCP for all frames.
-    const fcpAllFramesEvt = frameTreeEvents.find(
+    const fcpAllFramesEvts = frameTreeEvents.filter(
       e => e.name === 'firstContentfulPaint' && e.ts > timeOriginEvt.ts
     );
+
+    const getTiming = ts => (ts - timeOriginEvt.ts) / 1000;
+    const fcpAllFramesEvt = fcpAllFramesEvts[0];
+    console.log({fcpAllFramesEvts}, getTiming(fcpAllFramesEvt.ts));
+
 
     if (!fcpAllFramesEvt) {
       throw this.createNoFirstContentfulPaintError();
@@ -804,7 +809,6 @@ class TraceProcessor {
     const lcpAllFramesEvt = this.computeValidLCPAllFrames(frameTreeEvents, timeOriginEvt).lcp;
 
     /** @param {number} ts */
-    const getTiming = ts => (ts - timeOriginEvt.ts) / 1000;
     /** @param {number=} ts */
     const maybeGetTiming = (ts) => ts === undefined ? undefined : getTiming(ts);
 
