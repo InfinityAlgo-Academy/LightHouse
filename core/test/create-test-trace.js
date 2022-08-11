@@ -7,7 +7,7 @@
 const pid = 1111;
 const tid = 222;
 const browserPid = 13725;
-const rootFrame = '3EFC2700D7BC3F4734CAF2F726EFB78C';
+const rootFrame = 'ROOT_FRAME';
 const defaultUrl = 'https://example.com/';
 
 /** @typedef {{ts: number, duration: number, children?: Array<ChildTaskDef>}} TopLevelTaskDef */

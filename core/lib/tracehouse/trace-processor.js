@@ -503,6 +503,7 @@ class TraceProcessor {
       : [mainFrameIds.startingPid];
 
     const pidToTid = new Map();
+
     mainFramePids.forEach(pid => {
       // While renderer tids are generally predictable, we'll doublecheck it
       const threadNameEvt = keyEvents.find(e =>
@@ -512,8 +513,26 @@ class TraceProcessor {
         e.name === 'thread_name' &&
         e.args.name === 'CrRendererMain'
       );
-      const tid = threadNameEvt?.tid;
-      if (!tid) throw new Error('Missing CrRenderer thread_name event and/or tid');
+      let tid = threadNameEvt?.tid;
+
+      // Fallback as many test/fixture traces are missing metadata blocks
+      if (!tid) {
+        // All of these are dispatched on the main thread.
+        // TODO: recapture our fixture traces so we can remove this trash
+        const mainThreadEvent = keyEvents.find(e =>
+          e.pid === pid &&
+          e.name === 'EventDispatch' ||
+          e.name === 'navigationStart' ||
+          e.name === 'ResourceSendRequest' ||
+          e.name === 'firstContentfulPaint' ||
+          e.name === 'ParseHTML'
+        );
+        tid = mainThreadEvent?.tid;
+        if (!tid) {
+          throw new Error('Unable to determine tid for renderer process');
+        }
+      }
+
       pidToTid.set(pid, tid);
     });
     return pidToTid;
@@ -708,7 +727,6 @@ class TraceProcessor {
       e.args.frame === mainFrameIds.frameId;
     }
 
-    console.log({inspectedTreeFrameIds});
     /** @param {LH.TraceEvent} e */
     function associatedToAllFrames(e) {
       return inspectedTreeFrameIds.includes(e.args?.data?.frame || e.args.frame);

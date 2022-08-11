@@ -23,35 +23,7 @@ const lcpTrace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
 const lcpAllFramesTrace = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
 const startedAfterNavstartTrace = readJson('../../fixtures/traces/tracingstarted-after-navstart.json', import.meta);
 
-const t91 = readJson('../../fixtures/traces/timespan-trace-m91.json', import.meta);
-
-
 describe('TraceProcessor', () => {
-  describe('traces', () => {
-    const trs = {
-      t91,
-      pwaTrace,
-      badNavStartTrace,
-      startedAfterNavstartTrace,
-      noTracingStartedTrace,
-      preactTrace,
-      noFMPtrace,
-      noFCPtrace,
-      timespanTrace,
-      noNavStartTrace,
-      backgroundTabTrace,
-      lcpTrace,
-      lcpAllFramesTrace,
-    };
-    for (const [name, trace] of Object.entries(trs)) {
-      const events = trace.traceEvents || trace;
-      console.assert(Array.isArray(events) && events.length);
-      const tracingStartedEvt = events.find(e => e.name === 'TracingStartedInBrowser');
-      const traceCommEvt = events.find(e => e.name === 'FrameCommittedInBrowser');
-      console.log(name, 'tracstarted', !!tracingStartedEvt, 'framecomm', !!traceCommEvt);
-    }
-  });
-
   describe('_riskPercentiles', () => {
     const defaultPercentiles = [0, 0.25, 0.5, 0.75, 0.9, 0.99, 1];
 
@@ -231,8 +203,8 @@ describe('TraceProcessor', () => {
     it('frameTreeEvents excludes other frame trees', () => {
       const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
       const mainFrame = testTrace.traceEvents.find(e => e.name === 'navigationStart').args.frame;
-      const childFrame = 'CHILDFRAME';
-      const otherMainFrame = 'ANOTHERTAB';
+      const childFrame = 'CHILD_FRAME';
+      const otherMainFrame = 'OTHER_TAB_FRAME';
       const cat = 'loading,rail,devtools.timeline';
       testTrace.traceEvents.push(
         /* eslint-disable max-len */
@@ -244,15 +216,21 @@ describe('TraceProcessor', () => {
         /* eslint-enable max-len */
       );
       const trace = TraceProcessor.processTrace(testTrace);
-      expect(trace.frameTreeEvents.map(e => e.name)).toEqual([
-        'navigationStart',
-        'FrameCommittedInBrowser',
-        'domContentLoadedEventEnd',
-        'firstContentfulPaint',
-        'firstMeaningfulPaint',
-        'Event1',
-        'Event2',
-      ]);
+      const frameTreeEventOutput = trace.frameTreeEvents.map((e) =>
+        `${e.name.padEnd(25)} - ${e.args?.data?.frame || e.args.frame}`);
+
+      expect(frameTreeEventOutput).toMatchInlineSnapshot(`
+        Array [
+          "navigationStart           - ROOT_FRAME",
+          "FrameCommittedInBrowser   - ROOT_FRAME",
+          "domContentLoadedEventEnd  - ROOT_FRAME",
+          "firstContentfulPaint      - ROOT_FRAME",
+          "firstMeaningfulPaint      - ROOT_FRAME",
+          "FrameCommittedInBrowser   - CHILD_FRAME",
+          "Event1                    - ROOT_FRAME",
+          "Event2                    - CHILD_FRAME",
+        ]
+      `);
     });
 
     it('frameTreeEvents includes main frame events if no FrameCommittedInBrowser found', () => {
