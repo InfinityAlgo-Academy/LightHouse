@@ -663,6 +663,7 @@ class TraceProcessor {
     const processEvents = TraceProcessor
       .filteredTraceSort(trace.traceEvents, e => rendererPids.includes(e.pid));
 
+    // TODO(paulirish): filter down frames (and subsequent actions) to the primary process tree & frame tree
 
     /** @type {Map<string, {id: string, url: string, parent?: string}>} */
     const framesById = new Map();
@@ -700,8 +701,19 @@ class TraceProcessor {
           parent: evt.args.data.parent,
         });
       });
-    const frames = [...framesById.values()];
-    const frameIdToRootFrameId = this.resolveRootFrames(frames);
+
+    const allFrames = [...framesById.values()];
+    const frameIdToRootFrameId = this.resolveRootFrames(allFrames);
+
+
+    const inspectedTreeFrameIds = [...frameIdToRootFrameId.entries()]
+      // eslint-disable-next-line no-unused-vars
+      .filter(([child, root]) => root === mainFrameIds.frameId).map(([child, root]) => child);
+
+    // @ts-expect-error frameIdToRootFrameId's values were casted to string. Runtime check here to confirm.
+    if (inspectedTreeFrameIds.includes(undefined)) {
+      throw new Error('Unexpected undefined in frameIdToRootFrameId');
+    }
 
     // Filter to just events matching the main frame ID, just to make sure.
     /** @param {LH.TraceEvent} e */
@@ -709,12 +721,18 @@ class TraceProcessor {
       return e.args?.data?.frame === mainFrameIds.frameId ||
       e.args.frame === mainFrameIds.frameId;
     }
+
+    console.log({inspectedTreeFrameIds});
+    /** @param {LH.TraceEvent} e */
+    function associatedToAllFrames(e) {
+      return inspectedTreeFrameIds.includes(e.args?.data?.frame || e.args.frame);
+    }
     const frameEvents = keyEvents.filter(e => associatedToMainFrame(e));
 
     // Filter to just events matching the main frame ID or any child frame IDs.
     let frameTreeEvents = [];
     if (frameIdToRootFrameId.has(mainFrameIds.frameId)) {
-      frameTreeEvents = keyEvents.filter(e => associatedToMainFrame(e));
+      frameTreeEvents = keyEvents.filter(e => associatedToAllFrames(e));
     } else {
       // In practice, there should always be TracingStartedInBrowser/FrameCommittedInBrowser events to
       // define the frame tree. Unfortunately, many test traces do not that frame info due to minification.
@@ -761,7 +779,7 @@ class TraceProcessor {
     // This could be much more concise with object spread, but the consensus is that explicitness is
     // preferred over brevity here.
     return {
-      frames,
+      frames: allFrames,
       mainThreadEvents,
       frameEvents,
       frameTreeEvents,
@@ -790,7 +808,7 @@ class TraceProcessor {
 
     // Compute the key frame timings for the main frame.
     const frameTimings = this.computeNavigationTimingsForFrame(frameEvents, {timeOriginEvt});
-
+    console.log({frameTimings});
     // Compute FCP for all frames.
     const fcpAllFramesEvts = frameTreeEvents.filter(
       e => e.name === 'firstContentfulPaint' && e.ts > timeOriginEvt.ts

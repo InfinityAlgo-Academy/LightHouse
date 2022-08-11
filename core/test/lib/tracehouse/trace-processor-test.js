@@ -649,6 +649,8 @@ Object {
       it.only('in a trace', () => {
         const trace = TraceProcessor.processTrace(lcpAllFramesTrace);
         const navigation = TraceProcessor.processNavigation(trace);
+        const {frames} = trace;
+        console.log({frames})
         expect({
           // Main frame
           'mainFrameIds.frameId': trace.mainFrameIds.frameId,
@@ -663,6 +665,21 @@ Object {
           'largestContentfulPaintAllFramesEvt.ts': navigation.largestContentfulPaintAllFramesEvt.ts,
           'timestamps.firstContentfulPaintAllFrames': navigation.timestamps.firstContentfulPaintAllFrames, // eslint-disable-line max-len
           'timestamps.largestContentfulPaintAllFrames': navigation.timestamps.largestContentfulPaintAllFrames, // eslint-disable-line max-len
+
+          // In lcpAllFramesTrace (aka frame-metrics-m89) theres an FCP&LCP combo for the root frame and an inner frame.
+          // The root/outer frame (frame-metrics.html)'s paint is at 863ms.
+          // The inner frame (frame.html)'s paint is at 682ms
+
+          //     rootFrame: http://localhost:8080/frame-metrics.html
+          //     863ms since timeorigin
+          //     {"args":{"data":{"candidateIndex":1,"isMainFrame":true, ... ,"nodeId":8,"size":580,"type":"text"},"frame":"207613A6AD77B492759226780A40F6F4"},"cat":"loading,rail,devtools.timeline","name":"largestContentfulPaint::Candidate","ph":"R","pid":34523,"tid":775,"ts":23466886143},
+
+          //     innerFrame: http://localhost:8080/frame.html
+          //     682ms since timeorigin
+          //     {"args":{"data":{"candidateIndex":1,"isMainFrame":false, ... ,"nodeId":7,"size":1937,"type":"text"},"frame":"7BE07FCA8E7A8510BE5334AEEB06AF1C"},"cat":"loading,rail,devtools.timeline","name":"largestContentfulPaint::Candidate","ph":"R","pid":34523,"tid":775,"ts":23466705983},
+
+          // For the -AllFrames variant, we want whatever is larger of the two (later in time, but larger in `size` for LCP)
+
           'timings.firstContentfulPaintAllFrames': navigation.timings.firstContentfulPaintAllFrames,
           'timings.largestContentfulPaintAllFrames': navigation.timings.largestContentfulPaintAllFrames, // eslint-disable-line max-len
         }).toMatchInlineSnapshot(`
