@@ -25,6 +25,9 @@ import fs from 'fs';
 import readline from 'readline';
 import {fileURLToPath} from 'url';
 
+// Puppeteer 16 can unpause worker targets prematurely so we use an older version just for this script.
+// https://bugs.chromium.org/p/chromium/issues/detail?id=1352175
+// TODO: Bump dev Puppeteer to latest.
 import puppeteer from 'puppeteer';
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
