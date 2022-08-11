@@ -628,21 +628,7 @@ class TraceProcessor {
    * @return {LH.Artifacts.ProcessedTrace}
   */
   static processTrace(trace, options) {
-    console.time('processTrace');
     const {timeOriginDeterminationMethod = 'auto'} = options || {};
-
-    const allframeevts = trace.traceEvents.filter(e => e?.args?.data?.frame === '5A391419DEEC87928E2D2473343A3BF6');
-    // console.log('allframeevts', allframeevts.length);
-    const allframeevts2 = trace.traceEvents.filter(e => e?.args?.frame === '5A391419DEEC87928E2D2473343A3BF6');
-    // console.log('allframeevts2', allframeevts2.length);
-
-    const xx = allframeevts.reduce((acc, curr) => {
-      let sum = acc[curr.cat] || 0;
-      sum++;
-      acc[curr.cat] = sum;
-      return acc;
-    }, {});
-    // console.log(xx);
 
     // Parse the trace for our key events and sort them by timestamp. Note: sort
     // *must* be stable to keep events correctly nested.
@@ -702,8 +688,8 @@ class TraceProcessor {
         });
       });
 
-    const allFrames = [...framesById.values()];
-    const frameIdToRootFrameId = this.resolveRootFrames(allFrames);
+    const frames = [...framesById.values()];
+    const frameIdToRootFrameId = this.resolveRootFrames(frames);
 
 
     const inspectedTreeFrameIds = [...frameIdToRootFrameId.entries()]
@@ -757,29 +743,10 @@ class TraceProcessor {
     // Ensure our traceEnd reflects all page activity.
     const traceEnd = this.computeTraceEnd(trace.traceEvents, timeOriginEvt);
 
-
-    const frameEventsLen = frameEvents.length;
-    const frameTreeEventsLen = frameTreeEvents.length;
-    const processEventsLen = processEvents.length;
-    const keyEventsLen = keyEvents.length;
-    const mainThreadEventsLen = mainThreadEvents.length;
-    const allEventsLen = trace.traceEvents.length;
-
-    const pct1 = processEventsLen / keyEventsLen;
-    const pct2 = frameEventsLen / keyEventsLen;
-    const pct3 = mainThreadEventsLen / keyEventsLen;
-
-    // console.log({frameEventsLen, frameTreeEventsLen, processEventsLen, keyEventsLen, mainThreadEventsLen,  allEventsLen, frames, mainFrameIds});
-    // console.log(pct1 < 0.4 ? '❌ BAD' : '✅ GOOD', pct1 * 100);
-    // console.log(pct2 < 0.1 ? '❌ BAD' : '✅ GOOD', pct2 * 100);
-    // console.log(pct3 < 0.15 ? '❌ BAD' : '✅ GOOD', pct3 * 100);
-
-
-    console.timeEnd('processTrace');
     // This could be much more concise with object spread, but the consensus is that explicitness is
     // preferred over brevity here.
     return {
-      frames: allFrames,
+      frames,
       mainThreadEvents,
       frameEvents,
       frameTreeEvents,
@@ -808,16 +775,11 @@ class TraceProcessor {
 
     // Compute the key frame timings for the main frame.
     const frameTimings = this.computeNavigationTimingsForFrame(frameEvents, {timeOriginEvt});
-    console.log({frameTimings});
+
     // Compute FCP for all frames.
-    const fcpAllFramesEvts = frameTreeEvents.filter(
+    const fcpAllFramesEvt = frameTreeEvents.find(
       e => e.name === 'firstContentfulPaint' && e.ts > timeOriginEvt.ts
     );
-
-    const getTiming = ts => (ts - timeOriginEvt.ts) / 1000;
-    const fcpAllFramesEvt = fcpAllFramesEvts[0];
-    console.log({fcpAllFramesEvts}, getTiming(fcpAllFramesEvt.ts));
-
 
     if (!fcpAllFramesEvt) {
       throw this.createNoFirstContentfulPaintError();
@@ -827,6 +789,7 @@ class TraceProcessor {
     const lcpAllFramesEvt = this.computeValidLCPAllFrames(frameTreeEvents, timeOriginEvt).lcp;
 
     /** @param {number} ts */
+    const getTiming = ts => (ts - timeOriginEvt.ts) / 1000;
     /** @param {number=} ts */
     const maybeGetTiming = (ts) => ts === undefined ? undefined : getTiming(ts);
 

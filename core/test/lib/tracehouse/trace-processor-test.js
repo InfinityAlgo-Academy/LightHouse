@@ -646,11 +646,9 @@ Object {
     });
 
     describe('.processNavigation() - All Frames', () => {
-      it.only('in a trace', () => {
+      it('in a trace', () => {
         const trace = TraceProcessor.processTrace(lcpAllFramesTrace);
         const navigation = TraceProcessor.processNavigation(trace);
-        const {frames} = trace;
-        console.log({frames})
         expect({
           // Main frame
           'mainFrameIds.frameId': trace.mainFrameIds.frameId,
@@ -684,19 +682,19 @@ Object {
           'timings.largestContentfulPaintAllFrames': navigation.timings.largestContentfulPaintAllFrames, // eslint-disable-line max-len
         }).toMatchInlineSnapshot(`
           Object {
-            "firstContentfulPaintAllFramesEvt.ts": 23466886143,
+            "firstContentfulPaintAllFramesEvt.ts": 23466705983,
             "firstContentfulPaintEvt.ts": 23466886143,
-            "largestContentfulPaintAllFramesEvt.ts": 23466886143,
+            "largestContentfulPaintAllFramesEvt.ts": 23466705983,
             "largestContentfulPaintEvt.ts": 23466886143,
             "mainFrameIds.frameId": "207613A6AD77B492759226780A40F6F4",
             "timestamps.firstContentfulPaint": 23466886143,
-            "timestamps.firstContentfulPaintAllFrames": 23466886143,
+            "timestamps.firstContentfulPaintAllFrames": 23466705983,
             "timestamps.largestContentfulPaint": 23466886143,
-            "timestamps.largestContentfulPaintAllFrames": 23466886143,
+            "timestamps.largestContentfulPaintAllFrames": 23466705983,
             "timings.firstContentfulPaint": 863.013,
-            "timings.firstContentfulPaintAllFrames": 863.013,
+            "timings.firstContentfulPaintAllFrames": 682.853,
             "timings.largestContentfulPaint": 863.013,
-            "timings.largestContentfulPaintAllFrames": 863.013,
+            "timings.largestContentfulPaintAllFrames": 682.853,
           }
         `);
       });
