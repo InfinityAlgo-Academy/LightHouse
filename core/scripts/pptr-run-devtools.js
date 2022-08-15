@@ -69,10 +69,12 @@ const argv = /** @type {Awaited<typeof argv_>} */ (argv_);
 async function evaluateInSession(session, fn, deps) {
   const depsSerialized = deps ? deps.join('\n') : '';
 
-  const expression = `(() => {
-    ${depsSerialized}
-    return (${fn.toString()})();
-  })()`;
+  const expression = typeof fn === 'string' ?
+    fn :
+    `(() => {
+      ${depsSerialized}
+      return (${fn.toString()})();
+    })()`;
   const {result, exceptionDetails} = await session.send('Runtime.evaluate', {
     awaitPromise: true,
     returnByValue: true,
@@ -233,11 +235,10 @@ function disableLegacyNavigation() {
 /* eslint-enable */
 
 /**
- * @param {puppeteer.Browser} browser
  * @param {puppeteer.CDPSession} inspectorSession
  * @param {LH.Config.Json} config
  */
-async function installCustomLighthouseConfig(browser, inspectorSession, config) {
+async function installCustomLighthouseConfig(inspectorSession, config) {
   // Prevent modification for tests that are retried.
   config = JSON.parse(JSON.stringify(config));
 
@@ -251,29 +252,15 @@ async function installCustomLighthouseConfig(browser, inspectorSession, config) 
   if (!config.settings) config.settings = {};
   config.settings.screenEmulation = {disabled: true};
 
-  const workerTarget = await browser.waitForTarget(t => t.url().includes('lighthouse_worker'));
+  // The throttling flag set via the Lighthouse panel will override whatever value is in the config.
+  if (config.settings?.throttlingMethod === 'devtools') {
+    await evaluateInSession(inspectorSession, enableDevToolsThrottling);
+  }
 
-  // Ensure the inspector is paused once the worker is initialized so Lighthouse doesn't start prematurely.
-  await Promise.all([
-    inspectorSession.send('Runtime.enable'),
-    inspectorSession.send('Debugger.enable'),
-  ]);
-  await inspectorSession.send('Debugger.pause');
-
-  const workerSession = await workerTarget.createCDPSession();
-  await Promise.all([
-    workerSession.send('Runtime.enable'),
-    workerSession.send('Debugger.enable'),
-    workerSession.send('Runtime.runIfWaitingForDebugger'),
-    new Promise(resolve => {
-      workerSession.once('Debugger.scriptParsed', resolve);
-    }),
-  ]);
-  await evaluateInSession(workerSession,
-    `self.createConfig = () => (${JSON.stringify(config)})`
+  await evaluateInSession(
+    inspectorSession,
+    `UI.panels.lighthouse.protocolService.configForTesting = ${JSON.stringify(config)}`
   );
-
-  await inspectorSession.send('Debugger.resume');
 }
 
 /**
@@ -328,29 +315,11 @@ async function testUrlFromDevtools(url, options = {}) {
       await evaluateInSession(inspectorSession, disableLegacyNavigation);
     }
 
-    let configPromise = Promise.resolve();
     if (config) {
-      // Must attach to the Lighthouse worker target and override the `self.createConfig`
-      // function, allowing us to use any config we want.
-      // This needs to be done *before* starting Lighthouse, otherwise the config may not be installed in time.
-      await inspectorSession.send('Target.setAutoAttach', {
-        autoAttach: true,
-        flatten: true,
-        waitForDebuggerOnStart: true,
-      });
-
-      // The throttling flag set via the Lighthouse panel will override whatever value is in the config.
-      if (config.settings?.throttlingMethod === 'devtools') {
-        await evaluateInSession(inspectorSession, enableDevToolsThrottling);
-      }
-
-      configPromise = installCustomLighthouseConfig(browser, inspectorSession, config);
+      await installCustomLighthouseConfig(inspectorSession, config);
     }
 
-    const [result] = await Promise.all([
-      evaluateInSession(inspectorSession, runLighthouse, [addSniffer]),
-      configPromise,
-    ]);
+    const result = await evaluateInSession(inspectorSession, runLighthouse, [addSniffer]);
 
     return {...result, logs};
   } finally {
