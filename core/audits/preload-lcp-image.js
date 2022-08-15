@@ -12,6 +12,8 @@ import MainResource from '../computed/main-resource.js';
 import LanternLCP from '../computed/metrics/lantern-largest-contentful-paint.js';
 import LoadSimulator from '../computed/load-simulator.js';
 import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
+import ImageRecords from '../computed/image-records.js';
+import NetworkRecords from '../computed/network-records.js';
 
 const UIStrings = {
   /** Title of a lighthouse audit that tells a user to preload an image in order to improve their LCP time. */
@@ -217,6 +219,11 @@ class PreloadLCPImageAudit extends Audit {
     const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[PreloadLCPImageAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[PreloadLCPImageAudit.DEFAULT_PASS];
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const images = await ImageRecords.request({
+      ImageElements: artifacts.ImageElements,
+      networkRecords,
+    }, context);
     const URL = artifacts.URL;
     const metricData = {trace, devtoolsLog, gatherContext, settings: context.settings, URL};
     const lcpElement = artifacts.TraceElements
@@ -230,7 +237,7 @@ class PreloadLCPImageAudit extends Audit {
 
     const graph = lanternLCP.pessimisticGraph;
     // eslint-disable-next-line max-len
-    const {lcpNodeToPreload, initiatorPath} = PreloadLCPImageAudit.getLCPNodeToPreload(mainResource, graph, lcpElement, artifacts.ImageElements);
+    const {lcpNodeToPreload, initiatorPath} = PreloadLCPImageAudit.getLCPNodeToPreload(mainResource, graph, lcpElement, images);
 
     const {results, wastedMs} =
       PreloadLCPImageAudit.computeWasteWithGraph(lcpElement, lcpNodeToPreload, graph, simulator);

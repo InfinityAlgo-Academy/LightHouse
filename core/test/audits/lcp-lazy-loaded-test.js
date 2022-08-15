@@ -5,6 +5,8 @@
  */
 
 import LargestContentfulPaintLazyLoaded from '../../audits/lcp-lazy-loaded.js';
+import {createTestTrace} from '../create-test-trace.js';
+import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
 const SAMPLE_NODE = {
   devtoolsNodePath: '1,HTML,1,BODY,3,DIV,2,IMG',
@@ -14,7 +16,7 @@ const SAMPLE_NODE = {
 };
 function generateImage(loading, clientRectTop) {
   return {
-    src: 'test',
+    src: 'http://example.com/test.png',
     loading,
     clientRect: {
       top: clientRectTop,
@@ -25,23 +27,41 @@ function generateImage(loading, clientRectTop) {
     node: SAMPLE_NODE,
   };
 }
+
+/**
+ * @param {ImageElement[]} imageElements
+ */
+function createArtifacts(imageElements) {
+  const networkRecords = imageElements.map(e => ({
+    url: e.src,
+    mimeType: 'image/png',
+  }));
+  return {
+    traces: {
+      [LargestContentfulPaintLazyLoaded.DEFAULT_PASS]: createTestTrace({
+        traceEnd: 6e3,
+        largestContentfulPaint: 45e2,
+      }),
+    },
+    devtoolsLogs: {[LargestContentfulPaintLazyLoaded.DEFAULT_PASS]:
+      networkRecordsToDevtoolsLog(networkRecords)},
+    TraceElements: imageElements.length ? [{
+      traceEventType: 'largest-contentful-paint',
+      node: SAMPLE_NODE,
+    }] : [],
+    ImageElements: imageElements,
+    ViewportDimensions: {
+      innerHeight: 500,
+      innerWidth: 300,
+    },
+  };
+}
+
 describe('Performance: lcp-lazy-loaded audit', () => {
   it('correctly surfaces the lazy loaded LCP element', async () => {
-    const artifacts = {
-      TraceElements: [{
-        traceEventType: 'largest-contentful-paint',
-        node: SAMPLE_NODE,
-      }],
-      ImageElements: [
-        generateImage('lazy', 0),
-      ],
-      ViewportDimensions: {
-        innerHeight: 500,
-        innerWidth: 300,
-      },
-    };
-
-    const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts);
+    const artifacts = createArtifacts([generateImage('lazy', 0)]);
+    const context = {settings: {}, computedCache: new Map()};
+    const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts, context);
     expect(auditResult.score).toEqual(0);
     expect(auditResult.details.items).toHaveLength(1);
     expect(auditResult.details.items[0].node.path).toEqual('1,HTML,1,BODY,3,DIV,2,IMG');
@@ -50,49 +70,24 @@ describe('Performance: lcp-lazy-loaded audit', () => {
   });
 
   it('eager LCP element scores 1', async () => {
-    const artifacts = {
-      TraceElements: [{
-        traceEventType: 'largest-contentful-paint',
-        node: SAMPLE_NODE,
-      }],
-      ImageElements: [
-        generateImage('eager', 0),
-      ],
-      ViewportDimensions: {
-        innerHeight: 500,
-        innerWidth: 300,
-      },
-    };
-    const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts);
+    const artifacts = createArtifacts([generateImage('eager', 0)]);
+    const context = {settings: {}, computedCache: new Map()};
+    const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts, context);
     expect(auditResult.score).toEqual(1);
     expect(auditResult.details.items).toHaveLength(1);
   });
 
   it('not applicable when outside of viewport', async () => {
-    const artifacts = {
-      TraceElements: [{
-        traceEventType: 'largest-contentful-paint',
-        node: SAMPLE_NODE,
-      }],
-      ImageElements: [
-        generateImage('lazy', 700),
-      ],
-      ViewportDimensions: {
-        innerHeight: 500,
-        innerWidth: 300,
-      },
-    };
-    const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts);
+    const artifacts = createArtifacts([generateImage('lazy', 700)]);
+    const context = {settings: {}, computedCache: new Map()};
+    const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts, context);
     expect(auditResult.notApplicable).toEqual(true);
   });
 
   it('doesn\'t throw an error when there is nothing to show', async () => {
-    const artifacts = {
-      TraceElements: [],
-      ImageElements: [],
-    };
-
-    const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts);
+    const artifacts = createArtifacts([]);
+    const context = {settings: {}, computedCache: new Map()};
+    const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts, context);
     expect(auditResult.score).toEqual(1);
     expect(auditResult.notApplicable).toEqual(true);
   });

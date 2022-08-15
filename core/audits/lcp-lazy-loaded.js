@@ -7,6 +7,8 @@
 
 import {Audit} from './audit.js';
 import * as i18n from '../lib/i18n/i18n.js';
+import ImageRecords from '../computed/image-records.js';
+import NetworkRecords from '../computed/network-records.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on whether the largest above-the-fold image was loaded with sufficient priority. This descriptive title is shown to users when the image was loaded properly. */
@@ -30,7 +32,7 @@ class LargestContentfulPaintLazyLoaded extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       supportedModes: ['navigation'],
-      requiredArtifacts: ['TraceElements', 'ViewportDimensions', 'ImageElements'],
+      requiredArtifacts: ['TraceElements', 'ViewportDimensions', 'ImageElements', 'devtoolsLogs'],
     };
   }
 
@@ -47,15 +49,21 @@ class LargestContentfulPaintLazyLoaded extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @return {LH.Audit.Product}
+   * @param {LH.Audit.Context} context
+   * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts) {
+  static async audit(artifacts, context) {
+    const devtoolsLog = artifacts.devtoolsLogs[LargestContentfulPaintLazyLoaded.DEFAULT_PASS];
+    const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const images = await ImageRecords.request({
+      ImageElements: artifacts.ImageElements,
+      networkRecords,
+    }, context);
     const lcpElement = artifacts.TraceElements
       .find(element => element.traceEventType === 'largest-contentful-paint');
-    const lcpElementImage = lcpElement ? artifacts.ImageElements.find(elem => {
+    const lcpElementImage = lcpElement ? images.find(elem => {
       return elem.node.devtoolsNodePath === lcpElement.node.devtoolsNodePath;
     }) : undefined;
-
 
     if (!lcpElementImage ||
       !this.isImageInViewport(lcpElementImage, artifacts.ViewportDimensions)) {

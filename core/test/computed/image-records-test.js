@@ -22,7 +22,7 @@ function mockRequest(partial = {}) {
  */
 function mockElement(partial = {}) {
   return {
-    src: 'https://example.com/img.png',
+    src: partial.src ?? 'https://example.com/img.png',
     srcset: '',
     displayedWidth: 200,
     displayedHeight: 200,
@@ -159,14 +159,28 @@ describe('compute_', () => {
     expect(elements).toEqual([mockElement({mimeType: 'image/png'})]);
   });
 
-  it('guess mime type if no request', async () => {
+  it('ignore image element if no valid record', async () => {
     const elements = await ImageRecords.compute_({
       ImageElements: [
-        mockElement(),
+        mockElement({src: 'https://example.com/img.png'}),
+        mockElement({src: 'https://example.com/img2.png'}),
       ],
-      networkRecords: [],
+      networkRecords: [
+        mockRequest({
+          mimeType: 'iam/trash',
+          url: 'https://example.com/img.png',
+          finished: true,
+          statusCode: 200,
+        }),
+        mockRequest({
+          mimeType: 'image/png',
+          url: 'https://example.com/img2.png',
+          finished: true,
+          statusCode: 500,
+        }),
+      ],
     });
 
-    expect(elements).toEqual([mockElement({mimeType: 'image/png'})]);
+    expect(elements).toEqual([]);
   });
 });

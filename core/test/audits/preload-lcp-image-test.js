@@ -82,6 +82,7 @@ describe('Performance: preload-lcp audit', () => {
       {
         requestId: '4',
         resourceType: 'Image',
+        mimeType: 'image/png',
         priority: 'High',
         isLinkPreload: false,
         startTime: 2,

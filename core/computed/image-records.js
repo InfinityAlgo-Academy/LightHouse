@@ -5,7 +5,6 @@
  */
 'use strict';
 
-import URL from '../lib/url-shim.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 
 class ImageRecords {
@@ -39,12 +38,13 @@ class ImageRecords {
 
     for (const element of data.ImageElements) {
       const networkRecord = indexedNetworkRecords[element.src];
-      const mimeType = networkRecord?.mimeType;
+      // Ignore if we aren't sure this is really an image.
+      // TODO: we should add something in tracing to get this straight from blink.
+      if (!networkRecord) continue;
 
-      // Don't change the guessed mime type if no mime type was found.
       imageRecords.push({
         ...element,
-        mimeType: mimeType ? mimeType : URL.guessMimeType(element.src),
+        mimeType: networkRecord.mimeType,
       });
     }
 
