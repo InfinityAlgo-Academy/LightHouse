@@ -653,8 +653,8 @@ function resolveMessageCollisions(strings) {
 
   try {
     expect(collidingMessages).toEqual([
-      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use $MARKDOWN_SNIPPET_1$ or $MARKDOWN_SNIPPET_2$ instead.',
-      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use $MARKDOWN_SNIPPET_1$ or $MARKDOWN_SNIPPET_2$ instead.',
+      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use standardized $MARKDOWN_SNIPPET_1$ instead.',
+      '$MARKDOWN_SNIPPET_0$ is deprecated. Please use standardized $MARKDOWN_SNIPPET_1$ instead.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',
       'ARIA $MARKDOWN_SNIPPET_0$ elements do not have accessible names.',

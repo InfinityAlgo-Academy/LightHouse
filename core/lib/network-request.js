@@ -67,6 +67,7 @@ const RESOURCE_TYPES = {
   Ping: 'Ping',
   Preflight: 'Preflight',
   CSPViolationReport: 'CSPViolationReport',
+  Prefetch: 'Prefetch',
 };
 
 class NetworkRequest {

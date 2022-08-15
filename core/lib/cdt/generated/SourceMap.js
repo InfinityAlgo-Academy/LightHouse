@@ -56,6 +56,8 @@ class SourceMapV3 {
     sourceRoot;
     names;
     sourcesContent;
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    x_google_ignoreList;
     constructor() {
     }
 }
@@ -153,6 +155,38 @@ class TextSourceMap {
         const index = Platform.ArrayUtilities.upperBound(mappings, undefined, (unused, entry) => lineNumber - entry.lineNumber || columnNumber - entry.columnNumber);
         return index ? mappings[index - 1] : null;
     }
+    findEntryRanges(lineNumber, columnNumber) {
+        const mappings = this.mappings();
+        const index = Platform.ArrayUtilities.upperBound(mappings, undefined, (unused, entry) => lineNumber - entry.lineNumber || columnNumber - entry.columnNumber);
+        if (!index) {
+            // If the line and column are preceding all the entries, then there is nothing to map.
+            return null;
+        }
+        const sourceURL = mappings[index].sourceURL;
+        if (!sourceURL) {
+            return null;
+        }
+        // Let us compute the range that contains the source position in the compiled code.
+        const endLine = index < mappings.length ? mappings[index].lineNumber : 2 ** 31 - 1;
+        const endColumn = index < mappings.length ? mappings[index].columnNumber : 2 ** 31 - 1;
+        const range = new TextUtils.TextRange.TextRange(mappings[index - 1].lineNumber, mappings[index - 1].columnNumber, endLine, endColumn);
+        // Now try to find the corresponding token in the original code.
+        const reverseMappings = this.reversedMappings(sourceURL);
+        const startSourceLine = mappings[index - 1].sourceLineNumber;
+        const startSourceColumn = mappings[index - 1].sourceColumnNumber;
+        const endReverseIndex = Platform.ArrayUtilities.upperBound(reverseMappings, undefined, (unused, i) => startSourceLine - mappings[i].sourceLineNumber || startSourceColumn - mappings[i].sourceColumnNumber);
+        if (!endReverseIndex) {
+            return null;
+        }
+        const endSourceLine = endReverseIndex < reverseMappings.length ?
+            mappings[reverseMappings[endReverseIndex]].sourceLineNumber :
+            2 ** 31 - 1;
+        const endSourceColumn = endReverseIndex < reverseMappings.length ?
+            mappings[reverseMappings[endReverseIndex]].sourceColumnNumber :
+            2 ** 31 - 1;
+        const sourceRange = new TextUtils.TextRange.TextRange(startSourceLine, startSourceColumn, endSourceLine, endSourceColumn);
+        return { range, sourceRange, sourceURL };
+    }
     sourceLineMapping(sourceURL, lineNumber, columnNumber) {
         const mappings = this.mappings();
         const reverseMappings = this.reversedMappings(sourceURL);
@@ -219,37 +253,48 @@ class TextSourceMap {
     }
     /** @return {Array<{lineNumber: number, columnNumber: number, sourceURL?: string, sourceLineNumber: number, sourceColumnNumber: number, name?: string, lastColumnNumber?: number}>} */
     mappings() {
+        this.#ensureMappingsProcessed();
+        return this.#mappingsInternal ?? [];
+    }
+    reversedMappings(sourceURL) {
+        this.#ensureMappingsProcessed();
+        return this.#sourceInfos.get(sourceURL)?.reverseMappings ?? [];
+    }
+    #ensureMappingsProcessed() {
         if (this.#mappingsInternal === null) {
             this.#mappingsInternal = [];
             this.eachSection(this.parseMap.bind(this));
+            this.#computeReverseMappings(this.#mappingsInternal);
             this.#json = null;
         }
-        return this.#mappingsInternal;
     }
-    reversedMappings(sourceURL) {
-        const info = this.#sourceInfos.get(sourceURL);
-        if (!info) {
-            return [];
+    #computeReverseMappings(mappings) {
+        const reverseMappingsPerUrl = new Map();
+        for (let i = 0; i < mappings.length; i++) {
+            const entryUrl = mappings[i].sourceURL;
+            if (!entryUrl) {
+                continue;
+            }
+            let reverseMap = reverseMappingsPerUrl.get(entryUrl);
+            if (!reverseMap) {
+                reverseMap = [];
+                reverseMappingsPerUrl.set(entryUrl, reverseMap);
+            }
+            reverseMap.push(i);
         }
-        const mappings = this.mappings();
-        if (info.reverseMappings === null) {
-            const indexes = Array(mappings.length).fill(0).map((_, i) => i);
-            info.reverseMappings = indexes.filter(i => mappings[i].sourceURL === sourceURL).sort(sourceMappingComparator);
+        for (const [url, reverseMap] of reverseMappingsPerUrl.entries()) {
+            const info = this.#sourceInfos.get(url);
+            if (!info) {
+                continue;
+            }
+            reverseMap.sort(sourceMappingComparator);
+            info.reverseMappings = reverseMap;
         }
-        return info.reverseMappings;
         function sourceMappingComparator(indexA, indexB) {
             const a = mappings[indexA];
             const b = mappings[indexB];
-            if (a.sourceLineNumber !== b.sourceLineNumber) {
-                return a.sourceLineNumber - b.sourceLineNumber;
-            }
-            if (a.sourceColumnNumber !== b.sourceColumnNumber) {
-                return a.sourceColumnNumber - b.sourceColumnNumber;
-            }
-            if (a.lineNumber !== b.lineNumber) {
-                return a.lineNumber - b.lineNumber;
-            }
-            return a.columnNumber - b.columnNumber;
+            return a.sourceLineNumber - b.sourceLineNumber || a.sourceColumnNumber - b.sourceColumnNumber ||
+                a.lineNumber - b.lineNumber || a.columnNumber - b.columnNumber;
         }
     }
     eachSection(callback) {
@@ -267,6 +312,7 @@ class TextSourceMap {
     parseSources(sourceMap) {
         const sourcesList = [];
         const sourceRoot = sourceMap.sourceRoot || Platform.DevToolsPath.EmptyUrlString;
+        const ignoreList = new Set(sourceMap.x_google_ignoreList);
         for (let i = 0; i < sourceMap.sources.length; ++i) {
             let href = sourceMap.sources[i];
             // The source map v3 proposal says to prepend the sourceRoot to the source URL
@@ -286,11 +332,12 @@ class TextSourceMap {
             const source = sourceMap.sourcesContent && sourceMap.sourcesContent[i];
             if (url === this.#compiledURLInternal && source) {
             }
-            if (this.#sourceInfos.has(url)) {
-                continue;
-            }
-            this.#sourceInfos.set(url, new TextSourceMap.SourceInfo(source || null, null));
             sourcesList.push(url);
+            if (!this.#sourceInfos.has(url)) {
+                const content = source ?? null;
+                const ignoreListHint = ignoreList.has(i);
+                this.#sourceInfos.set(url, new TextSourceMap.SourceInfo(content, ignoreListHint));
+            }
         }
         sourceMapToSourceList.set(sourceMap, sourcesList);
     }
@@ -394,6 +441,44 @@ class TextSourceMap {
         }
         return false;
     }
+    hasIgnoreListHint(sourceURL) {
+        return this.#sourceInfos.get(sourceURL)?.ignoreListHint ?? false;
+    }
+    /**
+     * Returns a list of ranges in the generated script for original sources that
+     * match a predicate. Each range is a [begin, end) pair, meaning that code at
+     * the beginning location, up to but not including the end location, matches
+     * the predicate.
+     */
+    findRanges(predicate, options) {
+        const mappings = this.mappings();
+        const ranges = [];
+        if (!mappings.length) {
+            return [];
+        }
+        let current = null;
+        // If the first mapping isn't at the beginning of the original source, it's
+        // up to the caller to decide if it should be considered matching the
+        // predicate or not. By default, it's not.
+        if ((mappings[0].lineNumber !== 0 || mappings[0].columnNumber !== 0) && options?.isStartMatching) {
+            current = TextUtils.TextRange.TextRange.createUnboundedFromLocation(0, 0);
+            ranges.push(current);
+        }
+        for (const { sourceURL, lineNumber, columnNumber } of mappings) {
+            const ignoreListHint = sourceURL && predicate(sourceURL);
+            if (!current && ignoreListHint) {
+                current = TextUtils.TextRange.TextRange.createUnboundedFromLocation(lineNumber, columnNumber);
+                ranges.push(current);
+                continue;
+            }
+            if (current && !ignoreListHint) {
+                current.endLine = lineNumber;
+                current.endColumn = columnNumber;
+                current = null;
+            }
+        }
+        return ranges;
+    }
 }
 exports.TextSourceMap = TextSourceMap;
 (function (TextSourceMap) {
@@ -426,10 +511,11 @@ exports.TextSourceMap = TextSourceMap;
     TextSourceMap.StringCharIterator = StringCharIterator;
     class SourceInfo {
         content;
-        reverseMappings;
-        constructor(content, reverseMappings) {
+        ignoreListHint;
+        reverseMappings = null;
+        constructor(content, ignoreListHint) {
             this.content = content;
-            this.reverseMappings = reverseMappings;
+            this.ignoreListHint = ignoreListHint;
         }
     }
     TextSourceMap.SourceInfo = SourceInfo;
