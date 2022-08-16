@@ -1,3 +1,23 @@
+<a name="9.6.6"></a>
+# 9.6.6 (2022-08-16)
+[Full Changelog](https://github.com/compare/v9.6.5...v9.6.6)
+
+We expect this release to ship in the DevTools of [Chrome 106](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## New Contributors
+
+Thanks to our new contributor 👽🐷🐰🐯🐻!
+
+- Steven @styfle
+
+## Core
+
+* unsized-images: ignore non-network SVGs ([#13737](https://github.com/GoogleChrome/lighthouse/pull/13737))
+
+## Deps
+
+* upgrade csp-evaluator ([#14281](https://github.com/GoogleChrome/lighthouse/pull/14281))
+
 <a name="9.6.5"></a>
 # 9.6.5 (2022-08-01)
 [Full Changelog](https://github.com/compare/v9.6.4...v9.6.5)
