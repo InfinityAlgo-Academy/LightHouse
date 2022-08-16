@@ -14,9 +14,36 @@ import {
   setThrottlingMethod,
   waitForResult,
 } from '../helpers/lighthouse-helpers.js';
+import {click, goToResource, waitFor, setDevToolsSettings, waitForElementWithTextContent} from '../../shared/helper.js';
+
+import type {ElementHandle} from 'puppeteer';
 
 // This test will fail (by default) in headful mode, as the target page never gets painted.
 // To resolve this when debugging, just make sure the target page is visible during the lighthouse run.
+
+// TODO: update upstream.
+async function navigateToLighthouseTab_2(path?: string): Promise<ElementHandle<Element>> {
+  await click('#tab-lighthouse');
+  // await waitForLighthousePanelContentLoaded();
+  await waitFor('.view-container > .lighthouse');
+  if (path) {
+    await goToResource(path);
+  }
+
+  return waitFor('.lighthouse-start-view-fr');
+}
+
+async function setLegacyNavigation_2(enabled: boolean, textContext = 'Legacy navigation') {
+  const toolbarHandle = await waitFor('.lighthouse-settings-pane .toolbar');
+  const label = await waitForElementWithTextContent(textContext, toolbarHandle);
+  await label.evaluate((label, enabled: boolean) => {
+    const rootNode = label.getRootNode() as ShadowRoot;
+    const checkboxId = label.getAttribute('for') as string;
+    const checkboxElem = rootNode.getElementById(checkboxId) as HTMLInputElement;
+    checkboxElem.checked = enabled;
+    checkboxElem.dispatchEvent(new Event('change'));  // Need change event to update the backing setting.
+  }, enabled);
+}
 
 describe('Navigation', async function() {
   // The tests in this suite are particularly slow
@@ -35,9 +62,10 @@ describe('Navigation', async function() {
       });
 
       it('successfully returns a Lighthouse report', async () => {
-        await navigateToLighthouseTab('lighthouse/hello.html');
+        await setDevToolsSettings({language: 'en-XL'});
+        await navigateToLighthouseTab_2('lighthouse/hello.html');
 
-        await setLegacyNavigation(mode === 'legacy');
+        await setLegacyNavigation_2(mode === 'legacy', 'L̂éĝáĉý n̂áv̂íĝát̂íôń');
         await clickStartButton();
 
         const {lhr, artifacts, reportEl} = await waitForResult();
@@ -77,7 +105,9 @@ describe('Navigation', async function() {
         const viewTraceText = await reportEl.$eval('.lh-button--trace', viewTraceEl => {
           return viewTraceEl.textContent;
         });
-        assert.strictEqual(viewTraceText, 'View Original Trace');
+        assert.strictEqual(viewTraceText, 'V̂íêẃ Ôŕîǵîńâĺ T̂ŕâćê');
+
+        assert.strictEqual(lhr.i18n.rendererFormattedStrings.footerIssue, 'F̂íl̂é âń îśŝúê');
       });
 
       it('successfully returns a Lighthouse report with DevTools throttling', async () => {
