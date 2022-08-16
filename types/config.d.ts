@@ -57,19 +57,6 @@ declare module Config {
     groups: Record<string, Group> | null;
   }
 
-  /**
-   * Additional information about the context in which a Fraggle Rock config should be interpreted.
-   * This information is typically set by the CLI or other channel integrations.
-   */
-  interface FRContext {
-    configPath?: string;
-    settingsOverrides?: SharedFlagsSettings & Pick<LH.Flags, 'plugins'>;
-    skipAboutBlank?: boolean;
-    logLevel?: string;
-    hostname?: string;
-    port?: number;
-  }
-
   interface SharedPassNavigationJson {
     /**
      * Controls the behavior when the navigation fails to complete (due to server error, no FCP, etc).

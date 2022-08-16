@@ -3734,7 +3734,8 @@
           "onlyCategories": null,
           "skipAudits": [
             "uses-http2"
-          ]
+          ],
+          "skipAboutBlank": true
         },
         "categories": {
           "performance": {
@@ -9173,7 +9174,8 @@
           "onlyCategories": null,
           "skipAudits": [
             "uses-http2"
-          ]
+          ],
+          "skipAboutBlank": false
         },
         "categories": {
           "performance": {
@@ -12436,7 +12438,8 @@
           "onlyCategories": null,
           "skipAudits": [
             "uses-http2"
-          ]
+          ],
+          "skipAboutBlank": false
         },
         "categories": {
           "performance": {
@@ -17979,7 +17982,8 @@
           "onlyCategories": null,
           "skipAudits": [
             "uses-http2"
-          ]
+          ],
+          "skipAboutBlank": true
         },
         "categories": {
           "performance": {

@@ -91,8 +91,8 @@ describe('UserFlow', () => {
 
       await flow.navigate('https://example.com/1', {stepName: 'My Step'});
 
-      const configContext = {settingsOverrides: {maxWaitForLoad: 1000}};
-      await flow.navigate('https://example.com/2', {configContext});
+      const flags = {maxWaitForLoad: 1000};
+      await flow.navigate('https://example.com/2', {flags});
 
       await flow.navigate('https://example.com/3');
 
@@ -109,32 +109,32 @@ describe('UserFlow', () => {
       await flow.navigate('https://example.com/1');
 
       // Try once when we have some other settings.
-      const configContext = {settingsOverrides: {maxWaitForLoad: 1000}};
-      await flow.navigate('https://example.com/2', {configContext});
+      const flags = {maxWaitForLoad: 1000};
+      await flow.navigate('https://example.com/2', {flags});
 
       // Try once when we don't have any other settings.
       await flow.navigate('https://example.com/3');
 
       // Try once when we explicitly set it.
-      const configContextExplicit = {settingsOverrides: {disableStorageReset: false}};
-      await flow.navigate('https://example.com/4', {configContext: configContextExplicit});
+      const flagsExplicit = {disableStorageReset: false};
+      await flow.navigate('https://example.com/4', {flags: flagsExplicit});
 
       // Check that we have the property set.
       expect(navigationModule.navigationGather).toHaveBeenCalledTimes(4);
       /** @type {any[][]} */
       const [[, call1], [, call2], [, call3], [, call4]] =
         navigationModule.navigationGather.mock.calls;
-      expect(call1).not.toHaveProperty('configContext.settingsOverrides.disableStorageReset');
-      expect(call2).toHaveProperty('configContext.settingsOverrides.disableStorageReset');
-      expect(call3).toHaveProperty('configContext.settingsOverrides.disableStorageReset');
-      expect(call4).toHaveProperty('configContext.settingsOverrides.disableStorageReset');
-      expect(call2.configContext.settingsOverrides.disableStorageReset).toBe(true);
-      expect(call3.configContext.settingsOverrides.disableStorageReset).toBe(true);
-      expect(call4.configContext.settingsOverrides.disableStorageReset).toBe(false);
+      expect(call1).not.toHaveProperty('flags.disableStorageReset');
+      expect(call2).toHaveProperty('flags.disableStorageReset');
+      expect(call3).toHaveProperty('flags.disableStorageReset');
+      expect(call4).toHaveProperty('flags.disableStorageReset');
+      expect(call2.flags.disableStorageReset).toBe(true);
+      expect(call3.flags.disableStorageReset).toBe(true);
+      expect(call4.flags.disableStorageReset).toBe(false);
 
       // Check that we didn't mutate the original objects.
-      expect(configContext).toEqual({settingsOverrides: {maxWaitForLoad: 1000}});
-      expect(configContextExplicit).toEqual({settingsOverrides: {disableStorageReset: false}});
+      expect(flags).toEqual({maxWaitForLoad: 1000});
+      expect(flagsExplicit).toEqual({disableStorageReset: false});
     });
 
     it('should disable about:blank jumps by default', async () => {
@@ -142,27 +142,27 @@ describe('UserFlow', () => {
       await flow.navigate('https://example.com/1');
 
       // Try once when we have some other settings.
-      const configContext = {settingsOverrides: {maxWaitForLoad: 1000}};
-      await flow.navigate('https://example.com/2', {configContext});
+      const flags = {maxWaitForLoad: 1000};
+      await flow.navigate('https://example.com/2', {flags});
 
       // Try once when we explicitly set it.
-      const configContextExplicit = {skipAboutBlank: false};
-      await flow.navigate('https://example.com/3', {configContext: configContextExplicit});
+      const flagsExplicit = {skipAboutBlank: false};
+      await flow.navigate('https://example.com/3', {flags: flagsExplicit});
 
       // Check that we have the property set.
       expect(navigationModule.navigationGather).toHaveBeenCalledTimes(3);
       /** @type {any[][]} */
       const [[, call1], [, call2], [, call3]] = navigationModule.navigationGather.mock.calls;
-      expect(call1).toHaveProperty('configContext.skipAboutBlank');
-      expect(call2).toHaveProperty('configContext.skipAboutBlank');
-      expect(call3).toHaveProperty('configContext.skipAboutBlank');
-      expect(call1.configContext.skipAboutBlank).toBe(true);
-      expect(call2.configContext.skipAboutBlank).toBe(true);
-      expect(call3.configContext.skipAboutBlank).toBe(false);
+      expect(call1).toHaveProperty('flags.skipAboutBlank');
+      expect(call2).toHaveProperty('flags.skipAboutBlank');
+      expect(call3).toHaveProperty('flags.skipAboutBlank');
+      expect(call1.flags.skipAboutBlank).toBe(true);
+      expect(call2.flags.skipAboutBlank).toBe(true);
+      expect(call3.flags.skipAboutBlank).toBe(false);
 
       // Check that we didn't mutate the original objects.
-      expect(configContext).toEqual({settingsOverrides: {maxWaitForLoad: 1000}});
-      expect(configContextExplicit).toEqual({skipAboutBlank: false});
+      expect(flags).toEqual({maxWaitForLoad: 1000});
+      expect(flagsExplicit).toEqual({skipAboutBlank: false});
     });
   });
 
@@ -339,11 +339,9 @@ describe('UserFlow', () => {
         },
       };
 
-      /** @type {LH.Config.FRContext} */
-      const snapshotContext = {
-        settingsOverrides: {
-          onlyCategories: ['accessibility'],
-        },
+      /** @type {LH.Flags} */
+      const snapshotFlags = {
+        onlyCategories: ['accessibility'],
       };
 
       /** @type {LH.UserFlow.GatherStep[]} */
@@ -383,7 +381,7 @@ describe('UserFlow', () => {
             },
             GatherContext: {gatherMode: 'snapshot'},
           },
-          configContext: snapshotContext,
+          flags: snapshotFlags,
         },
       ];
 

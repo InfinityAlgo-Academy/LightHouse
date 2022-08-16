@@ -554,7 +554,7 @@ describe('Fraggle Rock Config Filtering', () => {
     });
 
     it('should preserve full-page-screenshot', async () => {
-      config = (await initializeConfig(undefined, {gatherMode: 'navigation'})).config;
+      config = (await initializeConfig('navigation')).config;
 
       const filtered = filters.filterConfigByExplicitFilters(config, {
         onlyAudits: ['color-contrast'],

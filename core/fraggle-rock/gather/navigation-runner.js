@@ -25,8 +25,6 @@ import Trace from '../../gather/gatherers/trace.js';
 import DevtoolsLog from '../../gather/gatherers/devtools-log.js';
 import NetworkRecords from '../../computed/network-records.js';
 
-/** @typedef {{skipAboutBlank?: boolean}} InternalOptions */
-
 /**
  * @typedef NavigationContext
  * @property {Driver} driver
@@ -35,7 +33,6 @@ import NetworkRecords from '../../computed/network-records.js';
  * @property {LH.NavigationRequestor} requestor
  * @property {LH.FRBaseArtifacts} baseArtifacts
  * @property {Map<string, LH.ArbitraryEqualityMap>} computedCache
- * @property {InternalOptions} [options]
  */
 
 /** @typedef {Omit<Parameters<typeof collectPhaseArtifacts>[0], 'phase'>} PhaseState */
@@ -44,12 +41,14 @@ const DEFAULT_HOSTNAME = '127.0.0.1';
 const DEFAULT_PORT = 9222;
 
 /**
- * @param {{driver: Driver, config: LH.Config.FRConfig, options?: InternalOptions}} args
+ * @param {{driver: Driver, config: LH.Config.FRConfig, requestor: LH.NavigationRequestor}} args
  * @return {Promise<{baseArtifacts: LH.FRBaseArtifacts}>}
  */
-async function _setup({driver, config, options}) {
+async function _setup({driver, config, requestor}) {
   await driver.connect();
-  if (!options?.skipAboutBlank) {
+
+  // We can't trigger the navigation through user interaction if we reset the page before starting.
+  if (typeof requestor === 'string' && !config.settings.skipAboutBlank) {
     await gotoURL(driver, defaultNavigationConfig.blankPage, {waitUntil: ['navigated']});
   }
 
@@ -64,10 +63,12 @@ async function _setup({driver, config, options}) {
  * @param {NavigationContext} navigationContext
  * @return {Promise<{warnings: Array<LH.IcuMessage>}>}
  */
-async function _setupNavigation({requestor, driver, navigation, config, options}) {
-  if (!options?.skipAboutBlank) {
+async function _setupNavigation({requestor, driver, navigation, config}) {
+  // We can't trigger the navigation through user interaction if we reset the page before starting.
+  if (typeof requestor === 'string' && !config.settings.skipAboutBlank) {
     await gotoURL(driver, navigation.blankPage, {...navigation, waitUntil: ['navigated']});
   }
+
   const {warnings} = await prepare.prepareTargetForIndividualNavigation(
     driver.defaultSession,
     config.settings,
@@ -249,10 +250,10 @@ async function _navigation(navigationContext) {
 }
 
 /**
- * @param {{driver: Driver, config: LH.Config.FRConfig, requestor: LH.NavigationRequestor; baseArtifacts: LH.FRBaseArtifacts, computedCache: NavigationContext['computedCache'], options?: InternalOptions}} args
+ * @param {{driver: Driver, config: LH.Config.FRConfig, requestor: LH.NavigationRequestor; baseArtifacts: LH.FRBaseArtifacts, computedCache: NavigationContext['computedCache']}} args
  * @return {Promise<{artifacts: Partial<LH.FRArtifacts & LH.FRBaseArtifacts>}>}
  */
-async function _navigations({driver, config, requestor, baseArtifacts, computedCache, options}) {
+async function _navigations({driver, config, requestor, baseArtifacts, computedCache}) {
   if (!config.navigations) throw new Error('No navigations configured');
 
   /** @type {Partial<LH.FRArtifacts & LH.FRBaseArtifacts>} */
@@ -268,7 +269,6 @@ async function _navigations({driver, config, requestor, baseArtifacts, computedC
       config,
       baseArtifacts,
       computedCache,
-      options,
     };
 
     let shouldHaltNavigations = false;
@@ -300,25 +300,17 @@ async function _cleanup({requestedUrl, driver, config}) {
 
 /**
  * @param {LH.NavigationRequestor|undefined} requestor
- * @param {{page?: LH.Puppeteer.Page, config?: LH.Config.Json, configContext?: LH.Config.FRContext}} options
+ * @param {{page?: LH.Puppeteer.Page, config?: LH.Config.Json, flags?: LH.Flags}} options
  * @return {Promise<LH.Gatherer.FRGatherResult>}
  */
 async function navigationGather(requestor, options) {
-  const {configContext = {}} = options;
-  log.setLevel(configContext.logLevel || 'error');
+  const {flags = {}} = options;
+  log.setLevel(flags.logLevel || 'error');
 
-  const {config} =
-    await initializeConfig(options.config, {...configContext, gatherMode: 'navigation'});
+  const {config} = await initializeConfig('navigation', options.config, flags);
   const computedCache = new Map();
-  const internalOptions = {
-    skipAboutBlank: configContext.skipAboutBlank,
-  };
 
-  // We can't trigger the navigation through user interaction if we reset the page before starting.
   const isCallback = typeof requestor === 'function';
-  if (isCallback) {
-    internalOptions.skipAboutBlank = true;
-  }
 
   const runnerOptions = {config, computedCache};
   const artifacts = await Runner.gather(
@@ -329,7 +321,7 @@ async function navigationGather(requestor, options) {
       // For navigation mode, we shouldn't connect to a browser in audit mode,
       // therefore we connect to the browser in the gatherFn callback.
       if (!page) {
-        const {hostname = DEFAULT_HOSTNAME, port = DEFAULT_PORT} = configContext;
+        const {hostname = DEFAULT_HOSTNAME, port = DEFAULT_PORT} = flags;
         const browser = await puppeteer.connect({browserURL: `http://${hostname}:${port}`});
         page = await browser.newPage();
       }
@@ -339,7 +331,6 @@ async function navigationGather(requestor, options) {
         driver,
         config,
         requestor: normalizedRequestor,
-        options: internalOptions,
       };
       const {baseArtifacts} = await _setup(context);
       const {artifacts} = await _navigations({...context, baseArtifacts, computedCache});

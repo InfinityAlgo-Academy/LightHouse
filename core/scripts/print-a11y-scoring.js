@@ -8,7 +8,7 @@
 
 import {initializeConfig} from '../fraggle-rock/config/config.js';
 
-const {config} = await initializeConfig(undefined, {gatherMode: 'navigation'});
+const {config} = await initializeConfig('navigation');
 if (!config.categories || !config.audits) throw new Error('wut');
 
 const auditRefs = config.categories.accessibility.auditRefs;

@@ -101,19 +101,18 @@ describe('Snapshot Runner', () => {
   });
 
 
-  it('should use configContext', async () => {
-    const settingsOverrides = {
+  it('should use flags', async () => {
+    const flags = {
       formFactor: /** @type {const} */ ('desktop'),
       maxWaitForLoad: 1234,
       screenEmulation: {mobile: false},
     };
 
-    const configContext = {settingsOverrides};
-    await snapshotGather({page, config, configContext});
+    await snapshotGather({page, config, flags});
 
     expect(mockRunner.gather.mock.calls[0][1]).toMatchObject({
       config: {
-        settings: settingsOverrides,
+        settings: flags,
       },
     });
   });

@@ -169,7 +169,8 @@
     "precomputedLanternData": null,
     "onlyAudits": null,
     "onlyCategories": null,
-    "skipAudits": null
+    "skipAudits": null,
+    "skipAboutBlank": false
   },
   "URL": {
     "initialUrl": "about:blank",

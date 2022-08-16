@@ -71,6 +71,8 @@ export type ScreenEmulationSettings = {
   disableStorageReset?: boolean;
   /** Flag indicating that Lighthouse should pause after page load to wait for the user's permission to continue the audit. */
   debugNavigation?: boolean;
+  /** If set to true, will skip the initial navigation to about:blank. This option is ignored when using the legacy navigation runner. */
+  skipAboutBlank?: boolean;
 
   /** How Lighthouse should interpret this run in regards to scoring performance metrics and skipping mobile-only tests in desktop. Must be set even if throttling/emulation is being applied outside of Lighthouse. */
   formFactor?: 'mobile'|'desktop';

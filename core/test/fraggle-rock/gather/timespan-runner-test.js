@@ -115,20 +115,19 @@ describe('Timespan Runner', () => {
     });
   });
 
-  it('should use configContext', async () => {
-    const settingsOverrides = {
+  it('should use flags', async () => {
+    const flags = {
       formFactor: /** @type {const} */ ('desktop'),
       maxWaitForLoad: 1234,
       screenEmulation: {mobile: false},
     };
 
-    const configContext = {settingsOverrides};
-    const timespan = await startTimespanGather({page, config, configContext});
+    const timespan = await startTimespanGather({page, config, flags});
     await timespan.endTimespanGather();
 
     expect(mockRunner.gather.mock.calls[0][1]).toMatchObject({
       config: {
-        settings: settingsOverrides,
+        settings: flags,
       },
     });
   });

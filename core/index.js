@@ -12,7 +12,6 @@ import {Config} from './config/config.js';
 import URL from './lib/url-shim.js';
 import * as fraggleRock from './fraggle-rock/api.js';
 import {Driver} from './gather/driver.js';
-import {flagsToFRContext} from './config/config-helpers.js';
 import {initializeConfig} from './fraggle-rock/config/config.js';
 
 /** @typedef {import('./gather/connections/connection.js').Connection} Connection */
@@ -41,8 +40,7 @@ import {initializeConfig} from './fraggle-rock/config/config.js';
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 async function lighthouse(url, flags = {}, configJSON, page) {
-  const configContext = flagsToFRContext(flags);
-  return fraggleRock.navigation(url, {page, config: configJSON, configContext});
+  return fraggleRock.navigation(url, {page, config: configJSON, flags});
 }
 
 /**
@@ -86,8 +84,7 @@ async function legacyNavigation(url, flags = {}, configJSON, userConnection) {
  * @return {Promise<LH.Config.FRConfig>}
  */
 async function generateConfig(configJson, flags = {}, gatherMode = 'navigation') {
-  const configContext = flagsToFRContext(flags);
-  const {config} = await initializeConfig(configJson, {...configContext, gatherMode});
+  const {config} = await initializeConfig(gatherMode, configJson, flags);
   return config;
 }
 

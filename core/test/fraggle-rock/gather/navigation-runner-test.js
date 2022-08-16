@@ -104,7 +104,7 @@ describe('NavigationRunner', () => {
   beforeEach(async () => {
     requestedUrl = 'http://example.com';
     requestor = requestedUrl;
-    config = (await initializeConfig(undefined, {gatherMode: 'navigation'})).config;
+    config = (await initializeConfig('navigation')).config;
     navigation = createNavigation().navigation;
     computedCache = new Map();
     baseArtifacts = createMockBaseArtifacts();
@@ -126,12 +126,12 @@ describe('NavigationRunner', () => {
     });
 
     it('should connect the driver', async () => {
-      await runner._setup({driver, config});
+      await runner._setup({driver, config, requestor: requestedUrl});
       expect(mockDriver.connect).toHaveBeenCalled();
     });
 
-    it('should navigate to the blank page', async () => {
-      await runner._setup({driver, config});
+    it('should navigate to the blank page if requestor is a string', async () => {
+      await runner._setup({driver, config, requestor: requestedUrl});
       expect(mocks.navigationMock.gotoURL).toHaveBeenCalledTimes(1);
       expect(mocks.navigationMock.gotoURL).toHaveBeenCalledWith(
         expect.anything(),
@@ -140,17 +140,28 @@ describe('NavigationRunner', () => {
       );
     });
 
-    it('skip about:blank if option is true', async () => {
+    it('skip about:blank if using callback requestor', async () => {
       await runner._setup({
         driver,
         config,
-        options: {skipAboutBlank: true},
+        requestor: () => {},
+      });
+      expect(mocks.navigationMock.gotoURL).not.toHaveBeenCalled();
+    });
+
+    it('skip about:blank if config option is set to true', async () => {
+      config.settings.skipAboutBlank = true;
+
+      await runner._setup({
+        driver,
+        config,
+        requestor: requestedUrl,
       });
       expect(mocks.navigationMock.gotoURL).not.toHaveBeenCalled();
     });
 
     it('should collect base artifacts', async () => {
-      const {baseArtifacts} = await runner._setup({driver, config});
+      const {baseArtifacts} = await runner._setup({driver, config, requestor: requestedUrl});
       expect(baseArtifacts).toMatchObject({
         URL: {
           initialUrl: '',
@@ -160,14 +171,14 @@ describe('NavigationRunner', () => {
     });
 
     it('should prepare the target for navigation', async () => {
-      await runner._setup({driver, config});
+      await runner._setup({driver, config, requestor: requestedUrl});
       expect(mocks.prepareMock.prepareTargetForNavigationMode).toHaveBeenCalledTimes(1);
     });
 
     it('should prepare the target for navigation *after* base artifact collection', async () => {
       mockDriver._executionContext.evaluate.mockReset();
       mockDriver._executionContext.evaluate.mockRejectedValue(new Error('Not available'));
-      const setupPromise = runner._setup({driver, config});
+      const setupPromise = runner._setup({driver, config, requestor: requestedUrl});
       await expect(setupPromise).rejects.toThrowError(/Not available/);
       expect(mocks.prepareMock.prepareTargetForNavigationMode).not.toHaveBeenCalled();
     });
@@ -184,6 +195,7 @@ describe('NavigationRunner', () => {
 
     it('should navigate as many times as there are navigations', async () => {
       config = (await initializeConfig(
+        'navigation',
         {
           ...config,
           navigations: [
@@ -192,8 +204,7 @@ describe('NavigationRunner', () => {
             {id: 'third', artifacts: ['ViewportDimensions']},
             {id: 'fourth', artifacts: ['AnchorElements']},
           ],
-        },
-        {gatherMode: 'navigation'}
+        }
       )).config;
 
       await run();
@@ -206,13 +217,13 @@ describe('NavigationRunner', () => {
       requestedUrl = 'https://backfill.example.com';
       requestor = () => {};
       config = (await initializeConfig(
+        'navigation',
         {
           ...config,
           navigations: [
             {id: 'default', artifacts: ['FontSize']},
           ],
-        },
-        {gatherMode: 'navigation'}
+        }
       )).config;
       mocks.navigationMock.gotoURL.mockReturnValue({
         requestedUrl,
@@ -232,14 +243,14 @@ describe('NavigationRunner', () => {
 
     it('should merge artifacts between navigations', async () => {
       config = (await initializeConfig(
+        'navigation',
         {
           ...config,
           navigations: [
             {id: 'default', artifacts: ['FontSize']},
             {id: 'second', artifacts: ['ConsoleMessages']},
           ],
-        },
-        {gatherMode: 'navigation'}
+        }
       )).config;
 
       // Both gatherers will error in these test conditions, but artifact errors
@@ -252,14 +263,14 @@ describe('NavigationRunner', () => {
 
     it('should retain PageLoadError and associated warnings', async () => {
       config = (await initializeConfig(
+        'navigation',
         {
           ...config,
           navigations: [
             {id: 'default', loadFailureMode: 'fatal', artifacts: ['FontSize']},
             {id: 'second', artifacts: ['ConsoleMessages']},
           ],
-        },
-        {gatherMode: 'navigation'}
+        }
       )).config;
 
       // Ensure the first real page load fails.
@@ -310,7 +321,9 @@ describe('NavigationRunner', () => {
       expect(mocks.navigationMock.gotoURL).toHaveBeenCalledTimes(2);
     });
 
-    it('skips about:blank if option is set to true', async () => {
+    it('skips about:blank if config option is set to true', async () => {
+      config.settings.skipAboutBlank = true;
+
       const {artifacts} = await runner._navigation({
         driver,
         config,
@@ -318,7 +331,23 @@ describe('NavigationRunner', () => {
         requestor: requestedUrl,
         computedCache,
         baseArtifacts,
-        options: {skipAboutBlank: true},
+      });
+      const artifactIds = Object.keys(artifacts);
+      expect(artifactIds).toContain('Timespan');
+      expect(artifactIds).toContain('Snapshot');
+
+      // Only once for the requested URL.
+      expect(mocks.navigationMock.gotoURL).toHaveBeenCalledTimes(1);
+    });
+
+    it('skips about:blank if using a callback requestor', async () => {
+      const {artifacts} = await runner._navigation({
+        driver,
+        config,
+        navigation,
+        requestor: () => {},
+        computedCache,
+        baseArtifacts,
       });
       const artifactIds = Object.keys(artifacts);
       expect(artifactIds).toContain('Timespan');
@@ -567,24 +596,23 @@ describe('NavigationRunner', () => {
     });
 
     it('should initialize config', async () => {
-      const settingsOverrides = {
+      const flags = {
         formFactor: /** @type {const} */ ('desktop'),
         maxWaitForLoad: 1234,
         screenEmulation: {mobile: false},
       };
 
-      const configContext = {settingsOverrides};
       await runner.navigationGather(
         'http://example.com',
         {
           page: mockDriver._page.asPage(),
-          configContext,
+          flags,
         }
       );
 
       expect(mockRunner.gather.mock.calls[0][1]).toMatchObject({
         config: {
-          settings: settingsOverrides,
+          settings: flags,
         },
       });
     });

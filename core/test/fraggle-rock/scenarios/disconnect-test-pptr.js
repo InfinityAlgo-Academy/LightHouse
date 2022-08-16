@@ -31,8 +31,8 @@ describe('Disconnect', function() {
 
     const timespan = await lighthouse.startTimespan({
       page: state.page,
-      configContext: {
-        settingsOverrides: {blockedUrlPatterns: ['*']},
+      flags: {
+        blockedUrlPatterns: ['*'],
       },
     });
 

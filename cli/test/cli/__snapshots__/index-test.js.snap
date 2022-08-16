@@ -187,6 +187,7 @@ Object {
       "mobile": true,
       "width": 360,
     },
+    "skipAboutBlank": false,
     "skipAudits": null,
     "throttling": Object {
       "cpuSlowdownMultiplier": 4,
@@ -359,6 +360,7 @@ Object {
       "mobile": true,
       "width": 360,
     },
+    "skipAboutBlank": false,
     "skipAudits": null,
     "throttling": Object {
       "cpuSlowdownMultiplier": 4,

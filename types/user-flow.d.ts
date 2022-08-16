@@ -10,7 +10,7 @@ declare module UserFlow {
     artifacts: LH.Artifacts;
     name: string;
     config?: LH.Config.Json;
-    configContext?: LH.Config.FRContext;
+    flags?: LH.Flags;
   }
 }
 
