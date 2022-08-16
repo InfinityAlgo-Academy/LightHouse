@@ -16,6 +16,13 @@ class ExecutionContext {
 
     /** @type {number|undefined} */
     this._executionContextId = undefined;
+    /**
+     * Marks how many execution context ids have been created, for purposes of having a unique
+     * value (that doesn't expose the actual execution context id) to
+     * use for __lighthouseExecutionContextUniqueIdentifier.
+     * @type {number}
+     */
+    this._executionContextIdentifiersCreated = 0;
 
     // We use isolated execution contexts for `evaluateAsync` that can be destroyed through navigation
     // and other page actions. Cleanup our relevant bookkeeping as we see those events.
@@ -64,9 +71,9 @@ class ExecutionContext {
     });
 
     this._executionContextId = isolatedWorldResponse.executionContextId;
+    this._executionContextIdentifiersCreated++;
     return isolatedWorldResponse.executionContextId;
   }
-
 
   /**
    * Evaluate an expression in the given execution context; an undefined contextId implies the main
@@ -82,15 +89,25 @@ class ExecutionContext {
       this._session.getNextProtocolTimeout() :
       60000;
 
+    // `__lighthouseExecutionContextUniqueIdentifier` is only used by the FullPageScreenshot gatherer.
+    // See `getNodeDetails` in page-functions.
+    const uniqueExecutionContextIdentifier = contextId === undefined ?
+      undefined :
+      this._executionContextIdentifiersCreated;
+
     const evaluationParams = {
       // We need to explicitly wrap the raw expression for several purposes:
       // 1. Ensure that the expression will be a native Promise and not a polyfill/non-Promise.
       // 2. Ensure that errors in the expression are captured by the Promise.
       // 3. Ensure that errors captured in the Promise are converted into plain-old JS Objects
       //    so that they can be serialized properly b/c JSON.stringify(new Error('foo')) === '{}'
+      //
+      // `__lighthouseExecutionContextUniqueIdentifier` is only used by the FullPageScreenshot gatherer.
+      // See `getNodeDetails` in page-functions.
       expression: `(function wrapInNativePromise() {
         ${ExecutionContext._cachedNativesPreamble};
-        globalThis.__lighthouseExecutionContextId = ${contextId};
+        globalThis.__lighthouseExecutionContextUniqueIdentifier =
+          ${uniqueExecutionContextIdentifier};
         return new Promise(function (resolve) {
           return Promise.resolve()
             .then(_ => ${expression})
