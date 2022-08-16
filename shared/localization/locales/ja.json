@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "`document.write()` は使用されていません"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "最も高い重大度"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "ライブラリのバージョン"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "脆弱性の件数"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "一部の第三者スクリプトには、悪意のあるユーザーによって簡単に特定され利用されるような、既知のセキュリティの脆弱性が含まれていることがあります。[詳細](https://web.dev/no-vulnerable-libraries/)"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 件の脆弱性が検出されました}other{# 件の脆弱性が検出されました}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "既知のセキュリティの脆弱性を含んだフロントエンドの JavaScript ライブラリが含まれています"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "既知のセキュリティの脆弱性を含んだフロントエンドの JavaScript ライブラリは除外されています"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "サイトから脈絡なしに通知の送信許可を求められると、ユーザーは不信感を抱き、困惑します。リクエストはユーザーの操作と関連付けて行うようにしてください。[詳細](https://web.dev/notification-on-start/)"
   },

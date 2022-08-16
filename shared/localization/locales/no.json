@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Unngår `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Høyeste alvorlighetsgrad"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Bibliotekversjon"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Antall sårbarheter"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Noen tredjepartsskript kan inneholde kjente sikkerhetssårbarheter som enkelt kan identifiseres og utnyttes av angripere. [Finn ut mer](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 sårbarhet er oppdaget}other{# sårbarheter er oppdaget}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Inkluderer JavaScript-grensesnittsbiblioteker med kjente sikkerhetssårbarheter"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Unngår JavaScript-grensesnittsbiblioteker med kjente sikkerhetssårbarheter"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Brukere er mistroiske overfor eller blir forvirret av nettsteder som spør om å få sende varsler uten kontekst. Vurder å knytte forespørselen opp mot brukerbevegelser i stedet. [Finn ut mer](https://web.dev/notification-on-start/)."
   },

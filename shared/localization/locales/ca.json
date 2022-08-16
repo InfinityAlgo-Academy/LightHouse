@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Evita `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Gravetat més alta"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Versió de la biblioteca"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Recompte de vulnerabilitats"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Alguns scripts de tercers poden contenir vulnerabilitats de seguretat que els atacants identifiquen i exploten fàcilment. [Obtén més informació](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{S'ha detectat 1 vulnerabilitat}other{S'han detectat # vulnerabilitats}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Inclou biblioteques de JavaScript d'interfície amb vulnerabilitats de seguretat conegudes"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Evita les biblioteques de JavaScript d'interfície amb vulnerabilitats de seguretat conegudes"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Els usuaris reaccionen amb desconfiança i desconcert davant dels llocs web que sol·liciten enviar notificacions sense context. Et recomanem que vinculis la sol·licitud als gestos de l'usuari. [Obtén més informació](https://web.dev/notification-on-start/)."
   },

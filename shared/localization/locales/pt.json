@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Evita `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Maior gravidade"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Versão da biblioteca"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Contagem de vulnerabilidades"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Alguns scripts de terceiros podem conter vulnerabilidades de segurança conhecidas, facilmente identificadas e exploradas por invasores. [Saiba mais](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 vulnerabilidade detectada}one{# vulnerabilidade detectada}other{# vulnerabilidades detectadas}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Inclui bibliotecas JavaScript de front-end com vulnerabilidades de segurança conhecidas"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Evita bibliotecas JavaScript de front-end com vulnerabilidades de segurança conhecidas"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Os usuários não confiam ou ficam confusos com sites que solicitam o envio de notificações sem contexto. Vincule a solicitação a gestos do usuário. [Saiba mais](https://web.dev/notification-on-start/)."
   },

@@ -725,27 +725,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Âv́ôíd̂ś `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Ĥíĝh́êśt̂ Śêv́êŕît́ŷ"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "L̂íb̂ŕâŕŷ V́êŕŝíôń"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "V̂úl̂ńêŕâb́îĺît́ŷ Ćôún̂t́"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Ŝóm̂é t̂h́îŕd̂-ṕâŕt̂ý ŝćr̂íp̂t́ŝ ḿâý ĉón̂t́âín̂ ḱn̂óŵń ŝéĉúr̂ít̂ý v̂úl̂ńêŕâb́îĺît́îéŝ t́ĥát̂ ár̂é êáŝíl̂ý îd́êńt̂íf̂íêd́ âńd̂ éx̂ṕl̂óît́êd́ b̂ý ât́t̂áĉḱêŕŝ. [Ĺêár̂ń m̂ór̂é âb́ôút̂ v́ûĺn̂ér̂áb̂ĺê ĺîb́r̂ár̂íêś](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount, plural,\n    =1 {1 v̂úl̂ńêŕâb́îĺît́ŷ d́êt́êćt̂éd̂}\n    other {# v́ûĺn̂ér̂áb̂íl̂ít̂íêś d̂ét̂éĉt́êd́}\n    }"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Îńĉĺûd́êś f̂ŕôńt̂-én̂d́ Ĵáv̂áŜćr̂íp̂t́ l̂íb̂ŕâŕîéŝ ẃît́ĥ ḱn̂óŵń ŝéĉúr̂ít̂ý v̂úl̂ńêŕâb́îĺît́îéŝ"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Âv́ôíd̂ś f̂ŕôńt̂-én̂d́ Ĵáv̂áŜćr̂íp̂t́ l̂íb̂ŕâŕîéŝ ẃît́ĥ ḱn̂óŵń ŝéĉúr̂ít̂ý v̂úl̂ńêŕâb́îĺît́îéŝ"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Ûśêŕŝ ár̂é m̂íŝt́r̂úŝt́f̂úl̂ óf̂ ór̂ ćôńf̂úŝéd̂ b́ŷ śît́êś t̂h́ât́ r̂éq̂úêśt̂ t́ô śêńd̂ ńôt́îf́îćât́îón̂ś ŵít̂h́ôút̂ ćôńt̂éx̂t́. Ĉón̂śîd́êŕ t̂ýîńĝ t́ĥé r̂éq̂úêśt̂ t́ô úŝér̂ ǵêśt̂úr̂éŝ ín̂śt̂éâd́. [L̂éâŕn̂ ḿôŕê áb̂óût́ r̂éŝṕôńŝíb̂ĺŷ ǵêt́t̂ín̂ǵ p̂ér̂ḿîśŝíôń f̂ór̂ ńôt́îf́îćât́îón̂ś](https://web.dev/notification-on-start/)."
   },

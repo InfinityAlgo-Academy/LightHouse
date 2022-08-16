@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Vermijdt `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Meest ernstig"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Bibliotheekversie"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Aantal kwetsbaarheden"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Sommige scripts van derden kunnen bekende beveiligingskwetsbaarheden bevatten die makkelijk te identificeren zijn en door aanvallers kunnen worden gebruikt. [Meer informatie](https://web.dev/no-vulnerable-libraries/)"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 kwetsbaarheid gedetecteerd}other{# kwetsbaarheden gedetecteerd}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Omvat front end JavaScript-bibliotheken met bekende beveiligingskwetsbaarheden"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Vermijdt front end JavaScript-bibliotheken met bekende beveiligingskwetsbaarheden"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Gebruikers wantrouwen of raken in de war van sites die vragen om meldingen zonder context te versturen. Overweeg het verzoek in plaats daarvan te koppelen aan gebruikersgebaren. [Meer informatie](https://web.dev/notification-on-start/)"
   },

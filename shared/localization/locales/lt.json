@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Vengiama naudoti „`document.write()`“"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Rimčiausias pažeidimas"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Bibliotekos versija"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Pažeidimų skaičius"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Kai kuriuose trečiųjų šalių scenarijuose gali būti žinomų saugos pažeidimų, kuriuos užpuolėjai gali lengvai nustatyti ir jais pasinaudoti. [Sužinokite daugiau](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{Aptiktas 1 pažeidimas}one{Aptiktas # pažeidimas}few{Aptikti # pažeidimai}many{Aptikta # pažeidimo}other{Aptikta # pažeidimų}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Puslapyje yra „JavaScript“ sąsajos bibliotekų, kuriose yra žinomų saugos pažeidimų"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Vengiama „JavaScript“ sąsajos bibliotekų, kuriose yra žinomų saugos pažeidimų"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Naudotojai gali būti įtarūs arba sumišę, jei svetainėse bus prašoma suteikti pranešimų leidimą be jokio konteksto. Apsvarstykite galimybę susieti užklausą su naudotojų gestais. [Sužinokite daugiau](https://web.dev/notification-on-start/)."
   },

@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "避免使用 `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "嚴重程度"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "程式庫版本"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "安全漏洞數量"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "部分第三方指令碼可能包含已知的安全漏洞，攻擊者將能輕易識別及利用這些漏洞。[瞭解詳情](https://web.dev/no-vulnerable-libraries/)。"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{偵測到 1 個安全漏洞}other{偵測到 # 個安全漏洞}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "包括前端 JavaScript 程式庫具有已知安全漏洞"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "避免使用包含已知安全漏洞的前端 JavaScript 程式庫"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "如果未提供其他資訊就要求使用者允許網站顯示通知，會讓使用者感到困惑而不信任網站。建議您在使用者操作特定手勢時，再提出這項要求。[瞭解詳情](https://web.dev/notification-on-start/)。"
   },

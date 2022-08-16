@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Αποφυγή `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Υψηλότερη σοβαρότητα"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Έκδοση βιβλιοθήκης"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Πλήθος ευπαθειών"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Ορισμένα σενάρια τρίτων μπορεί να έχουν γνωστές ευπάθειες ασφάλειας τις οποίες μπορούν εύκολα να εντοπίσουν και να εκμεταλλευτούν οι επίδοξοι εισβολείς. [Μάθετε περισσότερα](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{Εντοπίστηκε 1 ευπάθεια}other{Εντοπίστηκαν # ευπάθειες}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Συμπερίληψη βιβλιοθηκών JavaScript διεπαφής με γνωστές ευπάθειες ασφάλειας"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Αποφυγή όλων των βιβλιοθηκών JavaScript διεπαφής με γνωστές ευπάθειες ασφάλειας"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Οι ιστότοποι που απαιτούν την αποστολή ειδοποιήσεων χωρίς προφανή αιτία προκαλούν σύγχυση ή φαίνονται ύποπτοι στους χρήστες. Συνιστάται τα αιτήματα να συνδέονται με τις κινήσεις των χρηστών. [Μάθετε περισσότερα](https://web.dev/notification-on-start/)."
   },

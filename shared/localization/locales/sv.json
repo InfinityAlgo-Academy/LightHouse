@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "`document.write()` undviks"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Högsta allvarlighetsgrad"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Biblioteksversion"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Antal säkerhetsbrister"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Vissa skript från tredje part kan innehålla kända säkerhetsproblem som är lätta att identifiera och utnyttja för angripare. [Läs mer](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 säkerhetsbrist har identifierats}other{# säkerhetsbrister har identifierats}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Innehåller JavaScript-bibliotek på klientsidan med kända säkerhetsbrister"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Undviker JavaScript-bibliotek med kända säkerhetsproblem på klientsidan"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Användare blir misstänksamma eller förvirrade av webbplatser som ber om åtkomst att skicka aviseringar utan sammanhang. Det kan vara bättre att koppla förfrågan till rörelser. [Läs mer](https://web.dev/notification-on-start/)."
   },

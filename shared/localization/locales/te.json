@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "'`document.write()`'ను నివారిస్తుంది"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "అత్యంత తీవ్రత"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "లైబ్రరీ వెర్షన్"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "భద్రతా ప్రమాదాల సంఖ్య"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "కొన్ని మూడవ పక్షం స్క్రిప్ట్‌లలో, దాడులకు పాల్పడేవారు సులభంగా గుర్తించగలిగే, సమాచారం దొంగిలించగలిగే తెలిసిన భద్రతా ప్రమాదాలు ఉండవచ్చు. [మరింత తెలుసుకోండి](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 ప్రమాద కారకం గుర్తించబడింది}other{# ప్రమాద కారకాలు గుర్తించబడ్డాయి}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "తెలిసిన భద్రతా ప్రమాదాలను కలిగి ఉండే ఫ్రంట్-ఎండ్ JavaScript లైబ్రరీలను జోడిస్తుంది"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "తెలిసిన భద్రతా ప్రమాదాలను కలిగి ఉండే ఫ్రంట్-ఎండ్ JavaScript లైబ్రరీలను నివారిస్తుంది"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "సందర్భం ఏమీ లేకుండా నోటిఫికేషన్‌లను పంపడానికి అనుమతి కోరే సైట్‌లను వినియోగదారులు నమ్మరు లేదా గందరగోళానికి గురి అవుతారు. బదులుగా వినియోగదారు సంజ్ఞలకు రిక్వెస్ట్‌ను ప్రయత్నించడం పరిశీలించండి. [మరింత తెలుసుకోండి](https://web.dev/notification-on-start/)."
   },

@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "หลีกเลี่ยงการใช้ `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "ความรุนแรงสูงสุด"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "เวอร์ชันของไลบรารี"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "จำนวนช่องโหว่"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "สคริปต์ของบุคคลที่สามบางรายการอาจมีช่องโหว่ด้านความปลอดภัยที่เป็นที่รู้จักซึ่งผู้โจมตีจะหาพบได้ง่ายและใช้ประโยชน์จากช่องโหว่นั้น [ดูข้อมูลเพิ่มเติม](https://web.dev/no-vulnerable-libraries/)"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{ตรวจพบช่องโหว่ 1 รายการ}other{ตรวจพบช่องโหว่ # รายการ}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "มีไลบรารี JavaScript ส่วนหน้าที่มีช่องโหว่ด้านความปลอดภัย"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "หลีกเลี่ยงการใช้ไลบรารี JavaScript ส่วนหน้าที่มีช่องโหว่ด้านความปลอดภัย"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "ผู้ใช้ไม่เชื่อถือหรือเกิดความสับสนในเว็บไซต์ที่ขอส่งการแจ้งเตือนโดยไม่มีบริบทให้ พิจารณาผูกคำขอกับท่าทางสัมผัสของผู้ใช้แทน [ดูข้อมูลเพิ่มเติม](https://web.dev/notification-on-start/)"
   },

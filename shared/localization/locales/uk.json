@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Уникає `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Найвищий рівень серйозності"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Версія бібліотеки"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Кількість прогалин системи безпеки"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Деякі сторонні сценарії можуть містити відомі прогалини системи безпеки, які зловмисники можуть легко виявити та використати. [Докладніше](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{Виявлено 1 прогалину системи безпеки}one{Виявлено # прогалину системи безпеки}few{Виявлено # прогалини системи безпеки}many{Виявлено # прогалин системи безпеки}other{Виявлено # прогалини системи безпеки}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Включає бібліотеки JavaScript зовнішнього інтерфейсу з відомими прогалинами системи безпеки"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Уникає бібліотек JavaScript зовнішнього інтерфейсу з відомими прогалинами в системі безпеки"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Сайти, які надсилають запит на показ сповіщень без пояснення, викликають у користувачів недовіру або спантеличеність. Радимо пов'язувати запит із жестами користувача. [Докладніше](https://web.dev/notification-on-start/)."
   },

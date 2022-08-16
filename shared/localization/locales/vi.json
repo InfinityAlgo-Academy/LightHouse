@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Tránh `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Mức độ nghiêm trọng cao nhất"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Phiên bản thư viện"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Số lượng lỗ hổng"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Một số tập lệnh của bên thứ ba có thể chứa các lỗ hổng bảo mật đã biết mà kẻ tấn công dễ dàng xác định và khai thác. [Tìm hiểu thêm](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{Phát hiện thấy 1 lỗ hổng}other{Phát hiện thấy # lỗ hổng}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Bao gồm các thư viện giao diện người dùng JavaScript có những lỗ hổng bảo mật đã biết"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Tránh các thư viện giao diện người dùng JavaScript có lỗ hổng bảo mật đã biết"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Các trang web gửi thông báo không có ngữ cảnh sẽ khiến người dùng không tin tưởng hoặc bối rối. Hãy cân nhắc liên kết yêu cầu với cử chỉ của người dùng. [Tìm hiểu thêm](https://web.dev/notification-on-start/)."
   },

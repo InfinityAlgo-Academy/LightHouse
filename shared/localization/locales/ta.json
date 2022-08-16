@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "`document.write()`ஐத் தவிர்க்கும்"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "அதிகபட்ச அபாயம்"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "லைப்ரரி பதிப்பு"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "பாதுகாப்புக் குறைபாடுகளின் எண்ணிக்கை"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "சில மூன்றாம் தரப்பு ஸ்கிரிப்ட்களில் ஹேக்கர்கள் எளிதாக அடையாளம் கண்டுகொண்டு பயன்படுத்திக் கொள்ளக்கூடிய தெரிந்த பாதுகாப்புக் குறைபாடுகள் இருக்கக்கூடும். [மேலும் அறிக](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 பாதுகாப்புக் குறைபாடு கண்டறியப்பட்டுள்ளது}other{# பாதுகாப்புக் குறைபாடுகள் கண்டறியப்பட்டுள்ளன}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "தெரிந்த பாதுகாப்புக் குறைபாடுகளுள்ள ஃபிரண்ட் எண்டு JavaScript லைப்ரரிகள் இதில் அடங்கும்"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "தெரிந்த பாதுகாப்புக் குறைபாடுகளுடைய ஃபிரண்ட் எண்ட் JavaScript லைப்ரரிகளைத் தவிர்க்கிறது"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "சரியான காரணங்கள் இன்றி அறிவிப்புகளை அனுப்பக் கோரிக்கையிடும் தளங்களால் பயனர்கள் குழப்பமடையலாம் அல்லது சந்தேகப்படலாம். அதற்கு பதிலாக பயனர் சைகைகளை முயலவும். [மேலும் அறிக](https://web.dev/notification-on-start/)."
   },

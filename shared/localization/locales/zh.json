@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "请勿使用 `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "最高严重程度"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "库版本"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "漏洞数量"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "某些第三方脚本可能包含已知的安全漏洞，攻击者很容易识别和利用这些漏洞。[了解详情](https://web.dev/no-vulnerable-libraries/)。"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{检测到 1 个漏洞}other{检测到 # 个漏洞}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "包含有已知安全漏洞的前端 JavaScript 库"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "避免使用含已知安全漏洞的前端 JavaScript 库"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "如果网站在缺少上下文的情况下请求发送通知，会导致用户不信任网站或感到困惑。建议将请求与用户手势进行绑定。[了解详情](https://web.dev/notification-on-start/)。"
   },

@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Se izogiba `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Največja resnost"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Različica knjižnice"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Štetje ranljivosti"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Nekateri skripti drugih ponudnikov morda vsebujejo znane varnostne ranljivosti, ki jih napadalci lahko preprosto prepoznajo in izkoristijo. [Več o tem](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{Zaznana je bila 1 ranljivost}one{Zaznana je bila # ranljivost}two{Zaznani sta bili # ranljivosti}few{Zaznane so bile # ranljivosti}other{Zaznanih je bilo # ranljivosti}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Vključuje knjižniceJavaScript vmesnikov z znanimi varnostnimi ranljivostmi"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Izogiba se knjižnicam JavaScript vmesnikov z znanimi varnostnimi ranljivostmi"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Uporabniki so nezaupljivi do spletnih mest oziroma jih begajo spletna mesta, ki zahtevajo pošiljanje obvestil brez konteksta. Razmislite o tem, da bi zahtevo povezali z uporabniškimi potezami. [Več o tem](https://web.dev/notification-on-start/)."
   },

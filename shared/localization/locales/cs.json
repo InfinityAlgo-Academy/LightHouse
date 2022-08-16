@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Nepoužívá metodu `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Největší závažnost"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Verze knihovny"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Počet chyb zabezpečení"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Některé skripty třetích stran mohou obsahovat známé chyby zabezpečení, které útočníci mohou snadno odhalit a zneužít. [Další informace](https://web.dev/no-vulnerable-libraries/)"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{Byla zjištěna jedna chyba zabezpečení}few{Byly zjištěny # chyby zabezpečení}many{Bylo zjištěno # chyby zabezpečení}other{Bylo zjištěno # chyb zabezpečení}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Zahrnuje frontendové javascriptové knihovny se známými chybami zabezpečení"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Nepoužívá frontendové javascriptové knihovny se známými chybami zabezpečení"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Vůči webům, které bez kontextu žádají o oprávnění odesílat oznámení, mohou být uživatelé nedůvěřiví nebo z nich mohou být zmateni. Zvažte možnost spojit tuto žádost s gesty uživatele. [Další informace](https://web.dev/notification-on-start/)"
   },

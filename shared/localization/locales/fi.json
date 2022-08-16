@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Vältetty: `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Vakavin mahdollinen"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Kirjaston versio"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Haavoittuvuuksien määrä"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Jotkin kolmannen osapuolen skriptit voivat sisältää tunnettuja tietoturvahaavoittuvuuksia, joita hyökkääjien on helppo tunnistaa ja hyödyntää. [Lue lisää](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 haavoittuvuus havaittu}other{# haavoittuvuutta havaittu}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Sisältää käyttöliittymän JavaScript-kirjastot, joissa on tunnettuja tietoturvahaavoittuvuuksia"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Välttää käyttöliittymän JavaScript-kirjastoja, joissa on tunnettuja tietoturvahaavoittuvuuksia"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Sivustot, jotka pyytävät lupaa ilmoitusten lähettämiseen ilman asiayhteyttä, saavat käyttäjät epäluuloisiksi tai hämmentävät heitä. Kokeile sen sijaan yhdistää pyyntö käyttäjäeleisiin. [Lue lisää](https://web.dev/notification-on-start/)."
   },

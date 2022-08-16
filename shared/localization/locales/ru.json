@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Метод `document.write()` не используется"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Максимальная степень опасности"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Версия библиотеки"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Количество уязвимостей"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Некоторые сторонние скрипты содержат известные уязвимости, которые легко могут быть обнаружены и использованы злоумышленниками. [Подробнее…](https://web.dev/no-vulnerable-libraries/)"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{Обнаружена 1 уязвимость}one{Обнаружена # уязвимость}few{Обнаружено # уязвимости}many{Обнаружено # уязвимостей}other{Обнаружено # уязвимости}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Содержит клиентские библиотеки JavaScript с известными уязвимостями"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Не содержит клиентские библиотеки JavaScript с известными уязвимостями"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Пользователи с подозрением относятся к сайтам, которые беспричинно запрашивают разрешение на отправку уведомлений. Мы рекомендуем связать этот запрос с определенными жестами пользователя. [Подробнее…](https://web.dev/notification-on-start/)"
   },

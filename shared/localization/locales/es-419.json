@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "No usa `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Gravedad más alta"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Versión de la biblioteca"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Recuento de vulnerabilidades"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Es posible que algunas secuencias de comandos de terceros contengan vulnerabilidades de seguridad conocidas que los atacantes pueden identificar y aprovechar fácilmente. [Obtén más información](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{Se detectó una vulnerabilidad}other{Se detectaron # vulnerabilidades}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Incluye bibliotecas JavaScript de frontend con vulnerabilidades de seguridad conocidas"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Evita las bibliotecas JavaScript de frontend con vulnerabilidades de seguridad conocidas"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Los sitios que solicitan a los usuarios permiso para enviar notificaciones sin contexto los confunden o los hacen desconfiar. Te recomendamos vincular la solicitud a los gestos del usuario. [Obtén más información](https://web.dev/notification-on-start/)."
   },

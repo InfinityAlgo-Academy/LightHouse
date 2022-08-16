@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Nepoužíva `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Najzávažnejšie"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Verzia knižnice"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Počet chýb zabezpečenia"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Niektoré skripty tretích strán môžu obsahovať chyby zabezpečenia, ktoré dokážu útočníci ľahko rozpoznať a zneužiť. [Ďalšie informácie](https://web.dev/no-vulnerable-libraries/)"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{Bola zistená 1 chyba zabezpečenia}few{Boli zistené # chyby zabezpečenia}many{# vulnerabilities detected}other{Bolo zistených # chýb zabezpečenia}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Zahrnuje JavaScriptové knižnice v klientskom rozhraní so známymi chybami zabezpečenia"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Nepoužíva v klientskom rozhraní knižnice JavaScriptov so známymi chybami zabezpečenia"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Používatelia nedôverujú webom, ktoré požadujú odosielanie upozornení bez kontextu, alebo ich považujú za mätúce. Zvážte namiesto toho spojenie žiadosti s gestami používateľa. [Ďalšie informácie](https://web.dev/notification-on-start/)"
   },

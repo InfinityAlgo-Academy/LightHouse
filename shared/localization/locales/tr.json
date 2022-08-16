@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "`document.write()` öğesinden kaçınıyor"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "En Yüksek Önem Derecesi"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Kitaplık Sürümü"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Güvenlik Açığı Sayısı"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Bazı üçüncü taraf komut dosyaları, saldırganlar tarafından kolayca belirlenen ve istismar edilen bilinen güvenlik açıkları içerebilir. [Daha fazla bilgi](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 güvenlik açığı algılandı}other{# güvenlik açığı algılandı}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Bilinen güvenlik açıklarına sahip JavaScript kitaplıkları kullanıcı arabirimi içeriyor"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Bilinen güvenlik açıklarına sahip JavaScript kitaplıkları kullanıcı arabirimini önlüyor"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Kullanıcılar herhangi bir bağlam olmadan bildirim göndermek isteyen sitelere şüpheyle bakarlar veya bu istek karşısında şaşırırlar. Onun yerine isteği kullanıcı hareketlerine bağlamayı değerlendirin. [Daha fazla bilgi](https://web.dev/notification-on-start/)."
   },

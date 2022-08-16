@@ -43,7 +43,6 @@ In general, Lighthouse should be using the latest version of all of these depend
 1. https://github.com/GoogleChrome/lighthouse-stack-packs
 1. `puppeteer` and `puppeteer-core`
 1. `third-party-web`
-1. `snyk`
 1. `axe-core`
 1. `js-library-detector`
 1. `chrome-launcher`

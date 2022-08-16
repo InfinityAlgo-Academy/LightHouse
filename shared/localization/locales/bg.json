@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Избягва `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Най-високо ниво на сериозност"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Версия на библиотеката"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Брой уязвимости"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Някои скриптове на трети страни може да съдържат известни уязвимости в сигурността, които лесно се откриват и използват от атакуващите. [Научете повече](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{Открита е 1 уязвимост}other{Открити са # уязвимости}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Включва библиотеки на JavaScript за предния слой, съдържащи известни уязвимости в сигурността"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Избягва библиотеки на JavaScript за предния слой, съдържащи известни уязвимости в сигурността"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Потребителите се объркват или нямат доверие на сайтове, които искат да изпращат известия без контекст. Вместо това бихте могли да обвържете заявката към жестове на потребителя. [Научете повече](https://web.dev/notification-on-start/)."
   },

@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Kerüli a(z) `document.write()` használatát"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Legmagasabb súlyosság"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Függvénytár verziója"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Sebezhetőségek száma"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "A harmadik felektől származó szkriptek ismert sebezhetőségeket tartalmazhatnak, melyeket a támadók könnyedén felismerhetnek és kihasználhatnak. [További információ](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 észlelt sebezhetőség}other{# észlelt sebezhetőség}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Ismert sebezhetőségeket tartalmazó front-end JavaScript-függvénytárakat használ"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Kerüli az ismert sebezhetőségeket tartalmazó front-end JavaScript-függvénytárakat"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Az értesítésekre vonatkozó engedély váratlan kérése bizalmatlanságra adhat okot, valamint összezavarhatja a felhasználókat. Érdemes inkább felhasználói műveletekhez kötni a kérést. [További információ](https://web.dev/notification-on-start/)."
   },

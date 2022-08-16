@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "[Åvöîðš ᐅ`document.write()`ᐊ one two three]"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "[Ĥîĝĥéšţ Šévéŕîţý one two]"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "[Ļîбŕåŕý Véŕšîöñ one two]"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "[Vûļñéŕåбîļîţý Çöûñţ one two three]"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "[Šömé ţĥîŕð-þåŕţý šçŕîþţš måý çöñţåîñ ķñöŵñ šéçûŕîţý vûļñéŕåбîļîţîéš ţĥåţ åŕé éåšîļý îðéñţîƒîéð åñð éxþļöîţéð бý åţţåçķéŕš. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/no-vulnerable-libraries/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone]"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{[1 vûļñéŕåбîļîţý ðéţéçţéð one two three]}other{[# vûļñéŕåбîļîţîéš ðéţéçţéð one two three]}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "[Îñçļûðéš ƒŕöñţ-éñð ĴåvåŠçŕîþţ ļîбŕåŕîéš ŵîţĥ ķñöŵñ šéçûŕîţý vûļñéŕåбîļîţîéš one two three four five six seven eight nine ten eleven twelve thirteen fourteen]"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "[Åvöîðš ƒŕöñţ-éñð ĴåvåŠçŕîþţ ļîбŕåŕîéš ŵîţĥ ķñöŵñ šéçûŕîţý vûļñéŕåбîļîţîéš one two three four five six seven eight nine ten eleven twelve thirteen fourteen]"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "[Ûšéŕš åŕé mîšţŕûšţƒûļ öƒ öŕ çöñƒûšéð бý šîţéš ţĥåţ ŕéqûéšţ ţö šéñð ñöţîƒîçåţîöñš ŵîţĥöûţ çöñţéxţ. Çöñšîðéŕ ţýîñĝ ţĥé ŕéqûéšţ ţö ûšéŕ ĝéšţûŕéš îñšţéåð. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/notification-on-start/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour]"
   },

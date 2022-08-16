@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Verwendet kein `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Höchster Schweregrad"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Bibliotheksversion"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Anzahl der Sicherheitslücken"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Einige Skripts von Drittanbietern können bekannte Sicherheitslücken enthalten, die von Angreifern leicht zu identifizieren und zu missbrauchen sind. [Weitere Informationen.](https://web.dev/no-vulnerable-libraries/)"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 Sicherheitslücke erkannt}other{# Sicherheitslücken erkannt}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Enthält Front-End-JavaScript-Bibliotheken mit bekannten Sicherheitslücken"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Vermeidet Front-End-JavaScript-Bibliotheken mit bekannten Sicherheitslücken"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Nutzer sind misstrauisch oder verwirrt, wenn Websites die Berechtigung zum Senden von Benachrichtigungen ohne Begründung anfordern. Versuchen Sie stattdessen, die Anforderung mit Touch-Gesten zu verbinden. [Weitere Informationen.](https://web.dev/notification-on-start/)"
   },

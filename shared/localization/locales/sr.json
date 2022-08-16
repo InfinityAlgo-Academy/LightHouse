@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Избегава атрибут `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Највиши ниво озбиљности"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Верзија библиотеке"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Број пропуста"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Неке независне скрипте могу да обухватају познате безбедносне пропусте које нападачи могу лако да препознају и искористе. [Сазнајте више](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{Откривен је 1 пропуст}one{Откривен је # пропуст}few{Откривена су # пропуста}other{Откривено је # пропуста}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Обухвата корисничке JavaScript датотеке са познатим безбедносним пропустима"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Избегава корисничке JavaScript датотеке са познатим безбедносним пропустима"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Корисници немају поверења у сајтове који траже дозволу за слање обавештења без контекста или их такви сајтови збуњују. Препоручујемо вам да уместо тога повежете захтев са покретима корисника. [Сазнајте више](https://web.dev/notification-on-start/)."
   },

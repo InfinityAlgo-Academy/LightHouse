@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "`document.write()` का इस्तेमाल नहीं किया जाता"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "सबसे ज़्यादा गंभीर"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "लाइब्रेरी वर्शन"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "जोखिम की संभावना की संख्या"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "तीसरे पक्ष की कुछ स्क्रिप्ट में सुरक्षा के ऐसे जोखिम हो सकते हैं जिनके बारे में लोगों को पता है. साथ ही, जिन्हें हमलावर आसानी से पहचानकर उनका फ़ायदा उठा सकते हैं. [ज़्यादा जानें](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 जोखिम की संभावना का पता चला}one{# जोखिमों की संभावना का पता चला}other{# जोखिमों की संभावना का पता चला}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "ऐसी फ़्रंट-एंड JavaScript लाइब्रेरी का इस्तेमाल करता है जिनमें शामिल सुरक्षा जोखिमों के बारे में सबको पता होता है."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "ऐसी फ़्रंट-एंड JavaScript लाइब्रेरी का इस्तेमाल नहीं करता जिनमें शामिल सुरक्षा जोखिमों के बारे में सबको पता होता है."
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "उपयोगकर्ता ऐसी साइटों पर भरोसा नहीं करते या उनकी वजह से उलझन में रहते हैं जो उन्हें बिना किसी संदर्भ के सूचनाएं भेजने का अनुरोध करती हैं. इसके बजाय, उपयोगकर्ता के जेस्चर के हिसाब से अनुरोध करें. [ज़्यादा जानें](https://web.dev/notification-on-start/)."
   },

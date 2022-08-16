@@ -3403,46 +3403,6 @@
               "items": []
             }
           },
-          "no-vulnerable-libraries": {
-            "id": "no-vulnerable-libraries",
-            "title": "Includes front-end JavaScript libraries with known security vulnerabilities",
-            "description": "Some third-party scripts may contain known security vulnerabilities that are easily identified and exploited by attackers. [Learn more about vulnerable libraries](https://web.dev/no-vulnerable-libraries/).",
-            "score": 0,
-            "scoreDisplayMode": "binary",
-            "displayValue": "3 vulnerabilities detected",
-            "details": {
-              "type": "table",
-              "headings": [
-                {
-                  "key": "detectedLib",
-                  "itemType": "link",
-                  "text": "Library Version"
-                },
-                {
-                  "key": "vulnCount",
-                  "itemType": "text",
-                  "text": "Vulnerability Count"
-                },
-                {
-                  "key": "highestSeverity",
-                  "itemType": "text",
-                  "text": "Highest Severity"
-                }
-              ],
-              "items": [
-                {
-                  "highestSeverity": "Medium",
-                  "vulnCount": 3,
-                  "detectedLib": {
-                    "text": "Next.js@10.0.6",
-                    "url": "https://snyk.io/vuln/npm:next?lh=10.0.6&utm_source=lighthouse&utm_medium=ref&utm_campaign=audit",
-                    "type": "link"
-                  }
-                }
-              ],
-              "summary": {}
-            }
-          },
           "js-libraries": {
             "id": "js-libraries",
             "title": "Detected JavaScript libraries",
@@ -4352,11 +4312,6 @@
                 "group": "best-practices-trust-safety"
               },
               {
-                "id": "no-vulnerable-libraries",
-                "weight": 1,
-                "group": "best-practices-trust-safety"
-              },
-              {
                 "id": "csp-xss",
                 "weight": 0,
                 "group": "best-practices-trust-safety"
@@ -4418,7 +4373,7 @@
               }
             ],
             "id": "best-practices",
-            "score": 0.92
+            "score": 1
           },
           "seo": {
             "title": "SEO",
@@ -5948,114 +5903,108 @@
             },
             {
               "startTime": 210,
-              "name": "lh:audit:no-vulnerable-libraries",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 211,
               "name": "lh:audit:js-libraries",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 212,
+              "startTime": 211,
               "name": "lh:audit:notification-on-start",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 213,
+              "startTime": 212,
               "name": "lh:audit:password-inputs-can-be-pasted-into",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 214,
+              "startTime": 213,
               "name": "lh:audit:uses-passive-event-listeners",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 215,
+              "startTime": 214,
               "name": "lh:audit:meta-description",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 216,
+              "startTime": 215,
               "name": "lh:audit:http-status-code",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 217,
+              "startTime": 216,
               "name": "lh:audit:font-size",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 218,
+              "startTime": 217,
               "name": "lh:audit:link-text",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 219,
+              "startTime": 218,
               "name": "lh:audit:crawlable-anchors",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 220,
+              "startTime": 219,
               "name": "lh:audit:is-crawlable",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 221,
+              "startTime": 220,
               "name": "lh:audit:robots-txt",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 222,
+              "startTime": 221,
               "name": "lh:audit:tap-targets",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 223,
+              "startTime": 222,
               "name": "lh:audit:hreflang",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 224,
+              "startTime": 223,
               "name": "lh:audit:plugins",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 225,
+              "startTime": 224,
               "name": "lh:audit:canonical",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 226,
+              "startTime": 225,
               "name": "lh:audit:structured-data",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 227,
+              "startTime": 226,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 228
+          "total": 227
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -7104,32 +7053,6 @@
             ],
             "core/audits/dobetterweb/no-document-write.js | description": [
               "audits[no-document-write].description"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": [
-              "audits[no-vulnerable-libraries].title"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | description": [
-              "audits[no-vulnerable-libraries].description"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": [
-              {
-                "values": {
-                  "itemCount": 3
-                },
-                "path": "audits[no-vulnerable-libraries].displayValue"
-              }
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": [
-              "audits[no-vulnerable-libraries].details.headings[0].text"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": [
-              "audits[no-vulnerable-libraries].details.headings[1].text"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": [
-              "audits[no-vulnerable-libraries].details.headings[2].text"
-            ],
-            "core/lib/i18n/i18n.js | itemSeverityMedium": [
-              "audits[no-vulnerable-libraries].details.items[0].highestSeverity"
             ],
             "core/audits/dobetterweb/js-libraries.js | title": [
               "audits[js-libraries].title"
@@ -12112,46 +12035,6 @@
               ]
             }
           },
-          "no-vulnerable-libraries": {
-            "id": "no-vulnerable-libraries",
-            "title": "Includes front-end JavaScript libraries with known security vulnerabilities",
-            "description": "Some third-party scripts may contain known security vulnerabilities that are easily identified and exploited by attackers. [Learn more about vulnerable libraries](https://web.dev/no-vulnerable-libraries/).",
-            "score": 0,
-            "scoreDisplayMode": "binary",
-            "displayValue": "3 vulnerabilities detected",
-            "details": {
-              "type": "table",
-              "headings": [
-                {
-                  "key": "detectedLib",
-                  "itemType": "link",
-                  "text": "Library Version"
-                },
-                {
-                  "key": "vulnCount",
-                  "itemType": "text",
-                  "text": "Vulnerability Count"
-                },
-                {
-                  "key": "highestSeverity",
-                  "itemType": "text",
-                  "text": "Highest Severity"
-                }
-              ],
-              "items": [
-                {
-                  "highestSeverity": "Medium",
-                  "vulnCount": 3,
-                  "detectedLib": {
-                    "text": "Next.js@10.0.6",
-                    "url": "https://snyk.io/vuln/npm:next?lh=10.0.6&utm_source=lighthouse&utm_medium=ref&utm_campaign=audit",
-                    "type": "link"
-                  }
-                }
-              ],
-              "summary": {}
-            }
-          },
           "js-libraries": {
             "id": "js-libraries",
             "title": "Detected JavaScript libraries",
@@ -12752,11 +12635,6 @@
             ],
             "auditRefs": [
               {
-                "id": "no-vulnerable-libraries",
-                "weight": 1,
-                "group": "best-practices-trust-safety"
-              },
-              {
                 "id": "password-inputs-can-be-pasted-into",
                 "weight": 1,
                 "group": "best-practices-ux"
@@ -12783,7 +12661,7 @@
               }
             ],
             "id": "best-practices",
-            "score": 0.6
+            "score": 0.75
           },
           "seo": {
             "title": "SEO",
@@ -13442,78 +13320,72 @@
             },
             {
               "startTime": 78,
-              "name": "lh:audit:no-vulnerable-libraries",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 79,
               "name": "lh:audit:js-libraries",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 80,
+              "startTime": 79,
               "name": "lh:audit:password-inputs-can-be-pasted-into",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 81,
+              "startTime": 80,
               "name": "lh:audit:meta-description",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 82,
+              "startTime": 81,
               "name": "lh:audit:font-size",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 83,
+              "startTime": 82,
               "name": "lh:audit:link-text",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 84,
+              "startTime": 83,
               "name": "lh:audit:crawlable-anchors",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 85,
+              "startTime": 84,
               "name": "lh:audit:robots-txt",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 86,
+              "startTime": 85,
               "name": "lh:audit:tap-targets",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 87,
+              "startTime": 86,
               "name": "lh:audit:plugins",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 88,
+              "startTime": 87,
               "name": "lh:audit:structured-data",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 89,
+              "startTime": 88,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 90
+          "total": 89
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -13926,32 +13798,6 @@
             ],
             "core/audits/dobetterweb/dom-size.js | statisticDOMWidth": [
               "audits[dom-size].details.items[2].statistic"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": [
-              "audits[no-vulnerable-libraries].title"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | description": [
-              "audits[no-vulnerable-libraries].description"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": [
-              {
-                "values": {
-                  "itemCount": 3
-                },
-                "path": "audits[no-vulnerable-libraries].displayValue"
-              }
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": [
-              "audits[no-vulnerable-libraries].details.headings[0].text"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": [
-              "audits[no-vulnerable-libraries].details.headings[1].text"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": [
-              "audits[no-vulnerable-libraries].details.headings[2].text"
-            ],
-            "core/lib/i18n/i18n.js | itemSeverityMedium": [
-              "audits[no-vulnerable-libraries].details.items[0].highestSeverity"
             ],
             "core/audits/dobetterweb/js-libraries.js | title": [
               "audits[js-libraries].title"
@@ -17594,46 +17440,6 @@
               "items": []
             }
           },
-          "no-vulnerable-libraries": {
-            "id": "no-vulnerable-libraries",
-            "title": "Includes front-end JavaScript libraries with known security vulnerabilities",
-            "description": "Some third-party scripts may contain known security vulnerabilities that are easily identified and exploited by attackers. [Learn more about vulnerable libraries](https://web.dev/no-vulnerable-libraries/).",
-            "score": 0,
-            "scoreDisplayMode": "binary",
-            "displayValue": "3 vulnerabilities detected",
-            "details": {
-              "type": "table",
-              "headings": [
-                {
-                  "key": "detectedLib",
-                  "itemType": "link",
-                  "text": "Library Version"
-                },
-                {
-                  "key": "vulnCount",
-                  "itemType": "text",
-                  "text": "Vulnerability Count"
-                },
-                {
-                  "key": "highestSeverity",
-                  "itemType": "text",
-                  "text": "Highest Severity"
-                }
-              ],
-              "items": [
-                {
-                  "highestSeverity": "Medium",
-                  "vulnCount": 3,
-                  "detectedLib": {
-                    "text": "Next.js@10.0.6",
-                    "url": "https://snyk.io/vuln/npm:next?lh=10.0.6&utm_source=lighthouse&utm_medium=ref&utm_campaign=audit",
-                    "type": "link"
-                  }
-                }
-              ],
-              "summary": {}
-            }
-          },
           "js-libraries": {
             "id": "js-libraries",
             "title": "Detected JavaScript libraries",
@@ -18600,11 +18406,6 @@
                 "group": "best-practices-trust-safety"
               },
               {
-                "id": "no-vulnerable-libraries",
-                "weight": 1,
-                "group": "best-practices-trust-safety"
-              },
-              {
                 "id": "csp-xss",
                 "weight": 0,
                 "group": "best-practices-trust-safety"
@@ -18666,7 +18467,7 @@
               }
             ],
             "id": "best-practices",
-            "score": 0.92
+            "score": 1
           },
           "seo": {
             "title": "SEO",
@@ -20178,114 +19979,108 @@
             },
             {
               "startTime": 207,
-              "name": "lh:audit:no-vulnerable-libraries",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 208,
               "name": "lh:audit:js-libraries",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 209,
+              "startTime": 208,
               "name": "lh:audit:notification-on-start",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 210,
+              "startTime": 209,
               "name": "lh:audit:password-inputs-can-be-pasted-into",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 211,
+              "startTime": 210,
               "name": "lh:audit:uses-passive-event-listeners",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 212,
+              "startTime": 211,
               "name": "lh:audit:meta-description",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 213,
+              "startTime": 212,
               "name": "lh:audit:http-status-code",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 214,
+              "startTime": 213,
               "name": "lh:audit:font-size",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 215,
+              "startTime": 214,
               "name": "lh:audit:link-text",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 216,
+              "startTime": 215,
               "name": "lh:audit:crawlable-anchors",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 217,
+              "startTime": 216,
               "name": "lh:audit:is-crawlable",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 218,
+              "startTime": 217,
               "name": "lh:audit:robots-txt",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 219,
+              "startTime": 218,
               "name": "lh:audit:tap-targets",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 220,
+              "startTime": 219,
               "name": "lh:audit:hreflang",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 221,
+              "startTime": 220,
               "name": "lh:audit:plugins",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 222,
+              "startTime": 221,
               "name": "lh:audit:canonical",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 223,
+              "startTime": 222,
               "name": "lh:audit:structured-data",
               "duration": 1,
               "entryType": "measure"
             },
             {
-              "startTime": 224,
+              "startTime": 223,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 225
+          "total": 224
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -21341,32 +21136,6 @@
             ],
             "core/audits/dobetterweb/no-document-write.js | description": [
               "audits[no-document-write].description"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": [
-              "audits[no-vulnerable-libraries].title"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | description": [
-              "audits[no-vulnerable-libraries].description"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": [
-              {
-                "values": {
-                  "itemCount": 3
-                },
-                "path": "audits[no-vulnerable-libraries].displayValue"
-              }
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": [
-              "audits[no-vulnerable-libraries].details.headings[0].text"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": [
-              "audits[no-vulnerable-libraries].details.headings[1].text"
-            ],
-            "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": [
-              "audits[no-vulnerable-libraries].details.headings[2].text"
-            ],
-            "core/lib/i18n/i18n.js | itemSeverityMedium": [
-              "audits[no-vulnerable-libraries].details.items[0].highestSeverity"
             ],
             "core/audits/dobetterweb/js-libraries.js | title": [
               "audits[js-libraries].title"

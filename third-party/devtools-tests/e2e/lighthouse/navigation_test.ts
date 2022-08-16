@@ -85,7 +85,7 @@ describe('Navigation', async function() {
         assert.strictEqual(devicePixelRatio, 3);
 
         const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
-        assert.strictEqual(auditResults.length, 151);
+        assert.strictEqual(auditResults.length, 150);
         assert.strictEqual(erroredAudits.length, 0);
         assert.deepStrictEqual(failedAudits.map(audit => audit.id), [
           'service-worker',
@@ -122,7 +122,7 @@ describe('Navigation', async function() {
         assert.strictEqual(lhr.configSettings.throttlingMethod, 'devtools');
 
         const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
-        assert.strictEqual(auditResults.length, 151);
+        assert.strictEqual(auditResults.length, 150);
         assert.strictEqual(erroredAudits.length, 0);
         assert.deepStrictEqual(failedAudits.map(audit => audit.id), [
           'service-worker',

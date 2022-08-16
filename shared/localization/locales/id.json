@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Menghindari `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Keparahan Tertinggi"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Versi Library"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Jumlah Kerentanan"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Beberapa skrip pihak ketiga dapat berisi kerentanan keamanan umum yang mudah diidentifikasi dan dimanfaatkan oleh penyerang. [Pelajari lebih lanjut](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 kerentanan terdeteksi}other{# kerentanan terdeteksi}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Menyertakan library JavaScript front-end yang memiliki kerentanan keamanan umum"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Menghindari library JavaScript front-end yang memiliki kerentanan keamanan umum"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Pengguna tidak percaya atau bingung dengan situs yang meminta untuk mengirim pemberitahuan tanpa konteks. Sebaiknya kaitkan permintaan dengan gestur pengguna. [Pelajari lebih lanjut](https://web.dev/notification-on-start/)."
   },
