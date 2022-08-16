@@ -7545,6 +7545,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:ImageRecords",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:layout-shift-elements",
         "duration": 100,
         "entryType": "measure"
@@ -8146,12 +8152,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:uses-responsive-images",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:ImageRecords",
         "duration": 100,
         "entryType": "measure"
       },
