@@ -46,6 +46,7 @@ jobs:
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
+    - run: yarn reset-link
 
     # Run pptr tests using ToT Chrome instead of stable default.
     - name: Define ToT chrome path
