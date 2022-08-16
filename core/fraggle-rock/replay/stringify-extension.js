@@ -37,14 +37,12 @@ class LighthouseStringifyExtension extends PuppeteerReplay.PuppeteerStringifyExt
 
     await super.beforeAllSteps(out, flow);
 
-    const configContext = {
-      settingsOverrides: {
-        screenEmulation: {
-          disabled: true,
-        },
+    const flags = {
+      screenEmulation: {
+        disabled: true,
       },
     };
-    out.appendLine(`const configContext = ${JSON.stringify(configContext)}`);
+    out.appendLine(`const flags = ${JSON.stringify(flags)}`);
     if (isMobile) {
       out.appendLine(`const config = undefined;`);
     } else {
@@ -54,7 +52,7 @@ class LighthouseStringifyExtension extends PuppeteerReplay.PuppeteerStringifyExt
 
     out.appendLine(`const lhApi = await import('lighthouse/core/fraggle-rock/api.js');`);
     // eslint-disable-next-line max-len
-    out.appendLine(`const lhFlow = await lhApi.startFlow(page, {name: ${JSON.stringify(flow.title)}, config, configContext});`);
+    out.appendLine(`const lhFlow = await lhApi.startFlow(page, {name: ${JSON.stringify(flow.title)}, config, flags});`);
   }
 
   /**
