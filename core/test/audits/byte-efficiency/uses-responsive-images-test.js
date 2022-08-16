@@ -278,6 +278,8 @@ describe('Page uses responsive images', () => {
       mimeType: 'image/png',
       resourceSize: 1024 * 100,
       transferSize: 0,
+      finished: true,
+      statusCode: 200,
       url: 'https://google.com/logo.png',
     };
     const auditResult = await UsesResponsiveImagesAudit.audit_({
