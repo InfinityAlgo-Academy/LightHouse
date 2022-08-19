@@ -12,7 +12,7 @@
 
 
   A detailed overview of the Chromium networking layer can be found here:
-    https://github.com/GoogleChrome/lighthouse/blob/master/docs/Network-Timings.svg
+    https://github.com/GoogleChrome/lighthouse/blob/master/docs/Network-Timing.svg
 
   Below is a simplified model.
 
@@ -36,13 +36,13 @@
       browser network manager has initiated the request, hasn't recieved any bytes back yet
       Note: even with early-hint response, only the "real" response is considered here
 
-      CDP: Network.requestWillBeSentExtraInfo timings.requestTime + timings.sendStart
+      CDP: Network.requestWillBeSentExtraInfo timing.requestTime + timing.sendStart
 
   (3) dark shaded region
 
       browser network manager has recieved the very first header byte
 
-      CDP:   Network.requestWillBeSentExtraInfo timings.requestTime + timings.recievedHeadersEnd
+      CDP:   Network.requestWillBeSentExtraInfo timing.requestTime + timing.recievedHeadersEnd
       CDP:   (right edge of box) Network.finished/Network.failed timestamp
       Trace: ResourceFinish.finishedTime
 
