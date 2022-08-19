@@ -21,31 +21,37 @@
     |-------[xxxxxXXXXXX]-|
        (1)    (2)    (3) (4)
 
-  (1) Covers various stages:
+  (1) leading whisker
+
+      Covers various stages:
+
       - Queuing (delta between renderer knowing about request and network manager knowing about it)
       - DNS
       - Connection setup cost (TCP, TLS, SSL, etc.)
 
       CDP: left whisker edge is Network.requestWillBeSent timestamp
 
-  (2) light shaded region. browser network manager has initiated the request, hasn't recieved any bytes back yet
+  (2) light shaded region
+
+      browser network manager has initiated the request, hasn't recieved any bytes back yet
       Note: even with early-hint response, only the "real" response is considered here
 
       CDP: Network.requestWillBeSentExtraInfo timings.requestTime + timings.sendStart
 
-  (3) dark shaded region. browser network manager has recieved the very first header byte
+  (3) dark shaded region
+
+      browser network manager has recieved the very first header byte
 
       CDP:   Network.requestWillBeSentExtraInfo timings.requestTime + timings.recievedHeadersEnd
       CDP:   (right edge of box) Network.finished/Network.failed timestamp
       Trace: ResourceFinish.finishedTime
 
-  (4) Trailing whisker: marks time when render process main thread is available to use the resource.
+  (4) trailing whisker
 
-      Could be long if main thread is busy.
+      Marks time when render process main thread is available to use the resource. Could be long
+      if main thread is busy. Currently don't use this anywhere.
 
       Trace: ResourceFinish.ts
-
-      Currently don't use this anywhere.
  */
 
 import URL from './url-shim.js';
