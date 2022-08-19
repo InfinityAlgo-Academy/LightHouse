@@ -1,4 +1,4 @@
-import {UserFlow as UserFlow_} from '../lighthouse-core/fraggle-rock/user-flow';
+import {UserFlow as UserFlow_} from '../core/fraggle-rock/user-flow';
 
 declare module UserFlow {
   export interface FlowArtifacts {
@@ -10,7 +10,7 @@ declare module UserFlow {
     artifacts: LH.Artifacts;
     name: string;
     config?: LH.Config.Json;
-    configContext?: LH.Config.FRContext;
+    flags?: LH.Flags;
   }
 }
 

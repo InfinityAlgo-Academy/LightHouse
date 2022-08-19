@@ -10,14 +10,14 @@ import jsdom from 'jsdom';
 import jestMock from 'jest-mock';
 
 import {Util} from '../../renderer/util.js';
-import URL from '../../../lighthouse-core/lib/url-shim.js';
+import URL from '../../../core/lib/url-shim.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
 import {ReportRenderer} from '../../renderer/report-renderer.js';
-import {readJson} from '../../../lighthouse-core/test/test-utils.js';
+import {readJson} from '../../../core/test/test-utils.js';
 
-const sampleResultsOrig = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);
+const sampleResultsOrig = readJson('../../../core/test/results/sample_v2.json', import.meta);
 
 const TIMESTAMP_REGEX = /\d+, \d{4}.*\d+:\d+/;
 

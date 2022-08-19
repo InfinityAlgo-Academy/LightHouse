@@ -1,0 +1,376 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CLI Tests print-config fraggle rock should print the overridden config and exit immediately after 1`] = `
+Object {
+  "artifacts": Array [
+    Object {
+      "gatherer": "devtools-log",
+      "id": "DevtoolsLog",
+    },
+    Object {
+      "gatherer": "trace",
+      "id": "Trace",
+    },
+    Object {
+      "gatherer": "stacks",
+      "id": "Stacks",
+    },
+    Object {
+      "gatherer": "devtools-log-compat",
+      "id": "devtoolsLogs",
+    },
+    Object {
+      "gatherer": "trace-compat",
+      "id": "traces",
+    },
+    Object {
+      "gatherer": "full-page-screenshot",
+      "id": "FullPageScreenshot",
+    },
+  ],
+  "audits": Array [
+    Object {
+      "path": "metrics",
+    },
+    Object {
+      "path": "full-page-screenshot",
+    },
+  ],
+  "categories": Object {
+    "performance": Object {
+      "auditRefs": Array [
+        Object {
+          "group": "hidden",
+          "id": "metrics",
+          "weight": 0,
+        },
+      ],
+      "supportedModes": Array [
+        "navigation",
+        "timespan",
+        "snapshot",
+      ],
+      "title": "Performance",
+    },
+  },
+  "groups": Object {
+    "a11y-aria": Object {
+      "description": "These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader.",
+      "title": "ARIA",
+    },
+    "a11y-audio-video": Object {
+      "description": "These are opportunities to provide alternative content for audio and video. This may improve the experience for users with hearing or vision impairments.",
+      "title": "Audio and video",
+    },
+    "a11y-best-practices": Object {
+      "description": "These items highlight common accessibility best practices.",
+      "title": "Best practices",
+    },
+    "a11y-color-contrast": Object {
+      "description": "These are opportunities to improve the legibility of your content.",
+      "title": "Contrast",
+    },
+    "a11y-language": Object {
+      "description": "These are opportunities to improve the interpretation of your content by users in different locales.",
+      "title": "Internationalization and localization",
+    },
+    "a11y-names-labels": Object {
+      "description": "These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.",
+      "title": "Names and labels",
+    },
+    "a11y-navigation": Object {
+      "description": "These are opportunities to improve keyboard navigation in your application.",
+      "title": "Navigation",
+    },
+    "a11y-tables-lists": Object {
+      "description": "These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
+      "title": "Tables and lists",
+    },
+    "best-practices-browser-compat": Object {
+      "title": "Browser Compatibility",
+    },
+    "best-practices-general": Object {
+      "title": "General",
+    },
+    "best-practices-trust-safety": Object {
+      "title": "Trust and Safety",
+    },
+    "best-practices-ux": Object {
+      "title": "User Experience",
+    },
+    "budgets": Object {
+      "description": "Performance budgets set standards for the performance of your site.",
+      "title": "Budgets",
+    },
+    "diagnostics": Object {
+      "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
+      "title": "Diagnostics",
+    },
+    "hidden": Object {
+      "title": "",
+    },
+    "load-opportunities": Object {
+      "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
+      "title": "Opportunities",
+    },
+    "metrics": Object {
+      "title": "Metrics",
+    },
+    "pwa-installable": Object {
+      "title": "Installable",
+    },
+    "pwa-optimized": Object {
+      "title": "PWA Optimized",
+    },
+    "seo-content": Object {
+      "description": "Format your HTML in a way that enables crawlers to better understand your app’s content.",
+      "title": "Content Best Practices",
+    },
+    "seo-crawl": Object {
+      "description": "To appear in search results, crawlers need access to your app.",
+      "title": "Crawling and Indexing",
+    },
+    "seo-mobile": Object {
+      "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/).",
+      "title": "Mobile Friendly",
+    },
+  },
+  "navigations": Array [
+    Object {
+      "artifacts": Array [
+        "DevtoolsLog",
+        "Trace",
+        "Stacks",
+        "devtoolsLogs",
+        "traces",
+        "FullPageScreenshot",
+      ],
+      "blankPage": "about:blank",
+      "blockedUrlPatterns": Array [],
+      "cpuQuietThresholdMs": 1000,
+      "disableStorageReset": false,
+      "disableThrottling": false,
+      "id": "default",
+      "loadFailureMode": "fatal",
+      "networkQuietThresholdMs": 1000,
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+    },
+  ],
+  "settings": Object {
+    "additionalTraceCategories": null,
+    "auditMode": true,
+    "blockedUrlPatterns": null,
+    "budgets": null,
+    "channel": "cli",
+    "debugNavigation": false,
+    "disableStorageReset": false,
+    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4695.0 Mobile Safari/537.36 Chrome-Lighthouse",
+    "extraHeaders": null,
+    "formFactor": "mobile",
+    "gatherMode": false,
+    "locale": "en-US",
+    "maxWaitForFcp": 30000,
+    "maxWaitForLoad": 45000,
+    "onlyAudits": Array [
+      "metrics",
+    ],
+    "onlyCategories": null,
+    "output": Array [
+      "json",
+    ],
+    "precomputedLanternData": null,
+    "screenEmulation": Object {
+      "deviceScaleFactor": 2.625,
+      "disabled": false,
+      "height": 640,
+      "mobile": true,
+      "width": 360,
+    },
+    "skipAboutBlank": false,
+    "skipAudits": null,
+    "throttling": Object {
+      "cpuSlowdownMultiplier": 4,
+      "downloadThroughputKbps": 1474.5600000000002,
+      "requestLatencyMs": 562.5,
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "uploadThroughputKbps": 675,
+    },
+    "throttlingMethod": "simulate",
+  },
+}
+`;
+
+exports[`CLI Tests print-config should print the overridden config and exit immediately after 1`] = `
+Object {
+  "audits": Array [
+    Object {
+      "path": "dobetterweb/charset",
+    },
+  ],
+  "categories": Object {
+    "best-practices": Object {
+      "auditRefs": Array [
+        Object {
+          "group": "best-practices-browser-compat",
+          "id": "charset",
+          "weight": 1,
+        },
+      ],
+      "supportedModes": Array [
+        "navigation",
+        "timespan",
+        "snapshot",
+      ],
+      "title": "Best Practices",
+    },
+  },
+  "groups": Object {
+    "a11y-aria": Object {
+      "description": "These are opportunities to improve the usage of ARIA in your application which may enhance the experience for users of assistive technology, like a screen reader.",
+      "title": "ARIA",
+    },
+    "a11y-audio-video": Object {
+      "description": "These are opportunities to provide alternative content for audio and video. This may improve the experience for users with hearing or vision impairments.",
+      "title": "Audio and video",
+    },
+    "a11y-best-practices": Object {
+      "description": "These items highlight common accessibility best practices.",
+      "title": "Best practices",
+    },
+    "a11y-color-contrast": Object {
+      "description": "These are opportunities to improve the legibility of your content.",
+      "title": "Contrast",
+    },
+    "a11y-language": Object {
+      "description": "These are opportunities to improve the interpretation of your content by users in different locales.",
+      "title": "Internationalization and localization",
+    },
+    "a11y-names-labels": Object {
+      "description": "These are opportunities to improve the semantics of the controls in your application. This may enhance the experience for users of assistive technology, like a screen reader.",
+      "title": "Names and labels",
+    },
+    "a11y-navigation": Object {
+      "description": "These are opportunities to improve keyboard navigation in your application.",
+      "title": "Navigation",
+    },
+    "a11y-tables-lists": Object {
+      "description": "These are opportunities to improve the experience of reading tabular or list data using assistive technology, like a screen reader.",
+      "title": "Tables and lists",
+    },
+    "best-practices-browser-compat": Object {
+      "title": "Browser Compatibility",
+    },
+    "best-practices-general": Object {
+      "title": "General",
+    },
+    "best-practices-trust-safety": Object {
+      "title": "Trust and Safety",
+    },
+    "best-practices-ux": Object {
+      "title": "User Experience",
+    },
+    "budgets": Object {
+      "description": "Performance budgets set standards for the performance of your site.",
+      "title": "Budgets",
+    },
+    "diagnostics": Object {
+      "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
+      "title": "Diagnostics",
+    },
+    "hidden": Object {
+      "title": "",
+    },
+    "load-opportunities": Object {
+      "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
+      "title": "Opportunities",
+    },
+    "metrics": Object {
+      "title": "Metrics",
+    },
+    "pwa-installable": Object {
+      "title": "Installable",
+    },
+    "pwa-optimized": Object {
+      "title": "PWA Optimized",
+    },
+    "seo-content": Object {
+      "description": "Format your HTML in a way that enables crawlers to better understand your app’s content.",
+      "title": "Content Best Practices",
+    },
+    "seo-crawl": Object {
+      "description": "To appear in search results, crawlers need access to your app.",
+      "title": "Crawling and Indexing",
+    },
+    "seo-mobile": Object {
+      "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/).",
+      "title": "Mobile Friendly",
+    },
+  },
+  "passes": Array [
+    Object {
+      "blankPage": "about:blank",
+      "blockedUrlPatterns": Array [],
+      "cpuQuietThresholdMs": 1000,
+      "gatherers": Array [
+        Object {
+          "path": "meta-elements",
+        },
+        Object {
+          "path": "main-document-content",
+        },
+      ],
+      "loadFailureMode": "fatal",
+      "networkQuietThresholdMs": 1000,
+      "passName": "defaultPass",
+      "pauseAfterFcpMs": 1000,
+      "pauseAfterLoadMs": 1000,
+      "recordTrace": false,
+      "useThrottling": true,
+    },
+  ],
+  "settings": Object {
+    "additionalTraceCategories": null,
+    "auditMode": true,
+    "blockedUrlPatterns": null,
+    "budgets": null,
+    "channel": "cli",
+    "debugNavigation": false,
+    "disableStorageReset": false,
+    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4695.0 Mobile Safari/537.36 Chrome-Lighthouse",
+    "extraHeaders": null,
+    "formFactor": "mobile",
+    "gatherMode": false,
+    "locale": "en-US",
+    "maxWaitForFcp": 30000,
+    "maxWaitForLoad": 45000,
+    "onlyAudits": Array [
+      "charset",
+    ],
+    "onlyCategories": null,
+    "output": Array [
+      "json",
+    ],
+    "precomputedLanternData": null,
+    "screenEmulation": Object {
+      "deviceScaleFactor": 2.625,
+      "disabled": false,
+      "height": 640,
+      "mobile": true,
+      "width": 360,
+    },
+    "skipAboutBlank": false,
+    "skipAudits": null,
+    "throttling": Object {
+      "cpuSlowdownMultiplier": 4,
+      "downloadThroughputKbps": 1474.5600000000002,
+      "requestLatencyMs": 562.5,
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "uploadThroughputKbps": 675,
+    },
+    "throttlingMethod": "simulate",
+  },
+}
+`;

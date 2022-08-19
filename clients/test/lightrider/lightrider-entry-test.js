@@ -8,8 +8,8 @@
 import jestMock from 'jest-mock';
 import {strict as assert} from 'assert';
 import {runLighthouseInLR} from '../../lightrider/lightrider-entry.js';
-import {Runner} from '../../../lighthouse-core/runner.js';
-import {LighthouseError} from '../../../lighthouse-core/lib/lh-error.js';
+import {Runner} from '../../../core/runner.js';
+import {LighthouseError} from '../../../core/lib/lh-error.js';
 
 describe('lightrider-entry', () => {
   describe('#runLighthouseInLR', () => {

@@ -43,10 +43,11 @@ In general, Lighthouse should be using the latest version of all of these depend
 1. https://github.com/GoogleChrome/lighthouse-stack-packs
 1. `puppeteer` and `puppeteer-core`
 1. `third-party-web`
-1. `snyk`
 1. `axe-core`
 1. `js-library-detector`
 1. `chrome-launcher`
+1. `chrome-devtools-frontend`
+1. `devtools-protocol`
 
 ### On the scheduled release date
 
@@ -55,7 +56,7 @@ and that no new PRs should be merged until you are done.
 
 ```sh
 # Make pristine folder.
-bash ./lighthouse-core/scripts/release/prepare-pristine.sh
+bash ./core/scripts/release/prepare-pristine.sh
 cd ../lighthouse-pristine
 yarn
 yarn build-all
@@ -92,7 +93,7 @@ Now that the integrations are confirmed to work, go back to `lighthouse` folder.
 
 ```sh
 # Prepare the commit, replace x.x.x with the desired version
-bash ./lighthouse-core/scripts/release/prepare-commit.sh x.x.x
+bash ./core/scripts/release/prepare-commit.sh x.x.x
 ```
 
 1. Edit changelog.md before opening the PR
@@ -103,7 +104,7 @@ bash ./lighthouse-core/scripts/release/prepare-commit.sh x.x.x
 
 ```sh
 # Package everything for publishing.
-bash ./lighthouse-core/scripts/release/prepare-package.sh
+bash ./core/scripts/release/prepare-package.sh
 
 # Make sure you're in the Lighthouse pristine repo.
 cd ../lighthouse-pristine

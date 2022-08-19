@@ -9,16 +9,16 @@ import {strict as assert} from 'assert';
 import jsdom from 'jsdom';
 import jestMock from 'jest-mock';
 
-import reportAssets from '../../generator/report-assets.js';
+import {reportAssets} from '../../generator/report-assets.js';
 import {Util} from '../../renderer/util.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {ReportUIFeatures} from '../../renderer/report-ui-features.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
 import {ReportRenderer} from '../../renderer/report-renderer.js';
-import {readJson} from '../../../lighthouse-core/test/test-utils.js';
+import {readJson} from '../../../core/test/test-utils.js';
 
-const sampleResultsOrig = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);
+const sampleResultsOrig = readJson('../../../core/test/results/sample_v2.json', import.meta);
 
 describe('ReportUIFeatures', () => {
   let sampleResults;

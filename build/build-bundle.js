@@ -21,9 +21,9 @@ import {rollup} from 'rollup';
 // import PubAdsPlugin from 'lighthouse-plugin-publisher-ads/plugin.js';
 
 import * as rollupPlugins from './rollup-plugins.js';
-import {Runner} from '../lighthouse-core/runner.js';
+import {Runner} from '../core/runner.js';
 import {LH_ROOT} from '../root.js';
-import {readJson} from '../lighthouse-core/test/test-utils.js';
+import {readJson} from '../core/test/test-utils.js';
 
 const require = createRequire(import.meta.url);
 
@@ -98,7 +98,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
 
   /** @type {Record<string, string>} */
   const shimsObj = {
-    [require.resolve('../lighthouse-core/gather/connections/cri.js')]:
+    [require.resolve('../core/gather/connections/cri.js')]:
       'export const CriConnection = {}',
     [require.resolve('../package.json')]: `export const version = '${pkg.version}';`,
   };
@@ -116,12 +116,13 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
   // Don't include the stringified report in DevTools - see devtools-report-assets.js
   // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
   if (isDevtools(entryPath) || isLightrider(entryPath)) {
-    modulesToIgnore.push(require.resolve('../report/generator/report-assets.js'));
+    shimsObj[require.resolve('../report/generator/report-assets.js')] =
+      'export const reportAssets = {}';
   }
 
   // Don't include locales in DevTools.
   if (isDevtools(entryPath)) {
-    shimsObj['./locales.js'] = 'export default {}';
+    shimsObj['./locales.js'] = 'export const locales = {};';
   }
 
   for (const modulePath of modulesToIgnore) {
@@ -167,7 +168,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         ...shimsObj,
         // Allows for plugins to import lighthouse.
         'lighthouse': `
-          import {Audit} from '${require.resolve('../lighthouse-core/audits/audit.js')}';
+          import {Audit} from '${require.resolve('../core/audits/audit.js')}';
           export {Audit};
         `,
         'url': `
@@ -186,6 +187,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         `,
       }),
       rollupPlugins.json(),
+      rollupPlugins.removeModuleDirCalls(),
       rollupPlugins.inlineFs({verbose: false}),
       rollupPlugins.commonjs({
         // https://github.com/rollup/plugins/issues/922

@@ -86,7 +86,7 @@ const requireFileExtension = {
 
             // Usually `fixedPath.startsWith(requiredPath)` and this will just add
             // a suffix to the existing path, but sometimes humans write confusing
-            // paths, e.g. './lighthouse-core/lib/../lib/lh-error.js'. To cover both
+            // paths, e.g. './core/lib/../lib/lh-error.js'. To cover both
             // cases, double check that the paths resolve to the same file.
             const resolvedFixedPath = requireResolveOrNull(fixedPath, contextDirname);
 

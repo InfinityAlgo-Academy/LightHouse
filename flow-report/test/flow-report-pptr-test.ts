@@ -6,7 +6,7 @@
 
 import puppeteer, {Browser, Page} from 'puppeteer';
 
-import ReportGenerator from '../../report/generator/report-generator.js';
+import {ReportGenerator} from '../../report/generator/report-generator.js';
 import {flowResult} from './sample-flow';
 
 describe('Lighthouse Flow Report', () => {

@@ -4,13 +4,13 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {NetworkNode as _NetworkNode} from '../lighthouse-core/lib/dependency-graph/network-node';
-import {CPUNode as _CPUNode} from '../lighthouse-core/lib/dependency-graph/cpu-node';
-import {Simulator as _Simulator} from '../lighthouse-core/lib/dependency-graph/simulator/simulator';
-import {Driver} from '../lighthouse-core/gather/driver';
-import {ExecutionContext} from '../lighthouse-core/gather/driver/execution-context';
-import {Fetcher} from '../lighthouse-core/gather/fetcher';
-import {ArbitraryEqualityMap} from '../lighthouse-core/lib/arbitrary-equality-map';
+import {NetworkNode as _NetworkNode} from '../core/lib/dependency-graph/network-node';
+import {CPUNode as _CPUNode} from '../core/lib/dependency-graph/cpu-node';
+import {Simulator as _Simulator} from '../core/lib/dependency-graph/simulator/simulator';
+import {Driver} from '../core/gather/driver';
+import {ExecutionContext} from '../core/gather/driver/execution-context';
+import {Fetcher} from '../core/gather/fetcher';
+import {ArbitraryEqualityMap} from '../core/lib/arbitrary-equality-map';
 
 import {Artifacts, BaseArtifacts, FRBaseArtifacts, GathererArtifacts} from './artifacts';
 import Config from './config';
@@ -147,7 +147,7 @@ declare module Gatherer {
   type AnyFRGathererInstance = FRGathererInstanceExpander<Gatherer.DependencyKey>
 
   namespace Simulation {
-    type GraphNode = import('../lighthouse-core/lib/dependency-graph/base-node').Node;
+    type GraphNode = import('../core/lib/dependency-graph/base-node').Node;
     type GraphNetworkNode = _NetworkNode;
     type GraphCPUNode = _CPUNode;
     type Simulator = _Simulator;

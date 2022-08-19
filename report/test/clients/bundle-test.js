@@ -13,7 +13,7 @@ import * as lighthouseRenderer from '../../clients/bundle.js';
 import {LH_ROOT} from '../../../root.js';
 
 const sampleResultsStr =
-  fs.readFileSync(LH_ROOT + '/lighthouse-core/test/results/sample_v2.json', 'utf-8');
+  fs.readFileSync(LH_ROOT + '/core/test/results/sample_v2.json', 'utf-8');
 
 describe('lighthouseRenderer bundle', () => {
   let document;

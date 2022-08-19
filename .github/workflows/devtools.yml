@@ -59,12 +59,12 @@ jobs:
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/download-depot-tools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
     - name: Download DevTools Frontend
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/download-devtools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-devtools.sh
 
     - name: Roll Lighthouse + build DevTools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/roll-devtools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/roll-devtools.sh
 
     - name: Cache build artifacts
       id: devtools-build-artifacts
@@ -98,7 +98,7 @@ jobs:
       run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
     # For vpython.
     - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/download-depot-tools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
 
     - name: Load build artifacts
       id: devtools-build-artifacts
@@ -111,7 +111,7 @@ jobs:
         key: devtools-build-artifacts-${{ github.run_id }}
 
     - name: Run e2e tests
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/run-e2e-tests.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/run-e2e-tests.sh
 
   smoke:
     needs: [build]
@@ -156,16 +156,20 @@ jobs:
       run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
     - name: Install Chrome ToT
       working-directory: /home/runner
-      run: bash ${{ github.workspace }}/lighthouse/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+      run: bash ${{ github.workspace }}/lighthouse/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: mkdir latest-run
       working-directory: ${{ github.workspace }}/lighthouse
     - name: yarn smoke --runner devtools
       # Disabled because normal Chrome usage makes DevTools not function on these poorly constructed pages
-      #   errors-expired-ssl errors-infinite-loop
+      #   errors-expired-ssl, errors-infinite-loop, dbw (dialog prompt)
       # Disabled because Chrome will follow the redirect first, and Lighthouse will only ever see/run the final URL.
-      #   redirects-client-paint-server redirects-multiple-server redirects-single-server redirects-single-client
-      run: xvfb-run --auto-servernum yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=2 --invert-match a11y byte-efficiency byte-gzip dbw errors-expired-ssl errors-infinite-loop lantern-idle-callback-short legacy-javascript metrics-tricky-tti metrics-tricky-tti-late-fcp perf-budgets perf-fonts perf-frame-metrics perf-preload perf-trace-elements pwa redirects-client-paint-server redirects-history-push-state redirects-multiple-server redirects-single-server redirects-single-client redirects-scripts screenshot seo-passing seo-tap-targets
+      #   redirects-client-paint-server, redirects-multiple-server, redirects-single-server, redirects-single-client
+      # Disabled because these tests use settings that cannot be fully configured in DevTools (e.g. throttling method "provided").
+      #   metrics-tricky-tti, metrics-tricky-tti-late-fcp, screenshot
+      # Disabled because of differences that need further investigation
+      #   byte-efficiency, byte-gzip, perf-preload
+      run: xvfb-run --auto-servernum yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=2 --invert-match byte-efficiency byte-gzip dbw errors-expired-ssl errors-infinite-loop metrics-tricky-tti metrics-tricky-tti-late-fcp perf-preload redirects-client-paint-server redirects-history-push-state redirects-multiple-server redirects-single-server redirects-single-client redirects-scripts screenshot
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Upload failures

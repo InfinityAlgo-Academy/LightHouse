@@ -82,7 +82,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['lighthouse-cli/test/smokehouse/test-definitions/*.js'],
+      files: ['cli/test/smokehouse/test-definitions/*.js'],
       rules: {
         'max-len': 0,
       },

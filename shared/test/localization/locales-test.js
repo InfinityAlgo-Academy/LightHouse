@@ -5,8 +5,8 @@
  */
 'use strict';
 
-const locales = require('../../localization/locales.js');
-const assert = require('assert').strict;
+import {locales} from '../../localization/locales.js';
+import {strict as assert} from 'assert';
 
 describe('locales', () => {
   it('has only canonical (or expected-deprecated) language tags', () => {

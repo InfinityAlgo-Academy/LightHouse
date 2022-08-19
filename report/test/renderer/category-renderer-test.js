@@ -13,9 +13,9 @@ import {I18n} from '../../renderer/i18n.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
-import {readJson} from '../../../lighthouse-core/test/test-utils.js';
+import {readJson} from '../../../core/test/test-utils.js';
 
-const sampleResultsOrig = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);
+const sampleResultsOrig = readJson('../../../core/test/results/sample_v2.json', import.meta);
 
 describe('CategoryRenderer', () => {
   let renderer;
@@ -421,7 +421,7 @@ describe('CategoryRenderer', () => {
       const naAudits = elem.querySelectorAll('.lh-clump--notapplicable .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 5);
+      assert.equal(failedAudits.length, 4);
       assert.equal(warningAudits.length, 2);
       assert.equal(manualAudits.length, 3);
       assert.equal(naAudits.length, 1);
@@ -441,7 +441,7 @@ describe('CategoryRenderer', () => {
       const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 8);
+      assert.equal(failedAudits.length, 7);
     });
 
     it('expands warning audit group', () => {

@@ -5,5 +5,10 @@
  */
 'use strict';
 
-module.exports.swapLocale = require('./swap-locale.js');
-module.exports.format = require('./format.js');
+import * as format from './format.js';
+import {swapLocale} from './swap-locale.js';
+
+export {
+  swapLocale,
+  format,
+};

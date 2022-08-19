@@ -35,10 +35,10 @@ async function buildReportGenerator() {
     input: 'report/generator/report-generator.js',
     plugins: [
       rollupPlugins.shim({
-        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
+        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export const flowReportAssets = {}',
       }),
-      rollupPlugins.commonjs(),
       rollupPlugins.nodeResolve(),
+      rollupPlugins.removeModuleDirCalls(),
       rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
     ],
   });

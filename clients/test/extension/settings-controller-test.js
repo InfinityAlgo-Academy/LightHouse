@@ -6,7 +6,7 @@
 'use strict';
 
 import * as SettingsController from '../../extension/scripts/settings-controller.js';
-import defaultConfig from '../../../lighthouse-core/config/default-config.js';
+import defaultConfig from '../../../core/config/default-config.js';
 import * as format from '../../../shared/localization/format.js';
 
 describe('Lighthouse chrome extension SettingsController', () => {
