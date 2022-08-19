@@ -10,30 +10,42 @@
  * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/sdk/NetworkRequest.js
  * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/sdk/NetworkManager.js
 
+
+  A detailed overview of the Chromium networking layer can be found here:
+    https://github.com/GoogleChrome/lighthouse/blob/master/docs/Network-Timings.svg
+
+  Below is a simplified model.
+
   DevTools box-whisker
 
     |-------[xxxxxXXXXXX]-|
        (1)    (2)    (3) (4)
 
-  (1) Queuing (delta between renderer knowing about request and network manager knowing about it),
-      DNS, SSL, connection setup cost
+  (1) Covers various stages:
+      - Queuing (delta between renderer knowing about request and network manager knowing about it)
+      - DNS
+      - Connection setup cost (TCP, TLS, SSL, etc.)
 
       CDP: left whisker edge is Network.requestWillBeSent timestamp
 
   (2) light shaded region. browser network manager has initiated the request, hasn't recieved any bytes back yet
       Note: even with early-hint response, only the "real" response is considered here
 
-      CDP: Network.responseRecieved timings.requestStart + timing.sendStart
+      CDP: Network.requestWillBeSentExtraInfo timings.requestTime + timings.sendStart
 
   (3) dark shaded region. browser network manager has recieved the very first header byte
 
-      CDP: Network.responseRecieved timings.requestStart + timing.recievedHeadersEnd
-      CDP: (right edge of box) Network.finished/Network.failed timestamp
+      CDP:   Network.requestWillBeSentExtraInfo timings.requestTime + timings.recievedHeadersEnd
+      CDP:   (right edge of box) Network.finished/Network.failed timestamp
+      Trace: ResourceFinish.finishedTime
 
-  (4) Trailing whisker: marks time when render process has used the resource.
+  (4) Trailing whisker: marks time when render process main thread is available to use the resource.
 
-      Trace: ResourceFinished trace event finishedTime. Currently don't care about this. Could be
-      long if main thread is busy.
+      Could be long if main thread is busy.
+
+      Trace: ResourceFinish.ts
+
+      Currently don't use this anywhere.
  */
 
 import URL from './url-shim.js';
