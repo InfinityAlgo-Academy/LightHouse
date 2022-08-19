@@ -9,7 +9,7 @@ import assert from 'assert';
 
 import puppeteer from 'puppeteer';
 
-import {server} from '../../cli/test/fixtures/static-server.js';
+import {Server} from '../../cli/test/fixtures/static-server.js';
 import defaultConfig from '../../core/config/default-config.js';
 import {LH_ROOT} from '../../root.js';
 import {getCanonicalLocales} from '../../shared/localization/format.js';
@@ -55,7 +55,9 @@ describe('Lighthouse Viewer', () => {
       });
   }
 
+  let server;
   before(async () => {
+    server = new Server(portNumber);
     await server.listen(portNumber, 'localhost');
 
     // start puppeteer

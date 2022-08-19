@@ -198,17 +198,15 @@ async function begin() {
   const testDefns = getShardedDefinitions(requestedTestDefns, argv.shard);
 
   let smokehouseResult;
-  let server;
-  let serverForOffline;
+  let servers;
   let takeNetworkRequestUrls = undefined;
 
   try {
     // If running the core tests, spin up the test server.
     if (testDefnPath === coreTestDefnsPath) {
-      ({server, serverForOffline} = await import('../../fixtures/static-server.js'));
-      await server.listen(10200, 'localhost');
-      await serverForOffline.listen(10503, 'localhost');
-      takeNetworkRequestUrls = server.takeRequestUrls.bind(server);
+      const {createServers} = await import('../../fixtures/static-server.js');
+      servers = await createServers();
+      takeNetworkRequestUrls = servers[0].takeRequestUrls.bind(servers[0]);
     }
 
     const prunedTestDefns = pruneExpectedNetworkRequests(testDefns, takeNetworkRequestUrls);
@@ -224,8 +222,7 @@ async function begin() {
 
     smokehouseResult = (await runSmokehouse(prunedTestDefns, options));
   } finally {
-    if (server) await server.close();
-    if (serverForOffline) await serverForOffline.close();
+    servers?.forEach(s => s.close());
   }
 
   if (!smokehouseResult.success) {

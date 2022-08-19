@@ -8,7 +8,7 @@ import fs from 'fs';
 
 import puppeteer from 'puppeteer';
 
-import {server} from '../../cli/test/fixtures/static-server.js';
+import {Server} from '../../cli/test/fixtures/static-server.js';
 import {LH_ROOT} from '../../root.js';
 
 const debugOptions = JSON.parse(
@@ -33,7 +33,9 @@ describe('Lighthouse Treemap', () => {
   /** @type {Error[]} */
   let pageErrors = [];
 
+  let server;
   before(async function() {
+    server = new Server(portNumber);
     await server.listen(portNumber, 'localhost');
   });
 
