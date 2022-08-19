@@ -122,6 +122,7 @@ class CriticalRequestChains extends Audit {
     /** @param {CrcNodeInfo} opts */
     function flatten(opts) {
       const request = opts.node.request;
+      console.log({request});
       const simpleRequest = {
         url: request.url,
         startTime: request.startTime,

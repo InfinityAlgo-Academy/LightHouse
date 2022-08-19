@@ -504,6 +504,17 @@ class TraceProcessor {
     const pidToTid = new Map();
 
     mainFramePids.forEach(pid => {
+      const urls = [];
+      // console.log(pid);
+      // console.log(frameCommittedEvts.map(e => e.args.data));
+      const fcEvts = frameCommittedEvts.filter(e => e.args.data?.processId === pid);
+      if (fcEvts.length < 1) {
+        // console.error('- unexpected number of fc matches!' + fcEvts.length);
+      }
+      fcEvts.forEach(e => {
+        urls.push(e.args.data.url);
+      });
+      // console.log(urls)
       // While renderer tids are generally predictable, we'll doublecheck it
       const threadNameEvt = keyEvents.find(e =>
         e.cat === '__metadata' &&
@@ -532,8 +543,49 @@ class TraceProcessor {
         }
       }
 
-      pidToTid.set(pid, tid);
+      pidToTid.set(pid, {tid, urls});
     });
+
+    // [...pidToTid.entries()].forEach(([pid, obj]) => {
+    //   console.log('pid', pid, obj);
+    // });
+
+
+
+    const rendererDudes = keyEvents.filter(e =>
+      e.cat === '__metadata' &&
+      e.ph === 'M' &&
+      e.name === 'thread_name' &&
+      e.args.name === 'CrRendererMain'
+    );
+    // rendererDudes.map(e => `pid ${e.pid}   tid: ${e.tid}`).forEach(console.log)
+
+    const fcs = keyEvents.map(evt => {
+      if (evt.name === 'FrameCommittedInBrowser')
+        return {pid: evt.args.data?.processId, url: evt.args.data.url};
+      if (evt.name === 'FrameLoader' && evt.args?.snapshot?.documentLoaderURL)
+        return {pid: evt.pid, url: evt.args.snapshot.documentLoaderURL};
+      if (evt.name === 'ParseHTML' && evt.args?.beginData?.url)
+        return {pid: evt.pid, url: evt.args.beginData.url};
+
+      return;
+    }).filter(Boolean)
+    .map(obj => ({
+      pid: obj?.pid,
+      url: obj?.url.slice(0, 200),
+    }));
+
+    // console.log(fcs);
+
+    // const pidToUrls = new Map();
+    console.log('in summary');
+    rendererDudes.forEach(r => {
+      const urls = Array.from(new Set(fcs.filter(x => x.pid === r.pid).map(x => x.url)));
+      console.log('pid', r.pid, 'tid', r.tid, 'urls', urls);
+    });
+
+
+
     return pidToTid;
   }
 
@@ -748,15 +800,16 @@ class TraceProcessor {
     }
 
     // Compute our time origin to use for all relative timings.
-    const timeOriginEvt = this.computeTimeOrigin(
-      {keyEvents, frameEvents, mainFrameIds},
-      timeOriginDeterminationMethod
-    );
+    // const timeOriginEvt = this.computeTimeOrigin(
+    //   {keyEvents, frameEvents, mainFrameIds},
+    //   timeOriginDeterminationMethod
+    // );
+const timeOriginEvt  = {};
 
-    const mainThreadEvents = processEvents.filter(e => e.tid === rendererPidTids.get(e.pid));
+    const mainThreadEvents = processEvents.filter(e => e.tid === rendererPidTids.get(e.pid).tid);
 
     // Ensure our traceEnd reflects all page activity.
-    const traceEnd = this.computeTraceEnd(trace.traceEvents, timeOriginEvt);
+    const traceEnd = {}; // this.computeTraceEnd(trace.traceEvents, timeOriginEvt);
 
     // This could be much more concise with object spread, but the consensus is that explicitness is
     // preferred over brevity here.
