@@ -27,20 +27,20 @@ declare module Details {
       length: number;
       transferSize: number;
     };
-    chains: SimpleCriticalRequestNode;
+    chains: SimpleCriticalRequestTree;
   }
 
+  type SimpleCriticalRequestTree = { [id: string]: SimpleCriticalRequestNode };
+
   type SimpleCriticalRequestNode = {
-    [id: string]: {
-      request: {
-        url: string;
-        startTime: number;
-        endTime: number;
-        responseReceivedTime: number;
-        transferSize: number;
-      };
-      children?: SimpleCriticalRequestNode;
-    }
+    request: {
+      url: string;
+      startTime: number;
+      endTime: number;
+      responseReceivedTime: number;
+      transferSize: number;
+    };
+    children?: SimpleCriticalRequestTree;
   }
 
   interface Filmstrip {

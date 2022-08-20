@@ -70,17 +70,17 @@ class CriticalRequestChains {
    * Create a tree of critical requests.
    * @param {LH.Artifacts.NetworkRequest} mainResource
    * @param {LH.Gatherer.Simulation.GraphNode} graph
-   * @return {LH.Artifacts.CriticalRequestNode}
+   * @return {LH.Artifacts.CriticalRequestTree}
    */
   static extractChainsFromGraph(mainResource, graph) {
-    /** @type {LH.Artifacts.CriticalRequestNode} */
-    const rootNode = {};
+    /** @type {LH.Artifacts.CriticalRequestTree} */
+    const tree = {};
 
     /**
      * @param {LH.Artifacts.NetworkRequest[]} path
      */
     function addChain(path) {
-      let currentNode = rootNode;
+      let currentNode = tree;
 
       for (const record of path) {
         if (!currentNode[record.requestId]) {
@@ -123,13 +123,13 @@ class CriticalRequestChains {
       addChain(networkPath);
     }, getNextNodes);
 
-    return rootNode;
+    return tree;
   }
 
   /**
    * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog, trace: LH.Trace}} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @return {Promise<LH.Artifacts.CriticalRequestNode>}
+   * @return {Promise<LH.Artifacts.CriticalRequestTree>}
    */
   static async compute_(data, context) {
     const mainResource = await MainResource.request(data, context);

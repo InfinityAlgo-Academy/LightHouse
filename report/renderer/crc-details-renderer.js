@@ -26,7 +26,7 @@ import {Util} from './util.js';
 /** @typedef {import('./details-renderer.js').DetailsRenderer} DetailsRenderer */
 /**
  * @typedef CRCSegment
- * @property {LH.Audit.Details.SimpleCriticalRequestNode[string]} node
+ * @property {LH.Audit.Details.SimpleCriticalRequestNode} node
  * @property {boolean} isLastChild
  * @property {boolean} hasChildren
  * @property {number} startTime
@@ -37,8 +37,8 @@ import {Util} from './util.js';
 class CriticalRequestChainRenderer {
   /**
    * Create render context for critical-request-chain tree display.
-   * @param {LH.Audit.Details.SimpleCriticalRequestNode} tree
-   * @return {{tree: LH.Audit.Details.SimpleCriticalRequestNode, startTime: number, transferSize: number}}
+   * @param {LH.Audit.Details.SimpleCriticalRequestTree} tree
+   * @return {{tree: LH.Audit.Details.SimpleCriticalRequestTree, startTime: number, transferSize: number}}
    */
   static initTree(tree) {
     let startTime = 0;
@@ -56,7 +56,7 @@ class CriticalRequestChainRenderer {
    * parent. Calculates if this node is the last child, whether it has any
    * children itself and what the tree looks like all the way back up to the root,
    * so the tree markers can be drawn correctly.
-   * @param {LH.Audit.Details.SimpleCriticalRequestNode} parent
+   * @param {LH.Audit.Details.SimpleCriticalRequestTree} parent
    * @param {string} id
    * @param {number} startTime
    * @param {number} transferSize

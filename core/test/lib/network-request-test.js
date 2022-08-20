@@ -111,10 +111,10 @@ describe('NetworkRequest', () => {
   describe('update fetch stats for Lightrider', () => {
     function getRequest() {
       return {
-        // units = seconds
-        startTime: 0,
-        endTime: 2,
-        responseReceivedTime: 1,
+        // units = ms
+        internalNetworkRequestTime: 0,
+        networkEndTime: 2000,
+        responseHeadersReceivedTime: 1000,
 
         // units = ms
         responseHeaders: [
@@ -134,9 +134,9 @@ describe('NetworkRequest', () => {
       global.isLightrider = true;
       const record = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
 
-      expect(record.startTime).toStrictEqual(0);
-      expect(record.endTime).toStrictEqual(2);
-      expect(record.responseReceivedTime).toStrictEqual(1);
+      expect(record.internalNetworkRequestTime).toStrictEqual(0);
+      expect(record.networkEndTime).toStrictEqual(2000);
+      expect(record.responseHeadersReceivedTime).toStrictEqual(1000);
       expect(record.lrStatistics).toStrictEqual({
         endTimeDeltaMs: -8000,
         TCPMs: 5000,

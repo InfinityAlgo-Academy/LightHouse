@@ -32,8 +32,8 @@ class NetworkRequests extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const records = await NetworkRecords.request(devtoolsLog, context);
-    const earliestStartTime = records.reduce(
-      (min, record) => Math.min(min, record.startTime),
+    const earliestMainThreadStartTime = records.reduce(
+      (min, record) => Math.min(min, record.mainThreadStartTime),
       Infinity
     );
 
@@ -48,8 +48,8 @@ class NetworkRequests extends Audit {
     }
 
     /** @param {number} time */
-    const timeToMs = time => time < earliestStartTime || !Number.isFinite(time) ?
-      undefined : (time - earliestStartTime) * 1000;
+    const normalizeTime = time => time < earliestMainThreadStartTime || !Number.isFinite(time) ?
+      undefined : time - earliestMainThreadStartTime;
 
     const results = records.map(record => {
       const endTimeDeltaMs = record.lrStatistics?.endTimeDeltaMs;
@@ -65,8 +65,8 @@ class NetworkRequests extends Audit {
       return {
         url: URL.elideDataURI(record.url),
         protocol: record.protocol,
-        startTime: timeToMs(record.startTime),
-        endTime: timeToMs(record.endTime),
+        startTime: normalizeTime(record.mainThreadStartTime),
+        endTime: normalizeTime(record.mainThreadEndTime),
         finished: record.finished,
         transferSize: record.transferSize,
         resourceSize: record.resourceSize,
@@ -111,8 +111,8 @@ class NetworkRequests extends Audit {
     const tableDetails = Audit.makeTableDetails(headings, results);
 
     // Include starting timestamp to allow syncing requests with navStart/metric timestamps.
-    const networkStartTimeTs = Number.isFinite(earliestStartTime) ?
-        earliestStartTime * 1_000_000 : undefined;
+    const networkStartTimeTs = Number.isFinite(earliestMainThreadStartTime) ?
+        earliestMainThreadStartTime * 1_000 : undefined;
     tableDetails.debugData = {
       type: 'debugdata',
       networkStartTimeTs,

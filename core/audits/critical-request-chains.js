@@ -42,26 +42,70 @@ class CriticalRequestChains extends Audit {
     };
   }
 
-  /** @typedef {{depth: number, id: string, chainDuration: number, chainTransferSize: number, node: LH.Audit.Details.SimpleCriticalRequestNode[string]}} CrcNodeInfo */
+  // TODO: if we are OK with changing the audit details we can easily delete all this duplication.
+  // Only difference between these trees is the shape of the network request object.
+  /** @typedef {{depth: number, id: string, chainDuration: number, chainTransferSize: number, node: LH.Artifacts.CriticalRequestNode}} CrcNodeInfo */
+  /** @typedef {{depth: number, id: string, chainDuration: number, chainTransferSize: number, node: LH.Audit.Details.SimpleCriticalRequestNode}} CrcNodeInfo2 */
 
   /**
-   * @param {LH.Audit.Details.SimpleCriticalRequestNode} tree
+   * @param {LH.Artifacts.CriticalRequestTree} tree
    * @param {function(CrcNodeInfo): void} cb
    */
-  static _traverse(tree, cb) {
+  static _traverseArtifact(tree, cb) {
     /**
-     * @param {LH.Audit.Details.SimpleCriticalRequestNode} node
+     * @param {LH.Artifacts.CriticalRequestTree} tree
      * @param {number} depth
      * @param {number=} startTime
      * @param {number=} transferSize
      */
-    function walk(node, depth, startTime, transferSize = 0) {
-      const children = Object.keys(node);
+    function walk(tree, depth, startTime, transferSize = 0) {
+      const children = Object.keys(tree);
       if (children.length === 0) {
         return;
       }
       children.forEach(id => {
-        const child = node[id];
+        const child = tree[id];
+        if (!startTime) {
+          startTime = child.request.mainThreadStartTime;
+        }
+
+        // Call the callback with the info for this child.
+        cb({
+          depth,
+          id,
+          node: child,
+          chainDuration: (child.request.networkEndTime - startTime) * 1000,
+          chainTransferSize: (transferSize + child.request.transferSize),
+        });
+
+        // Carry on walking.
+        if (child.children) {
+          walk(child.children, depth + 1, startTime);
+        }
+      }, '');
+    }
+
+    walk(tree, 0);
+  }
+
+  /**
+   * @param {LH.Audit.Details.SimpleCriticalRequestTree} tree
+   * @param {function(CrcNodeInfo2): void} cb
+   */
+  static _traverseDetails(tree, cb) {
+    /**
+     * @param {LH.Audit.Details.SimpleCriticalRequestTree} tree
+     * @param {number} depth
+     * @param {number=} startTime
+     * @param {number=} transferSize
+     */
+    function walk(tree, depth, startTime, transferSize = 0) {
+      const children = Object.keys(tree);
+      if (children.length === 0) {
+        return;
+      }
+      children.forEach(id => {
+        const child = tree[id];
         if (!startTime) {
           startTime = child.request.startTime;
         }
@@ -87,7 +131,7 @@ class CriticalRequestChains extends Audit {
 
   /**
    * Get stats about the longest initiator chain (as determined by time duration)
-   * @param {LH.Audit.Details.SimpleCriticalRequestNode} tree
+   * @param {LH.Audit.Details.SimpleCriticalRequestTree} tree
    * @return {{duration: number, length: number, transferSize: number}}
    */
   static _getLongestChain(tree) {
@@ -96,7 +140,7 @@ class CriticalRequestChains extends Audit {
       length: 0,
       transferSize: 0,
     };
-    CriticalRequestChains._traverse(tree, opts => {
+    CriticalRequestChains._traverseDetails(tree, opts => {
       const duration = opts.chainDuration;
       if (duration > longest.duration) {
         longest.duration = duration;
@@ -110,13 +154,13 @@ class CriticalRequestChains extends Audit {
   }
 
   /**
-   * @param {LH.Artifacts.CriticalRequestNode} tree
-   * @return {LH.Audit.Details.SimpleCriticalRequestNode}
+   * @param {LH.Artifacts.CriticalRequestTree} tree
+   * @return {LH.Audit.Details.SimpleCriticalRequestTree}
    */
   static flattenRequests(tree) {
-    /** @type {LH.Audit.Details.SimpleCriticalRequestNode} */
+    /** @type {LH.Audit.Details.SimpleCriticalRequestTree} */
     const flattendChains = {};
-    /** @type {Map<string, LH.Audit.Details.SimpleCriticalRequestNode[string]>} */
+    /** @type {Map<string, LH.Audit.Details.SimpleCriticalRequestNode>} */
     const chainMap = new Map();
 
     /** @param {CrcNodeInfo} opts */
@@ -124,9 +168,9 @@ class CriticalRequestChains extends Audit {
       const request = opts.node.request;
       const simpleRequest = {
         url: request.url,
-        startTime: request.startTime,
-        endTime: request.endTime,
-        responseReceivedTime: request.responseReceivedTime,
+        startTime: request.mainThreadStartTime,
+        endTime: request.mainThreadEndTime,
+        responseReceivedTime: request.responseHeadersReceivedTime,
         transferSize: request.transferSize,
       };
 
@@ -143,7 +187,7 @@ class CriticalRequestChains extends Audit {
       if (opts.node.children) {
         for (const chainId of Object.keys(opts.node.children)) {
           // Note: cast should be Partial<>, but filled in when child node is traversed.
-          const childChain = /** @type {LH.Audit.Details.SimpleCriticalRequestNode[string]} */ ({
+          const childChain = /** @type {LH.Audit.Details.SimpleCriticalRequestNode} */ ({
             request: {},
           });
           chainMap.set(chainId, childChain);
@@ -156,7 +200,7 @@ class CriticalRequestChains extends Audit {
       chainMap.set(opts.id, chain);
     }
 
-    CriticalRequestChains._traverse(tree, flatten);
+    CriticalRequestChains._traverseArtifact(tree, flatten);
 
     return flattendChains;
   }
@@ -174,14 +218,14 @@ class CriticalRequestChains extends Audit {
     return ComputedChains.request({devtoolsLog, trace, URL}, context).then(chains => {
       let chainCount = 0;
       /**
-       * @param {LH.Audit.Details.SimpleCriticalRequestNode} node
+       * @param {LH.Audit.Details.SimpleCriticalRequestTree} tree
        * @param {number} depth
        */
-      function walk(node, depth) {
-        const childIds = Object.keys(node);
+      function walk(tree, depth) {
+        const childIds = Object.keys(tree);
 
         childIds.forEach(id => {
-          const child = node[id];
+          const child = tree[id];
           if (child.children) {
             walk(child.children, depth + 1);
           } else {

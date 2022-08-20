@@ -608,11 +608,11 @@ declare module Artifacts {
   }
 
   // Computed artifact types below.
+  type CriticalRequestTree = { [id: string]: CriticalRequestNode }
+
   type CriticalRequestNode = {
-    [id: string]: {
-      request: Artifacts.NetworkRequest;
-      children: CriticalRequestNode;
-    }
+    request: Artifacts.NetworkRequest;
+    children: CriticalRequestTree;
   }
 
   type ManifestValueCheckID = 'hasStartUrl'|'hasIconsAtLeast144px'|'hasIconsAtLeast512px'|'fetchesIcon'|'hasPWADisplayValue'|'hasBackgroundColor'|'hasThemeColor'|'hasShortName'|'hasName'|'shortNameLength'|'hasMaskableIcon';

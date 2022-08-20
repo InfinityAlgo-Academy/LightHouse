@@ -102,7 +102,8 @@ class OffscreenImages extends ByteEfficiencyAudit {
     return {
       node: ByteEfficiencyAudit.makeNodeItem(image.node),
       url,
-      requestStartTime: networkRecord.startTime,
+      // TODO rename requestStartTime
+      requestStartTime: networkRecord.mainThreadStartTime / 1000,
       totalBytes,
       wastedBytes,
       wastedPercent: 100 * wastedRatio,

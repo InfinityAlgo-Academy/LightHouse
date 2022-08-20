@@ -151,7 +151,7 @@ class NetworkAnalyzer {
       if (!Number.isFinite(timing.receiveHeadersEnd) || timing.receiveHeadersEnd < 0) return;
 
       // Compute the amount of time downloading everything after the first congestion window took
-      const totalTime = (record.endTime - record.startTime) * 1000;
+      const totalTime = record.networkEndTime - record.internalNetworkRequestTime;
       const downloadTimeAfterFirstByte = totalTime - timing.receiveHeadersEnd;
       const numberOfRoundTrips = Math.log2(record.transferSize / INITIAL_CWD);
 
@@ -280,17 +280,18 @@ class NetworkAnalyzer {
     const groupedByOrigin = NetworkAnalyzer.groupByOrigin(records);
     for (const [_, originRecords] of groupedByOrigin.entries()) {
       const earliestReusePossible = originRecords
-        .map(record => record.endTime)
+        .map(record => record.networkEndTime)
         .reduce((a, b) => Math.min(a, b), Infinity);
 
       for (const record of originRecords) {
         connectionWasReused.set(
           record.requestId,
-          record.startTime >= earliestReusePossible || record.protocol === 'h2'
+          record.internalNetworkRequestTime >= earliestReusePossible || record.protocol === 'h2'
         );
       }
 
-      const firstRecord = originRecords.reduce((a, b) => (a.startTime > b.startTime ? b : a));
+      const firstRecord = originRecords
+        .reduce((a, b) => (a.internalNetworkRequestTime > b.internalNetworkRequestTime ? b : a));
       connectionWasReused.set(firstRecord.requestId, false);
     }
 
@@ -400,8 +401,8 @@ class NetworkAnalyzer {
 
       // If we've made it this far, all the times we need should be valid (i.e. not undefined/-1).
       totalBytes += record.transferSize;
-      boundaries.push({time: record.responseReceivedTime, isStart: true});
-      boundaries.push({time: record.endTime, isStart: false});
+      boundaries.push({time: record.responseHeadersReceivedTime / 1000, isStart: true});
+      boundaries.push({time: record.networkEndTime / 1000, isStart: false});
       return boundaries;
     }, /** @type {Array<{time: number, isStart: boolean}>} */([])).sort((a, b) => a.time - b.time);
 

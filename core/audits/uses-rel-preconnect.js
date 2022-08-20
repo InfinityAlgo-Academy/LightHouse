@@ -92,13 +92,14 @@ class UsesRelPreconnectAudit extends Audit {
   }
 
   /**
-   * Check is the connection has started before the socket idle time
+   * Check if the connection has started before the socket idle time
    * @param {LH.Artifacts.NetworkRequest} record
    * @param {LH.Artifacts.NetworkRequest} mainResource
    * @return {boolean}
    */
-  static socketStartTimeIsBelowThreshold(record, mainResource) {
-    return Math.max(0, record.startTime - mainResource.endTime) < PRECONNECT_SOCKET_MAX_IDLE;
+  static connectionGoesUnusedForTooLong(record, mainResource) {
+    const delta = Math.max(0, record.internalNetworkRequestTime - mainResource.networkEndTime);
+    return delta < PRECONNECT_SOCKET_MAX_IDLE;
   }
 
   /**
@@ -152,7 +153,7 @@ class UsesRelPreconnectAudit extends Audit {
           // Filter out all resources where origins are already resolved.
           UsesRelPreconnectAudit.hasAlreadyConnectedToOrigin(record) ||
           // Make sure the requests are below the PRECONNECT_SOCKET_MAX_IDLE (15s) mark.
-          !UsesRelPreconnectAudit.socketStartTimeIsBelowThreshold(record, mainResource)
+          !UsesRelPreconnectAudit.connectionGoesUnusedForTooLong(record, mainResource)
         ) {
           return;
         }
@@ -169,11 +170,10 @@ class UsesRelPreconnectAudit extends Audit {
     /** @type {Array<{url: string, wastedMs: number}>}*/
     let results = [];
     origins.forEach(records => {
-      // Sometimes requests are done simultaneous and the connection has not been made
-      // chrome will try to connect for each network record, we get the first record
-      const firstRecordOfOrigin = records.reduce((firstRecord, record) => {
-        return (record.startTime < firstRecord.startTime) ? record : firstRecord;
-      });
+      // We just need a single record, let's grab the earliest there is.
+      const firstRecordOfOrigin = records.reduce((firstRecord, record) =>
+        record.mainThreadStartTime < firstRecord.mainThreadStartTime ? record : firstRecord
+      );
 
       // Skip the origin if we don't have timing information
       if (!firstRecordOfOrigin.timing) return;
@@ -189,8 +189,8 @@ class UsesRelPreconnectAudit extends Audit {
       if (firstRecordOfOrigin.parsedURL.scheme === 'https') connectionTime = connectionTime * 2;
 
       const timeBetweenMainResourceAndDnsStart =
-        firstRecordOfOrigin.startTime * 1000 -
-        mainResource.endTime * 1000 +
+        firstRecordOfOrigin.internalNetworkRequestTime -
+        mainResource.networkEndTime +
         firstRecordOfOrigin.timing.dnsStart;
 
       const wastedMs = Math.min(connectionTime, timeBetweenMainResourceAndDnsStart);
