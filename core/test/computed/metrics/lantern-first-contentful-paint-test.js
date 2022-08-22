@@ -44,8 +44,8 @@ describe('Metrics: Lantern FCP', () => {
         url: 'https://example.com/',
         resourceType: 'Document',
         priority: 'High',
-        startTime: 0,
-        endTime: 0.0000001, // Before FCP
+        internalNetworkRequestTime: 0,
+        networkEndTime: 0.0001, // Before FCP
         timing: {sslStart: 50, sslEnd: 100, connectStart: 50, connectEnd: 100},
       },
       {
@@ -53,8 +53,8 @@ describe('Metrics: Lantern FCP', () => {
         url: 'https://example.com/script.js',
         resourceType: 'Script',
         priority: 'High',
-        startTime: 0.000015, // After FCP
-        endTime: -1,
+        internalNetworkRequestTime: 0.015, // After FCP
+        networkEndTime: -1,
         timing: {sslStart: 50, sslEnd: 100, connectStart: 50, connectEnd: 100},
       },
     ]);

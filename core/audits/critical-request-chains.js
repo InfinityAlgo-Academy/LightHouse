@@ -74,7 +74,7 @@ class CriticalRequestChains extends Audit {
           depth,
           id,
           node: child,
-          chainDuration: (child.request.networkEndTime - startTime) * 1000,
+          chainDuration: (child.request.networkEndTime - startTime) / 1000,
           chainTransferSize: (transferSize + child.request.transferSize),
         });
 
@@ -115,7 +115,7 @@ class CriticalRequestChains extends Audit {
           depth,
           id,
           node: child,
-          chainDuration: (child.request.endTime - startTime) * 1000,
+          chainDuration: child.request.endTime - startTime,
           chainTransferSize: (transferSize + child.request.transferSize),
         });
 

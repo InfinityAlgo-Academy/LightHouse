@@ -103,7 +103,7 @@ function getResponseReceivedEvent(networkRecord, index) {
     method: 'Network.responseReceived',
     params: {
       requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
-      timestamp: networkRecord.responseHeadersRecievedTime / 1000 || 1,
+      timestamp: networkRecord.responseHeadersReceivedTime / 1000 || 1,
       type: networkRecord.resourceType || undefined,
       response: {
         url: networkRecord.url || exampleUrl,

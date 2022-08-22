@@ -202,10 +202,10 @@ describe('DependencyGraph/Simulator', () => {
     });
 
     it('should not reuse connections', () => {
-      const nodeA = new NetworkNode(request({startTime: 0, endTime: 1}));
-      const nodeB = new NetworkNode(request({startTime: 2, endTime: 3}));
-      const nodeC = new NetworkNode(request({startTime: 2, endTime: 5}));
-      const nodeD = new NetworkNode(request({startTime: 2, endTime: 7}));
+      const nodeA = new NetworkNode(request({internalNetworkRequestTime: 0, networkEndTime: 1}));
+      const nodeB = new NetworkNode(request({internalNetworkRequestTime: 2, networkEndTime: 3}));
+      const nodeC = new NetworkNode(request({internalNetworkRequestTime: 2, networkEndTime: 5}));
+      const nodeD = new NetworkNode(request({internalNetworkRequestTime: 2, networkEndTime: 7}));
 
       nodeA.addDependent(nodeB);
       nodeA.addDependent(nodeC);
@@ -241,13 +241,14 @@ describe('DependencyGraph/Simulator', () => {
     });
 
     it('should start network requests in startTime order', () => {
-      const rootNode = new NetworkNode(request({startTime: 0, endTime: 0.05, connectionId: '1'}));
+      const rootNode = new NetworkNode(
+        request({internalNetworkRequestTime: 0, networkEndTime: 0.05, connectionId: '1'}));
       const imageNodes = [
-        new NetworkNode(request({startTime: 5})),
-        new NetworkNode(request({startTime: 4})),
-        new NetworkNode(request({startTime: 3})),
-        new NetworkNode(request({startTime: 2})),
-        new NetworkNode(request({startTime: 1})),
+        new NetworkNode(request({internalNetworkRequestTime: 5})),
+        new NetworkNode(request({internalNetworkRequestTime: 4})),
+        new NetworkNode(request({internalNetworkRequestTime: 3})),
+        new NetworkNode(request({internalNetworkRequestTime: 2})),
+        new NetworkNode(request({internalNetworkRequestTime: 1})),
       ];
 
       for (const imageNode of imageNodes) {
@@ -270,13 +271,14 @@ describe('DependencyGraph/Simulator', () => {
     });
 
     it('should start network requests in priority order to break startTime ties', () => {
-      const rootNode = new NetworkNode(request({startTime: 0, endTime: 0.05, connectionId: '1'}));
+      const rootNode = new NetworkNode(
+        request({internalNetworkRequestTime: 0, networkEndTime: 0.05, connectionId: '1'}));
       const imageNodes = [
-        new NetworkNode(request({startTime: 0.1, priority: 'VeryLow'})),
-        new NetworkNode(request({startTime: 0.2, priority: 'Low'})),
-        new NetworkNode(request({startTime: 0.3, priority: 'Medium'})),
-        new NetworkNode(request({startTime: 0.4, priority: 'High'})),
-        new NetworkNode(request({startTime: 0.5, priority: 'VeryHigh'})),
+        new NetworkNode(request({internalNetworkRequestTime: 0.1, priority: 'VeryLow'})),
+        new NetworkNode(request({internalNetworkRequestTime: 0.2, priority: 'Low'})),
+        new NetworkNode(request({internalNetworkRequestTime: 0.3, priority: 'Medium'})),
+        new NetworkNode(request({internalNetworkRequestTime: 0.4, priority: 'High'})),
+        new NetworkNode(request({internalNetworkRequestTime: 0.5, priority: 'VeryHigh'})),
       ];
 
       for (const imageNode of imageNodes) {

@@ -15,15 +15,15 @@ const redditDevtoolsLog = readJson('../fixtures/artifacts/perflog/defaultPass.de
 
 const FAILING_CHAIN_RECORDS = [
   {
-    endTime: 5,
-    responseReceivedTime: 5,
-    startTime: 0,
+    networkEndTime: 5_000,
+    responseHeadersReceivedTime: 5_000,
+    mainThreadStartTime: 0,
     url: 'https://example.com/',
     priority: 'VeryHigh',
   }, {
-    endTime: 16,
-    responseReceivedTime: 14,
-    startTime: 11,
+    networkEndTime: 16_000,
+    responseHeadersReceivedTime: 14_000,
+    mainThreadStartTime: 11_000,
     url: 'https://example.com/b.js',
     priority: 'VeryHigh',
     initiator: {
@@ -31,9 +31,9 @@ const FAILING_CHAIN_RECORDS = [
       url: 'https://example.com/',
     },
   }, {
-    endTime: 17,
-    responseReceivedTime: 15,
-    startTime: 12,
+    networkEndTime: 17_000,
+    responseHeadersReceivedTime: 15_000,
+    mainThreadStartTime: 12_000,
     url: 'https://example.com/c.js',
     priority: 'VeryHigh',
     initiator: {
@@ -45,9 +45,9 @@ const FAILING_CHAIN_RECORDS = [
 
 const PASSING_CHAIN_RECORDS = [
   {
-    endTime: 1,
-    responseReceivedTime: 1,
-    startTime: 0,
+    networkEndTime: 1_000,
+    responseHeadersReceivedTime: 1_000,
+    mainThreadStartTime: 0,
     url: 'https://example.com/',
     priority: 'VeryHigh',
   },
@@ -56,9 +56,9 @@ const PASSING_CHAIN_RECORDS = [
 const PASSING_CHAIN_RECORDS_2 = [
   {
     url: 'http://localhost:10503/offline-ready.html',
-    startTime: 33552.036878,
-    endTime: 33552.285438,
-    responseReceivedTime: 33552.275677,
+    mainThreadStartTime: 33552036.878,
+    networkEndTime: 33552285.438,
+    responseHeadersReceivedTime: 33552275.677,
     transferSize: 1849,
     priority: 'VeryHigh',
   },
@@ -66,9 +66,9 @@ const PASSING_CHAIN_RECORDS_2 = [
 
 const EMPTY_CHAIN_RECORDS = [];
 
-const mockArtifacts = (chainNetworkRecords) => {
+const mockArtifacts = (chainNetworkRecords, opts) => {
   const trace = createTestTrace({topLevelTasks: [{ts: 0}]});
-  const devtoolsLog = networkRecordsToDevtoolsLog(chainNetworkRecords);
+  const devtoolsLog = networkRecordsToDevtoolsLog(chainNetworkRecords, opts);
   const finalUrl = chainNetworkRecords[0] ? chainNetworkRecords[0].url : 'https://example.com';
 
   return {
@@ -121,14 +121,17 @@ describe('Performance: critical-request-chains audit', () => {
     };
     const context = {computedCache: new Map()};
     return CriticalRequestChains.audit(artifacts, context).then(output => {
-      expect(output.details.longestChain.duration).toBeCloseTo(656.491);
+      expect(output.details.longestChain.duration).toBeCloseTo(660.173);
       expect(output.details.longestChain.transferSize).toEqual(2468);
       expect(output).toHaveProperty('score', 0);
     });
   });
 
   it('calculates the correct chain result for passing example (no 2.)', () => {
-    const artifacts = mockArtifacts(PASSING_CHAIN_RECORDS_2);
+    const artifacts = mockArtifacts(PASSING_CHAIN_RECORDS_2, {
+      // Precision issues from converting between ms and s create slight differences during roundtrip.
+      skipVerification: true,
+    });
     const context = {computedCache: new Map()};
     return CriticalRequestChains.audit(artifacts, context).then(output => {
       assert.equal(output.displayValue, '');

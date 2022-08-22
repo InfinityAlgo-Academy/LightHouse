@@ -189,6 +189,7 @@ class NetworkAnalyzer {
    * headers of the response (~TTFB).
    * NOTE: this is the most inaccurate way to estimate the RTT, but in some environments it's all
    * we have access to :(
+   * TODO: could this use record.responseHeadersReceivedTime?
    *
    * @param {LH.Artifacts.NetworkRequest[]} records
    * @return {Map<string, number[]>}
