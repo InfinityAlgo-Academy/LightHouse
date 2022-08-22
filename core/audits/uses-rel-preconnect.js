@@ -22,7 +22,7 @@ import LanternLCP from '../computed/metrics/lantern-largest-contentful-paint.js'
 // around for 10s. Meaning, the time delta between processing preconnect a request should be <10s,
 // otherwise it's wasted. We add a 5s margin so we are sure to capture all key requests.
 // @see https://github.com/GoogleChrome/lighthouse/issues/3106#issuecomment-333653747
-const PRECONNECT_SOCKET_MAX_IDLE = 15;
+const PRECONNECT_SOCKET_MAX_IDLE = 15_000;
 
 const IGNORE_THRESHOLD_IN_MS = 50;
 
