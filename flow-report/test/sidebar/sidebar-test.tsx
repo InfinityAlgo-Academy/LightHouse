@@ -12,7 +12,6 @@ import {SidebarHeader, SidebarRuntimeSettings, SidebarSummary} from '../../src/s
 import {FlowResultContext} from '../../src/util';
 import {flowResult} from '../sample-flow';
 
-
 let wrapper: FunctionComponent;
 
 beforeEach(() => {

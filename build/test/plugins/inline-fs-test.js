@@ -13,7 +13,7 @@ import {LH_ROOT} from '../../../root.js';
 
 const require = createRequire(import.meta.url);
 
-const filepath = `${LH_ROOT}/lighthouse-core/index.js`;
+const filepath = `${LH_ROOT}/core/index.js`;
 
 describe('inline-fs', () => {
   const tmpPath = `${LH_ROOT}/.tmp/inline-fs/test.txt`;

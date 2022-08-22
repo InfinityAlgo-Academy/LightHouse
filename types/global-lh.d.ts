@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import ArbitraryEqualityMap_ = require('../lighthouse-core/lib/arbitrary-equality-map.js');
+import {ArbitraryEqualityMap as ArbitraryEqualityMap_} from '../core/lib/arbitrary-equality-map.js';
 import * as Artifacts_ from './artifacts';
 import Audit_ from './audit';
 import Budget_ from './lhr/budget';
@@ -14,7 +14,7 @@ import _CrdpMappings from 'devtools-protocol/types/protocol-mapping';
 import * as Externs from './externs';
 import Gatherer_ from './gatherer';
 import * as I18n from './lhr/i18n';
-import LHError = require('../lighthouse-core/lib/lh-error.js');
+import {LighthouseError as LighthouseError_} from '../core/lib/lh-error.js';
 import LHResult from './lhr/lhr';
 import FlowResult_ from './lhr/flow';
 import Protocol_ from './protocol';
@@ -59,7 +59,7 @@ declare global {
     export import DevToolsJsonTarget = Externs.DevToolsJsonTarget;
 
     export import Gatherer = Gatherer_;
-    export import LighthouseError = LHError;
+    export import LighthouseError = LighthouseError_;
     export import Result = LHResult;
     export import FlowResult = FlowResult_;
 

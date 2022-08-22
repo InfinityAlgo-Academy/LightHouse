@@ -18,12 +18,12 @@ All audits in the Best Practices category are equally weighted. Therefore, imple
 
 ## How is the SEO score calculated?
 
-All audits in the SEO category are [equally weighted](https://github.com/GoogleChrome/lighthouse/blob/080c6b4b9fec6dfcaf8e0cd8d09c3224465e4fd3/lighthouse-core/config/default-config.js#L531-L547), with the exception ofStructured Data, which is an unscored manual audit. Therefore, implementing each audit correctly will increase your overall score by ~8 points.
+All audits in the SEO category are [equally weighted](https://github.com/GoogleChrome/lighthouse/blob/master/core/config/default-config.js#:~:text=%7D%2C-,%27seo%27%3A,-%7B), with the exception of Structured Data, which is an unscored manual audit. Therefore, implementing each audit correctly will increase your overall score by ~8 points.
 
 
 ## How is the accessibility score calculated?
 
-<!-- To regnerate score weights, run `node lighthouse-core/scripts/print-a11y-scoring.js`-->
+<!-- To regnerate score weights, run `node core/scripts/print-a11y-scoring.js`-->
 
 The accessibility score is a weighted average. The specific weights for v7 are as follows:
 

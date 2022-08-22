@@ -14,7 +14,8 @@ import glob from 'glob';
 import * as terser from 'terser';
 
 import * as rollupPlugins from './rollup-plugins.js';
-import {LH_ROOT, readJson} from '../root.js';
+import {LH_ROOT} from '../root.js';
+import {readJson} from '../core/test/test-utils.js';
 
 const ghPagesDistDir = `${LH_ROOT}/dist/gh-pages`;
 const lighthousePackage = readJson(`${LH_ROOT}/package.json`);

@@ -6,7 +6,7 @@
 
 import {strict as assert} from 'assert';
 
-import {jest} from '@jest/globals';
+import jestMock from 'jest-mock';
 import jsdom from 'jsdom';
 
 import {DOM} from '../../renderer/dom.js';
@@ -19,20 +19,20 @@ describe('DOM', () => {
   let window;
   let nativeCreateObjectURL;
 
-  beforeAll(() => {
+  before(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
     window = new jsdom.JSDOM().window;
 
     // The Node version of URL.createObjectURL isn't compatible with the jsdom blob type,
     // so we stub it.
     nativeCreateObjectURL = URL.createObjectURL;
-    URL.createObjectURL = jest.fn(_ => `https://fake-origin/blahblah-blobid`);
+    URL.createObjectURL = jestMock.fn(_ => `https://fake-origin/blahblah-blobid`);
 
     dom = new DOM(window.document);
     dom.setLighthouseChannel('someChannel');
   });
 
-  afterAll(() => {
+  after(() => {
     Util.i18n = undefined;
     URL.createObjectURL = nativeCreateObjectURL;
   });

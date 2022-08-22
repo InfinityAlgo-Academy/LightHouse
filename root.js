@@ -5,24 +5,14 @@
  */
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
-const url = require('url');
+import fs from 'fs';
+import {getModuleDirectory} from './esm-utils.js';
 
-// import {dirname} from 'path';
-// import {fileURLToPath} from 'url';
+const LH_ROOT = getModuleDirectory(import.meta);
+const pkg = JSON.parse(fs.readFileSync(`${LH_ROOT}/package.json`, 'utf-8'));
+const lighthouseVersion = pkg.version;
 
-module.exports = {
-  LH_ROOT: __dirname,
-  /**
-   * Return parsed json object.
-   * Resolves path relative to importMeta.url (if provided) or LH_ROOT (if not provided).
-   * @param {string} filePath Can be an absolute or relative path.
-   * @param {ImportMeta=} importMeta
-   */
-  readJson(filePath, importMeta) {
-    const dir = importMeta ? path.dirname(url.fileURLToPath(importMeta.url)) : __dirname;
-    filePath = path.resolve(dir, filePath);
-    return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-  },
+export {
+  LH_ROOT,
+  lighthouseVersion,
 };

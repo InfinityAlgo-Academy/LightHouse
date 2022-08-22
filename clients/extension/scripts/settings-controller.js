@@ -89,7 +89,7 @@ function loadSettings() {
   });
 }
 
-module.exports = {
+export {
   DEFAULT_CATEGORIES,
   STORAGE_KEYS,
   saveSettings,

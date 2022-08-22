@@ -147,7 +147,7 @@ function _preformatValues(messageFormatter, values = {}, lhlMessage) {
   for (const valueId of Object.keys(values)) {
     if (valueId in formattedValues) continue;
 
-    // errorCode is a special case always allowed to help LHError ease-of-use.
+    // errorCode is a special case always allowed to help LighthouseError ease-of-use.
     if (valueId === 'errorCode') {
       formattedValues.errorCode = values.errorCode;
       continue;

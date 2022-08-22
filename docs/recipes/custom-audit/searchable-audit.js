@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Audit = require('lighthouse').Audit;
+import {Audit} from 'lighthouse';
 
 const MAX_SEARCHABLE_TIME = 4000;
 
@@ -43,4 +43,4 @@ class LoadAudit extends Audit {
   }
 }
 
-module.exports = LoadAudit;
+export default LoadAudit;

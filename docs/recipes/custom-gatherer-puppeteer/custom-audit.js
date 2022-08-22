@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const Audit = require('lighthouse').Audit;
+import {Audit} from 'lighthouse';
 
 class CustomAudit extends Audit {
   static get meta() {
@@ -31,4 +31,4 @@ class CustomAudit extends Audit {
   }
 }
 
-module.exports = CustomAudit;
+export default CustomAudit;
