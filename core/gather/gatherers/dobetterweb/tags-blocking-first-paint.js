@@ -195,9 +195,8 @@ class TagsBlockingFirstPaint extends FRGatherer {
       result.push({
         tag: {tagName, url, mediaChanges},
         transferSize: request.transferSize,
-        // TODO: change these to ms
-        startTime: request.mainThreadStartTime / 1000,
-        endTime: endTime / 1000,
+        mainThreadStartTime: request.mainThreadStartTime,
+        networkEndTime: endTime,
       });
 
       // Prevent duplicates from showing up again

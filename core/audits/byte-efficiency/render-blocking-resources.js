@@ -158,7 +158,7 @@ class RenderBlockingResources extends Audit {
     const deferredNodeIds = new Set();
     for (const resource of artifacts.TagsBlockingFirstPaint) {
       // Ignore any resources that finished after observed FCP (they're clearly not render-blocking)
-      if (resource.endTime * 1000 > fcpTsInMs) continue;
+      if (resource.networkEndTime > fcpTsInMs) continue;
       // TODO: beacon to Sentry, https://github.com/GoogleChrome/lighthouse/issues/7041
       if (!nodesByUrl[resource.tag.url]) continue;
 

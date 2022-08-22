@@ -552,8 +552,10 @@ declare module Artifacts {
   }
 
   interface TagBlockingFirstPaint {
-    startTime: number;
-    endTime: number;
+    // ms
+    mainThreadStartTime: number;
+    // ms
+    networkEndTime: number;
     transferSize: number;
     tag: {
       tagName: 'LINK'|'SCRIPT';

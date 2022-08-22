@@ -166,14 +166,14 @@ describe('First paint blocking tags', () => {
       {
         tag: {tagName: 'LINK', url: linkDetails.url, mediaChanges: []},
         transferSize: 10,
-        startTime: 10,
-        endTime: 10,
+        mainThreadStartTime: 10_000,
+        networkEndTime: 10_000,
       },
       {
         tag: {tagName: 'SCRIPT', url: scriptDetails.url, mediaChanges: undefined},
         transferSize: 12,
-        startTime: 12,
-        endTime: 22,
+        mainThreadStartTime: 12_000,
+        networkEndTime: 22_000,
       },
     ];
     expect(artifact).toEqual(expected);
