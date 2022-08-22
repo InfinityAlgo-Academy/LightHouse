@@ -326,15 +326,15 @@
                 "93D775556D560D4810DFB59EEDFBDEFB": {
                   "request": {
                     "url": "https://www.mikescerealshack.co/",
-                    "startTime": 49208.077236,
-                    "endTime": 49208.810741,
-                    "responseReceivedTime": 49208.809906999995,
+                    "startTime": 49208076.299,
+                    "endTime": 49208810.741000004,
+                    "responseReceivedTime": 49208809.90699999,
                     "transferSize": 3549
                   }
                 }
               },
               "longestChain": {
-                "duration": 733.5050000037882,
+                "duration": 734.4420000016689,
                 "length": 1,
                 "transferSize": 3549
               }
@@ -675,7 +675,7 @@
                   "numTasksOver100ms": 0,
                   "numTasksOver500ms": 0,
                   "rtt": 29.944,
-                  "throughput": 12821046.93708577,
+                  "throughput": 12821046.935458306,
                   "maxRtt": 150.74099999999999,
                   "maxServerLatency": 103.685,
                   "totalByteWeight": 183724,
@@ -751,7 +751,7 @@
                   "url": "https://www.mikescerealshack.co/",
                   "protocol": "h2",
                   "startTime": 0,
-                  "endTime": 733.5050000037882,
+                  "endTime": 734.4420000016689,
                   "finished": true,
                   "transferSize": 3549,
                   "resourceSize": 9302,
@@ -763,8 +763,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/fonts/danielbd.woff2",
                   "protocol": "h2",
-                  "startTime": 748.7920000057784,
-                  "endTime": 992.6370000030147,
+                  "startTime": 749.0069999992847,
+                  "endTime": 993.5740000009537,
                   "finished": true,
                   "transferSize": 35886,
                   "resourceSize": 35680,
@@ -777,8 +777,8 @@
                 {
                   "url": "https://events.mikescerealshack.co/js/index.js",
                   "protocol": "http/1.1",
-                  "startTime": 749.3080000058399,
-                  "endTime": 1295.9800000026007,
+                  "startTime": 749.7239999994636,
+                  "endTime": 1296.9169999957085,
                   "finished": true,
                   "transferSize": 1138,
                   "resourceSize": 1335,
@@ -790,8 +790,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/css/08dcb440d7d83b488817.css",
                   "protocol": "h2",
-                  "startTime": 749.7580000053858,
-                  "endTime": 889.0430000028573,
+                  "startTime": 749.9650000035763,
+                  "endTime": 889.9799999967217,
                   "finished": true,
                   "transferSize": 4994,
                   "resourceSize": 18126,
@@ -804,8 +804,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/main-1f8481d632114a408557.js",
                   "protocol": "h2",
-                  "startTime": 749.9840000018594,
-                  "endTime": 888.2980000053067,
+                  "startTime": 750.3649999946356,
+                  "endTime": 889.234999999404,
                   "finished": true,
                   "transferSize": 7040,
                   "resourceSize": 17656,
@@ -818,8 +818,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/webpack-657a8433bac0aabd564e.js",
                   "protocol": "h2",
-                  "startTime": 750.2970000059577,
-                  "endTime": 890.8300000039162,
+                  "startTime": 750.6290000006557,
+                  "endTime": 891.7669999971986,
                   "finished": true,
                   "transferSize": 1398,
                   "resourceSize": 2351,
@@ -832,8 +832,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/framework.9d524150d48315f49e80.js",
                   "protocol": "h2",
-                  "startTime": 750.6570000041393,
-                  "endTime": 956.915000002482,
+                  "startTime": 750.8749999925494,
+                  "endTime": 957.8519999980927,
                   "finished": true,
                   "transferSize": 43868,
                   "resourceSize": 130277,
@@ -846,8 +846,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/commons.49455e4fa8cc3f51203f.js",
                   "protocol": "h2",
-                  "startTime": 750.9890000001178,
-                  "endTime": 890.1499999992666,
+                  "startTime": 751.1299999952316,
+                  "endTime": 891.0869999974966,
                   "finished": true,
                   "transferSize": 15112,
                   "resourceSize": 44060,
@@ -860,8 +860,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/_app-ef508c97234d1af96c47.js",
                   "protocol": "h2",
-                  "startTime": 751.2009999991278,
-                  "endTime": 923.8120000009076,
+                  "startTime": 751.3869999945164,
+                  "endTime": 924.7489999979734,
                   "finished": true,
                   "transferSize": 738,
                   "resourceSize": 1235,
@@ -874,8 +874,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/1aeab0175d4c4d823d7a78205bceb5dd9cd36d32.a629f28ec97ae6e480bf.js",
                   "protocol": "h2",
-                  "startTime": 751.5410000050906,
-                  "endTime": 923.0290000050445,
+                  "startTime": 751.6119999960065,
+                  "endTime": 923.9659999981523,
                   "finished": true,
                   "transferSize": 23953,
                   "resourceSize": 67673,
@@ -888,8 +888,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/index-37980adf97404e76e41a.js",
                   "protocol": "h2",
-                  "startTime": 751.7590000061318,
-                  "endTime": 1103.5630000042147,
+                  "startTime": 751.8239999935031,
+                  "endTime": 1104.5,
                   "finished": true,
                   "transferSize": 1110,
                   "resourceSize": 1856,
@@ -902,8 +902,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/logo-text.svg",
                   "protocol": "h2",
-                  "startTime": 755.4450000025099,
-                  "endTime": 1179.6650000032969,
+                  "startTime": 752.1419999971986,
+                  "endTime": 1180.6019999980927,
                   "finished": true,
                   "transferSize": 14322,
                   "resourceSize": 53947,
@@ -915,8 +915,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/t5QnfQSErVZVsTAuFcBWI/_buildManifest.js",
                   "protocol": "h2",
-                  "startTime": 755.7579999993322,
-                  "endTime": 1119.2700000028708,
+                  "startTime": 752.5010000020266,
+                  "endTime": 1120.2069999948144,
                   "finished": true,
                   "transferSize": 748,
                   "resourceSize": 1545,
@@ -928,8 +928,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/t5QnfQSErVZVsTAuFcBWI/_ssgManifest.js",
                   "protocol": "h2",
-                  "startTime": 756.0850000008941,
-                  "endTime": 1109.2730000018491,
+                  "startTime": 752.5969999954104,
+                  "endTime": 1110.2099999934435,
                   "finished": true,
                   "transferSize": 224,
                   "resourceSize": 76,
@@ -941,8 +941,8 @@
                 {
                   "url": "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap",
                   "protocol": "h2",
-                  "startTime": 756.4640000055078,
-                  "endTime": 953.2330000001821,
+                  "startTime": 755.0109999999404,
+                  "endTime": 954.1699999943376,
                   "finished": true,
                   "transferSize": 1023,
                   "resourceSize": 3282,
@@ -954,8 +954,8 @@
                 {
                   "url": "https://fonts.gstatic.com/s/poppins/v19/pxiEyp8kv8JHgFVrJJfecnFHGPc.woff2",
                   "protocol": "h2",
-                  "startTime": 961.4090000031865,
-                  "endTime": 1087.029000002076,
+                  "startTime": 959.8029999956489,
+                  "endTime": 1087.9659999981523,
                   "finished": true,
                   "transferSize": 8518,
                   "resourceSize": 7884,
@@ -967,8 +967,8 @@
                 {
                   "url": "https://fonts.gstatic.com/s/poppins/v19/pxiByp8kv8JHgFVrLCz7Z1xlFd2JQEk.woff2",
                   "protocol": "h2",
-                  "startTime": 961.6119999991497,
-                  "endTime": 1090.3410000028089,
+                  "startTime": 960.6780000030994,
+                  "endTime": 1091.277999997139,
                   "finished": true,
                   "transferSize": 7933,
                   "resourceSize": 7816,
@@ -980,8 +980,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/1aeab0175d4c4d823d7a78205bceb5dd9cd36d32.a629f28ec97ae6e480bf.js",
                   "protocol": "h2",
-                  "startTime": 1141.3990000000922,
-                  "endTime": 1143.0529999997816,
+                  "startTime": 1141.6749999970198,
+                  "endTime": 1143.9899999946356,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 0,
@@ -993,8 +993,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/9ea7d3ba8dd80c65c50028121847762825088b49.dc477066508a83415fce.js",
                   "protocol": "h2",
-                  "startTime": 1141.5970000016387,
-                  "endTime": 1184.1239999994286,
+                  "startTime": 1142.000999994576,
+                  "endTime": 1185.0609999969602,
                   "finished": true,
                   "transferSize": 3857,
                   "resourceSize": 0,
@@ -1006,8 +1006,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/scenes/%5Bseason%5D/%5Bepisode%5D/%5Bscene%5D-526fe33be891a56314a3.js",
                   "protocol": "h2",
-                  "startTime": 1142.041999999492,
-                  "endTime": 1254.8710000046412,
+                  "startTime": 1142.304999999702,
+                  "endTime": 1255.807999998331,
                   "finished": true,
                   "transferSize": 2988,
                   "resourceSize": 0,
@@ -1019,8 +1019,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/9ea7d3ba8dd80c65c50028121847762825088b49.dc477066508a83415fce.js",
                   "protocol": "h2",
-                  "startTime": 1285.6170000013663,
-                  "endTime": 1286.6250000006403,
+                  "startTime": 1286.0769999921322,
+                  "endTime": 1287.5619999989867,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 8890,
@@ -1032,8 +1032,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/scenes/%5Bseason%5D/%5Bepisode%5D/%5Bscene%5D-526fe33be891a56314a3.js",
                   "protocol": "h2",
-                  "startTime": 1285.944000002928,
-                  "endTime": 1287.2480000005453,
+                  "startTime": 1286.4269999936223,
+                  "endTime": 1288.1849999949336,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 6837,
@@ -1045,8 +1045,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/favicon.png",
                   "protocol": "h2",
-                  "startTime": 1300.7130000041798,
-                  "endTime": 1519.2540000061854,
+                  "startTime": 1301.2719999924302,
+                  "endTime": 1520.1909999996424,
                   "finished": true,
                   "transferSize": 5325,
                   "resourceSize": 5164,
@@ -1058,7 +1058,7 @@
               ],
               "debugData": {
                 "type": "debugdata",
-                "networkStartTimeTs": 49208077236
+                "networkStartTimeTs": 49208076299
               }
             }
           },
@@ -7930,7 +7930,7 @@
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/search-915c07eb7d90925bcf29.js",
                   "protocol": "h2",
                   "startTime": 0,
-                  "endTime": 582.4599999978091,
+                  "endTime": 584.0419999957085,
                   "finished": true,
                   "transferSize": 3281,
                   "resourceSize": 6631,
@@ -7941,8 +7941,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/logo-text.svg",
                   "protocol": "h2",
-                  "startTime": 617.9120000015246,
-                  "endTime": 1186.6079999963404,
+                  "startTime": 618.0209999904037,
+                  "endTime": 1188.1899999901652,
                   "finished": true,
                   "transferSize": 84,
                   "resourceSize": 53947,
@@ -7953,8 +7953,8 @@
                 {
                   "url": "https://mnl4bjjsnz-dsn.algolia.net/1/indexes/dev_OFFICE_SCENES/query",
                   "protocol": "http/1.1",
-                  "startTime": 641.8829999965965,
-                  "endTime": 896.7059999995399,
+                  "startTime": 643.4769999980927,
+                  "endTime": 898.2879999950528,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 0,
@@ -7965,8 +7965,8 @@
                 {
                   "url": "https://mnl4bjjsnz-dsn.algolia.net/1/indexes/dev_OFFICE_SCENES/query",
                   "protocol": "http/1.1",
-                  "startTime": 896.8129999993835,
-                  "endTime": 1495.5629999967641,
+                  "startTime": 642.1909999996424,
+                  "endTime": 1497.1449999958277,
                   "finished": true,
                   "transferSize": 3888,
                   "resourceSize": 16577,
@@ -7977,8 +7977,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/index-37980adf97404e76e41a.js",
                   "protocol": "h2",
-                  "startTime": 655.9159999960684,
-                  "endTime": 656.9180000005872,
+                  "startTime": 656.2039999961853,
+                  "endTime": 658.4999999925494,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 0,
@@ -7989,8 +7989,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/terms-0236318e86139dd7d7f2.js",
                   "protocol": "h2",
-                  "startTime": 657.6609999974607,
-                  "endTime": 1257.7709999968647,
+                  "startTime": 657.8159999996424,
+                  "endTime": 1259.3529999926686,
                   "finished": true,
                   "transferSize": 4886,
                   "resourceSize": 0,
@@ -8001,8 +8001,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/privacy-864d3895f3c3722acef2.js",
                   "protocol": "h2",
-                  "startTime": 664.5569999964209,
-                  "endTime": 1241.4760000028764,
+                  "startTime": 664.278999991715,
+                  "endTime": 1243.057999998331,
                   "finished": true,
                   "transferSize": 883,
                   "resourceSize": 0,
@@ -8013,8 +8013,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/privacy-864d3895f3c3722acef2.js",
                   "protocol": "h2",
-                  "startTime": 1256.9210000001476,
-                  "endTime": 1257.9980000009527,
+                  "startTime": 1256.817999996245,
+                  "endTime": 1259.5799999982119,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 720,
@@ -8025,8 +8025,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/terms-0236318e86139dd7d7f2.js",
                   "protocol": "h2",
-                  "startTime": 1273.4679999994114,
-                  "endTime": 1274.2510000025504,
+                  "startTime": 1273.406999990344,
+                  "endTime": 1275.832999996841,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 11002,
@@ -8037,8 +8037,8 @@
                 {
                   "url": "https://cdn.mikescerealshack.co/frames/s8/e13/128w/81d89db1bf3d43b5b21f813d2f2a9777.jpg",
                   "protocol": "h2",
-                  "startTime": 1570.808999997098,
-                  "endTime": 2346.5999999971245,
+                  "startTime": 1571.6349999904633,
+                  "endTime": 2348.1819999963045,
                   "finished": true,
                   "transferSize": 2875,
                   "resourceSize": 2379,
@@ -8049,8 +8049,8 @@
                 {
                   "url": "https://cdn.mikescerealshack.co/frames/s3/e3/128w/9b3031eb3988ba363fe946929a79e016.jpg",
                   "protocol": "h2",
-                  "startTime": 1571.3069999983418,
-                  "endTime": 2353.862999996636,
+                  "startTime": 1572.4919999986887,
+                  "endTime": 2355.4449999928474,
                   "finished": true,
                   "transferSize": 3815,
                   "resourceSize": 2865,
@@ -8061,8 +8061,8 @@
                 {
                   "url": "https://cdn.mikescerealshack.co/frames/s3/e3/128w/793a408ca63a660b5d7aa1a41ac126ca.jpg",
                   "protocol": "h2",
-                  "startTime": 1572.0349999974133,
-                  "endTime": 2338.2520000013756,
+                  "startTime": 1573.2959999963641,
+                  "endTime": 2339.8339999988675,
                   "finished": true,
                   "transferSize": 2252,
                   "resourceSize": 1758,
@@ -8073,7 +8073,7 @@
               ],
               "debugData": {
                 "type": "debugdata",
-                "networkStartTimeTs": 49220053647
+                "networkStartTimeTs": 49220052065.00001
               }
             }
           },
@@ -14422,15 +14422,15 @@
                 "617457183199EA465BB2824F7A466489": {
                   "request": {
                     "url": "https://www.mikescerealshack.co/corrections",
-                    "startTime": 49241.053294,
-                    "endTime": 49241.169143,
-                    "responseReceivedTime": 49241.168642,
+                    "startTime": 49241052.788,
+                    "endTime": 49241169.143,
+                    "responseReceivedTime": 49241168.642,
                     "transferSize": 3528
                   }
                 }
               },
               "longestChain": {
-                "duration": 115.84900000161724,
+                "duration": 116.35499999672174,
                 "length": 1,
                 "transferSize": 3528
               }
@@ -14776,7 +14776,7 @@
                   "numTasksOver100ms": 0,
                   "numTasksOver500ms": 0,
                   "rtt": 0.0029000000000000002,
-                  "throughput": 12404828.046847919,
+                  "throughput": 12404828.047942804,
                   "maxRtt": 0.0271,
                   "maxServerLatency": 5.1761,
                   "totalByteWeight": 127824,
@@ -14852,7 +14852,7 @@
                   "url": "https://www.mikescerealshack.co/corrections",
                   "protocol": "h2",
                   "startTime": 0,
-                  "endTime": 115.84900000161724,
+                  "endTime": 116.35499999672174,
                   "finished": true,
                   "transferSize": 3528,
                   "resourceSize": 9492,
@@ -14864,8 +14864,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/fonts/danielbd.woff2",
                   "protocol": "h2",
-                  "startTime": 131.58200000179932,
-                  "endTime": 169.66800000227522,
+                  "startTime": 131.7419999986887,
+                  "endTime": 170.1739999949932,
                   "finished": true,
                   "transferSize": 62,
                   "resourceSize": 35680,
@@ -14878,8 +14878,8 @@
                 {
                   "url": "https://events.mikescerealshack.co/js/index.js",
                   "protocol": "http/1.1",
-                  "startTime": 131.75900000351248,
-                  "endTime": 135.39500000479165,
+                  "startTime": 131.9759999960661,
+                  "endTime": 135.90100000053644,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 1335,
@@ -14891,8 +14891,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/css/08dcb440d7d83b488817.css",
                   "protocol": "h2",
-                  "startTime": 132.16100000136066,
-                  "endTime": 136.31800000439398,
+                  "startTime": 132.1659999936819,
+                  "endTime": 136.82400000095367,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 18126,
@@ -14905,8 +14905,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/main-1f8481d632114a408557.js",
                   "protocol": "h2",
-                  "startTime": 132.4559999993653,
-                  "endTime": 136.96200000413228,
+                  "startTime": 132.4210000038147,
+                  "endTime": 137.46800000220537,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 17656,
@@ -14919,8 +14919,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/webpack-657a8433bac0aabd564e.js",
                   "protocol": "h2",
-                  "startTime": 132.6240000053076,
-                  "endTime": 137.29700000112643,
+                  "startTime": 132.61600000411272,
+                  "endTime": 137.80299999564886,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 2351,
@@ -14933,8 +14933,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/framework.9d524150d48315f49e80.js",
                   "protocol": "h2",
-                  "startTime": 133.08300000062445,
-                  "endTime": 142.2000000020489,
+                  "startTime": 132.79199999570847,
+                  "endTime": 142.70600000023842,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 130277,
@@ -14947,8 +14947,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/commons.49455e4fa8cc3f51203f.js",
                   "protocol": "h2",
-                  "startTime": 133.56100000237348,
-                  "endTime": 140.74900000559865,
+                  "startTime": 132.98000000417233,
+                  "endTime": 141.2550000026822,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 44060,
@@ -14961,8 +14961,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/_app-ef508c97234d1af96c47.js",
                   "protocol": "h2",
-                  "startTime": 133.71700000425335,
-                  "endTime": 140.8880000017234,
+                  "startTime": 133.17500000447035,
+                  "endTime": 141.39399999380112,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 1235,
@@ -14975,8 +14975,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/1aeab0175d4c4d823d7a78205bceb5dd9cd36d32.a629f28ec97ae6e480bf.js",
                   "protocol": "h2",
-                  "startTime": 134.15600000007544,
-                  "endTime": 142.42600000579841,
+                  "startTime": 133.36299999803305,
+                  "endTime": 142.9320000037551,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 67673,
@@ -14989,8 +14989,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/corrections-7a620a51252fe2c2f77b.js",
                   "protocol": "h2",
-                  "startTime": 134.36400000500726,
-                  "endTime": 260.9470000024885,
+                  "startTime": 133.60699999332428,
+                  "endTime": 261.45299999415874,
                   "finished": true,
                   "transferSize": 1678,
                   "resourceSize": 3328,
@@ -15003,8 +15003,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/logo-text.svg",
                   "protocol": "h2",
-                  "startTime": 137.79800000338582,
-                  "endTime": 180.75600000156555,
+                  "startTime": 133.8289999961853,
+                  "endTime": 181.26199999451637,
                   "finished": true,
                   "transferSize": 61,
                   "resourceSize": 53947,
@@ -15016,8 +15016,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/oscar-actually.jpg",
                   "protocol": "h2",
-                  "startTime": 138.61300000280607,
-                  "endTime": 417.00500000297325,
+                  "startTime": 133.92300000041723,
+                  "endTime": 417.5109999999404,
                   "finished": true,
                   "transferSize": 122495,
                   "resourceSize": 122114,
@@ -15029,8 +15029,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/t5QnfQSErVZVsTAuFcBWI/_buildManifest.js",
                   "protocol": "h2",
-                  "startTime": 138.7590000013006,
-                  "endTime": 144.482000003336,
+                  "startTime": 134.20199999958277,
+                  "endTime": 144.98799999803305,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 1545,
@@ -15042,8 +15042,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/t5QnfQSErVZVsTAuFcBWI/_ssgManifest.js",
                   "protocol": "h2",
-                  "startTime": 138.90200000605546,
-                  "endTime": 144.63400000386173,
+                  "startTime": 134.28599999845028,
+                  "endTime": 145.14000000059605,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 76,
@@ -15055,8 +15055,8 @@
                 {
                   "url": "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap",
                   "protocol": "h2",
-                  "startTime": 139.04800000454998,
-                  "endTime": 145.0020000047516,
+                  "startTime": 135.72699999809265,
+                  "endTime": 145.5080000013113,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 3282,
@@ -15068,8 +15068,8 @@
                 {
                   "url": "https://fonts.gstatic.com/s/poppins/v19/pxiEyp8kv8JHgFVrJJfecnFHGPc.woff2",
                   "protocol": "h2",
-                  "startTime": 173.1160000053933,
-                  "endTime": 174.59000000235392,
+                  "startTime": 173.1819999963045,
+                  "endTime": 175.09600000083447,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 7884,
@@ -15081,8 +15081,8 @@
                 {
                   "url": "https://fonts.gstatic.com/s/poppins/v19/pxiByp8kv8JHgFVrLCz7Z1xlFd2JQEk.woff2",
                   "protocol": "h2",
-                  "startTime": 174.09600000246428,
-                  "endTime": 175.19600000377977,
+                  "startTime": 174.19799999892712,
+                  "endTime": 175.70199999958277,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 7816,
@@ -15094,8 +15094,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/1aeab0175d4c4d823d7a78205bceb5dd9cd36d32.a629f28ec97ae6e480bf.js",
                   "protocol": "h2",
-                  "startTime": 292.78700000577373,
-                  "endTime": 294.73800000414485,
+                  "startTime": 292.64800000190735,
+                  "endTime": 295.2440000027418,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 0,
@@ -15107,8 +15107,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/index-37980adf97404e76e41a.js",
                   "protocol": "h2",
-                  "startTime": 292.99700000410667,
-                  "endTime": 294.9430000007851,
+                  "startTime": 293.00199999660254,
+                  "endTime": 295.4489999935031,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 0,
@@ -15120,8 +15120,8 @@
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/index-37980adf97404e76e41a.js",
                   "protocol": "h2",
-                  "startTime": 313.6480000030133,
-                  "endTime": 315.0090000053751,
+                  "startTime": 313.24399999529123,
+                  "endTime": 315.51500000059605,
                   "finished": true,
                   "transferSize": 0,
                   "resourceSize": 1856,
@@ -15133,7 +15133,7 @@
               ],
               "debugData": {
                 "type": "debugdata",
-                "networkStartTimeTs": 49241053294
+                "networkStartTimeTs": 49241052788
               }
             }
           },

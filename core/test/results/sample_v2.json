@@ -638,117 +638,117 @@
           "6913DB840A4B952A23AAEB21C42F130A": {
             "request": {
               "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-              "startTime": 8696.703416,
-              "endTime": 8697.360243,
-              "responseReceivedTime": 8697.27259,
+              "startTime": 8696702.394,
+              "endTime": 8697360.242999999,
+              "responseReceivedTime": 8697272.590000002,
               "transferSize": 17609
             },
             "children": {
               "31161.2": {
                 "request": {
                   "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
-                  "startTime": 8697.305899,
-                  "endTime": 8697.877161,
-                  "responseReceivedTime": 8697.876691000001,
+                  "startTime": 8697304.738,
+                  "endTime": 8697877.161,
+                  "responseReceivedTime": 8697876.691,
                   "transferSize": 903
                 }
               },
               "31161.3": {
                 "request": {
                   "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
-                  "startTime": 8697.306911,
-                  "endTime": 8697.887146,
-                  "responseReceivedTime": 8697.885266,
+                  "startTime": 8697305.797,
+                  "endTime": 8697887.146,
+                  "responseReceivedTime": 8697885.266,
                   "transferSize": 209
                 }
               },
               "31161.4": {
                 "request": {
                   "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-                  "startTime": 8697.307719,
-                  "endTime": 8699.513723,
-                  "responseReceivedTime": 8699.513451,
+                  "startTime": 8697306.837,
+                  "endTime": 8699513.723,
+                  "responseReceivedTime": 8699513.451000001,
                   "transferSize": 903
                 }
               },
               "31161.5": {
                 "request": {
                   "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
-                  "startTime": 8697.309169,
-                  "endTime": 8697.893143,
-                  "responseReceivedTime": 8697.892820000001,
+                  "startTime": 8697308.203,
+                  "endTime": 8697893.143,
+                  "responseReceivedTime": 8697892.82,
                   "transferSize": 1190
                 }
               },
               "31161.6": {
                 "request": {
                   "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
-                  "startTime": 8697.310132,
-                  "endTime": 8700.316334,
-                  "responseReceivedTime": 8700.316068,
+                  "startTime": 8697309.518,
+                  "endTime": 8700316.333999999,
+                  "responseReceivedTime": 8700316.068000002,
                   "transferSize": 903
                 }
               },
               "31161.8": {
                 "request": {
                   "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
-                  "startTime": 8697.312282,
-                  "endTime": 8700.880996,
-                  "responseReceivedTime": 8700.88051,
+                  "startTime": 8697311.519000001,
+                  "endTime": 8700880.996,
+                  "responseReceivedTime": 8700880.510000002,
                   "transferSize": 903
                 }
               },
               "31161.18": {
                 "request": {
                   "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
-                  "startTime": 8697.362422,
-                  "endTime": 8703.466927,
-                  "responseReceivedTime": 8703.463442,
+                  "startTime": 8697361.52,
+                  "endTime": 8703466.927,
+                  "responseReceivedTime": 8703463.442,
                   "transferSize": 223
                 }
               },
               "31161.25": {
                 "request": {
                   "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-                  "startTime": 8700.884093,
-                  "endTime": 8702.335333,
-                  "responseReceivedTime": 8701.453183000001,
+                  "startTime": 8697366.467,
+                  "endTime": 8702335.333,
+                  "responseReceivedTime": 8701453.183,
                   "transferSize": 166550
                 }
               },
               "31161.26": {
                 "request": {
                   "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-                  "startTime": 8702.33829,
-                  "endTime": 8703.08326,
-                  "responseReceivedTime": 8702.922942,
+                  "startTime": 8697366.91,
+                  "endTime": 8703083.26,
+                  "responseReceivedTime": 8702922.942,
                   "transferSize": 30346
                 }
               },
               "31161.43": {
                 "request": {
                   "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
-                  "startTime": 8703.56974,
-                  "endTime": 8704.393508,
-                  "responseReceivedTime": 8704.393047000001,
+                  "startTime": 8703568.711,
+                  "endTime": 8704393.508,
+                  "responseReceivedTime": 8704393.047,
                   "transferSize": 903
                 }
               },
               "31161.9": {
                 "request": {
                   "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-                  "startTime": 8697.313513,
-                  "endTime": 8698.45698,
-                  "responseReceivedTime": 8698.456458999999,
+                  "startTime": 8697312.914,
+                  "endTime": 8698456.98,
+                  "responseReceivedTime": 8698456.458999999,
                   "transferSize": 1052
                 }
               },
               "31161.10": {
                 "request": {
                   "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
-                  "startTime": 8697.315116,
-                  "endTime": 8698.465845,
-                  "responseReceivedTime": 8698.465576,
+                  "startTime": 8697313.844,
+                  "endTime": 8698465.845,
+                  "responseReceivedTime": 8698465.576000001,
                   "transferSize": 221
                 }
               }
@@ -756,7 +756,7 @@
           }
         },
         "longestChain": {
-          "duration": 7690.091999998913,
+          "duration": 7691.11400000006,
           "length": 2,
           "transferSize": 903
         }
@@ -1295,7 +1295,7 @@
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "protocol": "http/1.1",
             "startTime": 0,
-            "endTime": 656.8269999988843,
+            "endTime": 657.8489999994636,
             "finished": true,
             "transferSize": 17609,
             "resourceSize": 17393,
@@ -1307,8 +1307,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
             "protocol": "http/1.1",
-            "startTime": 602.483000000575,
-            "endTime": 1173.7450000000536,
+            "startTime": 602.3440000005066,
+            "endTime": 1174.7670000009239,
             "finished": true,
             "transferSize": 903,
             "resourceSize": 689,
@@ -1320,8 +1320,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
             "protocol": "http/1.1",
-            "startTime": 603.4949999993842,
-            "endTime": 1183.7299999988318,
+            "startTime": 603.4030000008643,
+            "endTime": 1184.7520000003278,
             "finished": true,
             "transferSize": 209,
             "resourceSize": 0,
@@ -1333,8 +1333,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
             "protocol": "http/1.1",
-            "startTime": 604.3030000000726,
-            "endTime": 2810.3069999997388,
+            "startTime": 604.4429999999702,
+            "endTime": 2811.3289999999106,
             "finished": true,
             "transferSize": 903,
             "resourceSize": 689,
@@ -1346,8 +1346,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
             "protocol": "http/1.1",
-            "startTime": 605.7529999998224,
-            "endTime": 1189.7269999990385,
+            "startTime": 605.8090000003576,
+            "endTime": 1190.748999999836,
             "finished": true,
             "transferSize": 1190,
             "resourceSize": 976,
@@ -1359,8 +1359,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
             "protocol": "http/1.1",
-            "startTime": 606.7160000002332,
-            "endTime": 3612.917999998899,
+            "startTime": 607.1239999998361,
+            "endTime": 3613.9399999994785,
             "finished": true,
             "transferSize": 903,
             "resourceSize": 689,
@@ -1372,8 +1372,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
             "protocol": "http/1.1",
-            "startTime": 608.1489999996847,
-            "endTime": 2659.3379999994795,
+            "startTime": 608.2609999999404,
+            "endTime": 2660.3600000012666,
             "finished": true,
             "transferSize": 903,
             "resourceSize": 689,
@@ -1386,8 +1386,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
             "protocol": "http/1.1",
-            "startTime": 608.8660000004893,
-            "endTime": 4177.57999999958,
+            "startTime": 609.1250000018626,
+            "endTime": 4178.601999999955,
             "finished": true,
             "transferSize": 903,
             "resourceSize": 689,
@@ -1399,8 +1399,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
             "protocol": "http/1.1",
-            "startTime": 610.0969999988592,
-            "endTime": 1753.5640000005515,
+            "startTime": 610.5200000014156,
+            "endTime": 1754.586000001058,
             "finished": true,
             "transferSize": 1052,
             "resourceSize": 824,
@@ -1412,8 +1412,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
             "protocol": "http/1.1",
-            "startTime": 611.6999999994732,
-            "endTime": 1762.4290000003384,
+            "startTime": 611.4500000011176,
+            "endTime": 1763.4510000012815,
             "finished": true,
             "transferSize": 221,
             "resourceSize": 0,
@@ -1425,8 +1425,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/empty.css",
             "protocol": "http/1.1",
-            "startTime": 8072.050999999192,
-            "endTime": 8651.972999999998,
+            "startTime": 620.672000002116,
+            "endTime": 8652.995000001043,
             "finished": true,
             "transferSize": 207,
             "resourceSize": 0,
@@ -1438,8 +1438,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
             "protocol": "http/1.1",
-            "startTime": 659.005999999863,
-            "endTime": 6763.510999999198,
+            "startTime": 659.1260000001639,
+            "endTime": 6764.532999999821,
             "finished": true,
             "transferSize": 223,
             "resourceSize": 0,
@@ -1451,8 +1451,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar1",
             "protocol": "http/1.1",
-            "startTime": 6384.352999999464,
-            "endTime": 7077.696000000287,
+            "startTime": 660.9970000013709,
+            "endTime": 7078.718000000343,
             "finished": true,
             "transferSize": 24822,
             "resourceSize": 24620,
@@ -1464,8 +1464,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
             "protocol": "http/1.1",
-            "startTime": 6763.1860000001325,
-            "endTime": 8071.932999999262,
+            "startTime": 661.8369999993593,
+            "endTime": 8072.9550000000745,
             "finished": true,
             "transferSize": 24822,
             "resourceSize": 24620,
@@ -1477,8 +1477,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr2",
             "protocol": "http/1.1",
-            "startTime": 6765.025999999125,
-            "endTime": 8079.610999999204,
+            "startTime": 661.945000000298,
+            "endTime": 8080.632999999449,
             "finished": true,
             "transferSize": 24822,
             "resourceSize": 24620,
@@ -1490,8 +1490,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr3",
             "protocol": "http/1.1",
-            "startTime": 6765.406999998959,
-            "endTime": 8087.203999999474,
+            "startTime": 662.6960000004619,
+            "endTime": 8088.225999999791,
             "finished": true,
             "transferSize": 24822,
             "resourceSize": 24620,
@@ -1503,8 +1503,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
             "protocol": "http/1.1",
-            "startTime": 6765.933000000587,
-            "endTime": 8095.172999999704,
+            "startTime": 662.9379999991506,
+            "endTime": 8096.195000000298,
             "finished": true,
             "transferSize": 24822,
             "resourceSize": 24620,
@@ -1516,8 +1516,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-rotating.gif",
             "protocol": "http/1.1",
-            "startTime": 6766.39299999988,
-            "endTime": 13062.77399999999,
+            "startTime": 663.3130000010133,
+            "endTime": 13063.79600000009,
             "finished": true,
             "transferSize": 934487,
             "resourceSize": 934285,
@@ -1529,8 +1529,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "protocol": "http/1.1",
-            "startTime": 4180.677000000287,
-            "endTime": 5631.9170000006125,
+            "startTime": 664.0730000007898,
+            "endTime": 5632.939000001177,
             "finished": true,
             "transferSize": 166550,
             "resourceSize": 166320,
@@ -1542,8 +1542,8 @@
           {
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
             "protocol": "http/1.1",
-            "startTime": 5634.8739999993995,
-            "endTime": 6379.843999999139,
+            "startTime": 664.51600000076,
+            "endTime": 6380.866000000387,
             "finished": true,
             "transferSize": 30346,
             "resourceSize": 84245,
@@ -1555,8 +1555,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar2",
             "protocol": "http/1.1",
-            "startTime": 8008.174000000508,
-            "endTime": 8850.000000000364,
+            "startTime": 6841.868000000715,
+            "endTime": 8851.022000001743,
             "finished": true,
             "transferSize": 24822,
             "resourceSize": 24620,
@@ -1568,8 +1568,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
             "protocol": "http/1.1",
-            "startTime": 6866.324000000532,
-            "endTime": 7690.091999998913,
+            "startTime": 6866.316999999806,
+            "endTime": 7691.11400000006,
             "finished": true,
             "transferSize": 903,
             "resourceSize": 689,
@@ -1581,8 +1581,8 @@
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "protocol": "http/1.1",
-            "startTime": 6869.548000000577,
-            "endTime": 8010.202999999819,
+            "startTime": 6868.923000000417,
+            "endTime": 8011.22500000149,
             "finished": true,
             "transferSize": 17609,
             "resourceSize": 17393,
@@ -1594,8 +1594,8 @@
           {
             "url": "blob:http://localhost:10200/3f2bc9df-684b-4541-837c-1590152ef65d",
             "protocol": "blob",
-            "startTime": 8016.351000000213,
-            "endTime": 8214.981999999509,
+            "startTime": 8017.373000001535,
+            "endTime": 8216.004000000656,
             "finished": true,
             "transferSize": 0,
             "resourceSize": 4,
@@ -1607,8 +1607,8 @@
           {
             "url": "filesystem:http://localhost:10200/temporary/empty-0.43448333410631723.png",
             "protocol": "filesystem",
-            "startTime": 8338.71999999974,
-            "endTime": 8340.64600000056,
+            "startTime": 8339.742000000551,
+            "endTime": 8341.66800000146,
             "finished": true,
             "transferSize": 0,
             "resourceSize": 0,
@@ -1620,8 +1620,8 @@
           {
             "url": "http://localhost:10200/favicon.ico",
             "protocol": "http/1.1",
-            "startTime": 13105.599999998958,
-            "endTime": 13674.191000000064,
+            "startTime": 13105.274000000209,
+            "endTime": 13675.213000001386,
             "finished": true,
             "transferSize": 255,
             "resourceSize": 34,
@@ -1633,7 +1633,7 @@
         ],
         "debugData": {
           "type": "debugdata",
-          "networkStartTimeTs": 8696703416
+          "networkStartTimeTs": 8696702394
         }
       }
     },
