@@ -4553,32 +4553,32 @@
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
-            "totalBytes": 903,
+            "totalBytes": 929,
             "wastedMs": 729
           },
           {
             "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
-            "totalBytes": 209,
+            "totalBytes": 235,
             "wastedMs": 879
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
-            "totalBytes": 903,
+            "totalBytes": 929,
             "wastedMs": 879
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
-            "totalBytes": 903,
+            "totalBytes": 929,
             "wastedMs": 879
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
-            "totalBytes": 1052,
+            "totalBytes": 1078,
             "wastedMs": 879
           },
           {
             "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
-            "totalBytes": 223,
+            "totalBytes": 249,
             "wastedMs": 879
           }
         ],

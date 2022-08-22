@@ -10782,9 +10782,9 @@
         "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
         "mediaChanges": []
       },
-      "transferSize": 903,
-      "startTime": 8697.305899,
-      "endTime": 8697.877161
+      "transferSize": 929,
+      "mainThreadStartTime": 1192438.482,
+      "networkEndTime": 1193004.23
     },
     {
       "tag": {
@@ -10792,9 +10792,9 @@
         "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
         "mediaChanges": []
       },
-      "transferSize": 209,
-      "startTime": 8697.306911,
-      "endTime": 8697.887146
+      "transferSize": 235,
+      "mainThreadStartTime": 1192439.207,
+      "networkEndTime": 1193014.402
     },
     {
       "tag": {
@@ -10802,9 +10802,9 @@
         "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
         "mediaChanges": []
       },
-      "transferSize": 903,
-      "startTime": 8697.307719,
-      "endTime": 8699.513723
+      "transferSize": 929,
+      "mainThreadStartTime": 1192439.8409999998,
+      "networkEndTime": 1194649.793
     },
     {
       "tag": {
@@ -10814,38 +10814,38 @@
           {
             "href": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
             "media": "not-matching",
-            "msSinceHTMLEnd": 1463,
+            "msSinceHTMLEnd": 1437,
             "matches": false
           },
           {
             "href": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
             "media": "screen",
-            "msSinceHTMLEnd": 2959,
+            "msSinceHTMLEnd": 2950,
             "matches": true
           }
         ]
       },
-      "transferSize": 903,
-      "startTime": 8697.310132,
-      "endTime": 8698.823242999999
+      "transferSize": 929,
+      "mainThreadStartTime": 1192441.253,
+      "networkEndTime": 1193941.103
     },
     {
       "tag": {
         "tagName": "SCRIPT",
         "url": "http://localhost:10200/dobetterweb/dbw_tester.js"
       },
-      "transferSize": 1052,
-      "startTime": 8697.313513,
-      "endTime": 8698.45698
+      "transferSize": 1078,
+      "mainThreadStartTime": 1192442.634,
+      "networkEndTime": 1193584.3709999998
     },
     {
       "tag": {
         "tagName": "SCRIPT",
         "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000"
       },
-      "transferSize": 223,
-      "startTime": 8697.362422,
-      "endTime": 8703.466927
+      "transferSize": 249,
+      "mainThreadStartTime": 1192446.997,
+      "networkEndTime": 1198592.29
     }
   ],
   "FontSize": {
