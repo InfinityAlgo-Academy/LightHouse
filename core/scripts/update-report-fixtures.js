@@ -7,7 +7,7 @@
 import * as cli from '../../cli/run.js';
 import * as cliFlags from '../../cli/cli-flags.js';
 import * as assetSaver from '../lib/asset-saver.js';
-import {server} from '../../cli/test/fixtures/static-server.js';
+import {Server} from '../../cli/test/fixtures/static-server.js';
 import budgetedConfig from '../test/results/sample-config.js';
 
 const artifactPath = 'core/test/results/artifacts';
@@ -21,6 +21,7 @@ const MAGIC_SERVER_PORT = 10200;
  * @param {Array<keyof LH.Artifacts>} artifactNames
  */
 async function update(artifactNames) {
+  const server = new Server(MAGIC_SERVER_PORT);
   await server.listen(MAGIC_SERVER_PORT, 'localhost');
 
   const oldArtifacts = assetSaver.loadArtifacts(artifactPath);

@@ -42,8 +42,8 @@ function createTestState() {
      */
     installServerHooks(port = 0, secondaryPort = 0) {
       before(async () => {
-        this.server = new Server();
-        this.secondaryServer = new Server();
+        this.server = new Server(port);
+        this.secondaryServer = new Server(secondaryPort);
         await this.server.listen(port, '127.0.0.1');
         await this.secondaryServer.listen(secondaryPort, '127.0.0.1');
         this.serverBaseUrl = `http://localhost:${this.server.getPort()}`;
