@@ -19,7 +19,7 @@ function generateRecord({
   return {
     url,
     mimeType,
-    mainThreadStartTime, // DevTools timestamp which is in seconds.
+    mainThreadStartTime,
     resourceSize: resourceSizeInKb * 1024,
     transferSize: resourceSizeInKb * 1024,
   };

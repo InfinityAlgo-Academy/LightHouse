@@ -102,7 +102,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
     return {
       node: ByteEfficiencyAudit.makeNodeItem(image.node),
       url,
-      mainThreadStartTime: networkRecord.mainThreadStartTime / 1000,
+      mainThreadStartTime: networkRecord.mainThreadStartTime,
       totalBytes,
       wastedBytes,
       wastedPercent: 100 * wastedRatio,
@@ -151,7 +151,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
     return images.filter(image => {
       if (image.wastedBytes < IGNORE_THRESHOLD_IN_BYTES) return false;
       if (image.wastedPercent < IGNORE_THRESHOLD_IN_PERCENT) return false;
-      return image.mainThreadStartTime < interactiveTimestamp / 1e6 - IGNORE_THRESHOLD_IN_MS / 1000;
+      return image.mainThreadStartTime < interactiveTimestamp / 1e3 - IGNORE_THRESHOLD_IN_MS;
     });
   }
 
