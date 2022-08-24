@@ -139,11 +139,17 @@ function purpleify(str) {
  */
 function convertToLegacyConfig(configJson) {
   if (!configJson) return configJson;
-  if (!configJson.navigations) return configJson;
 
   return {
     ...configJson,
-    passes: configJson.navigations.map(nav => ({...nav, passName: nav.id.concat('Pass')})),
+    passes: [{
+      passName: 'defaultPass',
+      pauseAfterFcpMs: configJson.settings?.pauseAfterFcpMs,
+      pauseAfterLoadMs: configJson.settings?.pauseAfterLoadMs,
+      networkQuietThresholdMs: configJson.settings?.networkQuietThresholdMs,
+      cpuQuietThresholdMs: configJson.settings?.cpuQuietThresholdMs,
+      blankPage: configJson.settings?.blankPage,
+    }],
   };
 }
 

@@ -221,62 +221,6 @@ const defaultConfig = {
     // FullPageScreenshot comes at the very end so all other node analysis is captured.
     {id: artifacts.FullPageScreenshot, gatherer: 'full-page-screenshot'},
   ],
-  navigations: [
-    {
-      id: 'default',
-      pauseAfterFcpMs: 1000,
-      pauseAfterLoadMs: 1000,
-      networkQuietThresholdMs: 1000,
-      cpuQuietThresholdMs: 1000,
-      artifacts: [
-        // Artifacts which can be depended on come first.
-        artifacts.DevtoolsLog,
-        artifacts.Trace,
-
-        artifacts.Accessibility,
-        artifacts.AnchorElements,
-        artifacts.CacheContents,
-        artifacts.ConsoleMessages,
-        artifacts.CSSUsage,
-        artifacts.Doctype,
-        artifacts.DOMStats,
-        artifacts.EmbeddedContent,
-        artifacts.FontSize,
-        artifacts.Inputs,
-        artifacts.GlobalListeners,
-        artifacts.IFrameElements,
-        artifacts.ImageElements,
-        artifacts.InstallabilityErrors,
-        artifacts.InspectorIssues,
-        artifacts.JsUsage,
-        artifacts.LinkElements,
-        artifacts.MainDocumentContent,
-        artifacts.MetaElements,
-        artifacts.NetworkUserAgent,
-        artifacts.OptimizedImages,
-        artifacts.PasswordInputsWithPreventedPaste,
-        artifacts.ResponseCompression,
-        artifacts.RobotsTxt,
-        artifacts.ServiceWorker,
-        artifacts.ScriptElements,
-        artifacts.Scripts,
-        artifacts.SourceMaps,
-        artifacts.Stacks,
-        artifacts.TagsBlockingFirstPaint,
-        artifacts.TapTargets,
-        artifacts.TraceElements,
-        artifacts.ViewportDimensions,
-        artifacts.WebAppManifest,
-
-        // Compat artifacts come last.
-        artifacts.devtoolsLogs,
-        artifacts.traces,
-
-        // FullPageScreenshot comes at the very end so all other node analysis is captured.
-        artifacts.FullPageScreenshot,
-      ],
-    },
-  ],
   audits: [
     'is-on-https',
     'service-worker',

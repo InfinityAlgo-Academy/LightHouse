@@ -194,18 +194,24 @@ describe('NavigationRunner', () => {
     });
 
     it('should navigate as many times as there are navigations', async () => {
-      config = (await initializeConfig(
-        'navigation',
-        {
-          ...config,
-          navigations: [
-            {id: 'default', artifacts: ['FontSize']},
-            {id: 'second', artifacts: ['ConsoleMessages']},
-            {id: 'third', artifacts: ['ViewportDimensions']},
-            {id: 'fourth', artifacts: ['AnchorElements']},
-          ],
-        }
-      )).config;
+      // initializeConfig always produces a single config navigation.
+      // Artificially construct multiple navigations to test on the navigation runner.
+      const originalNavigation = config.navigations?.[0];
+      if (!originalNavigation) throw new Error('Should always have navigations');
+      const artifactDefns = originalNavigation.artifacts.filter(a =>
+        ['FontSize', 'ConsoleMessages', 'ViewportDimensions', 'AnchorElements'].includes(a.id)
+      );
+      const newNavigations = [];
+      for (let i = 0; i < artifactDefns.length; ++i) {
+        const artifactDefn = artifactDefns[i];
+        newNavigations.push({
+          ...originalNavigation,
+          id: i ? String(i) : 'default',
+          artifacts: [artifactDefn],
+        });
+      }
+
+      config.navigations = newNavigations;
 
       await run();
       const navigations = mocks.navigationMock.gotoURL.mock.calls;
@@ -220,8 +226,9 @@ describe('NavigationRunner', () => {
         'navigation',
         {
           ...config,
-          navigations: [
-            {id: 'default', artifacts: ['FontSize']},
+          artifacts: [
+            {id: 'FontSize', gatherer: 'seo/font-size'},
+            {id: 'MetaElements', gatherer: 'meta-elements'},
           ],
         }
       )).config;
@@ -242,16 +249,17 @@ describe('NavigationRunner', () => {
     });
 
     it('should merge artifacts between navigations', async () => {
-      config = (await initializeConfig(
-        'navigation',
-        {
-          ...config,
-          navigations: [
-            {id: 'default', artifacts: ['FontSize']},
-            {id: 'second', artifacts: ['ConsoleMessages']},
-          ],
-        }
-      )).config;
+      // initializeConfig always produces a single config navigation.
+      // Artificially construct multiple navigations to test on the navigation runner.
+      if (!config.navigations) throw new Error('Should always have navigations');
+      const firstNavigation = config.navigations[0];
+      const secondNavigation = {...firstNavigation, id: 'second'};
+      const fontSizeDef = firstNavigation.artifacts.find(a => a.id === 'FontSize');
+      const consoleMsgDef = firstNavigation.artifacts.find(a => a.id === 'ConsoleMessages');
+      if (!fontSizeDef || !consoleMsgDef) throw new Error('Artifact definitions not found');
+      secondNavigation.artifacts = [fontSizeDef];
+      firstNavigation.artifacts = [consoleMsgDef];
+      config.navigations.push(secondNavigation);
 
       // Both gatherers will error in these test conditions, but artifact errors
       // will be merged into single `artifacts` object.
@@ -266,9 +274,9 @@ describe('NavigationRunner', () => {
         'navigation',
         {
           ...config,
-          navigations: [
-            {id: 'default', loadFailureMode: 'fatal', artifacts: ['FontSize']},
-            {id: 'second', artifacts: ['ConsoleMessages']},
+          artifacts: [
+            {id: 'FontSize', gatherer: 'seo/font-size'},
+            {id: 'MetaElements', gatherer: 'meta-elements'},
           ],
         }
       )).config;

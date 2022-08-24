@@ -95,6 +95,10 @@ const defaultSettings = {
   output: 'json',
   maxWaitForFcp: 30 * 1000,
   maxWaitForLoad: 45 * 1000,
+  pauseAfterFcpMs: 1000,
+  pauseAfterLoadMs: 1000,
+  networkQuietThresholdMs: 1000,
+  cpuQuietThresholdMs: 1000,
 
   formFactor: 'mobile',
   throttling: throttling.mobileSlow4G,
@@ -107,6 +111,8 @@ const defaultSettings = {
   disableStorageReset: false,
   debugNavigation: false,
   channel: 'node',
+  skipAboutBlank: false,
+  blankPage: 'about:blank',
 
   // the following settings have no defaults but we still want ensure that `key in settings`
   // in config will work in a typechecked way
@@ -119,7 +125,6 @@ const defaultSettings = {
   onlyAudits: null,
   onlyCategories: null,
   skipAudits: null,
-  skipAboutBlank: false,
 };
 
 /** @type {LH.Config.Pass} */

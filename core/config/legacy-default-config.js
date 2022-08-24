@@ -19,7 +19,6 @@ if (!legacyDefaultConfig.categories) {
 
 // These properties are ignored in Legacy navigations.
 delete legacyDefaultConfig.artifacts;
-delete legacyDefaultConfig.navigations;
 
 // These audits don't work in Legacy navigation mode so we remove them.
 const unsupportedAuditIds = [

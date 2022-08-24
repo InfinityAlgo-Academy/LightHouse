@@ -78,7 +78,7 @@ function resolveExtensions(configJSON) {
     throw new Error('`lighthouse:default` is the only valid extension method.');
   }
 
-  const {artifacts, navigations, ...extensionJSON} = configJSON;
+  const {artifacts, ...extensionJSON} = configJSON;
   const defaultClone = deepCloneConfigJson(defaultConfig);
   const mergedConfig = mergeConfigFragment(defaultClone, extensionJSON);
 
@@ -86,11 +86,6 @@ function resolveExtensions(configJSON) {
     defaultClone.artifacts,
     artifacts,
     artifact => artifact.id
-  );
-  mergedConfig.navigations = mergeConfigFragmentArrayByKey(
-    defaultClone.navigations,
-    navigations,
-    navigation => navigation.id
   );
 
   return mergedConfig;
@@ -213,39 +208,33 @@ function overrideNavigationThrottlingWindows(navigation, settings) {
 }
 
 /**
- *
- * @param {LH.Config.NavigationJson[]|null|undefined} navigations
  * @param {LH.Config.AnyArtifactDefn[]|null|undefined} artifactDefns
  * @param {LH.Config.Settings} settings
  * @return {LH.Config.NavigationDefn[] | null}
  */
-function resolveNavigationsToDefns(navigations, artifactDefns, settings) {
-  if (!navigations) return null;
-  if (!artifactDefns) throw new Error('Cannot use navigations without defining artifacts');
+function resolveFakeNavigations(artifactDefns, settings) {
+  if (!artifactDefns) return null;
 
   const status = {msg: 'Resolve navigation definitions', id: 'lh:config:resolveNavigationsToDefns'};
   log.time(status, 'verbose');
 
-  const artifactsById = new Map(artifactDefns.map(defn => [defn.id, defn]));
+  const resolvedNavigation = {
+    ...defaultNavigationConfig,
+    artifacts: artifactDefns,
+    pauseAfterFcpMs: settings.pauseAfterFcpMs,
+    pauseAfterLoadMs: settings.pauseAfterLoadMs,
+    networkQuietThresholdMs: settings.networkQuietThresholdMs,
+    cpuQuietThresholdMs: settings.cpuQuietThresholdMs,
+    blankPage: settings.blankPage,
+  };
 
-  const navigationDefns = navigations.map(navigation => {
-    const navigationWithDefaults = {...defaultNavigationConfig, ...navigation};
-    const navId = navigationWithDefaults.id;
-    const artifacts = navigationWithDefaults.artifacts.map(id => {
-      const artifact = artifactsById.get(id);
-      if (!artifact) throw new Error(`Unrecognized artifact "${id}" in navigation "${navId}"`);
-      return artifact;
-    });
+  overrideNavigationThrottlingWindows(resolvedNavigation, settings);
 
-    const resolvedNavigation = {...navigationWithDefaults, artifacts};
-    overrideNavigationThrottlingWindows(resolvedNavigation, settings);
-    return resolvedNavigation;
-  });
-
-  assertArtifactTopologicalOrder(navigationDefns);
+  const navigations = [resolvedNavigation];
+  assertArtifactTopologicalOrder(navigations);
 
   log.timeEnd(status);
-  return navigationDefns;
+  return navigations;
 }
 
 /**
@@ -267,7 +256,8 @@ async function initializeConfig(gatherMode, configJSON, flags = {}) {
   overrideSettingsForGatherMode(settings, gatherMode);
 
   const artifacts = await resolveArtifactsToDefns(configWorkingCopy.artifacts, configDir);
-  const navigations = resolveNavigationsToDefns(configWorkingCopy.navigations, artifacts, settings);
+
+  const navigations = resolveFakeNavigations(artifacts, settings);
 
   /** @type {LH.Config.FRConfig} */
   let config = {
