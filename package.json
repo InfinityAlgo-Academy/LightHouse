@@ -88,8 +88,8 @@
     "compile-proto": "protoc --python_out=./ ./proto/lighthouse-result.proto && mv ./proto/*_pb2.py ./proto/scripts || (echo \"❌ Install protobuf ≥ 3.7.1 to compile the proto file.\" && false)",
     "build-proto-roundtrip": "mkdir -p .tmp && cross-env PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION_VERSION=2 python proto/scripts/json_roundtrip_via_proto.py",
     "static-server": "node cli/test/fixtures/static-server.js",
-    "serve-dist": "cd dist && python3 -m http.server",
-    "serve-gh-pages": "cd dist/gh-pages && python3 -m http.server",
+    "serve-dist": "cd dist && python3 -m http.server 7878",
+    "serve-gh-pages": "cd dist/gh-pages && python3 -m http.server 7333",
     "serve-treemap": "yarn serve-gh-pages",
     "serve-viewer": "yarn serve-gh-pages",
     "flow-report": "yarn build-report --flow && node ./core/scripts/build-test-flow-report.js"
