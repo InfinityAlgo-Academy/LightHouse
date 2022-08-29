@@ -24,6 +24,7 @@ import log from 'lighthouse-logger';
 import {runSmokehouse, getShardedDefinitions} from '../smokehouse.js';
 import {updateTestDefnFormat} from './back-compat-util.js';
 import {LH_ROOT} from '../../../../root.js';
+import exclusions from '../config/exclusions.js';
 
 const coreTestDefnsPath =
   path.join(LH_ROOT, 'cli/test/smokehouse/core-tests.js');
@@ -69,6 +70,7 @@ function getDefinitionsToRun(allTestDefns, requestedIds, {invertMatch}) {
   });
   if (unmatchedIds.length) {
     console.log(log.redify(`Smoketests not found for: ${unmatchedIds.join(' ')}`));
+    console.log(`Check test exclusions (${requestedIds.join(' ')})\n`);
     console.log(usage);
   }
 
@@ -193,8 +195,11 @@ async function begin() {
   const requestedTestIds = argv._;
   const {default: rawTestDefns} = await import(url.pathToFileURL(testDefnPath).href);
   const allTestDefns = updateTestDefnFormat(rawTestDefns);
+  const excludedTests = new Set(exclusions[argv.runner] || []);
+  const filteredTestDefns = allTestDefns.filter(test => !excludedTests.has(test.id));
   const invertMatch = argv.invertMatch;
-  const requestedTestDefns = getDefinitionsToRun(allTestDefns, requestedTestIds, {invertMatch});
+  const requestedTestDefns = getDefinitionsToRun(filteredTestDefns,
+    requestedTestIds, {invertMatch});
   const testDefns = getShardedDefinitions(requestedTestDefns, argv.shard);
 
   let smokehouseResult;
