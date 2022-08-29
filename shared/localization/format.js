@@ -381,7 +381,7 @@ function _getLocaleMessages(locale) {
 }
 
 /**
- * Returns whether the `requestedLocale` can be used.
+ * Returns whether the `requestedLocale` is registered and available for use
  * @param {LH.Locale} requestedLocale
  * @return {boolean}
  */
