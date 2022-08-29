@@ -58,6 +58,9 @@ describe('Navigation', async function() {
           // TODO: Figure out why these are emitted in FR.
           expectError(/Protocol Error: the message with wrong session id/);
           expectError(/Protocol Error: the message with wrong session id/);
+          expectError(/Protocol Error: the message with wrong session id/);
+          expectError(/Protocol Error: the message with wrong session id/);
+          expectError(/Protocol Error: the message with wrong session id/);
         }
       });
 
