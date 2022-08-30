@@ -15,7 +15,7 @@ const moduleDir = getModuleDirectory(import.meta);
 const FLOW_REPORT_TEMPLATE = fs.readFileSync(`${moduleDir}/../../flow-report/assets/standalone-flow-template.html`, 'utf8');
 const REGULAR_REPORT_CSS = fs.readFileSync(moduleDir + '/../assets/styles.css', 'utf8');
 const FLOW_REPORT_CSS = fs.readFileSync(`${moduleDir}/../../flow-report/assets/styles.css`, 'utf8');
-const FLOW_REPORT_JAVASCRIPT = fs.readFileSync(`${moduleDir}/../../dist/report/flow.js`, 'utf8');
+const FLOW_REPORT_JAVASCRIPT = fs.readFileSync(`${moduleDir}/../../dist/report/flow2.js`, 'utf8');
 /* eslint-enable max-len */
 
 export const flowReportAssets = {
