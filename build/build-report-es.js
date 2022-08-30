@@ -6,15 +6,14 @@
 
 import fs from 'fs';
 
-import builtin from 'builtin-modules';
 import esbuild from 'esbuild';
 import esMain from 'es-main';
 
+import * as plugins from './esbuild-plugins.js';
 import {LH_ROOT} from '../root.js';
 import {getIcuMessageIdParts} from '../shared/localization/format.js';
 import {locales} from '../shared/localization/locales.js';
 import {UIStrings as FlowUIStrings} from '../flow-report/src/i18n/ui-strings.js';
-import {inlineFs} from './plugins/inline-fs.js';
 
 /**
  * Extract only the strings needed for the flow report into
@@ -51,92 +50,9 @@ function buildStandaloneReport() {
   });
 }
 
-/**
- * @param {string[]=} builtinList
- * @return {esbuild.Plugin}
- */
-function ignoreBuiltins(builtinList) {
-  if (!builtinList) builtinList = [...builtin];
-  const builtinRegexp = new RegExp(`^(${builtinList.join('|')})\\/?(.+)?`);
-  return {
-    name: 'ignore-builtins',
-    setup(build) {
-      build.onResolve({filter: builtinRegexp}, (args) => {
-        if (args.path.match(builtinRegexp)) {
-          return {path: args.path, namespace: 'ignore-builtins'};
-        }
-      });
-      build.onLoad({filter: builtinRegexp, namespace: 'ignore-builtins'}, async () => {
-        return {contents: ''};
-      });
-    },
-  };
-}
-
-/**
- * Bundles multiple partial loaders (string => string transforms) into a single esbuild Loader plugin.
- * A partial loader that doesn't want to do any transform should just return the code given to it.
- * @param {Array<{name: string, onLoad: (code: string, args: esbuild.OnLoadArgs) => Promise<{code: string, warnings?: esbuild.PartialMessage[]}>}>} partialLoaders
- * @return {esbuild.Plugin}
- */
-function bulkLoader(partialLoaders) {
-  return {
-    name: 'bulk-loader',
-    setup(build) {
-      build.onLoad({filter: /\.*.js/}, async (args) => {
-        if (args.path.includes('node_modules')) return;
-
-        /** @type {esbuild.PartialMessage[]} */
-        const warnings = [];
-        // TODO: source maps? lol.
-        let code = await fs.promises.readFile(args.path, 'utf-8');
-
-        for (const partialLoader of partialLoaders) {
-          const partialResult = await partialLoader.onLoad(code, args);
-          code = partialResult.code;
-          if (partialResult.warnings) {
-            warnings.push(...partialResult.warnings);
-          }
-        }
-
-        return {contents: code, warnings};
-      });
-    },
-  };
-}
-
-/**
- * @param {Record<string, string>} replaceMap
- * @return {esbuild.Plugin}
- */
-function replaceModules(replaceMap) {
-  return {
-    name: 'replace-modules',
-    setup(build) {
-      build.onLoad({filter: /\.*.js/}, async (args) => {
-        if (args.path.includes('node_modules')) return;
-        if (!(args.path in replaceMap)) return;
-
-        return {contents: replaceMap[args.path]};
-      });
-    },
-  };
-}
-
-const buildReportBulkLoader = bulkLoader([
-  {
-    name: 'inline-fs',
-    async onLoad(inputCode, args) {
-      const {code, warnings} = await inlineFs(inputCode, args.path);
-      return {code: code ?? inputCode, warnings};
-    },
-  },
-  {
-    name: 'rm-get-module-directory',
-    async onLoad(inputCode) {
-      return {code: inputCode.replace(/getModuleDirectory\(import.meta\)/g, '""')};
-    },
-  },
+const buildReportBulkLoader = plugins.bulkLoader([
+  plugins.partialLoaders.inlineFs,
+  plugins.partialLoaders.rmGetModuleDirectory,
 ]);
 
 async function buildFlowReport() {
@@ -147,8 +63,8 @@ async function buildFlowReport() {
     bundle: true,
     minify: true,
     plugins: [
-      ignoreBuiltins(),
-      replaceModules({
+      plugins.ignoreBuiltins(),
+      plugins.replaceModules({
         [`${LH_ROOT}/flow-report/src/i18n/localized-strings.js`]: buildFlowStrings(),
         [`${LH_ROOT}/shared/localization/locales.js`]: 'export const locales = {}',
       }),
@@ -204,7 +120,7 @@ export const format = {registerLocaleData, hasLocale};
     bundle: true,
     minify: true,
     plugins: [
-      replaceModules({
+      plugins.replaceModules({
         // Exclude this 30kb from the devtools bundle for now.
         [`${LH_ROOT}/shared/localization/i18n-module.js`]: i18nModuleShim,
       }),
@@ -218,15 +134,15 @@ async function buildUmdBundle() {
     outfile: 'dist/report/bundle.umd.js',
     // currently there is no umd support in esbuild.
     // so we take the output and create our own umd bundle.
-    write: false,
     // https://github.com/evanw/esbuild/pull/1331
+    write: false,
     format: 'iife',
     globalName: 'reportExports',
     bundle: true,
     minify: false,
     plugins: [
-      ignoreBuiltins(),
-      replaceModules({
+      plugins.ignoreBuiltins(),
+      plugins.replaceModules({
         [`${LH_ROOT}/shared/localization/locales.js`]: 'export const locales = {}',
       }),
       buildReportBulkLoader,

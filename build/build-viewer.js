@@ -6,33 +6,54 @@
 
 import {createRequire} from 'module';
 
-import {rollup} from 'rollup';
+import esbuild from 'esbuild';
 
-import * as rollupPlugins from './rollup-plugins.js';
+import * as plugins from './esbuild-plugins.js';
 import {GhPagesApp} from './gh-pages-app.js';
 import {LH_ROOT} from '../root.js';
 
 const require = createRequire(import.meta.url);
 
 async function buildReportGenerator() {
-  const bundle = await rollup({
-    input: 'report/generator/report-generator.js',
+  const result = await esbuild.build({
+    entryPoints: ['report/generator/report-generator.js'],
+    // currently there is no umd support in esbuild.
+    // so we take the output and create our own umd bundle.
+    // https://github.com/evanw/esbuild/pull/1331
+    write: false,
+    format: 'iife',
+    globalName: 'reportGeneratorExports',
+    bundle: true,
+    minify: !process.env.DEBUG,
     plugins: [
-      rollupPlugins.shim({
+      plugins.ignoreBuiltins(),
+      plugins.replaceModules({
         [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export const flowReportAssets = {}',
       }),
-      rollupPlugins.nodeResolve(),
-      rollupPlugins.removeModuleDirCalls(),
-      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
+      plugins.bulkLoader([
+        plugins.partialLoaders.inlineFs,
+        plugins.partialLoaders.rmGetModuleDirectory,
+      ]),
     ],
   });
 
-  const result = await bundle.generate({
-    format: 'umd',
-    name: 'ReportGenerator',
-  });
-  await bundle.close();
-  return result.output[0].code;
+  const code = `
+(function(root, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
+  } else if (typeof module === "object" && module.exports) {
+    module.exports = factory();
+  } else {
+    root.ReportGenerator = factory();
+  }
+}(typeof self !== "undefined" ? self : this, function() {
+  "use strict";
+  ${result.outputFiles[0].text.replace('"use strict";\n', '')};
+  return reportGeneratorExports.ReportGenerator;
+}));
+`;
+
+  return code;
 }
 
 /**
@@ -50,18 +71,13 @@ async function main() {
       {path: '../../flow-report/assets/styles.css'},
     ],
     javascripts: [
+      // TODO: import report generator async
+      // https://github.com/GoogleChrome/lighthouse/pull/13429
       reportGeneratorJs,
-      // TODO: https://github.com/GoogleChrome/lighthouse/pull/13429
-      'window.ReportGenerator = window.ReportGenerator.ReportGenerator',
       {path: require.resolve('pako/dist/pako_inflate.js')},
-      {path: 'src/main.js', rollup: true, rollupPlugins: [
-        rollupPlugins.replace({
-          delimiters: ['', ''],
-          values: {
-            'getModuleDirectory(import.meta)': '""',
-          },
-        }),
-        rollupPlugins.shim({
+      {path: 'src/main.js', esbuild: true, esbuildPlugins: [
+        plugins.ignoreBuiltins(),
+        plugins.replaceModules({
           './locales.js': 'export const locales = {};',
           'module': `
             export const createRequire = () => {
@@ -73,19 +89,10 @@ async function main() {
             };
           `,
         }),
-        rollupPlugins.typescript({
-          tsconfig: 'flow-report/tsconfig.json',
-          // Plugin struggles with custom outDir, so revert it from tsconfig value
-          // as well as any options that require an outDir is set.
-          outDir: null,
-          composite: false,
-          emitDeclarationOnly: false,
-          declarationMap: false,
-        }),
-        rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
-        rollupPlugins.commonjs(),
-        rollupPlugins.nodePolyfills(),
-        rollupPlugins.nodeResolve({preferBuiltins: true}),
+        plugins.bulkLoader([
+          plugins.partialLoaders.inlineFs,
+          plugins.partialLoaders.rmGetModuleDirectory,
+        ]),
       ]},
     ],
     assets: [

@@ -61,7 +61,7 @@ async function main() {
       {path: require.resolve('tabulator-tables/dist/js/modules/format.js')},
       {path: require.resolve('tabulator-tables/dist/js/modules/resize_columns.js')},
       {path: require.resolve('pako/dist/pako_inflate.js')},
-      {path: 'src/main.js', rollup: true},
+      {path: 'src/main.js', esbuild: true},
     ],
     assets: [
       {path: 'images/**/*', destDir: 'images'},

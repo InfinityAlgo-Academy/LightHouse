@@ -8,6 +8,7 @@ import fs from 'fs';
 import path from 'path';
 
 import {rollup} from 'rollup';
+import esbuild from 'esbuild';
 import cpy from 'cpy';
 import ghPages from 'gh-pages';
 import glob from 'glob';
@@ -39,7 +40,7 @@ const license = `/*
 /**
  * Literal string (representing JS, CSS, etc...), or an object with a path, which would
  * be interpreted relative to opts.appDir and be glob-able.
- * @typedef {{path: string, rollup?: boolean, rollupPlugins?: import('rollup').Plugin[]} | string} Source
+ * @typedef {{path: string, rollup?: boolean, rollupPlugins?: import('rollup').Plugin[], esbuild?: boolean, esbuildPlugins?: esbuild.Plugin[]} | string} Source
  */
 
 /**
@@ -137,6 +138,11 @@ class GhPagesApp {
           path.resolve(this.opts.appDir, source.path),
           source.rollupPlugins)
         );
+      } else if (source.esbuild) {
+        result.push(await this._esbuildSource(
+          path.resolve(this.opts.appDir, source.path),
+          source.esbuildPlugins)
+        );
       } else {
         result.push(...loadFiles(path.resolve(this.opts.appDir, source.path)));
       }
@@ -174,6 +180,33 @@ class GhPagesApp {
     const scripts = output[0].imports.map(fileName => `src/${fileName}`);
     this.preloadScripts.push(...scripts);
     return output[0].code;
+  }
+
+  /**
+   * @param {string} input
+   * @param {esbuild.Plugin[]=} plugins
+   * @return {Promise<string>}
+   */
+  async _esbuildSource(input, plugins) {
+    const result = await esbuild.build({
+      entryPoints: [input],
+      write: false,
+      outdir: fs.mkdtempSync('gh-pages-app-'),
+      format: 'esm',
+      bundle: true,
+      splitting: true,
+      minify: !process.env.DEBUG,
+      plugins,
+    });
+
+    // Return the code from the main chunk, and save the rest to the src directory.
+    for (let i = 1; i < result.outputFiles.length; i++) {
+      const code = result.outputFiles[i].text;
+      const basename = path.basename(result.outputFiles[i].path);
+      safeWriteFile(`${this.distDir}/src/${basename}`, code);
+    }
+
+    return result.outputFiles[0].text;
   }
 
   async _compileHtml() {
