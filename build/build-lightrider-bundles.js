@@ -37,13 +37,13 @@ async function buildReportGenerator() {
     bundle: true,
     minify: false,
     plugins: [
+      plugins.replaceModules({
+        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export const flowReportAssets = {}',
+      }),
       plugins.bulkLoader([
         plugins.partialLoaders.inlineFs,
         plugins.partialLoaders.rmGetModuleDirectory,
       ]),
-      plugins.replaceModules({
-        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export const flowReportAssets = {}',
-      }),
       plugins.ignoreBuiltins(),
     ],
   });

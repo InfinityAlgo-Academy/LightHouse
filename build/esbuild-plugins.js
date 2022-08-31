@@ -73,6 +73,7 @@ function bulkLoader(partialLoaders) {
  * Given absolute module paths (or a bare builtin specifier), replace the module contents with the
  * provided text.
  * Ignores modules inside node_modules (but will still replace any requested builtins).
+ * This plugin should always be the first loader plugin.
  * @param {Record<string, string>} replaceMap
  * @return {esbuild.Plugin}
  */
