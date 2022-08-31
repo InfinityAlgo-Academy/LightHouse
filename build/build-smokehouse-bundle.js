@@ -4,9 +4,9 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {rollup} from 'rollup';
+import esbuild from 'esbuild';
 
-import * as rollupPlugins from './rollup-plugins.js';
+import * as plugins from './esbuild-plugins.js';
 import {LH_ROOT} from '../root.js';
 
 const distDir = `${LH_ROOT}/dist`;
@@ -15,11 +15,13 @@ const smokehouseLibFilename = './cli/test/smokehouse/frontends/lib.js';
 const smokehouseCliFilename = `${LH_ROOT}/cli/test/smokehouse/lighthouse-runners/cli.js`;
 
 async function main() {
-  const bundle = await rollup({
-    input: smokehouseLibFilename,
-    context: 'globalThis',
+  await esbuild.build({
+    entryPoints: [smokehouseLibFilename],
+    outfile: bundleOutFile,
+    format: 'cjs',
+    bundle: true,
     plugins: [
-      rollupPlugins.shim({
+      plugins.replaceModules({
         [smokehouseCliFilename]:
           'export function runLighthouse() { throw new Error("not supported"); }',
         'module': `
@@ -32,19 +34,13 @@ async function main() {
           };
         `,
       }),
-      rollupPlugins.removeModuleDirCalls(),
-      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
-      rollupPlugins.commonjs(),
-      rollupPlugins.nodePolyfills(),
-      rollupPlugins.nodeResolve(),
+      plugins.bulkLoader([
+        plugins.partialLoaders.inlineFs,
+        plugins.partialLoaders.rmGetModuleDirectory,
+      ]),
+      plugins.ignoreBuiltins(),
     ],
   });
-
-  await bundle.write({
-    file: bundleOutFile,
-    format: 'commonjs',
-  });
-  await bundle.close();
 }
 
 await main();
