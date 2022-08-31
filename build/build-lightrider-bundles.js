@@ -7,9 +7,9 @@
 import fs from 'fs';
 import path from 'path';
 
-import {rollup} from 'rollup';
+import esbuild from 'esbuild';
 
-import * as rollupPlugins from './rollup-plugins.js';
+import * as plugins from './esbuild-plugins.js';
 import {buildBundle} from './build-bundle.js';
 import {LH_ROOT} from '../root.js';
 
@@ -28,41 +28,46 @@ function buildEntryPoint() {
 }
 
 async function buildReportGenerator() {
-  const bundle = await rollup({
-    input: 'report/generator/report-generator.js',
+  const result = await esbuild.build({
+    entryPoints: ['report/generator/report-generator.js'],
+    outfile: 'dist/report/bundle.umd.js',
+    write: false,
+    format: 'iife', // really umd! see plugins.generateUMD
+    globalName: 'umdExports',
+    bundle: true,
+    minify: false,
     plugins: [
-      rollupPlugins.removeModuleDirCalls(),
-      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
-      rollupPlugins.shim({
+      plugins.bulkLoader([
+        plugins.partialLoaders.inlineFs,
+        plugins.partialLoaders.rmGetModuleDirectory,
+      ]),
+      plugins.replaceModules({
         [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export const flowReportAssets = {}',
-        'fs': 'export default {}',
       }),
+      plugins.ignoreBuiltins(),
     ],
   });
 
-  await bundle.write({
-    file: 'dist/lightrider/report-generator-bundle.js',
-    format: 'umd',
-    name: 'ReportGenerator',
-  });
-  await bundle.close();
+  const code = plugins.generateUMD(result.outputFiles[0].text, 'ReportGenerator');
+  await fs.promises.writeFile(result.outputFiles[0].path, code);
 }
 
 async function buildStaticServerBundle() {
-  const bundle = await rollup({
-    input: 'cli/test/fixtures/static-server.js',
+  await esbuild.build({
+    entryPoints: ['cli/test/fixtures/static-server.js'],
+    outfile: 'dist/lightrider/static-server.js',
+    format: 'cjs',
+    bundle: true,
+    minify: false,
     plugins: [
-      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
-      rollupPlugins.nodeResolve(),
+      plugins.bulkLoader([
+        plugins.partialLoaders.inlineFs,
+      ]),
+      plugins.ignoreBuiltins(),
+      // rollupPlugins.nodeResolve(), // TODO ?
     ],
     external: ['mime-types', 'glob'],
   });
-
-  await bundle.write({
-    file: 'dist/lightrider/static-server.js',
-    format: 'commonjs',
-  });
-  await bundle.close();
 }
 
 await Promise.all([

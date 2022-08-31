@@ -63,11 +63,11 @@ async function buildFlowReport() {
     bundle: true,
     minify: true,
     plugins: [
-      plugins.ignoreBuiltins(),
       plugins.replaceModules({
         [`${LH_ROOT}/flow-report/src/i18n/localized-strings.js`]: buildFlowStrings(),
         [`${LH_ROOT}/shared/localization/locales.js`]: 'export const locales = {}',
       }),
+      plugins.ignoreBuiltins(),
       buildReportBulkLoader,
     ],
   });
@@ -132,40 +132,22 @@ async function buildUmdBundle() {
   const result = await esbuild.build({
     entryPoints: ['report/clients/bundle.js'],
     outfile: 'dist/report/bundle.umd.js',
-    // currently there is no umd support in esbuild.
-    // so we take the output and create our own umd bundle.
-    // https://github.com/evanw/esbuild/pull/1331
     write: false,
-    format: 'iife',
-    globalName: 'reportExports',
+    format: 'iife', // really umd! see plugins.generateUMD
+    globalName: 'umdExports',
     bundle: true,
     minify: false,
     plugins: [
-      plugins.ignoreBuiltins(),
       plugins.replaceModules({
         [`${LH_ROOT}/shared/localization/locales.js`]: 'export const locales = {}',
       }),
+      plugins.ignoreBuiltins(),
       buildReportBulkLoader,
     ],
   });
 
-  const code = `
-(function(root, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(factory);
-  } else if (typeof module === "object" && module.exports) {
-    module.exports = factory();
-  } else {
-    root.report = factory();
-  }
-}(typeof self !== "undefined" ? self : this, function() {
-  "use strict";
-  ${result.outputFiles[0].text.replace('"use strict";\n', '')};
-  return reportExports;
-}));
-`;
-
-  fs.writeFileSync(result.outputFiles[0].path, code);
+  const code = plugins.generateUMD(result.outputFiles[0].text, 'report');
+  await fs.promises.writeFile(result.outputFiles[0].path, code);
 }
 
 async function main() {

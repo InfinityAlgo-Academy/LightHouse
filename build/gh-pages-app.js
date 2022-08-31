@@ -5,6 +5,7 @@
  */
 
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
 
 import {rollup} from 'rollup';
@@ -191,7 +192,7 @@ class GhPagesApp {
     const result = await esbuild.build({
       entryPoints: [input],
       write: false,
-      outdir: fs.mkdtempSync('gh-pages-app-'),
+      outdir: fs.mkdtempSync(path.join(os.tmpdir(), 'gh-pages-app-')),
       format: 'esm',
       bundle: true,
       splitting: true,

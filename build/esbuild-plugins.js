@@ -5,6 +5,7 @@
  */
 
 import fs from 'fs';
+import path from 'path';
 
 // eslint-disable-next-line no-unused-vars
 import esbuild from 'esbuild';
@@ -18,8 +19,8 @@ import {inlineFs} from './plugins/inline-fs.js';
  * @property {(code: string, args: esbuild.OnLoadArgs) => Promise<{code: string, warnings?: esbuild.PartialMessage[]}>} onLoad
  */
 
-/** @type {Record<string, PartialLoader>} */
 const partialLoaders = {
+  /** @type {PartialLoader} */
   inlineFs: {
     name: 'inline-fs',
     async onLoad(inputCode, args) {
@@ -27,6 +28,7 @@ const partialLoaders = {
       return {code: code ?? inputCode, warnings};
     },
   },
+  /** @type {PartialLoader} */
   rmGetModuleDirectory: {
     name: 'rm-get-module-directory',
     async onLoad(inputCode) {
@@ -61,13 +63,16 @@ function bulkLoader(partialLoaders) {
           }
         }
 
-        return {contents: code, warnings};
+        return {contents: code, warnings, resolveDir: path.dirname(args.path)};
       });
     },
   };
 }
 
 /**
+ * Given absolute module paths (or a bare builtin specifier), replace the module contents with the
+ * provided text.
+ * Ignores modules inside node_modules (but will still replace any requested builtins).
  * @param {Record<string, string>} replaceMap
  * @return {esbuild.Plugin}
  */
@@ -75,11 +80,29 @@ function replaceModules(replaceMap) {
   return {
     name: 'replace-modules',
     setup(build) {
-      build.onLoad({filter: /\.*.js/}, async (args) => {
+      build.onResolve({filter: /.*/}, (args) => {
         if (args.path.includes('node_modules')) return;
-        if (!(args.path in replaceMap)) return;
 
+        const isBuiltin = builtin.includes(args.path);
+        if (!isBuiltin && args.resolveDir.includes('node_modules')) return;
+
+        const resolvedPath = isBuiltin ?
+          args.path :
+          path.resolve(args.resolveDir, args.path);
+        if (!(resolvedPath in replaceMap)) return;
+
+        return {path: resolvedPath, namespace: 'replace-modules'};
+      });
+
+      const modulesNotSeen = new Set(Object.keys(replaceMap));
+      build.onLoad({filter: /.*/, namespace: 'replace-modules'}, async (args) => {
+        modulesNotSeen.delete(args.path);
         return {contents: replaceMap[args.path]};
+      });
+      build.onEnd(() => {
+        if (modulesNotSeen.size > 0) {
+          throw new Error('Unused module replacements: ' + [...modulesNotSeen]);
+        }
       });
     },
   };
@@ -107,9 +130,36 @@ function ignoreBuiltins(builtinList) {
   };
 }
 
+/**
+ * Currently there is no umd support in esbuild,
+ * so we take the output of an iife build and create our own umd bundle.
+ * https://github.com/evanw/esbuild/pull/1331
+ * @param {string} iifeCode expected to use `globalName: 'umdExports'`
+ * @param {string} moduleName
+ * @return {string}
+ */
+function generateUMD(iifeCode, moduleName) {
+  return `
+  (function(root, factory) {
+    if (typeof define === "function" && define.amd) {
+      define(factory);
+    } else if (typeof module === "object" && module.exports) {
+      module.exports = factory();
+    } else {
+      root.${moduleName} = factory();
+    }
+  }(typeof self !== "undefined" ? self : this, function() {
+    "use strict";
+    ${iifeCode.replace('"use strict";\n', '')};
+    return umdExports;
+  }));
+  `;
+}
+
 export {
   partialLoaders,
   bulkLoader,
   replaceModules,
   ignoreBuiltins,
+  generateUMD,
 };

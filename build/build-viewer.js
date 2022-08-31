@@ -17,19 +17,16 @@ const require = createRequire(import.meta.url);
 async function buildReportGenerator() {
   const result = await esbuild.build({
     entryPoints: ['report/generator/report-generator.js'],
-    // currently there is no umd support in esbuild.
-    // so we take the output and create our own umd bundle.
-    // https://github.com/evanw/esbuild/pull/1331
     write: false,
     format: 'iife',
-    globalName: 'reportGeneratorExports',
+    globalName: 'umdExports',
     bundle: true,
     minify: !process.env.DEBUG,
     plugins: [
-      plugins.ignoreBuiltins(),
       plugins.replaceModules({
         [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export const flowReportAssets = {}',
       }),
+      plugins.ignoreBuiltins(),
       plugins.bulkLoader([
         plugins.partialLoaders.inlineFs,
         plugins.partialLoaders.rmGetModuleDirectory,
@@ -37,22 +34,7 @@ async function buildReportGenerator() {
     ],
   });
 
-  const code = `
-(function(root, factory) {
-  if (typeof define === "function" && define.amd) {
-    define(factory);
-  } else if (typeof module === "object" && module.exports) {
-    module.exports = factory();
-  } else {
-    root.ReportGenerator = factory();
-  }
-}(typeof self !== "undefined" ? self : this, function() {
-  "use strict";
-  ${result.outputFiles[0].text.replace('"use strict";\n', '')};
-  return reportGeneratorExports.ReportGenerator;
-}));
-`;
-
+  const code = plugins.generateUMD(result.outputFiles[0].text, 'ReportGenerator');
   return code;
 }
 
@@ -76,9 +58,8 @@ async function main() {
       reportGeneratorJs,
       {path: require.resolve('pako/dist/pako_inflate.js')},
       {path: 'src/main.js', esbuild: true, esbuildPlugins: [
-        plugins.ignoreBuiltins(),
         plugins.replaceModules({
-          './locales.js': 'export const locales = {};',
+          [`${LH_ROOT}/shared/localization/locales.js`]: 'export const locales = {};',
           'module': `
             export const createRequire = () => {
               return {
@@ -89,6 +70,7 @@ async function main() {
             };
           `,
         }),
+        plugins.ignoreBuiltins(),
         plugins.bulkLoader([
           plugins.partialLoaders.inlineFs,
           plugins.partialLoaders.rmGetModuleDirectory,
