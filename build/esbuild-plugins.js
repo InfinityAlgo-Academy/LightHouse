@@ -6,6 +6,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import {createRequire} from 'module';
 
 // eslint-disable-next-line no-unused-vars
 import esbuild from 'esbuild';
@@ -24,6 +25,7 @@ const partialLoaders = {
   inlineFs: {
     name: 'inline-fs',
     async onLoad(inputCode, args) {
+      // if (args.path.includes('proto-pre')) debugger;
       const {code, warnings} = await inlineFs(inputCode, args.path);
       return {code: code ?? inputCode, warnings};
     },
@@ -31,8 +33,8 @@ const partialLoaders = {
   /** @type {PartialLoader} */
   rmGetModuleDirectory: {
     name: 'rm-get-module-directory',
-    async onLoad(inputCode) {
-      return {code: inputCode.replace(/getModuleDirectory\(import.meta\)/g, '""')};
+    async onLoad(code) {
+      return {code: code.replace(/getModuleDirectory\(import.meta\)/g, '""')};
     },
   },
 };
@@ -59,6 +61,10 @@ function bulkLoader(partialLoaders) {
           const partialResult = await partialLoader.onLoad(code, args);
           code = partialResult.code;
           if (partialResult.warnings) {
+            for (const warning of partialResult.warnings) {
+              warning.notes = warning.notes || [];
+              warning.notes.unshift({text: `partial loader: ${partialLoader.name}`});
+            }
             warnings.push(...partialResult.warnings);
           }
         }
@@ -70,26 +76,52 @@ function bulkLoader(partialLoaders) {
 }
 
 /**
- * Given absolute module paths (or a bare builtin specifier), replace the module contents with the
+ * Given absolute module paths (or a bare builtin specifier/package path), replace the module contents with the
  * provided text.
  * Ignores modules inside node_modules (but will still replace any requested builtins).
  * This plugin should always be the first loader plugin.
  * @param {Record<string, string>} replaceMap
+ * @param {{disableUnusedError: boolean}} opts
  * @return {esbuild.Plugin}
  */
-function replaceModules(replaceMap) {
+function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
+  // Allow callers to specifier an unresolved path, but normalize things
+  // by resolving those paths now.
+  // TODO: really this should use import.meta.resolve, but... that's not a thing yet!
+  const require = createRequire(import.meta.url);
+  for (const [k, v] of Object.entries(replaceMap)) {
+    const resolvedPath = require.resolve(k);
+    if (resolvedPath !== k) {
+      replaceMap[resolvedPath] = v;
+      delete replaceMap[k];
+    }
+  }
+
   return {
     name: 'replace-modules',
     setup(build) {
       build.onResolve({filter: /.*/}, (args) => {
-        if (args.path.includes('node_modules')) return;
+        // TODO: delete, right? and update jsdoc.
+        // if (args.path.includes('node_modules')) return;
 
-        const isBuiltin = builtin.includes(args.path);
-        if (!isBuiltin && args.resolveDir.includes('node_modules')) return;
+        // const isBuiltin = builtin.includes(args.path);
+        // TODO: delete, right?
+        // if (!isBuiltin && args.resolveDir.includes('node_modules')) return;
 
-        const resolvedPath = isBuiltin ?
-          args.path :
-          path.resolve(args.resolveDir, args.path);
+        // `import.meta.resolve` would be amazing here!
+        // ex: 'puppeteer-core' or 'pako/lib/zlib/inflate.js'
+        // const isPackageSpecifier = !(args.path.startsWith('/') || args.path.startsWith('.'));
+        // const resolvedPath = isBuiltin || isPackageSpecifier ?
+        //   args.path :
+        //   path.resolve(args.resolveDir, args.path);
+        let resolvedPath;
+        try {
+          resolvedPath = require.resolve(args.path, {paths: [args.resolveDir]});
+        } catch {
+          // We should append .js and .ts and .tsx to try and file the correct file...
+          // but we aren't shimming suck modules at the moment, so whatever.
+          return;
+        }
         if (!(resolvedPath in replaceMap)) return;
 
         return {path: resolvedPath, namespace: 'replace-modules'};
@@ -98,13 +130,16 @@ function replaceModules(replaceMap) {
       const modulesNotSeen = new Set(Object.keys(replaceMap));
       build.onLoad({filter: /.*/, namespace: 'replace-modules'}, async (args) => {
         modulesNotSeen.delete(args.path);
-        return {contents: replaceMap[args.path]};
+        return {contents: replaceMap[args.path], resolveDir: path.dirname(args.path)};
       });
-      build.onEnd(() => {
-        if (modulesNotSeen.size > 0) {
-          throw new Error('Unused module replacements: ' + [...modulesNotSeen]);
-        }
-      });
+
+      if (!opts.disableUnusedError) {
+        build.onEnd(() => {
+          if (modulesNotSeen.size > 0) {
+            throw new Error('Unused module replacements: ' + [...modulesNotSeen]);
+          }
+        });
+      }
     },
   };
 }
