@@ -175,21 +175,20 @@ function ignoreBuiltins(builtinList) {
  * @return {string}
  */
 function generateUMD(iifeCode, moduleName) {
-  return `
-  (function(root, factory) {
-    if (typeof define === "function" && define.amd) {
-      define(factory);
-    } else if (typeof module === "object" && module.exports) {
-      module.exports = factory();
-    } else {
-      root.${moduleName} = factory();
-    }
-  }(typeof self !== "undefined" ? self : this, function() {
-    "use strict";
-    ${iifeCode.replace('"use strict";\n', '')};
-    return umdExports;
-  }));
-  `;
+  return `(function(root, factory) {
+  if (typeof define === "function" && define.amd) {
+    define(factory);
+  } else if (typeof module === "object" && module.exports) {
+    module.exports = factory();
+  } else {
+    root.${moduleName} = factory();
+  }
+}(typeof self !== "undefined" ? self : this, function() {
+  "use strict";
+  ${iifeCode.replace('"use strict";\n', '')};
+  return umdExports;
+}));
+`;
 }
 
 export {
