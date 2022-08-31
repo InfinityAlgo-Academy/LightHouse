@@ -8,9 +8,9 @@ import fs from 'fs';
 
 import archiver from 'archiver';
 import cpy from 'cpy';
-import {rollup} from 'rollup';
+import esbuild from 'esbuild';
 
-import * as rollupPlugins from './rollup-plugins.js';
+import * as plugins from './esbuild-plugins.js';
 import {LH_ROOT} from '../root.js';
 import {readJson} from '../core/test/test-utils.js';
 
@@ -26,30 +26,21 @@ const packagePath = `${distDir}/../extension-${browserBrand}-package`;
 
 const manifestVersion = readJson(`${sourceDir}/manifest.json`).version;
 
-/**
- * Bundle and minify entry point.
- */
 async function buildEntryPoint() {
-  const bundle = await rollup({
-    input: `${sourceDir}/scripts/${sourceName}`,
+  await esbuild.build({
+    entryPoints: [`${sourceDir}/scripts/${sourceName}`],
+    outfile: `${distDir}/scripts/${distName}`,
+    format: 'iife',
+    bundle: true,
+    minify: !process.env.DEBUG,
     plugins: [
-      rollupPlugins.shim({
-        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
-      }),
-      rollupPlugins.replace({
-        '___BROWSER_BRAND___': browserBrand,
-      }),
-      rollupPlugins.nodeResolve(),
-      rollupPlugins.inlineFs({verbose: false}),
-      rollupPlugins.terser(),
+      plugins.bulkLoader([
+        plugins.partialLoaders.replaceText({
+          '___BROWSER_BRAND___': browserBrand,
+        }),
+      ]),
     ],
   });
-
-  await bundle.write({
-    file: `${distDir}/scripts/${distName}`,
-    format: 'iife',
-  });
-  await bundle.close();
 }
 
 function copyAssets() {

@@ -174,50 +174,28 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
       }),
       nodeModulesPolyfillPlugin(),
       plugins.bulkLoader([
-        {name: 'text-replace', async onLoad(code, args) {
-          const replacements = {
-            '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
-            // This package exports to default in a way that causes Rollup to get confused,
-            // resulting in MessageFormat being undefined.
-            'require(\'intl-messageformat\').default': 'require(\'intl-messageformat\')',
-            // Below we replace lighthouse-logger with a local copy, which is ES modules. Need
-            // to change every require of the package to reflect this.
-            'require(\'lighthouse-logger\');': 'require(\'lighthouse-logger\').default;',
-            // Rollup doesn't replace this, so let's manually change it to false.
-            'require.main === module': 'false',
-            // TODO: Use globalThis directly.
-            'global.isLightrider': 'globalThis.isLightrider',
-            'global.isDevtools': 'globalThis.isDevtools',
-            // For some reason, `shim` doesn't work to force this module to return false, so instead
-            // just replace usages of it with false.
-            'esMain(import.meta)': 'false',
-            'import esMain from \'es-main\'': '',
-            // By default esbuild converts `import.meta` to an empty object.
-            // We need at least the url property for i18n things.
-            /** @param {string} id */
-            'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
-          };
-
-          for (const [k, v] of Object.entries(replacements)) {
-            let replaceWith;
-            if (v instanceof Function) {
-              replaceWith = v(args.path);
-            } else {
-              replaceWith = v;
-            }
-
-            // @ts-expect-error
-            if (String.prototype.replaceAll) {
-              // @ts-expect-error
-              code = code.replaceAll(k, replaceWith);
-            } else {
-              // TODO: delete when not supporting node 14
-              while (code.includes(k)) code = code.replace(k, replaceWith);
-            }
-          }
-
-          return {code};
-        }},
+        plugins.partialLoaders.replaceText({
+          '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
+          // This package exports to default in a way that causes Rollup to get confused,
+          // resulting in MessageFormat being undefined.
+          'require(\'intl-messageformat\').default': 'require(\'intl-messageformat\')',
+          // Below we replace lighthouse-logger with a local copy, which is ES modules. Need
+          // to change every require of the package to reflect this.
+          'require(\'lighthouse-logger\');': 'require(\'lighthouse-logger\').default;',
+          // Rollup doesn't replace this, so let's manually change it to false.
+          'require.main === module': 'false',
+          // TODO: Use globalThis directly.
+          'global.isLightrider': 'globalThis.isLightrider',
+          'global.isDevtools': 'globalThis.isDevtools',
+          // For some reason, `shim` doesn't work to force this module to return false, so instead
+          // just replace usages of it with false.
+          'esMain(import.meta)': 'false',
+          'import esMain from \'es-main\'': '',
+          // By default esbuild converts `import.meta` to an empty object.
+          // We need at least the url property for i18n things.
+          /** @param {string} id */
+          'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
+        }),
         // TODO: for rollup, various things were tree-shaken out before inlineFs did its thing.
         // Now treeshaking only happens at the end, so the plugin sees more cases than it did before.
         // Some of those new cases emit warnings. Safe to ignore, but should be resolved eventually.

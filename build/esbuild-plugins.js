@@ -37,6 +37,36 @@ const partialLoaders = {
       return {code: code.replace(/getModuleDirectory\(import.meta\)/g, '""')};
     },
   },
+  /**
+   * @param {Record<string, string | ((id: string) => string)>} replacements
+   * @return {PartialLoader}
+   */
+  replaceText(replacements) {
+    return {
+      name: 'text-replace',
+      async onLoad(code, args) {
+        for (const [k, v] of Object.entries(replacements)) {
+          let replaceWith;
+          if (v instanceof Function) {
+            replaceWith = v(args.path);
+          } else {
+            replaceWith = v;
+          }
+
+          // @ts-expect-error
+          if (String.prototype.replaceAll) {
+            // @ts-expect-error
+            code = code.replaceAll(k, replaceWith);
+          } else {
+            // TODO: delete when not supporting node 14
+            while (code.includes(k)) code = code.replace(k, replaceWith);
+          }
+        }
+
+        return {code};
+      },
+    };
+  },
 };
 
 /**
