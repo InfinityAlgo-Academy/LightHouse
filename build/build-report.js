@@ -4,10 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {rollup} from 'rollup';
+import fs from 'fs';
+
+import esbuild from 'esbuild';
 import esMain from 'es-main';
 
-import * as rollupPlugins from './rollup-plugins.js';
+import * as plugins from './esbuild-plugins.js';
 import {LH_ROOT} from '../root.js';
 import {getIcuMessageIdParts} from '../shared/localization/format.js';
 import {locales} from '../shared/localization/locales.js';
@@ -38,53 +40,37 @@ function buildFlowStrings() {
   return 'export default ' + JSON.stringify(strings, null, 2) + ';';
 }
 
-async function buildStandaloneReport() {
-  const bundle = await rollup({
-    input: 'report/clients/standalone.js',
-    plugins: [
-      rollupPlugins.commonjs(),
-      rollupPlugins.terser(),
-    ],
-  });
-
-  await bundle.write({
-    file: 'dist/report/standalone.js',
+function buildStandaloneReport() {
+  return esbuild.build({
+    entryPoints: ['report/clients/standalone.js'],
+    outfile: 'dist/report/standalone.js',
     format: 'iife',
+    bundle: true,
+    minify: true,
   });
-  await bundle.close();
 }
 
+const buildReportBulkLoader = plugins.bulkLoader([
+  plugins.partialLoaders.inlineFs,
+  plugins.partialLoaders.rmGetModuleDirectory,
+]);
+
 async function buildFlowReport() {
-  const bundle = await rollup({
-    input: 'flow-report/clients/standalone.ts',
+  return esbuild.build({
+    entryPoints: ['flow-report/clients/standalone.ts'],
+    outfile: 'dist/report/flow.js',
+    format: 'iife',
+    bundle: true,
+    minify: true,
     plugins: [
-      rollupPlugins.removeModuleDirCalls(),
-      rollupPlugins.inlineFs({verbose: true}),
-      rollupPlugins.shim({
+      plugins.replaceModules({
         [`${LH_ROOT}/flow-report/src/i18n/localized-strings.js`]: buildFlowStrings(),
         [`${LH_ROOT}/shared/localization/locales.js`]: 'export const locales = {}',
-        'fs': 'export default {}',
       }),
-      rollupPlugins.nodeResolve(),
-      rollupPlugins.commonjs(),
-      rollupPlugins.typescript({
-        tsconfig: 'flow-report/tsconfig.json',
-        // Plugin struggles with custom outDir, so revert it from tsconfig value
-        // as well as any options that require an outDir is set.
-        outDir: null,
-        composite: false,
-        emitDeclarationOnly: false,
-        declarationMap: false,
-      }),
-      rollupPlugins.terser(),
+      plugins.ignoreBuiltins(),
+      buildReportBulkLoader,
     ],
   });
-
-  await bundle.write({
-    file: 'dist/report/flow.js',
-    format: 'iife',
-  });
-  await bundle.close();
 }
 
 async function buildEsModulesBundle() {
@@ -127,52 +113,41 @@ function hasLocale(requestedLocale) {
 export const format = {registerLocaleData, hasLocale};
 `;
 
-  const bundle = await rollup({
-    input: 'report/clients/bundle.js',
+  return esbuild.build({
+    entryPoints: ['report/clients/bundle.js'],
+    outfile: 'dist/report/bundle.esm.js',
+    format: 'esm',
+    bundle: true,
+    minify: true,
     plugins: [
-      rollupPlugins.commonjs(),
-      // Exclude this 30kb from the devtools bundle for now.
-      rollupPlugins.shim({
+      plugins.replaceModules({
+        // Exclude this 30kb from the devtools bundle for now.
         [`${LH_ROOT}/shared/localization/i18n-module.js`]: i18nModuleShim,
       }),
     ],
   });
-
-  await bundle.write({
-    file: 'dist/report/bundle.esm.js',
-    format: 'esm',
-  });
-  await bundle.close();
 }
 
 async function buildUmdBundle() {
-  const bundle = await rollup({
-    input: 'report/clients/bundle.js',
+  const result = await esbuild.build({
+    entryPoints: ['report/clients/bundle.js'],
+    outfile: 'dist/report/bundle.umd.js',
+    write: false,
+    format: 'iife', // really umd! see plugins.generateUMD
+    globalName: 'umdExports',
+    bundle: true,
+    minify: false,
     plugins: [
-      rollupPlugins.removeModuleDirCalls(),
-      rollupPlugins.inlineFs({verbose: true}),
-      rollupPlugins.commonjs(),
-      rollupPlugins.terser({
-        format: {
-          beautify: true,
-        },
-      }),
-      // Shim this empty to ensure the bundle isn't 10MB
-      rollupPlugins.shim({
+      plugins.replaceModules({
         [`${LH_ROOT}/shared/localization/locales.js`]: 'export const locales = {}',
-        'fs': 'export default {}',
       }),
-      rollupPlugins.nodeResolve({preferBuiltins: true}),
+      plugins.ignoreBuiltins(),
+      buildReportBulkLoader,
     ],
   });
 
-  await bundle.write({
-    file: 'dist/report/bundle.umd.js',
-    format: 'umd',
-    name: 'report',
-    sourcemap: Boolean(process.env.DEBUG),
-  });
-  await bundle.close();
+  const code = plugins.generateUMD(result.outputFiles[0].text, 'report');
+  await fs.promises.writeFile(result.outputFiles[0].path, code);
 }
 
 async function main() {
