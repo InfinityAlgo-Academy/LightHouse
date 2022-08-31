@@ -758,6 +758,7 @@
                   "statusCode": 200,
                   "mimeType": "text/html",
                   "resourceType": "Document",
+                  "priority": "VeryHigh",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -771,6 +772,7 @@
                   "statusCode": 200,
                   "mimeType": "font/woff2",
                   "resourceType": "Font",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -785,6 +787,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "Low",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -798,6 +801,7 @@
                   "statusCode": 200,
                   "mimeType": "text/css",
                   "resourceType": "Stylesheet",
+                  "priority": "VeryHigh",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -812,6 +816,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -826,6 +831,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -840,6 +846,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -854,6 +861,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -868,6 +876,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -882,6 +891,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -896,6 +906,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -910,6 +921,7 @@
                   "statusCode": 200,
                   "mimeType": "image/svg+xml",
                   "resourceType": "Image",
+                  "priority": "High",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -923,6 +935,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "Low",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -936,6 +949,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "Low",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -949,6 +963,7 @@
                   "statusCode": 200,
                   "mimeType": "text/css",
                   "resourceType": "Stylesheet",
+                  "priority": "VeryLow",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -962,6 +977,7 @@
                   "statusCode": 200,
                   "mimeType": "font/woff2",
                   "resourceType": "Font",
+                  "priority": "VeryHigh",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -975,6 +991,7 @@
                   "statusCode": 200,
                   "mimeType": "font/woff2",
                   "resourceType": "Font",
+                  "priority": "VeryHigh",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -988,6 +1005,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Other",
+                  "priority": "VeryLow",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -1001,6 +1019,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Other",
+                  "priority": "VeryLow",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -1014,6 +1033,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Other",
+                  "priority": "VeryLow",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -1027,6 +1047,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "Low",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -1040,6 +1061,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "Low",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -1053,6 +1075,7 @@
                   "statusCode": 200,
                   "mimeType": "image/png",
                   "resourceType": "Other",
+                  "priority": "High",
                   "experimentalFromMainFrame": true
                 }
               ],
@@ -7941,7 +7964,8 @@
                   "resourceSize": 6631,
                   "statusCode": 200,
                   "mimeType": "application/javascript",
-                  "resourceType": "Script"
+                  "resourceType": "Script",
+                  "priority": "Low"
                 },
                 {
                   "url": "https://www.mikescerealshack.co/logo-text.svg",
@@ -7953,7 +7977,8 @@
                   "resourceSize": 53947,
                   "statusCode": 200,
                   "mimeType": "image/svg+xml",
-                  "resourceType": "Image"
+                  "resourceType": "Image",
+                  "priority": "High"
                 },
                 {
                   "url": "https://mnl4bjjsnz-dsn.algolia.net/1/indexes/dev_OFFICE_SCENES/query",
@@ -7965,7 +7990,8 @@
                   "resourceSize": 0,
                   "statusCode": 200,
                   "mimeType": "text/plain",
-                  "resourceType": "Preflight"
+                  "resourceType": "Preflight",
+                  "priority": "High"
                 },
                 {
                   "url": "https://mnl4bjjsnz-dsn.algolia.net/1/indexes/dev_OFFICE_SCENES/query",
@@ -7977,7 +8003,8 @@
                   "resourceSize": 16577,
                   "statusCode": 200,
                   "mimeType": "application/json",
-                  "resourceType": "Fetch"
+                  "resourceType": "Fetch",
+                  "priority": "High"
                 },
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/index-37980adf97404e76e41a.js",
@@ -7989,7 +8016,8 @@
                   "resourceSize": 0,
                   "statusCode": 200,
                   "mimeType": "application/javascript",
-                  "resourceType": "Other"
+                  "resourceType": "Other",
+                  "priority": "VeryLow"
                 },
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/terms-0236318e86139dd7d7f2.js",
@@ -8001,7 +8029,8 @@
                   "resourceSize": 0,
                   "statusCode": 200,
                   "mimeType": "application/javascript",
-                  "resourceType": "Other"
+                  "resourceType": "Other",
+                  "priority": "VeryLow"
                 },
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/privacy-864d3895f3c3722acef2.js",
@@ -8013,7 +8042,8 @@
                   "resourceSize": 0,
                   "statusCode": 200,
                   "mimeType": "application/javascript",
-                  "resourceType": "Other"
+                  "resourceType": "Other",
+                  "priority": "VeryLow"
                 },
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/privacy-864d3895f3c3722acef2.js",
@@ -8025,7 +8055,8 @@
                   "resourceSize": 720,
                   "statusCode": 200,
                   "mimeType": "application/javascript",
-                  "resourceType": "Script"
+                  "resourceType": "Script",
+                  "priority": "Low"
                 },
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/pages/terms-0236318e86139dd7d7f2.js",
@@ -8037,7 +8068,8 @@
                   "resourceSize": 11002,
                   "statusCode": 200,
                   "mimeType": "application/javascript",
-                  "resourceType": "Script"
+                  "resourceType": "Script",
+                  "priority": "Low"
                 },
                 {
                   "url": "https://cdn.mikescerealshack.co/frames/s8/e13/128w/81d89db1bf3d43b5b21f813d2f2a9777.jpg",
@@ -8049,7 +8081,8 @@
                   "resourceSize": 2379,
                   "statusCode": 200,
                   "mimeType": "image/jpeg",
-                  "resourceType": "Image"
+                  "resourceType": "Image",
+                  "priority": "Low"
                 },
                 {
                   "url": "https://cdn.mikescerealshack.co/frames/s3/e3/128w/9b3031eb3988ba363fe946929a79e016.jpg",
@@ -8061,7 +8094,8 @@
                   "resourceSize": 2865,
                   "statusCode": 200,
                   "mimeType": "image/jpeg",
-                  "resourceType": "Image"
+                  "resourceType": "Image",
+                  "priority": "Low"
                 },
                 {
                   "url": "https://cdn.mikescerealshack.co/frames/s3/e3/128w/793a408ca63a660b5d7aa1a41ac126ca.jpg",
@@ -8073,7 +8107,8 @@
                   "resourceSize": 1758,
                   "statusCode": 200,
                   "mimeType": "image/jpeg",
-                  "resourceType": "Image"
+                  "resourceType": "Image",
+                  "priority": "Low"
                 }
               ],
               "debugData": {
@@ -14874,6 +14909,7 @@
                   "statusCode": 200,
                   "mimeType": "text/html",
                   "resourceType": "Document",
+                  "priority": "VeryHigh",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -14887,6 +14923,7 @@
                   "statusCode": 200,
                   "mimeType": "font/woff2",
                   "resourceType": "Font",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -14901,6 +14938,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "Low",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -14914,6 +14952,7 @@
                   "statusCode": 200,
                   "mimeType": "text/css",
                   "resourceType": "Stylesheet",
+                  "priority": "VeryHigh",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -14928,6 +14967,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -14942,6 +14982,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -14956,6 +14997,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -14970,6 +15012,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -14984,6 +15027,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -14998,6 +15042,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -15012,6 +15057,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "High",
                   "isLinkPreload": true,
                   "experimentalFromMainFrame": true
                 },
@@ -15026,6 +15072,7 @@
                   "statusCode": 200,
                   "mimeType": "image/svg+xml",
                   "resourceType": "Image",
+                  "priority": "High",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -15039,6 +15086,7 @@
                   "statusCode": 200,
                   "mimeType": "image/jpeg",
                   "resourceType": "Image",
+                  "priority": "High",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -15052,6 +15100,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "Low",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -15065,6 +15114,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "Low",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -15078,6 +15128,7 @@
                   "statusCode": 200,
                   "mimeType": "text/css",
                   "resourceType": "Stylesheet",
+                  "priority": "VeryLow",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -15091,6 +15142,7 @@
                   "statusCode": 200,
                   "mimeType": "font/woff2",
                   "resourceType": "Font",
+                  "priority": "VeryHigh",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -15104,6 +15156,7 @@
                   "statusCode": 200,
                   "mimeType": "font/woff2",
                   "resourceType": "Font",
+                  "priority": "VeryHigh",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -15117,6 +15170,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Other",
+                  "priority": "VeryLow",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -15130,6 +15184,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Other",
+                  "priority": "VeryLow",
                   "experimentalFromMainFrame": true
                 },
                 {
@@ -15143,6 +15198,7 @@
                   "statusCode": 200,
                   "mimeType": "application/javascript",
                   "resourceType": "Script",
+                  "priority": "Low",
                   "experimentalFromMainFrame": true
                 }
               ],
