@@ -449,6 +449,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
         width: 30,
         height: 130,
       },
+      type: 'text',
     };
     const connectionStub = new Connection();
     connectionStub.sendCommand = createMockSendCommandFn()
@@ -525,6 +526,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
         width: 964,
         height: 18,
       },
+      type: 'text',
     };
     const animationNodeData = {
       traceEventType: 'animation',
@@ -630,6 +632,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
         width: 30,
         height: 130,
       },
+      type: 'text',
     };
     const connectionStub = new Connection();
     connectionStub.sendCommand = createMockSendCommandFn()

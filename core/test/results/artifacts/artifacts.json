@@ -11528,7 +11528,8 @@
         "snippet": "<h2>",
         "nodeLabel": "Do better web tester page"
       },
-      "nodeId": 6
+      "nodeId": 6,
+      "type": "text"
     },
     {
       "traceEventType": "layout-shift",
