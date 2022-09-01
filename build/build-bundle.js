@@ -83,6 +83,11 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     ...Runner.getAuditList().map(gatherer => `../audits/${gatherer}`),
   ];
 
+  // Added for smokerider test (used by byte-efficiency).
+  if (isLightrider(entryPath)) {
+    dynamicModulePaths.push('../audits/script-elements-test-audit.js');
+  }
+
   // Include lighthouse-plugin-publisher-ads.
   // if (isDevtools(entryPath) || isLightrider(entryPath)) {
   //   dynamicModulePaths.push('lighthouse-plugin-publisher-ads');
