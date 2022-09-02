@@ -34,6 +34,7 @@ describe('Performance: lcp-lazy-loaded audit', () => {
       TraceElements: [{
         traceEventType: 'largest-contentful-paint',
         node: SAMPLE_NODE,
+        type: 'image',
       }],
       ImageElements: [
         generateImage('lazy', 0),
@@ -57,6 +58,7 @@ describe('Performance: lcp-lazy-loaded audit', () => {
       TraceElements: [{
         traceEventType: 'largest-contentful-paint',
         node: SAMPLE_NODE,
+        type: 'image',
       }],
       ImageElements: [
         generateImage('eager', 0),
@@ -76,6 +78,7 @@ describe('Performance: lcp-lazy-loaded audit', () => {
       TraceElements: [{
         traceEventType: 'largest-contentful-paint',
         node: SAMPLE_NODE,
+        type: 'image',
       }],
       ImageElements: [
         generateImage('lazy', 700),
@@ -96,7 +99,29 @@ describe('Performance: lcp-lazy-loaded audit', () => {
     };
 
     const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts);
-    expect(auditResult.score).toEqual(1);
+    expect(auditResult.score).toEqual(null);
     expect(auditResult.notApplicable).toEqual(true);
+  });
+
+  it('is not applicable when LCP was text', async () => {
+    const artifacts = {
+      TraceElements: [{
+        traceEventType: 'largest-contentful-paint',
+        node: SAMPLE_NODE,
+        type: 'text',
+      }],
+      ImageElements: [
+        generateImage('lazy', 700),
+      ],
+      ViewportDimensions: {
+        innerHeight: 500,
+        innerWidth: 300,
+      },
+    };
+    const auditResult = await LargestContentfulPaintLazyLoaded.audit(artifacts);
+    expect(auditResult).toEqual({
+      score: null,
+      notApplicable: true,
+    });
   });
 });

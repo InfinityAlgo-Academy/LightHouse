@@ -88,7 +88,7 @@ class PreloadLCPImageAudit extends Audit {
   /**
    * @param {LH.Artifacts.NetworkRequest} mainResource
    * @param {LH.Gatherer.Simulation.GraphNode} graph
-   * @param {LH.Artifacts.TraceElement|undefined} lcpElement
+   * @param {LH.Artifacts.TraceElement} lcpElement
    * @param {Array<LH.Artifacts.ImageElement>} imageElements
    * @return {{lcpNodeToPreload?: LH.Gatherer.Simulation.GraphNetworkNode, initiatorPath?: InitiatorPath}}
    */
@@ -121,14 +121,14 @@ class PreloadLCPImageAudit extends Audit {
 
   /**
    * Computes the estimated effect of preloading the LCP image.
-   * @param {LH.Artifacts.TraceElement|undefined} lcpElement
+   * @param {LH.Artifacts.TraceElement} lcpElement
    * @param {LH.Gatherer.Simulation.GraphNetworkNode|undefined} lcpNode
    * @param {LH.Gatherer.Simulation.GraphNode} graph
    * @param {LH.Gatherer.Simulation.Simulator} simulator
    * @return {{wastedMs: number, results: Array<{node: LH.Audit.Details.NodeValue, url: string, wastedMs: number}>}}
    */
   static computeWasteWithGraph(lcpElement, lcpNode, graph, simulator) {
-    if (!lcpElement || !lcpNode) {
+    if (!lcpNode) {
       return {
         wastedMs: 0,
         results: [],
@@ -221,6 +221,10 @@ class PreloadLCPImageAudit extends Audit {
     const metricData = {trace, devtoolsLog, gatherContext, settings: context.settings};
     const lcpElement = artifacts.TraceElements
       .find(element => element.traceEventType === 'largest-contentful-paint');
+
+    if (!lcpElement || lcpElement.type !== 'image') {
+      return {score: null, notApplicable: true};
+    }
 
     const [mainResource, lanternLCP, simulator] = await Promise.all([
       MainResource.request({devtoolsLog, URL}, context),

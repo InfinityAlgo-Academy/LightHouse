@@ -73,6 +73,7 @@ class NetworkRequests extends Audit {
         statusCode: record.statusCode,
         mimeType: record.mimeType,
         resourceType: record.resourceType,
+        priority: record.priority,
         isLinkPreload,
         experimentalFromMainFrame,
         lrEndTimeDeltaMs: endTimeDeltaMs, // Only exists on Lightrider runs

@@ -1,6 +1,17 @@
+<a name="9.6.7"></a>
+# 9.6.7 (2022-09-01)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.6.6...v9.6.7)
+
+This is an npm-only release. We have no plans to release this specific version to DevTools or PSI, but the changes will be rolled up into the next release in those clients.
+
+## Core
+
+* core(trace-elements): include LCP type in artifact ([#14344](https://github.com/GoogleChrome/lighthouse/pull/14344))
+* core: add priority to network-requests debug audit ([#14340](https://github.com/GoogleChrome/lighthouse/pull/14340))
+
 <a name="9.6.6"></a>
 # 9.6.6 (2022-08-16)
-[Full Changelog](https://github.com/compare/v9.6.5...v9.6.6)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.6.5...v9.6.6)
 
 We expect this release to ship in the DevTools of [Chrome 106](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
@@ -20,7 +31,7 @@ Thanks to our new contributor 👽🐷🐰🐯🐻!
 
 <a name="9.6.5"></a>
 # 9.6.5 (2022-08-01)
-[Full Changelog](https://github.com/compare/v9.6.4...v9.6.5)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.6.4...v9.6.5)
 
 This is an npm-only release and affects only the raw JSON report. We have no plans to release this specific version to DevTools or PSI, but the changes will be rolled up into the next release in those clients.
 
@@ -31,7 +42,7 @@ This is an npm-only release and affects only the raw JSON report. We have no pla
 
 <a name="9.6.4"></a>
 # 9.6.4 (2022-07-26)
-[Full Changelog](https://github.com/compare/v9.6.3...v9.6.4)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.6.3...v9.6.4)
 
 We expect this release to ship in the DevTools of [Chrome 106](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
@@ -49,7 +60,7 @@ We expect this release to ship in the DevTools of [Chrome 106](https://chromiumd
 
 <a name="9.6.3"></a>
 # 9.6.3 (2022-06-28)
-[Full Changelog](https://github.com/compare/v9.6.2...v9.6.3)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.6.2...v9.6.3)
 
 This is an npm-only release and affects only the raw JSON report. We have no plans to release this specific version to DevTools or PSI, but the changes will be rolled up into the next release in those clients.
 
@@ -60,7 +71,7 @@ This is an npm-only release and affects only the raw JSON report. We have no pla
 
 <a name="9.6.2"></a>
 # 9.6.2 (2022-06-01)
-[Full Changelog](https://github.com/compare/v9.6.1...v9.6.2)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.6.1...v9.6.2)
 
 We expect this release to ship in the DevTools of [Chrome 104](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
@@ -87,7 +98,7 @@ We expect this release to ship in the DevTools of [Chrome 104](https://chromiumd
 
  <a name="9.6.1"></a>
 # 9.6.1 (2022-05-11)
-[Full Changelog](https://github.com/compare/v9.6.0...v9.6.1)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.6.0...v9.6.1)
 
 We expect this release to ship in the DevTools of [Chrome 103](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
@@ -107,7 +118,7 @@ We expect this release to ship in the DevTools of [Chrome 103](https://chromiumd
 
 <a name="9.6.0"></a>
 # 9.6.0 (2022-05-09)
-[Full Changelog](https://github.com/compare/v9.5.0...v9.6.0)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.5.0...v9.6.0)
 
 We expect this release to ship in the DevTools of [Chrome 103](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
@@ -157,7 +168,7 @@ We expect this release to ship in the DevTools of [Chrome 103](https://chromiumd
 
 <a name="9.5.0"></a>
 # 9.5.0 (2022-03-09)
-[Full Changelog](https://github.com/compare/v9.4.0...v9.5.0)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.4.0...v9.5.0)
 
 We expect this release to ship in the DevTools of [Chrome 101](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
@@ -211,7 +222,7 @@ Thanks to our new contributor 👽🐷🐰🐯🐻!
 
 <a name="9.4.0"></a>
 # 9.4.0 (2022-02-16)
-[Full Changelog](https://github.com/compare/v9.3.1...v9.4.0)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.3.1...v9.4.0)
 
 We expect this release to ship in the DevTools of [Chrome 100](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
@@ -256,7 +267,7 @@ We expect this release to ship in the DevTools of [Chrome 100](https://chromiumd
 
 <a name="9.3.1"></a>
 # 9.3.1 (2022-01-31)
-[Full Changelog](https://github.com/compare/v9.3.0...v9.3.1)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.3.0...v9.3.1)
 
 ## Report
 
@@ -264,7 +275,7 @@ We expect this release to ship in the DevTools of [Chrome 100](https://chromiumd
 
 <a name="9.3.0"></a>
 # 9.3.0 (2022-01-31)
-[Full Changelog](https://github.com/compare/v9.2.0...v9.3.0)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.2.0...v9.3.0)
 
 We expect this release to ship in the DevTools of [Chrome 100](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 

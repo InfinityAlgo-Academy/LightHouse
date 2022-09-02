@@ -20,6 +20,7 @@ describe('Performance: largest-contentful-paint-element audit', () => {
           nodeLabel: 'My Test Label',
           snippet: '<h1 class="test-class">',
         },
+        type: 'text',
       }],
     };
 

@@ -73,6 +73,7 @@ const expectations = {
             height: 318,
           },
         },
+        type: 'image',
       },
       {
         traceEventType: 'layout-shift',
