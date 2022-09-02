@@ -11,7 +11,7 @@
  *   However, the audit will only fail pages that use images that have waste
  *   beyond a particular byte threshold.
  */
-'use strict';
+
 
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
 import {NetworkRequest} from '../../lib/network-request.js';

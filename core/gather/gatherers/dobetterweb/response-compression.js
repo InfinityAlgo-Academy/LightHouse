@@ -8,14 +8,15 @@
   * @fileoverview Determines optimized gzip/br/deflate filesizes for all responses by
   *   checking the content-encoding header.
   */
-'use strict';
+
 
 import {Buffer} from 'buffer';
+import {gzip} from 'zlib';
+
 import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 import URL from '../../../lib/url-shim.js';
 import {Sentry} from '../../../lib/sentry.js';
 import {NetworkRequest} from '../../../lib/network-request.js';
-import {gzip} from 'zlib';
 import DevtoolsLog from '../devtools-log.js';
 import {fetchResponseBodyFromCache} from '../../driver/network.js';
 import NetworkRecords from '../../../computed/network-records.js';

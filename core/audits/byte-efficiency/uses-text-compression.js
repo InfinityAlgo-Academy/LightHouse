@@ -7,7 +7,7 @@
  * @fileoverview Audit a page to ensure that resources loaded with
  * gzip/br/deflate compression.
  */
-'use strict';
+
 
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
 import URL from '../../lib/url-shim.js';

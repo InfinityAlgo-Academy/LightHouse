@@ -7,7 +7,7 @@
  * @fileoverview Checks to see if images are displayed only outside of the viewport.
  *     Images requested after TTI are not flagged as violations.
  */
-'use strict';
+
 
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
 import {NetworkRequest} from '../../lib/network-request.js';

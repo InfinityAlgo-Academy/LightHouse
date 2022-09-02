@@ -8,7 +8,6 @@
  * Audit that checks whether all images have explicit width and height.
  */
 
-'use strict';
 
 import {Audit} from './audit.js';
 import * as i18n from './../lib/i18n/i18n.js';

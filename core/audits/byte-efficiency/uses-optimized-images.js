@@ -7,7 +7,7 @@
  * @fileoverview This audit determines if the images used are sufficiently larger
  * than JPEG compressed images without metadata at quality 85.
  */
-'use strict';
+
 
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
 import URL from '../../lib/url-shim.js';

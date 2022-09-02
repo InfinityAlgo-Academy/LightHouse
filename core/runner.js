@@ -3,19 +3,20 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
+
+import fs from 'fs';
+import path from 'path';
 
 import isDeepEqual from 'lodash/isEqual.js';
+import log from 'lighthouse-logger';
+
 import {Driver} from './gather/driver.js';
 import {GatherRunner} from './gather/gather-runner.js';
 import {ReportScoring} from './scoring.js';
 import {Audit} from './audits/audit.js';
-import log from 'lighthouse-logger';
 import * as format from '../shared/localization/format.js';
 import * as stackPacks from './lib/stack-packs.js';
 import * as assetSaver from './lib/asset-saver.js';
-import fs from 'fs';
-import path from 'path';
 import {Sentry} from './lib/sentry.js';
 import {ReportGenerator} from '../report/generator/report-generator.js';
 import {LighthouseError} from './lib/lh-error.js';

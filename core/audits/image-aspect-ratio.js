@@ -9,7 +9,7 @@
  *   audit will list all images that don't match with their display size
  *   aspect ratio.
  */
-'use strict';
+
 
 import {Audit} from './audit.js';
 import URL from '../lib/url-shim.js';

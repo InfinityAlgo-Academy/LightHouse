@@ -3,14 +3,14 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import path from 'path';
+
 import log from 'lighthouse-logger';
+
 import {Runner} from '../../runner.js';
 import defaultConfig from '../../config/default-config.js';
 import {defaultNavigationConfig, nonSimulatedPassConfigOverrides} from '../../config/constants.js'; // eslint-disable-line max-len
-
 import {
   isFRGathererDefn,
   throwInvalidDependencyOrder,
@@ -19,9 +19,7 @@ import {
   assertArtifactTopologicalOrder,
   assertValidConfig,
 } from './validation.js';
-
 import {filterConfigByGatherMode, filterConfigByExplicitFilters} from './filters.js';
-
 import {
   deepCloneConfigJson,
   resolveSettings,
@@ -31,7 +29,6 @@ import {
   mergeConfigFragment,
   mergeConfigFragmentArrayByKey,
 } from '../../config/config-helpers.js';
-
 import {getModuleDirectory} from '../../../esm-utils.js';
 import * as format from '../../../shared/localization/format.js';
 

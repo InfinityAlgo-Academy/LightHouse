@@ -9,7 +9,7 @@
  *   their display size with DPR (a 1000px wide image displayed as a
  *   500px high-res image on a Retina display is 100% used);
  */
-'use strict';
+
 
 import {Audit} from '../audit.js';
 import * as UsesResponsiveImages from './uses-responsive-images.js';

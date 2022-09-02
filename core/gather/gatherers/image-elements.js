@@ -7,9 +7,10 @@
   * @fileoverview Gathers all images used on the page with their src, size,
   *   and attribute information. Executes script in the context of the page.
   */
-'use strict';
+
 
 import log from 'lighthouse-logger';
+
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 import * as FontSize from './seo/font-size.js';

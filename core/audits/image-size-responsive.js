@@ -8,7 +8,7 @@
  *   the page are large enough with respect to the pixel ratio. The
  *   audit will list all visible images that are too small.
  */
-'use strict';
+
 
 import {Audit} from './audit.js';
 import URL from '../lib/url-shim.js';

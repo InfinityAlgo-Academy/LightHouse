@@ -6,7 +6,7 @@
 /*
  * @fileoverview This audit determines if the images could be smaller when compressed with WebP.
  */
-'use strict';
+
 
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
 import URL from '../../lib/url-shim.js';

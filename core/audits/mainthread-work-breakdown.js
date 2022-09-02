@@ -8,7 +8,6 @@
  * @fileoverview Audit a page to show a breakdown of execution timings on the main thread
  */
 
-'use strict';
 
 import {Audit} from './audit.js';
 import {taskGroups} from '../lib/tracehouse/task-groups.js';

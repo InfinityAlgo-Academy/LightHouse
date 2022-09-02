@@ -8,7 +8,6 @@
  * @fileoverview Capture IssueAdded events
  */
 
-'use strict';
 
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 import NetworkRecords from '../../computed/network-records.js';

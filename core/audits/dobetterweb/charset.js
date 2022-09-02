@@ -10,7 +10,7 @@
  *
  * @see https://github.com/GoogleChrome/lighthouse/issues/10023
  */
-'use strict';
+
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';

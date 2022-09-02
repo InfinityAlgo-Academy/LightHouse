@@ -8,9 +8,10 @@
   * @fileoverview Determines optimized jpeg/webp filesizes for all same-origin and dataURI images by
   *   running the images through canvas in the browser context.
   */
-'use strict';
+
 
 import log from 'lighthouse-logger';
+
 import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
 import URL from '../../../lib/url-shim.js';
 import {NetworkRequest} from '../../../lib/network-request.js';
