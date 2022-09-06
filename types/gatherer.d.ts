@@ -52,6 +52,8 @@ declare module Gatherer {
     gatherMode: GatherMode;
     /** The connection to the page being analyzed. */
     driver: FRTransitionalDriver;
+    /** The Puppeteer page handle. Will be undefined in legacy navigation mode. */
+    page?: LH.Puppeteer.Page;
     /** The set of base artifacts that are always collected. */
     baseArtifacts: FRBaseArtifacts;
     /** The cached results of computed artifacts. */

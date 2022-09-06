@@ -7,6 +7,7 @@
 /**
  * @typedef CollectPhaseArtifactOptions
  * @property {import('./driver.js').Driver} driver
+ * @property {LH.Puppeteer.Page} page
  * @property {Array<LH.Config.AnyArtifactDefn>} artifactDefinitions
  * @property {ArtifactState} artifactState
  * @property {LH.FRBaseArtifacts} baseArtifacts
@@ -66,6 +67,7 @@ const phaseToPriorPhase = {
 async function collectPhaseArtifacts(options) {
   const {
     driver,
+    page,
     artifactDefinitions,
     artifactState,
     baseArtifacts,
@@ -91,6 +93,7 @@ async function collectPhaseArtifacts(options) {
       return gatherer[phase]({
         gatherMode,
         driver,
+        page,
         baseArtifacts,
         dependencies,
         computedCache,

@@ -46,6 +46,8 @@ describe('NavigationRunner', () => {
   let mockDriver;
   /** @type {import('../../../fraggle-rock/gather/driver.js').Driver} */
   let driver;
+  /** @type {LH.Puppeteer.Page} */
+  let page;
   /** @type {LH.Config.FRConfig} */
   let config;
   /** @type {LH.Config.NavigationDefn} */
@@ -113,6 +115,7 @@ describe('NavigationRunner', () => {
     mockDriver = createMockDriver();
     mockDriver.url.mockReturnValue('about:blank');
     driver = mockDriver.asDriver();
+    page = mockDriver._page.asPage();
 
     mocks.reset();
   });
@@ -186,7 +189,7 @@ describe('NavigationRunner', () => {
 
   describe('_navigations', () => {
     const run = () =>
-      runner._navigations({driver, config, requestor, computedCache, baseArtifacts});
+      runner._navigations({driver, page, config, requestor, computedCache, baseArtifacts});
 
     it('should throw if no navigations available', async () => {
       config = {...config, navigations: null};
@@ -312,6 +315,7 @@ describe('NavigationRunner', () => {
     /** @param {LH.Config.NavigationDefn} navigation */
     const run = navigation => runner._navigation({
       driver,
+      page,
       config,
       navigation,
       requestor,
@@ -334,6 +338,7 @@ describe('NavigationRunner', () => {
 
       const {artifacts} = await runner._navigation({
         driver,
+        page,
         config,
         navigation,
         requestor: requestedUrl,
@@ -351,6 +356,7 @@ describe('NavigationRunner', () => {
     it('skips about:blank if using a callback requestor', async () => {
       const {artifacts} = await runner._navigation({
         driver,
+        page,
         config,
         navigation,
         requestor: () => {},
@@ -491,6 +497,7 @@ describe('NavigationRunner', () => {
       navigation.blankPage = 'data:text/html;...';
       await runner._setupNavigation({
         driver,
+        page,
         navigation,
         requestor: requestedUrl,
         config,
@@ -507,6 +514,7 @@ describe('NavigationRunner', () => {
     it('should prepare target for navigation', async () => {
       await runner._setupNavigation({
         driver,
+        page,
         navigation,
         requestor: requestedUrl,
         config,
@@ -521,6 +529,7 @@ describe('NavigationRunner', () => {
       mocks.prepareMock.prepareTargetForIndividualNavigation.mockResolvedValue({warnings});
       const result = await runner._setupNavigation({
         driver,
+        page,
         navigation,
         requestor: requestedUrl,
         config,
@@ -535,6 +544,7 @@ describe('NavigationRunner', () => {
     const run = () =>
       runner._navigate({
         driver,
+        page,
         navigation,
         requestor,
         config,

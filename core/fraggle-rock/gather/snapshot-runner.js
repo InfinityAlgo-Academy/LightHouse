@@ -17,11 +17,11 @@ import {getBaseArtifacts, finalizeArtifacts} from './base-artifacts.js';
  * @return {Promise<LH.Gatherer.FRGatherResult>}
  */
 async function snapshotGather(options) {
-  const {flags = {}} = options;
+  const {page, flags = {}} = options;
   log.setLevel(flags.logLevel || 'error');
 
   const {config} = await initializeConfig('snapshot', options.config, flags);
-  const driver = new Driver(options.page);
+  const driver = new Driver(page);
   await driver.connect();
 
   /** @type {Map<string, LH.ArbitraryEqualityMap>} */
@@ -43,6 +43,7 @@ async function snapshotGather(options) {
         phase: 'getArtifact',
         gatherMode: 'snapshot',
         driver,
+        page,
         baseArtifacts,
         artifactDefinitions,
         artifactState,

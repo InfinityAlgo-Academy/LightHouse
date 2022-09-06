@@ -18,11 +18,11 @@ import {getBaseArtifacts, finalizeArtifacts} from './base-artifacts.js';
  * @return {Promise<{endTimespanGather(): Promise<LH.Gatherer.FRGatherResult>}>}
  */
 async function startTimespanGather(options) {
-  const {flags = {}} = options;
+  const {page, flags = {}} = options;
   log.setLevel(flags.logLevel || 'error');
 
   const {config} = await initializeConfig('timespan', options.config, flags);
-  const driver = new Driver(options.page);
+  const driver = new Driver(page);
   await driver.connect();
 
   /** @type {Map<string, LH.ArbitraryEqualityMap>} */
@@ -34,6 +34,7 @@ async function startTimespanGather(options) {
   /** @type {Omit<import('./runner-helpers.js').CollectPhaseArtifactOptions, 'phase'>} */
   const phaseOptions = {
     driver,
+    page,
     artifactDefinitions,
     artifactState,
     baseArtifacts,

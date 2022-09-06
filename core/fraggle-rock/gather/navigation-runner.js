@@ -28,6 +28,7 @@ import NetworkRecords from '../../computed/network-records.js';
 /**
  * @typedef NavigationContext
  * @property {Driver} driver
+ * @property {LH.Puppeteer.Page} page
  * @property {LH.Config.FRConfig} config
  * @property {LH.Config.NavigationDefn} navigation
  * @property {LH.NavigationRequestor} requestor
@@ -218,6 +219,7 @@ async function _navigation(navigationContext) {
     url: initialUrl,
     gatherMode: /** @type {const} */ ('navigation'),
     driver: navigationContext.driver,
+    page: navigationContext.page,
     computedCache: navigationContext.computedCache,
     artifactDefinitions: navigationContext.navigation.artifacts,
     artifactState,
@@ -250,10 +252,10 @@ async function _navigation(navigationContext) {
 }
 
 /**
- * @param {{driver: Driver, config: LH.Config.FRConfig, requestor: LH.NavigationRequestor; baseArtifacts: LH.FRBaseArtifacts, computedCache: NavigationContext['computedCache']}} args
+ * @param {{driver: Driver, page: LH.Puppeteer.Page, config: LH.Config.FRConfig, requestor: LH.NavigationRequestor; baseArtifacts: LH.FRBaseArtifacts, computedCache: NavigationContext['computedCache']}} args
  * @return {Promise<{artifacts: Partial<LH.FRArtifacts & LH.FRBaseArtifacts>}>}
  */
-async function _navigations({driver, config, requestor, baseArtifacts, computedCache}) {
+async function _navigations({driver, page, config, requestor, baseArtifacts, computedCache}) {
   if (!config.navigations) throw new Error('No navigations configured');
 
   /** @type {Partial<LH.FRArtifacts & LH.FRBaseArtifacts>} */
@@ -264,6 +266,7 @@ async function _navigations({driver, config, requestor, baseArtifacts, computedC
   for (const navigation of config.navigations) {
     const navigationContext = {
       driver,
+      page,
       navigation,
       requestor,
       config,
@@ -333,7 +336,7 @@ async function navigationGather(requestor, options) {
         requestor: normalizedRequestor,
       };
       const {baseArtifacts} = await _setup(context);
-      const {artifacts} = await _navigations({...context, baseArtifacts, computedCache});
+      const {artifacts} = await _navigations({...context, page, baseArtifacts, computedCache});
       await _cleanup(context);
 
       return finalizeArtifacts(baseArtifacts, artifacts);
