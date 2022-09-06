@@ -3,10 +3,10 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-/*
+
+/**
  * @fileoverview This audit determines if the images could be smaller when compressed with WebP.
  */
-
 
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
 import URL from '../../lib/url-shim.js';
@@ -89,12 +89,14 @@ class ModernImageFormats extends ByteEfficiencyAudit {
 
   /**
    * @param {LH.Artifacts} artifacts
+   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @return {import('./byte-efficiency-audit.js').ByteEfficiencyProduct}
    */
-  static audit_(artifacts) {
+  static audit_(artifacts, networkRecords) {
     const pageURL = artifacts.URL.finalUrl;
     const images = artifacts.OptimizedImages;
     const imageElements = artifacts.ImageElements;
+
     /** @type {Map<string, LH.Artifacts.ImageElement>} */
     const imageElementsByURL = new Map();
     imageElements.forEach(img => imageElementsByURL.set(img.src, img));
@@ -112,6 +114,13 @@ class ModernImageFormats extends ByteEfficiencyAudit {
 
       // Skip if the image was already using a modern format.
       if (image.mimeType === 'image/webp' || image.mimeType === 'image/avif') continue;
+
+      // Skip if Cloudflare's automatic conversion detected that converting wasn't worth it.
+      // https://support.cloudflare.com/hc/en-us/articles/4412244347917-Troubleshoot-common-Cf-Polished-statuses
+      const record = networkRecords.find(record => record.requestId === image.requestId);
+      const cfPolishedHeader =
+        record?.responseHeaders.find(h => h.name.toLowerCase() === 'cf-polish');
+      if (cfPolishedHeader?.value.includes('webp_bigger')) continue;
 
       const jpegSize = image.jpegSize;
       let webpSize = image.webpSize;
