@@ -259,10 +259,6 @@ function pruneExpectations(localConsole, lhr, expected, reportOptions) {
    * @param {*} obj
    */
   function failsChromeVersionCheck(obj) {
-    // LHR never actually run, so we can't know. Better to not prune
-    // things than to fail loudly when accessing lhr.environment.
-    if (!lhr.environment) return false;
-
     return !chromiumVersionCheck({
       version: getChromeVersionString(),
       min: obj._minChromiumVersion,
