@@ -6155,8 +6155,9 @@ query-string@^4.1.0:
     strict-uri-encode "^1.0.0"
 
 quibble@^0.6.7, quibble@connorjclark/quibble#mod-cache:
-  version "0.6.9"
-  resolved "https://codeload.github.com/connorjclark/quibble/tar.gz/b228a4ddbbad5061d36b465db2f364bb7c3291d3"
+  version "0.6.14"
+  uid "68d53b087d4c9117cc86c7e5f19e7953a219582b"
+  resolved "https://codeload.github.com/connorjclark/quibble/tar.gz/68d53b087d4c9117cc86c7e5f19e7953a219582b"
   dependencies:
     lodash "^4.17.21"
     resolve "^1.20.0"
