@@ -27,8 +27,13 @@ import {readJson} from '../core/test/test-utils.js';
 
 const require = createRequire(import.meta.url);
 
-/** The commit hash for the current HEAD. */
-const COMMIT_HASH = execSync('git rev-parse HEAD').toString().trim();
+/**
+ * The git tag for the current HEAD (if HEAD is itself a tag),
+ * otherwise a combination of latest tag + #commits since + sha.
+ * Note: can't do this in CI because it is a shallow checkout.
+ */
+const GIT_READABLE_REF =
+  execSync(process.env.CI ? 'git rev-parse HEAD' : 'git describe').toString().trim();
 
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.
 /** @type {Array<string>} */
@@ -54,7 +59,7 @@ const today = (() => {
 const pkg = readJson(`${LH_ROOT}/package.json`);
 const banner = `
 /**
- * Lighthouse v${pkg.version} ${COMMIT_HASH} (${today})
+ * Lighthouse ${GIT_READABLE_REF} (${today})
  *
  * ${pkg.description}
  *
@@ -251,6 +256,5 @@ if (esMain(import.meta)) {
 }
 
 export {
-  COMMIT_HASH,
   buildBundle,
 };
