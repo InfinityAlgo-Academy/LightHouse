@@ -9,7 +9,7 @@ import log from 'lighthouse-logger';
 import {Runner} from './runner.js';
 import {CriConnection} from './gather/connections/cri.js';
 import {Config} from './config/config.js';
-import URL from './lib/url-shim.js';
+import UrlUtils from './lib/url-utils.js';
 import * as fraggleRock from './fraggle-rock/api.js';
 import {Driver} from './gather/driver.js';
 import {initializeConfig} from './fraggle-rock/config/config.js';
@@ -67,7 +67,7 @@ async function legacyNavigation(url, flags = {}, configJSON, userConnection) {
 
   // kick off a lighthouse run
   const artifacts = await Runner.gather(() => {
-    const requestedUrl = URL.normalizeUrl(url);
+    const requestedUrl = UrlUtils.normalizeUrl(url);
     return Runner._gatherArtifactsFromBrowser(requestedUrl, options, connection);
   }, options);
   return Runner.audit(artifacts, options);

@@ -14,7 +14,7 @@
 
 import {Audit} from '../audit.js';
 import ThirdParty from '../../lib/third-party-web.js';
-import URL from '../../lib/url-shim.js';
+import UrlUtils from '../../lib/url-utils.js';
 import {ByteEfficiencyAudit} from '../byte-efficiency/byte-efficiency-audit.js';
 import Interactive from '../../computed/metrics/lantern-interactive.js';
 import {NetworkRequest} from '../../lib/network-request.js';
@@ -167,7 +167,7 @@ class UsesHTTP2Audit extends Audit {
     const groupedByOrigin = new Map();
     for (const record of networkRecords) {
       if (!UsesHTTP2Audit.isStaticAsset(record)) continue;
-      if (URL.isLikeLocalhost(record.parsedURL.host)) continue;
+      if (UrlUtils.isLikeLocalhost(record.parsedURL.host)) continue;
       const existing = groupedByOrigin.get(record.parsedURL.securityOrigin) || [];
       existing.push(record);
       groupedByOrigin.set(record.parsedURL.securityOrigin, existing);

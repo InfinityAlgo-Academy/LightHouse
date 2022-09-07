@@ -4,12 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-/**
- * URL shim so we keep our code DRY
- */
-
 import {Util} from '../util.cjs';
-import {LighthouseError} from '../lib/lh-error.js';
+import {LighthouseError} from './lh-error.js';
 
 /** @typedef {import('./network-request.js').NetworkRequest} NetworkRequest */
 
@@ -43,8 +39,7 @@ function rewriteChromeInternalUrl(url) {
   return url.replace(/^chrome:\/\/chrome\//, 'chrome://');
 }
 
-// URL is global as of node 10. https://nodejs.org/api/globals.html#globals_url
-class URLShim extends URL {
+class UrlUtils {
   /**
    * @param {string} url
    * @return {boolean}
@@ -264,11 +259,8 @@ class URLShim extends URL {
   }
 }
 
-URLShim.URL = URL;
-
-URLShim.INVALID_URL_DEBUG_STRING =
+UrlUtils.INVALID_URL_DEBUG_STRING =
     'Lighthouse was unable to determine the URL of some script executions. ' +
     'It\'s possible a Chrome extension or other eval\'d code is the source.';
 
-// TODO(esmodules): don't use default export
-export default URLShim;
+export default UrlUtils;

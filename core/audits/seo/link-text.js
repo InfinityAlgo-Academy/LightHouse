@@ -5,7 +5,7 @@
  */
 
 import {Audit} from '../audit.js';
-import URL from '../../lib/url-shim.js';
+import UrlUtils from '../../lib/url-utils.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const BLOCKLIST = new Set([
@@ -121,7 +121,7 @@ class LinkText extends Audit {
           href.startsWith('mailto:') ||
           // This line prevents the audit from flagging anchor links.
           // In this case it is better to use `finalUrl` than `mainDocumentUrl`.
-          URL.equalWithExcludedFragments(link.href, artifacts.URL.finalUrl)
+          UrlUtils.equalWithExcludedFragments(link.href, artifacts.URL.finalUrl)
         ) {
           return false;
         }

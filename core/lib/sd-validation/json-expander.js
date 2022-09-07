@@ -8,7 +8,6 @@ import fs from 'fs';
 
 import jsonld from 'jsonld';
 
-import URL from '../url-shim.js';
 import {LH_ROOT} from '../../../root.js';
 
 const SCHEMA_ORG_HOST = 'schema.org';

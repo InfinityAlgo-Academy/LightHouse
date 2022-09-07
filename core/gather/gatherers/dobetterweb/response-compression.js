@@ -14,7 +14,7 @@ import {Buffer} from 'buffer';
 import {gzip} from 'zlib';
 
 import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
-import URL from '../../../lib/url-shim.js';
+import UrlUtils from '../../../lib/url-utils.js';
 import {Sentry} from '../../../lib/sentry.js';
 import {NetworkRequest} from '../../../lib/network-request.js';
 import DevtoolsLog from '../devtools-log.js';
@@ -122,7 +122,7 @@ class ResponseCompression extends FRGatherer {
       }).catch(err => {
         Sentry.captureException(err, {
           tags: {gatherer: 'ResponseCompression'},
-          extra: {url: URL.elideDataURI(record.url)},
+          extra: {url: UrlUtils.elideDataURI(record.url)},
           level: 'warning',
         });
 

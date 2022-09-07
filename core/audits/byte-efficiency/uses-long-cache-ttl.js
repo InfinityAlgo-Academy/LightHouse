@@ -8,7 +8,7 @@ import parseCacheControl from 'parse-cache-control';
 
 import {Audit} from '../audit.js';
 import {NetworkRequest} from '../../lib/network-request.js';
-import URL from '../../lib/url-shim.js';
+import UrlUtils from '../../lib/url-utils.js';
 import {linearInterpolation} from '../../lib/statistics.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import NetworkRecords from '../../computed/network-records.js';
@@ -233,7 +233,7 @@ class CacheHeaders extends Audit {
         const cacheHitProbability = CacheHeaders.getCacheHitProbability(cacheLifetimeInSeconds);
         if (cacheHitProbability > IGNORE_THRESHOLD_IN_PERCENT) continue;
 
-        const url = URL.elideDataURI(record.url);
+        const url = UrlUtils.elideDataURI(record.url);
         const totalBytes = record.transferSize || 0;
         const wastedBytes = (1 - cacheHitProbability) * totalBytes;
 

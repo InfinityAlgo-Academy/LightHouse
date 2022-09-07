@@ -7,7 +7,6 @@
 import LinkHeader from 'http-link-header';
 
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
-import URL from '../../lib/url-shim.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 import DevtoolsLog from './devtools-log.js';
 import MainResource from '../../computed/main-resource.js';

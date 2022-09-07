@@ -7,7 +7,6 @@
 import robotsParser from 'robots-parser';
 
 import {Audit} from '../audit.js';
-import URL from '../../lib/url-shim.js';
 import MainResource from '../../computed/main-resource.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 

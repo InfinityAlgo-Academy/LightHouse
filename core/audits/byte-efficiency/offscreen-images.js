@@ -12,7 +12,7 @@
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import {Sentry} from '../../lib/sentry.js';
-import URL from '../../lib/url-shim.js';
+import UrlUtils from '../../lib/url-utils.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import Interactive from '../../computed/metrics/interactive.js';
 import ProcessedTrace from '../../computed/processed-trace.js';
@@ -87,7 +87,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
     // If the image had its loading behavior explicitly controlled already, treat it as passed.
     if (image.loading === 'lazy' || image.loading === 'eager') return null;
 
-    const url = URL.elideDataURI(image.src);
+    const url = UrlUtils.elideDataURI(image.src);
     const totalPixels = image.displayedWidth * image.displayedHeight;
     const visiblePixels = this.computeVisiblePixels(image.clientRect, viewportDimensions);
     // Treat images with 0 area as if they're offscreen. See https://github.com/GoogleChrome/lighthouse/issues/1914

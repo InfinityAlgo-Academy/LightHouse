@@ -5,7 +5,7 @@
  */
 
 import {Audit} from './audit.js';
-import URL from '../lib/url-shim.js';
+import UrlUtils from '../lib/url-utils.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import NetworkRecords from '../computed/network-records.js';
 import * as i18n from '../lib/i18n/i18n.js';
@@ -75,7 +75,7 @@ class HTTPS extends Audit {
     return NetworkRecords.request(devtoolsLogs, context).then(networkRecords => {
       const insecureURLs = networkRecords
           .filter(record => !NetworkRequest.isSecureRequest(record))
-          .map(record => URL.elideDataURI(record.url));
+          .map(record => UrlUtils.elideDataURI(record.url));
 
       /** @type {Array<{url: string, resolution?: LH.IcuMessage|string}>}  */
       const items = Array.from(new Set(insecureURLs)).map(url => ({url, resolution: undefined}));

@@ -10,7 +10,7 @@ import {NetworkMonitor} from './network-monitor.js';
 import {waitForFullyLoaded, waitForFrameNavigated, waitForUserToContinue} from './wait-for-condition.js'; // eslint-disable-line max-len
 import * as constants from '../../config/constants.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import URL from '../../lib/url-shim.js';
+import UrlUtils from '../../lib/url-utils.js';
 
 const UIStrings = {
   /**
@@ -130,7 +130,7 @@ async function gotoURL(driver, requestor, options) {
 
   let requestedUrl = navigationUrls.requestedUrl;
   if (typeof requestor === 'string') {
-    if (requestedUrl && !URL.equalWithExcludedFragments(requestor, requestedUrl)) {
+    if (requestedUrl && !UrlUtils.equalWithExcludedFragments(requestor, requestedUrl)) {
       log.error(
         'Navigation',
         `Provided URL (${requestor}) did not match initial navigation URL (${requestedUrl})`
@@ -169,7 +169,7 @@ function getNavigationWarnings(navigation) {
 
   if (navigation.timedOut) warnings.push(str_(UIStrings.warningTimeout));
 
-  if (!URL.equalWithExcludedFragments(requestedUrl, mainDocumentUrl)) {
+  if (!UrlUtils.equalWithExcludedFragments(requestedUrl, mainDocumentUrl)) {
     warnings.push(str_(UIStrings.warningRedirected, {
       requested: requestedUrl,
       final: mainDocumentUrl,

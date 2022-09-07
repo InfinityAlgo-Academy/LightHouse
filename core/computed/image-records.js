@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import URL from '../lib/url-shim.js';
+import UrlUtils from '../lib/url-utils.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 
 class ImageRecords {
@@ -43,7 +43,7 @@ class ImageRecords {
       // Don't change the guessed mime type if no mime type was found.
       imageRecords.push({
         ...element,
-        mimeType: mimeType ? mimeType : URL.guessMimeType(element.src),
+        mimeType: mimeType ? mimeType : UrlUtils.guessMimeType(element.src),
       });
     }
 

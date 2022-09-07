@@ -6,8 +6,6 @@
 
 import cssParsers from 'cssstyle/lib/parsers.js';
 
-import URL from './url-shim.js';
-
 const ALLOWED_DISPLAY_VALUES = [
   'fullscreen',
   'standalone',

@@ -5,7 +5,6 @@
  */
 
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
-import URL from '../../lib/url-shim.js';
 
 /**
  * @fileoverview Gets JavaScript source maps.

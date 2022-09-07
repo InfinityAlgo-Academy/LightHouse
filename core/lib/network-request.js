@@ -52,7 +52,7 @@
       Trace: ResourceFinish.ts
  */
 
-import URL from './url-shim.js';
+import UrlUtils from './url-utils.js';
 
 // Lightrider X-Header names for timing information.
 // See: _updateTransferSizeForLightrider and _updateTimingsForLightrider.
@@ -215,7 +215,7 @@ class NetworkRequest {
       host: url.hostname,
       securityOrigin: url.origin,
     };
-    this.isSecure = URL.isSecureScheme(this.parsedURL.scheme);
+    this.isSecure = UrlUtils.isSecureScheme(this.parsedURL.scheme);
 
     this.startTime = data.timestamp;
 
@@ -522,9 +522,9 @@ class NetworkRequest {
    */
   static isNonNetworkRequest(record) {
     // The 'protocol' field in devtools a string more like a `scheme`
-    return URL.isNonNetworkProtocol(record.protocol) ||
+    return UrlUtils.isNonNetworkProtocol(record.protocol) ||
       // But `protocol` can fail to be populated if the request fails, so fallback to scheme.
-      URL.isNonNetworkProtocol(record.parsedURL.scheme);
+      UrlUtils.isNonNetworkProtocol(record.parsedURL.scheme);
   }
 
   /**
@@ -535,9 +535,9 @@ class NetworkRequest {
    * @return {boolean}
    */
   static isSecureRequest(record) {
-    return URL.isSecureScheme(record.parsedURL.scheme) ||
-        URL.isSecureScheme(record.protocol) ||
-        URL.isLikeLocalhost(record.parsedURL.host) ||
+    return UrlUtils.isSecureScheme(record.parsedURL.scheme) ||
+        UrlUtils.isSecureScheme(record.protocol) ||
+        UrlUtils.isLikeLocalhost(record.parsedURL.host) ||
         NetworkRequest.isHstsRequest(record);
   }
 

@@ -99,7 +99,7 @@
     "core/test/lib/tracehouse/task-summary-test.js",
     "core/test/lib/tracehouse/trace-processor-test.js",
     "core/test/lib/traces/metrics-trace-events-test.js",
-    "core/test/lib/url-shim-test.js",
+    "core/test/lib/url-utils-test.js",
     "core/test/network-records-to-devtools-log-test.js",
     "core/test/runner-test.js",
     "core/test/scoring-test.js",

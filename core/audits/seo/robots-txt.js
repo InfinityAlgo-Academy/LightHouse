@@ -12,7 +12,6 @@
  */
 
 import {Audit} from '../audit.js';
-import URL from '../../lib/url-shim.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const HTTP_CLIENT_ERROR_CODE_LOW = 400;

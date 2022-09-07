@@ -13,7 +13,7 @@
 
 import {Audit} from '../audit.js';
 import * as UsesResponsiveImages from './uses-responsive-images.js';
-import URL from '../../lib/url-shim.js';
+import UrlUtils from '../../lib/url-utils.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
@@ -71,7 +71,7 @@ class UsesResponsiveImagesSnapshot extends Audit {
 
       items.push({
         node: Audit.makeNodeItem(image.node),
-        url: URL.elideDataURI(image.src),
+        url: UrlUtils.elideDataURI(image.src),
         displayedDimensions: `${displayed.width}x${displayed.height}`,
         actualDimensions: `${actual.width}x${actual.height}`,
       });

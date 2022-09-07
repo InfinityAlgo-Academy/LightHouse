@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import URL from '../../url-shim.js';
+import UrlUtils from '../../url-utils.js';
 
 const INITIAL_CWD = 14 * 1024;
 
@@ -440,7 +440,7 @@ class NetworkAnalyzer {
     // equalWithExcludedFragments is expensive, so check that the resourceUrl starts with the request url first
     return records.find(request =>
       resourceUrl.startsWith(request.url) &&
-      URL.equalWithExcludedFragments(request.url, resourceUrl)
+      UrlUtils.equalWithExcludedFragments(request.url, resourceUrl)
     );
   }
 

@@ -5,7 +5,7 @@
  */
 
 import {Audit} from './audit.js';
-import URL from '../lib/url-shim.js';
+import UrlUtils from '../lib/url-utils.js';
 import NetworkRecords from '../computed/network-records.js';
 import MainResource from '../computed/main-resource.js';
 
@@ -62,7 +62,7 @@ class NetworkRequests extends Audit {
         undefined;
 
       return {
-        url: URL.elideDataURI(record.url),
+        url: UrlUtils.elideDataURI(record.url),
         protocol: record.protocol,
         startTime: timeToMs(record.startTime),
         endTime: timeToMs(record.endTime),

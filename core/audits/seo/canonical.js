@@ -5,7 +5,7 @@
  */
 
 import {Audit} from '../audit.js';
-import URL from '../../lib/url-shim.js';
+import UrlUtils from '../../lib/url-utils.js';
 import MainResource from '../../computed/main-resource.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
@@ -93,7 +93,7 @@ class Canonical extends Audit {
         // Links that had an hrefRaw but didn't have a valid href were invalid, flag them
         if (!link.href) invalidCanonicalLink = link;
         // Links that had a valid href but didn't have a valid hrefRaw must have been relatively resolved, flag them
-        else if (!URL.isValid(link.hrefRaw)) relativeCanonicallink = link;
+        else if (!UrlUtils.isValid(link.hrefRaw)) relativeCanonicallink = link;
         // Otherwise, it was a valid canonical URL
         else uniqueCanonicalURLs.add(link.href);
       } else if (link.rel === 'alternate') {

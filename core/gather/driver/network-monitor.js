@@ -15,7 +15,7 @@ import log from 'lighthouse-logger';
 
 import {NetworkRecorder} from '../../lib/network-recorder.js';
 import {NetworkRequest} from '../../lib/network-request.js';
-import URL from '../../lib/url-shim.js';
+import UrlUtils from '../../lib/url-utils.js';
 
 /** @typedef {import('../../lib/network-recorder.js').NetworkRecorderEventMap} NetworkRecorderEventMap */
 /** @typedef {'network-2-idle'|'network-critical-idle'|'networkidle'|'networkbusy'|'network-critical-busy'|'network-2-busy'} NetworkMonitorEvent_ */
@@ -214,7 +214,7 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
     /** @type {Array<{time: number, isStart: boolean}>} */
     let timeBoundaries = [];
     requests.forEach(request => {
-      if (URL.isNonNetworkProtocol(request.protocol)) return;
+      if (UrlUtils.isNonNetworkProtocol(request.protocol)) return;
       if (request.protocol === 'ws' || request.protocol === 'wss') return;
 
       // convert the network timestamp to ms
