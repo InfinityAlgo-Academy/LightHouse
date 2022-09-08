@@ -4,11 +4,12 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import Metric from './metric.js';
-
 /**
  * @fileOverview Enforces that a metric can only be computed on navigations.
  */
+
+import Metric from './metric.js';
+
 class NavigationMetric extends Metric {
   /**
    * @param {LH.Artifacts.NavigationMetricComputationData} data
@@ -42,4 +43,4 @@ class NavigationMetric extends Metric {
   }
 }
 
-export default NavigationMetric;
+export {NavigationMetric};

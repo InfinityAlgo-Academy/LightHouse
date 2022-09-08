@@ -5,8 +5,8 @@
  */
 
 import {Audit} from './audit.js';
-import TimingSummary from '../computed/metrics/timing-summary.js';
-import MainResource from '../computed/main-resource.js';
+import {TimingSummary} from '../computed/metrics/timing-summary.js';
+import {MainResource} from '../computed/main-resource.js';
 import {Budget} from '../config/budget.js';
 import * as i18n from '../lib/i18n/i18n.js';
 

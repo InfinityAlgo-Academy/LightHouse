@@ -6,8 +6,8 @@
 
 import {Audit} from './audit.js';
 import UrlUtils from '../lib/url-utils.js';
-import NetworkRecords from '../computed/network-records.js';
-import MainResource from '../computed/main-resource.js';
+import {NetworkRecords} from '../computed/network-records.js';
+import {MainResource} from '../computed/main-resource.js';
 
 class NetworkRequests extends Audit {
   /**

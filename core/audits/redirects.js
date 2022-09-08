@@ -7,10 +7,10 @@
 import {Audit} from './audit.js';
 import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import ProcessedTrace from '../computed/processed-trace.js';
-import NetworkRecords from '../computed/network-records.js';
-import MainResource from '../computed/main-resource.js';
-import LanternInteractive from '../computed/metrics/lantern-interactive.js';
+import {ProcessedTrace} from '../computed/processed-trace.js';
+import {NetworkRecords} from '../computed/network-records.js';
+import {MainResource} from '../computed/main-resource.js';
+import {LanternInteractive} from '../computed/metrics/lantern-interactive.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to eliminate the redirects taken through multiple URLs to load the page. This is shown in a list of audits that Lighthouse generates. */

@@ -5,7 +5,7 @@
  */
 
 import {Audit} from '../audit.js';
-import ComputedTBT from '../../computed/metrics/total-blocking-time.js';
+import {TotalBlockingTime as ComputedTBT} from '../../computed/metrics/total-blocking-time.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {

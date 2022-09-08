@@ -5,7 +5,7 @@
  */
 
 import {Audit} from './audit.js';
-import ComputedTimingSummary from '../computed/metrics/timing-summary.js';
+import {TimingSummary} from '../computed/metrics/timing-summary.js';
 
 /** @type {Set<keyof LH.Artifacts.TimingSummary>} */
 const DECIMAL_METRIC_KEYS = new Set([
@@ -42,7 +42,7 @@ class Metrics extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const URL = artifacts.URL;
-    const summary = await ComputedTimingSummary
+    const summary = await TimingSummary
       .request({trace, devtoolsLog, gatherContext, settings: context.settings, URL}, context);
     const metrics = summary.metrics;
     const debugInfo = summary.debugInfo;

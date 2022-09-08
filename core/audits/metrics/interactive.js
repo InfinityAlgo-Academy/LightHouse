@@ -6,7 +6,7 @@
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import Interactive from '../../computed/metrics/interactive.js';
+import {Interactive} from '../../computed/metrics/interactive.js';
 
 const UIStrings = {
   /** Description of the Time to Interactive (TTI) metric, which evaluates when a page has completed its primary network activity and main thread work. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */

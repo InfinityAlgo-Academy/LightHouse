@@ -8,13 +8,13 @@ import {Audit} from './audit.js';
 import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
 import UrlUtils from '../lib/url-utils.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import NetworkRecords from '../computed/network-records.js';
-import MainResource from '../computed/main-resource.js';
-import LoadSimulator from '../computed/load-simulator.js';
-import ProcessedTrace from '../computed/processed-trace.js';
-import ProcessedNavigation from '../computed/processed-navigation.js';
-import PageDependencyGraph from '../computed/page-dependency-graph.js';
-import LanternLCP from '../computed/metrics/lantern-largest-contentful-paint.js';
+import {NetworkRecords} from '../computed/network-records.js';
+import {MainResource} from '../computed/main-resource.js';
+import {LoadSimulator} from '../computed/load-simulator.js';
+import {ProcessedTrace} from '../computed/processed-trace.js';
+import {ProcessedNavigation} from '../computed/processed-navigation.js';
+import {PageDependencyGraph} from '../computed/page-dependency-graph.js';
+import {LanternLargestContentfulPaint} from '../computed/metrics/lantern-largest-contentful-paint.js';
 
 // Preconnect establishes a "clean" socket. Chrome's socket manager will keep an unused socket
 // around for 10s. Meaning, the time delta between processing preconnect a request should be <10s,
@@ -125,7 +125,8 @@ class UsesRelPreconnectAudit extends Audit {
       ]);
 
     const {rtt, additionalRttByOrigin} = loadSimulator.getOptions();
-    const lcpGraph = await LanternLCP.getPessimisticGraph(pageGraph, processedNavigation);
+    const lcpGraph =
+      await LanternLargestContentfulPaint.getPessimisticGraph(pageGraph, processedNavigation);
     /** @type {Set<string>} */
     const lcpGraphURLs = new Set();
     lcpGraph.traverse(node => {

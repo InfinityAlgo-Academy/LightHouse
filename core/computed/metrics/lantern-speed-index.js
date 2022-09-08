@@ -5,10 +5,10 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import LanternMetric from './lantern-metric.js';
+import {LanternMetric} from './lantern-metric.js';
 import {BaseNode} from '../../lib/dependency-graph/base-node.js';
-import Speedline from '../speedline.js';
-import LanternFirstContentfulPaint from './lantern-first-contentful-paint.js';
+import {Speedline} from '../speedline.js';
+import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
 import {throttling as defaultThrottling} from '../../config/constants.js';
 
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
@@ -143,7 +143,8 @@ class LanternSpeedIndex extends LanternMetric {
   }
 }
 
-export default makeComputedArtifact(
+const LanternSpeedIndexComputed = makeComputedArtifact(
   LanternSpeedIndex,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
+export {LanternSpeedIndexComputed as LanternSpeedIndex};

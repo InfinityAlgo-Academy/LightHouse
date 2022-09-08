@@ -5,13 +5,13 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import LanternMetricArtifact from './lantern-metric.js';
+import {LanternMetric} from './lantern-metric.js';
 import {BaseNode} from '../../lib/dependency-graph/base-node.js';
-import LanternFirstContentfulPaint from './lantern-first-contentful-paint.js';
+import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
 
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
-class LanternMaxPotentialFID extends LanternMetricArtifact {
+class LanternMaxPotentialFID extends LanternMetric {
   /**
    * @return {LH.Gatherer.Simulation.MetricCoefficients}
    */
@@ -86,7 +86,8 @@ class LanternMaxPotentialFID extends LanternMetricArtifact {
   }
 }
 
-export default makeComputedArtifact(
+const LanternMaxPotentialFIDComputed = makeComputedArtifact(
   LanternMaxPotentialFID,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
+export {LanternMaxPotentialFIDComputed as LanternMaxPotentialFID};

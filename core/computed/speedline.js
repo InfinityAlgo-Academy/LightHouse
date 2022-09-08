@@ -8,7 +8,7 @@ import speedline from 'speedline-core';
 
 import {makeComputedArtifact} from './computed-artifact.js';
 import {LighthouseError} from '../lib/lh-error.js';
-import ProcessedTrace from './processed-trace.js';
+import {ProcessedTrace} from './processed-trace.js';
 
 class Speedline {
   /**
@@ -51,4 +51,5 @@ class Speedline {
   }
 }
 
-export default makeComputedArtifact(Speedline, null);
+const SpeedlineComputed = makeComputedArtifact(Speedline, null);
+export {SpeedlineComputed as Speedline};

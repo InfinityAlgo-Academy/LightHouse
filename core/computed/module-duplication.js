@@ -5,7 +5,7 @@
  */
 
 import {makeComputedArtifact} from './computed-artifact.js';
-import JsBundles from './js-bundles.js';
+import {JSBundles} from './js-bundles.js';
 
 const RELATIVE_SIZE_THRESHOLD = 0.1;
 const ABSOLUTE_SIZE_THRESHOLD_BYTES = 1024 * 0.5;
@@ -77,7 +77,7 @@ class ModuleDuplication {
    * @param {LH.Artifacts.ComputedContext} context
    */
   static async compute_(artifacts, context) {
-    const bundles = await JsBundles.request(artifacts, context);
+    const bundles = await JSBundles.request(artifacts, context);
 
     /**
      * @typedef SourceData
@@ -133,4 +133,6 @@ class ModuleDuplication {
   }
 }
 
-export default makeComputedArtifact(ModuleDuplication, ['Scripts', 'SourceMaps']);
+const ModuleDuplicationComputed =
+  makeComputedArtifact(ModuleDuplication, ['Scripts', 'SourceMaps']);
+export {ModuleDuplicationComputed as ModuleDuplication};

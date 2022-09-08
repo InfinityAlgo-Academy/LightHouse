@@ -6,7 +6,7 @@
 
 import log from 'lighthouse-logger';
 
-import NetworkRecords from '../computed/network-records.js';
+import {NetworkRecords} from '../computed/network-records.js';
 import {getPageLoadError} from '../lib/navigation-error.js';
 import * as emulation from '../lib/emulation.js';
 import * as constants from '../config/constants.js';

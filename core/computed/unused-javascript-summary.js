@@ -148,7 +148,8 @@ class UnusedJavascriptSummary {
   }
 }
 
-export default makeComputedArtifact(
+const UnusedJavascriptSummaryComputed = makeComputedArtifact(
   UnusedJavascriptSummary,
   ['bundle', 'scriptCoverage', 'scriptId']
 );
+export {UnusedJavascriptSummaryComputed as UnusedJavascriptSummary};

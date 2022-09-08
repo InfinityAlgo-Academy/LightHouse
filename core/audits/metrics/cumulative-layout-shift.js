@@ -5,7 +5,7 @@
  */
 
 import {Audit} from '../audit.js';
-import ComputedCLS from '../../computed/metrics/cumulative-layout-shift.js';
+import {CumulativeLayoutShift as ComputedCLS} from '../../computed/metrics/cumulative-layout-shift.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {

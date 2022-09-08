@@ -5,7 +5,7 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import NavigationMetric from './navigation-metric.js';
+import {NavigationMetric} from './navigation-metric.js';
 
 class FirstContentfulPaintAllFrames extends NavigationMetric {
   /**
@@ -30,7 +30,8 @@ class FirstContentfulPaintAllFrames extends NavigationMetric {
   }
 }
 
-export default makeComputedArtifact(
+const FirstContentfulPaintAllFramesComputed = makeComputedArtifact(
   FirstContentfulPaintAllFrames,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
+export {FirstContentfulPaintAllFramesComputed as FirstContentfulPaintAllFrames};

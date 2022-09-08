@@ -17,4 +17,5 @@ class ProcessedNavigation {
   }
 }
 
-export default makeComputedArtifact(ProcessedNavigation, null);
+const ProcessedNavigationComputed = makeComputedArtifact(ProcessedNavigation, null);
+export {ProcessedNavigationComputed as ProcessedNavigation};

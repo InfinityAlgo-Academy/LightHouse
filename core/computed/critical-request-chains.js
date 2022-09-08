@@ -6,8 +6,8 @@
 
 import {makeComputedArtifact} from './computed-artifact.js';
 import {NetworkRequest} from '../lib/network-request.js';
-import MainResource from './main-resource.js';
-import PageDependencyGraph from './page-dependency-graph.js';
+import {MainResource} from './main-resource.js';
+import {PageDependencyGraph} from './page-dependency-graph.js';
 
 class CriticalRequestChains {
   /**
@@ -138,4 +138,6 @@ class CriticalRequestChains {
   }
 }
 
-export default makeComputedArtifact(CriticalRequestChains, ['URL', 'devtoolsLog', 'trace']);
+const CriticalRequestChainsComputed =
+  makeComputedArtifact(CriticalRequestChains, ['URL', 'devtoolsLog', 'trace']);
+export {CriticalRequestChainsComputed as CriticalRequestChains};

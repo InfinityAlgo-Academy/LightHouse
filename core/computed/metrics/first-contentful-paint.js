@@ -5,8 +5,8 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import NavigationMetric from './navigation-metric.js';
-import LanternFirstContentfulPaint from './lantern-first-contentful-paint.js';
+import {NavigationMetric} from './navigation-metric.js';
+import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
 
 class FirstContentfulPaint extends NavigationMetric {
   /**
@@ -33,7 +33,8 @@ class FirstContentfulPaint extends NavigationMetric {
   }
 }
 
-export default makeComputedArtifact(
+const FirstContentfulPaintComputed = makeComputedArtifact(
   FirstContentfulPaint,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
+export {FirstContentfulPaintComputed as FirstContentfulPaint};

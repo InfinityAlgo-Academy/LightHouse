@@ -6,7 +6,7 @@
 
 import {makeComputedArtifact} from './computed-artifact.js';
 import {NetworkAnalyzer} from '../lib/dependency-graph/simulator/network-analyzer.js';
-import NetworkRecords from './network-records.js';
+import {NetworkRecords} from './network-records.js';
 
 class NetworkAnalysis {
   /**
@@ -60,4 +60,5 @@ class NetworkAnalysis {
   }
 }
 
-export default makeComputedArtifact(NetworkAnalysis, null);
+const NetworkAnalysisComputed = makeComputedArtifact(NetworkAnalysis, null);
+export {NetworkAnalysisComputed as NetworkAnalysis};

@@ -18,10 +18,10 @@ import {pageFunctions} from '../../lib/page-functions.js';
 import * as RectHelpers from '../../lib/rect-helpers.js';
 import {Sentry} from '../../lib/sentry.js';
 import Trace from './trace.js';
-import ProcessedTrace from '../../computed/processed-trace.js';
-import ProcessedNavigation from '../../computed/processed-navigation.js';
+import {ProcessedTrace} from '../../computed/processed-trace.js';
+import {ProcessedNavigation} from '../../computed/processed-navigation.js';
 import {LighthouseError} from '../../lib/lh-error.js';
-import ComputedResponsiveness from '../../computed/metrics/responsiveness.js';
+import {Responsiveness} from '../../computed/metrics/responsiveness.js';
 
 /** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[], type?: string}} TraceElementData */
 
@@ -150,7 +150,7 @@ class TraceElements extends FRGatherer {
   static async getResponsivenessElement(trace, context) {
     const {settings} = context;
     try {
-      const responsivenessEvent = await ComputedResponsiveness.request({trace, settings}, context);
+      const responsivenessEvent = await Responsiveness.request({trace, settings}, context);
       if (!responsivenessEvent || responsivenessEvent.name === 'FallbackTiming') return;
       return {nodeId: responsivenessEvent.args.data.nodeId};
     } catch {

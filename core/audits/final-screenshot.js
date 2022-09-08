@@ -6,8 +6,8 @@
 
 import {Audit} from './audit.js';
 import {LighthouseError} from '../lib/lh-error.js';
-import ProcessedTrace from '../computed/processed-trace.js';
-import Screenshots from '../computed/screenshots.js';
+import {ProcessedTrace} from '../computed/processed-trace.js';
+import {Screenshots} from '../computed/screenshots.js';
 
 class FinalScreenshot extends Audit {
   /**

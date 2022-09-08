@@ -10,7 +10,7 @@
  */
 
 import {Audit} from '../audit.js';
-import ComputedViewportMeta from '../../computed/viewport-meta.js';
+import {ViewportMeta} from '../../computed/viewport-meta.js';
 import {
   rectsTouchOrOverlap,
   getRectOverlapArea,
@@ -268,7 +268,7 @@ class TapTargets extends Audit {
       };
     }
 
-    const viewportMeta = await ComputedViewportMeta.request(artifacts.MetaElements, context);
+    const viewportMeta = await ViewportMeta.request(artifacts.MetaElements, context);
     if (!viewportMeta.isMobileOptimized) {
       return {
         score: 0,

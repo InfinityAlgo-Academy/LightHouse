@@ -6,7 +6,7 @@
 
 import {makeComputedArtifact} from './computed-artifact.js';
 import {ByteEfficiencyAudit} from '../audits/byte-efficiency/byte-efficiency-audit.js';
-import NetworkRecords from './network-records.js';
+import {NetworkRecords} from './network-records.js';
 
 const PREVIEW_LENGTH = 100;
 
@@ -149,4 +149,5 @@ class UnusedCSS {
   }
 }
 
-export default makeComputedArtifact(UnusedCSS, ['CSSUsage', 'devtoolsLog']);
+const UnusedCSSComputed = makeComputedArtifact(UnusedCSS, ['CSSUsage', 'devtoolsLog']);
+export {UnusedCSSComputed as UnusedCSS};

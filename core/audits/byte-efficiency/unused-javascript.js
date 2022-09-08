@@ -5,8 +5,8 @@
  */
 
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
-import UnusedJavaScriptSummary from '../../computed/unused-javascript-summary.js';
-import JsBundles from '../../computed/js-bundles.js';
+import {UnusedJavascriptSummary} from '../../computed/unused-javascript-summary.js';
+import {JSBundles} from '../../computed/js-bundles.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {getRequestForScript} from '../../lib/script-helpers.js';
 
@@ -79,7 +79,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
    * @return {Promise<import('./byte-efficiency-audit.js').ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
-    const bundles = await JsBundles.request(artifacts, context);
+    const bundles = await JSBundles.request(artifacts, context);
     const {
       unusedThreshold = UNUSED_BYTES_IGNORE_THRESHOLD,
       bundleSourceUnusedThreshold = UNUSED_BYTES_IGNORE_BUNDLE_SOURCE_THRESHOLD,
@@ -95,7 +95,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
 
       const bundle = bundles.find(b => b.script.scriptId === scriptId);
       const unusedJsSummary =
-        await UnusedJavaScriptSummary.request({scriptId, scriptCoverage, bundle}, context);
+        await UnusedJavascriptSummary.request({scriptId, scriptCoverage, bundle}, context);
       if (unusedJsSummary.wastedBytes === 0 || unusedJsSummary.totalBytes === 0) continue;
 
       const transfer = ByteEfficiencyAudit

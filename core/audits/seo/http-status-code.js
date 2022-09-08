@@ -6,7 +6,7 @@
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import MainResource from '../../computed/main-resource.js';
+import {MainResource} from '../../computed/main-resource.js';
 
 const HTTP_UNSUCCESSFUL_CODE_LOW = 400;
 const HTTP_UNSUCCESSFUL_CODE_HIGH = 599;

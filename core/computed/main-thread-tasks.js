@@ -6,7 +6,7 @@
 
 import {makeComputedArtifact} from './computed-artifact.js';
 import {MainThreadTasks as MainThreadTasks_} from '../lib/tracehouse/main-thread-tasks.js';
-import ProcessedTrace from './processed-trace.js';
+import {ProcessedTrace} from './processed-trace.js';
 
 class MainThreadTasks {
   /**
@@ -21,4 +21,5 @@ class MainThreadTasks {
   }
 }
 
-export default makeComputedArtifact(MainThreadTasks, null);
+const MainThreadTasksComputed = makeComputedArtifact(MainThreadTasks, null);
+export {MainThreadTasksComputed as MainThreadTasks};

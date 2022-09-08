@@ -8,7 +8,7 @@
 
 import * as i18n from '../../lib/i18n/i18n.js';
 import {Audit} from '../audit.js';
-import ComputedViewportMeta from '../../computed/viewport-meta.js';
+import {ViewportMeta} from '../../computed/viewport-meta.js';
 
 const MINIMAL_PERCENTAGE_OF_LEGIBLE_TEXT = 60;
 
@@ -256,7 +256,7 @@ class FontSize extends Audit {
       };
     }
 
-    const viewportMeta = await ComputedViewportMeta.request(artifacts.MetaElements, context);
+    const viewportMeta = await ViewportMeta.request(artifacts.MetaElements, context);
     if (!viewportMeta.isMobileOptimized) {
       return {
         score: 0,

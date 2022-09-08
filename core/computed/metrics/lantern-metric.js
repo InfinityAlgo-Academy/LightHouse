@@ -6,10 +6,10 @@
 
 import {BaseNode} from '../../lib/dependency-graph/base-node.js';
 import {NetworkRequest} from '../../lib/network-request.js';
-import ProcessedTrace from '../processed-trace.js';
-import ProcessedNavigation from '../processed-navigation.js';
-import PageDependencyGraph from '../page-dependency-graph.js';
-import LoadSimulator from '../load-simulator.js';
+import {ProcessedTrace} from '../processed-trace.js';
+import {ProcessedNavigation} from '../processed-navigation.js';
+import {PageDependencyGraph} from '../page-dependency-graph.js';
+import {LoadSimulator} from '../load-simulator.js';
 
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 /** @typedef {import('../../lib/dependency-graph/network-node').NetworkNode} NetworkNode */
@@ -24,7 +24,7 @@ import LoadSimulator from '../load-simulator.js';
  * @property {{speedIndex: number}=} speedline
  */
 
-class LanternMetricArtifact {
+class LanternMetric {
   /**
    * @param {Node} dependencyGraph
    * @param {function(NetworkNode):boolean=} condition
@@ -161,4 +161,4 @@ class LanternMetricArtifact {
   }
 }
 
-export default LanternMetricArtifact;
+export {LanternMetric};

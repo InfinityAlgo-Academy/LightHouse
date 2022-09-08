@@ -5,7 +5,7 @@
  */
 
 import {makeComputedArtifact} from './computed-artifact.js';
-import NetworkRecords from './network-records.js';
+import {NetworkRecords} from './network-records.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import {Budget} from '../config/budget.js';
 import {Util} from '../util.cjs';
@@ -109,4 +109,6 @@ class ResourceSummary {
   }
 }
 
-export default makeComputedArtifact(ResourceSummary, ['URL', 'devtoolsLog', 'budgets']);
+const ResourceSummaryComputed =
+  makeComputedArtifact(ResourceSummary, ['URL', 'devtoolsLog', 'budgets']);
+export {ResourceSummaryComputed as ResourceSummary};

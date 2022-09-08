@@ -5,8 +5,8 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import NavigationMetric from './navigation-metric.js';
-import LanternMaxPotentialFID from './lantern-max-potential-fid.js';
+import {NavigationMetric} from './navigation-metric.js';
+import {LanternMaxPotentialFID} from './lantern-max-potential-fid.js';
 import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
 
 class MaxPotentialFID extends NavigationMetric {
@@ -38,7 +38,8 @@ class MaxPotentialFID extends NavigationMetric {
   }
 }
 
-export default makeComputedArtifact(
+const MaxPotentialFIDComputed = makeComputedArtifact(
   MaxPotentialFID,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
+export {MaxPotentialFIDComputed as MaxPotentialFID};

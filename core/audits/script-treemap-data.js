@@ -15,9 +15,9 @@
  */
 
 import {Audit} from './audit.js';
-import JsBundles from '../computed/js-bundles.js';
-import UnusedJavaScriptSummary from '../computed/unused-javascript-summary.js';
-import ModuleDuplication from '../computed/module-duplication.js';
+import {JSBundles} from '../computed/js-bundles.js';
+import {UnusedJavascriptSummary} from '../computed/unused-javascript-summary.js';
+import {ModuleDuplication} from '../computed/module-duplication.js';
 import {isInline} from '../lib/script-helpers.js';
 
 class ScriptTreemapDataAudit extends Audit {
@@ -167,7 +167,7 @@ class ScriptTreemapDataAudit extends Audit {
     const nodes = [];
     /** @type {Map<string, LH.Treemap.Node>} */
     const htmlNodesByFrameId = new Map();
-    const bundles = await JsBundles.request(artifacts, context);
+    const bundles = await JSBundles.request(artifacts, context);
     const duplicationByPath = await ModuleDuplication.request(artifacts, context);
 
     for (const script of artifacts.Scripts) {
@@ -178,7 +178,7 @@ class ScriptTreemapDataAudit extends Audit {
       const scriptCoverage = /** @type {LH.Artifacts['JsUsage'][string] | undefined} */
         (artifacts.JsUsage[script.scriptId]);
       const unusedJavascriptSummary = scriptCoverage ?
-        await UnusedJavaScriptSummary.request(
+        await UnusedJavascriptSummary.request(
           {scriptId: script.scriptId, scriptCoverage, bundle}, context) :
         undefined;
 

@@ -17,4 +17,5 @@ class ProcessedTrace {
   }
 }
 
-export default makeComputedArtifact(ProcessedTrace, null);
+const ProcessedTraceComputed = makeComputedArtifact(ProcessedTrace, null);
+export {ProcessedTraceComputed as ProcessedTrace};

@@ -58,5 +58,7 @@ class ImageRecords {
   }
 }
 
-export default makeComputedArtifact(ImageRecords, ['ImageElements', 'networkRecords']);
+const ImageRecordsComputed =
+  makeComputedArtifact(ImageRecords, ['ImageElements', 'networkRecords']);
+export {ImageRecordsComputed as ImageRecords};
 

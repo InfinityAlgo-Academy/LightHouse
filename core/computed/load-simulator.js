@@ -7,7 +7,7 @@
 import {makeComputedArtifact} from './computed-artifact.js';
 import * as constants from '../config/constants.js';
 import {Simulator} from '../lib/dependency-graph/simulator/simulator.js';
-import NetworkAnalysis from './network-analysis.js';
+import {NetworkAnalysis} from './network-analysis.js';
 
 class LoadSimulator {
   /**
@@ -88,7 +88,5 @@ class LoadSimulator {
   }
 }
 
-// TODO(esmodules): For all computed artifacts:
-//   const LoadSimulatorComputed = makeComputedArtifact(LoadSimulator, ['devtoolsLog', 'settings']);
-//   export {LoadSimulator as LoadSimulatorComputed};
-export default makeComputedArtifact(LoadSimulator, ['devtoolsLog', 'settings']);
+const LoadSimulatorComputed = makeComputedArtifact(LoadSimulator, ['devtoolsLog', 'settings']);
+export {LoadSimulatorComputed as LoadSimulator};

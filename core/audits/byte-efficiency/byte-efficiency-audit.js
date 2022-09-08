@@ -6,11 +6,11 @@
 
 import {Audit} from '../audit.js';
 import {linearInterpolation} from '../../lib/statistics.js';
-import Interactive from '../../computed/metrics/lantern-interactive.js';
+import {LanternInteractive} from '../../computed/metrics/lantern-interactive.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import NetworkRecords from '../../computed/network-records.js';
-import LoadSimulator from '../../computed/load-simulator.js';
-import PageDependencyGraph from '../../computed/page-dependency-graph.js';
+import {NetworkRecords} from '../../computed/network-records.js';
+import {LoadSimulator} from '../../computed/load-simulator.js';
+import {PageDependencyGraph} from '../../computed/page-dependency-graph.js';
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, {});
 
@@ -190,8 +190,9 @@ class ByteEfficiencyAudit extends Audit {
     });
 
     const savingsOnOverallLoad = simulationBeforeChanges.timeInMs - simulationAfterChanges.timeInMs;
-    const savingsOnTTI = Interactive.getLastLongTaskEndTime(simulationBeforeChanges.nodeTimings) -
-      Interactive.getLastLongTaskEndTime(simulationAfterChanges.nodeTimings);
+    const savingsOnTTI =
+      LanternInteractive.getLastLongTaskEndTime(simulationBeforeChanges.nodeTimings) -
+      LanternInteractive.getLastLongTaskEndTime(simulationAfterChanges.nodeTimings);
 
     let savings = savingsOnTTI;
     if (options.includeLoad) savings = Math.max(savings, savingsOnOverallLoad);

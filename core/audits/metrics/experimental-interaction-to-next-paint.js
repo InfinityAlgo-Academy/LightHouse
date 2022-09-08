@@ -5,7 +5,7 @@
  */
 
 import {Audit} from '../audit.js';
-import ComputedResponsivenes from '../../computed/metrics/responsiveness.js';
+import {Responsiveness as ComputedResponsivenes} from '../../computed/metrics/responsiveness.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {

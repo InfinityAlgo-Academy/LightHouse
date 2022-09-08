@@ -16,11 +16,11 @@ import {Audit} from '../audit.js';
 import ThirdParty from '../../lib/third-party-web.js';
 import UrlUtils from '../../lib/url-utils.js';
 import {ByteEfficiencyAudit} from '../byte-efficiency/byte-efficiency-audit.js';
-import Interactive from '../../computed/metrics/lantern-interactive.js';
+import {LanternInteractive} from '../../computed/metrics/lantern-interactive.js';
 import {NetworkRequest} from '../../lib/network-request.js';
-import NetworkRecords from '../../computed/network-records.js';
-import LoadSimulator from '../../computed/load-simulator.js';
-import PageDependencyGraph from '../../computed/page-dependency-graph.js';
+import {NetworkRecords} from '../../computed/network-records.js';
+import {LoadSimulator} from '../../computed/load-simulator.js';
+import {PageDependencyGraph} from '../../computed/page-dependency-graph.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
@@ -106,8 +106,8 @@ class UsesHTTP2Audit extends Audit {
     });
 
     const savingsOnOverallLoad = simulationBefore.timeInMs - simulationAfter.timeInMs;
-    const savingsOnTTI = Interactive.getLastLongTaskEndTime(simulationBefore.nodeTimings) -
-      Interactive.getLastLongTaskEndTime(simulationAfter.nodeTimings);
+    const savingsOnTTI = LanternInteractive.getLastLongTaskEndTime(simulationBefore.nodeTimings) -
+      LanternInteractive.getLastLongTaskEndTime(simulationAfter.nodeTimings);
     const savings = Math.max(savingsOnTTI, savingsOnOverallLoad);
 
     // Round waste to nearest 10ms

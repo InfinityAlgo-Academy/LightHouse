@@ -9,7 +9,7 @@
 /** @typedef {{url: string, sourceTransferBytes?: number}} SubItem */
 
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
-import ModuleDuplication from '../../computed/module-duplication.js';
+import {ModuleDuplication} from '../../computed/module-duplication.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {getRequestForScript} from '../../lib/script-helpers.js';
 

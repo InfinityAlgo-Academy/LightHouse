@@ -12,7 +12,7 @@
 import {Audit} from './audit.js';
 import {taskGroups} from '../lib/tracehouse/task-groups.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import MainThreadTasks from '../computed/main-thread-tasks.js';
+import {MainThreadTasks} from '../computed/main-thread-tasks.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the main thread work the browser did to load the page. This descriptive title is shown to users when the amount is acceptable and no user action is required. */

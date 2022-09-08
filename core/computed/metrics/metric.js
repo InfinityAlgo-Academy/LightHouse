@@ -5,9 +5,9 @@
  */
 
 import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
-import ProcessedTrace from '../processed-trace.js';
-import ProcessedNavigation from '../processed-navigation.js';
-import NetworkRecords from '../network-records.js';
+import {ProcessedTrace} from '../processed-trace.js';
+import {ProcessedNavigation} from '../processed-navigation.js';
+import {NetworkRecords} from '../network-records.js';
 
 /**
  * @fileOverview Encapsulates logic for choosing the correct metric computation method based on the

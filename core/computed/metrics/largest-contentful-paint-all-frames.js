@@ -9,7 +9,7 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import NavigationMetric from './navigation-metric.js';
+import {NavigationMetric} from './navigation-metric.js';
 import {LighthouseError} from '../../lib/lh-error.js';
 
 class LargestContentfulPaintAllFrames extends NavigationMetric {
@@ -38,7 +38,8 @@ class LargestContentfulPaintAllFrames extends NavigationMetric {
   }
 }
 
-export default makeComputedArtifact(
+const LargestContentfulPaintAllFramesComputed = makeComputedArtifact(
   LargestContentfulPaintAllFrames,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
+export {LargestContentfulPaintAllFramesComputed as LargestContentfulPaintAllFrames};

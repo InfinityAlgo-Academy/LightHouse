@@ -5,7 +5,7 @@
  */
 
 import {Audit} from '../audit.js';
-import ComputedFcp from '../../computed/metrics/first-contentful-paint.js';
+import {FirstContentfulPaint as ComputedFcp} from '../../computed/metrics/first-contentful-paint.js';
 import * as constants from '../../config/constants.js';
 
 const regular3G = constants.throttling.mobileRegular3G;

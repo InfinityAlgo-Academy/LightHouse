@@ -6,11 +6,11 @@
 
 import {Audit} from './audit.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import LanternFcp from '../computed/metrics/lantern-first-contentful-paint.js';
-import LanternFmp from '../computed/metrics/lantern-first-meaningful-paint.js';
-import LanternInteractive from '../computed/metrics/lantern-interactive.js';
-import LanternSpeedIndex from '../computed/metrics/lantern-speed-index.js';
-import LanternLcp from '../computed/metrics/lantern-largest-contentful-paint.js';
+import {LanternFirstContentfulPaint} from '../computed/metrics/lantern-first-contentful-paint.js';
+import {LanternFirstMeaningfulPaint} from '../computed/metrics/lantern-first-meaningful-paint.js';
+import {LanternInteractive} from '../computed/metrics/lantern-interactive.js';
+import {LanternSpeedIndex} from '../computed/metrics/lantern-speed-index.js';
+import {LanternLargestContentfulPaint} from '../computed/metrics/lantern-largest-contentful-paint.js';
 
 // Parameters (in ms) for log-normal CDF scoring. To see the curve:
 //   https://www.desmos.com/calculator/bksgkihhj8
@@ -50,11 +50,11 @@ class PredictivePerf extends Audit {
     // @ts-expect-error - TODO(bckenny): allow optional `throttling` settings
     const settings = {}; // Use default settings.
     const computationData = {trace, devtoolsLog, gatherContext, settings, URL};
-    const fcp = await LanternFcp.request(computationData, context);
-    const fmp = await LanternFmp.request(computationData, context);
+    const fcp = await LanternFirstContentfulPaint.request(computationData, context);
+    const fmp = await LanternFirstMeaningfulPaint.request(computationData, context);
     const tti = await LanternInteractive.request(computationData, context);
     const si = await LanternSpeedIndex.request(computationData, context);
-    const lcp = await LanternLcp.request(computationData, context);
+    const lcp = await LanternLargestContentfulPaint.request(computationData, context);
 
     const values = {
       roughEstimateOfFCP: fcp.timing,

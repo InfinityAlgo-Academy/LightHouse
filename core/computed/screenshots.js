@@ -25,4 +25,5 @@ class Screenshots {
   }
 }
 
-export default makeComputedArtifact(Screenshots, null);
+const ScreenshotsComputed = makeComputedArtifact(Screenshots, null);
+export {ScreenshotsComputed as Screenshots};

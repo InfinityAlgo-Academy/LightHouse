@@ -110,7 +110,7 @@ const traceCategories = Driver.traceCategories;
 export default lighthouse;
 export {Audit} from './audits/audit.js';
 export {default as Gatherer} from './fraggle-rock/gather/base-gatherer.js';
-export {default as NetworkRecords} from './computed/network-records.js';
+export {NetworkRecords} from './computed/network-records.js';
 export {
   legacyNavigation,
   generateConfig,

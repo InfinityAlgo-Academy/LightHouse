@@ -5,7 +5,7 @@
  */
 
 import {Audit} from './audit.js';
-import ComputedResourceSummary from '../computed/resource-summary.js';
+import {ResourceSummary as ComputedResourceSummary} from '../computed/resource-summary.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {

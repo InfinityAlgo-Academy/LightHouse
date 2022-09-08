@@ -45,7 +45,8 @@ class ViewportMeta {
   }
 }
 
-export default makeComputedArtifact(ViewportMeta, null);
+const ViewportMetaComputed = makeComputedArtifact(ViewportMeta, null);
+export {ViewportMetaComputed as ViewportMeta};
 
 /**
  * @typedef {object} ViewportMetaResult

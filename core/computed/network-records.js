@@ -17,4 +17,5 @@ class NetworkRecords {
   }
 }
 
-export default makeComputedArtifact(NetworkRecords, null);
+const NetworkRecordsComputed = makeComputedArtifact(NetworkRecords, null);
+export {NetworkRecordsComputed as NetworkRecords};

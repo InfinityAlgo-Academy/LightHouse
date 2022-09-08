@@ -5,7 +5,7 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import ProcessedTrace from '../processed-trace.js';
+import {ProcessedTrace} from '../processed-trace.js';
 
 /** @typedef {{ts: number, isMainFrame: boolean, weightedScore: number}} LayoutShiftEvent */
 
@@ -121,4 +121,5 @@ class CumulativeLayoutShift {
   }
 }
 
-export default makeComputedArtifact(CumulativeLayoutShift, null);
+const CumulativeLayoutShiftComputed = makeComputedArtifact(CumulativeLayoutShift, null);
+export {CumulativeLayoutShiftComputed as CumulativeLayoutShift};

@@ -5,7 +5,7 @@
  */
 
 import {Audit} from './audit.js';
-import ComputedViewportMeta from '../computed/viewport-meta.js';
+import {ViewportMeta} from '../computed/viewport-meta.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
@@ -44,7 +44,7 @@ class Viewport extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const viewportMeta = await ComputedViewportMeta.request(artifacts.MetaElements, context);
+    const viewportMeta = await ViewportMeta.request(artifacts.MetaElements, context);
 
     if (!viewportMeta.hasViewportTag) {
       return {

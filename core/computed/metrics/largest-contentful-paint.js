@@ -13,9 +13,9 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import NavigationMetric from './navigation-metric.js';
+import {NavigationMetric} from './navigation-metric.js';
 import {LighthouseError} from '../../lib/lh-error.js';
-import LanternLargestContentfulPaint from './lantern-largest-contentful-paint.js';
+import {LanternLargestContentfulPaint} from './lantern-largest-contentful-paint.js';
 
 class LargestContentfulPaint extends NavigationMetric {
   /**
@@ -45,7 +45,8 @@ class LargestContentfulPaint extends NavigationMetric {
   }
 }
 
-export default makeComputedArtifact(
+const LargestContentfulPaintComputed = makeComputedArtifact(
   LargestContentfulPaint,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
+export {LargestContentfulPaintComputed as LargestContentfulPaint};

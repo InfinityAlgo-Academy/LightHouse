@@ -5,7 +5,7 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import LanternMetric from './lantern-metric.js';
+import {LanternMetric} from './lantern-metric.js';
 import {BaseNode} from '../../lib/dependency-graph/base-node.js';
 
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
@@ -197,7 +197,8 @@ class LanternFirstContentfulPaint extends LanternMetric {
   }
 }
 
-export default makeComputedArtifact(
+const LanternFirstContentfulPaintComputed = makeComputedArtifact(
   LanternFirstContentfulPaint,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
+export {LanternFirstContentfulPaintComputed as LanternFirstContentfulPaint};

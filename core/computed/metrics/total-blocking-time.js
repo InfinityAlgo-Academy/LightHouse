@@ -7,8 +7,8 @@
 import {makeComputedArtifact} from '../computed-artifact.js';
 import ComputedMetric from './metric.js';
 import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
-import LanternTotalBlockingTime from './lantern-total-blocking-time.js';
-import TimetoInteractive from './interactive.js';
+import {LanternTotalBlockingTime} from './lantern-total-blocking-time.js';
+import {Interactive} from './interactive.js';
 import {calculateSumOfBlockingTime} from './tbt-utils.js';
 
 /**
@@ -46,7 +46,7 @@ class TotalBlockingTime extends ComputedMetric {
     if (data.processedNavigation) {
       const {firstContentfulPaint} = data.processedNavigation.timings;
       const metricData = ComputedMetric.getMetricComputationInput(data);
-      const interactiveTimeMs = (await TimetoInteractive.request(metricData, context)).timing;
+      const interactiveTimeMs = (await Interactive.request(metricData, context)).timing;
 
       return {
         timing: calculateSumOfBlockingTime(
@@ -67,7 +67,8 @@ class TotalBlockingTime extends ComputedMetric {
   }
 }
 
-export default makeComputedArtifact(
+const TotalBlockingTimeComputed = makeComputedArtifact(
   TotalBlockingTime,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
+export {TotalBlockingTimeComputed as TotalBlockingTime};

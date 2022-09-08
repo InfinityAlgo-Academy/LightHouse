@@ -5,7 +5,7 @@
  */
 
 import {Audit} from './audit.js';
-import ManifestValues from '../computed/manifest-values.js';
+import {ManifestValues} from '../computed/manifest-values.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {

@@ -5,10 +5,10 @@
  */
 
 import {Audit} from './audit.js';
-import ComputedResponsivenes from '../computed/metrics/responsiveness.js';
-import ProcessedTrace from '../computed/processed-trace.js';
+import {Responsiveness} from '../computed/metrics/responsiveness.js';
+import {ProcessedTrace} from '../computed/processed-trace.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import NetworkRecords from '../computed/network-records.js';
+import {NetworkRecords} from '../computed/network-records.js';
 import {MainThreadTasks} from '../lib/tracehouse/main-thread-tasks.js';
 import {taskGroups} from '../lib/tracehouse/task-groups.js';
 import {TraceProcessor} from '../lib/tracehouse/trace-processor.js';
@@ -229,7 +229,7 @@ class WorkDuringInteraction extends Audit {
 
     const trace = artifacts.traces[WorkDuringInteraction.DEFAULT_PASS];
     const metricData = {trace, settings};
-    const interactionEvent = await ComputedResponsivenes.request(metricData, context);
+    const interactionEvent = await Responsiveness.request(metricData, context);
     // If no interaction, diagnostic audit is n/a.
     if (interactionEvent === null) {
       return {score: null, notApplicable: true};

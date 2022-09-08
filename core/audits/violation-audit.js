@@ -5,7 +5,7 @@
  */
 
 import {Audit} from './audit.js';
-import JsBundles from '../computed/js-bundles.js';
+import {JSBundles} from '../computed/js-bundles.js';
 
 class ViolationAudit extends Audit {
   /**
@@ -15,7 +15,7 @@ class ViolationAudit extends Audit {
    * @return {Promise<Array<{source: LH.Audit.Details.SourceLocationValue}>>}
    */
   static async getViolationResults(artifacts, context, pattern) {
-    const bundles = await JsBundles.request(artifacts, context);
+    const bundles = await JSBundles.request(artifacts, context);
 
     /**
      * @template T

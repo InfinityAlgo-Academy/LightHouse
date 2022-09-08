@@ -5,7 +5,7 @@
  */
 
 import {Audit} from '../audit.js';
-import ComputedFid from '../../computed/metrics/max-potential-fid.js';
+import {MaxPotentialFID as ComputedFid} from '../../computed/metrics/max-potential-fid.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {

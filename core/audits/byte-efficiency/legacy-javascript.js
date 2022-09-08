@@ -20,7 +20,7 @@
 import fs from 'fs';
 
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
-import JsBundles from '../../computed/js-bundles.js';
+import {JSBundles} from '../../computed/js-bundles.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import thirdPartyWeb from '../../lib/third-party-web.js';
 import {getRequestForScript} from '../../lib/script-helpers.js';
@@ -402,7 +402,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
    */
   static async audit_(artifacts, networkRecords, context) {
     const mainDocumentEntity = thirdPartyWeb.getEntity(artifacts.URL.finalUrl);
-    const bundles = await JsBundles.request(artifacts, context);
+    const bundles = await JSBundles.request(artifacts, context);
 
     /** @type {Item[]} */
     const items = [];

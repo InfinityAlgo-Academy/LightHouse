@@ -14,8 +14,8 @@ import {NetworkRequest} from '../../lib/network-request.js';
 import {Sentry} from '../../lib/sentry.js';
 import UrlUtils from '../../lib/url-utils.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import Interactive from '../../computed/metrics/interactive.js';
-import ProcessedTrace from '../../computed/processed-trace.js';
+import {Interactive} from '../../computed/metrics/interactive.js';
+import {ProcessedTrace} from '../../computed/processed-trace.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to defer loading offscreen images. Offscreen images are images located outside of the visible browser viewport. As they are unseen by the user and slow down page load, they should be loaded later, closer to when the user is going to see them. This is displayed in a list of audit titles that Lighthouse generates. */

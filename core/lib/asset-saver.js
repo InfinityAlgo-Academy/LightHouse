@@ -14,8 +14,8 @@ import log from 'lighthouse-logger';
 import {Simulator} from './dependency-graph/simulator/simulator.js';
 import lanternTraceSaver from './lantern-trace-saver.js';
 import {MetricTraceEvents} from './traces/metric-trace-events.js';
-import NetworkAnalysisComputed from '../computed/network-analysis.js';
-import LoadSimulatorComputed from '../computed/load-simulator.js';
+import {NetworkAnalysis} from '../computed/network-analysis.js';
+import {LoadSimulator} from '../computed/load-simulator.js';
 import {LighthouseError} from '../lib/lh-error.js';
 
 const {promisify} = util;
@@ -310,8 +310,8 @@ async function saveLanternNetworkData(devtoolsLog, outputPath) {
   /** @type {LH.Audit.Context} */
   // @ts-expect-error - the full audit context isn't needed for analysis.
   const context = {computedCache: new Map()};
-  const networkAnalysis = await NetworkAnalysisComputed.request(devtoolsLog, context);
-  const lanternData = LoadSimulatorComputed.convertAnalysisToSaveableLanternData(networkAnalysis);
+  const networkAnalysis = await NetworkAnalysis.request(devtoolsLog, context);
+  const lanternData = LoadSimulator.convertAnalysisToSaveableLanternData(networkAnalysis);
 
   fs.writeFileSync(outputPath, JSON.stringify(lanternData));
 }

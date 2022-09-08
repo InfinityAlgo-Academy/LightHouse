@@ -5,8 +5,8 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import NavigationMetric from './navigation-metric.js';
-import LanternInteractive from './lantern-interactive.js';
+import {NavigationMetric} from './navigation-metric.js';
+import {LanternInteractive} from './lantern-interactive.js';
 import {NetworkMonitor} from '../../gather/driver/network-monitor.js';
 import {TraceProcessor} from '../../lib/tracehouse/trace-processor.js';
 import {LighthouseError} from '../../lib/lh-error.js';
@@ -179,10 +179,11 @@ class Interactive extends NavigationMetric {
   }
 }
 
-export default makeComputedArtifact(
+const InteractiveComputed = makeComputedArtifact(
   Interactive,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
+export {InteractiveComputed as Interactive};
 
 /**
  * @typedef TimePeriod

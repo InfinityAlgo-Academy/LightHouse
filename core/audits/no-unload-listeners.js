@@ -5,7 +5,7 @@
  */
 
 import {Audit} from './audit.js';
-import JsBundles from '../computed/js-bundles.js';
+import {JSBundles} from '../computed/js-bundles.js';
 import * as i18n from './../lib/i18n/i18n.js';
 
 const UIStrings = {
@@ -46,7 +46,7 @@ class NoUnloadListeners extends Audit {
       };
     }
 
-    const bundles = await JsBundles.request(artifacts, context);
+    const bundles = await JSBundles.request(artifacts, context);
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [

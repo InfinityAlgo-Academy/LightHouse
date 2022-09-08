@@ -6,8 +6,8 @@
 
 import {Audit} from './audit.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import NetworkRecords from '../computed/network-records.js';
-import NetworkAnalysisComputed from '../computed/network-analysis.js';
+import {NetworkRecords} from '../computed/network-records.js';
+import {NetworkAnalysis} from '../computed/network-analysis.js';
 
 const UIStrings = {
   /** Descriptive title of a Lighthouse audit that tells the user the server latencies observed from each origin the page connected to. This is displayed in a list of audit titles that Lighthouse generates. */
@@ -49,7 +49,7 @@ class NetworkServerLatency extends Audit {
       };
     }
 
-    const analysis = await NetworkAnalysisComputed.request(devtoolsLog, context);
+    const analysis = await NetworkAnalysis.request(devtoolsLog, context);
 
     /** @type {number} */
     let maxLatency = 0;

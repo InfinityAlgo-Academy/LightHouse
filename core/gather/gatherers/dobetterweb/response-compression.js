@@ -19,7 +19,7 @@ import {Sentry} from '../../../lib/sentry.js';
 import {NetworkRequest} from '../../../lib/network-request.js';
 import DevtoolsLog from '../devtools-log.js';
 import {fetchResponseBodyFromCache} from '../../driver/network.js';
-import NetworkRecords from '../../../computed/network-records.js';
+import {NetworkRecords} from '../../../computed/network-records.js';
 
 const CHROME_EXTENSION_PROTOCOL = 'chrome-extension:';
 const compressionHeaders = [

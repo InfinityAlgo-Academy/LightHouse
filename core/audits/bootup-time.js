@@ -7,8 +7,8 @@
 import {Audit} from './audit.js';
 import {taskGroups} from '../lib/tracehouse/task-groups.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import NetworkRecords from '../computed/network-records.js';
-import MainThreadTasks from '../computed/main-thread-tasks.js';
+import {NetworkRecords} from '../computed/network-records.js';
+import {MainThreadTasks} from '../computed/main-thread-tasks.js';
 import {getExecutionTimingsByURL} from '../lib/tracehouse/task-summary.js';
 
 const UIStrings = {

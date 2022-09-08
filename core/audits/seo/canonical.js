@@ -6,7 +6,7 @@
 
 import {Audit} from '../audit.js';
 import UrlUtils from '../../lib/url-utils.js';
-import MainResource from '../../computed/main-resource.js';
+import {MainResource} from '../../computed/main-resource.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {

@@ -5,9 +5,9 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import NavigationMetric from './navigation-metric.js';
+import {NavigationMetric} from './navigation-metric.js';
 import {LighthouseError} from '../../lib/lh-error.js';
-import LanternFirstMeaningfulPaint from './lantern-first-meaningful-paint.js';
+import {LanternFirstMeaningfulPaint} from './lantern-first-meaningful-paint.js';
 
 class FirstMeaningfulPaint extends NavigationMetric {
   /**
@@ -37,7 +37,8 @@ class FirstMeaningfulPaint extends NavigationMetric {
   }
 }
 
-export default makeComputedArtifact(
+const FirstMeaningfulPaintComputed = makeComputedArtifact(
   FirstMeaningfulPaint,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
+export {FirstMeaningfulPaintComputed as FirstMeaningfulPaint};

@@ -11,7 +11,7 @@ import {NetworkRequest} from '../../lib/network-request.js';
 import UrlUtils from '../../lib/url-utils.js';
 import {linearInterpolation} from '../../lib/statistics.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import NetworkRecords from '../../computed/network-records.js';
+import {NetworkRecords} from '../../computed/network-records.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides detail on the cache policy applies to the page's static assets. Cache refers to browser disk cache, which keeps old versions of network resources around for future use. This is displayed in a list of audit titles that Lighthouse generates. */

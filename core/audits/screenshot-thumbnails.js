@@ -8,7 +8,7 @@ import jpeg from 'jpeg-js';
 
 import {Audit} from './audit.js';
 import {LighthouseError} from '../lib/lh-error.js';
-import Speedline from '../computed/speedline.js';
+import {Speedline} from '../computed/speedline.js';
 
 const NUMBER_OF_THUMBNAILS = 10;
 const THUMBNAIL_WIDTH = 120;

@@ -6,7 +6,7 @@
 
 import {makeComputedArtifact} from './computed-artifact.js';
 import {NetworkAnalyzer} from '../lib/dependency-graph/simulator/network-analyzer.js';
-import NetworkRecords from './network-records.js';
+import {NetworkRecords} from './network-records.js';
 
 /**
  * @fileoverview This artifact identifies the main resource on the page. Current solution assumes
@@ -31,4 +31,5 @@ class MainResource {
   }
 }
 
-export default makeComputedArtifact(MainResource, ['URL', 'devtoolsLog']);
+const MainResourceComputed = makeComputedArtifact(MainResource, ['URL', 'devtoolsLog']);
+export {MainResourceComputed as MainResource};

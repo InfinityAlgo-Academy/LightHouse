@@ -116,4 +116,5 @@ class JSBundles {
   }
 }
 
-export default makeComputedArtifact(JSBundles, ['Scripts', 'SourceMaps']);
+const JSBundlesComputed = makeComputedArtifact(JSBundles, ['Scripts', 'SourceMaps']);
+export {JSBundlesComputed as JSBundles};

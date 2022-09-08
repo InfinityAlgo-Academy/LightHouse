@@ -131,4 +131,6 @@ class ManifestValues {
   }
 }
 
-export default makeComputedArtifact(ManifestValues, ['InstallabilityErrors', 'WebAppManifest']);
+const ManifestValuesComputed =
+  makeComputedArtifact(ManifestValues, ['InstallabilityErrors', 'WebAppManifest']);
+export {ManifestValuesComputed as ManifestValues};

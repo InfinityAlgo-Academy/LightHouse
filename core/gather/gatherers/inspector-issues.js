@@ -10,7 +10,7 @@
 
 
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
-import NetworkRecords from '../../computed/network-records.js';
+import {NetworkRecords} from '../../computed/network-records.js';
 import DevtoolsLog from './devtools-log.js';
 
 class InspectorIssues extends FRGatherer {

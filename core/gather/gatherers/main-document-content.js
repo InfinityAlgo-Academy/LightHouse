@@ -7,7 +7,7 @@
 import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
 import DevtoolsLog from './devtools-log.js';
 import {fetchResponseBodyFromCache} from '../driver/network.js';
-import MainResource from '../../computed/main-resource.js';
+import {MainResource} from '../../computed/main-resource.js';
 
 /**
  * Collects the content of the main html document.

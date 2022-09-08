@@ -5,10 +5,10 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import LanternMetric from './lantern-metric.js';
+import {LanternMetric} from './lantern-metric.js';
 import {BaseNode} from '../../lib/dependency-graph/base-node.js';
-import LanternFirstContentfulPaint from './lantern-first-contentful-paint.js';
-import LanternInteractive from './lantern-interactive.js';
+import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
+import {LanternInteractive} from './lantern-interactive.js';
 import {BLOCKING_TIME_THRESHOLD, calculateSumOfBlockingTime} from './tbt-utils.js';
 
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
@@ -119,7 +119,8 @@ class LanternTotalBlockingTime extends LanternMetric {
   }
 }
 
-export default makeComputedArtifact(
+const LanternTotalBlockingTimeComputed = makeComputedArtifact(
   LanternTotalBlockingTime,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
+export {LanternTotalBlockingTimeComputed as LanternTotalBlockingTime};

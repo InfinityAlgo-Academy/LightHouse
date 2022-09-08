@@ -30,7 +30,7 @@
  * @typedef {{name: 'FallbackTiming', duration: number}} FallbackTimingEvent
  */
 
-import ProcessedTrace from '../processed-trace.js';
+import {ProcessedTrace} from '../processed-trace.js';
 import {makeComputedArtifact} from '../computed-artifact.js';
 
 const KEYBOARD_EVENTS = new Set(['keydown', 'keypress', 'keyup']);
@@ -150,7 +150,8 @@ class Responsiveness {
   }
 }
 
-export default makeComputedArtifact(Responsiveness, [
+const ResponsivenessComputed = makeComputedArtifact(Responsiveness, [
   'trace',
   'settings',
 ]);
+export {ResponsivenessComputed as Responsiveness};

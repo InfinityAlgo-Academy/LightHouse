@@ -5,9 +5,9 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import NavigationMetric from './navigation-metric.js';
-import LanternSpeedIndex from './lantern-speed-index.js';
-import Speedline from '../speedline.js';
+import {NavigationMetric} from './navigation-metric.js';
+import {LanternSpeedIndex} from './lantern-speed-index.js';
+import {Speedline} from '../speedline.js';
 
 class SpeedIndex extends NavigationMetric {
   /**
@@ -33,7 +33,8 @@ class SpeedIndex extends NavigationMetric {
   }
 }
 
-export default makeComputedArtifact(
+const SpeedIndexComputed = makeComputedArtifact(
   SpeedIndex,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
+export {SpeedIndexComputed as SpeedIndex};

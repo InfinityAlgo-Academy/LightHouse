@@ -6,7 +6,7 @@
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
-import ComputedFcp from '../../computed/metrics/first-contentful-paint.js';
+import {FirstContentfulPaint as ComputedFcp} from '../../computed/metrics/first-contentful-paint.js';
 
 const UIStrings = {
   /** Description of the First Contentful Paint (FCP) metric, which marks the time at which the first text or image is painted by the browser. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */

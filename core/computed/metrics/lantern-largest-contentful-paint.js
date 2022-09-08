@@ -5,9 +5,9 @@
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';
-import LanternMetric from './lantern-metric.js';
+import {LanternMetric} from './lantern-metric.js';
 import {LighthouseError} from '../../lib/lh-error.js';
-import LanternFirstContentfulPaint from './lantern-first-contentful-paint.js';
+import {LanternFirstContentfulPaint} from './lantern-first-contentful-paint.js';
 
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
@@ -104,7 +104,8 @@ class LanternLargestContentfulPaint extends LanternMetric {
   }
 }
 
-export default makeComputedArtifact(
+const LanternLargestContentfulPaintComputed = makeComputedArtifact(
   LanternLargestContentfulPaint,
   ['devtoolsLog', 'gatherContext', 'settings', 'simulator', 'trace', 'URL']
 );
+export {LanternLargestContentfulPaintComputed as LanternLargestContentfulPaint};
