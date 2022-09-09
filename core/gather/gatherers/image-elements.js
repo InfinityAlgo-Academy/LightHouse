@@ -344,9 +344,9 @@ class ImageElements extends FRGatherer {
       args: [],
       useIsolation: true,
       deps: [
-        pageFunctions.getElementsInDocumentString,
-        pageFunctions.getBoundingClientRectString,
-        pageFunctions.getNodeDetailsString,
+        pageFunctions.getElementsInDocument,
+        pageFunctions.getBoundingClientRect,
+        pageFunctions.getNodeDetails,
         getClientRect,
         getPosition,
         getHTMLImages,

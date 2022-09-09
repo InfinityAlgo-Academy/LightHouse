@@ -55,9 +55,9 @@ class IFrameElements extends FRGatherer {
       args: [],
       useIsolation: true,
       deps: [
-        pageFunctions.getElementsInDocumentString,
-        pageFunctions.isPositionFixedString,
-        pageFunctions.getNodeDetailsString,
+        pageFunctions.getElementsInDocument,
+        pageFunctions.isPositionFixed,
+        pageFunctions.getNodeDetails,
       ],
     });
     return iframeElements;

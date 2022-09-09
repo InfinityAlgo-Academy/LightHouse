@@ -106,8 +106,8 @@ class AnchorElements extends FRGatherer {
       args: [],
       useIsolation: true,
       deps: [
-        pageFunctions.getElementsInDocumentString,
-        pageFunctions.getNodeDetailsString,
+        pageFunctions.getElementsInDocument,
+        pageFunctions.getNodeDetails,
       ],
     });
     await session.sendCommand('DOM.enable');

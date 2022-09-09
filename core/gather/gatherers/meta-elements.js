@@ -58,7 +58,7 @@ class MetaElements extends FRGatherer {
       useIsolation: true,
       deps: [
         pageFunctions.getElementsInDocument,
-        pageFunctions.getNodeDetailsString,
+        pageFunctions.getNodeDetails,
       ],
     });
   }

@@ -102,8 +102,8 @@ class Inputs extends FRGatherer {
       args: [],
       useIsolation: true,
       deps: [
-        pageFunctions.getElementsInDocumentString,
-        pageFunctions.getNodeDetailsString,
+        pageFunctions.getElementsInDocument,
+        pageFunctions.getNodeDetails,
       ],
     });
   }

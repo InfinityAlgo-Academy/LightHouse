@@ -295,7 +295,7 @@ class TraceElements extends FRGatherer {
             objectId,
             functionDeclaration: `function () {
               ${getNodeDetailsData.toString()};
-              ${pageFunctions.getNodeDetailsString};
+              ${pageFunctions.getNodeDetails};
               return getNodeDetailsData.call(this);
             }`,
             returnByValue: true,

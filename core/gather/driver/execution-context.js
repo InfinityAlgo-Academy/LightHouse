@@ -110,7 +110,7 @@ class ExecutionContext {
         return new Promise(function (resolve) {
           return Promise.resolve()
             .then(_ => ${expression})
-            .catch(${pageFunctions.wrapRuntimeEvalErrorInBrowserString})
+            .catch(${pageFunctions.wrapRuntimeEvalErrorInBrowser})
             .then(resolve);
         });
       }())

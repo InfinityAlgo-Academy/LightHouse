@@ -173,7 +173,7 @@ class Accessibility extends FRGatherer {
       useIsolation: true,
       deps: [
         axeSource,
-        pageFunctions.getNodeDetailsString,
+        pageFunctions.getNodeDetails,
         createAxeRuleResultArtifact,
       ],
     });

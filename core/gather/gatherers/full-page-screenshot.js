@@ -163,7 +163,7 @@ class FullPageScreenshot extends FRGatherer {
       return context.driver.executionContext.evaluate(resolveNodes, {
         args: [],
         useIsolation,
-        deps: [pageFunctions.getBoundingClientRectString],
+        deps: [pageFunctions.getBoundingClientRect],
       });
     }
 
