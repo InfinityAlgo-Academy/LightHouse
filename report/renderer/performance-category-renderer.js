@@ -17,7 +17,7 @@
 
 /** @typedef {import('./dom.js').DOM} DOM */
 
-import {ReportUtils} from './report-utils.js';
+import {ReportUtils, SharedUtils} from './report-utils.js';
 import {CategoryRenderer} from './category-renderer.js';
 
 export class PerformanceCategoryRenderer extends CategoryRenderer {
@@ -29,7 +29,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     const tmpl = this.dom.createComponent('metric');
     const element = this.dom.find('.lh-metric', tmpl);
     element.id = audit.result.id;
-    const rating = ReportUtils.calculateRating(audit.result.score, audit.result.scoreDisplayMode);
+    const rating = SharedUtils.calculateRating(audit.result.score, audit.result.scoreDisplayMode);
     element.classList.add(`lh-metric--${rating}`);
 
     const titleEl = this.dom.find('.lh-metric__title', tmpl);
@@ -238,7 +238,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     // Opportunities
     const opportunityAudits = category.auditRefs
         .filter(audit => this._classifyPerformanceAudit(audit) === 'load-opportunity')
-        .filter(audit => !ReportUtils.showAsPassed(audit.result))
+        .filter(audit => !SharedUtils.showAsPassed(audit.result))
         .sort((auditA, auditB) => this._getWastedMs(auditB) - this._getWastedMs(auditA));
 
     const filterableMetrics = metricAudits.filter(a => !!a.relevantAudits);
@@ -272,7 +272,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     // Diagnostics
     const diagnosticAudits = category.auditRefs
         .filter(audit => this._classifyPerformanceAudit(audit) === 'diagnostic')
-        .filter(audit => !ReportUtils.showAsPassed(audit.result))
+        .filter(audit => !SharedUtils.showAsPassed(audit.result))
         .sort((a, b) => {
           const scoreA = a.result.scoreDisplayMode === 'informative' ? 100 : Number(a.result.score);
           const scoreB = b.result.scoreDisplayMode === 'informative' ? 100 : Number(b.result.score);
@@ -288,7 +288,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Passed audits
     const passedAudits = category.auditRefs.filter(
-      audit => this._classifyPerformanceAudit(audit) && ReportUtils.showAsPassed(audit.result));
+      audit => this._classifyPerformanceAudit(audit) && SharedUtils.showAsPassed(audit.result));
 
     if (!passedAudits.length) return element;
 
