@@ -2327,154 +2327,154 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "Pode ativar a compressão de texto na configuração do servidor Web."
   },
-  "report/renderer/util.js | calculatorLink": {
+  "report/renderer/report-utils.js | calculatorLink": {
     "message": "Veja a calculadora."
   },
-  "report/renderer/util.js | collapseView": {
+  "report/renderer/report-utils.js | collapseView": {
     "message": "Reduzir vista"
   },
-  "report/renderer/util.js | crcInitialNavigation": {
+  "report/renderer/report-utils.js | crcInitialNavigation": {
     "message": "Navegação inicial"
   },
-  "report/renderer/util.js | crcLongestDurationLabel": {
+  "report/renderer/report-utils.js | crcLongestDurationLabel": {
     "message": "Latência crítica máxima do caminho:"
   },
-  "report/renderer/util.js | dropdownCopyJSON": {
+  "report/renderer/report-utils.js | dropdownCopyJSON": {
     "message": "Copiar JSON"
   },
-  "report/renderer/util.js | dropdownDarkTheme": {
+  "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Ativar/desativar tema escuro"
   },
-  "report/renderer/util.js | dropdownPrintExpanded": {
+  "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Imprimir com expansão"
   },
-  "report/renderer/util.js | dropdownPrintSummary": {
+  "report/renderer/report-utils.js | dropdownPrintSummary": {
     "message": "Imprimir resumo"
   },
-  "report/renderer/util.js | dropdownSaveGist": {
+  "report/renderer/report-utils.js | dropdownSaveGist": {
     "message": "Guardar como Gist"
   },
-  "report/renderer/util.js | dropdownSaveHTML": {
+  "report/renderer/report-utils.js | dropdownSaveHTML": {
     "message": "Guardar como HTML"
   },
-  "report/renderer/util.js | dropdownSaveJSON": {
+  "report/renderer/report-utils.js | dropdownSaveJSON": {
     "message": "Guardar como JSON"
   },
-  "report/renderer/util.js | dropdownViewer": {
+  "report/renderer/report-utils.js | dropdownViewer": {
     "message": "Abrir no visualizador"
   },
-  "report/renderer/util.js | errorLabel": {
+  "report/renderer/report-utils.js | errorLabel": {
     "message": "Erro!"
   },
-  "report/renderer/util.js | errorMissingAuditInfo": {
+  "report/renderer/report-utils.js | errorMissingAuditInfo": {
     "message": "Erro de relatório: sem informações de auditoria"
   },
-  "report/renderer/util.js | expandView": {
+  "report/renderer/report-utils.js | expandView": {
     "message": "Expandir vista"
   },
-  "report/renderer/util.js | footerIssue": {
+  "report/renderer/report-utils.js | footerIssue": {
     "message": "Apresentar um problema"
   },
-  "report/renderer/util.js | hide": {
+  "report/renderer/report-utils.js | hide": {
     "message": "Ocultar"
   },
-  "report/renderer/util.js | labDataTitle": {
+  "report/renderer/report-utils.js | labDataTitle": {
     "message": "Dados laboratoriais"
   },
-  "report/renderer/util.js | lsPerformanceCategoryDescription": {
+  "report/renderer/report-utils.js | lsPerformanceCategoryDescription": {
     "message": "A análise do [Lighthouse](https://developers.google.com/web/tools/lighthouse/) da página atual numa rede móvel emulada. Os valores são o resultado de uma estimativa e podem variar."
   },
-  "report/renderer/util.js | manualAuditsGroupTitle": {
+  "report/renderer/report-utils.js | manualAuditsGroupTitle": {
     "message": "Itens adicionais a verificar manualmente"
   },
-  "report/renderer/util.js | notApplicableAuditsGroupTitle": {
+  "report/renderer/report-utils.js | notApplicableAuditsGroupTitle": {
     "message": "Não aplicável"
   },
-  "report/renderer/util.js | opportunityResourceColumnLabel": {
+  "report/renderer/report-utils.js | opportunityResourceColumnLabel": {
     "message": "Oportunidade"
   },
-  "report/renderer/util.js | opportunitySavingsColumnLabel": {
+  "report/renderer/report-utils.js | opportunitySavingsColumnLabel": {
     "message": "Poupança estimada"
   },
-  "report/renderer/util.js | passedAuditsGroupTitle": {
+  "report/renderer/report-utils.js | passedAuditsGroupTitle": {
     "message": "Auditorias aprovadas"
   },
-  "report/renderer/util.js | runtimeAnalysisWindow": {
+  "report/renderer/report-utils.js | runtimeAnalysisWindow": {
     "message": "Carregamento de página inicial"
   },
-  "report/renderer/util.js | runtimeCustom": {
+  "report/renderer/report-utils.js | runtimeCustom": {
     "message": "Limitação personalizada"
   },
-  "report/renderer/util.js | runtimeDesktopEmulation": {
+  "report/renderer/report-utils.js | runtimeDesktopEmulation": {
     "message": "Ambiente de trabalho emulado"
   },
-  "report/renderer/util.js | runtimeMobileEmulation": {
+  "report/renderer/report-utils.js | runtimeMobileEmulation": {
     "message": "Moto G4 emulado"
   },
-  "report/renderer/util.js | runtimeNoEmulation": {
+  "report/renderer/report-utils.js | runtimeNoEmulation": {
     "message": "Sem emulação"
   },
-  "report/renderer/util.js | runtimeSettingsAxeVersion": {
+  "report/renderer/report-utils.js | runtimeSettingsAxeVersion": {
     "message": "Versão Axe"
   },
-  "report/renderer/util.js | runtimeSettingsBenchmark": {
+  "report/renderer/report-utils.js | runtimeSettingsBenchmark": {
     "message": "Potência da CPU/memória"
   },
-  "report/renderer/util.js | runtimeSettingsCPUThrottling": {
+  "report/renderer/report-utils.js | runtimeSettingsCPUThrottling": {
     "message": "Limitação da CPU"
   },
-  "report/renderer/util.js | runtimeSettingsDevice": {
+  "report/renderer/report-utils.js | runtimeSettingsDevice": {
     "message": "Dispositivo"
   },
-  "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
+  "report/renderer/report-utils.js | runtimeSettingsNetworkThrottling": {
     "message": "Limitação de rede"
   },
-  "report/renderer/util.js | runtimeSettingsUANetwork": {
+  "report/renderer/report-utils.js | runtimeSettingsUANetwork": {
     "message": "Agente do utilizador (rede)"
   },
-  "report/renderer/util.js | runtimeSingleLoad": {
+  "report/renderer/report-utils.js | runtimeSingleLoad": {
     "message": "Carregamento de página único"
   },
-  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+  "report/renderer/report-utils.js | runtimeSingleLoadTooltip": {
     "message": "Estes dados são retirados de um único carregamento de página, ao contrário dos dados de campo que resumem várias sessões."
   },
-  "report/renderer/util.js | runtimeSlow4g": {
+  "report/renderer/report-utils.js | runtimeSlow4g": {
     "message": "Limitação lenta de 4G"
   },
-  "report/renderer/util.js | runtimeUnknown": {
+  "report/renderer/report-utils.js | runtimeUnknown": {
     "message": "Desconhecido"
   },
-  "report/renderer/util.js | show": {
+  "report/renderer/report-utils.js | show": {
     "message": "Mostrar"
   },
-  "report/renderer/util.js | showRelevantAudits": {
+  "report/renderer/report-utils.js | showRelevantAudits": {
     "message": "Mostrar auditorias relevantes para:"
   },
-  "report/renderer/util.js | snippetCollapseButtonLabel": {
+  "report/renderer/report-utils.js | snippetCollapseButtonLabel": {
     "message": "Reduzir fragmento"
   },
-  "report/renderer/util.js | snippetExpandButtonLabel": {
+  "report/renderer/report-utils.js | snippetExpandButtonLabel": {
     "message": "Expandir fragmento"
   },
-  "report/renderer/util.js | thirdPartyResourcesLabel": {
+  "report/renderer/report-utils.js | thirdPartyResourcesLabel": {
     "message": "Mostrar recursos de terceiros"
   },
-  "report/renderer/util.js | throttlingProvided": {
+  "report/renderer/report-utils.js | throttlingProvided": {
     "message": "Fornecido pelo ambiente"
   },
-  "report/renderer/util.js | toplevelWarningsMessage": {
+  "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Ocorreram problemas que afetaram esta execução do Lighthouse:"
   },
-  "report/renderer/util.js | varianceDisclaimer": {
+  "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Os valores são estimados e podem variar. A [pontuação de desempenho é calculada](https://web.dev/performance-scoring/) diretamente a partir destas métricas."
   },
-  "report/renderer/util.js | viewTreemapLabel": {
+  "report/renderer/report-utils.js | viewTreemapLabel": {
     "message": "Ver mapa em árvore"
   },
-  "report/renderer/util.js | warningAuditsGroupTitle": {
+  "report/renderer/report-utils.js | warningAuditsGroupTitle": {
     "message": "As auditorias foram concluídas com êxito, mas com avisos"
   },
-  "report/renderer/util.js | warningHeader": {
+  "report/renderer/report-utils.js | warningHeader": {
     "message": "Avisos: "
   },
   "treemap/app/src/util.js | allLabel": {

@@ -2327,154 +2327,154 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "[Ýöû çåñ éñåбļé ţéxţ çömþŕéššîöñ îñ ýöûŕ ŵéб šéŕvéŕ çöñƒîĝûŕåţîöñ. one two three four five six seven eight nine ten eleven twelve thirteen]"
   },
-  "report/renderer/util.js | calculatorLink": {
+  "report/renderer/report-utils.js | calculatorLink": {
     "message": "[Šéé çåļçûļåţöŕ. one two]"
   },
-  "report/renderer/util.js | collapseView": {
+  "report/renderer/report-utils.js | collapseView": {
     "message": "[Çöļļåþšé vîéŵ one two]"
   },
-  "report/renderer/util.js | crcInitialNavigation": {
+  "report/renderer/report-utils.js | crcInitialNavigation": {
     "message": "[Îñîţîåļ Ñåvîĝåţîöñ one two three]"
   },
-  "report/renderer/util.js | crcLongestDurationLabel": {
+  "report/renderer/report-utils.js | crcLongestDurationLabel": {
     "message": "[Måxîmûm çŕîţîçåļ þåţĥ ļåţéñçý: one two three four five six seven]"
   },
-  "report/renderer/util.js | dropdownCopyJSON": {
+  "report/renderer/report-utils.js | dropdownCopyJSON": {
     "message": "[Çöþý ĴŠÖÑ one two]"
   },
-  "report/renderer/util.js | dropdownDarkTheme": {
+  "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "[Ţöĝĝļé Ðåŕķ Ţĥémé one two three]"
   },
-  "report/renderer/util.js | dropdownPrintExpanded": {
+  "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "[Þŕîñţ Éxþåñðéð one two]"
   },
-  "report/renderer/util.js | dropdownPrintSummary": {
+  "report/renderer/report-utils.js | dropdownPrintSummary": {
     "message": "[Þŕîñţ Šûmmåŕý one two]"
   },
-  "report/renderer/util.js | dropdownSaveGist": {
+  "report/renderer/report-utils.js | dropdownSaveGist": {
     "message": "[Šåvé åš Ĝîšţ one two]"
   },
-  "report/renderer/util.js | dropdownSaveHTML": {
+  "report/renderer/report-utils.js | dropdownSaveHTML": {
     "message": "[Šåvé åš ĤŢMĻ one two]"
   },
-  "report/renderer/util.js | dropdownSaveJSON": {
+  "report/renderer/report-utils.js | dropdownSaveJSON": {
     "message": "[Šåvé åš ĴŠÖÑ one two]"
   },
-  "report/renderer/util.js | dropdownViewer": {
+  "report/renderer/report-utils.js | dropdownViewer": {
     "message": "[Öþéñ îñ Vîéŵéŕ one two]"
   },
-  "report/renderer/util.js | errorLabel": {
+  "report/renderer/report-utils.js | errorLabel": {
     "message": "[Éŕŕöŕ¡ one]"
   },
-  "report/renderer/util.js | errorMissingAuditInfo": {
+  "report/renderer/report-utils.js | errorMissingAuditInfo": {
     "message": "[Ŕéþöŕţ éŕŕöŕ: ñö åûðîţ îñƒöŕmåţîöñ one two three four five six seven]"
   },
-  "report/renderer/util.js | expandView": {
+  "report/renderer/report-utils.js | expandView": {
     "message": "[Éxþåñð vîéŵ one two]"
   },
-  "report/renderer/util.js | footerIssue": {
+  "report/renderer/report-utils.js | footerIssue": {
     "message": "[Fîļé åñ îššûé one two]"
   },
-  "report/renderer/util.js | hide": {
+  "report/renderer/report-utils.js | hide": {
     "message": "[Ĥîðé one]"
   },
-  "report/renderer/util.js | labDataTitle": {
+  "report/renderer/report-utils.js | labDataTitle": {
     "message": "[Ļåб Ðåţå one]"
   },
-  "report/renderer/util.js | lsPerformanceCategoryDescription": {
+  "report/renderer/report-utils.js | lsPerformanceCategoryDescription": {
     "message": "[ᐅ[ᐊĻîĝĥţĥöûšéᐅ](https://developers.google.com/web/tools/lighthouse/)ᐊ åñåļýšîš öƒ ţĥé çûŕŕéñţ þåĝé öñ åñ émûļåţéð möбîļé ñéţŵöŕķ. Våļûéš åŕé éšţîmåţéð åñð måý våŕý. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen]"
   },
-  "report/renderer/util.js | manualAuditsGroupTitle": {
+  "report/renderer/report-utils.js | manualAuditsGroupTitle": {
     "message": "[Åððîţîöñåļ îţémš ţö måñûåļļý çĥéçķ one two three four five six seven]"
   },
-  "report/renderer/util.js | notApplicableAuditsGroupTitle": {
+  "report/renderer/report-utils.js | notApplicableAuditsGroupTitle": {
     "message": "[Ñöţ åþþļîçåбļé one two]"
   },
-  "report/renderer/util.js | opportunityResourceColumnLabel": {
+  "report/renderer/report-utils.js | opportunityResourceColumnLabel": {
     "message": "[Öþþöŕţûñîţý one two]"
   },
-  "report/renderer/util.js | opportunitySavingsColumnLabel": {
+  "report/renderer/report-utils.js | opportunitySavingsColumnLabel": {
     "message": "[Éšţîmåţéð Šåvîñĝš one two three]"
   },
-  "report/renderer/util.js | passedAuditsGroupTitle": {
+  "report/renderer/report-utils.js | passedAuditsGroupTitle": {
     "message": "[Þåššéð åûðîţš one two]"
   },
-  "report/renderer/util.js | runtimeAnalysisWindow": {
+  "report/renderer/report-utils.js | runtimeAnalysisWindow": {
     "message": "[Îñîţîåļ þåĝé ļöåð one two three]"
   },
-  "report/renderer/util.js | runtimeCustom": {
+  "report/renderer/report-utils.js | runtimeCustom": {
     "message": "[Çûšţöm ţĥŕöţţļîñĝ one two three]"
   },
-  "report/renderer/util.js | runtimeDesktopEmulation": {
+  "report/renderer/report-utils.js | runtimeDesktopEmulation": {
     "message": "[Émûļåţéð Ðéšķţöþ one two]"
   },
-  "report/renderer/util.js | runtimeMobileEmulation": {
+  "report/renderer/report-utils.js | runtimeMobileEmulation": {
     "message": "[Émûļåţéð Möţö Ĝ4 one two]"
   },
-  "report/renderer/util.js | runtimeNoEmulation": {
+  "report/renderer/report-utils.js | runtimeNoEmulation": {
     "message": "[Ñö émûļåţîöñ one two]"
   },
-  "report/renderer/util.js | runtimeSettingsAxeVersion": {
+  "report/renderer/report-utils.js | runtimeSettingsAxeVersion": {
     "message": "[Åxé véŕšîöñ one two]"
   },
-  "report/renderer/util.js | runtimeSettingsBenchmark": {
+  "report/renderer/report-utils.js | runtimeSettingsBenchmark": {
     "message": "[ÇÞÛ/Mémöŕý Þöŵéŕ one two]"
   },
-  "report/renderer/util.js | runtimeSettingsCPUThrottling": {
+  "report/renderer/report-utils.js | runtimeSettingsCPUThrottling": {
     "message": "[ÇÞÛ ţĥŕöţţļîñĝ one two]"
   },
-  "report/renderer/util.js | runtimeSettingsDevice": {
+  "report/renderer/report-utils.js | runtimeSettingsDevice": {
     "message": "[Ðévîçé one]"
   },
-  "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
+  "report/renderer/report-utils.js | runtimeSettingsNetworkThrottling": {
     "message": "[Ñéţŵöŕķ ţĥŕöţţļîñĝ one two three]"
   },
-  "report/renderer/util.js | runtimeSettingsUANetwork": {
+  "report/renderer/report-utils.js | runtimeSettingsUANetwork": {
     "message": "[Ûšéŕ åĝéñţ (ñéţŵöŕķ) one two three]"
   },
-  "report/renderer/util.js | runtimeSingleLoad": {
+  "report/renderer/report-utils.js | runtimeSingleLoad": {
     "message": "[Šîñĝļé þåĝé ļöåð one two]"
   },
-  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+  "report/renderer/report-utils.js | runtimeSingleLoadTooltip": {
     "message": "[Ţĥîš ðåţå îš ţåķéñ ƒŕöm å šîñĝļé þåĝé ļöåð, åš öþþöšéð ţö ƒîéļð ðåţå šûmmåŕîžîñĝ måñý šéššîöñš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen]"
   },
-  "report/renderer/util.js | runtimeSlow4g": {
+  "report/renderer/report-utils.js | runtimeSlow4g": {
     "message": "[Šļöŵ 4Ĝ ţĥŕöţţļîñĝ one two three]"
   },
-  "report/renderer/util.js | runtimeUnknown": {
+  "report/renderer/report-utils.js | runtimeUnknown": {
     "message": "[Ûñķñöŵñ one]"
   },
-  "report/renderer/util.js | show": {
+  "report/renderer/report-utils.js | show": {
     "message": "[Šĥöŵ one]"
   },
-  "report/renderer/util.js | showRelevantAudits": {
+  "report/renderer/report-utils.js | showRelevantAudits": {
     "message": "[Šĥöŵ åûðîţš ŕéļévåñţ ţö: one two three four five]"
   },
-  "report/renderer/util.js | snippetCollapseButtonLabel": {
+  "report/renderer/report-utils.js | snippetCollapseButtonLabel": {
     "message": "[Çöļļåþšé šñîþþéţ one two]"
   },
-  "report/renderer/util.js | snippetExpandButtonLabel": {
+  "report/renderer/report-utils.js | snippetExpandButtonLabel": {
     "message": "[Éxþåñð šñîþþéţ one two]"
   },
-  "report/renderer/util.js | thirdPartyResourcesLabel": {
+  "report/renderer/report-utils.js | thirdPartyResourcesLabel": {
     "message": "[Šĥöŵ 3ŕð-þåŕţý ŕéšöûŕçéš one two three]"
   },
-  "report/renderer/util.js | throttlingProvided": {
+  "report/renderer/report-utils.js | throttlingProvided": {
     "message": "[Þŕövîðéð бý éñvîŕöñméñţ one two three]"
   },
-  "report/renderer/util.js | toplevelWarningsMessage": {
+  "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "[Ţĥéŕé ŵéŕé îššûéš åƒƒéçţîñĝ ţĥîš ŕûñ öƒ Ļîĝĥţĥöûšé: one two three four five six seven eight nine ten eleven]"
   },
-  "report/renderer/util.js | varianceDisclaimer": {
+  "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "[Våļûéš åŕé éšţîmåţéð åñð måý våŕý. Ţĥé ᐅ[ᐊþéŕƒöŕmåñçé šçöŕé îš çåļçûļåţéðᐅ](https://web.dev/performance-scoring/)ᐊ ðîŕéçţļý ƒŕöm ţĥéšé méţŕîçš. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen]"
   },
-  "report/renderer/util.js | viewTreemapLabel": {
+  "report/renderer/report-utils.js | viewTreemapLabel": {
     "message": "[Vîéŵ Ţŕéémåþ one two]"
   },
-  "report/renderer/util.js | warningAuditsGroupTitle": {
+  "report/renderer/report-utils.js | warningAuditsGroupTitle": {
     "message": "[Þåššéð åûðîţš бûţ ŵîţĥ ŵåŕñîñĝš one two three four five six seven]"
   },
-  "report/renderer/util.js | warningHeader": {
+  "report/renderer/report-utils.js | warningHeader": {
     "message": "[Ŵåŕñîñĝš:  one two]"
   },
   "treemap/app/src/util.js | allLabel": {

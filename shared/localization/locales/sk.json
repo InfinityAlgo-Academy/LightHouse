@@ -2327,154 +2327,154 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "V konfigurácii webového servera môžete povoliť kompresiu textu."
   },
-  "report/renderer/util.js | calculatorLink": {
+  "report/renderer/report-utils.js | calculatorLink": {
     "message": "Zobraziť kalkulačku"
   },
-  "report/renderer/util.js | collapseView": {
+  "report/renderer/report-utils.js | collapseView": {
     "message": "Zbaliť zobrazenie"
   },
-  "report/renderer/util.js | crcInitialNavigation": {
+  "report/renderer/report-utils.js | crcInitialNavigation": {
     "message": "Počiatočná navigácia"
   },
-  "report/renderer/util.js | crcLongestDurationLabel": {
+  "report/renderer/report-utils.js | crcLongestDurationLabel": {
     "message": "Maximálna latencia cesty dôležitých žiadostí:"
   },
-  "report/renderer/util.js | dropdownCopyJSON": {
+  "report/renderer/report-utils.js | dropdownCopyJSON": {
     "message": "Kopírovať JSON"
   },
-  "report/renderer/util.js | dropdownDarkTheme": {
+  "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "Prepnúť tmavý motív"
   },
-  "report/renderer/util.js | dropdownPrintExpanded": {
+  "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "Vytlačiť rozbalené"
   },
-  "report/renderer/util.js | dropdownPrintSummary": {
+  "report/renderer/report-utils.js | dropdownPrintSummary": {
     "message": "Súhrn tlače"
   },
-  "report/renderer/util.js | dropdownSaveGist": {
+  "report/renderer/report-utils.js | dropdownSaveGist": {
     "message": "Uložiť ako Gist"
   },
-  "report/renderer/util.js | dropdownSaveHTML": {
+  "report/renderer/report-utils.js | dropdownSaveHTML": {
     "message": "Uložiť ako HTML"
   },
-  "report/renderer/util.js | dropdownSaveJSON": {
+  "report/renderer/report-utils.js | dropdownSaveJSON": {
     "message": "Uložiť ako JSON"
   },
-  "report/renderer/util.js | dropdownViewer": {
+  "report/renderer/report-utils.js | dropdownViewer": {
     "message": "Otvoriť v zobrazovači"
   },
-  "report/renderer/util.js | errorLabel": {
+  "report/renderer/report-utils.js | errorLabel": {
     "message": "Chyba!"
   },
-  "report/renderer/util.js | errorMissingAuditInfo": {
+  "report/renderer/report-utils.js | errorMissingAuditInfo": {
     "message": "Nahlásenie chyby: žiadne informácie o kontrole"
   },
-  "report/renderer/util.js | expandView": {
+  "report/renderer/report-utils.js | expandView": {
     "message": "Rozbaliť zobrazenie"
   },
-  "report/renderer/util.js | footerIssue": {
+  "report/renderer/report-utils.js | footerIssue": {
     "message": "Nahlásiť problém"
   },
-  "report/renderer/util.js | hide": {
+  "report/renderer/report-utils.js | hide": {
     "message": "Skryť"
   },
-  "report/renderer/util.js | labDataTitle": {
+  "report/renderer/report-utils.js | labDataTitle": {
     "message": "Údaje laboratória"
   },
-  "report/renderer/util.js | lsPerformanceCategoryDescription": {
+  "report/renderer/report-utils.js | lsPerformanceCategoryDescription": {
     "message": "Analýza aktuálnej stránky v emulovanej mobilnej sieti nástrojom [Lighthouse](https://developers.google.com/web/tools/lighthouse/). Hodnoty sú odhady, ktoré sa môžu líšiť."
   },
-  "report/renderer/util.js | manualAuditsGroupTitle": {
+  "report/renderer/report-utils.js | manualAuditsGroupTitle": {
     "message": "Ďalšie položky na manuálnu kontrolu"
   },
-  "report/renderer/util.js | notApplicableAuditsGroupTitle": {
+  "report/renderer/report-utils.js | notApplicableAuditsGroupTitle": {
     "message": "Nehodí sa"
   },
-  "report/renderer/util.js | opportunityResourceColumnLabel": {
+  "report/renderer/report-utils.js | opportunityResourceColumnLabel": {
     "message": "Príležitosti"
   },
-  "report/renderer/util.js | opportunitySavingsColumnLabel": {
+  "report/renderer/report-utils.js | opportunitySavingsColumnLabel": {
     "message": "Odhadovaná úspora"
   },
-  "report/renderer/util.js | passedAuditsGroupTitle": {
+  "report/renderer/report-utils.js | passedAuditsGroupTitle": {
     "message": "Absolvované kontroly"
   },
-  "report/renderer/util.js | runtimeAnalysisWindow": {
+  "report/renderer/report-utils.js | runtimeAnalysisWindow": {
     "message": "Počiatočné načítanie stránky"
   },
-  "report/renderer/util.js | runtimeCustom": {
+  "report/renderer/report-utils.js | runtimeCustom": {
     "message": "Vlastné obmedzenie toku dát"
   },
-  "report/renderer/util.js | runtimeDesktopEmulation": {
+  "report/renderer/report-utils.js | runtimeDesktopEmulation": {
     "message": "Emulovaná pracovná plocha"
   },
-  "report/renderer/util.js | runtimeMobileEmulation": {
+  "report/renderer/report-utils.js | runtimeMobileEmulation": {
     "message": "Emulované zariadenie Moto G4"
   },
-  "report/renderer/util.js | runtimeNoEmulation": {
+  "report/renderer/report-utils.js | runtimeNoEmulation": {
     "message": "Bez emulácie"
   },
-  "report/renderer/util.js | runtimeSettingsAxeVersion": {
+  "report/renderer/report-utils.js | runtimeSettingsAxeVersion": {
     "message": "Verzia knižnice Axe"
   },
-  "report/renderer/util.js | runtimeSettingsBenchmark": {
+  "report/renderer/report-utils.js | runtimeSettingsBenchmark": {
     "message": "Výkon procesora alebo pamäte"
   },
-  "report/renderer/util.js | runtimeSettingsCPUThrottling": {
+  "report/renderer/report-utils.js | runtimeSettingsCPUThrottling": {
     "message": "Obmedzenie rýchlosti procesora"
   },
-  "report/renderer/util.js | runtimeSettingsDevice": {
+  "report/renderer/report-utils.js | runtimeSettingsDevice": {
     "message": "Zariadenie"
   },
-  "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
+  "report/renderer/report-utils.js | runtimeSettingsNetworkThrottling": {
     "message": "Obmedzovanie rýchlosti"
   },
-  "report/renderer/util.js | runtimeSettingsUANetwork": {
+  "report/renderer/report-utils.js | runtimeSettingsUANetwork": {
     "message": "Používateľský agent (sieť)"
   },
-  "report/renderer/util.js | runtimeSingleLoad": {
+  "report/renderer/report-utils.js | runtimeSingleLoad": {
     "message": "Načítanie jednej stránky"
   },
-  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+  "report/renderer/report-utils.js | runtimeSingleLoadTooltip": {
     "message": "Tieto údaje sú prevzaté z jedného načítania stránky na rozdiel od údajov poľa zhrnujúcich mnoho relácií."
   },
-  "report/renderer/util.js | runtimeSlow4g": {
+  "report/renderer/report-utils.js | runtimeSlow4g": {
     "message": "Pomalé obmedzenie toku dát 4G"
   },
-  "report/renderer/util.js | runtimeUnknown": {
+  "report/renderer/report-utils.js | runtimeUnknown": {
     "message": "Neznáme"
   },
-  "report/renderer/util.js | show": {
+  "report/renderer/report-utils.js | show": {
     "message": "Zobraziť"
   },
-  "report/renderer/util.js | showRelevantAudits": {
+  "report/renderer/report-utils.js | showRelevantAudits": {
     "message": "Zobraziť kontroly relevantné pre:"
   },
-  "report/renderer/util.js | snippetCollapseButtonLabel": {
+  "report/renderer/report-utils.js | snippetCollapseButtonLabel": {
     "message": "Zbaliť útržok"
   },
-  "report/renderer/util.js | snippetExpandButtonLabel": {
+  "report/renderer/report-utils.js | snippetExpandButtonLabel": {
     "message": "Rozbaliť útržok"
   },
-  "report/renderer/util.js | thirdPartyResourcesLabel": {
+  "report/renderer/report-utils.js | thirdPartyResourcesLabel": {
     "message": "Zobrazovať zdroje tretích strán"
   },
-  "report/renderer/util.js | throttlingProvided": {
+  "report/renderer/report-utils.js | throttlingProvided": {
     "message": "Poskytnuté prostredím"
   },
-  "report/renderer/util.js | toplevelWarningsMessage": {
+  "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "Vyskytli sa problémy ovplyvňujúce funkčnosť nástroja Lighthouse:"
   },
-  "report/renderer/util.js | varianceDisclaimer": {
+  "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "Hodnoty sú odhady, ktoré sa môžu líšiť. [Skóre výkonnosti sa vypočítava](https://web.dev/performance-scoring/) priamo z týchto metrík."
   },
-  "report/renderer/util.js | viewTreemapLabel": {
+  "report/renderer/report-utils.js | viewTreemapLabel": {
     "message": "Zobraziť stromovú mapu"
   },
-  "report/renderer/util.js | warningAuditsGroupTitle": {
+  "report/renderer/report-utils.js | warningAuditsGroupTitle": {
     "message": "Úspešne absolvované kontroly, ale s upozorneniami"
   },
-  "report/renderer/util.js | warningHeader": {
+  "report/renderer/report-utils.js | warningHeader": {
     "message": "Upozornenia: "
   },
   "treemap/app/src/util.js | allLabel": {

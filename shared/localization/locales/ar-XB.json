@@ -2327,154 +2327,154 @@
   "node_modules/lighthouse-stack-packs/packs/wordpress.js | uses-text-compression": {
     "message": "‏‮You‬‏ ‏‮can‬‏ ‏‮enable‬‏ ‏‮text‬‏ ‏‮compression‬‏ ‏‮in‬‏ ‏‮your‬‏ ‏‮web‬‏ ‏‮server‬‏ ‏‮configuration‬‏."
   },
-  "report/renderer/util.js | calculatorLink": {
+  "report/renderer/report-utils.js | calculatorLink": {
     "message": "‏‮See‬‏ ‏‮calculator‬‏."
   },
-  "report/renderer/util.js | collapseView": {
+  "report/renderer/report-utils.js | collapseView": {
     "message": "‏‮Collapse‬‏ ‏‮view‬‏"
   },
-  "report/renderer/util.js | crcInitialNavigation": {
+  "report/renderer/report-utils.js | crcInitialNavigation": {
     "message": "‏‮Initial‬‏ ‏‮Navigation‬‏"
   },
-  "report/renderer/util.js | crcLongestDurationLabel": {
+  "report/renderer/report-utils.js | crcLongestDurationLabel": {
     "message": "‏‮Maximum‬‏ ‏‮critical‬‏ ‏‮path‬‏ ‏‮latency‬‏:"
   },
-  "report/renderer/util.js | dropdownCopyJSON": {
+  "report/renderer/report-utils.js | dropdownCopyJSON": {
     "message": "‏‮Copy‬‏ ‏‮JSON‬‏"
   },
-  "report/renderer/util.js | dropdownDarkTheme": {
+  "report/renderer/report-utils.js | dropdownDarkTheme": {
     "message": "‏‮Toggle‬‏ ‏‮Dark‬‏ ‏‮Theme‬‏"
   },
-  "report/renderer/util.js | dropdownPrintExpanded": {
+  "report/renderer/report-utils.js | dropdownPrintExpanded": {
     "message": "‏‮Print‬‏ ‏‮Expanded‬‏"
   },
-  "report/renderer/util.js | dropdownPrintSummary": {
+  "report/renderer/report-utils.js | dropdownPrintSummary": {
     "message": "‏‮Print‬‏ ‏‮Summary‬‏"
   },
-  "report/renderer/util.js | dropdownSaveGist": {
+  "report/renderer/report-utils.js | dropdownSaveGist": {
     "message": "‏‮Save‬‏ ‏‮as‬‏ ‏‮Gist‬‏"
   },
-  "report/renderer/util.js | dropdownSaveHTML": {
+  "report/renderer/report-utils.js | dropdownSaveHTML": {
     "message": "‏‮Save‬‏ ‏‮as‬‏ ‏‮HTML‬‏"
   },
-  "report/renderer/util.js | dropdownSaveJSON": {
+  "report/renderer/report-utils.js | dropdownSaveJSON": {
     "message": "‏‮Save‬‏ ‏‮as‬‏ ‏‮JSON‬‏"
   },
-  "report/renderer/util.js | dropdownViewer": {
+  "report/renderer/report-utils.js | dropdownViewer": {
     "message": "‏‮Open‬‏ ‏‮in‬‏ ‏‮Viewer‬‏"
   },
-  "report/renderer/util.js | errorLabel": {
+  "report/renderer/report-utils.js | errorLabel": {
     "message": "‏‮Error‬‏!"
   },
-  "report/renderer/util.js | errorMissingAuditInfo": {
+  "report/renderer/report-utils.js | errorMissingAuditInfo": {
     "message": "‏‮Report‬‏ ‏‮error‬‏: ‏‮no‬‏ ‏‮audit‬‏ ‏‮information‬‏"
   },
-  "report/renderer/util.js | expandView": {
+  "report/renderer/report-utils.js | expandView": {
     "message": "‏‮Expand‬‏ ‏‮view‬‏"
   },
-  "report/renderer/util.js | footerIssue": {
+  "report/renderer/report-utils.js | footerIssue": {
     "message": "‏‮File‬‏ ‏‮an‬‏ ‏‮issue‬‏"
   },
-  "report/renderer/util.js | hide": {
+  "report/renderer/report-utils.js | hide": {
     "message": "‏‮Hide‬‏"
   },
-  "report/renderer/util.js | labDataTitle": {
+  "report/renderer/report-utils.js | labDataTitle": {
     "message": "‏‮Lab‬‏ ‏‮Data‬‏"
   },
-  "report/renderer/util.js | lsPerformanceCategoryDescription": {
+  "report/renderer/report-utils.js | lsPerformanceCategoryDescription": {
     "message": "[‏‮Lighthouse‬‏](https://developers.google.com/web/tools/lighthouse/) ‏‮analysis‬‏ ‏‮of‬‏ ‏‮the‬‏ ‏‮current‬‏ ‏‮page‬‏ ‏‮on‬‏ ‏‮an‬‏ ‏‮emulated‬‏ ‏‮mobile‬‏ ‏‮network‬‏. ‏‮Values‬‏ ‏‮are‬‏ ‏‮estimated‬‏ ‏‮and‬‏ ‏‮may‬‏ ‏‮vary‬‏."
   },
-  "report/renderer/util.js | manualAuditsGroupTitle": {
+  "report/renderer/report-utils.js | manualAuditsGroupTitle": {
     "message": "‏‮Additional‬‏ ‏‮items‬‏ ‏‮to‬‏ ‏‮manually‬‏ ‏‮check‬‏"
   },
-  "report/renderer/util.js | notApplicableAuditsGroupTitle": {
+  "report/renderer/report-utils.js | notApplicableAuditsGroupTitle": {
     "message": "‏‮Not‬‏ ‏‮applicable‬‏"
   },
-  "report/renderer/util.js | opportunityResourceColumnLabel": {
+  "report/renderer/report-utils.js | opportunityResourceColumnLabel": {
     "message": "‏‮Opportunity‬‏"
   },
-  "report/renderer/util.js | opportunitySavingsColumnLabel": {
+  "report/renderer/report-utils.js | opportunitySavingsColumnLabel": {
     "message": "‏‮Estimated‬‏ ‏‮Savings‬‏"
   },
-  "report/renderer/util.js | passedAuditsGroupTitle": {
+  "report/renderer/report-utils.js | passedAuditsGroupTitle": {
     "message": "‏‮Passed‬‏ ‏‮audits‬‏"
   },
-  "report/renderer/util.js | runtimeAnalysisWindow": {
+  "report/renderer/report-utils.js | runtimeAnalysisWindow": {
     "message": "‏‮Initial‬‏ ‏‮page‬‏ ‏‮load‬‏"
   },
-  "report/renderer/util.js | runtimeCustom": {
+  "report/renderer/report-utils.js | runtimeCustom": {
     "message": "‏‮Custom‬‏ ‏‮throttling‬‏"
   },
-  "report/renderer/util.js | runtimeDesktopEmulation": {
+  "report/renderer/report-utils.js | runtimeDesktopEmulation": {
     "message": "‏‮Emulated‬‏ ‏‮Desktop‬‏"
   },
-  "report/renderer/util.js | runtimeMobileEmulation": {
+  "report/renderer/report-utils.js | runtimeMobileEmulation": {
     "message": "‏‮Emulated‬‏ ‏‮Moto‬‏ ‏‮G‬‏4"
   },
-  "report/renderer/util.js | runtimeNoEmulation": {
+  "report/renderer/report-utils.js | runtimeNoEmulation": {
     "message": "‏‮No‬‏ ‏‮emulation‬‏"
   },
-  "report/renderer/util.js | runtimeSettingsAxeVersion": {
+  "report/renderer/report-utils.js | runtimeSettingsAxeVersion": {
     "message": "‏‮Axe‬‏ ‏‮version‬‏"
   },
-  "report/renderer/util.js | runtimeSettingsBenchmark": {
+  "report/renderer/report-utils.js | runtimeSettingsBenchmark": {
     "message": "‏‮CPU‬‏/‏‮Memory‬‏ ‏‮Power‬‏"
   },
-  "report/renderer/util.js | runtimeSettingsCPUThrottling": {
+  "report/renderer/report-utils.js | runtimeSettingsCPUThrottling": {
     "message": "‏‮CPU‬‏ ‏‮throttling‬‏"
   },
-  "report/renderer/util.js | runtimeSettingsDevice": {
+  "report/renderer/report-utils.js | runtimeSettingsDevice": {
     "message": "‏‮Device‬‏"
   },
-  "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
+  "report/renderer/report-utils.js | runtimeSettingsNetworkThrottling": {
     "message": "‏‮Network‬‏ ‏‮throttling‬‏"
   },
-  "report/renderer/util.js | runtimeSettingsUANetwork": {
+  "report/renderer/report-utils.js | runtimeSettingsUANetwork": {
     "message": "‏‮User‬‏ ‏‮agent‬‏ (‏‮network‬‏)"
   },
-  "report/renderer/util.js | runtimeSingleLoad": {
+  "report/renderer/report-utils.js | runtimeSingleLoad": {
     "message": "‏‮Single‬‏ ‏‮page‬‏ ‏‮load‬‏"
   },
-  "report/renderer/util.js | runtimeSingleLoadTooltip": {
+  "report/renderer/report-utils.js | runtimeSingleLoadTooltip": {
     "message": "‏‮This‬‏ ‏‮data‬‏ ‏‮is‬‏ ‏‮taken‬‏ ‏‮from‬‏ ‏‮a‬‏ ‏‮single‬‏ ‏‮page‬‏ ‏‮load‬‏, ‏‮as‬‏ ‏‮opposed‬‏ ‏‮to‬‏ ‏‮field‬‏ ‏‮data‬‏ ‏‮summarizing‬‏ ‏‮many‬‏ ‏‮sessions‬‏."
   },
-  "report/renderer/util.js | runtimeSlow4g": {
+  "report/renderer/report-utils.js | runtimeSlow4g": {
     "message": "‏‮Slow‬‏ 4‏‮G‬‏ ‏‮throttling‬‏"
   },
-  "report/renderer/util.js | runtimeUnknown": {
+  "report/renderer/report-utils.js | runtimeUnknown": {
     "message": "‏‮Unknown‬‏"
   },
-  "report/renderer/util.js | show": {
+  "report/renderer/report-utils.js | show": {
     "message": "‏‮Show‬‏"
   },
-  "report/renderer/util.js | showRelevantAudits": {
+  "report/renderer/report-utils.js | showRelevantAudits": {
     "message": "‏‮Show‬‏ ‏‮audits‬‏ ‏‮relevant‬‏ ‏‮to‬‏:"
   },
-  "report/renderer/util.js | snippetCollapseButtonLabel": {
+  "report/renderer/report-utils.js | snippetCollapseButtonLabel": {
     "message": "‏‮Collapse‬‏ ‏‮snippet‬‏"
   },
-  "report/renderer/util.js | snippetExpandButtonLabel": {
+  "report/renderer/report-utils.js | snippetExpandButtonLabel": {
     "message": "‏‮Expand‬‏ ‏‮snippet‬‏"
   },
-  "report/renderer/util.js | thirdPartyResourcesLabel": {
+  "report/renderer/report-utils.js | thirdPartyResourcesLabel": {
     "message": "‏‮Show‬‏ 3‏‮rd‬‏-‏‮party‬‏ ‏‮resources‬‏"
   },
-  "report/renderer/util.js | throttlingProvided": {
+  "report/renderer/report-utils.js | throttlingProvided": {
     "message": "‏‮Provided‬‏ ‏‮by‬‏ ‏‮environment‬‏"
   },
-  "report/renderer/util.js | toplevelWarningsMessage": {
+  "report/renderer/report-utils.js | toplevelWarningsMessage": {
     "message": "‏‮There‬‏ ‏‮were‬‏ ‏‮issues‬‏ ‏‮affecting‬‏ ‏‮this‬‏ ‏‮run‬‏ ‏‮of‬‏ ‏‮Lighthouse‬‏:"
   },
-  "report/renderer/util.js | varianceDisclaimer": {
+  "report/renderer/report-utils.js | varianceDisclaimer": {
     "message": "‏‮Values‬‏ ‏‮are‬‏ ‏‮estimated‬‏ ‏‮and‬‏ ‏‮may‬‏ ‏‮vary‬‏. ‏‮The‬‏ [‏‮performance‬‏ ‏‮score‬‏ ‏‮is‬‏ ‏‮calculated‬‏](https://web.dev/performance-scoring/) ‏‮directly‬‏ ‏‮from‬‏ ‏‮these‬‏ ‏‮metrics‬‏."
   },
-  "report/renderer/util.js | viewTreemapLabel": {
+  "report/renderer/report-utils.js | viewTreemapLabel": {
     "message": "‏‮View‬‏ ‏‮Treemap‬‏"
   },
-  "report/renderer/util.js | warningAuditsGroupTitle": {
+  "report/renderer/report-utils.js | warningAuditsGroupTitle": {
     "message": "‏‮Passed‬‏ ‏‮audits‬‏ ‏‮but‬‏ ‏‮with‬‏ ‏‮warnings‬‏"
   },
-  "report/renderer/util.js | warningHeader": {
+  "report/renderer/report-utils.js | warningHeader": {
     "message": "‏‮Warnings‬‏: "
   },
   "treemap/app/src/util.js | allLabel": {

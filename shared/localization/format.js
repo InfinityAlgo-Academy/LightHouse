@@ -226,7 +226,9 @@ function getRendererFormattedStrings(locale) {
   const strings = {};
   for (const icuMessageId of icuMessageIds) {
     const {filename, key} = getIcuMessageIdParts(icuMessageId);
-    if (!filename.endsWith('util.js')) throw new Error(`Unexpected message: ${icuMessageId}`);
+    if (!filename.endsWith('report-utils.js')) {
+      throw new Error(`Unexpected message: ${icuMessageId}`);
+    }
 
     strings[key] = localeMessages[icuMessageId].message;
   }
