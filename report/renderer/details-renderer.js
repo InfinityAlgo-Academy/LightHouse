@@ -24,7 +24,7 @@
 /** @typedef {LH.FormattedIcu<LH.Audit.Details.TableItem>} TableItem */
 /** @typedef {LH.FormattedIcu<LH.Audit.Details.ItemValue>} TableItemValue */
 
-import {ReportUtils, SharedUtils} from './report-utils.js';
+import {ReportUtils, UrlUtils} from './report-utils.js';
 import {CriticalRequestChainRenderer} from './crc-details-renderer.js';
 import {ElementScreenshotRenderer} from './element-screenshot-renderer.js';
 
@@ -110,7 +110,7 @@ export class DetailsRenderer {
     let displayedHost;
     let title;
     try {
-      const parsed = SharedUtils.parseURL(url);
+      const parsed = UrlUtils.parseURL(url);
       displayedPath = parsed.file === '/' ? parsed.origin : parsed.file;
       displayedHost = parsed.file === '/' || parsed.hostname === '' ? '' : `(${parsed.hostname})`;
       title = url;

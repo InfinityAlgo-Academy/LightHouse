@@ -26,7 +26,7 @@ import {ElementScreenshotRenderer} from './element-screenshot-renderer.js';
 import {toggleDarkTheme} from './features-util.js';
 import {openTreemap} from './open-tab.js';
 import {TopbarFeatures} from './topbar-features.js';
-import {ReportUtils, SharedUtils} from './report-utils.js';
+import {ReportUtils, UrlUtils} from './report-utils.js';
 import {getLhrFilenamePrefix} from '../generator/file-namer.js';
 
 /**
@@ -324,7 +324,7 @@ export class ReportUIFeatures {
   _getThirdPartyRows(rowEls, finalUrl) {
     /** @type {Array<HTMLElement>} */
     const thirdPartyRows = [];
-    const finalUrlRootDomain = SharedUtils.getRootDomain(finalUrl);
+    const finalUrlRootDomain = UrlUtils.getRootDomain(finalUrl);
 
     for (const rowEl of rowEls) {
       if (rowEl.classList.contains('lh-sub-item-row')) continue;
@@ -334,7 +334,7 @@ export class ReportUIFeatures {
 
       const datasetUrl = urlItem.dataset.url;
       if (!datasetUrl) continue;
-      const isThirdParty = SharedUtils.getRootDomain(datasetUrl) !== finalUrlRootDomain;
+      const isThirdParty = UrlUtils.getRootDomain(datasetUrl) !== finalUrlRootDomain;
       if (!isThirdParty) continue;
 
       thirdPartyRows.push(rowEl);
