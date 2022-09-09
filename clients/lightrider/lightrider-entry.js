@@ -25,7 +25,7 @@ const LR_PRESETS = {
   desktop: desktopConfig,
 };
 
-/** @typedef {import('../../core/gather/connections/connection.js').Connection} Connection */
+/** @typedef {import('../../core/legacy/gather/connections/connection.js').Connection} Connection */
 
 // Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
 // (`parseSourceMapFromDataUrl` breaks without this)

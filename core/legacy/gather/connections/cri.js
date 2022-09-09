@@ -10,7 +10,7 @@ import WebSocket from 'ws';
 import log from 'lighthouse-logger';
 
 import {Connection} from './connection.js';
-import {LighthouseError} from '../../lib/lh-error.js';
+import {LighthouseError} from '../../../lib/lh-error.js';
 
 const DEFAULT_HOSTNAME = '127.0.0.1';
 const CONNECT_TIMEOUT = 10000;

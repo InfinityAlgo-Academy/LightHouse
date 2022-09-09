@@ -6,25 +6,25 @@
 
 import log from 'lighthouse-logger';
 
-import {NetworkRecords} from '../computed/network-records.js';
-import {getPageLoadError} from '../lib/navigation-error.js';
-import * as emulation from '../lib/emulation.js';
-import * as constants from '../config/constants.js';
-import * as format from '../../shared/localization/format.js';
-import {getBenchmarkIndex, getEnvironmentWarnings} from './driver/environment.js';
-import * as prepare from './driver/prepare.js';
-import * as storage from './driver/storage.js';
-import * as navigation from './driver/navigation.js';
-import * as serviceWorkers from './driver/service-workers.js';
-import WebAppManifest from './gatherers/web-app-manifest.js';
-import InstallabilityErrors from './gatherers/installability-errors.js';
-import NetworkUserAgent from './gatherers/network-user-agent.js';
-import Stacks from './gatherers/stacks.js';
-import {finalizeArtifacts} from '../fraggle-rock/gather/base-artifacts.js';
-import UrlUtils from '../lib/url-utils.js';
+import {NetworkRecords} from '../../computed/network-records.js';
+import {getPageLoadError} from '../../lib/navigation-error.js';
+import * as emulation from '../../lib/emulation.js';
+import * as constants from '../../config/constants.js';
+import * as format from '../../../shared/localization/format.js';
+import {getBenchmarkIndex, getEnvironmentWarnings} from '../../gather/driver/environment.js';
+import * as prepare from '../../gather/driver/prepare.js';
+import * as storage from '../../gather/driver/storage.js';
+import * as navigation from '../../gather/driver/navigation.js';
+import * as serviceWorkers from '../../gather/driver/service-workers.js';
+import WebAppManifest from '../../gather/gatherers/web-app-manifest.js';
+import InstallabilityErrors from '../../gather/gatherers/installability-errors.js';
+import NetworkUserAgent from '../../gather/gatherers/network-user-agent.js';
+import Stacks from '../../gather/gatherers/stacks.js';
+import {finalizeArtifacts} from '../../fraggle-rock/gather/base-artifacts.js';
+import UrlUtils from '../../lib/url-utils.js';
 
-/** @typedef {import('../gather/driver.js').Driver} Driver */
-/** @typedef {import('../lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
+/** @typedef {import('./driver.js').Driver} Driver */
+/** @typedef {import('../../lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
 
 /**
  * Each entry in each gatherer result array is the output of a gatherer phase:

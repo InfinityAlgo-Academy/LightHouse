@@ -41,7 +41,7 @@
     "core/test/config/budget-test.js",
     "core/test/config/config-helpers-test.js",
     "core/test/config/config-plugin-test.js",
-    "core/test/config/config-test.js",
+    "core/test/legacy/config/config-test.js",
     "core/test/config/default-config-test.js",
     "core/test/create-test-trace.js",
     "core/test/gather/driver/wait-for-condition-test.js",

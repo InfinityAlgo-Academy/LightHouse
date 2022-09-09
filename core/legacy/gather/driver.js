@@ -8,13 +8,13 @@ import {EventEmitter} from 'events';
 
 import log from 'lighthouse-logger';
 
-import {Fetcher} from './fetcher.js';
-import {ExecutionContext} from './driver/execution-context.js';
-import {LighthouseError} from '../lib/lh-error.js';
-import {fetchResponseBodyFromCache} from '../gather/driver/network.js';
-import {DevtoolsMessageLog} from './gatherers/devtools-log.js';
-import TraceGatherer from './gatherers/trace.js';
-import {getBrowserVersion} from './driver/environment.js';
+import {Fetcher} from '../../gather/fetcher.js';
+import {ExecutionContext} from '../../gather/driver/execution-context.js';
+import {LighthouseError} from '../../lib/lh-error.js';
+import {fetchResponseBodyFromCache} from '../../gather/driver/network.js';
+import {DevtoolsMessageLog} from '../../gather/gatherers/devtools-log.js';
+import TraceGatherer from '../../gather/gatherers/trace.js';
+import {getBrowserVersion} from '../../gather/driver/environment.js';
 
 // Controls how long to wait for a response after sending a DevTools protocol command.
 const DEFAULT_PROTOCOL_TIMEOUT = 30000;

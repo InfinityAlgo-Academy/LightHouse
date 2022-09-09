@@ -5,8 +5,8 @@
  */
 
 import TraceElementsGatherer from '../../../gather/gatherers/trace-elements.js';
-import {Driver} from '../../../gather/driver.js';
-import {Connection} from '../../../gather/connections/connection.js';
+import {Driver} from '../../../legacy/gather/driver.js';
+import {Connection} from '../../../legacy/gather/connections/connection.js';
 import {createTestTrace} from '../../create-test-trace.js';
 import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
 import {flushAllTimersAndMicrotasks, fnAny, readJson, timers} from '../../test-utils.js';

@@ -8,7 +8,7 @@ import {EventEmitter} from 'events';
 
 import log from 'lighthouse-logger';
 
-import {LighthouseError} from '../../lib/lh-error.js';
+import {LighthouseError} from '../../../lib/lh-error.js';
 
 // TODO(bckenny): CommandCallback properties should be tied by command type after
 // https://github.com/Microsoft/TypeScript/pull/22348. See driver.js TODO.

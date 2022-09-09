@@ -7,14 +7,14 @@
 import log from 'lighthouse-logger';
 
 import {Runner} from './runner.js';
-import {CriConnection} from './gather/connections/cri.js';
-import {Config} from './config/config.js';
+import {CriConnection} from './legacy/gather/connections/cri.js';
+import {Config} from './legacy/config/config.js';
 import UrlUtils from './lib/url-utils.js';
 import * as fraggleRock from './fraggle-rock/api.js';
-import {Driver} from './gather/driver.js';
+import {Driver} from './legacy/gather/driver.js';
 import {initializeConfig} from './fraggle-rock/config/config.js';
 
-/** @typedef {import('./gather/connections/connection.js').Connection} Connection */
+/** @typedef {import('./legacy/gather/connections/connection.js').Connection} Connection */
 
 /*
  * The relationship between these root modules:

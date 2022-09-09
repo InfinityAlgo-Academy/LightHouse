@@ -9,10 +9,10 @@ import path from 'path';
 import log from 'lighthouse-logger';
 
 import legacyDefaultConfig from './legacy-default-config.js';
-import * as constants from './constants.js';
-import * as format from '../../shared/localization/format.js';
-import * as validation from './../fraggle-rock/config/validation.js';
-import {Runner} from '../runner.js';
+import * as constants from '../../config/constants.js';
+import * as format from '../../../shared/localization/format.js';
+import * as validation from '../../fraggle-rock/config/validation.js';
+import {Runner} from '../../runner.js';
 import {
   mergePlugins,
   mergeConfigFragment,
@@ -21,12 +21,12 @@ import {
   resolveGathererToDefn,
   deepClone,
   deepCloneConfigJson,
-} from './config-helpers.js';
-import {getModuleDirectory} from '../../esm-utils.js';
+} from '../../config/config-helpers.js';
+import {getModuleDirectory} from '../../../esm-utils.js';
 
 const defaultConfigPath = './legacy-default-config.js';
 
-/** @typedef {typeof import('../gather/gatherers/gatherer.js').Gatherer} GathererConstructor */
+/** @typedef {typeof import('../../gather/gatherers/gatherer.js').Gatherer} GathererConstructor */
 /** @typedef {InstanceType<GathererConstructor>} Gatherer */
 
 /**

@@ -22,7 +22,7 @@ const MINIMAL_LEGIBLE_FONT_SIZE_PX = 12;
 // limit number of protocol calls to make sure that gatherer doesn't take more than 1-2s
 const MAX_NODES_SOURCE_RULE_FETCHED = 50; // number of nodes to fetch the source font-size rule
 
-/** @typedef {import('../../driver.js')} Driver */
+/** @typedef {import('../../../legacy/gather/driver.js')} Driver */
 /** @typedef {LH.Artifacts.FontSize['analyzedFailingNodesData'][0]} NodeFontData */
 /** @typedef {Map<number, {fontSize: number, textLength: number}>} BackendIdsToFontData */
 

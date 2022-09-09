@@ -102,7 +102,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
 
   /** @type {Record<string, string>} */
   const shimsObj = {
-    [require.resolve('../core/gather/connections/cri.js')]:
+    [require.resolve('../core/legacy/gather/connections/cri.js')]:
       'export const CriConnection = {}',
     [require.resolve('../package.json')]: `export const version = '${pkg.version}';`,
   };

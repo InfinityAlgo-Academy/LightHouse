@@ -12,12 +12,12 @@ import log from 'lighthouse-logger';
 
 import lighthouse, {legacyNavigation} from '../../core/index.js';
 import {navigation, startTimespan, snapshot} from '../../core/fraggle-rock/api.js';
-import {RawConnection} from '../../core/gather/connections/raw.js';
+import {RawConnection} from '../../core/legacy/gather/connections/raw.js';
 import {lookupLocale} from '../../core/lib/i18n/i18n.js';
 import {registerLocaleData, getCanonicalLocales} from '../../shared/localization/format.js';
 import * as constants from '../../core/config/constants.js';
 
-/** @typedef {import('../../core/gather/connections/connection.js')} Connection */
+/** @typedef {import('../../core/legacy/gather/connections/connection.js')} Connection */
 
 // Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
 // (`parseSourceMapFromDataUrl` breaks without this)
@@ -58,7 +58,7 @@ function createConfig(categoryIDs, device) {
 }
 
 /**
- * @param {import('../../core/gather/connections/raw.js').Port} port
+ * @param {import('../../core/legacy/gather/connections/raw.js').Port} port
  * @return {RawConnection}
  */
 function setUpWorkerConnection(port) {

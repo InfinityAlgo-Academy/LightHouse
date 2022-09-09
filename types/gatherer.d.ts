@@ -7,7 +7,7 @@
 import {NetworkNode as _NetworkNode} from '../core/lib/dependency-graph/network-node';
 import {CPUNode as _CPUNode} from '../core/lib/dependency-graph/cpu-node';
 import {Simulator as _Simulator} from '../core/lib/dependency-graph/simulator/simulator';
-import {Driver} from '../core/gather/driver';
+import {Driver} from '../core/legacy/gather/driver';
 import {ExecutionContext} from '../core/gather/driver/execution-context';
 import {Fetcher} from '../core/gather/fetcher';
 import {ArbitraryEqualityMap} from '../core/lib/arbitrary-equality-map';

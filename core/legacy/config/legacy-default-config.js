@@ -8,7 +8,7 @@
  * @fileoverview Construct the legacy default config from the standard default config.
  */
 
-import defaultConfig from './default-config.js';
+import defaultConfig from '../../config/default-config.js';
 
 /** @type {LH.Config.Json} */
 const legacyDefaultConfig = JSON.parse(JSON.stringify(defaultConfig));
