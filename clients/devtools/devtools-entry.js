@@ -52,8 +52,7 @@ function createConfig(categoryIDs, device) {
 
   return {
     extends: 'lighthouse:default',
-    // TODO(esmodules): re-enable when pubads works again
-    // plugins: ['lighthouse-plugin-publisher-ads'],
+    plugins: ['lighthouse-plugin-publisher-ads'],
     settings,
   };
 }

@@ -16,9 +16,8 @@ import {createRequire} from 'module';
 
 import esMain from 'es-main';
 import {rollup} from 'rollup';
-// TODO(esmodules): convert pubads to esm
-// // @ts-expect-error: plugin has no types.
-// import PubAdsPlugin from 'lighthouse-plugin-publisher-ads/plugin.js';
+// @ts-expect-error: plugin has no types.
+import PubAdsPlugin from 'lighthouse-plugin-publisher-ads';
 
 import * as rollupPlugins from './rollup-plugins.js';
 import {Runner} from '../core/runner.js';
@@ -37,8 +36,8 @@ const GIT_READABLE_REF =
 
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.
 /** @type {Array<string>} */
-// // @ts-expect-error
-// const pubAdsAudits = PubAdsPlugin.audits.map(a => a.path);
+// @ts-expect-error
+const pubAdsAudits = PubAdsPlugin.audits.map(a => a.path);
 
 /** @param {string} file */
 const isDevtools = file =>
@@ -89,12 +88,12 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
   ];
 
   // Include lighthouse-plugin-publisher-ads.
-  // if (isDevtools(entryPath) || isLightrider(entryPath)) {
-  //   dynamicModulePaths.push('lighthouse-plugin-publisher-ads');
-  //   pubAdsAudits.forEach(pubAdAudit => {
-  //     dynamicModulePaths.push(pubAdAudit);
-  //   });
-  // }
+  if (isDevtools(entryPath) || isLightrider(entryPath)) {
+    dynamicModulePaths.push('lighthouse-plugin-publisher-ads');
+    pubAdsAudits.forEach(pubAdAudit => {
+      dynamicModulePaths.push(pubAdAudit);
+    });
+  }
 
   const bundledMapEntriesCode = dynamicModulePaths.map(modulePath => {
     const pathNoExt = modulePath.replace('.js', '');
