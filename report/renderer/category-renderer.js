@@ -20,7 +20,7 @@
 /** @typedef {import('./details-renderer.js').DetailsRenderer} DetailsRenderer */
 /** @typedef {'failed'|'warning'|'manual'|'passed'|'notApplicable'} TopLevelClumpId */
 
-import {ReportUtils, SharedUtils} from './report-utils.js';
+import {ReportUtils} from './report-utils.js';
 
 export class CategoryRenderer {
   /**
@@ -185,7 +185,7 @@ export class CategoryRenderer {
    * @return {!Element}
    */
   _setRatingClass(element, score, scoreDisplayMode) {
-    const rating = SharedUtils.calculateRating(score, scoreDisplayMode);
+    const rating = ReportUtils.calculateRating(score, scoreDisplayMode);
     element.classList.add(`lh-audit--${scoreDisplayMode.toLowerCase()}`);
     if (scoreDisplayMode !== 'informative') {
       element.classList.add(`lh-audit--${rating}`);
@@ -398,7 +398,7 @@ export class CategoryRenderer {
 
     // Render a numerical score if the category has applicable audits, or no audits whatsoever.
     if (category.auditRefs.length === 0 || this.hasApplicableAudits(category)) {
-      wrapper.classList.add(`lh-gauge__wrapper--${SharedUtils.calculateRating(category.score)}`);
+      wrapper.classList.add(`lh-gauge__wrapper--${ReportUtils.calculateRating(category.score)}`);
     } else {
       wrapper.classList.add(`lh-gauge__wrapper--not-applicable`);
       percentageEl.textContent = '-';
@@ -426,7 +426,7 @@ export class CategoryRenderer {
     text.textContent = `${numPassed}/${numPassableAudits}`;
     content.append(text);
 
-    let rating = SharedUtils.calculateRating(fraction);
+    let rating = ReportUtils.calculateRating(fraction);
 
     // If none of the available audits can affect the score, a rating isn't useful.
     // The flow report should display the fraction with neutral icon and coloring in this case.
@@ -491,7 +491,7 @@ export class CategoryRenderer {
       return scoreDisplayMode;
     }
 
-    if (SharedUtils.showAsPassed(auditRef.result)) {
+    if (ReportUtils.showAsPassed(auditRef.result)) {
       if (this._auditHasWarning(auditRef)) {
         return 'warning';
       } else {

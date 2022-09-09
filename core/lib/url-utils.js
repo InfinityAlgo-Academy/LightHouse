@@ -4,9 +4,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {Util} from '../../shared/shared-utils.js';
 import {LighthouseError} from './lh-error.js';
 
-const ELLIPSIS = '\u2026';
+/** @typedef {import('./network-request.js').NetworkRequest} NetworkRequest */
 
 const allowedProtocols = [
   'https:', 'http:', 'chrome:', 'chrome-extension:',
@@ -21,14 +22,6 @@ const NON_NETWORK_SCHEMES = [
   'intent', // @see https://developer.chrome.com/docs/multidevice/android/intents/
   'file', // @see https://en.wikipedia.org/wiki/File_URI_scheme
   'filesystem', // @see https://developer.mozilla.org/en-US/docs/Web/API/FileSystem
-];
-
-// 25 most used tld plus one domains (aka public suffixes) from http archive.
-// @see https://github.com/GoogleChrome/lighthouse/pull/5065#discussion_r191926212
-// The canonical list is https://publicsuffix.org/learn/ but we're only using subset to conserve bytes
-const listOfTlds = [
-  'com', 'co', 'gov', 'edu', 'ac', 'org', 'go', 'gob', 'or', 'net', 'in', 'ne', 'nic', 'gouv',
-  'web', 'spb', 'blog', 'jus', 'kiev', 'mil', 'wi', 'qc', 'ca', 'bel', 'on',
 ];
 
 /**
@@ -111,8 +104,8 @@ class UrlUtils {
     let urlAInfo;
     let urlBInfo;
     try {
-      urlAInfo = UrlUtils.createOrReturnURL(urlA);
-      urlBInfo = UrlUtils.createOrReturnURL(urlB);
+      urlAInfo = Util.createOrReturnURL(urlA);
+      urlBInfo = Util.createOrReturnURL(urlB);
     } catch (err) {
       return false;
     }
@@ -122,84 +115,19 @@ class UrlUtils {
     }
 
     // get the string before the tld
-    const urlARootDomain = UrlUtils.getRootDomain(urlAInfo);
-    const urlBRootDomain = UrlUtils.getRootDomain(urlBInfo);
+    const urlARootDomain = Util.getRootDomain(urlAInfo);
+    const urlBRootDomain = Util.getRootDomain(urlBInfo);
 
     return urlARootDomain === urlBRootDomain;
   }
 
   /**
-   * @param {string|URL} url
-   * @param {{numPathParts?: number, preserveQuery?: boolean, preserveHost?: boolean}=} options
+   * @param {string} url
+   * @param {{numPathParts: number, preserveQuery: boolean, preserveHost: boolean}=} options
    * @return {string}
    */
   static getURLDisplayName(url, options) {
-    const parsedUrl = url instanceof URL ? url : new URL(url);
-
-    // Closure optional properties aren't optional in tsc, so fallback needs undefined  values.
-    options = options || {numPathParts: undefined, preserveQuery: undefined,
-      preserveHost: undefined};
-    const numPathParts = options.numPathParts !== undefined ? options.numPathParts : 2;
-    const preserveQuery = options.preserveQuery !== undefined ? options.preserveQuery : true;
-    const preserveHost = options.preserveHost || false;
-
-    let name;
-
-    if (parsedUrl.protocol === 'about:' || parsedUrl.protocol === 'data:') {
-      // Handle 'about:*' and 'data:*' URLs specially since they have no path.
-      name = parsedUrl.href;
-    } else {
-      name = parsedUrl.pathname;
-      const parts = name.split('/').filter(part => part.length);
-      if (numPathParts && parts.length > numPathParts) {
-        name = ELLIPSIS + parts.slice(-1 * numPathParts).join('/');
-      }
-
-      if (preserveHost) {
-        name = `${parsedUrl.host}/${name.replace(/^\//, '')}`;
-      }
-      if (preserveQuery) {
-        name = `${name}${parsedUrl.search}`;
-      }
-    }
-
-    const MAX_LENGTH = 64;
-    if (parsedUrl.protocol !== 'data:') {
-      // Always elide hexadecimal hash
-      name = name.replace(/([a-f0-9]{7})[a-f0-9]{13}[a-f0-9]*/g, `$1${ELLIPSIS}`);
-      // Also elide other hash-like mixed-case strings
-      name = name.replace(/([a-zA-Z0-9-_]{9})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9-_]{10,}/g,
-        `$1${ELLIPSIS}`);
-      // Also elide long number sequences
-      name = name.replace(/(\d{3})\d{6,}/g, `$1${ELLIPSIS}`);
-      // Merge any adjacent ellipses
-      name = name.replace(/\u2026+/g, ELLIPSIS);
-
-      // Elide query params first
-      if (name.length > MAX_LENGTH && name.includes('?')) {
-        // Try to leave the first query parameter intact
-        name = name.replace(/\?([^=]*)(=)?.*/, `?$1$2${ELLIPSIS}`);
-
-        // Remove it all if it's still too long
-        if (name.length > MAX_LENGTH) {
-          name = name.replace(/\?.*/, `?${ELLIPSIS}`);
-        }
-      }
-    }
-
-    // Elide too long names next
-    if (name.length > MAX_LENGTH) {
-      const dotIndex = name.lastIndexOf('.');
-      if (dotIndex >= 0) {
-        name = name.slice(0, MAX_LENGTH - 1 - (name.length - dotIndex)) +
-          // Show file extension
-          `${ELLIPSIS}${name.slice(dotIndex)}`;
-      } else {
-        name = name.slice(0, MAX_LENGTH - 1) + ELLIPSIS;
-      }
-    }
-
-    return name;
+    return Util.getURLDisplayName(new URL(url), options);
   }
 
   /**
@@ -265,7 +193,7 @@ class UrlUtils {
   }
 
   /**
-   * @param {string} scheme
+   * @param {NetworkRequest['parsedURL']['scheme']} scheme
    * @return {boolean}
    */
   static isSecureScheme(scheme) {
@@ -280,7 +208,7 @@ class UrlUtils {
    *   https://url.spec.whatwg.org/#dom-url-protocol
    * A URL's `scheme` is specced as the `protocol` sans-colon, but isn't exposed on a URL object.
    * This method can take all 3 of these string types as a parameter.
-   * @param {string} protocol Either a networkRequest's `protocol` per CDP or a `new URL(href).protocol`
+   * @param {NetworkRequest['protocol'] | URL['protocol']} protocol Either a networkRequest's `protocol` per CDP or a `new URL(href).protocol`
    * @return {boolean}
    */
   static isNonNetworkProtocol(protocol) {
@@ -328,65 +256,6 @@ class UrlUtils {
     } else {
       throw new LighthouseError(LighthouseError.errors.INVALID_URL);
     }
-  }
-
-  /**
-   * Split a URL into a file, hostname and origin for easy display.
-   * @param {string} url
-   * @return {{file: string, hostname: string, origin: string}}
-   */
-  static parseURL(url) {
-    const parsedUrl = new URL(url);
-    return {
-      file: UrlUtils.getURLDisplayName(parsedUrl),
-      hostname: parsedUrl.hostname,
-      origin: parsedUrl.origin,
-    };
-  }
-
-  /**
-   * @param {string|URL} value
-   * @return {!URL}
-   */
-  static createOrReturnURL(value) {
-    if (value instanceof URL) {
-      return value;
-    }
-
-    return new URL(value);
-  }
-
-  /**
-   * Gets the tld of a domain
-   *
-   * @param {string} hostname
-   * @return {string} tld
-   */
-  static getTld(hostname) {
-    const tlds = hostname.split('.').slice(-2);
-
-    if (!listOfTlds.includes(tlds[0])) {
-      return `.${tlds[tlds.length - 1]}`;
-    }
-
-    return `.${tlds.join('.')}`;
-  }
-
-  /**
-   * Returns a primary domain for provided hostname (e.g. www.example.com -> example.com).
-   * @param {string|URL} url hostname or URL object
-   * @return {string}
-   */
-  static getRootDomain(url) {
-    const hostname = UrlUtils.createOrReturnURL(url).hostname;
-    const tld = UrlUtils.getTld(hostname);
-
-    // tld is .com or .co.uk which means we means that length is 1 to big
-    // .com => 2 & .co.uk => 3
-    const splitTld = tld.split('.');
-
-    // get TLD + root domain
-    return hostname.split('.').slice(-splitTld.length).join('.');
   }
 }
 

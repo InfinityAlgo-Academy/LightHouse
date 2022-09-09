@@ -386,4 +386,3 @@ export {
 };
 
 export * as MarkdownUtils from '../../shared/markdown.js';
-export {default as UrlUtils} from '../../core/lib/url-utils.js';

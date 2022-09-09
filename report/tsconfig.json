@@ -14,8 +14,6 @@
   "include": [
     "**/*.js",
     "types/**/*.d.ts",
-    "../core/lib/url-utils.js",
-    "../core/lib/lh-error.js",
   ],
   "exclude": [
     "generator/**/*.js",
