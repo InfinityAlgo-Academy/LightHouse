@@ -26,8 +26,7 @@ import {ElementScreenshotRenderer} from './element-screenshot-renderer.js';
 import {I18n} from './i18n.js';
 import {PerformanceCategoryRenderer} from './performance-category-renderer.js';
 import {PwaCategoryRenderer} from './pwa-category-renderer.js';
-import {Util} from './util.js';
-
+import {ReportUtils} from './report-utils.js';
 
 export class ReportRenderer {
   /**
@@ -67,7 +66,7 @@ export class ReportRenderer {
 
     this._dom.setLighthouseChannel(lhr.configSettings.channel || 'unknown');
 
-    const report = Util.prepareReportResult(lhr);
+    const report = ReportUtils.prepareReportResult(lhr);
 
     this._dom.rootEl.textContent = ''; // Remove previous report.
     this._dom.rootEl.append(this._renderReport(report));
@@ -108,7 +107,8 @@ export class ReportRenderer {
 
     this._renderMetaBlock(report, footer);
 
-    this._dom.find('.lh-footer__version_issue', footer).textContent = Util.i18n.strings.footerIssue;
+    this._dom.find('.lh-footer__version_issue', footer).textContent =
+      ReportUtils.i18n.strings.footerIssue;
     this._dom.find('.lh-footer__version', footer).textContent = report.lighthouseVersion;
     return footer;
   }
@@ -118,9 +118,8 @@ export class ReportRenderer {
    * @param {DocumentFragment} footer
    */
   _renderMetaBlock(report, footer) {
-    const envValues = Util.getEmulationDescriptions(report.configSettings || {});
-
-
+    const strings = ReportUtils.i18n.strings;
+    const envValues = ReportUtils.getEmulationDescriptions(report.configSettings || {});
     const match = report.userAgent.match(/(\w*Chrome\/[\d.]+)/); // \w* to include 'HeadlessChrome'
     const chromeVer = Array.isArray(match)
       ? match[1].replace('/', ' ').replace('Chrome', 'Chromium')
@@ -131,24 +130,20 @@ export class ReportRenderer {
 
     // [CSS icon class, textContent, tooltipText]
     const metaItems = [
-      ['date',
-        `Captured at ${Util.i18n.formatDateTime(report.fetchTime)}`],
+      ['date', `Captured at ${ReportUtils.i18n.formatDateTime(report.fetchTime)}`],
       ['devices',
         `${envValues.deviceEmulation} with Lighthouse ${report.lighthouseVersion}`,
-        `${Util.i18n.strings.runtimeSettingsBenchmark}: ${benchmarkIndex}` +
-            `\n${Util.i18n.strings.runtimeSettingsCPUThrottling}: ${envValues.cpuThrottling}` +
-            (axeVersion ? `\n${Util.i18n.strings.runtimeSettingsAxeVersion}: ${axeVersion}` : '')],
-      ['samples-one',
-        Util.i18n.strings.runtimeSingleLoad,
-        Util.i18n.strings.runtimeSingleLoadTooltip],
-      ['stopwatch',
-        Util.i18n.strings.runtimeAnalysisWindow],
+        `${strings.runtimeSettingsBenchmark}: ${benchmarkIndex}` +
+            `\n${strings.runtimeSettingsCPUThrottling}: ${envValues.cpuThrottling}` +
+            (axeVersion ? `\n${strings.runtimeSettingsAxeVersion}: ${axeVersion}` : '')],
+      ['samples-one', strings.runtimeSingleLoad, strings.runtimeSingleLoadTooltip],
+      ['stopwatch', strings.runtimeAnalysisWindow],
       ['networkspeed',
         `${envValues.summary}`,
-        `${Util.i18n.strings.runtimeSettingsNetworkThrottling}: ${envValues.networkThrottling}`],
+        `${strings.runtimeSettingsNetworkThrottling}: ${envValues.networkThrottling}`],
       ['chrome',
         `Using ${chromeVer}` + (channel ? ` with ${channel}` : ''),
-        `${Util.i18n.strings.runtimeSettingsUANetwork}: "${report.environment.networkUserAgent}"`],
+        `${strings.runtimeSettingsUANetwork}: "${report.environment.networkUserAgent}"`],
     ];
 
     const metaItemsEl = this._dom.find('.lh-meta__items', footer);
@@ -176,7 +171,7 @@ export class ReportRenderer {
 
     const container = this._dom.createComponent('warningsToplevel');
     const message = this._dom.find('.lh-warnings__msg', container);
-    message.textContent = Util.i18n.strings.toplevelWarningsMessage;
+    message.textContent = ReportUtils.i18n.strings.toplevelWarningsMessage;
 
     const warnings = [];
     for (const warningString of report.runWarnings) {
@@ -230,7 +225,7 @@ export class ReportRenderer {
       }
 
 
-      if (Util.isPluginCategory(category.id)) {
+      if (ReportUtils.isPluginCategory(category.id)) {
         pluginGauges.push(categoryGauge);
       } else if (renderer.renderCategoryScore === categoryRenderer.renderCategoryScore) {
         // The renderer for default categories is just the default CategoryRenderer.
@@ -254,11 +249,11 @@ export class ReportRenderer {
   _renderReport(report) {
     const i18n = new I18n(report.configSettings.locale, {
       // Set missing renderer strings to default (english) values.
-      ...Util.UIStrings,
+      ...ReportUtils.UIStrings,
       ...report.i18n.rendererFormattedStrings,
     });
-    Util.i18n = i18n;
-    Util.reportJson = report;
+    ReportUtils.i18n = i18n;
+    ReportUtils.reportJson = report;
 
     const fullPageScreenshot =
       report.audits['full-page-screenshot']?.details &&

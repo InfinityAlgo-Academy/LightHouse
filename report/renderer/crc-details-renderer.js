@@ -20,7 +20,7 @@
  * critical request chains network tree.
  */
 
-import {Util} from './util.js';
+import {ReportUtils} from './report-utils.js';
 
 /** @typedef {import('./dom.js').DOM} DOM */
 /** @typedef {import('./details-renderer.js').DetailsRenderer} DetailsRenderer */
@@ -136,9 +136,10 @@ class CriticalRequestChainRenderer {
     if (!segment.hasChildren) {
       const {startTime, endTime, transferSize} = segment.node.request;
       const span = dom.createElement('span', 'lh-crc-node__chain-duration');
-      span.textContent = ' - ' + Util.i18n.formatMilliseconds((endTime - startTime) * 1000) + ', ';
+      span.textContent =
+        ' - ' + ReportUtils.i18n.formatMilliseconds((endTime - startTime) * 1000) + ', ';
       const span2 = dom.createElement('span', 'lh-crc-node__chain-duration');
-      span2.textContent = Util.i18n.formatBytesToKiB(transferSize, 0.01);
+      span2.textContent = ReportUtils.i18n.formatBytesToKiB(transferSize, 0.01);
 
       treevalEl.append(span, span2);
     }
@@ -177,11 +178,12 @@ class CriticalRequestChainRenderer {
     const containerEl = dom.find('.lh-crc', tmpl);
 
     // Fill in top summary.
-    dom.find('.lh-crc-initial-nav', tmpl).textContent = Util.i18n.strings.crcInitialNavigation;
+    dom.find('.lh-crc-initial-nav', tmpl).textContent =
+      ReportUtils.i18n.strings.crcInitialNavigation;
     dom.find('.lh-crc__longest_duration_label', tmpl).textContent =
-        Util.i18n.strings.crcLongestDurationLabel;
+        ReportUtils.i18n.strings.crcLongestDurationLabel;
     dom.find('.lh-crc__longest_duration', tmpl).textContent =
-        Util.i18n.formatMilliseconds(details.longestChain.duration);
+        ReportUtils.i18n.formatMilliseconds(details.longestChain.duration);
 
     // Construct visual tree.
     const root = CRCRenderer.initTree(details.chains);

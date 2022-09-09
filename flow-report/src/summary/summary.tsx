@@ -9,7 +9,7 @@ import {useMemo} from 'preact/hooks';
 
 import {FlowSegment, FlowStepThumbnail, Separator} from '../common';
 import {getModeDescription, useFlowResult} from '../util';
-import {Util} from '../../../report/renderer/util';
+import {ReportUtils} from '../../../report/renderer/report-utils';
 import {SummaryCategory} from './category';
 import {useStringFormatter, useLocalizedStrings} from '../i18n/i18n';
 
@@ -49,7 +49,7 @@ const SummaryFlowStep: FunctionComponent<{
   label: string,
   hashIndex: number,
 }> = ({lhr, label, hashIndex}) => {
-  const reportResult = useMemo(() => Util.prepareReportResult(lhr), [lhr]);
+  const reportResult = useMemo(() => ReportUtils.prepareReportResult(lhr), [lhr]);
   const strings = useLocalizedStrings();
   const modeDescription = getModeDescription(lhr.gatherMode, strings);
 

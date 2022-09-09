@@ -20,7 +20,7 @@
 /** @typedef {HTMLElementTagNameMap & {[id: string]: HTMLElement}} HTMLElementByTagName */
 /** @template {string} T @typedef {import('typed-query-selector/parser').ParseSelector<T, Element>} ParseSelector */
 
-import {Util} from './util.js';
+import {MarkdownUtils} from './report-utils.js';
 import {createComponent} from './components.js';
 
 export class DOM {
@@ -132,7 +132,7 @@ export class DOM {
   convertMarkdownLinkSnippets(text) {
     const element = this.createElement('span');
 
-    for (const segment of Util.splitMarkdownLink(text)) {
+    for (const segment of MarkdownUtils.splitMarkdownLink(text)) {
       const processedSegment = segment.text.includes('`') ?
         this.convertMarkdownCodeSnippets(segment.text) :
         segment.text;
@@ -210,7 +210,7 @@ export class DOM {
   convertMarkdownCodeSnippets(markdownText) {
     const element = this.createElement('span');
 
-    for (const segment of Util.splitMarkdownCodeSpans(markdownText)) {
+    for (const segment of MarkdownUtils.splitMarkdownCodeSpans(markdownText)) {
       if (segment.isCode) {
         const pre = this.createElement('code');
         pre.textContent = segment.text;

@@ -6,7 +6,7 @@
 
 import {FunctionComponent} from 'preact';
 
-import {Util} from '../../../report/renderer/util';
+import {ReportUtils} from '../../../report/renderer/report-utils';
 import {Separator} from '../common';
 import {useI18n, useLocalizedStrings} from '../i18n/i18n';
 import {CpuIcon, EnvIcon, NetworkIcon, SummaryIcon} from '../icons';
@@ -34,7 +34,7 @@ const SidebarSummary: FunctionComponent = () => {
 const SidebarRuntimeSettings: FunctionComponent<{settings: LH.ConfigSettings}> =
 ({settings}) => {
   const strings = useLocalizedStrings();
-  const env = Util.getEmulationDescriptions(settings);
+  const env = ReportUtils.getEmulationDescriptions(settings);
 
   return (
     <div className="SidebarRuntimeSettings">

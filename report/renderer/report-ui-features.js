@@ -26,7 +26,7 @@ import {ElementScreenshotRenderer} from './element-screenshot-renderer.js';
 import {toggleDarkTheme} from './features-util.js';
 import {openTreemap} from './open-tab.js';
 import {TopbarFeatures} from './topbar-features.js';
-import {Util} from './util.js';
+import {ReportUtils, SharedUtils} from './report-utils.js';
 import {getLhrFilenamePrefix} from '../generator/file-namer.js';
 
 /**
@@ -105,7 +105,7 @@ export class ReportUIFeatures {
       this.json.audits['script-treemap-data'] && this.json.audits['script-treemap-data'].details;
     if (showTreemapApp) {
       this.addButton({
-        text: Util.i18n.strings.viewTreemapLabel,
+        text: ReportUtils.i18n.strings.viewTreemapLabel,
         icon: 'treemap',
         onClick: () => openTreemap(this.json),
       });
@@ -114,8 +114,8 @@ export class ReportUIFeatures {
     if (this._opts.onViewTrace) {
       this.addButton({
         text: lhr.configSettings.throttlingMethod === 'simulate' ?
-          Util.i18n.strings.viewOriginalTraceLabel :
-          Util.i18n.strings.viewTraceLabel,
+          ReportUtils.i18n.strings.viewOriginalTraceLabel :
+          ReportUtils.i18n.strings.viewTraceLabel,
         onClick: () => this._opts.onViewTrace?.(),
       });
     }
@@ -126,11 +126,11 @@ export class ReportUIFeatures {
 
     // Fill in all i18n data.
     for (const node of this._dom.findAll('[data-i18n]', this._dom.rootEl)) {
-      // These strings are guaranteed to (at least) have a default English string in Util.UIStrings,
+      // These strings are guaranteed to (at least) have a default English string in ReportUtils.UIStrings,
       // so this cannot be undefined as long as `report-ui-features.data-i18n` test passes.
       const i18nKey = node.getAttribute('data-i18n');
-      const i18nAttr = /** @type {keyof typeof Util.i18n.strings} */ (i18nKey);
-      node.textContent = Util.i18n.strings[i18nAttr];
+      const i18nAttr = /** @type {keyof typeof ReportUtils.i18n.strings} */ (i18nKey);
+      node.textContent = ReportUtils.i18n.strings[i18nAttr];
     }
   }
 
@@ -272,7 +272,7 @@ export class ReportUIFeatures {
       this._dom.find('.lh-3p-filter-count', filterTemplate).textContent =
           `${thirdPartyRows.length}`;
       this._dom.find('.lh-3p-ui-string', filterTemplate).textContent =
-          Util.i18n.strings.thirdPartyResourcesLabel;
+          ReportUtils.i18n.strings.thirdPartyResourcesLabel;
 
       const allThirdParty = thirdPartyRows.length === rowEls.length;
       const allFirstParty = !thirdPartyRows.length;
@@ -324,7 +324,7 @@ export class ReportUIFeatures {
   _getThirdPartyRows(rowEls, finalUrl) {
     /** @type {Array<HTMLElement>} */
     const thirdPartyRows = [];
-    const finalUrlRootDomain = Util.getRootDomain(finalUrl);
+    const finalUrlRootDomain = SharedUtils.getRootDomain(finalUrl);
 
     for (const rowEl of rowEls) {
       if (rowEl.classList.contains('lh-sub-item-row')) continue;
@@ -334,7 +334,7 @@ export class ReportUIFeatures {
 
       const datasetUrl = urlItem.dataset.url;
       if (!datasetUrl) continue;
-      const isThirdParty = Util.getRootDomain(datasetUrl) !== finalUrlRootDomain;
+      const isThirdParty = SharedUtils.getRootDomain(datasetUrl) !== finalUrlRootDomain;
       if (!isThirdParty) continue;
 
       thirdPartyRows.push(rowEl);

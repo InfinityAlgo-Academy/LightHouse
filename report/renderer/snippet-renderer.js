@@ -7,7 +7,8 @@
 /** @typedef {import('./details-renderer').DetailsRenderer} DetailsRenderer */
 /** @typedef {import('./dom').DOM} DOM */
 
-import {Util} from './util.js';
+import {ReportUtils} from './report-utils.js';
+import {Util as Util2} from '../../shared/shared-utils.js';
 
 /** @enum {number} */
 const LineVisibility = {
@@ -73,7 +74,7 @@ function getMessagesForLineNumber(messages, lineNumber) {
  */
 function getLinesWhenCollapsed(details) {
   const SURROUNDING_LINES_TO_SHOW_WHEN_COLLAPSED = 2;
-  return Util.filterRelevantLines(
+  return Util2.filterRelevantLines(
     details.lines,
     details.lineMessages,
     SURROUNDING_LINES_TO_SHOW_WHEN_COLLAPSED
@@ -104,7 +105,7 @@ export class SnippetRenderer {
     const {
       snippetCollapseButtonLabel,
       snippetExpandButtonLabel,
-    } = Util.i18n.strings;
+    } = ReportUtils.i18n.strings;
     dom.find(
       '.lh-snippet__btn-label-collapse',
       header

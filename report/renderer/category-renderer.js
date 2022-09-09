@@ -20,7 +20,7 @@
 /** @typedef {import('./details-renderer.js').DetailsRenderer} DetailsRenderer */
 /** @typedef {'failed'|'warning'|'manual'|'passed'|'notApplicable'} TopLevelClumpId */
 
-import {Util} from './util.js';
+import {ReportUtils, SharedUtils} from './report-utils.js';
 
 export class CategoryRenderer {
   /**
@@ -39,10 +39,10 @@ export class CategoryRenderer {
    */
   get _clumpTitles() {
     return {
-      warning: Util.i18n.strings.warningAuditsGroupTitle,
-      manual: Util.i18n.strings.manualAuditsGroupTitle,
-      passed: Util.i18n.strings.passedAuditsGroupTitle,
-      notApplicable: Util.i18n.strings.notApplicableAuditsGroupTitle,
+      warning: ReportUtils.i18n.strings.warningAuditsGroupTitle,
+      manual: ReportUtils.i18n.strings.manualAuditsGroupTitle,
+      passed: ReportUtils.i18n.strings.passedAuditsGroupTitle,
+      notApplicable: ReportUtils.i18n.strings.notApplicableAuditsGroupTitle,
     };
   }
 
@@ -62,7 +62,7 @@ export class CategoryRenderer {
    * @return {!Element}
    */
   populateAuditValues(audit, component) {
-    const strings = Util.i18n.strings;
+    const strings = ReportUtils.i18n.strings;
     const auditEl = this.dom.find('.lh-audit', component);
     auditEl.id = audit.result.id;
     const scoreDisplayMode = audit.result.scoreDisplayMode;
@@ -185,7 +185,7 @@ export class CategoryRenderer {
    * @return {!Element}
    */
   _setRatingClass(element, score, scoreDisplayMode) {
-    const rating = Util.calculateRating(score, scoreDisplayMode);
+    const rating = SharedUtils.calculateRating(score, scoreDisplayMode);
     element.classList.add(`lh-audit--${scoreDisplayMode.toLowerCase()}`);
     if (scoreDisplayMode !== 'informative') {
       element.classList.add(`lh-audit--${rating}`);
@@ -334,8 +334,8 @@ export class CategoryRenderer {
       el.append(descriptionEl);
     }
 
-    this.dom.find('.lh-clump-toggletext--show', el).textContent = Util.i18n.strings.show;
-    this.dom.find('.lh-clump-toggletext--hide', el).textContent = Util.i18n.strings.hide;
+    this.dom.find('.lh-clump-toggletext--show', el).textContent = ReportUtils.i18n.strings.show;
+    this.dom.find('.lh-clump-toggletext--hide', el).textContent = ReportUtils.i18n.strings.hide;
 
     clumpElement.classList.add(`lh-clump--${clumpId.toLowerCase()}`);
     return el;
@@ -349,7 +349,7 @@ export class CategoryRenderer {
    */
   renderCategoryScore(category, groupDefinitions, options) {
     let categoryScore;
-    if (options && Util.shouldDisplayAsFraction(options.gatherMode)) {
+    if (options && ReportUtils.shouldDisplayAsFraction(options.gatherMode)) {
       categoryScore = this.renderCategoryFraction(category);
     } else {
       categoryScore = this.renderScoreGauge(category, groupDefinitions);
@@ -377,7 +377,7 @@ export class CategoryRenderer {
     const tmpl = this.dom.createComponent('gauge');
     const wrapper = this.dom.find('a.lh-gauge__wrapper', tmpl);
 
-    if (Util.isPluginCategory(category.id)) {
+    if (ReportUtils.isPluginCategory(category.id)) {
       wrapper.classList.add('lh-gauge__wrapper--plugin');
     }
 
@@ -393,16 +393,16 @@ export class CategoryRenderer {
     percentageEl.textContent = scoreOutOf100.toString();
     if (category.score === null) {
       percentageEl.textContent = '?';
-      percentageEl.title = Util.i18n.strings.errorLabel;
+      percentageEl.title = ReportUtils.i18n.strings.errorLabel;
     }
 
     // Render a numerical score if the category has applicable audits, or no audits whatsoever.
     if (category.auditRefs.length === 0 || this.hasApplicableAudits(category)) {
-      wrapper.classList.add(`lh-gauge__wrapper--${Util.calculateRating(category.score)}`);
+      wrapper.classList.add(`lh-gauge__wrapper--${SharedUtils.calculateRating(category.score)}`);
     } else {
       wrapper.classList.add(`lh-gauge__wrapper--not-applicable`);
       percentageEl.textContent = '-';
-      percentageEl.title = Util.i18n.strings.notApplicableAuditsGroupTitle;
+      percentageEl.title = ReportUtils.i18n.strings.notApplicableAuditsGroupTitle;
     }
 
     this.dom.find('.lh-gauge__label', tmpl).textContent = category.title;
@@ -417,7 +417,8 @@ export class CategoryRenderer {
     const tmpl = this.dom.createComponent('fraction');
     const wrapper = this.dom.find('a.lh-fraction__wrapper', tmpl);
 
-    const {numPassed, numPassableAudits, totalWeight} = Util.calculateCategoryFraction(category);
+    const {numPassed, numPassableAudits, totalWeight} =
+      ReportUtils.calculateCategoryFraction(category);
 
     const fraction = numPassed / numPassableAudits;
     const content = this.dom.find('.lh-fraction__content', tmpl);
@@ -425,7 +426,7 @@ export class CategoryRenderer {
     text.textContent = `${numPassed}/${numPassableAudits}`;
     content.append(text);
 
-    let rating = Util.calculateRating(fraction);
+    let rating = SharedUtils.calculateRating(fraction);
 
     // If none of the available audits can affect the score, a rating isn't useful.
     // The flow report should display the fraction with neutral icon and coloring in this case.
@@ -490,7 +491,7 @@ export class CategoryRenderer {
       return scoreDisplayMode;
     }
 
-    if (Util.showAsPassed(auditRef.result)) {
+    if (SharedUtils.showAsPassed(auditRef.result)) {
       if (this._auditHasWarning(auditRef)) {
         return 'warning';
       } else {

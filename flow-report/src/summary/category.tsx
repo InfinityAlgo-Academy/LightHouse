@@ -6,7 +6,7 @@
 
 import {FunctionComponent} from 'preact';
 
-import {Util} from '../../../report/renderer/util';
+import {ReportUtils, SharedUtils} from '../../../report/renderer/report-utils';
 import {Separator} from '../common';
 import {CategoryScore} from '../wrappers/category-score';
 import {useI18n, useStringFormatter, useLocalizedStrings} from '../i18n/i18n';
@@ -48,7 +48,7 @@ function getOverallSavings(audit: LH.ReportResult.AuditRef): number {
 }
 
 const SummaryTooltipAudit: FunctionComponent<{audit: LH.ReportResult.AuditRef}> = ({audit}) => {
-  const rating = Util.calculateRating(audit.result.score, audit.result.scoreDisplayMode);
+  const rating = SharedUtils.calculateRating(audit.result.score, audit.result.scoreDisplayMode);
   return (
     <div className={`SummaryTooltipAudit SummaryTooltipAudit--${rating}`}>
       <Markdown text={audit.result.title}/>
@@ -69,7 +69,7 @@ const SummaryTooltipAudits: FunctionComponent<{category: LH.ReportResult.Categor
       // We don't want unweighted audits except for opportunities with potential savings.
       (audit.weight > 0 || getOverallSavings(audit) > 0) &&
       // Passing audits should never be high impact.
-      !Util.showAsPassed(audit.result);
+      !SharedUtils.showAsPassed(audit.result);
   }
 
   const audits = category.auditRefs
@@ -107,14 +107,14 @@ const SummaryTooltip: FunctionComponent<{
     numPassableAudits,
     numInformative,
     totalWeight,
-  } = Util.calculateCategoryFraction(category);
+  } = ReportUtils.calculateCategoryFraction(category);
 
   const i18n = useI18n();
-  const displayAsFraction = Util.shouldDisplayAsFraction(gatherMode);
+  const displayAsFraction = ReportUtils.shouldDisplayAsFraction(gatherMode);
   const score = displayAsFraction ?
     numPassed / numPassableAudits :
     category.score;
-  const rating = score === null ? 'error' : Util.calculateRating(score);
+  const rating = score === null ? 'error' : SharedUtils.calculateRating(score);
 
   return (
     <div className="SummaryTooltip">

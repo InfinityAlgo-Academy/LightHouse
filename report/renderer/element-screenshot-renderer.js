@@ -22,7 +22,7 @@
  * @property {LH.Audit.Details.FullPageScreenshot} fullPageScreenshot
  */
 
-import {Util} from './util.js';
+import {ReportUtils} from './report-utils.js';
 
 /**
  * @param {LH.Audit.Details.FullPageScreenshot['screenshot']} screenshot
@@ -102,7 +102,7 @@ export class ElementScreenshotRenderer {
    */
   static renderClipPathInScreenshot(dom, maskEl, positionClip, elementRect, elementPreviewSize) {
     const clipPathEl = dom.find('clipPath', maskEl);
-    const clipId = `clip-${Util.getUniqueSuffix()}`;
+    const clipId = `clip-${ReportUtils.getUniqueSuffix()}`;
     clipPathEl.id = clipId;
     maskEl.style.clipPath = `url(#${clipId})`;
 

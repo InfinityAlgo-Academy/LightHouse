@@ -17,7 +17,7 @@ import tsc from 'typescript';
 import MessageParser from 'intl-messageformat-parser';
 import esMain from 'es-main';
 
-import {Util} from '../../util.cjs';
+import {splitMarkdownCodeSpans, splitMarkdownLink} from '../../../shared/markdown.js';
 import {collectAndBakeCtcStrings} from './bake-ctc-to-lhl.js';
 import {pruneObsoleteLhlMessages} from './prune-obsolete-lhl-messages.js';
 import {countTranslatedMessages} from './count-translated.js';
@@ -49,7 +49,6 @@ const ignoredPathComponents = [
   '**/test/**',
   '**/*-test.js',
   '**/*-renderer.js',
-  '**/util-commonjs.js',
   'treemap/app/src/main.js',
 ];
 
@@ -236,7 +235,7 @@ function _processPlaceholderMarkdownCode(icu) {
 
   icu.message = '';
   let idx = 0;
-  for (const segment of Util.splitMarkdownCodeSpans(message)) {
+  for (const segment of splitMarkdownCodeSpans(message)) {
     if (segment.isCode) {
       const placeholderName = `MARKDOWN_SNIPPET_${idx++}`;
       // Backtick replacement looks unreadable here, so .join() instead.
@@ -272,7 +271,7 @@ function _processPlaceholderMarkdownLink(icu) {
   icu.message = '';
   let idx = 0;
 
-  for (const segment of Util.splitMarkdownLink(message)) {
+  for (const segment of splitMarkdownLink(message)) {
     if (!segment.isLink) {
       // Plain text segment.
       icu.message += segment.text;

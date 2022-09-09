@@ -17,7 +17,7 @@
 
 /** @typedef {import('./dom.js').DOM} DOM */
 
-import {Util} from './util.js';
+import {ReportUtils, SharedUtils} from './report-utils.js';
 import {CategoryRenderer} from './category-renderer.js';
 
 export class PerformanceCategoryRenderer extends CategoryRenderer {
@@ -29,7 +29,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     const tmpl = this.dom.createComponent('metric');
     const element = this.dom.find('.lh-metric', tmpl);
     element.id = audit.result.id;
-    const rating = Util.calculateRating(audit.result.score, audit.result.scoreDisplayMode);
+    const rating = SharedUtils.calculateRating(audit.result.score, audit.result.scoreDisplayMode);
     element.classList.add(`lh-metric--${rating}`);
 
     const titleEl = this.dom.find('.lh-metric__title', tmpl);
@@ -77,7 +77,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       this.dom.find('span.lh-audit__display-text, div.lh-audit__display-text', element);
     const sparklineWidthPct = `${details.overallSavingsMs / scale * 100}%`;
     this.dom.find('div.lh-sparkline__bar', element).style.width = sparklineWidthPct;
-    displayEl.textContent = Util.i18n.formatSeconds(details.overallSavingsMs, 0.01);
+    displayEl.textContent = ReportUtils.i18n.formatSeconds(details.overallSavingsMs, 0.01);
 
     // Set [title] tooltips
     if (audit.result.displayValue) {
@@ -142,9 +142,9 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     });
     const paramPairs = [...metricPairs];
 
-    if (Util.reportJson) {
-      paramPairs.push(['device', Util.reportJson.configSettings.formFactor]);
-      paramPairs.push(['version', Util.reportJson.lighthouseVersion]);
+    if (ReportUtils.reportJson) {
+      paramPairs.push(['device', ReportUtils.reportJson.configSettings.formFactor]);
+      paramPairs.push(['version', ReportUtils.reportJson.lighthouseVersion]);
     }
 
     const params = new URLSearchParams(paramPairs);
@@ -176,7 +176,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
    * @override
    */
   render(category, groups, options) {
-    const strings = Util.i18n.strings;
+    const strings = ReportUtils.i18n.strings;
     const element = this.dom.createElement('div', 'lh-category');
     element.id = category.id;
     element.append(this.renderCategoryHeader(category, groups, options));
@@ -188,7 +188,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
       // Metric descriptions toggle.
       const checkboxEl = this.dom.createElement('input', 'lh-metrics-toggle__input');
-      const checkboxId = `lh-metrics-toggle${Util.getUniqueSuffix()}`;
+      const checkboxId = `lh-metrics-toggle${ReportUtils.getUniqueSuffix()}`;
       checkboxEl.setAttribute('aria-label', 'Toggle the display of metric descriptions');
       checkboxEl.type = 'checkbox';
       checkboxEl.id = checkboxId;
@@ -198,8 +198,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
       labelEl.htmlFor = checkboxId;
       const showEl = this.dom.createChildOf(labelEl, 'span', 'lh-metrics-toggle__labeltext--show');
       const hideEl = this.dom.createChildOf(labelEl, 'span', 'lh-metrics-toggle__labeltext--hide');
-      showEl.textContent = Util.i18n.strings.expandView;
-      hideEl.textContent = Util.i18n.strings.collapseView;
+      showEl.textContent = ReportUtils.i18n.strings.expandView;
+      hideEl.textContent = ReportUtils.i18n.strings.collapseView;
 
       const metricsBoxesEl = this.dom.createElement('div', 'lh-metrics-container');
       metricsGroupEl.insertBefore(metricsBoxesEl, metricsFooterEl);
@@ -238,7 +238,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     // Opportunities
     const opportunityAudits = category.auditRefs
         .filter(audit => this._classifyPerformanceAudit(audit) === 'load-opportunity')
-        .filter(audit => !Util.showAsPassed(audit.result))
+        .filter(audit => !SharedUtils.showAsPassed(audit.result))
         .sort((auditA, auditB) => this._getWastedMs(auditB) - this._getWastedMs(auditA));
 
     const filterableMetrics = metricAudits.filter(a => !!a.relevantAudits);
@@ -272,7 +272,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     // Diagnostics
     const diagnosticAudits = category.auditRefs
         .filter(audit => this._classifyPerformanceAudit(audit) === 'diagnostic')
-        .filter(audit => !Util.showAsPassed(audit.result))
+        .filter(audit => !SharedUtils.showAsPassed(audit.result))
         .sort((a, b) => {
           const scoreA = a.result.scoreDisplayMode === 'informative' ? 100 : Number(a.result.score);
           const scoreB = b.result.scoreDisplayMode === 'informative' ? 100 : Number(b.result.score);
@@ -287,8 +287,8 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
     }
 
     // Passed audits
-    const passedAudits = category.auditRefs
-        .filter(audit => this._classifyPerformanceAudit(audit) && Util.showAsPassed(audit.result));
+    const passedAudits = category.auditRefs.filter(
+      audit => this._classifyPerformanceAudit(audit) && SharedUtils.showAsPassed(audit.result));
 
     if (!passedAudits.length) return element;
 
@@ -331,7 +331,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
   renderMetricAuditFilter(filterableMetrics, categoryEl) {
     const metricFilterEl = this.dom.createElement('div', 'lh-metricfilter');
     const textEl = this.dom.createChildOf(metricFilterEl, 'span', 'lh-metricfilter__text');
-    textEl.textContent = Util.i18n.strings.showRelevantAudits;
+    textEl.textContent = ReportUtils.i18n.strings.showRelevantAudits;
 
     const filterChoices = /** @type {LH.ReportResult.AuditRef[]} */ ([
       ({acronym: 'All'}),
@@ -340,7 +340,7 @@ export class PerformanceCategoryRenderer extends CategoryRenderer {
 
     // Form labels need to reference unique IDs, but multiple reports rendered in the same DOM (eg PSI)
     // would mean ID conflict.  To address this, we 'scope' these radio inputs with a unique suffix.
-    const uniqSuffix = Util.getUniqueSuffix();
+    const uniqSuffix = ReportUtils.getUniqueSuffix();
     for (const metric of filterChoices) {
       const elemId = `metric-${metric.acronym}-${uniqSuffix}`;
       const radioEl = this.dom.createChildOf(metricFilterEl, 'input', 'lh-metricfilter__radio');
