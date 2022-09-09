@@ -8,7 +8,7 @@ import {strict as assert} from 'assert';
 
 import jsdom from 'jsdom';
 
-import {Util} from '../../renderer/util.js';
+import {ReportUtils} from '../../renderer/report-utils.js';
 import {I18n} from '../../renderer/i18n.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
@@ -23,14 +23,14 @@ describe('PwaCategoryRenderer', () => {
   let sampleResults;
 
   before(() => {
-    Util.i18n = new I18n('en', {...Util.UIStrings});
+    ReportUtils.i18n = new I18n('en', {...ReportUtils.UIStrings});
 
     const {document} = new jsdom.JSDOM().window;
     const dom = new DOM(document);
     const detailsRenderer = new DetailsRenderer(dom);
     pwaRenderer = new PwaCategoryRenderer(dom, detailsRenderer);
 
-    sampleResults = Util.prepareReportResult(sampleResultsOrig);
+    sampleResults = ReportUtils.prepareReportResult(sampleResultsOrig);
   });
 
   beforeEach(() => {
@@ -40,7 +40,7 @@ describe('PwaCategoryRenderer', () => {
   });
 
   after(() => {
-    Util.i18n = undefined;
+    ReportUtils.i18n = undefined;
   });
 
   it('renders the regular audits', () => {
@@ -258,7 +258,7 @@ describe('PwaCategoryRenderer', () => {
 
       const percentageElem = badgeGauge.querySelector('.lh-gauge__percentage');
       assert.strictEqual(percentageElem.textContent, '?');
-      assert.strictEqual(percentageElem.title, Util.UIStrings.errorLabel);
+      assert.strictEqual(percentageElem.title, ReportUtils.UIStrings.errorLabel);
     });
 
     it('renders score gauges with unique ids for items in <defs>', () => {

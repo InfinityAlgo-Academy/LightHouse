@@ -10,7 +10,7 @@ import jestMock from 'jest-mock';
 import jsdom from 'jsdom';
 
 import {DOM} from '../../renderer/dom.js';
-import {Util} from '../../renderer/util.js';
+import {ReportUtils} from '../../renderer/report-utils.js';
 import {I18n} from '../../renderer/i18n.js';
 
 describe('DOM', () => {
@@ -20,7 +20,7 @@ describe('DOM', () => {
   let nativeCreateObjectURL;
 
   before(() => {
-    Util.i18n = new I18n('en', {...Util.UIStrings});
+    ReportUtils.i18n = new I18n('en', {...ReportUtils.UIStrings});
     window = new jsdom.JSDOM().window;
 
     // The Node version of URL.createObjectURL isn't compatible with the jsdom blob type,
@@ -33,7 +33,7 @@ describe('DOM', () => {
   });
 
   after(() => {
-    Util.i18n = undefined;
+    ReportUtils.i18n = undefined;
     URL.createObjectURL = nativeCreateObjectURL;
   });
 

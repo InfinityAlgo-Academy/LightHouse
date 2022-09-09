@@ -8,7 +8,7 @@ import {strict as assert} from 'assert';
 
 import jsdom from 'jsdom';
 
-import {Util} from '../../renderer/util.js';
+import {ReportUtils} from '../../renderer/report-utils.js';
 import {I18n} from '../../renderer/i18n.js';
 import {DOM} from '../../renderer/dom.js';
 import {SnippetRenderer} from '../../renderer/snippet-renderer.js';
@@ -55,13 +55,13 @@ describe('DetailsRenderer', () => {
   let dom;
 
   before(() => {
-    Util.i18n = new I18n('en', {...Util.UIStrings});
+    ReportUtils.i18n = new I18n('en', {...ReportUtils.UIStrings});
     const {document} = new jsdom.JSDOM().window;
     dom = new DOM(document);
   });
 
   after(() => {
-    Util.i18n = undefined;
+    ReportUtils.i18n = undefined;
   });
 
   function renderSnippet(details) {

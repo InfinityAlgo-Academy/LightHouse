@@ -8,7 +8,7 @@ import {strict as assert} from 'assert';
 
 import jsdom from 'jsdom';
 
-import {Util} from '../../renderer/util.js';
+import {ReportUtils, SharedUtils} from '../../renderer/report-utils.js';
 import {I18n} from '../../renderer/i18n.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
@@ -23,7 +23,7 @@ describe('PerfCategoryRenderer', () => {
   let sampleResults;
 
   before(() => {
-    Util.i18n = new I18n('en', {...Util.UIStrings});
+    ReportUtils.i18n = new I18n('en', {...ReportUtils.UIStrings});
 
     const {document} = new jsdom.JSDOM().window;
     const dom = new DOM(document);
@@ -31,12 +31,12 @@ describe('PerfCategoryRenderer', () => {
     renderer = new PerformanceCategoryRenderer(dom, detailsRenderer);
 
     // TODO: don't call a LH.ReportResult `sampleResults`, which is typically always LH.Result
-    sampleResults = Util.prepareReportResult(sampleResultsOrig);
+    sampleResults = ReportUtils.prepareReportResult(sampleResultsOrig);
     category = sampleResults.categories.performance;
   });
 
   after(() => {
-    Util.i18n = undefined;
+    ReportUtils.i18n = undefined;
   });
 
   it('renders the category header', () => {
@@ -152,7 +152,7 @@ describe('PerfCategoryRenderer', () => {
     const oppAudits = category.auditRefs.filter(audit =>
       audit.result.details &&
       audit.result.details.type === 'opportunity' &&
-      !Util.showAsPassed(audit.result));
+      !SharedUtils.showAsPassed(audit.result));
     const oppElements = [...categoryDOM.querySelectorAll('.lh-audit--load-opportunity')];
     expect(oppElements.map(e => e.id).sort()).toEqual(oppAudits.map(a => a.id).sort());
     expect(oppElements.length).toBeGreaterThan(0);
@@ -221,7 +221,7 @@ describe('PerfCategoryRenderer', () => {
     const diagnosticAuditIds = category.auditRefs.filter(audit => {
       return !audit.group &&
         !(audit.result.details && audit.result.details.type === 'opportunity') &&
-        !Util.showAsPassed(audit.result);
+        !SharedUtils.showAsPassed(audit.result);
     }).map(audit => audit.id).sort();
     assert.ok(diagnosticAuditIds.length > 0);
 
@@ -236,7 +236,7 @@ describe('PerfCategoryRenderer', () => {
 
     const passedAudits = category.auditRefs.filter(audit =>
       !audit.group &&
-      Util.showAsPassed(audit.result));
+      SharedUtils.showAsPassed(audit.result));
     const passedElements = passedSection.querySelectorAll('.lh-audit');
     assert.equal(passedElements.length, passedAudits.length);
   });
@@ -333,7 +333,7 @@ Array [
     });
 
     it('also appends device and version number', () => {
-      Util.reportJson = {
+      ReportUtils.reportJson = {
         configSettings: {formFactor: 'mobile'},
         lighthouseVersion: '6.0.0',
       };
@@ -354,7 +354,7 @@ Array [
 ]
 `);
       } finally {
-        Util.reportJson = null;
+        ReportUtils.reportJson = null;
       }
     });
 

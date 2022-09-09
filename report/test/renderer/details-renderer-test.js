@@ -9,7 +9,7 @@ import {strict as assert} from 'assert';
 import jsdom from 'jsdom';
 
 import {DOM} from '../../renderer/dom.js';
-import {Util} from '../../renderer/util.js';
+import {ReportUtils} from '../../renderer/report-utils.js';
 import {I18n} from '../../renderer/i18n.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 
@@ -23,12 +23,12 @@ describe('DetailsRenderer', () => {
   }
 
   before(() => {
-    Util.i18n = new I18n('en', {...Util.UIStrings});
+    ReportUtils.i18n = new I18n('en', {...ReportUtils.UIStrings});
     createRenderer();
   });
 
   after(() => {
-    Util.i18n = undefined;
+    ReportUtils.i18n = undefined;
   });
 
   describe('render', () => {

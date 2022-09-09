@@ -9,7 +9,7 @@ import {strict as assert} from 'assert';
 import jsdom from 'jsdom';
 import jestMock from 'jest-mock';
 
-import {Util} from '../../renderer/util.js';
+import {ReportUtils} from '../../renderer/report-utils.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
@@ -41,7 +41,7 @@ describe('ReportRenderer', () => {
     const detailsRenderer = new DetailsRenderer(dom);
     const categoryRenderer = new CategoryRenderer(dom, detailsRenderer);
     renderer = new ReportRenderer(dom, categoryRenderer);
-    sampleResults = Util.prepareReportResult(sampleResultsOrig);
+    sampleResults = ReportUtils.prepareReportResult(sampleResultsOrig);
   });
 
   after(() => {

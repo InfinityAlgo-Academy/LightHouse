@@ -7,7 +7,7 @@
 import jsdom from 'jsdom';
 
 import {ElementScreenshotRenderer} from '../../renderer/element-screenshot-renderer.js';
-import {Util} from '../../renderer/util.js';
+import {ReportUtils} from '../../renderer/report-utils.js';
 import {I18n} from '../../renderer/i18n.js';
 import {DOM} from '../../renderer/dom.js';
 
@@ -27,15 +27,15 @@ describe('ElementScreenshotRenderer', () => {
   let dom;
 
   before(() => {
-    Util.i18n = new I18n('en', {...Util.UIStrings});
+    ReportUtils.i18n = new I18n('en', {...ReportUtils.UIStrings});
 
     const {document} = new jsdom.JSDOM().window;
     dom = new DOM(document);
-    Util.resetUniqueSuffix();
+    ReportUtils.resetUniqueSuffix();
   });
 
   after(() => {
-    Util.i18n = undefined;
+    ReportUtils.i18n = undefined;
   });
 
   it('renders screenshot', () => {
