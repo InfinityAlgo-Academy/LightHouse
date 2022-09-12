@@ -124,7 +124,6 @@ class TargetManager extends ProtocolEventEmitter {
         session: newSession,
         protocolListener,
       };
-      this._targetIdToTargets.set(targetId, targetWithSession);
 
       // We want to receive information about network requests from iframes, so enable the Network domain.
       await newSession.sendCommand('Network.enable');
@@ -134,6 +133,8 @@ class TargetManager extends ProtocolEventEmitter {
         flatten: true,
         waitForDebuggerOnStart: true,
       });
+
+      this._targetIdToTargets.set(targetId, targetWithSession);
     } catch (err) {
       // Sometimes targets can be closed before we even have a chance to listen to their network activity.
       if (/Target closed/.test(err.message)) return;
