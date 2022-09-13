@@ -8,7 +8,7 @@
 /** @typedef {import('./dom').DOM} DOM */
 
 import {ReportUtils} from './report-utils.js';
-import {Util as Util2} from '../../shared/shared-utils.js';
+import {Util} from '../../shared/shared-utils.js';
 
 /** @enum {number} */
 const LineVisibility = {
@@ -74,7 +74,7 @@ function getMessagesForLineNumber(messages, lineNumber) {
  */
 function getLinesWhenCollapsed(details) {
   const SURROUNDING_LINES_TO_SHOW_WHEN_COLLAPSED = 2;
-  return Util2.filterRelevantLines(
+  return Util.filterRelevantLines(
     details.lines,
     details.lineMessages,
     SURROUNDING_LINES_TO_SHOW_WHEN_COLLAPSED
