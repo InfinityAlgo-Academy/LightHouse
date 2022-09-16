@@ -31,7 +31,8 @@ const filterResistantAuditIds = ['full-page-screenshot'];
 
 // Some artifacts are used by the report for additional information.
 // Always run these artifacts even if audits do not request them.
-const filterResistantArtifactIds = ['HostUserAgent', 'HostFormFactor', 'Stacks', 'GatherContext'];
+// These are similar to base artifacts but they cannot be run in all 3 modes.
+const filterResistantArtifactIds = ['Stacks', 'NetworkUserAgent'];
 
 /**
  * Returns the set of audit IDs used in the list of categories.
