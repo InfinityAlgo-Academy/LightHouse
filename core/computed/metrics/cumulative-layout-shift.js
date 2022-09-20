@@ -9,16 +9,18 @@ import {ProcessedTrace} from '../processed-trace.js';
 
 /** @typedef {{ts: number, isMainFrame: boolean, weightedScore: number}} LayoutShiftEvent */
 
+const RECENT_INPUT_WINDOW = 500;
+
 class CumulativeLayoutShift {
   /**
    * Returns all LayoutShift events that had no recent input.
    * Only a `weightedScore` per event is returned. For non-main-frame events, this is
    * the only score that matters. For main-frame events, `weighted_score_delta === score`.
    * @see https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/layout/layout_shift_tracker.cc;l=492-495;drc=de3b3a8a8839269c6b44403fa38a13a1ed12fed5
-   * @param {LH.TraceEvent[]} traceEvents
+   * @param {LH.Artifacts.ProcessedTrace} processedTrace
    * @return {Array<LayoutShiftEvent>}
    */
-  static getLayoutShiftEvents(traceEvents) {
+  static getLayoutShiftEvents(processedTrace) {
     const layoutShiftEvents = [];
 
     // Chromium will set `had_recent_input` if there was recent user input, which
@@ -26,9 +28,9 @@ class CumulativeLayoutShift {
     // Lighthouse changes the emulation size. This results in the first few shift
     // events having `had_recent_input` set, so ignore it for those events.
     // See https://bugs.chromium.org/p/chromium/issues/detail?id=1094974.
-    let ignoreHadRecentInput = true;
+    let mustRespectHadRecentInput = false;
 
-    for (const event of traceEvents) {
+    for (const event of processedTrace.frameTreeEvents) {
       if (event.name !== 'LayoutShift' ||
           !event.args.data ||
           event.args.data.is_main_frame === undefined) {
@@ -42,11 +44,10 @@ class CumulativeLayoutShift {
       }
 
       if (event.args.data.had_recent_input) {
-        // `had_recent_input` events aren't used unless currently ignoring.
-        if (!ignoreHadRecentInput) continue;
+        const timing = (event.ts - processedTrace.timestamps.timeOrigin) / 1000;
+        if (timing > RECENT_INPUT_WINDOW || mustRespectHadRecentInput) continue;
       } else {
-        // After a false `had_recent_input`, stop ignoring property.
-        ignoreHadRecentInput = false;
+        mustRespectHadRecentInput = true;
       }
 
       layoutShiftEvents.push({
@@ -106,7 +107,7 @@ class CumulativeLayoutShift {
     const processedTrace = await ProcessedTrace.request(trace, context);
 
     const allFrameShiftEvents =
-        CumulativeLayoutShift.getLayoutShiftEvents(processedTrace.frameTreeEvents);
+        CumulativeLayoutShift.getLayoutShiftEvents(processedTrace);
     const mainFrameShiftEvents = allFrameShiftEvents.filter(e => e.isMainFrame);
 
     // The original Cumulative Layout Shift metric, the sum of all main-frame shift events.
