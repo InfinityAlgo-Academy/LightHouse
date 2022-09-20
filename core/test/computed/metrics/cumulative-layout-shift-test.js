@@ -208,9 +208,9 @@ describe('Metrics: CLS', () => {
       it('includes events with recent input at start of trace, but ignores others', async () => {
         const shiftEvents = [
           {score: 1, ts: 250_000, had_recent_input: true},
-          {score: 1, ts: 500_000, had_recent_input: true},
+          {score: 1, ts: 500_000, had_recent_input: true}, // These first two events will still be counted because they are within the 500ms window.
           {score: 1, ts: 750_000, had_recent_input: true},
-          {score: 1, ts: 1_000_000, had_recent_input: true}, // These first four events will still be counted.
+          {score: 1, ts: 1_000_000, had_recent_input: true}, // These second two events will not be counted because they are outside the 500ms window.
 
           {score: 1, ts: 1_250_000, had_recent_input: false},
 
@@ -223,9 +223,9 @@ describe('Metrics: CLS', () => {
 
         const result = await CumulativeLayoutShift.request(trace, context);
         expect(result).toEqual({
-          cumulativeLayoutShift: 5,
-          cumulativeLayoutShiftMainFrame: 5,
-          totalCumulativeLayoutShift: 5,
+          cumulativeLayoutShift: 3,
+          cumulativeLayoutShiftMainFrame: 3,
+          totalCumulativeLayoutShift: 3,
         });
       });
     });
@@ -252,8 +252,8 @@ describe('Metrics: CLS', () => {
 
       it('includes events with recent input at start of trace, but ignores others', async () => {
         const shiftEvents = [
-          {score: 1, ts: 250_000, had_recent_input: true},
-          {score: 1, ts: 750_000, had_recent_input: true}, // These first two events will still be counted.
+          {score: 1, ts: 250_000, had_recent_input: true}, // This event will still be counted because it is within the 500ms window.
+          {score: 1, ts: 750_000, had_recent_input: true}, // This event will not be counted because it is outside the 500ms window.
 
           {score: 1, ts: 1_250_000, had_recent_input: false},
 
@@ -261,8 +261,8 @@ describe('Metrics: CLS', () => {
           {score: 1, ts: 2_000_000, had_recent_input: true},
 
           // Child frame
-          {score: 1, ts: 500_000, had_recent_input: true, is_main_frame: false},
-          {score: 1, ts: 1_000_000, had_recent_input: true, is_main_frame: false}, // These first two events will still be counted.
+          {score: 1, ts: 500_000, had_recent_input: true, is_main_frame: false}, // This event will still be counted because it is within the 500ms window.
+          {score: 1, ts: 1_000_000, had_recent_input: true, is_main_frame: false}, // This event will not be counted because it is outside the 500ms window.
 
           {score: 1, ts: 1_250_000, had_recent_input: false, is_main_frame: false},
 
@@ -273,9 +273,9 @@ describe('Metrics: CLS', () => {
 
         const result = await CumulativeLayoutShift.request(trace, context);
         expect(result).toMatchObject({
-          cumulativeLayoutShift: 6,
-          cumulativeLayoutShiftMainFrame: 3,
-          totalCumulativeLayoutShift: 3,
+          cumulativeLayoutShift: 4,
+          cumulativeLayoutShiftMainFrame: 2,
+          totalCumulativeLayoutShift: 2,
         });
       });
 
