@@ -28,9 +28,9 @@ describe('Lighthouse Viewer', () => {
   // eslint-disable-next-line no-console
   console.log('\n✨ Be sure to have recently run this: yarn build-viewer');
 
-  /** @type {import('puppeteer').Browser} */
+  /** @type {puppeteer.Browser} */
   let browser;
-  /** @type {import('puppeteer').Page} */
+  /** @type {puppeteer.Page} */
   let viewerPage;
   const pageErrors = [];
 
@@ -173,7 +173,8 @@ describe('Lighthouse Viewer', () => {
     });
 
     it('should support swapping locales', async () => {
-      function queryLocaleState() {
+      async function queryLocaleState() {
+        await viewerPage.waitForSelector('.lh-locale-selector');
         return viewerPage.$$eval('.lh-locale-selector', (elems) => {
           const selectEl = elems[0];
           const optionEls = [...selectEl.querySelectorAll('option')];
@@ -281,7 +282,7 @@ describe('Lighthouse Viewer', () => {
      * fall through.
      * To set the mocked PSI response, assign `psiResponse`.
      * To read the intercepted request, use `interceptedRequest`.
-     * @param {import('puppeteer').HTTPRequest} request
+     * @param {puppeteer.HTTPRequest} request
      */
     function onRequest(request) {
       if (request.url().includes('https://www.googleapis.com')) {
