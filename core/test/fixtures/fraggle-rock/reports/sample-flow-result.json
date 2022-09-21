@@ -1812,7 +1812,8 @@
                     "initiatorType": "other"
                   }
                 ],
-                "pathLength": 2
+                "pathLength": 2,
+                "missingInitiator": false
               }
             }
           },
@@ -15767,7 +15768,8 @@
                     "initiatorType": "other"
                   }
                 ],
-                "pathLength": 2
+                "pathLength": 2,
+                "missingInitiator": false
               }
             }
           },

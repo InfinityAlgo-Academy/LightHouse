@@ -97,7 +97,7 @@ class PreloadLCPImageAudit extends Audit {
    * @param {LH.Gatherer.Simulation.GraphNode} graph
    * @param {LH.Artifacts.TraceElement} lcpElement
    * @param {Array<LH.Artifacts.ImageElement>} imageElements
-   * @return {{lcpNodeToPreload?: LH.Gatherer.Simulation.GraphNetworkNode, initiatorPath?: InitiatorPath}}
+   * @return {{lcpNodeToPreload?: LH.Gatherer.Simulation.GraphNetworkNode, initiatorPath?: InitiatorPath, missingInitiator?: boolean}}
    */
   static getLCPNodeToPreload(mainResource, graph, lcpElement, imageElements) {
     const lcpImageElement = imageElements.find(elem => {
@@ -121,6 +121,9 @@ class PreloadLCPImageAudit extends Audit {
     return {
       lcpNodeToPreload,
       initiatorPath,
+      // Only used for debugdata, to track the case where Chrome can't give us an initiator chain.
+      // See img.lazy note in `shouldPreloadRequest`.
+      missingInitiator: initiatorPath && !lcpNode.record.initiatorRequest,
     };
   }
 
@@ -239,7 +242,7 @@ class PreloadLCPImageAudit extends Audit {
 
     const graph = lanternLCP.pessimisticGraph;
     // eslint-disable-next-line max-len
-    const {lcpNodeToPreload, initiatorPath} = PreloadLCPImageAudit.getLCPNodeToPreload(mainResource, graph, lcpElement, artifacts.ImageElements);
+    const {lcpNodeToPreload, initiatorPath, missingInitiator} = PreloadLCPImageAudit.getLCPNodeToPreload(mainResource, graph, lcpElement, artifacts.ImageElements);
 
     const {results, wastedMs} =
       PreloadLCPImageAudit.computeWasteWithGraph(lcpElement, lcpNodeToPreload, graph, simulator);
@@ -260,6 +263,7 @@ class PreloadLCPImageAudit extends Audit {
         type: 'debugdata',
         initiatorPath,
         pathLength: initiatorPath.length,
+        missingInitiator,
       };
     }
 
