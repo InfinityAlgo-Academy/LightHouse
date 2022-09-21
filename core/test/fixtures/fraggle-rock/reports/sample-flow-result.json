@@ -1797,45 +1797,8 @@
             "displayValue": "",
             "details": {
               "type": "opportunity",
-              "headings": [
-                {
-                  "key": "node",
-                  "valueType": "node",
-                  "label": ""
-                },
-                {
-                  "key": "url",
-                  "valueType": "url",
-                  "label": "URL"
-                },
-                {
-                  "key": "wastedMs",
-                  "valueType": "timespanMs",
-                  "label": "Potential Savings"
-                }
-              ],
-              "items": [
-                {
-                  "node": {
-                    "type": "node",
-                    "lhId": "page-1-IMG",
-                    "path": "1,HTML,1,BODY,0,DIV,0,DIV,4,IMG",
-                    "selector": "body > div#__next > div.flex > img.h-32",
-                    "boundingRect": {
-                      "top": 192,
-                      "bottom": 320,
-                      "left": 38,
-                      "right": 322,
-                      "width": 284,
-                      "height": 128
-                    },
-                    "snippet": "<img src=\"/logo-text.svg\" class=\"h-32 sm:h-44 mt-12 md:mt-24 mb-8 lg:mb-16\" alt=\"Mike's Cereal Shack Logo\">",
-                    "nodeLabel": "Mike's Cereal Shack Logo"
-                  },
-                  "url": "https://www.mikescerealshack.co/logo-text.svg",
-                  "wastedMs": 0
-                }
-              ],
+              "headings": [],
+              "items": [],
               "overallSavingsMs": 0,
               "debugData": {
                 "type": "debugdata",
@@ -6247,7 +6210,6 @@
               "audits[network-server-latency].details.headings[0].text",
               "audits[long-tasks].details.headings[0].text",
               "audits[unsized-images].details.headings[1].text",
-              "audits[preload-lcp-image].details.headings[1].label",
               "audits[total-byte-weight].details.headings[0].text",
               "audits[legacy-javascript].details.headings[0].label"
             ],
@@ -6601,10 +6563,6 @@
             ],
             "core/audits/preload-lcp-image.js | description": [
               "audits[preload-lcp-image].description"
-            ],
-            "core/lib/i18n/i18n.js | columnWastedBytes": [
-              "audits[preload-lcp-image].details.headings[2].label",
-              "audits[legacy-javascript].details.headings[2].label"
             ],
             "core/audits/csp-xss.js | title": [
               "audits[csp-xss].title"
@@ -7022,6 +6980,9 @@
                 },
                 "path": "audits[legacy-javascript].displayValue"
               }
+            ],
+            "core/lib/i18n/i18n.js | columnWastedBytes": [
+              "audits[legacy-javascript].details.headings[2].label"
             ],
             "core/audits/dobetterweb/doctype.js | title": [
               "audits.doctype.title"
@@ -15791,45 +15752,8 @@
             "displayValue": "",
             "details": {
               "type": "opportunity",
-              "headings": [
-                {
-                  "key": "node",
-                  "valueType": "node",
-                  "label": ""
-                },
-                {
-                  "key": "url",
-                  "valueType": "url",
-                  "label": "URL"
-                },
-                {
-                  "key": "wastedMs",
-                  "valueType": "timespanMs",
-                  "label": "Potential Savings"
-                }
-              ],
-              "items": [
-                {
-                  "node": {
-                    "type": "node",
-                    "lhId": "page-1-IMG",
-                    "path": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,2,DIV,0,IMG",
-                    "selector": "div.flex > main#main-content > div.flex > img.rounded-md",
-                    "boundingRect": {
-                      "top": -18,
-                      "bottom": 142,
-                      "left": 38,
-                      "right": 322,
-                      "width": 284,
-                      "height": 160
-                    },
-                    "snippet": "<img class=\"rounded-md h-40 sm:h-48 md:h-60 lg:h-80\" src=\"/oscar-actually.jpg\">",
-                    "nodeLabel": "div.flex > main#main-content > div.flex > img.rounded-md"
-                  },
-                  "url": "https://www.mikescerealshack.co/oscar-actually.jpg",
-                  "wastedMs": 0
-                }
-              ],
+              "headings": [],
+              "items": [],
               "overallSavingsMs": 0,
               "debugData": {
                 "type": "debugdata",
@@ -20371,7 +20295,6 @@
               "audits[network-server-latency].details.headings[0].text",
               "audits[long-tasks].details.headings[0].text",
               "audits[unsized-images].details.headings[1].text",
-              "audits[preload-lcp-image].details.headings[1].label",
               "audits[total-byte-weight].details.headings[0].text",
               "audits[modern-image-formats].details.headings[1].label",
               "audits[uses-responsive-images].details.headings[1].label",
@@ -20717,12 +20640,6 @@
             ],
             "core/audits/preload-lcp-image.js | description": [
               "audits[preload-lcp-image].description"
-            ],
-            "core/lib/i18n/i18n.js | columnWastedBytes": [
-              "audits[preload-lcp-image].details.headings[2].label",
-              "audits[modern-image-formats].details.headings[3].label",
-              "audits[uses-responsive-images].details.headings[3].label",
-              "audits[legacy-javascript].details.headings[2].label"
             ],
             "core/audits/csp-xss.js | title": [
               "audits[csp-xss].title"
@@ -21117,6 +21034,11 @@
             "core/lib/i18n/i18n.js | columnResourceSize": [
               "audits[modern-image-formats].details.headings[2].label",
               "audits[uses-responsive-images].details.headings[2].label"
+            ],
+            "core/lib/i18n/i18n.js | columnWastedBytes": [
+              "audits[modern-image-formats].details.headings[3].label",
+              "audits[uses-responsive-images].details.headings[3].label",
+              "audits[legacy-javascript].details.headings[2].label"
             ],
             "core/audits/byte-efficiency/uses-optimized-images.js | title": [
               "audits[uses-optimized-images].title"

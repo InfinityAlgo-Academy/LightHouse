@@ -50,14 +50,19 @@ class PreloadLCPImageAudit extends Audit {
    * @return {boolean}
    */
   static shouldPreloadRequest(request, mainResource, initiatorPath) {
-    const mainResourceDepth = mainResource.redirects ? mainResource.redirects.length : 0;
+    const mainResourceDepth = 0;
+    // We _should_ consider the redirect chain, however Lantern skips the redirect chain of
+    // for the main document, only keeping the resolved request as the root of the graph and discarding
+    // all the rest. Hence, the initiator path for all subsequent requests always starts at this
+    // finally resolved request. If that changes, we need to use the following code.
+    // const mainResourceDepth = mainResource.redirects ? mainResource.redirects.length : 0;
 
     // If it's already preloaded, no need to recommend it.
     if (request.isLinkPreload) return false;
     // It's not a request loaded over the network, don't recommend it.
     if (NetworkRequest.isNonNetworkRequest(request)) return false;
     // It's already discoverable from the main document, don't recommend it.
-    if (initiatorPath.length <= mainResourceDepth) return false;
+    if (initiatorPath.length <= mainResourceDepth + 1) return false;
     // Finally, return whether or not it belongs to the main frame
     return request.frameId === mainResource.frameId;
   }
