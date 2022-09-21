@@ -43,7 +43,6 @@ class PreloadLCPImageAudit extends Audit {
   }
 
   /**
-   *
    * @param {LH.Artifacts.NetworkRequest} request
    * @param {LH.Artifacts.NetworkRequest} mainResource
    * @param {Array<LH.Gatherer.Simulation.GraphNode>} initiatorPath
@@ -56,8 +55,17 @@ class PreloadLCPImageAudit extends Audit {
     if (request.isLinkPreload) return false;
     // It's not a request loaded over the network, don't recommend it.
     if (NetworkRequest.isNonNetworkRequest(request)) return false;
-    // It's already discoverable from the main document, don't recommend it.
-    if (initiatorPath.length <= mainResourceDepth + 1) return false;
+    // If the LCP element was lazy-loaded, tracing loses initiator information and the
+    // lantern graph defaults to just connecting it to the root request. In this case,
+    // initiatorRequest will be undefined. Because the initiator path will be bogus,
+    // just ignore the following check for lazy-loaded images.
+    // Note: lcp-lazy-loaded audit will direct the user to the correct course of action,
+    // which would be to not lazy load the LCP element. So it's somewhat OK to just dismiss
+    // this case for this audit.
+    if (request.initiatorRequest) {
+      // It's already discoverable from the main document, don't recommend it.
+      if (initiatorPath.length <= mainResourceDepth + 1) return false;
+    }
     // Finally, return whether or not it belongs to the main frame
     return request.frameId === mainResource.frameId;
   }
