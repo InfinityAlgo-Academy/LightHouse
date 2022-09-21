@@ -26,7 +26,7 @@ describe('Performance: preload-lcp audit', () => {
       devtoolsLogs: {[PreloadLCPImage.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {
         initialUrl: 'about:blank',
-        requestedUrl: finalUrl,
+        requestedUrl: rootNodeUrl,
         mainDocumentUrl: finalUrl,
         finalUrl,
       },
@@ -128,7 +128,7 @@ describe('Performance: preload-lcp audit', () => {
         startTime: 0,
         endTime: 0.5,
         timing: {receiveHeadersEnd: 500},
-        url: mainDocumentNodeUrl,
+        url: rootNodeUrl,
       },
       {
         requestId: '2',
@@ -139,10 +139,10 @@ describe('Performance: preload-lcp audit', () => {
         endTime: 4.5,
         timing: {receiveHeadersEnd: 2500},
         url: imageUrl,
-        initiator: {type: 'document', url: mainDocumentNodeUrl},
+        initiator: {type: 'document', url: rootNodeUrl},
       },
     ];
-    const artifacts = mockArtifacts(networkRecords, mainDocumentNodeUrl, imageUrl);
+    const artifacts = mockArtifacts(networkRecords, rootNodeUrl, imageUrl);
     const context = {settings: {}, computedCache: new Map()};
     const result = await PreloadLCPImage.audit(artifacts, context);
     expect(result.score).toEqual(1);
@@ -199,8 +199,9 @@ describe('Performance: preload-lcp audit', () => {
         {url: 'http://www.example.com/image.png', initiatorType: 'script'},
         {url: 'http://www.example.com/script.js', initiatorType: 'parser'},
         {url: 'http://www.example.com:3000', initiatorType: 'other'},
+        {url: 'http://example.com:3000', initiatorType: 'other'},
       ],
-      pathLength: 3,
+      pathLength: 4,
     });
   });
 
@@ -231,8 +232,9 @@ describe('Performance: preload-lcp audit', () => {
         {url: 'http://www.example.com/image.png', initiatorType: 'script'},
         {url: 'http://www.example.com/script.js', initiatorType: 'parser'},
         {url: 'http://www.example.com:3000', initiatorType: 'other'},
+        {url: 'http://example.com:3000', initiatorType: 'other'},
       ],
-      pathLength: 3,
+      pathLength: 4,
     });
   });
 });
