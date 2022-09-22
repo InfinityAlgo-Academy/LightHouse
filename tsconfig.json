@@ -19,7 +19,7 @@
     "core/util.cjs",
     "clients/**/*.js",
     "build/**/*.js",
-    "./types/**/*.d.ts",
+    "./types/**/*.ts",
     "eslint-local-rules.cjs",
     "third-party/axe/valid-langs.js",
 

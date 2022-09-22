@@ -8,7 +8,7 @@
     // directory structure relative to rootDir. No effect on include, exclude, etc.
     "emitDeclarationOnly": true,
     "declarationMap": true,
-    "outDir": ".tmp/tsbuildinfo/",
+    "outDir": "dist/tsbuildinfo/",
     "rootDir": ".",
 
     "target": "es2020",
