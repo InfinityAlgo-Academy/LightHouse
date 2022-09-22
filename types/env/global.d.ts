@@ -1,1 +1,3 @@
-import '../global-lh';
+export * from '../lh';
+
+export as namespace LH;
