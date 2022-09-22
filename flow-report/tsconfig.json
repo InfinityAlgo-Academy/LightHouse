@@ -19,7 +19,7 @@
     "**/*.ts",
     "**/*.tsx",
     "./types",
-    "../types/test.d.ts",
+    "../types/env/test.d.ts",
     "../root.js",
     "../esm-utils.js",
     "../core/test/test-env/fake-timers.js",
