@@ -1,4 +1,4 @@
-import {UserFlow as UserFlow_} from '../core/user-flow';
+import {UserFlow as UserFlow_} from '../core/user-flow.js';
 
 declare module UserFlow {
   export interface FlowArtifacts {
@@ -14,6 +14,6 @@ declare module UserFlow {
   }
 }
 
-type UserFlow = typeof UserFlow_;
+type UserFlow = InstanceType<typeof UserFlow_>;
 
 export default UserFlow;

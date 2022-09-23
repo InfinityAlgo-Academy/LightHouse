@@ -13,6 +13,7 @@ import UrlUtils from './lib/url-utils.js';
 import * as fraggleRock from './api.js';
 import {Driver} from './legacy/gather/driver.js';
 import {initializeConfig} from './config/config.js';
+import * as LH from '../types/lh.js';
 
 /** @typedef {import('./legacy/gather/connections/connection.js').Connection} Connection */
 
@@ -111,6 +112,7 @@ export default lighthouse;
 export {Audit} from './audits/audit.js';
 export {default as Gatherer} from './gather/base-gatherer.js';
 export {NetworkRecords} from './computed/network-records.js';
+export * from '../types/lh.js';
 export {
   legacyNavigation,
   generateConfig,

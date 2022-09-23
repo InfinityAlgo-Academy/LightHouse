@@ -76,7 +76,7 @@ module.exports = {
       vars: 'all',
       args: 'after-used',
       argsIgnorePattern: '(^reject$|^_+$)',
-      varsIgnorePattern: '(^_$)',
+      varsIgnorePattern: '(^_$|^LH$)',
     }],
     'space-infix-ops': 2,
     'strict': [2, 'global'],
