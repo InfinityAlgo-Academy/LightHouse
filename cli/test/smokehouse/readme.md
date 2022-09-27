@@ -6,7 +6,7 @@ By default this is done using the Lighthouse CLI (to exercise the full pipeline)
 
 ## Options
 
-See [`SmokehouseOptions`](https://github.com/GoogleChrome/lighthouse/blob/master/cli/test/smokehouse/smokehouse.js#L23).
+See [`SmokehouseOptions`](https://github.com/GoogleChrome/lighthouse/blob/main/cli/test/smokehouse/smokehouse.js#L23).
 
 ## Test definitions
 
