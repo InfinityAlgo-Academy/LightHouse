@@ -116,6 +116,25 @@ describe('._fetchResourceOverProtocol', () => {
     });
   });
 
+  it('returns empty headers if nothing requested', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: 'FRAME'}}})
+      .mockResponse('Network.loadNetworkResource', {
+        resource: {success: true, httpStatusCode: 200, stream: '1', headers: {
+          'x_some_header': 'a',
+          'x_some_header_2': 'b',
+        }},
+      });
+
+    const data = await fetcher._fetchResourceOverProtocol('https://example.com', {
+      timeout: 500, responseHeaders: []});
+    expect(data).toStrictEqual({
+      content: streamContents,
+      headers: {},
+      status: 200,
+    });
+  });
+
   it('returns null when resource could not be fetched', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
       .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: 'FRAME'}}})
