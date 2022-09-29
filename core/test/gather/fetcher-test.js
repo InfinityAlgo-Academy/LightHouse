@@ -90,8 +90,30 @@ describe('._fetchResourceOverProtocol', () => {
         resource: {success: true, httpStatusCode: 200, stream: '1'},
       });
 
-    const data = await fetcher._fetchResourceOverProtocol('https://example.com', {timeout: 500});
-    expect(data).toEqual({content: streamContents, status: 200});
+    const data = await fetcher._fetchResourceOverProtocol('https://example.com', {
+      timeout: 500, responseHeaders: []});
+    expect(data).toEqual({content: streamContents, headers: null, status: 200});
+  });
+
+  it('returns requested headers if present', async () => {
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Page.getFrameTree', {frameTree: {frame: {id: 'FRAME'}}})
+      .mockResponse('Network.loadNetworkResource', {
+        resource: {success: true, httpStatusCode: 200, stream: '1', headers: {
+          'x_some_header': 'a',
+          'x_some_header_ignore': 'b',
+        }},
+      });
+
+    const data = await fetcher._fetchResourceOverProtocol('https://example.com', {
+      timeout: 500, responseHeaders: ['x_some_header', 'x_not_there']});
+    expect(data).toStrictEqual({
+      content: streamContents,
+      headers: {
+        'x_some_header': 'a',
+      },
+      status: 200,
+    });
   });
 
   it('returns null when resource could not be fetched', async () => {
@@ -101,8 +123,9 @@ describe('._fetchResourceOverProtocol', () => {
         resource: {success: false, httpStatusCode: 404},
       });
 
-    const data = await fetcher._fetchResourceOverProtocol('https://example.com', {timeout: 500});
-    expect(data).toEqual({content: null, status: 404});
+    const data = await fetcher._fetchResourceOverProtocol('https://example.com', {
+      timeout: 500, responseHeaders: []});
+    expect(data).toEqual({content: null, headers: null, status: 404});
   });
 
   it('throws on timeout', async () => {
@@ -112,7 +135,8 @@ describe('._fetchResourceOverProtocol', () => {
         resource: {success: false, httpStatusCode: 404},
       }, 100);
 
-    const dataPromise = fetcher._fetchResourceOverProtocol('https://example.com', {timeout: 50});
+    const dataPromise = fetcher._fetchResourceOverProtocol('https://example.com', {
+      timeout: 50, responseHeaders: []});
     await expect(dataPromise).rejects.toThrowError(/Timed out fetching resource/);
   });
 
@@ -128,7 +152,8 @@ describe('._fetchResourceOverProtocol', () => {
       timeout = options.timeout;
     });
 
-    await fetcher._fetchResourceOverProtocol('https://example.com', {timeout: 1000});
+    await fetcher._fetchResourceOverProtocol('https://example.com', {
+      timeout: 1000, responseHeaders: []});
     expect(timeout).toBeCloseTo(500, -2);
   });
 });

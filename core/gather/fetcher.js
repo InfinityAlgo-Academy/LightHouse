@@ -11,7 +11,7 @@
 
 /* global fetch */
 
-/** @typedef {{content: string|null, status: number|null}} FetchResponse */
+/** @typedef {{content: string|null, status: number|null, headers: LH.Crdp.Network.Headers|null}} FetchResponse */
 
 class Fetcher {
   /**
@@ -25,24 +25,37 @@ class Fetcher {
    * Fetches any resource using the network directly.
    *
    * @param {string} url
-   * @param {{timeout: number}=} options timeout is in ms
+   * @param {{timeout?: number, responseHeaders?: string[]}=} options
+   *  - timeout is in ms
+   *  - responseHeaders is used to filter the resulting headers object.
+   *  Sometime in the future, when Node has full Fetch support, this can be removed
+   *  and instead we can just return a Headers instance. In the meantime, ask users
+   *  to early-declare the headers they are interested in so we can skip some processing
+   *  in the `_fetchWithFetchApi` case.
    * @return {Promise<FetchResponse>}
    */
-  async fetchResource(url, options = {timeout: 2_000}) {
+  async fetchResource(url, options = {}) {
+    const resolvedOptions = {
+      timeout: options.timeout ?? 2_000,
+      responseHeaders: options.responseHeaders ?? [],
+    };
+
     // In Lightrider, `Network.loadNetworkResource` is not implemented, but fetch
     // is configured to work for any resource.
     if (global.isLightrider) {
-      return this._wrapWithTimeout(this._fetchWithFetchApi(url), options.timeout);
+      return this._wrapWithTimeout(
+        this._fetchWithFetchApi(url, resolvedOptions), resolvedOptions.timeout);
     }
 
-    return this._fetchResourceOverProtocol(url, options);
+    return this._fetchResourceOverProtocol(url, resolvedOptions);
   }
 
   /**
    * @param {string} url
+   * @param {{responseHeaders: string[]}} options
    * @return {Promise<FetchResponse>}
    */
-  async _fetchWithFetchApi(url) {
+  async _fetchWithFetchApi(url, options) {
     const response = await fetch(url);
 
     let content = null;
@@ -50,9 +63,20 @@ class Fetcher {
       content = await response.text();
     } catch {}
 
+    /** @type {LH.Crdp.Network.Headers|null} */
+    let headers = null;
+    if (response.headers) {
+      headers = {};
+      for (const header of options.responseHeaders) {
+        const value = response.headers.get(header);
+        if (value !== null) headers[header] = value;
+      }
+    }
+
     return {
       content,
       status: response.status,
+      headers,
     };
   }
 
@@ -83,7 +107,7 @@ class Fetcher {
 
   /**
    * @param {string} url
-   * @return {Promise<{stream: LH.Crdp.IO.StreamHandle|null, status: number|null}>}
+   * @return {Promise<{stream: LH.Crdp.IO.StreamHandle|null, status: number|null, headers: LH.Crdp.Network.Headers|null}>}
    */
   async _loadNetworkResource(url) {
     const frameTreeResponse = await this.session.sendCommand('Page.getFrameTree');
@@ -99,24 +123,40 @@ class Fetcher {
     return {
       stream: networkResponse.resource.success ? (networkResponse.resource.stream || null) : null,
       status: networkResponse.resource.httpStatusCode || null,
+      headers: networkResponse.resource.headers || null,
     };
   }
 
   /**
    * @param {string} url
-   * @param {{timeout: number}} options timeout is in ms
+   * @param {{timeout: number, responseHeaders: string[]}} options timeout is in ms
    * @return {Promise<FetchResponse>}
    */
   async _fetchResourceOverProtocol(url, options) {
     const startTime = Date.now();
     const response = await this._wrapWithTimeout(this._loadNetworkResource(url), options.timeout);
 
+    /** @type {LH.Crdp.Network.Headers|null} */
+    let headers = null;
+    if (response.headers) {
+      headers = {};
+      for (const header of options.responseHeaders) {
+        if (response.headers[header] !== undefined) {
+          headers[header] = response.headers[header];
+        }
+      }
+    }
+
     const isOk = response.status && response.status >= 200 && response.status <= 299;
-    if (!response.stream || !isOk) return {status: response.status, content: null};
+    if (!response.stream || !isOk) return {status: response.status, content: null, headers};
 
     const timeout = options.timeout - (Date.now() - startTime);
     const content = await this._readIOStream(response.stream, {timeout});
-    return {status: response.status, content};
+    return {
+      status: response.status,
+      content,
+      headers,
+    };
   }
 
   /**
