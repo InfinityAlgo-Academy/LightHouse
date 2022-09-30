@@ -510,9 +510,10 @@ export class DetailsRenderer {
     if (item.path) element.setAttribute('data-path', item.path);
     if (item.selector) element.setAttribute('data-selector', item.selector);
     if (item.snippet) element.setAttribute('data-snippet', item.snippet);
-    if (item.lhId && this._nodeStackTraces?.nodes?.[item.lhId]) {
-      element.setAttribute('data-creation-url', this._nodeStackTraces.nodes[item.lhId].url);
-    }
+    // if (item.lhId && this._nodeStackTraces?.nodes?.[item.lhId]) {
+    //   const url = // TODO decode stack
+    //   element.setAttribute('data-creation-url', this._nodeStackTraces.nodes[item.lhId].url);
+    // }
 
     if (!this._fullPageScreenshot) return element;
 

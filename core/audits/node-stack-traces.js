@@ -29,18 +29,59 @@ class FullPageScreenshot extends Audit {
       return {score: 0, notApplicable: true};
     }
 
-    /** @type {Record<string, LH.Crdp.Runtime.CallFrame>} */
+    /** @type {string[]} */
+    const urls = [];
+
+    /** @type {Array<{url: number, line: number, column: number}>} */
+    const frames = [];
+
+    /** @type {Array<number[]>} */
+    const stacks = [];
+
+    /** @param {number[]} frames */
+    function dedupeStack(frames) {
+      let stackIndex = stacks.findIndex(s => {
+        return s.length === frames.length && s.every((value, index) => frames[index] === value);
+      });
+      if (stackIndex === -1) {
+        stackIndex = stacks.length;
+        stacks.push(frames);
+      }
+      return stackIndex;
+    }
+
+    /** @type {Record<string, {creation: number}>} */
     const nodes = {};
     for (const [lhId, stackTraces] of Object.entries(artifacts.NodeStackTraces.nodes)) {
       if (!stackTraces.creation) continue;
-      const topCallFrame = stackTraces.creation.callFrames[0];
-      nodes[lhId] = topCallFrame;
+
+      nodes[lhId] = {
+        creation: dedupeStack(stackTraces.creation.callFrames.map(frame => {
+          let urlIndex = urls.indexOf(frame.url);
+          if (urlIndex === -1) {
+            urlIndex = urls.length;
+            urls.push(frame.url);
+          }
+
+          let frameIndex = frames.findIndex(f =>
+            f.url === urlIndex && f.line === frame.lineNumber && f.column === frame.columnNumber);
+          if (frameIndex === -1) {
+            frameIndex = frames.length;
+            frames.push({url: urlIndex, line: frame.lineNumber, column: frame.columnNumber});
+          }
+
+          return frameIndex;
+        })),
+      };
     }
 
     return {
       score: 1,
       details: {
         type: 'debugdata',
+        urls,
+        frames,
+        stacks,
         nodes,
       },
     };
