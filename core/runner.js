@@ -122,7 +122,7 @@ class Runner {
       const lhr = /** @type {LH.Result} */ (i18nLhr);
 
       // Save lhr to ./latest-run, but only if -GA is used.
-      if (settings.gatherMode && settings.auditMode) {
+      if (settings.auditMode) {
         const path = Runner._getDataSavePath(settings);
         assetSaver.saveLhr(lhr, path);
       }

@@ -3261,6 +3261,14 @@
         }
       }
     },
+    "node-stack-traces": {
+      "id": "node-stack-traces",
+      "title": "Node stack traces",
+      "description": "Details about JavaScript created/modified HTML nodes",
+      "score": null,
+      "scoreDisplayMode": "error",
+      "errorMessage": "Required NodeStackTraces gatherer did not run."
+    },
     "script-treemap-data": {
       "id": "script-treemap-data",
       "title": "Script Treemap Data",
@@ -7577,6 +7585,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:audit:node-stack-traces",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:script-treemap-data",
         "duration": 100,
         "entryType": "measure"
@@ -9026,6 +9040,15 @@
       ],
       "core/audits/csp-xss.js | noCsp": [
         "audits[csp-xss].details.items[0].description"
+      ],
+      "core/lib/lh-error.js | missingRequiredArtifact": [
+        {
+          "values": {
+            "errorCode": "MISSING_REQUIRED_ARTIFACT",
+            "artifactName": "NodeStackTraces"
+          },
+          "path": "audits[node-stack-traces].errorMessage"
+        }
       ],
       "core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"

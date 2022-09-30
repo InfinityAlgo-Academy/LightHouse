@@ -33,8 +33,7 @@ class FullPageScreenshot extends Audit {
     const nodes = {};
     for (const [lhId, stackTraces] of Object.entries(artifacts.NodeStackTraces.nodes)) {
       if (!stackTraces.creation) continue;
-      const topCallFrame =
-        stackTraces.creation.callFrames[stackTraces.creation.callFrames.length - 1];
+      const topCallFrame = stackTraces.creation.callFrames[0];
       nodes[lhId] = topCallFrame;
     }
 
