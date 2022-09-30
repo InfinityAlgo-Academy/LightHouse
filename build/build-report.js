@@ -10,7 +10,7 @@ import esMain from 'es-main';
 import * as rollupPlugins from './rollup-plugins.js';
 import {LH_ROOT} from '../root.js';
 import {getIcuMessageIdParts} from '../shared/localization/format.js';
-import locales from '../shared/localization/locales.js';
+import {locales} from '../shared/localization/locales.js';
 import {UIStrings as FlowUIStrings} from '../flow-report/src/i18n/ui-strings.js';
 
 /**
@@ -58,13 +58,11 @@ async function buildFlowReport() {
   const bundle = await rollup({
     input: 'flow-report/clients/standalone.ts',
     plugins: [
+      rollupPlugins.removeModuleDirCalls(),
       rollupPlugins.inlineFs({verbose: true}),
-      rollupPlugins.replace({
-        '__dirname': '""',
-      }),
       rollupPlugins.shim({
-        [`${LH_ROOT}/flow-report/src/i18n/localized-strings`]: buildFlowStrings(),
-        [`${LH_ROOT}/shared/localization/locales.js`]: 'export default {}',
+        [`${LH_ROOT}/flow-report/src/i18n/localized-strings.js`]: buildFlowStrings(),
+        [`${LH_ROOT}/shared/localization/locales.js`]: 'export const locales = {}',
         'fs': 'export default {}',
       }),
       rollupPlugins.nodeResolve(),
@@ -116,7 +114,17 @@ export function swapLocale(lhr, requestedLocale) {
 function registerLocaleData(locale, lhlMessages) {
   // Stub function only included for types
 }
-export const format = {registerLocaleData};
+
+/**
+ * Returns whether the requestedLocale is registered and available for use
+ * @param {LH.Locale} requestedLocale
+ * @return {boolean}
+ */
+function hasLocale(requestedLocale) {
+  // Stub function only included for types
+  return false;
+}
+export const format = {registerLocaleData, hasLocale};
 `;
 
   const bundle = await rollup({
@@ -141,6 +149,7 @@ async function buildUmdBundle() {
   const bundle = await rollup({
     input: 'report/clients/bundle.js',
     plugins: [
+      rollupPlugins.removeModuleDirCalls(),
       rollupPlugins.inlineFs({verbose: true}),
       rollupPlugins.commonjs(),
       rollupPlugins.terser({
@@ -150,7 +159,7 @@ async function buildUmdBundle() {
       }),
       // Shim this empty to ensure the bundle isn't 10MB
       rollupPlugins.shim({
-        [`${LH_ROOT}/shared/localization/locales.js`]: 'export default {}',
+        [`${LH_ROOT}/shared/localization/locales.js`]: 'export const locales = {}',
         'fs': 'export default {}',
       }),
       rollupPlugins.nodeResolve({preferBuiltins: true}),

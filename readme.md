@@ -1,4 +1,4 @@
-# Lighthouse  [![GitHub Actions Status Badge](https://github.com/GoogleChrome/lighthouse/workflows/CI/badge.svg)](https://github.com/GoogleChrome/lighthouse/actions/workflows/ci.yml) [![GitHub Actions Status Badge](https://github.com/GoogleChrome/lighthouse/workflows/unit/badge.svg)](https://github.com/GoogleChrome/lighthouse/actions/workflows/unit.yml) [![GitHub Actions Status Badge](https://github.com/GoogleChrome/lighthouse/workflows/smoke/badge.svg)](https://github.com/GoogleChrome/lighthouse/actions/workflows/smoke.yml) [![Coverage Status](https://codecov.io/gh/GoogleChrome/lighthouse/branch/master/graph/badge.svg)](https://codecov.io/gh/GoogleChrome/lighthouse) [![Build tracker for Lighthouse](https://img.shields.io/badge/buildtracker-ok-blue)](https://lh-build-tracker.herokuapp.com/) [![NPM lighthouse package](https://img.shields.io/npm/v/lighthouse.svg)](https://npmjs.org/package/lighthouse)
+# Lighthouse  [![GitHub Actions Status Badge](https://github.com/GoogleChrome/lighthouse/workflows/CI/badge.svg)](https://github.com/GoogleChrome/lighthouse/actions/workflows/ci.yml) [![GitHub Actions Status Badge](https://github.com/GoogleChrome/lighthouse/workflows/unit/badge.svg)](https://github.com/GoogleChrome/lighthouse/actions/workflows/unit.yml) [![GitHub Actions Status Badge](https://github.com/GoogleChrome/lighthouse/workflows/smoke/badge.svg)](https://github.com/GoogleChrome/lighthouse/actions/workflows/smoke.yml) [![Coverage Status](https://codecov.io/gh/GoogleChrome/lighthouse/branch/main/graph/badge.svg)](https://codecov.io/gh/GoogleChrome/lighthouse) [![Build tracker for Lighthouse](https://img.shields.io/badge/buildtracker-ok-blue)](https://lh-build-tracker.herokuapp.com/) [![NPM lighthouse package](https://img.shields.io/npm/v/lighthouse.svg)](https://npmjs.org/package/lighthouse)
 
 > Lighthouse analyzes web apps and web pages, collecting modern performance metrics and insights on developer best practices.
 
@@ -69,7 +69,7 @@ By default, Lighthouse writes the report to an HTML file. You can control the ou
 ### CLI options
 
 <!-- To update the help output:
-  node lighthouse-cli --help | pbcopy
+  node cli --help | pbcopy
 -->
 
 ```
@@ -88,7 +88,7 @@ Configuration:
   --print-config                 Print the normalized config for the given config and options, then exit.  [boolean] [default: false]
   --additional-trace-categories  Additional categories to capture with the trace (comma-delimited).  [string]
   --config-path                  The path to the config JSON.
-                                 An example config file: lighthouse-core/config/lr-desktop-config.js  [string]
+                                 An example config file: core/config/lr-desktop-config.js  [string]
   --preset                       Use a built-in configuration.
                                  WARNING: If the --config-path flag is provided, this preset will be ignored.  [string] [choices: "perf", "experimental", "desktop"]
   --chrome-flags                 Custom flags to pass to Chrome (space-delimited). For a full list of flags, see https://bit.ly/chrome-flags
@@ -99,7 +99,7 @@ Configuration:
   --screenEmulation              Sets screen emulation parameters. See also --preset. Use --screenEmulation.disabled to disable. Otherwise set these 4 parameters individually: --screenEmulation.mobile --screenEmulation.width=360 --screenEmulation.height=640 --screenEmulation.deviceScaleFactor=2
   --emulatedUserAgent            Sets useragent emulation  [string]
   --max-wait-for-load            The timeout (in milliseconds) to wait before the page is considered done loading and the run should continue. WARNING: Very high values can lead to large traces and instability  [number]
-  --enable-error-reporting       Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://github.com/GoogleChrome/lighthouse/blob/master/docs/error-reporting.md  [boolean]
+  --enable-error-reporting       Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://github.com/GoogleChrome/lighthouse/blob/main/docs/error-reporting.md  [boolean]
   --gather-mode, -G              Collect artifacts from a connected browser and save to disk. (Artifacts folder path may optionally be provided). If audit-mode is not also enabled, the run will quit early.
   --audit-mode, -A               Process saved artifacts from disk. (Artifacts folder path may be provided, otherwise defaults to ./latest-run/)
   --only-audits                  Only run the specified audits  [array]
@@ -200,7 +200,7 @@ lighthouse -GA=./gmailartifacts https://gmail.com
 
 #### Notes on Error Reporting
 
-The first time you run the CLI you will be prompted with a message asking you if Lighthouse can anonymously report runtime exceptions. The Lighthouse team uses this information to detect new bugs and avoid regressions. Opting out will not affect your ability to use Lighthouse in any way. [Learn more](https://github.com/GoogleChrome/lighthouse/blob/master/docs/error-reporting.md).
+The first time you run the CLI you will be prompted with a message asking you if Lighthouse can anonymously report runtime exceptions. The Lighthouse team uses this information to detect new bugs and avoid regressions. Opting out will not affect your ability to use Lighthouse in any way. [Learn more](https://github.com/GoogleChrome/lighthouse/blob/main/docs/error-reporting.md).
 
 ## Using the Node module
 You can also use Lighthouse programmatically with the Node module.
@@ -246,7 +246,6 @@ Useful documentation, examples, and recipes to get you started.
 
 **Recipes**
 
-- [gulp](docs/recipes/gulp) - helpful for CI integration
 - [Plugin](./docs/recipes/lighthouse-plugin-example) - example Lighthouse plugin
 - [Custom Audit example](./docs/recipes/custom-audit) - extend Lighthouse, run your own audits
 
@@ -283,11 +282,11 @@ yarn build-all
 ### Run
 
 ```sh
-node lighthouse-cli http://example.com
+node cli http://example.com
 # append --chrome-flags="--no-sandbox --headless --disable-gpu" if you run into problems connecting to Chrome
 ```
 
-> **Getting started tip**: `node --inspect-brk lighthouse-cli http://example.com` to open up Chrome DevTools and step
+> **Getting started tip**: `node --inspect-brk cli http://example.com` to open up Chrome DevTools and step
 through the entire app. See [Debugging Node.js with Chrome
 DevTools](https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27#.59rma3ukm)
 for more info.
@@ -352,6 +351,10 @@ This section details services that have integrated Lighthouse data. If you're wo
 * **[DTEKT.IO](https://dtekt.io)** - DTEKT is a website performance and uptime monitoring service. It uses lighthouse to provide visibility into the performance of websites from multiple locations on multiple devices. It offers three months free trial and paid plans.
 
 * **[SpeedVitals](https://speedvitals.com)** - SpeedVitals is a Lighthouse powered tool to measure web performance across multiple devices and locations. It has various features like Layout Shift Visualization, Waterfall Chart, Field Data and Resource Graphs. SpeedVitals offers both free and paid plans.
+
+* **[Lighthouse Metrics](https://lighthouse-metrics.com/)** - Lighthouse Metrics gives you global performance insights with a single test. You can also monitor your websites on a daily or hourly base. Lighthouse Metrics offers free global one-time tests and performance monitoring as a paid feature with a free 14-day trial.
+
+* **[Auditzy](https://auditzy.com)** - Auditzy™ is a robust website auditing & monitoring tool which lets you analyze your web page(s) pre-user journey. Analyze the Competitor Health Metric, Core Web Vitals, and Technology. Compare your web pages with your competitors to understand where you are leading or lagging. Real-time notification with Slack. Have Seamless Collaboration with Multiple Teams. Automate your Audits hourly, daily, weekly, and so on. It has a free trial with pay as you go plans.
 
 ## Lighthouse Integrations in non-Web Perf services
 

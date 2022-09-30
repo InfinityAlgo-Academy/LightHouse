@@ -13,16 +13,16 @@ import {I18n} from '../../renderer/i18n.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {PwaCategoryRenderer} from '../../renderer/pwa-category-renderer.js';
-import {readJson} from '../../../root.js';
+import {readJson} from '../../../core/test/test-utils.js';
 
-const sampleResultsOrig = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);
+const sampleResultsOrig = readJson('../../../core/test/results/sample_v2.json', import.meta);
 
 describe('PwaCategoryRenderer', () => {
   let category;
   let pwaRenderer;
   let sampleResults;
 
-  beforeAll(() => {
+  before(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
 
     const {document} = new jsdom.JSDOM().window;
@@ -39,7 +39,7 @@ describe('PwaCategoryRenderer', () => {
     category = JSON.parse(JSON.stringify(pwaCategory));
   });
 
-  afterAll(() => {
+  after(() => {
     Util.i18n = undefined;
   });
 

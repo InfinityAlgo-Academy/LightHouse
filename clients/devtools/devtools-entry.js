@@ -3,21 +3,21 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* global globalThis */
 
 import {Buffer} from 'buffer';
 
-import lighthouse from '../../lighthouse-core/index.js';
-import {navigation, startTimespan, snapshot} from '../../lighthouse-core/fraggle-rock/api.js';
-import RawProtocol from '../../lighthouse-core/gather/connections/raw.js';
 import log from 'lighthouse-logger';
-import {lookupLocale} from '../../lighthouse-core/lib/i18n/i18n.js';
-import {registerLocaleData, getCanonicalLocales} from '../../shared/localization/format.js';
-import constants from '../../lighthouse-core/config/constants.js';
 
-/** @typedef {import('../../lighthouse-core/gather/connections/connection.js')} Connection */
+import lighthouse, {legacyNavigation} from '../../core/index.js';
+import {navigation, startTimespan, snapshot} from '../../core/api.js';
+import {RawConnection} from '../../core/legacy/gather/connections/raw.js';
+import {lookupLocale} from '../../core/lib/i18n/i18n.js';
+import {registerLocaleData, getCanonicalLocales} from '../../shared/localization/format.js';
+import * as constants from '../../core/config/constants.js';
+
+/** @typedef {import('../../core/legacy/gather/connections/connection.js')} Connection */
 
 // Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
 // (`parseSourceMapFromDataUrl` breaks without this)
@@ -58,16 +58,17 @@ function createConfig(categoryIDs, device) {
 }
 
 /**
- * @param {RawProtocol.Port} port
- * @return {RawProtocol}
+ * @param {import('../../core/legacy/gather/connections/raw.js').Port} port
+ * @return {RawConnection}
  */
 function setUpWorkerConnection(port) {
-  return new RawProtocol(port);
+  return new RawConnection(port);
 }
 
 /** @param {(status: [string, string, string]) => void} listenCallback */
 function listenForStatus(listenCallback) {
   log.events.addListener('status', listenCallback);
+  log.events.addListener('warning', listenCallback);
 }
 
 /**
@@ -89,7 +90,7 @@ if (typeof self !== 'undefined') {
   // @ts-expect-error
   self.setUpWorkerConnection = setUpWorkerConnection;
   // @ts-expect-error
-  self.runLighthouse = lighthouse.legacyNavigation;
+  self.runLighthouse = legacyNavigation;
   // @ts-expect-error
   self.runLighthouseNavigation = navigation;
   // @ts-expect-error
@@ -109,4 +110,6 @@ if (typeof self !== 'undefined') {
   // For the bundle smoke test.
   // @ts-expect-error
   global.runBundledLighthouse = lighthouse;
+  // @ts-expect-error
+  global.runBundledLighthouseLegacyNavigation = legacyNavigation;
 }

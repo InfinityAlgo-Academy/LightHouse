@@ -54,4 +54,8 @@ function getFlowResultFilenamePrefix(flowResult) {
   return getFilenamePrefix(name, lhr.fetchTime);
 }
 
-module.exports = {getLhrFilenamePrefix, getFilenamePrefix, getFlowResultFilenamePrefix};
+export {
+  getLhrFilenamePrefix,
+  getFilenamePrefix,
+  getFlowResultFilenamePrefix,
+};

@@ -54,13 +54,13 @@ function makeSnippetDetails({
 describe('DetailsRenderer', () => {
   let dom;
 
-  beforeAll(() => {
+  before(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
     const {document} = new jsdom.JSDOM().window;
     dom = new DOM(document);
   });
 
-  afterAll(() => {
+  after(() => {
     Util.i18n = undefined;
   });
 

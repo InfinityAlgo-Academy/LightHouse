@@ -17,16 +17,22 @@ import {createRequire} from 'module';
 import esMain from 'es-main';
 import {rollup} from 'rollup';
 // @ts-expect-error: plugin has no types.
-import PubAdsPlugin from 'lighthouse-plugin-publisher-ads/plugin.js';
+import PubAdsPlugin from 'lighthouse-plugin-publisher-ads';
 
 import * as rollupPlugins from './rollup-plugins.js';
-import Runner from '../lighthouse-core/runner.js';
-import {LH_ROOT, readJson} from '../root.js';
+import {Runner} from '../core/runner.js';
+import {LH_ROOT} from '../root.js';
+import {readJson} from '../core/test/test-utils.js';
 
 const require = createRequire(import.meta.url);
 
-/** The commit hash for the current HEAD. */
-const COMMIT_HASH = execSync('git rev-parse HEAD').toString().trim();
+/**
+ * The git tag for the current HEAD (if HEAD is itself a tag),
+ * otherwise a combination of latest tag + #commits since + sha.
+ * Note: can't do this in CI because it is a shallow checkout.
+ */
+const GIT_READABLE_REF =
+  execSync(process.env.CI ? 'git rev-parse HEAD' : 'git describe').toString().trim();
 
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.
 /** @type {Array<string>} */
@@ -52,7 +58,7 @@ const today = (() => {
 const pkg = readJson(`${LH_ROOT}/package.json`);
 const banner = `
 /**
- * Lighthouse v${pkg.version} ${COMMIT_HASH} (${today})
+ * Lighthouse ${GIT_READABLE_REF} (${today})
  *
  * ${pkg.description}
  *
@@ -91,11 +97,15 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
 
   const bundledMapEntriesCode = dynamicModulePaths.map(modulePath => {
     const pathNoExt = modulePath.replace('.js', '');
-    return `['${pathNoExt}', require('${modulePath}')]`;
+    return `['${pathNoExt}', import('${modulePath}')]`;
   }).join(',\n');
 
   /** @type {Record<string, string>} */
-  const shimsObj = {};
+  const shimsObj = {
+    [require.resolve('../core/legacy/gather/connections/cri.js')]:
+      'export const CriConnection = {}',
+    [require.resolve('../package.json')]: `export const version = '${pkg.version}';`,
+  };
 
   const modulesToIgnore = [
     'puppeteer-core',
@@ -105,26 +115,23 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     '@sentry/node',
     'source-map',
     'ws',
-    require.resolve('../lighthouse-core/gather/connections/cri.js'),
   ];
 
   // Don't include the stringified report in DevTools - see devtools-report-assets.js
   // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
   if (isDevtools(entryPath) || isLightrider(entryPath)) {
-    modulesToIgnore.push(require.resolve('../report/generator/report-assets.js'));
+    shimsObj[require.resolve('../report/generator/report-assets.js')] =
+      'export const reportAssets = {}';
   }
 
   // Don't include locales in DevTools.
   if (isDevtools(entryPath)) {
-    shimsObj['./locales.js'] = 'export default {}';
+    shimsObj['./locales.js'] = 'export const locales = {};';
   }
 
   for (const modulePath of modulesToIgnore) {
     shimsObj[modulePath] = 'export default {}';
   }
-
-  shimsObj[require.resolve('../package.json')] =
-    `export const version = '${pkg.version}';`;
 
   const bundle = await rollup({
     input: entryPath,
@@ -134,8 +141,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         delimiters: ['', ''],
         values: {
           '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
-          '__dirname': (id) => `'${path.relative(LH_ROOT, path.dirname(id))}'`,
-          '__filename': (id) => `'${path.relative(LH_ROOT, id)}'`,
           // This package exports to default in a way that causes Rollup to get confused,
           // resulting in MessageFormat being undefined.
           'require(\'intl-messageformat\').default': 'require(\'intl-messageformat\')',
@@ -147,6 +152,14 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
           // TODO: Use globalThis directly.
           'global.isLightrider': 'globalThis.isLightrider',
           'global.isDevtools': 'globalThis.isDevtools',
+          // For some reason, `shim` doesn't work to force this module to return false, so instead
+          // just replace usages of it with false.
+          'esMain(import.meta)': 'false',
+          'import esMain from \'es-main\'': '',
+          // By default Rollup converts `import.meta` to a big mess of `document.currentScript && ...`,
+          // and uses the output name as the url. Instead, do a simpler conversion and use the
+          // module path.
+          'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
         },
       }),
       rollupPlugins.alias({
@@ -159,16 +172,26 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         ...shimsObj,
         // Allows for plugins to import lighthouse.
         'lighthouse': `
-          import Audit from '${require.resolve('../lighthouse-core/audits/audit.js')}';
+          import {Audit} from '${require.resolve('../core/audits/audit.js')}';
           export {Audit};
         `,
-        // Most node 'url' polyfills don't include the WHATWG `URL` property, but
-        // that's all that's needed, so make a mini-polyfill.
-        // @see https://github.com/GoogleChrome/lighthouse/issues/5273
-        // TODO: remove when not needed for pubads (https://github.com/googleads/publisher-ads-lighthouse-plugin/pull/325)
-        'url': 'export const URL = globalThis.URL;',
+        'url': `
+          export const URL = globalThis.URL;
+          export const fileURLToPath = url => url;
+          export default {URL, fileURLToPath};
+        `,
+        'module': `
+          export const createRequire = () => {
+            return {
+              resolve() {
+                throw new Error('createRequire.resolve is not supported in bundled Lighthouse');
+              },
+            };
+          };
+        `,
       }),
       rollupPlugins.json(),
+      rollupPlugins.removeModuleDirCalls(),
       rollupPlugins.inlineFs({verbose: false}),
       rollupPlugins.commonjs({
         // https://github.com/rollup/plugins/issues/922
@@ -210,6 +233,8 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     banner,
     format: 'iife',
     sourcemap: DEBUG,
+    // Suppress code splitting.
+    inlineDynamicImports: true,
   });
   await bundle.close();
 }
@@ -221,7 +246,7 @@ async function cli(argv) {
   // Take paths relative to cwd and build.
   const [entryPath, distPath] = argv.slice(2)
     .map(filePath => path.resolve(process.cwd(), filePath));
-  await buildBundle(entryPath, distPath);
+  await buildBundle(entryPath, distPath, {minify: !process.env.DEBUG});
 }
 
 // Test if called from the CLI or as a module.
@@ -230,6 +255,5 @@ if (esMain(import.meta)) {
 }
 
 export {
-  COMMIT_HASH,
   buildBundle,
 };

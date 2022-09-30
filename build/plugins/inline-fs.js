@@ -277,7 +277,7 @@ function collapseToStringLiteral(node, filepath) {
     }
 
     case 'Identifier': {
-      if (node.name === '__dirname') {
+      if (node.name === '__dirname' || node.name === 'moduleDir') {
         return path.dirname(filepath);
       } else if (node.name === '__filename') {
         return filepath;

@@ -4,13 +4,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
 import puppeteer, {Browser, Page} from 'puppeteer';
 
-import ReportGenerator from '../../report/generator/report-generator.js';
+import {ReportGenerator} from '../../report/generator/report-generator.js';
 import {flowResult} from './sample-flow';
-
-jest.setTimeout(35_000);
 
 describe('Lighthouse Flow Report', () => {
   console.log('\n✨ Be sure to have recently run this: yarn build-report');
@@ -19,7 +16,7 @@ describe('Lighthouse Flow Report', () => {
   let page: Page;
   const pageErrors: Error[] = [];
 
-  beforeAll(async () => {
+  before(async () => {
     browser = await puppeteer.launch({
       headless: true,
     });
@@ -27,14 +24,14 @@ describe('Lighthouse Flow Report', () => {
     page.on('pageerror', pageError => pageErrors.push(pageError));
   });
 
-  afterAll(async () => {
+  after(async () => {
     if (pageErrors.length > 0) console.error(pageErrors);
 
     await browser.close();
   });
 
   describe('Renders the flow report', () => {
-    beforeAll(async () => {
+    before(async () => {
       const html = ReportGenerator.generateFlowReportHtml(flowResult);
       await page.setContent(html);
     });
@@ -43,4 +40,4 @@ describe('Lighthouse Flow Report', () => {
       expect(pageErrors).toHaveLength(0);
     });
   });
-});
+}).timeout(35_000);

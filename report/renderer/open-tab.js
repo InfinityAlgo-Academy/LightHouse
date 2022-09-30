@@ -24,7 +24,7 @@ function getAppsOrigin() {
   const isDev = new URLSearchParams(window.location.search).has('dev');
 
   if (isVercel) return `https://${window.location.host}/gh-pages`;
-  if (isDev) return 'http://localhost:8000';
+  if (isDev) return 'http://localhost:7333';
   return 'https://googlechrome.github.io/lighthouse';
 }
 

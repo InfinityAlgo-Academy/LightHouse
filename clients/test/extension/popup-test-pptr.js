@@ -3,14 +3,14 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const path = require('path');
-const puppeteer = require('puppeteer-core');
-const {getChromePath} = require('chrome-launcher');
-const {DEFAULT_CATEGORIES, STORAGE_KEYS} =
-  require('../../extension/scripts/settings-controller.js');
-const {LH_ROOT} = require('../../../root.js');
+import path from 'path';
+
+import puppeteer from 'puppeteer-core';
+import {getChromePath} from 'chrome-launcher';
+
+import {DEFAULT_CATEGORIES, STORAGE_KEYS} from '../../extension/scripts/settings-controller.js';
+import {LH_ROOT} from '../../../root.js';
 
 const lighthouseExtensionPath = path.resolve(LH_ROOT, 'dist/extension-chrome');
 
@@ -35,7 +35,7 @@ describe('Lighthouse chrome popup', function() {
   let page;
   const pageErrors = [];
 
-  beforeAll(async function() {
+  before(async function() {
     // start puppeteer
     browser = await puppeteer.launch({
       headless: false,
@@ -78,7 +78,7 @@ describe('Lighthouse chrome popup', function() {
     await page.goto('file://' + path.join(lighthouseExtensionPath, 'popup.html'), {waitUntil: 'networkidle2'});
   }, 10 * 1000);
 
-  afterAll(async () => {
+  after(async () => {
     if (browser) {
       await browser.close();
     }

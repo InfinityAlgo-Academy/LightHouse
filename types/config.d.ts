@@ -5,7 +5,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import Audit = require('../lighthouse-core/audits/audit.js');
+import {Audit} from '../core/audits/audit.js';
 import {SharedFlagsSettings, ConfigSettings} from './lhr/settings';
 import Gatherer from './gatherer';
 import {IcuMessage} from './lhr/i18n';
@@ -28,7 +28,6 @@ declare module Config {
 
     // Fraggle Rock Only
     artifacts?: ArtifactJson[] | null;
-    navigations?: NavigationJson[] | null;
 
     // Legacy Only
     passes?: PassJson[] | null;
@@ -55,19 +54,6 @@ declare module Config {
     audits: AuditDefn[] | null;
     categories: Record<string, Category> | null;
     groups: Record<string, Group> | null;
-  }
-
-  /**
-   * Additional information about the context in which a Fraggle Rock config should be interpreted.
-   * This information is typically set by the CLI or other channel integrations.
-   */
-  interface FRContext {
-    configPath?: string;
-    settingsOverrides?: SharedFlagsSettings & Pick<LH.Flags, 'plugins'>;
-    skipAboutBlank?: boolean;
-    logLevel?: string;
-    hostname?: string;
-    port?: number;
   }
 
   interface SharedPassNavigationJson {

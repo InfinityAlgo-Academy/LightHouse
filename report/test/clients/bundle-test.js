@@ -7,18 +7,18 @@
 import fs from 'fs';
 
 import jsdom from 'jsdom';
-import {jest} from '@jest/globals';
+import jestMock from 'jest-mock';
 
 import * as lighthouseRenderer from '../../clients/bundle.js';
 import {LH_ROOT} from '../../../root.js';
 
 const sampleResultsStr =
-  fs.readFileSync(LH_ROOT + '/lighthouse-core/test/results/sample_v2.json', 'utf-8');
+  fs.readFileSync(LH_ROOT + '/core/test/results/sample_v2.json', 'utf-8');
 
 describe('lighthouseRenderer bundle', () => {
   let document;
-  beforeAll(() => {
-    global.console.warn = jest.fn();
+  before(() => {
+    global.console.warn = jestMock.fn();
 
     const {window} = new jsdom.JSDOM();
     document = window.document;
@@ -38,7 +38,7 @@ describe('lighthouseRenderer bundle', () => {
     };
   });
 
-  afterAll(() => {
+  after(() => {
     global.window = global.self = undefined;
     global.HTMLInputElement = undefined;
   });

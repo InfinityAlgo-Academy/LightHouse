@@ -6,10 +6,9 @@
 
 import fs from 'fs';
 
-import {jest} from '@jest/globals';
 import puppeteer from 'puppeteer';
 
-import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
+import {Server} from '../../cli/test/fixtures/static-server.js';
 import {LH_ROOT} from '../../root.js';
 
 const debugOptions = JSON.parse(
@@ -17,10 +16,6 @@ const debugOptions = JSON.parse(
 );
 const portNumber = 20202;
 const treemapUrl = `http://localhost:${portNumber}/dist/gh-pages/treemap/index.html`;
-
-// These tests run in Chromium and have their own timeouts.
-// Make sure we get the more helpful test-specific timeout error instead of jest's generic one.
-jest.setTimeout(35_000);
 
 function getTextEncodingCode() {
   const code = fs.readFileSync(LH_ROOT + '/report/renderer/text-encoding.js', 'utf-8');
@@ -38,11 +33,13 @@ describe('Lighthouse Treemap', () => {
   /** @type {Error[]} */
   let pageErrors = [];
 
-  beforeAll(async function() {
+  let server;
+  before(async function() {
+    server = new Server(portNumber);
     await server.listen(portNumber, 'localhost');
   });
 
-  afterAll(async function() {
+  after(async function() {
     await Promise.all([
       server.close(),
       browser && browser.close(),

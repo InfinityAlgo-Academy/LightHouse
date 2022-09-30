@@ -71,6 +71,8 @@ export type ScreenEmulationSettings = {
   disableStorageReset?: boolean;
   /** Flag indicating that Lighthouse should pause after page load to wait for the user's permission to continue the audit. */
   debugNavigation?: boolean;
+  /** If set to true, will skip the initial navigation to about:blank. This option is ignored when using the legacy navigation runner. */
+  skipAboutBlank?: boolean;
 
   /** How Lighthouse should interpret this run in regards to scoring performance metrics and skipping mobile-only tests in desktop. Must be set even if throttling/emulation is being applied outside of Lighthouse. */
   formFactor?: 'mobile'|'desktop';
@@ -97,6 +99,17 @@ export type ScreenEmulationSettings = {
   precomputedLanternData?: PrecomputedLanternData | null;
   /** The budget.json object for LightWallet. */
   budgets?: Array<Budget> | null;
+
+  /** The number of milliseconds to wait after FCP until the page should be considered loaded. */
+  pauseAfterFcpMs?: number;
+  /** The number of milliseconds to wait after the load event until the page should be considered loaded. */
+  pauseAfterLoadMs?: number;
+  /** The number of milliseconds to wait between high priority network requests or 3 simulataneous requests before the page should be considered loaded. */
+  networkQuietThresholdMs?: number;
+  /** The number of milliseconds to wait between long tasks until the page should be considered loaded. */
+  cpuQuietThresholdMs?: number;
+  /** The URL to use for the "blank" neutral page in between navigations. Defaults to `about:blank`. */
+  blankPage?: string;
 }
 
 export interface ConfigSettings extends Required<SharedFlagsSettings> {

@@ -8,7 +8,10 @@
  <a name="{{version}}"></a>
 # {{version}} ({{date}})
 {{#if @root.linkCompare~}}
-  [Full Changelog]({{~@root.repoUrl}}/compare/{{previousTag}}...{{currentTag}})
+  [Full Changelog](
+    {{~#if @root.host}}{{~@root.host}}/{{/if~}}
+    {{~#if @root.owner ~}}{{@root.owner}}/{{/if~}}
+    {{~@root.repository}}/compare/{{previousTag}}...{{currentTag}})
 {{~/if}}
 
 

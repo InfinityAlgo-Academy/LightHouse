@@ -36,6 +36,19 @@ We follow [semver](https://semver.org/) versioning semantics (`vMajor.Minor.Patc
 
 ## Release Process
 
+### Update various dependencies
+
+In general, Lighthouse should be using the latest version of all of these dependencies:
+
+1. https://github.com/GoogleChrome/lighthouse-stack-packs
+1. `puppeteer` and `puppeteer-core`
+1. `third-party-web`
+1. `axe-core`
+1. `js-library-detector`
+1. `chrome-launcher`
+1. `chrome-devtools-frontend`
+1. `devtools-protocol`
+
 ### On the scheduled release date
 
 Before starting, you should announce to the LH eng channel that you are releasing,
@@ -43,17 +56,17 @@ and that no new PRs should be merged until you are done.
 
 ```sh
 # Make pristine folder.
-bash ./lighthouse-core/scripts/release/prepare-pristine.sh
+bash ./core/scripts/release/prepare-pristine.sh
 cd ../lighthouse-pristine
 yarn
 yarn build-all
 
 # Verify the viewer will work.
 yarn serve-viewer
-# Works with v4 report? http://localhost:8000/viewer?gist=7251f9eba409f385e4c0424515fe8009
-# Works with v5 report? http://localhost:8000/viewer?gist=6093e41b9b50c8d642a7e6bbc784e32f
-# Works with v6 report? http://localhost:8000/viewer?gist=94722e917a507feb5371ad51be6c3334
-# Works with v8 report? http://localhost:8000/viewer?gist=18d523b86779185ecfd376d58f891e1d
+# Works with v4 report? http://localhost:7333/viewer?gist=7251f9eba409f385e4c0424515fe8009
+# Works with v5 report? http://localhost:7333/viewer?gist=6093e41b9b50c8d642a7e6bbc784e32f
+# Works with v6 report? http://localhost:7333/viewer?gist=94722e917a507feb5371ad51be6c3334
+# Works with v8 report? http://localhost:7333/viewer?gist=18d523b86779185ecfd376d58f891e1d
 # Current production viewer (https://googlechrome.github.io/lighthouse/viewer/) has forward compat with next major LHR?
 
 # Confirm DevTools integration will work: Do some manual testing on a number of sites.
@@ -80,7 +93,7 @@ Now that the integrations are confirmed to work, go back to `lighthouse` folder.
 
 ```sh
 # Prepare the commit, replace x.x.x with the desired version
-bash ./lighthouse-core/scripts/release/prepare-commit.sh x.x.x
+bash ./core/scripts/release/prepare-commit.sh x.x.x
 ```
 
 1. Edit changelog.md before opening the PR
@@ -91,7 +104,7 @@ bash ./lighthouse-core/scripts/release/prepare-commit.sh x.x.x
 
 ```sh
 # Package everything for publishing.
-bash ./lighthouse-core/scripts/release/prepare-package.sh
+bash ./core/scripts/release/prepare-package.sh
 
 # Make sure you're in the Lighthouse pristine repo.
 cd ../lighthouse-pristine

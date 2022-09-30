@@ -7,17 +7,16 @@
 import {strict as assert} from 'assert';
 
 import jsdom from 'jsdom';
-import {jest} from '@jest/globals';
+import jestMock from 'jest-mock';
 
 import {Util} from '../../renderer/util.js';
-import URL from '../../../lighthouse-core/lib/url-shim.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
 import {ReportRenderer} from '../../renderer/report-renderer.js';
-import {readJson} from '../../../root.js';
+import {readJson} from '../../../core/test/test-utils.js';
 
-const sampleResultsOrig = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);
+const sampleResultsOrig = readJson('../../../core/test/results/sample_v2.json', import.meta);
 
 const TIMESTAMP_REGEX = /\d+, \d{4}.*\d+:\d+/;
 
@@ -25,8 +24,8 @@ describe('ReportRenderer', () => {
   let renderer;
   let sampleResults;
 
-  beforeAll(() => {
-    global.console.warn = jest.fn();
+  before(() => {
+    global.console.warn = jestMock.fn();
 
     // Stub out matchMedia for Node.
     global.matchMedia = function() {
@@ -45,7 +44,7 @@ describe('ReportRenderer', () => {
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
   });
 
-  afterAll(() => {
+  after(() => {
     global.self = undefined;
     global.matchMedia = undefined;
   });

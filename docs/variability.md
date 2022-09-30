@@ -100,7 +100,7 @@ npx -p @lhci/cli lhci upload --target filesystem --outputDir ./path/to/dump/repo
 
 > Note: you must have [Node](https://nodejs.org/en/download/package-manager/) installed.
 
-You can then process the reports that are output to the filesystem. Read the [Lighthouse CI documentation](https://github.com/GoogleChrome/lighthouse-ci/blob/master/docs/configuration.md#outputdir) for more.
+You can then process the reports that are output to the filesystem. Read the [Lighthouse CI documentation](https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md#outputdir) for more.
 
 ```js
 const fs = require('fs');
@@ -121,8 +121,8 @@ If you're running Lighthouse directly via node, you can use the `computeMedianRu
 
 ```js
 const spawnSync = require('child_process').spawnSync;
-const lighthouseCli = require.resolve('lighthouse/lighthouse-cli');
-const {computeMedianRun} = require('lighthouse/lighthouse-core/lib/median-run.js');
+const lighthouseCli = require.resolve('lighthouse/cli');
+const {computeMedianRun} = require('lighthouse/core/lib/median-run.js');
 
 const results = [];
 for (let i = 0; i < 5; i++) {

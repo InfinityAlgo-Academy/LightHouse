@@ -3,19 +3,20 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-import {jest} from '@jest/globals';
 import {strict as assert} from 'assert';
+
+import jestMock from 'jest-mock';
+
 import {runLighthouseInLR} from '../../lightrider/lightrider-entry.js';
-import Runner from '../../../lighthouse-core/runner.js';
-import LHError from '../../../lighthouse-core/lib/lh-error.js';
+import {Runner} from '../../../core/runner.js';
+import {LighthouseError} from '../../../core/lib/lh-error.js';
 
 describe('lightrider-entry', () => {
   describe('#runLighthouseInLR', () => {
     it('returns a runtimeError LHR when lighthouse throws a runtimeError', async () => {
-      const connectionError = new LHError(
-        LHError.errors.FAILED_DOCUMENT_REQUEST,
+      const connectionError = new LighthouseError(
+        LighthouseError.errors.FAILED_DOCUMENT_REQUEST,
         {errorDetails: 'Bad connection req'}
       );
       assert.strictEqual(connectionError.lhrRuntimeError, true);
@@ -53,12 +54,12 @@ describe('lightrider-entry', () => {
 
       const result = await runLighthouseInLR(mockConnection, url, {output}, {});
       const parsedResult = JSON.parse(result);
-      assert.strictEqual(parsedResult.runtimeError.code, LHError.UNKNOWN_ERROR);
+      assert.strictEqual(parsedResult.runtimeError.code, LighthouseError.UNKNOWN_ERROR);
       assert.ok(parsedResult.runtimeError.message.includes(errorMsg));
     });
 
     it('specifies the channel as lr', async () => {
-      const runStub = jest.spyOn(Runner, 'gather');
+      const runStub = jestMock.spyOn(Runner, 'gather');
 
       const mockConnection = {};
       const url = 'https://example.com';
@@ -71,7 +72,7 @@ describe('lightrider-entry', () => {
     });
 
     it('uses the desktop config preset when device is desktop', async () => {
-      const runStub = jest.spyOn(Runner, 'gather');
+      const runStub = jestMock.spyOn(Runner, 'gather');
 
       const mockConnection = {};
       const url = 'https://example.com';
@@ -85,7 +86,7 @@ describe('lightrider-entry', () => {
     });
 
     it('uses the mobile config preset when device is mobile', async () => {
-      const runStub = jest.spyOn(Runner, 'gather');
+      const runStub = jestMock.spyOn(Runner, 'gather');
 
       const mockConnection = {};
       const url = 'https://example.com';
@@ -99,7 +100,7 @@ describe('lightrider-entry', () => {
     });
 
     it('overrides the default config when one is provided', async () => {
-      const runStub = jest.spyOn(Runner, 'gather');
+      const runStub = jestMock.spyOn(Runner, 'gather');
 
       const mockConnection = {};
       const url = 'https://example.com';
@@ -127,8 +128,8 @@ describe('lightrider-entry', () => {
     });
 
     it('exposes artifacts when logAssets is true', async () => {
-      Runner.gather = jest.fn();
-      Runner.audit = jest.fn(Runner.audit).mockReturnValue(Promise.resolve({
+      Runner.gather = jestMock.fn();
+      Runner.audit = jestMock.fn(Runner.audit).mockReturnValue(Promise.resolve({
         lhr: {},
         artifacts: {
           Artifact: new Error('some error'),
