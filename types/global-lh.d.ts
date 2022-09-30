@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import ArbitraryEqualityMap_ = require('../lighthouse-core/lib/arbitrary-equality-map.js');
+import {ArbitraryEqualityMap as ArbitraryEqualityMap_} from '../core/lib/arbitrary-equality-map.js';
 import * as Artifacts_ from './artifacts';
 import Audit_ from './audit';
 import Budget_ from './lhr/budget';
@@ -14,19 +14,22 @@ import _CrdpMappings from 'devtools-protocol/types/protocol-mapping';
 import * as Externs from './externs';
 import Gatherer_ from './gatherer';
 import * as I18n from './lhr/i18n';
-import LHError = require('../lighthouse-core/lib/lh-error.js');
+import {LighthouseError as LighthouseError_} from '../core/lib/lh-error.js';
 import LHResult from './lhr/lhr';
 import FlowResult_ from './lhr/flow';
 import Protocol_ from './protocol';
 import * as Settings from './lhr/settings';
-import StructuredData_ from './structured-data';
 import Treemap_ from './lhr/treemap';
+import UserFlow_ from './user-flow';
+import puppeteer from 'puppeteer-core';
 
 // Construct hierarchy of global types under the LH namespace.
 declare global {
   module LH {
     export type ArbitraryEqualityMap = ArbitraryEqualityMap_;
     export type NavigationRequestor = string | (() => Promise<void> | void);
+
+    export import Puppeteer = puppeteer;
 
     // artifacts.d.ts
     export import Artifacts = Artifacts_.Artifacts;
@@ -46,6 +49,8 @@ declare global {
     export import CrdpEvents = _CrdpMappings.Events;
     export import CrdpCommands = _CrdpMappings.Commands;
 
+    export import UserFlow = UserFlow_;
+
     // externs.d.ts
     export import Flags = Externs.Flags;
     export import CliFlags = Externs.CliFlags;
@@ -53,7 +58,7 @@ declare global {
     export import DevToolsJsonTarget = Externs.DevToolsJsonTarget;
 
     export import Gatherer = Gatherer_;
-    export import LighthouseError = LHError;
+    export import LighthouseError = LighthouseError_;
     export import Result = LHResult;
     export import FlowResult = FlowResult_;
 
@@ -72,7 +77,6 @@ declare global {
     export import OutputMode = Settings.OutputMode;
     export import PrecomputedLanternData = Settings.PrecomputedLanternData;
 
-    export import StructuredData = StructuredData_;
     export import Treemap = Treemap_;
   }
 }

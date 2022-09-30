@@ -13,8 +13,8 @@ import {ConfigSettings} from './settings';
 interface Result {
   /** Gather mode used to collect artifacts for this result. */
   gatherMode: Result.GatherMode;
-  /** The URL that was supplied to Lighthouse and initially navigated to. */
-  requestedUrl: string;
+  /** The URL that Lighthouse initially navigated to. Will be `undefined` in timespan/snapshot. */
+  requestedUrl?: string;
   /** The post-redirects URL that Lighthouse loaded. */
   finalUrl: string;
   /** The ISO-8601 timestamp of when the results were generated. */
@@ -59,6 +59,8 @@ declare module Result {
     networkUserAgent: string;
     /** The benchmark index number that indicates rough device class. */
     benchmarkIndex: number;
+    /** Many benchmark indexes. */
+    benchmarkIndexes?: number[];
     /** The version of libraries with which these results were generated. Ex: axe-core. */
     credits?: Record<string, string|undefined>,
   }

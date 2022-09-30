@@ -3,15 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview Example script for running Lighthouse on an authenticated page.
  * See docs/recipes/auth/README.md for more.
  */
 
-const puppeteer = require('puppeteer');
-const lighthouse = require('lighthouse');
+import puppeteer from 'puppeteer';
+import lighthouse from 'lighthouse';
+import esMain from 'es-main';
 
 // This port will be used by Lighthouse later. The specific port is arbitrary.
 const PORT = 8041;
@@ -71,11 +71,11 @@ async function main() {
   console.log(JSON.stringify(result.lhr, null, 2));
 }
 
-if (require.main === module) {
+if (esMain(import.meta)) {
   main();
-} else {
-  module.exports = {
-    login,
-    logout,
-  };
 }
+
+export {
+  login,
+  logout,
+};

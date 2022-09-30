@@ -1,31 +1,39 @@
 #!/usr/bin/env node
-
 /**
  * @license Copyright 2019 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-disable no-console */
-const fs = require('fs');
-const path = require('path');
-const swapLocale = require('../shared/localization/swap-locale.js');
-const swapFlowLocale = require('../shared/localization/swap-flow-locale.js');
-const ReportGenerator = require('../report/generator/report-generator.js');
-const {defaultSettings} = require('../lighthouse-core/config/constants.js');
-const lighthouse = require('../lighthouse-core/index.js');
-const lhr = /** @type {LH.Result} */ (require('../lighthouse-core/test/results/sample_v2.json'));
-const {LH_ROOT, readJson} = require('../root.js');
+
+import fs from 'fs';
+import path from 'path';
+
+import {swapLocale} from '../shared/localization/swap-locale.js';
+import {swapFlowLocale} from '../shared/localization/swap-flow-locale.js';
+import {ReportGenerator} from '../report/generator/report-generator.js';
+import {defaultSettings} from '../core/config/constants.js';
+import lighthouse from '../core/index.js';
+import {LH_ROOT} from '../root.js';
+import {readJson} from '../core/test/test-utils.js';
+
+/** @type {LH.Result} */
+const lhr = readJson(`${LH_ROOT}/core/test/results/sample_v2.json`);
 
 /** @type {LH.FlowResult} */
 const flowResult = readJson(
-  `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`
+  `${LH_ROOT}/core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`
 );
 
 const DIST = path.join(LH_ROOT, 'dist');
 
-(async function() {
+async function buildSampleReports() {
+  const snapshotLhr = flowResult.steps.find(step => step.lhr.gatherMode === 'snapshot')?.lhr;
+  const timespanLhr = flowResult.steps.find(step => step.lhr.gatherMode === 'timespan')?.lhr;
+  if (!snapshotLhr) throw new Error('Could not find a snapshot report on the sample flow result');
+  if (!timespanLhr) throw new Error('Could not find a timespan report on the sample flow result');
+
   addPluginCategory(lhr);
   const errorLhr = await generateErrorLHR();
 
@@ -36,6 +44,8 @@ const DIST = path.join(LH_ROOT, 'dist');
     'xl-accented': swapLocale(lhr, 'en-XL').lhr,
     'error': errorLhr,
     'single-category': tweakLhrForPsi(lhr),
+    'snapshot': snapshotLhr,
+    'timespan': timespanLhr,
   };
 
   // Generate and write reports
@@ -59,7 +69,7 @@ const DIST = path.join(LH_ROOT, 'dist');
   });
 
   generateFlowReports();
-})();
+}
 
 function generateFlowReports() {
   const filenameToFlowResult = {
@@ -147,7 +157,9 @@ async function generateErrorLHR() {
     Stacks: [],
     settings: defaultSettings,
     URL: {
+      initialUrl: 'about:blank',
       requestedUrl: 'http://fakeurl.com',
+      mainDocumentUrl: 'http://fakeurl.com',
       finalUrl: 'http://fakeurl.com',
     },
     GatherContext: {gatherMode: 'navigation'},
@@ -179,15 +191,9 @@ async function generateErrorLHR() {
   offscreenImagesAudit.errorMessage = undefined;
   offscreenImagesAudit.scoreDisplayMode = 'binary';
   offscreenImagesAudit.score = 1;
-  // pwa-apple-touch-icon - set as passing but with a warning
-  const appleTouchIconAudit = errorLhr.audits['apple-touch-icon'];
-  appleTouchIconAudit.warnings = [
-    '`apple-touch-icon-precomposed` is out of date; `apple-touch-icon` is preferred.',
-  ];
-  appleTouchIconAudit.errorMessage = undefined;
-  appleTouchIconAudit.scoreDisplayMode = 'binary';
-  appleTouchIconAudit.score = 1;
 
   fs.rmSync(TMP, {recursive: true, force: true});
   return errorLhr;
 }
+
+await buildSampleReports();

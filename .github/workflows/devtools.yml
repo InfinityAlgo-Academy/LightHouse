@@ -2,17 +2,16 @@ name: DevTools
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
 env:
   DEPOT_TOOLS_PATH: ${{ github.workspace }}/depot-tools
   DEVTOOLS_PATH: ${{ github.workspace }}/devtools-frontend
-  BLINK_TOOLS_PATH: ${{ github.workspace }}/blink_tools
 
 jobs:
   build:
-    runs-on: macos-latest # while macbots are much slower, linux reliably crashes running this
+    runs-on: ubuntu-latest
 
     steps:
     - name: Set $PATH
@@ -35,52 +34,51 @@ jobs:
     # Caches are invalidated at least once a week, so that's the max time between testing
     # with the latest dependencies. Any commit to the DevTools repo touching Lighthouse
     # code will invalidate the cache sooner.
-    - name: Cache depot tools, devtools, blink tools and content shell
+    - name: Cache depot tools and devtools
       id: devtools-cache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: |
           ${{ env.DEPOT_TOOLS_PATH }}
           ${{ env.DEVTOOLS_PATH }}
-          ${{ env.BLINK_TOOLS_PATH }}
-          ${{ github.workspace }}/lighthouse/.tmp/chromium-web-tests/content-shells
           ${{ github.workspace }}/.gclient
+          ${{ github.workspace }}/.gclient_entries
         # This hash key changes:
         # 1) every monday (so invalidates once a week)
         # 2) every commit to CDT touching files important to Lighthouse web tests
         # 3) every change to file in Lighthouse repo important to running these tests.
         #
         # The number is how many times this hash key was manually updated to break the cache.
-        key: ${{ runner.os }}-2-${{ env.WEEK_OF_THE_YEAR }}-${{ hashFiles('cdt-test-hash.txt') }}
-        restore-keys: ${{ runner.os }}-
+        key: ${{ runner.os }}-9-${{ env.WEEK_OF_THE_YEAR }}-${{ hashFiles('cdt-test-hash.txt') }}
+        restore-keys: ${{ runner.os }}-9
     - name: Set GHA_DEVTOOLS_CACHE_HIT
       if: steps.devtools-cache.outputs.cache-hit == 'true'
       run: echo "GHA_DEVTOOLS_CACHE_HIT=1" >> $GITHUB_ENV
 
-    - run: yarn --frozen-lockfile
+    - run: yarn --frozen-lockfile --network-timeout 1000000
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-depot-tools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
     - name: Download DevTools Frontend
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-devtools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-devtools.sh
 
     - name: Roll Lighthouse + build DevTools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/roll-devtools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/roll-devtools.sh
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v2
+    - name: Cache build artifacts
+      id: devtools-build-artifacts
+      uses: actions/cache@v3
       with:
-        name: devtools-build
         path: |
-          ${{ env.DEVTOOLS_PATH }}/out/Default/gen/front_end
-          ${{ env.DEVTOOLS_PATH }}/test/webtests
+          ${{ env.DEVTOOLS_PATH }}
           ${{ github.workspace }}/.gclient
-        retention-days: 1
+          ${{ github.workspace }}/.gclient_entries
+        key: devtools-build-artifacts-${{ github.run_id }}
 
-  web-tests:
+  e2e:
     needs: [build]
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: git clone
@@ -93,39 +91,37 @@ jobs:
       with:
         node-version: 14.x
 
-    - name: Download artifact
-      uses: actions/download-artifact@v2
+    - run: yarn --frozen-lockfile --network-timeout 1000000
+      working-directory: ${{ github.workspace }}/lighthouse
+
+    - name: Set $PATH
+      run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
+    # For vpython.
+    - name: Download depot tools
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
+
+    - name: Load build artifacts
+      id: devtools-build-artifacts
+      uses: actions/cache@v3
       with:
-        name: devtools-build
-        path: ${{ github.workspace }}
+        path: |
+          ${{ env.DEVTOOLS_PATH }}
+          ${{ github.workspace }}/.gclient
+          ${{ github.workspace }}/.gclient_entries
+        key: devtools-build-artifacts-${{ github.run_id }}
 
-    - name: Download Blink Tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-blink-tools.sh
-    - name: Download Content Shell
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-content-shell.sh
-
-    - name: Install python deps
-      run: pip install six requests
-
-    - name: Run Web Tests
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/run-web-tests.sh
-
-    - name: Upload results
-      uses: actions/upload-artifact@v2
-      if: failure()
-      with:
-        name: results
-        path: ${{ github.workspace }}/lighthouse/.tmp/layout-test-results
+    - name: Run e2e tests
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/run-e2e-tests.sh
 
   smoke:
     needs: [build]
     strategy:
       matrix:
-        smoke-test-shard: [1, 2]
+        smoke-test-shard: [1, 2, 3]
       # e.g. if set 1 fails, continue with set 2 anyway
       fail-fast: false
-    runs-on: macos-latest
-    name: DevTools smoke ${{ matrix.smoke-test-shard }}
+    runs-on: ubuntu-latest
+    name: DevTools smoke ${{ matrix.smoke-test-shard }}/${{ strategy.job-total }}
 
     steps:
     - name: git clone
@@ -138,32 +134,39 @@ jobs:
       with:
         node-version: 14.x
 
-    - name: Download artifact
-      uses: actions/download-artifact@v2
+    - name: Load build artifacts
+      id: devtools-build-artifacts
+      uses: actions/cache@v3
       with:
-        name: devtools-build
-        path: ${{ github.workspace }}
-    
-    - name: Download Blink Tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-blink-tools.sh
-    - name: Download Content Shell
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/chromium-web-tests/download-content-shell.sh
+        path: |
+          ${{ env.DEVTOOLS_PATH }}
+          ${{ github.workspace }}/.gclient
+          ${{ github.workspace }}/.gclient_entries
+        key: devtools-build-artifacts-${{ github.run_id }}
 
     - run: yarn --frozen-lockfile --network-timeout 1000000
       working-directory: ${{ github.workspace }}/lighthouse
 
+    # This is only done because the import of `parseChromeFlags` in pptr-run-devtool.js triggers imports that eventually
+    # fail because of how report-assets.js reads generated files.
+    - run: yarn build-report
+      working-directory: ${{ github.workspace }}/lighthouse
+
     - name: Define ToT chrome path
-      run: echo "CHROME_PATH=/Users/runner/chrome-mac-tot/Chromium.app/Contents/MacOS/Chromium" >> $GITHUB_ENV
+      run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
     - name: Install Chrome ToT
-      working-directory: /Users/runner
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/scripts/download-chrome.sh && mv chrome-mac chrome-mac-tot
+      working-directory: /home/runner
+      run: bash ${{ github.workspace }}/lighthouse/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: mkdir latest-run
       working-directory: ${{ github.workspace }}/lighthouse
     - name: yarn smoke --runner devtools
-      # Disabled because normal Chrome usage makes DevTools not function on these poorly constructed pages
-      #   errors-expired-ssl errors-infinite-loop
-      # Disabled because Chrome will follow the redirect first, and Lighthouse will only ever see/run the final URL.
-      #   redirects-client-paint-server redirects-multiple-server redirects-single-server redirects-single-client
-      run: yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --retries=2 --invert-match a11y byte-efficiency byte-gzip dbw errors-expired-ssl errors-infinite-loop lantern-idle-callback-short legacy-javascript metrics-tricky-tti metrics-tricky-tti-late-fcp oopif-requests perf-budgets perf-diagnostics-third-party perf-fonts perf-frame-metrics perf-preload perf-trace-elements pwa redirects-client-paint-server redirects-history-push-state redirects-multiple-server redirects-single-server redirects-single-client screenshot seo-passing seo-tap-targets
+      run: xvfb-run --auto-servernum yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=2
       working-directory: ${{ github.workspace }}/lighthouse
+
+    - name: Upload failures
+      if: failure()
+      uses: actions/upload-artifact@v1
+      with:
+        name: Smokehouse (devtools smoke)
+        path: ${{ github.workspace }}/lighthouse/.tmp/smokehouse-ci-failures/

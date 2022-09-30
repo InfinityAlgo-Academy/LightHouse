@@ -3,9 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
-
-/* eslint-env jest */
 
 import {strict as assert} from 'assert';
 
@@ -16,13 +13,15 @@ import {I18n} from '../../renderer/i18n.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
-import sampleResultsOrig from '../../../lighthouse-core/test/results/sample_v2.json';
+import {readJson} from '../../../core/test/test-utils.js';
+
+const sampleResultsOrig = readJson('../../../core/test/results/sample_v2.json', import.meta);
 
 describe('CategoryRenderer', () => {
   let renderer;
   let sampleResults;
 
-  beforeAll(() => {
+  before(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
 
     const {document} = new jsdom.JSDOM().window;
@@ -33,7 +32,7 @@ describe('CategoryRenderer', () => {
     sampleResults = Util.prepareReportResult(sampleResultsOrig);
   });
 
-  afterAll(() => {
+  after(() => {
     Util.i18n = undefined;
   });
 
@@ -422,7 +421,7 @@ describe('CategoryRenderer', () => {
       const naAudits = elem.querySelectorAll('.lh-clump--notapplicable .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 5);
+      assert.equal(failedAudits.length, 4);
       assert.equal(warningAudits.length, 2);
       assert.equal(manualAudits.length, 3);
       assert.equal(naAudits.length, 1);
@@ -442,7 +441,7 @@ describe('CategoryRenderer', () => {
       const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 8);
+      assert.equal(failedAudits.length, 7);
     });
 
     it('expands warning audit group', () => {

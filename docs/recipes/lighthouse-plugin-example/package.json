@@ -1,9 +1,10 @@
 {
   "name": "lighthouse-plugin-example",
   "private": true,
+  "type": "module",
   "main": "./plugin.js",
   "peerDependencies": {
-    "lighthouse": "^9.4.0"
+    "lighthouse": "^9.5.0"
   },
   "devDependencies": {
     "lighthouse": "^8.6.0"
