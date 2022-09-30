@@ -7,10 +7,10 @@
   <script src="./node-stack-traces-lib.js"></script>
   <script>
     createElement('div', 'el-0').textContent = 'Hello!';
-    createElement('div', 'el-1', 'small').textContent = 'Hello!';
+    createElement('div', 'el-1', 'small').textContent = 'Hello 2!';
 
     const elToRemove = createElement('div', 'el-2', 'small');
-    elToRemove.textContent = 'Hello!';
+    elToRemove.textContent = 'Hello 3!';
     setTimeout(() => {
       elToRemove.remove();
     }, 2000);
