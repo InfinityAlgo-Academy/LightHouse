@@ -507,6 +507,53 @@ describe('DetailsRenderer', () => {
         const screenshotEl = nodeEl.querySelector('.lh-element-screenshot');
         expect(screenshotEl).toBeNull();
       });
+
+      it('renders NodeStackTraces data', () => {
+        createRenderer({
+          nodeStackTraces: {
+            type: 'debugdata',
+            urls: [
+              'http://www.example.com/script.js',
+              'http://www.example.com',
+            ],
+            frames: [
+              {url: 0, line: 246, column: 35},
+              {url: 1, line: 364, column: 2},
+              {url: 1, line: 407, column: 2},
+              {url: 0, line: 346, column: 35},
+            ],
+            stacks: [
+              [0, 1, 2],
+              [3, 1, 2],
+            ],
+            nodes: {
+              'node-id-1': {creation: 0},
+              'node-id-2': {creation: 1},
+              'node-id-3': {creation: 0},
+            },
+          },
+        });
+
+        const details = {
+          type: 'table',
+          headings: [{key: 'content', itemType: 'node', text: 'Heading'}],
+          items: [
+            {content: {type: 'node', lhId: 'node-id-3'}},
+            {content: {type: 'node', lhId: 'node-id-no-exist'}},
+          ],
+        };
+
+        const el = renderer.render(details);
+        let nodeEl;
+
+        nodeEl = el.querySelectorAll('.lh-node')[0];
+        assert.equal(nodeEl.dataset['creationUrl'], 'http://www.example.com/script.js');
+        assert.equal(nodeEl.dataset['creationLine'], '246');
+        assert.equal(nodeEl.dataset['creationColumn'], '35');
+
+        nodeEl = el.querySelectorAll('.lh-node')[1];
+        assert.equal(nodeEl.dataset['creationUrl'], undefined);
+      });
     });
 
     it('renders source-location values', () => {
