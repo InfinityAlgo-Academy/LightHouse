@@ -94,8 +94,8 @@ describe('CLI Tests', function() {
         const config = JSON.parse(ret.stdout);
         assert.strictEqual(config.settings.output[0], 'json');
         assert.strictEqual(config.settings.auditMode, true);
-        // FR config doesn't exclude full-page-screenshot with --only-audits
-        assert.strictEqual(config.audits.length, 2);
+        // FR config doesn't exclude full-page-screenshot (and some others) with --only-audits
+        assert.strictEqual(config.audits.length, 3);
 
         expect(config).toMatchSnapshot();
       });

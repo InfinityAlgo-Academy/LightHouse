@@ -31,6 +31,10 @@ Object {
       "gatherer": "full-page-screenshot",
       "id": "FullPageScreenshot",
     },
+    Object {
+      "gatherer": "node-stack-traces",
+      "id": "NodeStackTraces",
+    },
   ],
   "audits": Array [
     Object {
@@ -38,6 +42,9 @@ Object {
     },
     Object {
       "path": "full-page-screenshot",
+    },
+    Object {
+      "path": "node-stack-traces",
     },
   ],
   "categories": Object {
@@ -149,6 +156,7 @@ Object {
         "devtoolsLogs",
         "traces",
         "FullPageScreenshot",
+        "NodeStackTraces",
       ],
       "blankPage": "about:blank",
       "blockedUrlPatterns": Array [],
