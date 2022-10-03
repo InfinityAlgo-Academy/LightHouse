@@ -2363,7 +2363,7 @@
           "node-stack-traces": {
             "id": "node-stack-traces",
             "title": "Node stack traces",
-            "description": "Details about JavaScript created/modified HTML nodes",
+            "description": "Stack traces of JavaScript created HTML elements",
             "score": null,
             "scoreDisplayMode": "error",
             "errorMessage": "Required NodeStackTraces gatherer did not run."
@@ -8731,7 +8731,7 @@
           "node-stack-traces": {
             "id": "node-stack-traces",
             "title": "Node stack traces",
-            "description": "Details about JavaScript created/modified HTML nodes",
+            "description": "Stack traces of JavaScript created HTML elements",
             "score": null,
             "scoreDisplayMode": "error",
             "errorMessage": "Required NodeStackTraces gatherer did not run."
@@ -11161,7 +11161,7 @@
           "node-stack-traces": {
             "id": "node-stack-traces",
             "title": "Node stack traces",
-            "description": "Details about JavaScript created/modified HTML nodes",
+            "description": "Stack traces of JavaScript created HTML elements",
             "score": null,
             "scoreDisplayMode": "error",
             "errorMessage": "Required NodeStackTraces gatherer did not run."
@@ -16410,7 +16410,7 @@
           "node-stack-traces": {
             "id": "node-stack-traces",
             "title": "Node stack traces",
-            "description": "Details about JavaScript created/modified HTML nodes",
+            "description": "Stack traces of JavaScript created HTML elements",
             "score": null,
             "scoreDisplayMode": "error",
             "errorMessage": "Required NodeStackTraces gatherer did not run."

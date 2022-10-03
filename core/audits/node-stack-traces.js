@@ -6,7 +6,7 @@
 
 import {Audit} from './audit.js';
 
-class FullPageScreenshot extends Audit {
+class NodeStackTraces extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
@@ -15,7 +15,7 @@ class FullPageScreenshot extends Audit {
       id: 'node-stack-traces',
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: 'Node stack traces',
-      description: 'Details about JavaScript created/modified HTML nodes',
+      description: 'Stack traces of JavaScript created HTML elements',
       requiredArtifacts: ['NodeStackTraces'],
     };
   }
@@ -28,6 +28,9 @@ class FullPageScreenshot extends Audit {
     if (!artifacts.NodeStackTraces) {
       return {score: 0, notApplicable: true};
     }
+
+    // Don't just serialize NodeStackTraces–it's way too big!
+    // Instead, use a series of cache lookup arrays to greatly compress the data.
 
     /** @type {string[]} */
     const urls = [];
@@ -52,7 +55,7 @@ class FullPageScreenshot extends Audit {
 
     /** @type {Record<string, {creation: number}>} */
     const nodes = {};
-    for (const [lhId, stackTraces] of Object.entries(artifacts.NodeStackTraces.nodes)) {
+    for (const [lhId, stackTraces] of Object.entries(artifacts.NodeStackTraces)) {
       if (!stackTraces.creation) continue;
 
       nodes[lhId] = {
@@ -88,4 +91,4 @@ class FullPageScreenshot extends Audit {
   }
 }
 
-export default FullPageScreenshot;
+export default NodeStackTraces;

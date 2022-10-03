@@ -12842,5 +12842,499 @@
       "embedderName": "http://localhost:10200/dobetterweb/dbw_tester.html",
       "content": "\n  // Log console.error calls in the console.\n  console.error('Error! Error!');\n"
     }
-  ]
+  ],
+  "NodeStackTraces": {
+    "page-2-INPUT": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "passwordInputsCanBePastedIntoTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 364,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 407,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "page-3-INPUT": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "passwordInputsCanBePastedIntoTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 364,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 407,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-8-IMG": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "isOnHttps",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 383,
+            "columnNumber": 23
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 408,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-9-IMG": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "",
+            "scriptId": "31",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 465,
+            "columnNumber": 27
+          }
+        ]
+      }
+    },
+    "1-10-INPUT": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "passwordInputsCanBePastedIntoTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 364,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 407,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-11-INPUT": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "passwordInputsCanBePastedIntoTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 364,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 407,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-12-INPUT": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "passwordInputsCanBePastedIntoTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 364,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 407,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-13-A": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "noRelOpenLinksTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 360,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 404,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-14-A": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "noRelOpenLinksTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 360,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 404,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-17-A": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "noRelOpenLinksTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 360,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 404,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-18-A": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "noRelOpenLinksTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 360,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 404,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-19-A": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "noRelOpenLinksTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 360,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 404,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-20-A": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "noRelOpenLinksTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 360,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 404,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-21-A": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "noRelOpenLinksTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 360,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 404,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-22-A": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "noRelOpenLinksTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 360,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 404,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-23-A": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "noRelOpenLinksTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 360,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 404,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-24-A": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "noRelOpenLinksTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 360,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 404,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-25-A": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "noRelOpenLinksTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 360,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 404,
+            "columnNumber": 2
+          }
+        ]
+      }
+    },
+    "1-36-LINK": {
+      "creation": {
+        "callFrames": [
+          {
+            "functionName": "stampTemplate",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 246,
+            "columnNumber": 35
+          },
+          {
+            "functionName": "linksBlockingFirstPaintTest",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 356,
+            "columnNumber": 2
+          },
+          {
+            "functionName": "",
+            "scriptId": "26",
+            "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
+            "lineNumber": 403,
+            "columnNumber": 2
+          }
+        ]
+      }
+    }
+  }
 }

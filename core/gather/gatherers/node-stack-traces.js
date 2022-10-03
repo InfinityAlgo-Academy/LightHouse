@@ -16,9 +16,29 @@ class NodeStackTraces extends FRGatherer {
 
   /**
    * @param {LH.Gatherer.FRTransitionalContext} context
-   * @return {Promise<LH.Artifacts['NodeStackTraces']['nodes']>}
    */
-  async _resolveNodes(context) {
+  async startInstrumentation(context) {
+    await context.driver.defaultSession.sendCommand('DOM.enable');
+    await context.driver.defaultSession.sendCommand('DOM.setNodeStackTracesEnabled', {
+      enable: true,
+    });
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   */
+  async stopInstrumentation(context) {
+    await context.driver.defaultSession.sendCommand('DOM.disable');
+    await context.driver.defaultSession.sendCommand('DOM.setNodeStackTracesEnabled', {
+      enable: false,
+    });
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
+   * @return {Promise<LH.Artifacts['NodeStackTraces']>}
+   */
+  async getArtifact(context) {
     const session = context.driver.defaultSession;
 
     /**
@@ -59,7 +79,7 @@ class NodeStackTraces extends FRGatherer {
         backendNodeIds,
       });
 
-      /** @type {LH.Artifacts['NodeStackTraces']['nodes']} */
+      /** @type {LH.Artifacts['NodeStackTraces']} */
       const lhIdToStackTraces = {};
       for (let i = 0; i < nodeIds.length; i++) {
         const nodeId = nodeIds[i];
@@ -80,36 +100,6 @@ class NodeStackTraces extends FRGatherer {
     const pageContextResult = await resolveNodesInPage({useIsolation: false});
     const isolatedContextResult = await resolveNodesInPage({useIsolation: true});
     return {...pageContextResult, ...isolatedContextResult};
-  }
-
-  /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
-   */
-  async startInstrumentation(context) {
-    await context.driver.defaultSession.sendCommand('DOM.enable');
-    await context.driver.defaultSession.sendCommand('DOM.setNodeStackTracesEnabled', {
-      enable: true,
-    });
-  }
-
-  /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
-   */
-  async stopInstrumentation(context) {
-    await context.driver.defaultSession.sendCommand('DOM.disable');
-    await context.driver.defaultSession.sendCommand('DOM.setNodeStackTracesEnabled', {
-      enable: false,
-    });
-  }
-
-  /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
-   * @return {Promise<LH.Artifacts['NodeStackTraces']>}
-   */
-  async getArtifact(context) {
-    return {
-      nodes: await this._resolveNodes(context),
-    };
   }
 }
 

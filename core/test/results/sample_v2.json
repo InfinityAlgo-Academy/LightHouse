@@ -3264,10 +3264,150 @@
     "node-stack-traces": {
       "id": "node-stack-traces",
       "title": "Node stack traces",
-      "description": "Details about JavaScript created/modified HTML nodes",
+      "description": "Stack traces of JavaScript created HTML elements",
       "score": null,
-      "scoreDisplayMode": "error",
-      "errorMessage": "Required NodeStackTraces gatherer did not run."
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "debugdata",
+        "urls": [
+          "http://localhost:10200/dobetterweb/dbw_tester.html"
+        ],
+        "frames": [
+          {
+            "url": 0,
+            "line": 246,
+            "column": 35
+          },
+          {
+            "url": 0,
+            "line": 364,
+            "column": 2
+          },
+          {
+            "url": 0,
+            "line": 407,
+            "column": 2
+          },
+          {
+            "url": 0,
+            "line": 383,
+            "column": 23
+          },
+          {
+            "url": 0,
+            "line": 408,
+            "column": 2
+          },
+          {
+            "url": 0,
+            "line": 465,
+            "column": 27
+          },
+          {
+            "url": 0,
+            "line": 360,
+            "column": 2
+          },
+          {
+            "url": 0,
+            "line": 404,
+            "column": 2
+          },
+          {
+            "url": 0,
+            "line": 356,
+            "column": 2
+          },
+          {
+            "url": 0,
+            "line": 403,
+            "column": 2
+          }
+        ],
+        "stacks": [
+          [
+            0,
+            1,
+            2
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            5
+          ],
+          [
+            0,
+            6,
+            7
+          ],
+          [
+            0,
+            8,
+            9
+          ]
+        ],
+        "nodes": {
+          "page-2-INPUT": {
+            "creation": 0
+          },
+          "page-3-INPUT": {
+            "creation": 0
+          },
+          "1-8-IMG": {
+            "creation": 1
+          },
+          "1-9-IMG": {
+            "creation": 2
+          },
+          "1-10-INPUT": {
+            "creation": 0
+          },
+          "1-11-INPUT": {
+            "creation": 0
+          },
+          "1-12-INPUT": {
+            "creation": 0
+          },
+          "1-13-A": {
+            "creation": 3
+          },
+          "1-14-A": {
+            "creation": 3
+          },
+          "1-17-A": {
+            "creation": 3
+          },
+          "1-18-A": {
+            "creation": 3
+          },
+          "1-19-A": {
+            "creation": 3
+          },
+          "1-20-A": {
+            "creation": 3
+          },
+          "1-21-A": {
+            "creation": 3
+          },
+          "1-22-A": {
+            "creation": 3
+          },
+          "1-23-A": {
+            "creation": 3
+          },
+          "1-24-A": {
+            "creation": 3
+          },
+          "1-25-A": {
+            "creation": 3
+          },
+          "1-36-LINK": {
+            "creation": 4
+          }
+        }
+      }
     },
     "script-treemap-data": {
       "id": "script-treemap-data",
@@ -9040,15 +9180,6 @@
       ],
       "core/audits/csp-xss.js | noCsp": [
         "audits[csp-xss].details.items[0].description"
-      ],
-      "core/lib/lh-error.js | missingRequiredArtifact": [
-        {
-          "values": {
-            "errorCode": "MISSING_REQUIRED_ARTIFACT",
-            "artifactName": "NodeStackTraces"
-          },
-          "path": "audits[node-stack-traces].errorMessage"
-        }
       ],
       "core/audits/manual/pwa-cross-browser.js | title": [
         "audits[pwa-cross-browser].title"
