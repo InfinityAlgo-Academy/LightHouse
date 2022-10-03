@@ -278,7 +278,6 @@ const defaultConfig = {
     'csp-xss',
     'full-page-screenshot',
     'node-stack-traces',
-    'node-stack-traces',
     'script-treemap-data',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',

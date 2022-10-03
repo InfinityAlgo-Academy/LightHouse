@@ -252,7 +252,7 @@ const fetch = globalThis.__nativeFetch || globalThis.fetch;
     // Mock so the argument can be intercepted, and the generated code
     // can be evaluated without the error catching code.
     const mockFn = executionContext._evaluateInContext = fnAny()
-      .mockImplementation(() => Promise.resolve());
+      .mockImplementation(() => Promise.resolve({result: {result: undefined}}));
 
     /** @param {number} value */
     function mainFn(value) {
@@ -275,7 +275,7 @@ const fetch = globalThis.__nativeFetch || globalThis.fetch;
     // Mock so the argument can be intercepted, and the generated code
     // can be evaluated without the error catching code.
     const mockFn = executionContext._evaluateInContext = fnAny()
-      .mockImplementation(() => Promise.resolve());
+      .mockImplementation(() => Promise.resolve({result: {result: undefined}}));
 
     /** @param {number} value */
     const mainFn = (value) => {
@@ -298,7 +298,7 @@ const fetch = globalThis.__nativeFetch || globalThis.fetch;
     // Mock so the argument can be intercepted, and the generated code
     // can be evaluated without the error catching code.
     const mockFn = executionContext._evaluateInContext = fnAny()
-      .mockImplementation(() => Promise.resolve());
+      .mockImplementation(() => Promise.resolve({result: {result: undefined}}));
 
     /**
      * @param {{a: number, b: number}} _

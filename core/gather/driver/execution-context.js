@@ -162,10 +162,14 @@ class ExecutionContext {
       if (contextId && err.message.includes('Cannot find context')) {
         this.clearContextId();
         const freshContextId = await this._getOrCreateIsolatedContextId();
-        response =
-          await this._evaluateInContext(expression, freshContextId, !options.returnRawResponse);
+        try {
+          response =
+            await this._evaluateInContext(expression, freshContextId, !options.returnRawResponse);
+        } catch {
+          // On retry fail, thow the original error.
+          throw err;
+        }
       }
-      throw err;
     }
 
     if (options.returnRawResponse) return response;
