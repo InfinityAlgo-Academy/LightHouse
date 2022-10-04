@@ -90,7 +90,9 @@ class Runner {
       const i18nLhr = {
         lighthouseVersion,
         requestedUrl: artifacts.URL.requestedUrl,
-        finalUrl: artifacts.URL.finalUrl,
+        mainDocumentUrl: artifacts.URL.mainDocumentUrl,
+        finalDisplayedUrl: artifacts.URL.finalDisplayedUrl,
+        finalUrl: artifacts.URL.mainDocumentUrl,
         fetchTime: artifacts.fetchTime,
         gatherMode: artifacts.GatherContext.gatherMode,
         runtimeError: Runner.getArtifactRuntimeError(artifacts),

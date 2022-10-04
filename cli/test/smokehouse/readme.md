@@ -188,7 +188,7 @@ Smokehouse comes with a core set of test definitions, but it can run any set of 
   const expectations = [{
     lhr: {
       requestedUrl: 'http://localhost:8080/index.html',
-      finalUrl: 'http://localhost:8080/index.html',
+      finalDisplayedUrl: 'http://localhost:8080/index.html',
       audits: {
         'preload-as': {
           score: 1,
