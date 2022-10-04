@@ -3,10 +3,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {Audit} from '../audit.js';
-import URL from '../../lib/url-shim.js';
+import UrlUtils from '../../lib/url-utils.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const BLOCKLIST = new Set([
@@ -121,8 +120,8 @@ class LinkText extends Audit {
           href.startsWith('javascript:') ||
           href.startsWith('mailto:') ||
           // This line prevents the audit from flagging anchor links.
-          // In this case it is better to use `finalUrl` than `mainDocumentUrl`.
-          URL.equalWithExcludedFragments(link.href, artifacts.URL.finalUrl)
+          // In this case it is better to use `finalDisplayedUrl` than `mainDocumentUrl`.
+          UrlUtils.equalWithExcludedFragments(link.href, artifacts.URL.finalDisplayedUrl)
         ) {
           return false;
         }

@@ -6,7 +6,7 @@
 
 import {strict as assert} from 'assert';
 
-import CriticalRequestChains from '../../computed/critical-request-chains.js';
+import {CriticalRequestChains} from '../../computed/critical-request-chains.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import {createTestTrace} from '../create-test-trace.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
@@ -55,10 +55,9 @@ async function createChainsFromMockRecords(prioritiesList, edges, setExtrasFn, r
 
   const trace = createTestTrace({topLevelTasks: [{ts: 0}]});
   const URL = {
-    initialUrl: 'about:blank',
     requestedUrl: docUrl,
     mainDocumentUrl: docUrl,
-    finalUrl: docUrl,
+    finalDisplayedUrl: docUrl,
   };
   const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 

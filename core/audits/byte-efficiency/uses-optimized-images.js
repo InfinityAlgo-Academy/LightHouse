@@ -7,10 +7,10 @@
  * @fileoverview This audit determines if the images used are sufficiently larger
  * than JPEG compressed images without metadata at quality 85.
  */
-'use strict';
+
 
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
-import URL from '../../lib/url-shim.js';
+import UrlUtils from '../../lib/url-utils.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
@@ -69,7 +69,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
    * @return {import('./byte-efficiency-audit.js').ByteEfficiencyProduct}
    */
   static audit_(artifacts) {
-    const pageURL = artifacts.URL.finalUrl;
+    const pageURL = artifacts.URL.finalDisplayedUrl;
     const images = artifacts.OptimizedImages;
     const imageElements = artifacts.ImageElements;
     /** @type {Map<string, LH.Artifacts.ImageElement>} */
@@ -83,7 +83,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
       const imageElement = imageElementsByURL.get(image.url);
 
       if (image.failed) {
-        warnings.push(`Unable to decode ${URL.getURLDisplayName(image.url)}`);
+        warnings.push(`Unable to decode ${UrlUtils.getURLDisplayName(image.url)}`);
         continue;
       } else if (/(jpeg|bmp)/.test(image.mimeType) === false) {
         continue;
@@ -94,7 +94,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
 
       if (typeof jpegSize === 'undefined') {
         if (!imageElement) {
-          warnings.push(`Unable to locate resource ${URL.getURLDisplayName(image.url)}`);
+          warnings.push(`Unable to locate resource ${UrlUtils.getURLDisplayName(image.url)}`);
           continue;
         }
 
@@ -111,8 +111,8 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
 
       if (image.originalSize < jpegSize + IGNORE_THRESHOLD_IN_BYTES) continue;
 
-      const url = URL.elideDataURI(image.url);
-      const isCrossOrigin = !URL.originsMatch(pageURL, image.url);
+      const url = UrlUtils.elideDataURI(image.url);
+      const isCrossOrigin = !UrlUtils.originsMatch(pageURL, image.url);
       const jpegSavings = UsesOptimizedImages.computeSavings({...image, jpegSize});
 
       items.push({

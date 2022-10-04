@@ -7,6 +7,7 @@
 /* eslint-disable max-len */
 
 import fs from 'fs';
+import path from 'path';
 
 import yargs from 'yargs';
 import * as yargsHelpers from 'yargs/helpers';
@@ -175,7 +176,7 @@ function getYargsParser(manualArgv) {
       },
       'enable-error-reporting': {
         type: 'boolean',
-        describe: 'Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://github.com/GoogleChrome/lighthouse/blob/master/docs/error-reporting.md',
+        describe: 'Enables error reporting, overriding any saved preference. --no-enable-error-reporting will do the opposite. More: https://github.com/GoogleChrome/lighthouse/blob/main/docs/error-reporting.md',
       },
       'gather-mode': {
         alias: 'G',
@@ -227,6 +228,7 @@ function getYargsParser(manualArgv) {
       },
       'output-path': {
         type: 'string',
+        coerce: coerceOutputPath,
         describe: `The file path to output the results. Use 'stdout' to write to stdout.
 If using JSON output, default is stdout.
 If using HTML or CSV output, default is a file in the working directory with a name based on the test URL and date.
@@ -406,6 +408,21 @@ function coerceOutput(values) {
   });
 
   return validValues;
+}
+
+/**
+ * Verifies outputPath is something we can actually write to.
+ * @param {unknown=} value
+ * @return {string=}
+ */
+function coerceOutputPath(value) {
+  if (value === undefined) return;
+
+  if (typeof value !== 'string' || !value || !fs.existsSync(path.dirname(value))) {
+    throw new Error(`--output-path (${value}) cannot be written to`);
+  }
+
+  return value;
 }
 
 /**

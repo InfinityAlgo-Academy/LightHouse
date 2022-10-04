@@ -3,14 +3,13 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import LinkHeader from 'http-link-header';
-import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
-import URL from '../../lib/url-shim.js';
+
+import FRGatherer from '../base-gatherer.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 import DevtoolsLog from './devtools-log.js';
-import MainResource from '../../computed/main-resource.js';
+import {MainResource} from '../../computed/main-resource.js';
 
 /* globals HTMLLinkElement getNodeDetails */
 
@@ -23,12 +22,12 @@ import MainResource from '../../computed/main-resource.js';
 /**
  *
  * @param {string} url
- * @param {string} finalUrl
+ * @param {string} finalDisplayedUrl
  * @return {string|null}
  */
-function normalizeUrlOrNull(url, finalUrl) {
+function normalizeUrlOrNull(url, finalDisplayedUrl) {
   try {
-    return new URL(url, finalUrl).href;
+    return new URL(url, finalDisplayedUrl).href;
   } catch (_) {
     return null;
   }
@@ -105,7 +104,7 @@ class LinkElements extends FRGatherer {
       args: [],
       useIsolation: true,
       deps: [
-        pageFunctions.getNodeDetailsString,
+        pageFunctions.getNodeDetails,
         pageFunctions.getElementsInDocument,
       ],
     });
@@ -129,7 +128,7 @@ class LinkElements extends FRGatherer {
       for (const link of LinkHeader.parse(header.value).refs) {
         linkElements.push({
           rel: link.rel || '',
-          href: normalizeUrlOrNull(link.uri, context.baseArtifacts.URL.finalUrl),
+          href: normalizeUrlOrNull(link.uri, context.baseArtifacts.URL.finalDisplayedUrl),
           hrefRaw: link.uri || '',
           hreflang: link.hreflang || '',
           as: link.as || '',

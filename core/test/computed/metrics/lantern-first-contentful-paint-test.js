@@ -6,7 +6,7 @@
 
 import {strict as assert} from 'assert';
 
-import LanternFirstContentfulPaint from '../../../computed/metrics/lantern-first-contentful-paint.js'; // eslint-disable-line max-len
+import {LanternFirstContentfulPaint} from '../../../computed/metrics/lantern-first-contentful-paint.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 import {createTestTrace} from '../../create-test-trace.js';
@@ -62,7 +62,7 @@ describe('Metrics: Lantern FCP', () => {
     const URL = {
       requestedUrl: 'https://example.com/',
       mainDocumentUrl: 'https://example.com/',
-      finalUrl: 'https://example.com/',
+      finalDisplayedUrl: 'https://example.com/',
     };
     const artifacts = {
       trace,

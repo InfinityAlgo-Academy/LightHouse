@@ -10,7 +10,6 @@ import jsdom from 'jsdom';
 import jestMock from 'jest-mock';
 
 import {Util} from '../../renderer/util.js';
-import URL from '../../../core/lib/url-shim.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
@@ -72,7 +71,10 @@ describe('ReportRenderer', () => {
 
     it('renders a topbar', () => {
       const topbar = renderer._renderReportTopbar(sampleResults);
-      assert.equal(topbar.querySelector('.lh-topbar__url').textContent, sampleResults.finalUrl);
+      assert.equal(
+        topbar.querySelector('.lh-topbar__url').textContent,
+        sampleResults.finalDisplayedUrl
+      );
     });
 
     it('renders a header', () => {

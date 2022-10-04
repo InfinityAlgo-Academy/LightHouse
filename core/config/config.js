@@ -1,564 +1,325 @@
 /**
- * @license Copyright 2016 The Lighthouse Authors. All Rights Reserved.
+ * @license Copyright 2020 The Lighthouse Authors. All Rights Reserved.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-import legacyDefaultConfig from './legacy-default-config.js';
-import * as constants from './constants.js';
-import * as format from '../../shared/localization/format.js';
-import * as validation from './../fraggle-rock/config/validation.js';
-import log from 'lighthouse-logger';
 import path from 'path';
-import {Runner} from '../runner.js';
 
+import log from 'lighthouse-logger';
+
+import {Runner} from '../runner.js';
+import defaultConfig from './default-config.js';
+import {defaultNavigationConfig, nonSimulatedPassConfigOverrides} from './constants.js'; // eslint-disable-line max-len
 import {
-  mergePlugins,
-  mergeConfigFragment,
+  isFRGathererDefn,
+  throwInvalidDependencyOrder,
+  isValidArtifactDependency,
+  throwInvalidArtifactDependency,
+  assertArtifactTopologicalOrder,
+  assertValidConfig,
+} from './validation.js';
+import {filterConfigByGatherMode, filterConfigByExplicitFilters} from './filters.js';
+import {
+  deepCloneConfigJson,
   resolveSettings,
   resolveAuditsToDefns,
   resolveGathererToDefn,
-  deepClone,
-  deepCloneConfigJson,
+  mergePlugins,
+  mergeConfigFragment,
+  mergeConfigFragmentArrayByKey,
 } from './config-helpers.js';
 import {getModuleDirectory} from '../../esm-utils.js';
+import * as format from '../../shared/localization/format.js';
 
-const defaultConfigPath = './legacy-default-config.js';
-
-/** @typedef {typeof import('../gather/gatherers/gatherer.js').Gatherer} GathererConstructor */
-/** @typedef {InstanceType<GathererConstructor>} Gatherer */
-
-/**
- * Define with object literal so that tsc will require it to stay updated.
- * @type {Record<keyof LH.BaseArtifacts, ''>}
- */
-const BASE_ARTIFACT_BLANKS = {
-  fetchTime: '',
-  LighthouseRunWarnings: '',
-  HostFormFactor: '',
-  HostUserAgent: '',
-  NetworkUserAgent: '',
-  BenchmarkIndex: '',
-  BenchmarkIndexes: '',
-  WebAppManifest: '',
-  GatherContext: '',
-  InstallabilityErrors: '',
-  Stacks: '',
-  traces: '',
-  devtoolsLogs: '',
-  settings: '',
-  URL: '',
-  Timing: '',
-  PageLoadError: '',
-};
-const BASE_ARTIFACT_NAMES = Object.keys(BASE_ARTIFACT_BLANKS);
+const defaultConfigPath = path.join(
+  getModuleDirectory(import.meta),
+  '../../config/default-config.js'
+);
 
 /**
- * @param {Config['passes']} passes
- * @param {Config['audits']} audits
+ * @param {LH.Config.Json|undefined} configJSON
+ * @param {{configPath?: string}} context
+ * @return {{configWorkingCopy: LH.Config.Json, configDir?: string, configPath?: string}}
  */
-function assertValidPasses(passes, audits) {
-  if (!Array.isArray(passes)) {
-    return;
+function resolveWorkingCopy(configJSON, context) {
+  let {configPath} = context;
+
+  if (configPath && !path.isAbsolute(configPath)) {
+    throw new Error('configPath must be an absolute path');
   }
 
-  const requestedGatherers = Config.getGatherersRequestedByAudits(audits);
-  // Base artifacts are provided by GatherRunner, so start foundGatherers with them.
-  const foundGatherers = new Set(BASE_ARTIFACT_NAMES);
-
-  // Log if we are running gathers that are not needed by the audits listed in the config
-  passes.forEach((pass, passIndex) => {
-    if (passIndex === 0 && pass.loadFailureMode !== 'fatal') {
-      log.warn(`"${pass.passName}" is the first pass but was marked as non-fatal. ` +
-        `The first pass will always be treated as loadFailureMode=fatal.`);
-      pass.loadFailureMode = 'fatal';
-    }
-
-    pass.gatherers.forEach(gathererDefn => {
-      const gatherer = gathererDefn.instance;
-      foundGatherers.add(gatherer.name);
-      const isGatherRequiredByAudits = requestedGatherers.has(gatherer.name);
-      if (!isGatherRequiredByAudits) {
-        const msg = `${gatherer.name} gatherer requested, however no audit requires it.`;
-        log.warn('config', msg);
-      }
-    });
-  });
-
-  // All required gatherers must be found in the config. Throw otherwise.
-  for (const auditDefn of audits || []) {
-    const auditMeta = auditDefn.implementation.meta;
-    for (const requiredArtifact of auditMeta.requiredArtifacts) {
-      if (!foundGatherers.has(requiredArtifact)) {
-        throw new Error(`${requiredArtifact} gatherer, required by audit ${auditMeta.id}, ` +
-            'was not found in config.');
-      }
-    }
+  if (!configJSON) {
+    configJSON = defaultConfig;
+    configPath = defaultConfigPath;
   }
 
-  // Passes must have unique `passName`s. Throw otherwise.
-  const usedNames = new Set();
-  passes.forEach(pass => {
-    const passName = pass.passName;
-    if (usedNames.has(passName)) {
-      throw new Error(`Passes must have unique names (repeated passName: ${passName}.`);
-    }
-    usedNames.add(passName);
-  });
+  // The directory of the config path, if one was provided.
+  const configDir = configPath ? path.dirname(configPath) : undefined;
+
+  return {
+    configWorkingCopy: deepCloneConfigJson(configJSON),
+    configPath,
+    configDir,
+  };
 }
 
 /**
- * @param {Gatherer} gathererInstance
- * @param {string=} gathererName
+ * @param {LH.Config.Json} configJSON
+ * @return {LH.Config.Json}
  */
-function assertValidGatherer(gathererInstance, gathererName) {
-  gathererName = gathererName || gathererInstance.name || 'gatherer';
+function resolveExtensions(configJSON) {
+  if (!configJSON.extends) return configJSON;
 
-  if (typeof gathererInstance.beforePass !== 'function') {
-    throw new Error(`${gathererName} has no beforePass() method.`);
+  if (configJSON.extends !== 'lighthouse:default') {
+    throw new Error('`lighthouse:default` is the only valid extension method.');
   }
 
-  if (typeof gathererInstance.pass !== 'function') {
-    throw new Error(`${gathererName} has no pass() method.`);
-  }
+  const {artifacts, ...extensionJSON} = configJSON;
+  const defaultClone = deepCloneConfigJson(defaultConfig);
+  const mergedConfig = mergeConfigFragment(defaultClone, extensionJSON);
 
-  if (typeof gathererInstance.afterPass !== 'function') {
-    throw new Error(`${gathererName} has no afterPass() method.`);
-  }
-}
+  mergedConfig.artifacts = mergeConfigFragmentArrayByKey(
+    defaultClone.artifacts,
+    artifacts,
+    artifact => artifact.id
+  );
 
-
-/**
- * Validate the LH.Flags
- * @param {LH.Flags} flags
- */
-function assertValidFlags(flags) {
-  // COMPAT: compatibility layer for devtools as it uses the old way and we need tests to pass
-  // TODO(paulirish): remove this from LH once emulation refactor has rolled into DevTools
-  // @ts-expect-error Deprecated flag
-  if (flags.channel === 'devtools' && flags.internalDisableDeviceScreenEmulation) {
-    // @ts-expect-error Deprecated flag
-    flags.formFactor = flags.emulatedFormFactor;
-    // @ts-expect-error Deprecated flag
-    flags.emulatedFormFactor = flags.internalDisableDeviceScreenEmulation = undefined;
-  }
-
-
-  // @ts-expect-error Checking for removed flags
-  if (flags.emulatedFormFactor || flags.internalDisableDeviceScreenEmulation) {
-    throw new Error('Invalid emulation flag. Emulation configuration changed in LH 7.0. See https://github.com/GoogleChrome/lighthouse/blob/master/docs/emulation.md');
-  }
+  return mergedConfig;
 }
 
 /**
- * @implements {LH.Config.Config}
+ * Looks up the required artifact IDs for each dependency, throwing if no earlier artifact satisfies the dependency.
+ *
+ * @param {LH.Config.ArtifactJson} artifact
+ * @param {LH.Config.AnyFRGathererDefn} gatherer
+ * @param {Map<Symbol, LH.Config.AnyArtifactDefn>} artifactDefnsBySymbol
+ * @return {LH.Config.AnyArtifactDefn['dependencies']}
  */
-class Config {
-  /**
-   * Resolves the provided config (inherits from extended config, if set), resolves
-   * all referenced modules, and validates.
-   * @param {LH.Config.Json=} configJSON If not provided, uses the default config.
-   * @param {LH.Flags=} flags
-   * @return {Promise<Config>}
-   */
-  static async fromJson(configJSON, flags) {
-    const status = {msg: 'Create config', id: 'lh:init:config'};
-    log.time(status, 'verbose');
-    let configPath = flags?.configPath;
+function resolveArtifactDependencies(artifact, gatherer, artifactDefnsBySymbol) {
+  if (!('dependencies' in gatherer.instance.meta)) return undefined;
 
-    if (!configJSON) {
-      configJSON = legacyDefaultConfig;
-      configPath = path.resolve(getModuleDirectory(import.meta), defaultConfigPath);
-    }
+  const dependencies = Object.entries(gatherer.instance.meta.dependencies).map(
+      ([dependencyName, artifactSymbol]) => {
+        const dependency = artifactDefnsBySymbol.get(artifactSymbol);
 
-    if (configPath && !path.isAbsolute(configPath)) {
-      throw new Error('configPath must be an absolute path.');
-    }
+        // Check that dependency was defined before us.
+        if (!dependency) throwInvalidDependencyOrder(artifact.id, dependencyName);
 
-    // We don't want to mutate the original config object
-    configJSON = deepCloneConfigJson(configJSON);
+        // Check that the phase relationship is OK too.
+        const validDependency = isValidArtifactDependency(gatherer, dependency.gatherer);
+        if (!validDependency) throwInvalidArtifactDependency(artifact.id, dependencyName);
 
-    // Extend the default config if specified
-    if (configJSON.extends) {
-      if (configJSON.extends !== 'lighthouse:default') {
-        throw new Error('`lighthouse:default` is the only valid extension method.');
+        return [dependencyName, {id: dependency.id}];
       }
-      configJSON = Config.extendConfigJSON(deepCloneConfigJson(legacyDefaultConfig), configJSON);
+  );
+
+  return Object.fromEntries(dependencies);
+}
+
+/**
+ *
+ * @param {LH.Config.ArtifactJson[]|null|undefined} artifacts
+ * @param {string|undefined} configDir
+ * @return {Promise<LH.Config.AnyArtifactDefn[] | null>}
+ */
+async function resolveArtifactsToDefns(artifacts, configDir) {
+  if (!artifacts) return null;
+
+  const status = {msg: 'Resolve artifact definitions', id: 'lh:config:resolveArtifactsToDefns'};
+  log.time(status, 'verbose');
+
+  /** @type {Map<Symbol, LH.Config.AnyArtifactDefn>} */
+  const artifactDefnsBySymbol = new Map();
+
+  const coreGathererList = Runner.getGathererList();
+  const artifactDefns = [];
+  for (const artifactJson of artifacts) {
+    /** @type {LH.Config.GathererJson} */
+    // @ts-expect-error - remove when legacy runner path is removed.
+    const gathererJson = artifactJson.gatherer;
+
+    const gatherer = await resolveGathererToDefn(gathererJson, coreGathererList, configDir);
+    if (!isFRGathererDefn(gatherer)) {
+      throw new Error(`${gatherer.instance.name} gatherer does not have a Fraggle Rock meta obj`);
     }
 
-    // The directory of the config path, if one was provided.
-    const configDir = configPath ? path.dirname(configPath) : undefined;
+    /** @type {LH.Config.AnyArtifactDefn} */
+    // @ts-expect-error - Typescript can't validate the gatherer and dependencies match
+    // even though it knows that they're each valid on their own.
+    const artifact = {
+      id: artifactJson.id,
+      gatherer,
+      dependencies: resolveArtifactDependencies(artifactJson, gatherer, artifactDefnsBySymbol),
+    };
 
-    // Validate and merge in plugins (if any).
-    configJSON = await mergePlugins(configJSON, configDir, flags);
-
-    if (flags) {
-      assertValidFlags(flags);
-    }
-    const settings = resolveSettings(configJSON.settings || {}, flags);
-
-    // Augment passes with necessary defaults and require gatherers.
-    const passesWithDefaults = Config.augmentPassesWithDefaults(configJSON.passes);
-    Config.adjustDefaultPassForThrottling(settings, passesWithDefaults);
-    const passes = await Config.requireGatherers(passesWithDefaults, configDir);
-
-    const audits = await Config.requireAudits(configJSON.audits, configDir);
-
-    const config = new Config(configJSON, {settings, passes, audits});
-    log.timeEnd(status);
-    return config;
+    const symbol = artifact.gatherer.instance.meta.symbol;
+    if (symbol) artifactDefnsBySymbol.set(symbol, artifact);
+    artifactDefns.push(artifact);
   }
 
-  /**
-   * @deprecated `Config.fromJson` should be used instead.
-   * @constructor
-   * @param {LH.Config.Json} configJSON
-   * @param {{settings: LH.Config.Settings, passes: ?LH.Config.Pass[], audits: ?LH.Config.AuditDefn[]}} opts
-   */
-  constructor(configJSON, opts) {
-    /** @type {LH.Config.Settings} */
-    this.settings = opts.settings;
-    /** @type {?Array<LH.Config.Pass>} */
-    this.passes = opts.passes;
-    /** @type {?Array<LH.Config.AuditDefn>} */
-    this.audits = opts.audits;
-    /** @type {?Record<string, LH.Config.Category>} */
-    this.categories = configJSON.categories || null;
-    /** @type {?Record<string, LH.Config.Group>} */
-    this.groups = configJSON.groups || null;
+  log.timeEnd(status);
+  return artifactDefns;
+}
 
-    Config.filterConfigIfNeeded(this);
-
-    assertValidPasses(this.passes, this.audits);
-    validation.assertValidCategories(this.categories, this.audits, this.groups);
+/**
+ * Overrides the settings that may not apply to the chosen gather mode.
+ *
+ * @param {LH.Config.Settings} settings
+ * @param {LH.Gatherer.GatherMode} gatherMode
+ */
+function overrideSettingsForGatherMode(settings, gatherMode) {
+  if (gatherMode === 'timespan') {
+    if (settings.throttlingMethod === 'simulate') {
+      settings.throttlingMethod = 'devtools';
+    }
   }
+}
 
-  /**
-   * Provides a cleaned-up, stringified version of this config. Gatherer and
-   * Audit `implementation` and `instance` do not survive this process.
-   * @return {string}
-   */
-  getPrintString() {
-    const jsonConfig = deepClone(this);
+/**
+ * Overrides the quiet windows when throttlingMethod requires observation.
+ *
+ * @param {LH.Config.NavigationDefn} navigation
+ * @param {LH.Config.Settings} settings
+ */
+function overrideNavigationThrottlingWindows(navigation, settings) {
+  if (navigation.disableThrottling) return;
+  if (settings.throttlingMethod === 'simulate') return;
 
-    if (jsonConfig.passes) {
-      for (const pass of jsonConfig.passes) {
-        for (const gathererDefn of pass.gatherers) {
-          gathererDefn.implementation = undefined;
-          // @ts-expect-error Breaking the Config.GathererDefn type.
-          gathererDefn.instance = undefined;
-        }
+  navigation.cpuQuietThresholdMs = Math.max(
+    navigation.cpuQuietThresholdMs || 0,
+    nonSimulatedPassConfigOverrides.cpuQuietThresholdMs
+  );
+  navigation.networkQuietThresholdMs = Math.max(
+    navigation.networkQuietThresholdMs || 0,
+    nonSimulatedPassConfigOverrides.networkQuietThresholdMs
+  );
+  navigation.pauseAfterFcpMs = Math.max(
+    navigation.pauseAfterFcpMs || 0,
+    nonSimulatedPassConfigOverrides.pauseAfterFcpMs
+  );
+  navigation.pauseAfterLoadMs = Math.max(
+    navigation.pauseAfterLoadMs || 0,
+    nonSimulatedPassConfigOverrides.pauseAfterLoadMs
+  );
+}
+
+/**
+ * @param {LH.Config.AnyArtifactDefn[]|null|undefined} artifactDefns
+ * @param {LH.Config.Settings} settings
+ * @return {LH.Config.NavigationDefn[] | null}
+ */
+function resolveFakeNavigations(artifactDefns, settings) {
+  if (!artifactDefns) return null;
+
+  const status = {msg: 'Resolve navigation definitions', id: 'lh:config:resolveNavigationsToDefns'};
+  log.time(status, 'verbose');
+
+  const resolvedNavigation = {
+    ...defaultNavigationConfig,
+    artifacts: artifactDefns,
+    pauseAfterFcpMs: settings.pauseAfterFcpMs,
+    pauseAfterLoadMs: settings.pauseAfterLoadMs,
+    networkQuietThresholdMs: settings.networkQuietThresholdMs,
+    cpuQuietThresholdMs: settings.cpuQuietThresholdMs,
+    blankPage: settings.blankPage,
+  };
+
+  overrideNavigationThrottlingWindows(resolvedNavigation, settings);
+
+  const navigations = [resolvedNavigation];
+  assertArtifactTopologicalOrder(navigations);
+
+  log.timeEnd(status);
+  return navigations;
+}
+
+/**
+ * @param {LH.Gatherer.GatherMode} gatherMode
+ * @param {LH.Config.Json=} configJSON
+ * @param {LH.Flags=} flags
+ * @return {Promise<{config: LH.Config.FRConfig, warnings: string[]}>}
+ */
+async function initializeConfig(gatherMode, configJSON, flags = {}) {
+  const status = {msg: 'Initialize config', id: 'lh:config'};
+  log.time(status, 'verbose');
+
+  let {configWorkingCopy, configDir} = resolveWorkingCopy(configJSON, flags);
+
+  configWorkingCopy = resolveExtensions(configWorkingCopy);
+  configWorkingCopy = await mergePlugins(configWorkingCopy, configDir, flags);
+
+  const settings = resolveSettings(configWorkingCopy.settings || {}, flags);
+  overrideSettingsForGatherMode(settings, gatherMode);
+
+  const artifacts = await resolveArtifactsToDefns(configWorkingCopy.artifacts, configDir);
+
+  const navigations = resolveFakeNavigations(artifacts, settings);
+
+  /** @type {LH.Config.FRConfig} */
+  let config = {
+    artifacts,
+    navigations,
+    audits: await resolveAuditsToDefns(configWorkingCopy.audits, configDir),
+    categories: configWorkingCopy.categories || null,
+    groups: configWorkingCopy.groups || null,
+    settings,
+  };
+
+  const {warnings} = assertValidConfig(config);
+
+  config = filterConfigByGatherMode(config, gatherMode);
+  config = filterConfigByExplicitFilters(config, settings);
+
+  log.timeEnd(status);
+  return {config, warnings};
+}
+
+/**
+ * @param {LH.Config.FRConfig} config
+ * @return {string}
+ */
+function getConfigDisplayString(config) {
+  /** @type {LH.Config.FRConfig} */
+  const jsonConfig = JSON.parse(JSON.stringify(config));
+
+  if (jsonConfig.navigations) {
+    for (const navigation of jsonConfig.navigations) {
+      for (let i = 0; i < navigation.artifacts.length; ++i) {
+        // @ts-expect-error Breaking the Config.AnyArtifactDefn type.
+        navigation.artifacts[i] = navigation.artifacts[i].id;
       }
     }
+  }
 
-    if (jsonConfig.audits) {
-      for (const auditDefn of jsonConfig.audits) {
+  if (jsonConfig.artifacts) {
+    for (const artifactDefn of jsonConfig.artifacts) {
+      // @ts-expect-error Breaking the Config.AnyArtifactDefn type.
+      artifactDefn.gatherer = artifactDefn.gatherer.path;
+      // Dependencies are not declared on Config JSON
+      artifactDefn.dependencies = undefined;
+    }
+  }
+
+  if (jsonConfig.audits) {
+    for (const auditDefn of jsonConfig.audits) {
+      // @ts-expect-error Breaking the Config.AuditDefn type.
+      auditDefn.implementation = undefined;
+      if (Object.keys(auditDefn.options).length === 0) {
         // @ts-expect-error Breaking the Config.AuditDefn type.
-        auditDefn.implementation = undefined;
-        if (Object.keys(auditDefn.options).length === 0) {
-          // @ts-expect-error Breaking the Config.AuditDefn type.
-          auditDefn.options = undefined;
-        }
+        auditDefn.options = undefined;
       }
     }
-
-    // Printed config is more useful with localized strings.
-    format.replaceIcuMessages(jsonConfig, jsonConfig.settings.locale);
-
-    return JSON.stringify(jsonConfig, null, 2);
   }
 
-  /**
-   * @param {LH.Config.Json} baseJSON The JSON of the configuration to extend
-   * @param {LH.Config.Json} extendJSON The JSON of the extensions
-   * @return {LH.Config.Json}
-   */
-  static extendConfigJSON(baseJSON, extendJSON) {
-    if (extendJSON.passes && baseJSON.passes) {
-      for (const pass of extendJSON.passes) {
-        // use the default pass name if one is not specified
-        const passName = pass.passName || constants.defaultPassConfig.passName;
-        const basePass = baseJSON.passes.find(candidate => candidate.passName === passName);
+  // Printed config is more useful with localized strings.
+  format.replaceIcuMessages(jsonConfig, jsonConfig.settings.locale);
 
-        if (!basePass) {
-          baseJSON.passes.push(pass);
-        } else {
-          mergeConfigFragment(basePass, pass);
-        }
-      }
-
-      delete extendJSON.passes;
-    }
-
-    return mergeConfigFragment(baseJSON, extendJSON);
-  }
-
-  /**
-   * @param {LH.Config.Json['passes']} passes
-   * @return {?Array<Required<LH.Config.PassJson>>}
-   */
-  static augmentPassesWithDefaults(passes) {
-    if (!passes) {
-      return null;
-    }
-
-    const {defaultPassConfig} = constants;
-    return passes.map(pass => mergeConfigFragment(deepClone(defaultPassConfig), pass));
-  }
-
-  /**
-   * Observed throttling methods (devtools/provided) require at least 5s of quiet for the metrics to
-   * be computed. This method adjusts the quiet thresholds to the required minimums if necessary.
-   * @param {LH.Config.Settings} settings
-   * @param {?Array<Required<LH.Config.PassJson>>} passes
-   */
-  static adjustDefaultPassForThrottling(settings, passes) {
-    if (!passes ||
-        (settings.throttlingMethod !== 'devtools' && settings.throttlingMethod !== 'provided')) {
-      return;
-    }
-
-    const defaultPass = passes.find(pass => pass.passName === 'defaultPass');
-    if (!defaultPass) return;
-    const overrides = constants.nonSimulatedPassConfigOverrides;
-    defaultPass.pauseAfterFcpMs =
-      Math.max(overrides.pauseAfterFcpMs, defaultPass.pauseAfterFcpMs);
-    defaultPass.pauseAfterLoadMs =
-      Math.max(overrides.pauseAfterLoadMs, defaultPass.pauseAfterLoadMs);
-    defaultPass.cpuQuietThresholdMs =
-      Math.max(overrides.cpuQuietThresholdMs, defaultPass.cpuQuietThresholdMs);
-    defaultPass.networkQuietThresholdMs =
-      Math.max(overrides.networkQuietThresholdMs, defaultPass.networkQuietThresholdMs);
-  }
-
-  /**
-   * Filter out any unrequested items from the config, based on requested categories or audits.
-   * @param {Config} config
-   */
-  static filterConfigIfNeeded(config) {
-    const settings = config.settings;
-    if (!settings.onlyCategories && !settings.onlyAudits && !settings.skipAudits) {
-      return;
-    }
-
-    // 1. Filter to just the chosen categories/audits
-    const {categories, requestedAuditNames} = Config.filterCategoriesAndAudits(config.categories,
-      settings);
-
-    // 2. Resolve which audits will need to run
-    const audits = config.audits && config.audits.filter(auditDefn =>
-        requestedAuditNames.has(auditDefn.implementation.meta.id));
-
-    // 3. Resolve which gatherers will need to run
-    const requestedGathererIds = Config.getGatherersRequestedByAudits(audits);
-
-    // 4. Filter to only the neccessary passes
-    const passes = Config.generatePassesNeededByGatherers(config.passes, requestedGathererIds);
-
-    config.categories = categories;
-    config.audits = audits;
-    config.passes = passes;
-  }
-
-  /**
-   * Filter out any unrequested categories or audits from the categories object.
-   * @param {Config['categories']} oldCategories
-   * @param {LH.Config.Settings} settings
-   * @return {{categories: Config['categories'], requestedAuditNames: Set<string>}}
-   */
-  static filterCategoriesAndAudits(oldCategories, settings) {
-    if (!oldCategories) {
-      return {categories: null, requestedAuditNames: new Set()};
-    }
-
-    if (settings.onlyAudits && settings.skipAudits) {
-      throw new Error('Cannot set both skipAudits and onlyAudits');
-    }
-
-    /** @type {NonNullable<Config['categories']>} */
-    const categories = {};
-    const filterByIncludedCategory = !!settings.onlyCategories;
-    const filterByIncludedAudit = !!settings.onlyAudits;
-    const categoryIds = settings.onlyCategories || [];
-    const auditIds = settings.onlyAudits || [];
-    const skipAuditIds = settings.skipAudits || [];
-
-    // warn if the category is not found
-    categoryIds.forEach(categoryId => {
-      if (!oldCategories[categoryId]) {
-        log.warn('config', `unrecognized category in 'onlyCategories': ${categoryId}`);
-      }
-    });
-
-    // warn if the audit is not found in a category or there are overlaps
-    const auditsToValidate = new Set(auditIds.concat(skipAuditIds));
-    for (const auditId of auditsToValidate) {
-      const foundCategory = Object.keys(oldCategories).find(categoryId => {
-        const auditRefs = oldCategories[categoryId].auditRefs;
-        return !!auditRefs.find(candidate => candidate.id === auditId);
-      });
-
-      if (!foundCategory) {
-        const parentKeyName = skipAuditIds.includes(auditId) ? 'skipAudits' : 'onlyAudits';
-        log.warn('config', `unrecognized audit in '${parentKeyName}': ${auditId}`);
-      } else if (auditIds.includes(auditId) && categoryIds.includes(foundCategory)) {
-        log.warn('config', `${auditId} in 'onlyAudits' is already included by ` +
-            `${foundCategory} in 'onlyCategories'`);
-      }
-    }
-
-    const includedAudits = new Set(auditIds);
-    skipAuditIds.forEach(id => includedAudits.delete(id));
-
-    Object.keys(oldCategories).forEach(categoryId => {
-      const category = deepClone(oldCategories[categoryId]);
-
-      if (filterByIncludedCategory && filterByIncludedAudit) {
-        // If we're filtering by category and audit, include the union of the two
-        if (!categoryIds.includes(categoryId)) {
-          category.auditRefs = category.auditRefs.filter(audit => auditIds.includes(audit.id));
-        }
-      } else if (filterByIncludedCategory) {
-        // If we're filtering by just category, and the category is not included, skip it
-        if (!categoryIds.includes(categoryId)) {
-          return;
-        }
-      } else if (filterByIncludedAudit) {
-        category.auditRefs = category.auditRefs.filter(audit => auditIds.includes(audit.id));
-      }
-
-      // always filter based on skipAuditIds
-      category.auditRefs = category.auditRefs.filter(audit => !skipAuditIds.includes(audit.id));
-
-      if (category.auditRefs.length) {
-        categories[categoryId] = category;
-        category.auditRefs.forEach(audit => includedAudits.add(audit.id));
-      }
-    });
-
-    // The `full-page-screenshot` audit belongs to no category, but we still want to include
-    // it (unless explictly excluded) because there are audits in every category that can use it.
-    const explicitlyExcludesFullPageScreenshot =
-      settings.skipAudits && settings.skipAudits.includes('full-page-screenshot');
-    if (!explicitlyExcludesFullPageScreenshot && (settings.onlyCategories || settings.skipAudits)) {
-      includedAudits.add('full-page-screenshot');
-    }
-
-    return {categories, requestedAuditNames: includedAudits};
-  }
-
-  /**
-   * From some requested audits, return names of all required and optional artifacts
-   * @param {Config['audits']} audits
-   * @return {Set<string>}
-   */
-  static getGatherersRequestedByAudits(audits) {
-    // It's possible we weren't given any audits (but existing audit results), in which case
-    // there is no need to do any work here.
-    if (!audits) {
-      return new Set();
-    }
-
-    const gatherers = new Set();
-    for (const auditDefn of audits) {
-      const {requiredArtifacts, __internalOptionalArtifacts} = auditDefn.implementation.meta;
-      requiredArtifacts.forEach(artifact => gatherers.add(artifact));
-      if (__internalOptionalArtifacts) {
-        __internalOptionalArtifacts.forEach(artifact => gatherers.add(artifact));
-      }
-    }
-    return gatherers;
-  }
-
-  /**
-   * Filters to only requested passes and gatherers, returning a new passes array.
-   * @param {Config['passes']} passes
-   * @param {Set<string>} requestedGatherers
-   * @return {Config['passes']}
-   */
-  static generatePassesNeededByGatherers(passes, requestedGatherers) {
-    if (!passes) {
-      return null;
-    }
-
-    const auditsNeedTrace = requestedGatherers.has('traces');
-    const filteredPasses = passes.map(pass => {
-      // remove any unncessary gatherers from within the passes
-      pass.gatherers = pass.gatherers.filter(gathererDefn => {
-        const gatherer = gathererDefn.instance;
-        return requestedGatherers.has(gatherer.name);
-      });
-
-      // disable the trace if no audit requires a trace
-      if (pass.recordTrace && !auditsNeedTrace) {
-        const passName = pass.passName || 'unknown pass';
-        log.warn('config', `Trace not requested by an audit, dropping trace in ${passName}`);
-        pass.recordTrace = false;
-      }
-
-      return pass;
-    }).filter(pass => {
-      // remove any passes lacking concrete gatherers, unless they are dependent on the trace
-      if (pass.recordTrace) return true;
-      // Always keep defaultPass
-      if (pass.passName === 'defaultPass') return true;
-      return pass.gatherers.length > 0;
-    });
-    return filteredPasses;
-  }
-
-  /**
-   * Take an array of audits and audit paths and require any paths (possibly
-   * relative to the optional `configDir`) using `resolveModulePath`,
-   * leaving only an array of AuditDefns.
-   * @param {LH.Config.Json['audits']} audits
-   * @param {string=} configDir
-   * @return {Promise<Config['audits']>}
-   */
-  static async requireAudits(audits, configDir) {
-    const status = {msg: 'Requiring audits', id: 'lh:config:requireAudits'};
-    log.time(status, 'verbose');
-    const auditDefns = await resolveAuditsToDefns(audits, configDir);
-    log.timeEnd(status);
-    return auditDefns;
-  }
-
-  /**
-   * Takes an array of passes with every property now initialized except the
-   * gatherers and requires them, (relative to the optional `configDir` if
-   * provided) using `resolveModulePath`, returning an array of full Passes.
-   * @param {?Array<Required<LH.Config.PassJson>>} passes
-   * @param {string=} configDir
-   * @return {Promise<Config['passes']>}
-   */
-  static async requireGatherers(passes, configDir) {
-    if (!passes) {
-      return null;
-    }
-    const status = {msg: 'Requiring gatherers', id: 'lh:config:requireGatherers'};
-    log.time(status, 'verbose');
-
-    const coreList = Runner.getGathererList();
-    const fullPassesPromises = passes.map(async (pass) => {
-      const gathererDefns = await Promise.all(
-        pass.gatherers
-          .map(gatherer => resolveGathererToDefn(gatherer, coreList, configDir))
-      );
-
-      // De-dupe gatherers by artifact name because artifact IDs must be unique at runtime.
-      const uniqueDefns = Array.from(
-        new Map(gathererDefns.map(defn => [defn.instance.name, defn])).values()
-      );
-      uniqueDefns.forEach(gatherer => assertValidGatherer(gatherer.instance, gatherer.path));
-
-      return Object.assign(pass, {gatherers: uniqueDefns});
-    });
-    const fullPasses = await Promise.all(fullPassesPromises);
-
-    log.timeEnd(status);
-    return fullPasses;
-  }
+  return JSON.stringify(jsonConfig, null, 2);
 }
 
-export {Config};
+export {
+  resolveWorkingCopy,
+  initializeConfig,
+  getConfigDisplayString,
+};

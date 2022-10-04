@@ -3,11 +3,11 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import log from 'lighthouse-logger';
+
 import {parseManifest} from '../../lib/manifest-parser.js';
-import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+import FRGatherer from '../base-gatherer.js';
 
 class WebAppManifest extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
@@ -94,8 +94,8 @@ class WebAppManifest extends FRGatherer {
    */
   getArtifact(context) {
     const driver = context.driver;
-    const {finalUrl} = context.baseArtifacts.URL;
-    return WebAppManifest.getWebAppManifest(driver.defaultSession, finalUrl);
+    const {finalDisplayedUrl} = context.baseArtifacts.URL;
+    return WebAppManifest.getWebAppManifest(driver.defaultSession, finalDisplayedUrl);
   }
 }
 
