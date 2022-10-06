@@ -30,7 +30,7 @@ function buildEntryPoint() {
 async function buildReportGenerator() {
   const result = await esbuild.build({
     entryPoints: ['report/generator/report-generator.js'],
-    outfile: 'dist/report/bundle.umd.js',
+    outfile: 'dist/lightrider/report-generator-bundle.js',
     write: false,
     format: 'iife', // really umd! see plugins.generateUMD
     globalName: 'umdExports',
