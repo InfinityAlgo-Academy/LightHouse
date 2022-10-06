@@ -62,6 +62,7 @@ async function buildStaticServerBundle() {
     plugins: [
       plugins.bulkLoader([
         plugins.partialLoaders.inlineFs,
+        plugins.partialLoaders.rmGetModuleDirectory,
       ]),
       plugins.ignoreBuiltins(),
       // rollupPlugins.nodeResolve(), // TODO ?

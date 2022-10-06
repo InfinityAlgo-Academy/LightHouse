@@ -60,15 +60,6 @@ async function main() {
       {path: 'src/main.js', esbuild: true, esbuildPlugins: [
         plugins.replaceModules({
           [`${LH_ROOT}/shared/localization/locales.js`]: 'export const locales = {};',
-          'module': `
-            export const createRequire = () => {
-              return {
-                resolve() {
-                  throw new Error('createRequire.resolve is not supported in bundled Lighthouse');
-                },
-              };
-            };
-          `,
         }),
         plugins.ignoreBuiltins(),
         plugins.bulkLoader([

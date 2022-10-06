@@ -178,6 +178,12 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
       }),
       nodeModulesPolyfillPlugin(),
       plugins.bulkLoader([
+        // TODO: when we used rollup, various things were tree-shaken out before inlineFs did its
+        // thing. Now treeshaking only happens at the end, so the plugin sees more cases than it
+        // did before. Some of those new cases emit warnings. Safe to ignore, but should be
+        // resolved eventually.
+        plugins.partialLoaders.inlineFs,
+        plugins.partialLoaders.rmGetModuleDirectory,
         plugins.partialLoaders.replaceText({
           '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,
           // This package exports to default in a way that causes Rollup to get confused,
@@ -200,11 +206,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
           /** @param {string} id */
           'import.meta': (id) => `{url: '${path.relative(LH_ROOT, id)}'}`,
         }),
-        // TODO: for rollup, various things were tree-shaken out before inlineFs did its thing.
-        // Now treeshaking only happens at the end, so the plugin sees more cases than it did before.
-        // Some of those new cases emit warnings. Safe to ignore, but should be resolved eventually.
-        plugins.partialLoaders.inlineFs,
-        plugins.partialLoaders.rmGetModuleDirectory,
       ]),
       {
         name: 'alias',
