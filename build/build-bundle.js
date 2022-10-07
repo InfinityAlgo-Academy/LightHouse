@@ -143,6 +143,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     outfile: distPath,
     write: false,
     format: 'iife',
+    charset: 'utf8',
     bundle: true,
     minify: opts.minify,
     treeShaking: true,
