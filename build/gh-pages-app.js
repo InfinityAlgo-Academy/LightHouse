@@ -207,6 +207,7 @@ class GhPagesApp {
       safeWriteFile(`${this.distDir}/src/${basename}`, code);
     }
 
+    this.preloadScripts.push(...result.outputFiles.slice(1).map(f => path.basename(f.path)));
     return result.outputFiles[0].text;
   }
 
