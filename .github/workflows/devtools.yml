@@ -161,7 +161,7 @@ jobs:
     - run: mkdir latest-run
       working-directory: ${{ github.workspace }}/lighthouse
     - name: yarn smoke --runner devtools
-      run: xvfb-run --auto-servernum yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=20 lantern-idle-callback-short
+      run: xvfb-run --auto-servernum yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=40 lantern-idle-callback-short
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Upload failures
