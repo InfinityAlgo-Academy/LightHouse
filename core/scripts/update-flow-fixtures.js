@@ -7,7 +7,7 @@
 /* global document */
 
 import fs from 'fs';
-import assert from 'assert';
+import assert from 'assert/strict';
 
 import open from 'open';
 import waitForExpect from 'wait-for-expect';
