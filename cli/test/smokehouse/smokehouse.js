@@ -227,7 +227,7 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
       continue; // Retry, if possible.
     }
 
-    break; // Passing result, no need to retry.
+    // break; // Passing result, no need to retry.
   }
 
   bufferedConsole.log(`  smoketest results:`);

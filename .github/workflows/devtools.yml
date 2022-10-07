@@ -2,7 +2,7 @@ name: DevTools
 
 on:
   push:
-    branches: [main]
+    # branches: [main]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
 env:
@@ -76,48 +76,48 @@ jobs:
           ${{ github.workspace }}/.gclient_entries
         key: devtools-build-artifacts-${{ github.run_id }}
 
-  e2e:
-    needs: [build]
-    runs-on: ubuntu-latest
+  # e2e:
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - name: git clone
-      uses: actions/checkout@v2
-      with:
-        path: lighthouse
+  #   steps:
+  #   - name: git clone
+  #     uses: actions/checkout@v2
+  #     with:
+  #       path: lighthouse
 
-    - name: Use Node.js 14.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 14.x
+  #   - name: Use Node.js 14.x
+  #     uses: actions/setup-node@v1
+  #     with:
+  #       node-version: 14.x
 
-    - run: yarn --frozen-lockfile --network-timeout 1000000
-      working-directory: ${{ github.workspace }}/lighthouse
+  #   - run: yarn --frozen-lockfile --network-timeout 1000000
+  #     working-directory: ${{ github.workspace }}/lighthouse
 
-    - name: Set $PATH
-      run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
-    # For vpython.
-    - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
+  #   - name: Set $PATH
+  #     run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
+  #   # For vpython.
+  #   - name: Download depot tools
+  #     run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
 
-    - name: Load build artifacts
-      id: devtools-build-artifacts
-      uses: actions/cache@v3
-      with:
-        path: |
-          ${{ env.DEVTOOLS_PATH }}
-          ${{ github.workspace }}/.gclient
-          ${{ github.workspace }}/.gclient_entries
-        key: devtools-build-artifacts-${{ github.run_id }}
+  #   - name: Load build artifacts
+  #     id: devtools-build-artifacts
+  #     uses: actions/cache@v3
+  #     with:
+  #       path: |
+  #         ${{ env.DEVTOOLS_PATH }}
+  #         ${{ github.workspace }}/.gclient
+  #         ${{ github.workspace }}/.gclient_entries
+  #       key: devtools-build-artifacts-${{ github.run_id }}
 
-    - name: Run e2e tests
-      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/run-e2e-tests.sh
+  #   - name: Run e2e tests
+  #     run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/run-e2e-tests.sh
 
   smoke:
     needs: [build]
     strategy:
       matrix:
-        smoke-test-shard: [1, 2, 3]
+        smoke-test-shard: [1]
       # e.g. if set 1 fails, continue with set 2 anyway
       fail-fast: false
     runs-on: ubuntu-latest
@@ -161,7 +161,7 @@ jobs:
     - run: mkdir latest-run
       working-directory: ${{ github.workspace }}/lighthouse
     - name: yarn smoke --runner devtools
-      run: xvfb-run --auto-servernum yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=2
+      run: xvfb-run --auto-servernum yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=20 lantern-idle-callback-short
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Upload failures
