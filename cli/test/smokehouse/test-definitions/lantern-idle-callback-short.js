@@ -31,7 +31,7 @@ const expectations = {
       'total-blocking-time': {
         // With the requestIdleCallback shim in place 1ms tasks should not block at all and should max add up to
         // 12.5 ms each, which would result in 50ms under a 4x simulated throttling multiplier and therefore in 0 tbt
-        numericValue: '<=100',
+        numericValue: 0,
       },
     },
   },
