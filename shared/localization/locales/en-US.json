@@ -54,7 +54,7 @@
     "message": "ARIA input fields have accessible names"
   },
   "core/audits/accessibility/aria-meter-name.js | description": {
-    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name)."
+    "message": "When a meter element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name)."
   },
   "core/audits/accessibility/aria-meter-name.js | failureTitle": {
     "message": "ARIA `meter` elements do not have accessible names."
@@ -117,7 +117,7 @@
     "message": "ARIA toggle fields have accessible names"
   },
   "core/audits/accessibility/aria-tooltip-name.js | description": {
-    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name)."
+    "message": "When a tooltip element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name)."
   },
   "core/audits/accessibility/aria-tooltip-name.js | failureTitle": {
     "message": "ARIA `tooltip` elements do not have accessible names."
@@ -1668,7 +1668,7 @@
     "message": "Mobile Friendly"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
-    "message": "The tested device appears to have a slower CPU than  Lighthouse expects. This can negatively affect your performance score. Learn more about [calibrating an appropriate CPU slowdown multiplier](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+    "message": "The tested device appears to have a slower CPU than  Lighthouse expects. This can negatively affect your performance score. Learn more about [calibrating an appropriate CPU slowdown multiplier](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."
   },
   "core/gather/driver/navigation.js | warningRedirected": {
     "message": "The page may not be loading as expected because your test URL ({requested}) was redirected to {final}. Try testing the second URL directly."

@@ -11,7 +11,7 @@ import log from 'lighthouse-logger';
 import legacyDefaultConfig from './legacy-default-config.js';
 import * as constants from '../../config/constants.js';
 import * as format from '../../../shared/localization/format.js';
-import * as validation from '../../fraggle-rock/config/validation.js';
+import * as validation from '../../config/validation.js';
 import {Runner} from '../../runner.js';
 import {
   mergePlugins,
@@ -147,7 +147,7 @@ function assertValidFlags(flags) {
 
   // @ts-expect-error Checking for removed flags
   if (flags.emulatedFormFactor || flags.internalDisableDeviceScreenEmulation) {
-    throw new Error('Invalid emulation flag. Emulation configuration changed in LH 7.0. See https://github.com/GoogleChrome/lighthouse/blob/master/docs/emulation.md');
+    throw new Error('Invalid emulation flag. Emulation configuration changed in LH 7.0. See https://github.com/GoogleChrome/lighthouse/blob/main/docs/emulation.md');
   }
 }
 

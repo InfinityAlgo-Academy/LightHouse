@@ -12,7 +12,7 @@ import {
   getAuditsBreakdown,
   navigateToLighthouseTab,
   selectCategories,
-  selectMode,
+  selectDevice,
   setLegacyNavigation,
   setThrottlingMethod,
   setToolbarCheckboxWithText,
@@ -32,7 +32,7 @@ describe('Navigation', async function() {
     describe(`in ${mode} mode`, () => {
       beforeEach(() => {
         if (mode === 'FR') {
-          // TODO: Figure out why these are emitted in FR.
+          // https://bugs.chromium.org/p/chromium/issues/detail?id=1357791
           expectError(/Protocol Error: the message with wrong session id/);
           expectError(/Protocol Error: the message with wrong session id/);
           expectError(/Protocol Error: the message with wrong session id/);
@@ -45,6 +45,14 @@ describe('Navigation', async function() {
         await navigateToLighthouseTab('lighthouse/hello.html');
 
         await setLegacyNavigation(mode === 'legacy');
+        await selectCategories([
+          'performance',
+          'accessibility',
+          'best-practices',
+          'seo',
+          'pwa',
+          'lighthouse-plugin-publisher-ads',
+        ]);
 
         await clickStartButton();
 
@@ -54,35 +62,41 @@ describe('Navigation', async function() {
         // 9.6.x is forked so Lighthouse ToT is still using 9.5.0 as the version.
         // assert.strictEqual(lhr.lighthouseVersion, '9.6.6');
         assert.match(lhr.finalUrl, /^https:\/\/localhost:[0-9]+\/test\/e2e\/resources\/lighthouse\/hello.html/);
+
         assert.strictEqual(lhr.configSettings.throttlingMethod, 'simulate');
         assert.strictEqual(lhr.configSettings.disableStorageReset, false);
         assert.strictEqual(lhr.configSettings.formFactor, 'mobile');
+        assert.strictEqual(lhr.configSettings.throttling.rttMs, 150);
+        assert.strictEqual(lhr.configSettings.screenEmulation.disabled, true);
+        assert.include(lhr.configSettings.emulatedUserAgent, 'Mobile');
 
-        const {innerWidth, innerHeight, outerWidth, outerHeight, devicePixelRatio} = artifacts.ViewportDimensions;
-        // This value can vary slightly, depending on the display.
-        // https://bugs.chromium.org/p/chromium/issues/detail?id=1346355
-        assert.approximately(innerHeight, 1742, 1);
-        assert.strictEqual(innerWidth, 980);
-        assert.strictEqual(outerWidth, 360);
-        assert.strictEqual(outerHeight, 640);
-        assert.strictEqual(devicePixelRatio, 3);
+        // A bug in FR caused `networkUserAgent` to be excluded from the LHR.
+        // https://github.com/GoogleChrome/lighthouse/pull/14392
+        // TODO: Reenable once the fix lands in DT.
+        if (mode === 'legacy') {
+          assert.include(lhr.environment.networkUserAgent, 'Mobile');
+        }
+
+        assert.deepStrictEqual(artifacts.ViewportDimensions, {
+          innerHeight: 640,
+          innerWidth: 360,
+          outerHeight: 640,
+          outerWidth: 360,
+          devicePixelRatio: 3,
+        });
 
         const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
-        assert.strictEqual(auditResults.length, 150);
+        assert.strictEqual(auditResults.length, 173);
         assert.strictEqual(erroredAudits.length, 0);
         assert.deepStrictEqual(failedAudits.map(audit => audit.id), [
           'service-worker',
-          'viewport',
           'installable-manifest',
           'splash-screen',
           'themed-omnibox',
           'maskable-icon',
-          'content-width',
           'document-title',
           'html-has-lang',
           'meta-description',
-          'font-size',
-          'tap-targets',
         ]);
 
         const viewTraceText = await reportEl.$eval('.lh-button--trace', viewTraceEl => {
@@ -114,17 +128,13 @@ describe('Navigation', async function() {
         assert.strictEqual(erroredAudits.length, 0);
         assert.deepStrictEqual(failedAudits.map(audit => audit.id), [
           'service-worker',
-          'viewport',
           'installable-manifest',
           'splash-screen',
           'themed-omnibox',
           'maskable-icon',
-          'content-width',
           'document-title',
           'html-has-lang',
           'meta-description',
-          'font-size',
-          'tap-targets',
         ]);
 
         const viewTraceText = await reportEl.$eval('.lh-button--trace', viewTraceEl => {
@@ -140,7 +150,7 @@ describe('Navigation', async function() {
         await setToolbarCheckboxWithText(mode === 'legacy', 'L̂éĝáĉý n̂áv̂íĝát̂íôń');
         await setToolbarCheckboxWithText(false, 'Ĉĺêár̂ śt̂ór̂áĝé');
         await selectCategories(['performance', 'best-practices']);
-        await selectMode('desktop');
+        await selectDevice('desktop');
 
         await clickStartButton();
 
@@ -158,6 +168,16 @@ describe('Navigation', async function() {
         assert.deepStrictEqual(Object.keys(lhr.categories), ['performance', 'best-practices']);
         assert.strictEqual(lhr.configSettings.disableStorageReset, true);
         assert.strictEqual(lhr.configSettings.formFactor, 'desktop');
+        assert.strictEqual(lhr.configSettings.throttling.rttMs, 40);
+        assert.strictEqual(lhr.configSettings.screenEmulation.disabled, true);
+        assert.notInclude(lhr.configSettings.emulatedUserAgent, 'Mobile');
+
+        // A bug in FR caused `networkUserAgent` to be excluded from the LHR.
+        // https://github.com/GoogleChrome/lighthouse/pull/14392
+        // TODO: Reenable once the fix lands in DT.
+        if (mode === 'legacy') {
+          assert.notInclude(lhr.environment.networkUserAgent, 'Mobile');
+        }
 
         const viewTraceText = await reportEl.$eval('.lh-button--trace', viewTraceEl => {
           return viewTraceEl.textContent;

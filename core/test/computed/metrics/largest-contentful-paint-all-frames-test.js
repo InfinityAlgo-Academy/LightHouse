@@ -25,7 +25,7 @@ describe('Metrics: LCP from all frames', () => {
     const resultPromise = LargestContentfulPaintAllFrames.request({gatherContext, trace: traceAllFrames, devtoolsLog: devtoolsLogAllFrames, settings}, context); // eslint-disable-line max-len
 
     // TODO: Implement lantern solution for LCP all frames.
-    expect(resultPromise).rejects.toThrow();
+    await expect(resultPromise).rejects.toThrow();
   });
 
   it('should compute an observed value', async () => {

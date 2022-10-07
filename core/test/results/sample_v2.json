@@ -1,6 +1,8 @@
 {
   "lighthouseVersion": "9.5.0",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
+  "mainDocumentUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
+  "finalDisplayedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "fetchTime": "2021-09-07T20:11:11.853Z",
   "gatherMode": "navigation",
@@ -3440,7 +3442,7 @@
     "aria-meter-name": {
       "id": "aria-meter-name",
       "title": "ARIA `meter` elements have accessible names",
-      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name).",
+      "description": "When a meter element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
@@ -3499,7 +3501,7 @@
     "aria-tooltip-name": {
       "id": "aria-tooltip-name",
       "title": "ARIA `tooltip` elements have accessible names",
-      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name).",
+      "description": "When a tooltip element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
