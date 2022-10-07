@@ -232,7 +232,7 @@ describe('ReportRenderer', () => {
     const container = renderer._dom.document().body;
     const output = renderer.renderReport(sampleResults, container);
 
-    const DOCS_ORIGINS = ['https://developers.google.com', 'https://web.dev'];
+    const DOCS_ORIGINS = ['https://developers.google.com', 'https://web.dev', 'https://developer.chrome.com'];
     const utmChannels = [...output.querySelectorAll('a[href*="utm_source=lighthouse"')]
       .map(a => new URL(a.href))
       .filter(url => DOCS_ORIGINS.includes(url.origin))
