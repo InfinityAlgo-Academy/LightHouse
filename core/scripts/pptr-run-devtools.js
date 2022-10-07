@@ -326,8 +326,8 @@ async function testUrlFromDevtools(url, options = {}) {
       await installCustomLighthouseConfig(inspectorSession, config);
     }
 
-    // await evaluateInSession(inspectorSession, waitForIdle);
-    // await evaluateInSession(pageSession, waitForIdle);
+    await evaluateInSession(inspectorSession, waitForIdle);
+    await evaluateInSession(pageSession, waitForIdle);
 
     const result = await evaluateInSession(inspectorSession, runLighthouse, [addSniffer]);
 
