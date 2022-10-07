@@ -232,6 +232,12 @@ function disableLegacyNavigation() {
   checkboxEl.checked = false;
   checkboxEl.dispatchEvent(new Event('change'));
 }
+
+function waitForIdle() {
+  return new Promise(resolve => {
+    window.requestIdleCallback(resolve, {timeout: 5000});
+  });
+}
 /* eslint-enable */
 
 /**
@@ -299,6 +305,7 @@ async function testUrlFromDevtools(url, options = {}) {
     }
 
     const page = (await browser.pages())[0];
+    const pageSession = await page.target().createCDPSession();
 
     const inspectorTarget = await browser.waitForTarget(t => t.url().includes('devtools'));
     const inspectorSession = await inspectorTarget.createCDPSession();
@@ -318,6 +325,9 @@ async function testUrlFromDevtools(url, options = {}) {
     if (config) {
       await installCustomLighthouseConfig(inspectorSession, config);
     }
+
+    await evaluateInSession(inspectorSession, waitForIdle);
+    await evaluateInSession(pageSession, waitForIdle);
 
     const result = await evaluateInSession(inspectorSession, runLighthouse, [addSniffer]);
 
