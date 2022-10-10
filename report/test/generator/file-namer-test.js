@@ -5,14 +5,14 @@
  */
 'use strict';
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import {getLhrFilenamePrefix} from '../../generator/file-namer.js';
 
 describe('file-namer helper', () => {
   it('generates filename prefixes', () => {
     const results = {
-      finalUrl: 'https://testexample.com',
+      finalDisplayedUrl: 'https://testexample.com',
       fetchTime: '2017-01-06T02:34:56.217Z',
     };
     const str = getLhrFilenamePrefix(results);

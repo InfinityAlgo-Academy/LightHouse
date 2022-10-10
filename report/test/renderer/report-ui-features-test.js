@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import jsdom from 'jsdom';
 import jestMock from 'jest-mock';
@@ -107,7 +107,7 @@ describe('ReportUIFeatures', () => {
 
       before(() => {
         const lhr = JSON.parse(JSON.stringify(sampleResults));
-        lhr.requestedUrl = lhr.finalUrl = 'http://www.example.com';
+        lhr.requestedUrl = lhr.finalDisplayedUrl = 'http://www.example.com';
         const webpAuditItemTemplate = {
           ...sampleResults.audits['modern-image-formats'].details.items[0],
           wastedBytes: 8.8 * 1024,

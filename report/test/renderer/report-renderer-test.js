@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import jsdom from 'jsdom';
 import jestMock from 'jest-mock';
@@ -71,7 +71,10 @@ describe('ReportRenderer', () => {
 
     it('renders a topbar', () => {
       const topbar = renderer._renderReportTopbar(sampleResults);
-      assert.equal(topbar.querySelector('.lh-topbar__url').textContent, sampleResults.finalUrl);
+      assert.equal(
+        topbar.querySelector('.lh-topbar__url').textContent,
+        sampleResults.finalDisplayedUrl
+      );
     });
 
     it('renders a header', () => {
@@ -229,7 +232,7 @@ describe('ReportRenderer', () => {
     const container = renderer._dom.document().body;
     const output = renderer.renderReport(sampleResults, container);
 
-    const DOCS_ORIGINS = ['https://developers.google.com', 'https://web.dev'];
+    const DOCS_ORIGINS = ['https://developers.google.com', 'https://web.dev', 'https://developer.chrome.com'];
     const utmChannels = [...output.querySelectorAll('a[href*="utm_source=lighthouse"')]
       .map(a => new URL(a.href))
       .filter(url => DOCS_ORIGINS.includes(url.origin))

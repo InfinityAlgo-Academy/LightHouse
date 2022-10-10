@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import UnminifiedCssAudit from '../../../audits/byte-efficiency/unminified-css.js';
 
@@ -15,7 +15,7 @@ describe('Page uses optimized css', () => {
   it('fails when given unminified stylesheets', () => {
     const auditResult = UnminifiedCssAudit.audit_(
       {
-        URL: {finalUrl: ''},
+        URL: {finalDisplayedUrl: ''},
         CSSUsage: {stylesheets: [
           {
             header: {sourceURL: 'foo.css'},
@@ -61,7 +61,7 @@ describe('Page uses optimized css', () => {
   it('passes when stylesheets are already minified', () => {
     const auditResult = UnminifiedCssAudit.audit_(
       {
-        URL: {finalUrl: ''},
+        URL: {finalDisplayedUrl: ''},
         CSSUsage: {stylesheets: [
           {header: {sourceURL: 'foo.css'}, content: '#id{width:100px;}'},
           {
