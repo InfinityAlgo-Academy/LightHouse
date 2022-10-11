@@ -12,7 +12,7 @@ import {ExecutionContext} from '../core/gather/driver/execution-context';
 import {Fetcher} from '../core/gather/fetcher';
 import {ArbitraryEqualityMap} from '../core/lib/arbitrary-equality-map';
 
-import Artifacts  from './artifacts';
+import Artifacts from './artifacts';
 import Config from './config';
 import {IcuMessage} from './lhr/i18n';
 import Result from './lhr/lhr';
@@ -85,7 +85,7 @@ declare module Gatherer {
   }
 
   interface LoadData {
-    networkRecords: Array<LH.Artifacts.NetworkRequest>;
+    networkRecords: Array<Artifacts.NetworkRequest>;
     devtoolsLog: Artifacts.DevtoolsLog;
     trace?: Artifacts.Trace;
   }
