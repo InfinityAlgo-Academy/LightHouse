@@ -29,7 +29,7 @@ export type NavigationRequestor = string | (() => Promise<void> | void);
 
 export import Puppeteer = Puppeteer_;
 
-// artifacts.d.ts
+// artifacts.ts
 export import Artifacts = Artifacts_;
 export import BaseArtifacts = Artifacts_.BaseArtifacts;
 export import FRArtifacts = Artifacts_.FRArtifacts;
@@ -49,7 +49,7 @@ export import CrdpCommands = _CrdpMappings.Commands;
 
 export import UserFlow = UserFlow_;
 
-// externs.d.ts
+// externs.ts
 export import Flags = Externs.Flags;
 export import CliFlags = Externs.CliFlags;
 export import RunnerResult = Externs.RunnerResult;
@@ -60,14 +60,14 @@ export import LighthouseError = LighthouseError_;
 export import Result = LHResult;
 export import FlowResult = FlowResult_;
 
-// i18n.d.ts.
+// lhr/i18n.ts
 export import IcuMessage = I18n.IcuMessage;
 export import RawIcu = I18n.RawIcu;
 export import FormattedIcu = I18n.FormattedIcu;
 
 export import Protocol = Protocol_;
 
-// lhr/settings.d.ts
+// lhr/settings.ts
 export import Locale = Settings.Locale;
 export import ThrottlingSettings = Settings.ThrottlingSettings;
 export import ScreenEmulationSettings = Settings.ScreenEmulationSettings;
