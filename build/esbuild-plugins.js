@@ -54,13 +54,7 @@ const partialLoaders = {
           }
 
           // @ts-expect-error
-          if (String.prototype.replaceAll) {
-            // @ts-expect-error
-            code = code.replaceAll(k, replaceWith);
-          } else {
-            // TODO: delete when not supporting node 14
-            while (code.includes(k)) code = code.replace(k, replaceWith);
-          }
+          code = code.replaceAll(k, replaceWith);
         }
 
         return {code};
@@ -70,7 +64,7 @@ const partialLoaders = {
 };
 
 /**
- * Bundles multiple partial loaders (string => string transforms) into a single esbuild Loader plugin.
+ * Bundles multiple partial loaders (string => string JS transforms) into a single esbuild Loader plugin.
  * A partial loader that doesn't want to do any transform should just return the code given to it.
  * @param {Array<{name: string, onLoad: (code: string, args: esbuild.OnLoadArgs) => Promise<{code: string, warnings?: esbuild.PartialMessage[]}>}>} partialLoaders
  * @return {esbuild.Plugin}
@@ -79,9 +73,7 @@ function bulkLoader(partialLoaders) {
   return {
     name: 'bulk-loader',
     setup(build) {
-      build.onLoad({filter: /\.*.js/}, async (args) => {
-        if (args.path.includes('node_modules')) return;
-
+      build.onLoad({filter: /\.*.js$/}, async (args) => {
         /** @type {esbuild.PartialMessage[]} */
         const warnings = [];
         // TODO: source maps? lol.

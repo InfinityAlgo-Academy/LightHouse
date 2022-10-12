@@ -16,7 +16,7 @@ import {createRequire} from 'module';
 
 import esMain from 'es-main';
 import esbuild from 'esbuild';
-import {NodeModulesPolyfillPlugin as nodeModulesPolyfillPlugin} from '@esbuild-plugins/node-modules-polyfill';
+// import {NodeModulesPolyfillPlugin as nodeModulesPolyfillPlugin} from '@esbuild-plugins/node-modules-polyfill';
 // // @ts-expect-error: plugin has no types.
 import PubAdsPlugin from 'lighthouse-plugin-publisher-ads/plugin.js';
 
@@ -24,6 +24,7 @@ import * as plugins from './esbuild-plugins.js';
 import {Runner} from '../core/runner.js';
 import {LH_ROOT} from '../root.js';
 import {readJson} from '../core/test/test-utils.js';
+import {nodeModulesPolyfillPlugin} from './plugins/esbuild-polyfills.js';
 
 const require = createRequire(import.meta.url);
 
