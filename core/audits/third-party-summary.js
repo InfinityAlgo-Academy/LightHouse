@@ -16,7 +16,7 @@ const UIStrings = {
   title: 'Minimize third-party usage',
   /** Title of a diagnostic audit that provides details about the code on a web page that the user doesn't control (referred to as "third-party code"). This imperative title is shown to users when there is a significant amount of page execution time caused by third-party code that should be reduced. */
   failureTitle: 'Reduce the impact of third-party code',
-  /** Description of a Lighthouse audit that identifies the code on the page that the user doesn't control. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that identifies the code on the page that the user doesn't control. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Third-party code can significantly impact load performance. ' +
     'Limit the number of redundant third-party providers and try to load third-party code after ' +
     'your page has primarily finished loading. ' +

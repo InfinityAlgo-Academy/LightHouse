@@ -12,7 +12,7 @@ const UIStrings = {
   title: 'Document has a meta description',
   /** Title of a Lighthouse audit that provides detail on the web page's document meta description. This descriptive title is shown when the document does not have a meta description. "meta" should be left untranslated because it refers to an HTML element. */
   failureTitle: 'Document does not have a meta description',
-  /** Description of a Lighthouse audit that tells the user *why* they need to have meta descriptions on their page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they need to have meta descriptions on their page. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Meta descriptions may be included in search results to concisely summarize ' +
       'page content. ' +
       '[Learn more about the meta description](https://web.dev/meta-description/).',

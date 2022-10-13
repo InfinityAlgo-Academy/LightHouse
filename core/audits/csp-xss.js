@@ -14,7 +14,7 @@ import {evaluateRawCspsForXss, getTranslatedDescription} from '../lib/csp-evalua
 const UIStrings = {
   /** Title of a Lighthouse audit that evaluates the security of a page's CSP. "CSP" stands for "Content Security Policy". "XSS" stands for "Cross Site Scripting". "CSP" and "XSS" do not need to be translated. */
   title: 'Ensure CSP is effective against XSS attacks',
-  /** Description of a Lighthouse audit that evaluates the security of a page's CSP. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. "CSP" stands for "Content Security Policy". "XSS" stands for "Cross Site Scripting". "CSP" and "XSS" do not need to be translated. */
+  /** Description of a Lighthouse audit that evaluates the security of a page's CSP. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. "CSP" stands for "Content Security Policy". "XSS" stands for "Cross Site Scripting". "CSP" and "XSS" do not need to be translated. */
   description: 'A strong Content Security Policy (CSP) significantly ' +
     'reduces the risk of cross-site scripting (XSS) attacks. ' +
     '[Learn how to use a CSP to prevent XSS](https://web.dev/csp-xss/)',

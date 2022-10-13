@@ -15,7 +15,7 @@ import * as i18n from '../../lib/i18n/i18n.js';
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to use video formats rather than animated GIFs, which are wasteful. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Use video formats for animated content',
-  /** Description of a Lighthouse audit that tells the user *why* they should use video instead of GIF format for delivering animated content. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should use video instead of GIF format for delivering animated content. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Large GIFs are inefficient for delivering animated content. Consider using ' +
     'MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save ' +
     'network bytes. [Learn more about efficient video formats](https://web.dev/efficient-animated-content/)',

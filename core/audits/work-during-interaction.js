@@ -26,7 +26,7 @@ const UIStrings = {
   title: 'Minimizes work during key interaction',
   /** Title of a diagnostic audit that provides detail on the main thread work the browser did during a key user interaction. This imperative title is shown to users when there is a significant amount of execution time that could be reduced. */
   failureTitle: 'Minimize work during key interaction',
-  /** Description of the work-during-interaction metric. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of the work-during-interaction metric. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'This is the thread-blocking work occurring during the Interaction to Next Paint measurement. [Learn more about the Interaction to Next Paint metric](https://web.dev/inp/).',
   /** Label for a column in a data table; entries will be information on the time that the browser is delayed before responding to user input. Ideally fits within a ~40 character limit. */
   inputDelay: 'Input delay',
