@@ -36,6 +36,7 @@ declare global {
   interface RenderState {
     root: LH.Treemap.Node;
     viewMode: LH.Treemap.ViewMode;
+    darkMode: boolean;
   }
 
   var webtreemap: {

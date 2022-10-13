@@ -7,7 +7,16 @@
 .vars {
   /* Palette using Material Design Colors
    * https://www.materialui.co/colors */
+  --color-gray-100: #F5F5F5;
+  --color-gray-200: #E0E0E0;
+  --color-gray-300: #CFCFCF;
+  --color-gray-400: #BDBDBD;
+  --color-gray-50: #FAFAFA;
+  --color-gray-500: #9E9E9E;
   --color-gray-600: #757575;
+  --color-gray-600: #757575;
+  --color-gray-700: #616161;
+  --color-gray-800: #424242;
   --color-gray-900: #212121;
 
   --control-background-color: #e7f1fe;
@@ -15,16 +24,68 @@
   --text-color: var(--color-gray-900);
   --text-color-active: #2a67ce;
   --text-color-active-secondary: #4484f3c7;
+  --background-color: #fff;
+  --inactive-node-color: #fff;
+}
+
+@media not print {
+  .lh-dark {
+    /* Pallete */
+    --color-gray-200: var(--color-gray-800);
+    --color-gray-300: #616161;
+    --color-gray-400: var(--color-gray-600);
+    --color-gray-700: var(--color-gray-400);
+    --color-gray-50: #757575;
+    --color-gray-600: var(--color-gray-500);
+    --color-green-700: var(--color-green);
+    --color-orange-700: var(--color-orange);
+    --color-red-700: var(--color-red);
+    --color-teal-600: var(--color-cyan-500);
+
+    /* Context-specific colors */
+    --color-hover: rgba(0, 0, 0, 0.2);
+    --color-informative: var(--color-blue-200);
+
+    /* Component variables */
+    /* --env-item-background-color: #393535; */
+    --link-color: var(--color-blue-200);
+    /* --locale-selector-background-color: var(--color-gray-200); */
+    /* --plugin-badge-background-color: var(--color-gray-800); */
+    --background-color: #121212;
+    /* --report-border-color-secondary: var(--color-gray-200); */
+    --text-color-secondary: var(--color-gray-400);
+    --text-color: var(--color-gray-100);
+    /* --snippet-color: var(--color-cyan-500); */
+    /* --topbar-background-color: var(--color-gray); */
+    /* --toplevel-warning-background-color: hsl(33deg 14% 18%); */
+    /* --toplevel-warning-message-text-color: var(--color-orange-700); */
+    /* --toplevel-warning-text-color: var(--color-gray-100); */
+
+    /* --text-color-active: #2a67ce;
+    --text-color-active-secondary: #0f2141; */
+    --control-background-color: #162e4e;
+    --inactive-node-color: lightgrey;
+
+    /* SVGs */
+    /* --plugin-icon-url: var(--plugin-icon-url-dark); */
+    /* --pwa-installable-gray-url: var(--pwa-installable-gray-url-dark); */
+    /* --pwa-optimized-gray-url: var(--pwa-optimized-gray-url-dark); */
+  }
 }
 
 body {
   font-family: '.SFNSDisplay-Regular', 'Helvetica Neue', 'Lucida Grande', sans-serif;
   color: var(--text-color);
+  background-color: var(--background-color);
   margin: 0;
   overflow-y: hidden;
   height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+a {
+  color: var(--link-color);
 }
 
 .hidden {

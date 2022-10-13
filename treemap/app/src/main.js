@@ -399,10 +399,22 @@ class TreemapViewer {
   }
 
   render() {
+    this.darkMode = document.body.classList.contains('lh-dark');
+
     const rootChanged =
       !this.previousRenderState || this.previousRenderState.root !== this.currentTreemapRoot;
     const viewChanged =
       !this.previousRenderState || this.previousRenderState.viewMode !== this.currentViewMode;
+    const darkModeChanged = !this.previousRenderState ||
+      this.previousRenderState.darkMode !== this.darkMode;
+
+    // The duplicate-modules view mode has highlighted nodes, which reference a particular color.
+    if (darkModeChanged) {
+      const currentViewModeIndex = this.viewModes.indexOf(this.currentViewMode);
+      this.viewModes = this.createViewModes();
+      this.setViewMode(this.viewModes[currentViewModeIndex]);
+      renderViewModeButtons(this.viewModes);
+    }
 
     if (rootChanged) {
       this.nodeToPathMap = new Map();
@@ -433,7 +445,7 @@ class TreemapViewer {
       this.createTable();
     }
 
-    if (rootChanged || viewChanged) {
+    if (rootChanged || viewChanged || darkModeChanged) {
       this.updateColors();
       applyActiveClass(this.currentViewMode.id, this.el);
     }
@@ -441,6 +453,7 @@ class TreemapViewer {
     this.previousRenderState = {
       root: this.currentTreemapRoot,
       viewMode: this.currentViewMode,
+      darkMode: this.darkMode,
     };
   }
 
@@ -620,7 +633,11 @@ class TreemapViewer {
    * @param {number} hue
    */
   getColorFromHue(hue) {
-    return TreemapUtil.hsl(hue, 60, 90);
+    if (this.darkMode) {
+      return TreemapUtil.hsl(hue, 100, 10);
+    } else {
+      return TreemapUtil.hsl(hue, 60, 90);
+    }
   }
 
   updateColors() {
@@ -629,22 +646,22 @@ class TreemapViewer {
       const depthOneNode = this.nodeToDepthOneNodeMap.get(node);
       const hue = depthOneNode &&
         this.getHueForD1NodeName(depthOneNode ? depthOneNode.name : node.name);
-      const depthOneNodeColor = hue !== undefined ? this.getColorFromHue(hue) : 'white';
+      const depthOneNodeColor = hue !== undefined ?
+        this.getColorFromHue(hue) :
+        'var(--inactive-node-color)';
 
       if (!node.dom) return;
 
-      let backgroundColor;
       if (this.currentViewMode.highlights) {
         // A view can set nodes to highlight. If so, don't color anything else.
         const path = this.nodeToPathMap.get(node);
         const highlight = path && this.currentViewMode.highlights
           .find(highlight => TreemapUtil.pathsAreEqual(path, highlight.path));
         if (highlight) {
-          backgroundColor = highlight.color || depthOneNodeColor;
+          node.dom.style.backgroundColor = highlight.color || depthOneNodeColor;
         } else {
-          backgroundColor = 'white';
+          node.dom.style.backgroundColor = 'var(--inactive-node-color)';
         }
-        node.dom.style.backgroundColor = backgroundColor;
         return;
       }
 
@@ -927,6 +944,11 @@ class LighthouseTreemap {
 }
 
 async function main() {
+  TreemapUtil.find('.lh-topbar__logo').addEventListener('click', () => {
+    document.body.classList.toggle('lh-dark');
+    treemapViewer.render();
+  });
+
   const app = new LighthouseTreemap();
   const queryParams = new URLSearchParams(window.location.search);
   const gzip = queryParams.get('gzip') === '1';

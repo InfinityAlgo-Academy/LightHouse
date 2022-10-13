@@ -19,6 +19,11 @@ Unless required by applicable law or agreed to in writing, software distributed 
 </head>
 
 <body class="vars">
+  <script>
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.body.classList.toggle('lh-dark', true);
+    }
+  </script>
   <div class="drop_zone"></div>
 
   <div class="treemap-placeholder">
