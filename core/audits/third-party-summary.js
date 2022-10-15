@@ -10,6 +10,7 @@ import thirdPartyWeb from '../lib/third-party-web.js';
 import {NetworkRecords} from '../computed/network-records.js';
 import {MainThreadTasks} from '../computed/main-thread-tasks.js';
 import {getJavaScriptURLs, getAttributableURLForTask} from '../lib/tracehouse/task-summary.js';
+import UrlUtils from '../lib/url-utils.js';
 
 const UIStrings = {
   /** Title of a diagnostic audit that provides details about the code on a web page that the user doesn't control (referred to as "third-party code"). This descriptive title is shown to users when the amount is acceptable and no user action is required. */
@@ -229,6 +230,20 @@ class ThirdPartySummary extends Audit {
       // Sort by blocking time first, then transfer size to break ties.
       .sort((a, b) => (b.blockingTime - a.blockingTime) || (b.transferSize - a.transferSize));
 
+    /** @type {Array<Object>} */
+    const lutEntities = [];
+    /** @type {Record<string, number>} */
+    const lutOrigins = {};
+    for (const [entity] of summaries.byEntity.entries()) {
+      const {name, company, homepage} = entity;
+      const id = lutEntities.push({name, company, homepage}) - 1;
+
+      for (const url of summaries.urls.get(entity) || []) {
+        const origin = UrlUtils.getOrigin(url) || '';
+        if (!lutOrigins[origin]) lutOrigins[origin] = id;
+      }
+    }
+
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
@@ -251,6 +266,10 @@ class ThirdPartySummary extends Audit {
         timeInMs: overallSummary.wastedMs,
       }),
       details: Audit.makeTableDetails(headings, results, overallSummary),
+      data: {
+        entities: lutEntities,
+        origins: lutOrigins,
+      },
     };
   }
 }

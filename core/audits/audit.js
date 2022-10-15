@@ -383,6 +383,7 @@ class Audit {
       warnings: product.warnings,
 
       details: product.details,
+      data: product.data,
     };
   }
 }

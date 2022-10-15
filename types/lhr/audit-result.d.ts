@@ -56,4 +56,6 @@ export interface Result {
   numericUnit?: string;
   /** Extra information about the page provided by some types of audits, in one of several possible forms that can be rendered in the HTML report. */
   details?: FormattedIcu<AuditDetails>;
+  /** Extra data that an audit can choose to expose in the report */
+  data?: Object;
 }

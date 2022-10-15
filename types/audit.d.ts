@@ -80,6 +80,8 @@ declare module Audit {
     details?: AuditDetails;
     /** If an audit encounters unusual execution circumstances, strings can be put in this optional array to add top-level warnings to the LHR. */
     runWarnings?: Array<IcuMessage>;
+    /** Extra data an audit can choose to expose. */
+    data?: Object;
   }
 
   /** The Audit.Product type for audits that do not return a `numericValue`. */
