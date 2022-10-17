@@ -50,7 +50,7 @@ export class ReportUIFeatures {
     this._opts = opts;
 
     /** @type {Object | undefined} */ // TODO: Revise type.
-    this._thirdPartyLookupTable;
+    this._thirdPartyLookupTable = undefined;
 
     this._topbar = opts.omitTopbar ? null : new TopbarFeatures(this, dom);
     this.onMediaQueryChange = this.onMediaQueryChange.bind(this);
@@ -334,7 +334,6 @@ export class ReportUIFeatures {
     const finalDisplayedUrlRootDomain = Util.getRootDomain(finalDisplayedUrl);
     const finalDisplayedUrlOrigin = Util.parseURL(finalDisplayedUrl).origin;
     const finalDisplayedUrlEntity = lookupTable?.origins?.[finalDisplayedUrlOrigin];
-    console.log('from _getThirdPartyRows', finalDisplayedUrlEntity, lookupTable);
 
     for (const rowEl of rowEls) {
       if (rowEl.classList.contains('lh-sub-item-row')) continue;
@@ -347,14 +346,11 @@ export class ReportUIFeatures {
 
       // const isThirdParty = Util.getRootDomain(datasetUrl) !== finalDisplayedUrlRootDomain;
       const datasetUrlEntity = lookupTable?.origins?.[Util.parseURL(datasetUrl).origin];
-      console.log('from _getThirdPartyRows, ', datasetUrl, datasetUrlEntity);
       const isThirdParty = (datasetUrlEntity === finalDisplayedUrlEntity &&
           datasetUrlEntity === undefined) ?
         Util.getRootDomain(datasetUrl) !== finalDisplayedUrlRootDomain :
         datasetUrlEntity !== finalDisplayedUrlEntity;
 
-      console.log('verdict: ', datasetUrl, isThirdParty ? 'is a third party':
-        'is NOT a third party');
       if (!isThirdParty) continue;
 
       thirdPartyRows.push(rowEl);
