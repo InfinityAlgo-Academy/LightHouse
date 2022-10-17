@@ -264,6 +264,7 @@ export class ReportRenderer {
       report.audits['full-page-screenshot']?.details &&
       report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' ?
       report.audits['full-page-screenshot'].details : undefined;
+    const thirdPartyLookUpTable = report.audits['third-party-summary']?.data || undefined;
     const detailsRenderer = new DetailsRenderer(this._dom, {
       fullPageScreenshot,
     });
@@ -341,6 +342,22 @@ export class ReportRenderer {
         this._dom.rootEl, fullPageScreenshot.screenshot);
     }
 
+    if (thirdPartyLookUpTable) {
+      ReportRenderer.installThirdPartyLookupTable(
+        this._dom.rootEl, thirdPartyLookUpTable
+      );
+    }
+
     return reportFragment;
+  }
+
+  /**
+   * Called by report renderer. Attaches the lookup table as serialized
+   * JSON into root element as a data-attribute.
+   * @param {HTMLElement} el
+   * @param {Object} lookupTable // TODO: Revise type.
+   */
+  static installThirdPartyLookupTable(el, lookupTable) {
+    el.setAttribute('data-thirdparties', JSON.stringify(lookupTable));
   }
 }
