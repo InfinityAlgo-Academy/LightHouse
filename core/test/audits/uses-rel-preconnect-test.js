@@ -124,7 +124,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/request',
         initiator: {},
-        internalNetworkRequestTime: 16_000,
+        networkRequestTime: 16_000,
         timing: {receiveHeadersEnd: 20},
       },
     ];
@@ -143,7 +143,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/request',
         initiator: {},
-        internalNetworkRequestTime: 2_000,
+        networkRequestTime: 2_000,
         timing: {
           dnsStart: 100,
           connectStart: 150,
@@ -171,7 +171,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/first',
         initiator: {},
-        internalNetworkRequestTime: 2_000,
+        networkRequestTime: 2_000,
         timing: {
           dnsStart: 100,
           connectStart: 150,
@@ -182,7 +182,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/second',
         initiator: {},
-        internalNetworkRequestTime: 3_000,
+        networkRequestTime: 3_000,
         timing: {
           dnsStart: 300,
           connectStart: 350,
@@ -208,7 +208,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'http://cdn.example.com/first',
         initiator: {},
-        internalNetworkRequestTime: 2_000,
+        networkRequestTime: 2_000,
         timing: {
           dnsStart: 100,
           connectStart: 250,
@@ -219,7 +219,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://othercdn.example.com/second',
         initiator: {},
-        internalNetworkRequestTime: 1_200,
+        networkRequestTime: 1_200,
         timing: {
           dnsStart: 100,
           connectStart: 200,
@@ -230,7 +230,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://unimportant.example.com/second',
         initiator: {},
-        internalNetworkRequestTime: 6_000,
+        networkRequestTime: 6_000,
         networkEndTime: 8_000, // ends *after* LCP
         timing: {
           dnsStart: 100,
@@ -263,7 +263,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn1.example.com/first',
         initiator: {},
-        internalNetworkRequestTime: 2_000,
+        networkRequestTime: 2_000,
         timing: {
           dnsStart: 100,
           dnsEnd: 100,
@@ -275,7 +275,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn2.example.com/first',
         initiator: {},
-        internalNetworkRequestTime: 2_000,
+        networkRequestTime: 2_000,
         timing: {
           dnsStart: 100,
           dnsEnd: 100,
@@ -311,9 +311,9 @@ describe('Performance: uses-rel-preconnect audit', () => {
 
     const networkRecords = [
       mainResource,
-      {url: 'https://cdn1.example.com/first', initiator: {}, internalNetworkRequestTime: 2_000, timing},
-      {url: 'https://cdn2.example.com/first', initiator: {}, internalNetworkRequestTime: 2_000, timing},
-      {url: 'https://cdn3.example.com/first', initiator: {}, internalNetworkRequestTime: 2_000, timing},
+      {url: 'https://cdn1.example.com/first', initiator: {}, networkRequestTime: 2_000, timing},
+      {url: 'https://cdn2.example.com/first', initiator: {}, networkRequestTime: 2_000, timing},
+      {url: 'https://cdn3.example.com/first', initiator: {}, networkRequestTime: 2_000, timing},
     ];
 
     const artifacts = {

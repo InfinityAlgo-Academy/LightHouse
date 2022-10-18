@@ -248,7 +248,7 @@ class NetworkRecorder extends RequestEventEmitter {
     let candidates = recordsByURL.get(initiatorURL) || [];
     // The initiator must come before the initiated request.
     candidates = candidates
-      .filter(cand => cand.responseHeadersReceivedTime <= record.internalNetworkRequestTime);
+      .filter(cand => cand.responseHeadersReceivedTime <= record.networkRequestTime);
     if (candidates.length > 1) {
       // Disambiguate based on prefetch. Prefetch requests have type 'Other' and cannot
       // initiate requests, so we drop them here.

@@ -151,7 +151,7 @@ class NetworkAnalyzer {
       if (!Number.isFinite(timing.receiveHeadersEnd) || timing.receiveHeadersEnd < 0) return;
 
       // Compute the amount of time downloading everything after the first congestion window took
-      const totalTime = record.networkEndTime - record.internalNetworkRequestTime;
+      const totalTime = record.networkEndTime - record.networkRequestTime;
       const downloadTimeAfterFirstByte = totalTime - timing.receiveHeadersEnd;
       const numberOfRoundTrips = Math.log2(record.transferSize / INITIAL_CWD);
 
@@ -287,12 +287,12 @@ class NetworkAnalyzer {
       for (const record of originRecords) {
         connectionWasReused.set(
           record.requestId,
-          record.internalNetworkRequestTime >= earliestReusePossible || record.protocol === 'h2'
+          record.networkRequestTime >= earliestReusePossible || record.protocol === 'h2'
         );
       }
 
       const firstRecord = originRecords
-        .reduce((a, b) => (a.internalNetworkRequestTime > b.internalNetworkRequestTime ? b : a));
+        .reduce((a, b) => (a.networkRequestTime > b.networkRequestTime ? b : a));
       connectionWasReused.set(firstRecord.requestId, false);
     }
 

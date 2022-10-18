@@ -23,7 +23,7 @@ function generateNetworkRecords(records, timeOrigin) {
       statusCode: item.statusCode || 200,
       requestMethod: item.requestMethod || 'GET',
       finished: typeof item.finished === 'undefined' ? true : item.finished,
-      internalNetworkRequestTime: item.start + timeOriginInMs,
+      networkRequestTime: item.start + timeOriginInMs,
       networkEndTime: item.end === -1 ? -1 : item.end + timeOriginInMs,
     };
   });

@@ -131,7 +131,7 @@ class NetworkRequest {
      * ms. When the network service is about to handle a request, ie. just before going to the
      * HTTP cache or going to the network for DNS/connection setup.
      */
-    this.internalNetworkRequestTime = -1;
+    this.networkRequestTime = -1;
     /** ms. When the first byte of the response headers is received. */
     this.responseHeadersReceivedTime = -1;
     /** ms. When the last byte of the response body is received. */
@@ -234,7 +234,7 @@ class NetworkRequest {
 
     this.mainThreadStartTime = data.timestamp * 1000;
     // Expected to be overriden with better value in `_recomputeTimesWithResourceTiming`.
-    this.internalNetworkRequestTime = this.mainThreadStartTime;
+    this.networkRequestTime = this.mainThreadStartTime;
 
     this.requestMethod = data.request.method;
 
@@ -383,8 +383,8 @@ class NetworkRequest {
     if (timing.requestTime === 0 || timing.receiveHeadersEnd === -1) return;
     // Take startTime and responseReceivedTime from timing data for better accuracy.
     // Timing's requestTime is a baseline in seconds, rest of the numbers there are ticks in millis.
-    this.internalNetworkRequestTime = timing.requestTime * 1000;
-    const headersReceivedTime = this.internalNetworkRequestTime + timing.receiveHeadersEnd;
+    this.networkRequestTime = timing.requestTime * 1000;
+    const headersReceivedTime = this.networkRequestTime + timing.receiveHeadersEnd;
     if (!this.responseHeadersReceivedTime || this.responseHeadersReceivedTime < 0) {
       this.responseHeadersReceivedTime = headersReceivedTime;
     }
@@ -392,7 +392,7 @@ class NetworkRequest {
     this.responseHeadersReceivedTime =
       Math.min(this.responseHeadersReceivedTime, headersReceivedTime);
     this.responseHeadersReceivedTime =
-      Math.max(this.responseHeadersReceivedTime, this.internalNetworkRequestTime);
+      Math.max(this.responseHeadersReceivedTime, this.networkRequestTime);
     // We're only at responseReceived (_onResponse) at this point.
     // This endTime may be redefined again after onLoading is done.
     this.networkEndTime = Math.max(this.networkEndTime, this.responseHeadersReceivedTime);
@@ -501,7 +501,7 @@ class NetworkRequest {
     }
 
     this.lrStatistics = {
-      endTimeDeltaMs: this.networkEndTime - (this.internalNetworkRequestTime + totalMs),
+      endTimeDeltaMs: this.networkEndTime - (this.networkRequestTime + totalMs),
       TCPMs: TCPMs,
       requestMs: requestMs,
       responseMs: responseMs,

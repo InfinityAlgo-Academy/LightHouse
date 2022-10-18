@@ -98,7 +98,7 @@ class UsesRelPreconnectAudit extends Audit {
    * @return {boolean}
    */
   static connectionGoesUnusedForTooLong(record, mainResource) {
-    const delta = Math.max(0, record.internalNetworkRequestTime - mainResource.networkEndTime);
+    const delta = Math.max(0, record.networkRequestTime - mainResource.networkEndTime);
     return delta < PRECONNECT_SOCKET_MAX_IDLE;
   }
 
@@ -189,7 +189,7 @@ class UsesRelPreconnectAudit extends Audit {
       if (firstRecordOfOrigin.parsedURL.scheme === 'https') connectionTime = connectionTime * 2;
 
       const timeBetweenMainResourceAndDnsStart =
-        firstRecordOfOrigin.internalNetworkRequestTime -
+        firstRecordOfOrigin.networkRequestTime -
         mainResource.networkEndTime +
         firstRecordOfOrigin.timing.dnsStart;
 

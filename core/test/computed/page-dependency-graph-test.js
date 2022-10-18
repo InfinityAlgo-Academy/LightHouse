@@ -19,12 +19,12 @@ const sampleDevtoolsLog = readJson('../fixtures/traces/iframe-m79.devtoolslog.js
 function createRequest(
   requestId,
   url,
-  internalNetworkRequestTime = 0,
+  networkRequestTime = 0,
   initiator = null,
   resourceType = NetworkRequest.TYPES.Document
 ) {
-  const networkEndTime = internalNetworkRequestTime + 50;
-  return {requestId, url, internalNetworkRequestTime, networkEndTime, initiator, resourceType};
+  const networkEndTime = networkRequestTime + 50;
+  return {requestId, url, networkRequestTime, networkEndTime, initiator, resourceType};
 }
 
 const TOPLEVEL_TASK_NAME = 'TaskQueueManager::ProcessTaskFromWorkQueue';

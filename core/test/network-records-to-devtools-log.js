@@ -95,7 +95,7 @@ function getResponseReceivedEvent(networkRecord, index) {
   if (networkRecord.timing) {
     timing = {...networkRecord.timing};
     if (timing.requestTime === undefined) {
-      timing.requestTime = networkRecord.internalNetworkRequestTime / 1000 || 0;
+      timing.requestTime = networkRecord.networkRequestTime / 1000 || 0;
     }
   }
 

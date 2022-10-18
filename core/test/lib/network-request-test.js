@@ -112,7 +112,7 @@ describe('NetworkRequest', () => {
     function getRequest() {
       return {
         // units = ms
-        internalNetworkRequestTime: 0,
+        networkRequestTime: 0,
         networkEndTime: 2000,
         responseHeadersReceivedTime: 1000,
 
@@ -134,7 +134,7 @@ describe('NetworkRequest', () => {
       global.isLightrider = true;
       const record = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
 
-      expect(record.internalNetworkRequestTime).toStrictEqual(0);
+      expect(record.networkRequestTime).toStrictEqual(0);
       expect(record.networkEndTime).toStrictEqual(2000);
       expect(record.responseHeadersReceivedTime).toStrictEqual(1000);
       expect(record.lrStatistics).toStrictEqual({
