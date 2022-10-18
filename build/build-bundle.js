@@ -23,7 +23,7 @@ import * as plugins from './esbuild-plugins.js';
 import {Runner} from '../core/runner.js';
 import {LH_ROOT} from '../root.js';
 import {readJson} from '../core/test/test-utils.js';
-import {nodeModulesPolyfillPlugin} from './plugins/esbuild-polyfills.js';
+import {nodeModulesPolyfillPlugin} from '../third-party/esbuild-plugins-polyfills/esbuild-polyfills.js';
 
 const require = createRequire(import.meta.url);
 

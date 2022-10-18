@@ -1,7 +1,3 @@
-// This is @esbuild-plugins/node-modules-polyfill, but using a better library
-// for polyfills. It was done in this PR which has not merged:
-// https://github.com/remorses/esbuild-plugins/pull/19
-
 // @ts-nocheck
 /* eslint-disable */
 
