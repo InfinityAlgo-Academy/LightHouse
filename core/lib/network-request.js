@@ -399,7 +399,7 @@ class NetworkRequest {
   }
 
   /**
-   * Update responseReceivedTime to the networkEndTime if endTime is earlier.
+   * Update responseHeadersReceivedTime to the networkEndTime if networkEndTime is earlier.
    * A response can't be received after the entire request finished.
    */
   _updateResponseReceivedTimeIfNecessary() {

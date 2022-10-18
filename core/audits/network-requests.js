@@ -112,7 +112,7 @@ class NetworkRequests extends Audit {
 
     // Include starting timestamp to allow syncing requests with navStart/metric timestamps.
     const networkStartTimeTs = Number.isFinite(earliestMainThreadStartTime) ?
-        earliestMainThreadStartTime * 1_000 : undefined;
+        earliestMainThreadStartTime * 1000 : undefined;
     tableDetails.debugData = {
       type: 'debugdata',
       networkStartTimeTs,
