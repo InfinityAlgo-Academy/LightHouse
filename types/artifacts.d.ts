@@ -546,9 +546,9 @@ declare module Artifacts {
   }
 
   interface TagBlockingFirstPaint {
-    // ms
+    /** ms */
     mainThreadStartTime: number;
-    // ms
+    /** ms */
     networkEndTime: number;
     transferSize: number;
     tag: {

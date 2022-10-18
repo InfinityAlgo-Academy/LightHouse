@@ -217,7 +217,6 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
       if (UrlUtils.isNonNetworkProtocol(request.protocol)) return;
       if (request.protocol === 'ws' || request.protocol === 'wss') return;
 
-      // convert the network timestamp to ms
       timeBoundaries.push({time: request.networkRequestTime, isStart: true});
       if (request.finished) {
         timeBoundaries.push({time: request.networkEndTime, isStart: false});

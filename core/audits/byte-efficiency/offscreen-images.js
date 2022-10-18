@@ -151,7 +151,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
     return images.filter(image => {
       if (image.wastedBytes < IGNORE_THRESHOLD_IN_BYTES) return false;
       if (image.wastedPercent < IGNORE_THRESHOLD_IN_PERCENT) return false;
-      return image.mainThreadStartTime < interactiveTimestamp / 1e3 - IGNORE_THRESHOLD_IN_MS;
+      return image.mainThreadStartTime < interactiveTimestamp / 1000 - IGNORE_THRESHOLD_IN_MS;
     });
   }
 
