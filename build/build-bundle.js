@@ -16,8 +16,7 @@ import {createRequire} from 'module';
 
 import esMain from 'es-main';
 import esbuild from 'esbuild';
-// import {NodeModulesPolyfillPlugin as nodeModulesPolyfillPlugin} from '@esbuild-plugins/node-modules-polyfill';
-// // @ts-expect-error: plugin has no types.
+// @ts-expect-error: plugin has no types.
 import PubAdsPlugin from 'lighthouse-plugin-publisher-ads/plugin.js';
 
 import * as plugins from './esbuild-plugins.js';

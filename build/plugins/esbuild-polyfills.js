@@ -2,12 +2,12 @@
 // for polyfills. It was done in this PR which has not merged:
 // https://github.com/remorses/esbuild-plugins/pull/19
 
+// @ts-nocheck
+/* eslint-disable */
 
-import fs from 'fs';
 import path from 'path';
 
 import escapeStringRegexp from 'escape-string-regexp';
-import esbuild from 'esbuild';
 import {getModules as builtinsPolyfills} from 'rollup-plugin-polyfill-node/dist/modules.js';
 import polyfillLib from 'rollup-plugin-polyfill-node/dist/polyfills.js';
 
@@ -109,7 +109,7 @@ function nodeModulesPolyfillPlugin(
         };
       }
       onResolve({filter}, resolver);
-      onResolve({ filter: /.*/, namespace }, resolver);
+      onResolve({filter: /.*/, namespace}, resolver);
     },
   };
 }
