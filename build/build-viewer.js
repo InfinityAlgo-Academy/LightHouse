@@ -28,7 +28,7 @@ async function buildReportGenerator() {
       }),
       plugins.ignoreBuiltins(),
       plugins.bulkLoader([
-        plugins.partialLoaders.inlineFs,
+        plugins.partialLoaders.inlineFs({verbose: Boolean(process.env.DEBUG)}),
         plugins.partialLoaders.rmGetModuleDirectory,
       ]),
     ],
@@ -63,7 +63,7 @@ async function main() {
         }),
         plugins.ignoreBuiltins(),
         plugins.bulkLoader([
-          plugins.partialLoaders.inlineFs,
+          plugins.partialLoaders.inlineFs({verbose: Boolean(process.env.DEBUG)}),
           plugins.partialLoaders.rmGetModuleDirectory,
         ]),
       ]},

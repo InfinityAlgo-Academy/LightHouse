@@ -828,7 +828,7 @@
     "message": "F̂áîĺûŕê ŕêáŝón̂"
   },
   "core/audits/installable-manifest.js | description": {
-    "message": "Ŝér̂v́îćê ẃôŕk̂ér̂ íŝ t́ĥé t̂éĉh́n̂ól̂óĝý t̂h́ât́ êńâb́l̂éŝ ýôúr̂ áp̂ṕ t̂ó ûśê ḿâńŷ Ṕr̂óĝŕêśŝív̂é Ŵéb̂ Áp̂ṕ f̂éât́ûŕêś, ŝúĉh́ âś ôf́f̂ĺîńê, ád̂d́ t̂ó ĥóm̂éŝćr̂éêń, âńd̂ ṕûśĥ ńôt́îf́îćât́îón̂ś. Ŵít̂h́ p̂ŕôṕêŕ ŝér̂v́îćê ẃôŕk̂ér̂ án̂d́ m̂án̂íf̂éŝt́ îḿp̂ĺêḿêńt̂át̂íôńŝ, b́r̂óŵśêŕŝ ćâń p̂ŕôáĉt́îv́êĺŷ ṕr̂óm̂ṕt̂ úŝér̂ś t̂ó âd́d̂ ýôúr̂ áp̂ṕ t̂ó t̂h́êír̂ h́ôḿêśĉŕêén̂, ẃĥíĉh́ ĉán̂ ĺêád̂ t́ô h́îǵĥér̂ én̂ǵâǵêḿêńt̂. ' +\n  '[Ĺêár̂ń m̂ór̂é âb́ôút̂ ḿâńîf́êśt̂ ín̂śt̂ál̂ĺâb́îĺît́ŷ ŕêq́ûír̂ém̂én̂t́ŝ](https://web.dev/installable-manifest/)."
+    "message": "Ŝér̂v́îćê ẃôŕk̂ér̂ íŝ t́ĥé t̂éĉh́n̂ól̂óĝý t̂h́ât́ êńâb́l̂éŝ ýôúr̂ áp̂ṕ t̂ó ûśê ḿâńŷ Ṕr̂óĝŕêśŝív̂é Ŵéb̂ Áp̂ṕ f̂éât́ûŕêś, ŝúĉh́ âś ôf́f̂ĺîńê, ád̂d́ t̂ó ĥóm̂éŝćr̂éêń, âńd̂ ṕûśĥ ńôt́îf́îćât́îón̂ś. Ŵít̂h́ p̂ŕôṕêŕ ŝér̂v́îćê ẃôŕk̂ér̂ án̂d́ m̂án̂íf̂éŝt́ îḿp̂ĺêḿêńt̂át̂íôńŝ, b́r̂óŵśêŕŝ ćâń p̂ŕôáĉt́îv́êĺŷ ṕr̂óm̂ṕt̂ úŝér̂ś t̂ó âd́d̂ ýôúr̂ áp̂ṕ t̂ó t̂h́êír̂ h́ôḿêśĉŕêén̂, ẃĥíĉh́ ĉán̂ ĺêád̂ t́ô h́îǵĥér̂ én̂ǵâǵêḿêńt̂. [Ĺêár̂ń m̂ór̂é âb́ôút̂ ḿâńîf́êśt̂ ín̂śt̂ál̂ĺâb́îĺît́ŷ ŕêq́ûír̂ém̂én̂t́ŝ](https://web.dev/installable-manifest/)."
   },
   "core/audits/installable-manifest.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 r̂éâśôń}\n    other {# r̂éâśôńŝ}\n    }"
@@ -1626,7 +1626,7 @@
     "message": "P̂ér̂f́ôŕm̂án̂ćê"
   },
   "core/config/default-config.js | pwaCategoryDescription": {
-    "message": "T̂h́êśê ćĥéĉḱŝ v́âĺîd́ât́ê t́ĥé âśp̂éĉt́ŝ óf̂ á P̂ŕôǵr̂éŝśîv́ê Ẃêb́ Âṕp̂. [Ĺêár̂ń m̂ór̂é](https://web.dev/pwa-checklist/)."
+    "message": "T̂h́êśê ćĥéĉḱŝ v́âĺîd́ât́ê t́ĥé âśp̂éĉt́ŝ óf̂ á P̂ŕôǵr̂éŝśîv́ê Ẃêb́ Âṕp̂. [Ĺêár̂ń ŵh́ât́ m̂ák̂éŝ á ĝóôd́ P̂ŕôǵr̂éŝśîv́ê Ẃêb́ Âṕp̂](https://web.dev/pwa-checklist/)."
   },
   "core/config/default-config.js | pwaCategoryManualDescription": {
     "message": "T̂h́êśê ćĥéĉḱŝ ár̂é r̂éq̂úîŕêd́ b̂ý t̂h́ê b́âśêĺîńê [ṔŴÁ Ĉh́êćk̂ĺîśt̂](https://web.dev/pwa-checklist/) b́ût́ âŕê ńôt́ âút̂óm̂át̂íĉál̂ĺŷ ćĥéĉḱêd́ b̂ý L̂íĝh́t̂h́ôúŝé. T̂h́êý d̂ó n̂ót̂ áf̂f́êćt̂ ýôúr̂ śĉór̂é b̂út̂ ít̂'ś îḿp̂ór̂t́âńt̂ t́ĥát̂ ýôú v̂ér̂íf̂ý t̂h́êḿ m̂án̂úâĺl̂ý."
@@ -1641,7 +1641,7 @@
     "message": "P̂ẂÂ Óp̂t́îḿîźêd́"
   },
   "core/config/default-config.js | seoCategoryDescription": {
-    "message": "T̂h́êśê ćĥéĉḱŝ én̂śûŕê t́ĥát̂ ýôúr̂ ṕâǵê íŝ f́ôĺl̂óŵín̂ǵ b̂áŝíĉ śêár̂ćĥ én̂ǵîńê óp̂t́îḿîźât́îón̂ ád̂v́îćê. T́ĥér̂é âŕê ḿâńŷ ád̂d́ît́îón̂ál̂ f́âćt̂ór̂ś L̂íĝh́t̂h́ôúŝé d̂óêś n̂ót̂ śĉór̂é ĥér̂é t̂h́ât́ m̂áŷ áf̂f́êćt̂ ýôúr̂ śêár̂ćĥ ŕâńk̂ín̂ǵ, îńĉĺûd́îńĝ ṕêŕf̂ór̂ḿâńĉé ôń [Ĉór̂é Ŵéb̂ V́ît́âĺŝ](https://web.dev/learn-web-vitals/). [Ĺêár̂ń m̂ór̂é](https://support.google.com/webmasters/answer/35769)."
+    "message": "T̂h́êśê ćĥéĉḱŝ én̂śûŕê t́ĥát̂ ýôúr̂ ṕâǵê íŝ f́ôĺl̂óŵín̂ǵ b̂áŝíĉ śêár̂ćĥ én̂ǵîńê óp̂t́îḿîźât́îón̂ ád̂v́îćê. T́ĥér̂é âŕê ḿâńŷ ád̂d́ît́îón̂ál̂ f́âćt̂ór̂ś L̂íĝh́t̂h́ôúŝé d̂óêś n̂ót̂ śĉór̂é ĥér̂é t̂h́ât́ m̂áŷ áf̂f́êćt̂ ýôúr̂ śêár̂ćĥ ŕâńk̂ín̂ǵ, îńĉĺûd́îńĝ ṕêŕf̂ór̂ḿâńĉé ôń [Ĉór̂é Ŵéb̂ V́ît́âĺŝ](https://web.dev/learn-web-vitals/). [Ĺêár̂ń m̂ór̂é âb́ôút̂ Ǵôóĝĺê Śêár̂ćĥ Éŝśêńt̂íâĺŝ](https://support.google.com/webmasters/answer/35769)."
   },
   "core/config/default-config.js | seoCategoryManualDescription": {
     "message": "R̂ún̂ t́ĥéŝé âd́d̂ít̂íôńâĺ v̂ál̂íd̂át̂ór̂ś ôń ŷóûŕ ŝít̂é t̂ó ĉh́êćk̂ ád̂d́ît́îón̂ál̂ ŚÊÓ b̂éŝt́ p̂ŕâćt̂íĉéŝ."
@@ -1662,7 +1662,7 @@
     "message": "Ĉŕâẃl̂ín̂ǵ âńd̂ Ín̂d́êx́îńĝ"
   },
   "core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "M̂ák̂é ŝúr̂é ŷóûŕ p̂áĝéŝ ár̂é m̂ób̂íl̂é f̂ŕîén̂d́l̂ý ŝó ûśêŕŝ d́ôń’t̂ h́âv́ê t́ô ṕîńĉh́ ôŕ ẑóôḿ îń ôŕd̂ér̂ t́ô ŕêád̂ t́ĥé ĉón̂t́êńt̂ ṕâǵêś. [L̂éâŕn̂ ḿôŕê](https://developers.google.com/search/mobile-sites/)."
+    "message": "M̂ák̂é ŝúr̂é ŷóûŕ p̂áĝéŝ ár̂é m̂ób̂íl̂é f̂ŕîén̂d́l̂ý ŝó ûśêŕŝ d́ôń’t̂ h́âv́ê t́ô ṕîńĉh́ ôŕ ẑóôḿ îń ôŕd̂ér̂ t́ô ŕêád̂ t́ĥé ĉón̂t́êńt̂ ṕâǵêś. [L̂éâŕn̂ h́ôẃ t̂ó m̂ák̂é p̂áĝéŝ ḿôb́îĺê-f́r̂íêńd̂ĺŷ](https://developers.google.com/search/mobile-sites/)."
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "M̂ób̂íl̂é F̂ŕîén̂d́l̂ý"

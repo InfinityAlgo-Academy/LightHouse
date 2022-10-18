@@ -14,7 +14,7 @@ const UIStrings = {
   title: 'Document has a valid `rel=canonical`',
   /** Title of a Lighthouse audit that provides detail on a page's rel=canonical link. This descriptive title is shown to users when the rel=canonical link is invalid and should be fixed. "rel=canonical" is an HTML attribute and value and so should not be translated. */
   failureTitle: 'Document does not have a valid `rel=canonical`',
-  /** Description of a Lighthouse audit that tells the user *why* they need to have a valid rel=canonical link. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they need to have a valid rel=canonical link. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Canonical links suggest which URL to show in search results. ' +
     '[Learn more about canonical links](https://web.dev/canonical/).',
   /**

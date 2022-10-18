@@ -14,6 +14,7 @@ import {LH_ROOT} from '../../root.js';
 /**
  * @typedef Options
  * @property {boolean} [verbose] If true, turns on verbose logging, e.g. log instances where fs methods could not be inlined.
+ * @property {string[]} [ignorePaths] Absoulte paths of files to not process for inlining.
  */
 
 /**
@@ -29,9 +30,13 @@ function rollupInlineFs(options = {}) {
     /**
      * @param {string} originalCode
      * @param {string} filepath
-     * @return {Promise<string|null>}
+     * @return {Promise<import('rollup').TransformResult>}
      */
     async transform(originalCode, filepath) {
+      if (options.ignorePaths?.includes(filepath)) {
+        return;
+      }
+
       // TODO(bckenny): add source maps, watch files.
       const {code, warnings} = await inlineFs(originalCode, filepath);
 

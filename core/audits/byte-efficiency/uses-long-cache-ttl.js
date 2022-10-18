@@ -18,7 +18,7 @@ const UIStrings = {
   title: 'Uses efficient cache policy on static assets',
   /** Title of a diagnostic audit that provides details on the any page resources that could have been served with more efficient cache policies. Cache refers to browser disk cache, which keeps old versions of network resources around for future use. This imperative title is shown to users when there is a significant amount of assets served with poor cache policies. */
   failureTitle: 'Serve static assets with an efficient cache policy',
-  /** Description of a Lighthouse audit that tells the user *why* they need to adopt a long cache lifetime policy. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they need to adopt a long cache lifetime policy. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description:
     'A long cache lifetime can speed up repeat visits to your page. ' +
     '[Learn more about efficient cache policies](https://web.dev/uses-long-cache-ttl/).',

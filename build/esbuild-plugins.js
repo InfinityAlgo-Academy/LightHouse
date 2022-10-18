@@ -12,7 +12,7 @@ import {createRequire} from 'module';
 import esbuild from 'esbuild';
 import builtin from 'builtin-modules';
 
-import {inlineFs} from './plugins/inline-fs.js';
+import {inlineFsPlugin} from './plugins/esbuild-inline-fs.js';
 
 /**
  * @typedef PartialLoader
@@ -21,15 +21,7 @@ import {inlineFs} from './plugins/inline-fs.js';
  */
 
 const partialLoaders = {
-  /** @type {PartialLoader} */
-  inlineFs: {
-    name: 'inline-fs',
-    async onLoad(inputCode, args) {
-      // if (args.path.includes('proto-pre')) debugger;
-      const {code, warnings} = await inlineFs(inputCode, args.path);
-      return {code: code ?? inputCode, warnings};
-    },
-  },
+  inlineFs: inlineFsPlugin,
   /** @type {PartialLoader} */
   rmGetModuleDirectory: {
     name: 'rm-get-module-directory',

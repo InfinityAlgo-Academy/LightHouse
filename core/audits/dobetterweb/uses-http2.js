@@ -26,7 +26,7 @@ import * as i18n from '../../lib/i18n/i18n.js';
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to enable HTTP/2. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Use HTTP/2',
-  /** Description of a Lighthouse audit that tells the user why they should use HTTP/2. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why they should use HTTP/2. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'HTTP/2 offers many benefits over HTTP/1.1, including binary headers and ' +
       'multiplexing. [Learn more about HTTP/2](https://web.dev/uses-http2/).',
   /** [ICU Syntax] Label identifying the number of network requests that were not served with HTTP/2. */

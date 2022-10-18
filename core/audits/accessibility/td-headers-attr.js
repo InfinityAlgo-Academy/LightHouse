@@ -20,7 +20,7 @@ const UIStrings = {
   /** Title of an accesibility audit that evaluates if all table cell elements in a table that use the headers HTML attribute use it correctly to refer to header cells within the same table. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: 'Cells in a `<table>` element that use the `[headers]` attribute refer ' +
       'to an element `id` not found within the same table.',
-  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Screen readers have features to make navigating tables easier. Ensuring ' +
       '`<td>` cells using the `[headers]` attribute only refer to other cells in the same ' +
       'table may improve the experience for screen reader users. ' +

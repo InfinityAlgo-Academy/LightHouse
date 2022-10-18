@@ -35,7 +35,7 @@ async function main() {
         `,
       }),
       plugins.bulkLoader([
-        plugins.partialLoaders.inlineFs,
+        plugins.partialLoaders.inlineFs({verbose: Boolean(process.env.DEBUG)}),
         plugins.partialLoaders.rmGetModuleDirectory,
       ]),
       plugins.ignoreBuiltins(),

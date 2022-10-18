@@ -21,7 +21,7 @@ const UIStrings = {
   title: 'Serves images with appropriate resolution',
   /** Title of a Lighthouse audit that provides detail on the size of visible images on the page. This descriptive title is shown to users when not all images have correct sizes. */
   failureTitle: 'Serves images with low resolution',
-  /** Description of a Lighthouse audit that tells the user why they should maintain an appropriate size for all images. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why they should maintain an appropriate size for all images. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Image natural dimensions should be proportional to the display size and the ' +
     'pixel ratio to maximize image clarity. ' +
     '[Learn how to provide responsive images](https://web.dev/serve-responsive-images/).',

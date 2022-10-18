@@ -11,9 +11,12 @@ import {
   clickStartButton,
   endTimespan,
   getAuditsBreakdown,
+  getServiceWorkerCount,
   navigateToLighthouseTab,
+  registerServiceWorker,
   selectDevice,
   selectMode,
+  setThrottlingMethod,
   waitForResult,
   waitForTimespanStarted,
 } from '../helpers/lighthouse-helpers.js';
@@ -36,15 +39,21 @@ describe('Timespan', async function() {
 
   it('successfully returns a Lighthouse report for user interactions', async () => {
     await navigateToLighthouseTab('lighthouse/hello.html');
+    await registerServiceWorker();
 
     // https://bugs.chromium.org/p/chromium/issues/detail?id=1364257
     await selectDevice('desktop');
 
     await selectMode('timespan');
+    await setThrottlingMethod('simulate');
+
+    let numNavigations = 0;
+    const {target} = await getBrowserAndPages();
+    target.on('framenavigated', () => ++numNavigations);
+
     await clickStartButton();
     await waitForTimespanStarted();
 
-    const {target} = await getBrowserAndPages();
     await target.click('button');
     await target.click('button');
     await target.click('button');
@@ -53,7 +62,12 @@ describe('Timespan', async function() {
 
     const {lhr, artifacts, reportEl} = await waitForResult();
 
+    assert.strictEqual(numNavigations, 0);
+
     assert.strictEqual(lhr.gatherMode, 'timespan');
+
+    // Even though the dropdown is set to "simulate", throttling method should be overriden to "devtools".
+    assert.strictEqual(lhr.configSettings.throttlingMethod, 'devtools');
 
     const {innerWidth, innerHeight, devicePixelRatio} = artifacts.ViewportDimensions;
     // TODO: Figure out why outerHeight can be different depending on OS
@@ -78,5 +92,8 @@ describe('Timespan', async function() {
       return viewTraceEl.textContent;
     });
     assert.strictEqual(viewTraceText, 'View Trace');
+
+    // Ensure service worker is not cleared in timespan mode.
+    assert.strictEqual(await getServiceWorkerCount(), 1);
   });
 });

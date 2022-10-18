@@ -18,7 +18,7 @@ const UIStrings = {
   /** Title of an accesibility audit that evaluates if any list item elements do not have list parent elements. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: 'List items (`<li>`) are not contained within `<ul>`, ' +
       '`<ol>` or `<menu>` parent elements.',
-  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Screen readers require list items (`<li>`) to be contained within a ' +
       'parent `<ul>`, `<ol>` or `<menu>` to be announced properly. ' +
       '[Learn more about proper list structure](https://dequeuniversity.com/rules/axe/4.4/listitem).',

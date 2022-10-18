@@ -184,7 +184,10 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         // thing. Now treeshaking only happens at the end, so the plugin sees more cases than it
         // did before. Some of those new cases emit warnings. Safe to ignore, but should be
         // resolved eventually.
-        plugins.partialLoaders.inlineFs,
+        plugins.partialLoaders.inlineFs({
+          verbose: Boolean(process.env.DEBUG),
+          ignorePaths: [require.resolve('puppeteer-core/lib/esm/puppeteer/common/Page.js')],
+        }),
         plugins.partialLoaders.rmGetModuleDirectory,
         plugins.partialLoaders.replaceText({
           '/* BUILD_REPLACE_BUNDLED_MODULES */': `[\n${bundledMapEntriesCode},\n]`,

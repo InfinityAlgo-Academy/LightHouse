@@ -44,7 +44,7 @@ async function buildReportGenerator() {
         [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export const flowReportAssets = {}',
       }),
       plugins.bulkLoader([
-        plugins.partialLoaders.inlineFs,
+        plugins.partialLoaders.inlineFs({verbose: Boolean(process.env.DEBUG)}),
         plugins.partialLoaders.rmGetModuleDirectory,
       ]),
       plugins.ignoreBuiltins(),

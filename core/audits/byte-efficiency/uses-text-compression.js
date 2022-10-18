@@ -16,7 +16,7 @@ import * as i18n from '../../lib/i18n/i18n.js';
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to enable text compression (like gzip) in order to enhance the performance of a page. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Enable text compression',
-  /** Description of a Lighthouse audit that tells the user *why* their text-based resources should be served with compression (like gzip). This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* their text-based resources should be served with compression (like gzip). This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Text-based resources should be served with compression (gzip, deflate or' +
     ' brotli) to minimize total network bytes.' +
     ' [Learn more about text compression](https://web.dev/uses-text-compression/).',
