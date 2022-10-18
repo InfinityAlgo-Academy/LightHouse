@@ -31,6 +31,8 @@ const inlineFsPlugin = (options) => ({
     if (options.ignorePaths?.includes(args.path)) {
       return {code: inputCode}; // TODO
     }
+
+    // TODO(bckenny): add source maps, watch files.
     const {code, warnings} = await inlineFs(inputCode, args.path);
     return {
       code: code ?? inputCode,

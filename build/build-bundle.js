@@ -106,7 +106,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     [require.resolve('../core/legacy/gather/connections/cri.js')]:
       'export const CriConnection = {}',
     [require.resolve('../package.json')]: `export const version = '${pkg.version}';`,
-    'rollup-plugin-node-polyfills/polyfills/zlib-lib/inflate.js': `
+    '__zlib-lib/inflate': `
       export function inflateInit2() {};
       export function inflate() {};
       export function inflateEnd() {};

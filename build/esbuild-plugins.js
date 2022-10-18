@@ -104,11 +104,13 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
   // TODO: really this should use import.meta.resolve, but... that's not a thing yet!
   const require = createRequire(import.meta.url);
   for (const [k, v] of Object.entries(replaceMap)) {
-    const resolvedPath = require.resolve(k);
-    if (resolvedPath !== k) {
-      replaceMap[resolvedPath] = v;
-      delete replaceMap[k];
-    }
+    try {
+      const resolvedPath = require.resolve(k);
+      if (resolvedPath !== k) {
+        replaceMap[resolvedPath] = v;
+        delete replaceMap[k];
+      }
+    } catch {}
   }
 
   return {
@@ -133,7 +135,7 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
           resolvedPath = require.resolve(args.path, {paths: [args.resolveDir]});
         } catch {
           // We should append .js and .ts and .tsx to try and file the correct file...
-          // but we aren't shimming suck modules at the moment, so whatever.
+          // but we aren't shimming such modules at the moment, so whatever.
           return;
         }
         if (!(resolvedPath in replaceMap)) return;
@@ -143,8 +145,16 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
 
       const modulesNotSeen = new Set(Object.keys(replaceMap));
       build.onLoad({filter: /.*/, namespace: 'replace-modules'}, async (args) => {
+        // Anything in our namespace is guaranteed to be something in replaceMap.
         modulesNotSeen.delete(args.path);
         return {contents: replaceMap[args.path], resolveDir: path.dirname(args.path)};
+      });
+      build.onLoad({filter: /.*/}, async (args) => {
+        if (args.path in replaceMap) {
+          modulesNotSeen.delete(args.path);
+          return {contents: replaceMap[args.path], resolveDir: path.dirname(args.path)};
+        }
+        return null;
       });
 
       if (!opts.disableUnusedError) {

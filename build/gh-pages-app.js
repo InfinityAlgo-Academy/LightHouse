@@ -8,14 +8,12 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 
-import {rollup} from 'rollup';
 import esbuild from 'esbuild';
 import cpy from 'cpy';
 import ghPages from 'gh-pages';
 import glob from 'glob';
 import * as terser from 'terser';
 
-import * as rollupPlugins from './rollup-plugins.js';
 import {LH_ROOT} from '../root.js';
 import {readJson} from '../core/test/test-utils.js';
 
@@ -41,7 +39,7 @@ const license = `/*
 /**
  * Literal string (representing JS, CSS, etc...), or an object with a path, which would
  * be interpreted relative to opts.appDir and be glob-able.
- * @typedef {{path: string, rollup?: boolean, rollupPlugins?: import('rollup').Plugin[], esbuild?: boolean, esbuildPlugins?: esbuild.Plugin[]} | string} Source
+ * @typedef {{path: string, rollup?: boolean, esbuild?: boolean, esbuildPlugins?: esbuild.Plugin[]} | string} Source
  */
 
 /**
@@ -134,11 +132,6 @@ class GhPagesApp {
     for (const source of sources) {
       if (typeof source === 'string') {
         result.push(source);
-      } else if (source.rollup) {
-        result.push(await this._rollupSource(
-          path.resolve(this.opts.appDir, source.path),
-          source.rollupPlugins)
-        );
       } else if (source.esbuild) {
         result.push(await this._esbuildSource(
           path.resolve(this.opts.appDir, source.path),
@@ -150,37 +143,6 @@ class GhPagesApp {
     }
 
     return result;
-  }
-
-  /**
-   * @param {string} input
-   * @param {import('rollup').Plugin[]=} plugins
-   * @return {Promise<string>}
-   */
-  async _rollupSource(input, plugins) {
-    plugins = plugins || [
-      rollupPlugins.nodeResolve(),
-      rollupPlugins.commonjs(),
-    ];
-    if (!process.env.DEBUG) plugins.push(rollupPlugins.terser());
-    const bundle = await rollup({
-      preserveEntrySignatures: 'strict',
-      input,
-      plugins,
-    });
-    const {output} = await bundle.generate({format: 'esm'});
-
-    // Return the code from the main chunk, and save the rest to the src directory.
-    for (let i = 1; i < output.length; i++) {
-      if (output[i].type === 'chunk') {
-        // @ts-expect-error This is a chunk, not an asset.
-        const code = output[i].code;
-        safeWriteFile(`${this.distDir}/src/${output[i].fileName}`, code);
-      }
-    }
-    const scripts = output[0].imports.map(fileName => `src/${fileName}`);
-    this.preloadScripts.push(...scripts);
-    return output[0].code;
   }
 
   /**
