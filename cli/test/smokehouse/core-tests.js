@@ -42,7 +42,7 @@ import perfFonts from './test-definitions/perf-fonts.js';
 import perfFrameMetrics from './test-definitions/perf-frame-metrics.js';
 import perfPreload from './test-definitions/perf-preload.js';
 import perfTraceElements from './test-definitions/perf-trace-elements.js';
-// import pubads from './test-definitions/pubads.js';
+import pubads from './test-definitions/pubads.js';
 import pwaAirhorner from './test-definitions/pwa-airhorner.js';
 import pwaCaltrain from './test-definitions/pwa-caltrain.js';
 import pwaChromestatus from './test-definitions/pwa-chromestatus.js';
@@ -62,6 +62,7 @@ import seoStatus403 from './test-definitions/seo-status-403.js';
 import seoTapTargets from './test-definitions/seo-tap-targets.js';
 import sourceMaps from './test-definitions/source-maps.js';
 import timing from './test-definitions/timing.js';
+import fpsScaled from './test-definitions/fps-scaled.js';
 
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
 const smokeTests = [
@@ -103,8 +104,7 @@ const smokeTests = [
   perfFrameMetrics,
   perfPreload,
   perfTraceElements,
-  // TODO(esmodules): enable when pubads is bundled again
-  // pubads,
+  pubads,
   pwaAirhorner,
   pwaChromestatus,
   pwaSvgomg,
@@ -124,6 +124,7 @@ const smokeTests = [
   seoTapTargets,
   sourceMaps,
   timing,
+  fpsScaled,
 ];
 
 export default smokeTests;

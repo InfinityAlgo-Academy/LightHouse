@@ -7,7 +7,7 @@
 
 /* eslint-disable no-irregular-whitespace */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 import fs from 'fs';
 
 import csvValidator from 'csv-validator';
@@ -90,7 +90,7 @@ describe('ReportGenerator', () => {
       const lines = csvOutput.split('\n');
       expect(lines.length).toBeGreaterThan(100);
       expect(lines.slice(0, 15).join('\n')).toMatchInlineSnapshot(`
-"\\"requestedUrl\\",\\"finalUrl\\",\\"fetchTime\\",\\"gatherMode\\"
+"\\"requestedUrl\\",\\"finalDisplayedUrl\\",\\"fetchTime\\",\\"gatherMode\\"
 \\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"2021-09-07T20:11:11.853Z\\",\\"navigation\\"
 
 category,score

@@ -3,11 +3,11 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
+
+import cssParsers from 'cssstyle/lib/parsers.js';
 
 import MultiCheckAudit from './multi-check-audit.js';
-import ManifestValues from '../computed/manifest-values.js';
-import cssParsers from 'cssstyle/lib/parsers.js';
+import {ManifestValues} from '../computed/manifest-values.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
@@ -15,7 +15,7 @@ const UIStrings = {
   title: 'Sets a theme color for the address bar.',
   /** Title of a Lighthouse audit that provides detail on the theme color the web page has set for the browser's address bar. This descriptive title is shown to users when an address-bar theme color has not been set. */
   failureTitle: 'Does not set a theme color for the address bar.',
-  /** Description of a Lighthouse audit that tells the user why they should set a theme color for the browser's address bar. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why they should set a theme color for the browser's address bar. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'The browser address bar can be themed to match your site. ' +
     '[Learn more about theming the address bar](https://web.dev/themed-omnibox/).',
 };

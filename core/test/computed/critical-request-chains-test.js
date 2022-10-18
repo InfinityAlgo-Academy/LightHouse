@@ -4,9 +4,9 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
-import CriticalRequestChains from '../../computed/critical-request-chains.js';
+import {CriticalRequestChains} from '../../computed/critical-request-chains.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import {createTestTrace} from '../create-test-trace.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
@@ -55,10 +55,9 @@ async function createChainsFromMockRecords(prioritiesList, edges, setExtrasFn, r
 
   const trace = createTestTrace({topLevelTasks: [{ts: 0}]});
   const URL = {
-    initialUrl: 'about:blank',
     requestedUrl: docUrl,
     mainDocumentUrl: docUrl,
-    finalUrl: docUrl,
+    finalDisplayedUrl: docUrl,
   };
   const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
 

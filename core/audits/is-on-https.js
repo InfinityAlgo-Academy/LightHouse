@@ -3,12 +3,11 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {Audit} from './audit.js';
-import URL from '../lib/url-shim.js';
+import UrlUtils from '../lib/url-utils.js';
 import {NetworkRequest} from '../lib/network-request.js';
-import NetworkRecords from '../computed/network-records.js';
+import {NetworkRecords} from '../computed/network-records.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
@@ -16,7 +15,7 @@ const UIStrings = {
   title: 'Uses HTTPS',
   /** Title of a Lighthouse audit that provides detail on the useage of HTTPS on a page. This descriptive title is shown to users when some, or all, requests on the page use HTTP instead of HTTPS. */
   failureTitle: 'Does not use HTTPS',
-  /** Description of a Lighthouse audit that tells the user *why* HTTPS use *for all resources* is important. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* HTTPS use *for all resources* is important. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'All sites should be protected with HTTPS, even ones that don\'t handle ' +
       'sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), ' +
       'where some resources are loaded over HTTP despite the initial request being served ' +
@@ -76,7 +75,7 @@ class HTTPS extends Audit {
     return NetworkRecords.request(devtoolsLogs, context).then(networkRecords => {
       const insecureURLs = networkRecords
           .filter(record => !NetworkRequest.isSecureRequest(record))
-          .map(record => URL.elideDataURI(record.url));
+          .map(record => UrlUtils.elideDataURI(record.url));
 
       /** @type {Array<{url: string, resolution?: LH.IcuMessage|string}>}  */
       const items = Array.from(new Set(insecureURLs)).map(url => ({url, resolution: undefined}));

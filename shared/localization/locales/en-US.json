@@ -54,7 +54,7 @@
     "message": "ARIA input fields have accessible names"
   },
   "core/audits/accessibility/aria-meter-name.js | description": {
-    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name)."
+    "message": "When a meter element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name)."
   },
   "core/audits/accessibility/aria-meter-name.js | failureTitle": {
     "message": "ARIA `meter` elements do not have accessible names."
@@ -117,7 +117,7 @@
     "message": "ARIA toggle fields have accessible names"
   },
   "core/audits/accessibility/aria-tooltip-name.js | description": {
-    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name)."
+    "message": "When a tooltip element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name)."
   },
   "core/audits/accessibility/aria-tooltip-name.js | failureTitle": {
     "message": "ARIA `tooltip` elements do not have accessible names."
@@ -828,7 +828,7 @@
     "message": "Failure reason"
   },
   "core/audits/installable-manifest.js | description": {
-    "message": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. ' +\n  '[Learn more about manifest installability requirements](https://web.dev/installable-manifest/)."
+    "message": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more about manifest installability requirements](https://web.dev/installable-manifest/)."
   },
   "core/audits/installable-manifest.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 reason}\n    other {# reasons}\n    }"
@@ -1536,7 +1536,7 @@
     "message": "Best practices"
   },
   "core/config/default-config.js | a11yCategoryDescription": {
-    "message": "These checks highlight opportunities to [improve the accessibility of your web app](https://web.dev/lighthouse-accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged."
+    "message": "These checks highlight opportunities to [improve the accessibility of your web app](https://developer.chrome.com/docs/lighthouse/accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged."
   },
   "core/config/default-config.js | a11yCategoryManualDescription": {
     "message": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://web.dev/how-to-review/)."
@@ -1626,7 +1626,7 @@
     "message": "Performance"
   },
   "core/config/default-config.js | pwaCategoryDescription": {
-    "message": "These checks validate the aspects of a Progressive Web App. [Learn more](https://web.dev/pwa-checklist/)."
+    "message": "These checks validate the aspects of a Progressive Web App. [Learn what makes a good Progressive Web App](https://web.dev/pwa-checklist/)."
   },
   "core/config/default-config.js | pwaCategoryManualDescription": {
     "message": "These checks are required by the baseline [PWA Checklist](https://web.dev/pwa-checklist/) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually."
@@ -1641,7 +1641,7 @@
     "message": "PWA Optimized"
   },
   "core/config/default-config.js | seoCategoryDescription": {
-    "message": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more](https://support.google.com/webmasters/answer/35769)."
+    "message": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more about Google Search Essentials](https://support.google.com/webmasters/answer/35769)."
   },
   "core/config/default-config.js | seoCategoryManualDescription": {
     "message": "Run these additional validators on your site to check additional SEO best practices."
@@ -1662,13 +1662,13 @@
     "message": "Crawling and Indexing"
   },
   "core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn how to make pages mobile-friendly](https://developers.google.com/search/mobile-sites/)."
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobile Friendly"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
-    "message": "The tested device appears to have a slower CPU than  Lighthouse expects. This can negatively affect your performance score. Learn more about [calibrating an appropriate CPU slowdown multiplier](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+    "message": "The tested device appears to have a slower CPU than  Lighthouse expects. This can negatively affect your performance score. Learn more about [calibrating an appropriate CPU slowdown multiplier](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."
   },
   "core/gather/driver/navigation.js | warningRedirected": {
     "message": "The page may not be loading as expected because your test URL ({requested}) was redirected to {final}. Try testing the second URL directly."

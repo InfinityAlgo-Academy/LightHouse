@@ -1,6 +1,8 @@
 {
   "lighthouseVersion": "9.5.0",
   "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
+  "mainDocumentUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
+  "finalDisplayedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
   "fetchTime": "2021-09-07T20:11:11.853Z",
   "gatherMode": "navigation",
@@ -781,7 +783,7 @@
     "installable-manifest": {
       "id": "installable-manifest",
       "title": "Web app manifest or service worker do not meet the installability requirements",
-      "description": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. ' +\n  '[Learn more about manifest installability requirements](https://web.dev/installable-manifest/).",
+      "description": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more about manifest installability requirements](https://web.dev/installable-manifest/).",
       "score": 0,
       "scoreDisplayMode": "binary",
       "numericValue": 1,
@@ -1302,6 +1304,7 @@
             "statusCode": 200,
             "mimeType": "text/html",
             "resourceType": "Document",
+            "priority": "VeryHigh",
             "experimentalFromMainFrame": true
           },
           {
@@ -1315,6 +1318,7 @@
             "statusCode": 200,
             "mimeType": "text/css",
             "resourceType": "Stylesheet",
+            "priority": "VeryHigh",
             "experimentalFromMainFrame": true
           },
           {
@@ -1328,6 +1332,7 @@
             "statusCode": 404,
             "mimeType": "text/css",
             "resourceType": "Stylesheet",
+            "priority": "VeryHigh",
             "experimentalFromMainFrame": true
           },
           {
@@ -1341,6 +1346,7 @@
             "statusCode": 200,
             "mimeType": "text/css",
             "resourceType": "Stylesheet",
+            "priority": "VeryHigh",
             "experimentalFromMainFrame": true
           },
           {
@@ -1354,6 +1360,7 @@
             "statusCode": 200,
             "mimeType": "text/css",
             "resourceType": "Stylesheet",
+            "priority": "VeryHigh",
             "experimentalFromMainFrame": true
           },
           {
@@ -1367,6 +1374,7 @@
             "statusCode": 200,
             "mimeType": "text/css",
             "resourceType": "Stylesheet",
+            "priority": "VeryHigh",
             "experimentalFromMainFrame": true
           },
           {
@@ -1380,6 +1388,7 @@
             "statusCode": 200,
             "mimeType": "text/css",
             "resourceType": "Stylesheet",
+            "priority": "VeryHigh",
             "isLinkPreload": true,
             "experimentalFromMainFrame": true
           },
@@ -1394,6 +1403,7 @@
             "statusCode": 200,
             "mimeType": "text/css",
             "resourceType": "Stylesheet",
+            "priority": "VeryHigh",
             "experimentalFromMainFrame": true
           },
           {
@@ -1407,6 +1417,7 @@
             "statusCode": 200,
             "mimeType": "application/javascript",
             "resourceType": "Script",
+            "priority": "High",
             "experimentalFromMainFrame": true
           },
           {
@@ -1420,6 +1431,7 @@
             "statusCode": 200,
             "mimeType": "application/javascript",
             "resourceType": "Script",
+            "priority": "High",
             "experimentalFromMainFrame": true
           },
           {
@@ -1433,6 +1445,7 @@
             "statusCode": 200,
             "mimeType": "text/css",
             "resourceType": "Stylesheet",
+            "priority": "VeryLow",
             "experimentalFromMainFrame": true
           },
           {
@@ -1446,6 +1459,7 @@
             "statusCode": 404,
             "mimeType": "application/javascript",
             "resourceType": "Script",
+            "priority": "High",
             "experimentalFromMainFrame": true
           },
           {
@@ -1459,6 +1473,7 @@
             "statusCode": 200,
             "mimeType": "image/jpeg",
             "resourceType": "Image",
+            "priority": "Low",
             "experimentalFromMainFrame": true
           },
           {
@@ -1472,6 +1487,7 @@
             "statusCode": 200,
             "mimeType": "image/jpeg",
             "resourceType": "Image",
+            "priority": "High",
             "experimentalFromMainFrame": true
           },
           {
@@ -1485,6 +1501,7 @@
             "statusCode": 200,
             "mimeType": "image/jpeg",
             "resourceType": "Image",
+            "priority": "High",
             "experimentalFromMainFrame": true
           },
           {
@@ -1498,6 +1515,7 @@
             "statusCode": 200,
             "mimeType": "image/jpeg",
             "resourceType": "Image",
+            "priority": "High",
             "experimentalFromMainFrame": true
           },
           {
@@ -1511,6 +1529,7 @@
             "statusCode": 200,
             "mimeType": "image/jpeg",
             "resourceType": "Image",
+            "priority": "High",
             "experimentalFromMainFrame": true
           },
           {
@@ -1524,6 +1543,7 @@
             "statusCode": 200,
             "mimeType": "image/gif",
             "resourceType": "Image",
+            "priority": "Low",
             "experimentalFromMainFrame": true
           },
           {
@@ -1537,6 +1557,7 @@
             "statusCode": 200,
             "mimeType": "application/javascript",
             "resourceType": "Script",
+            "priority": "Medium",
             "experimentalFromMainFrame": true
           },
           {
@@ -1550,6 +1571,7 @@
             "statusCode": 200,
             "mimeType": "text/javascript",
             "resourceType": "Script",
+            "priority": "Medium",
             "experimentalFromMainFrame": true
           },
           {
@@ -1563,6 +1585,7 @@
             "statusCode": 200,
             "mimeType": "image/jpeg",
             "resourceType": "Image",
+            "priority": "High",
             "experimentalFromMainFrame": true
           },
           {
@@ -1576,6 +1599,7 @@
             "statusCode": 200,
             "mimeType": "text/css",
             "resourceType": "Stylesheet",
+            "priority": "VeryHigh",
             "experimentalFromMainFrame": true
           },
           {
@@ -1589,6 +1613,7 @@
             "statusCode": 200,
             "mimeType": "text/html",
             "resourceType": "XHR",
+            "priority": "VeryHigh",
             "experimentalFromMainFrame": true
           },
           {
@@ -1602,6 +1627,7 @@
             "statusCode": 200,
             "mimeType": "text/plain",
             "resourceType": "Image",
+            "priority": "Low",
             "experimentalFromMainFrame": true
           },
           {
@@ -1615,6 +1641,7 @@
             "statusCode": 200,
             "mimeType": "text/html",
             "resourceType": "Image",
+            "priority": "Low",
             "experimentalFromMainFrame": true
           },
           {
@@ -1628,6 +1655,7 @@
             "statusCode": 404,
             "mimeType": "image/vnd.microsoft.icon",
             "resourceType": "Other",
+            "priority": "High",
             "experimentalFromMainFrame": true
           }
         ],
@@ -2557,17 +2585,8 @@
       "id": "preload-lcp-image",
       "title": "Preload Largest Contentful Paint image",
       "description": "If the LCP element is dynamically added to the page, you should preload the image in order to improve LCP. [Learn more about preloading LCP elements](https://web.dev/optimize-lcp/#preload-important-resources).",
-      "score": 1,
-      "scoreDisplayMode": "numeric",
-      "numericValue": 0,
-      "numericUnit": "millisecond",
-      "displayValue": "",
-      "details": {
-        "type": "opportunity",
-        "headings": [],
-        "items": [],
-        "overallSavingsMs": 0
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "csp-xss": {
       "id": "csp-xss",
@@ -3423,7 +3442,7 @@
     "aria-meter-name": {
       "id": "aria-meter-name",
       "title": "ARIA `meter` elements have accessible names",
-      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name).",
+      "description": "When a meter element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
@@ -3482,7 +3501,7 @@
     "aria-tooltip-name": {
       "id": "aria-tooltip-name",
       "title": "ARIA `tooltip` elements have accessible names",
-      "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name).",
+      "description": "When a tooltip element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name).",
       "score": null,
       "scoreDisplayMode": "notApplicable"
     },
@@ -4206,70 +4225,70 @@
     "custom-controls-labels": {
       "id": "custom-controls-labels",
       "title": "Custom controls have associated labels",
-      "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more about custom controls and labels](https://web.dev/custom-controls-labels/).",
+      "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more about custom controls and labels](https://developer.chrome.com/docs/lighthouse/accessibility/custom-controls-labels/).",
       "score": null,
       "scoreDisplayMode": "manual"
     },
     "custom-controls-roles": {
       "id": "custom-controls-roles",
       "title": "Custom controls have ARIA roles",
-      "description": "Custom interactive controls have appropriate ARIA roles. [Learn how to add roles to custom controls](https://web.dev/custom-control-roles/).",
+      "description": "Custom interactive controls have appropriate ARIA roles. [Learn how to add roles to custom controls](https://developer.chrome.com/docs/lighthouse/accessibility/custom-control-roles/).",
       "score": null,
       "scoreDisplayMode": "manual"
     },
     "focus-traps": {
       "id": "focus-traps",
       "title": "User focus is not accidentally trapped in a region",
-      "description": "A user can tab into and out of any control or region without accidentally trapping their focus. [Learn how to avoid focus traps](https://web.dev/focus-traps/).",
+      "description": "A user can tab into and out of any control or region without accidentally trapping their focus. [Learn how to avoid focus traps](https://developer.chrome.com/docs/lighthouse/accessibility/focus-traps/).",
       "score": null,
       "scoreDisplayMode": "manual"
     },
     "focusable-controls": {
       "id": "focusable-controls",
       "title": "Interactive controls are keyboard focusable",
-      "description": "Custom interactive controls are keyboard focusable and display a focus indicator. [Learn how to make custom controls focusable](https://web.dev/focusable-controls/).",
+      "description": "Custom interactive controls are keyboard focusable and display a focus indicator. [Learn how to make custom controls focusable](https://developer.chrome.com/docs/lighthouse/accessibility/focusable-controls/).",
       "score": null,
       "scoreDisplayMode": "manual"
     },
     "interactive-element-affordance": {
       "id": "interactive-element-affordance",
       "title": "Interactive elements indicate their purpose and state",
-      "description": "Interactive elements, such as links and buttons, should indicate their state and be distinguishable from non-interactive elements. [Learn how to decorate interactive elements with affordance hints](https://web.dev/interactive-element-affordance/).",
+      "description": "Interactive elements, such as links and buttons, should indicate their state and be distinguishable from non-interactive elements. [Learn how to decorate interactive elements with affordance hints](https://developer.chrome.com/docs/lighthouse/accessibility/interactive-element-affordance/).",
       "score": null,
       "scoreDisplayMode": "manual"
     },
     "logical-tab-order": {
       "id": "logical-tab-order",
       "title": "The page has a logical tab order",
-      "description": "Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more about logical tab ordering](https://web.dev/logical-tab-order/).",
+      "description": "Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more about logical tab ordering](https://developer.chrome.com/docs/lighthouse/accessibility/logical-tab-order/).",
       "score": null,
       "scoreDisplayMode": "manual"
     },
     "managed-focus": {
       "id": "managed-focus",
       "title": "The user's focus is directed to new content added to the page",
-      "description": "If new content, such as a dialog, is added to the page, the user's focus is directed to it. [Learn how to direct focus to new content](https://web.dev/managed-focus/).",
+      "description": "If new content, such as a dialog, is added to the page, the user's focus is directed to it. [Learn how to direct focus to new content](https://developer.chrome.com/docs/lighthouse/accessibility/managed-focus/).",
       "score": null,
       "scoreDisplayMode": "manual"
     },
     "offscreen-content-hidden": {
       "id": "offscreen-content-hidden",
       "title": "Offscreen content is hidden from assistive technology",
-      "description": "Offscreen content is hidden with display: none or aria-hidden=true. [Learn how to properly hide offscreen content](https://web.dev/offscreen-content-hidden/).",
+      "description": "Offscreen content is hidden with display: none or aria-hidden=true. [Learn how to properly hide offscreen content](https://developer.chrome.com/docs/lighthouse/accessibility/offscreen-content-hidden/).",
       "score": null,
       "scoreDisplayMode": "manual"
     },
     "use-landmarks": {
       "id": "use-landmarks",
       "title": "HTML5 landmark elements are used to improve navigation",
-      "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more about landmark elements](https://web.dev/use-landmarks/).",
+      "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more about landmark elements](https://developer.chrome.com/docs/lighthouse/accessibility/use-landmarks/).",
       "score": null,
       "scoreDisplayMode": "manual"
     },
     "visual-order-follows-dom": {
       "id": "visual-order-follows-dom",
       "title": "Visual order on the page follows DOM order",
-      "description": "DOM order matches the visual order, improving navigation for assistive technology. [Learn more about DOM and visual ordering](https://web.dev/visual-order-follows-dom/).",
+      "description": "DOM order matches the visual order, improving navigation for assistive technology. [Learn more about DOM and visual ordering](https://developer.chrome.com/docs/lighthouse/accessibility/visual-order-follows-dom/).",
       "score": null,
       "scoreDisplayMode": "manual"
     },
@@ -5813,6 +5832,10 @@
     ],
     "maxWaitForFcp": 30000,
     "maxWaitForLoad": 45000,
+    "pauseAfterFcpMs": 1000,
+    "pauseAfterLoadMs": 1000,
+    "networkQuietThresholdMs": 1000,
+    "cpuQuietThresholdMs": 1000,
     "formFactor": "mobile",
     "throttling": {
       "rttMs": 150,
@@ -5836,6 +5859,8 @@
     "disableStorageReset": false,
     "debugNavigation": false,
     "channel": "cli",
+    "skipAboutBlank": false,
+    "blankPage": "about:blank",
     "budgets": [
       {
         "path": "/",
@@ -5942,8 +5967,7 @@
     "precomputedLanternData": null,
     "onlyAudits": null,
     "onlyCategories": null,
-    "skipAudits": null,
-    "skipAboutBlank": false
+    "skipAudits": null
   },
   "categories": {
     "performance": {
@@ -6269,7 +6293,7 @@
     },
     "accessibility": {
       "title": "Accessibility",
-      "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://web.dev/lighthouse-accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
+      "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developer.chrome.com/docs/lighthouse/accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
       "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://web.dev/how-to-review/).",
       "supportedModes": [
         "navigation",
@@ -6629,7 +6653,7 @@
     },
     "seo": {
       "title": "SEO",
-      "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more](https://support.google.com/webmasters/answer/35769).",
+      "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more about Google Search Essentials](https://support.google.com/webmasters/answer/35769).",
       "manualDescription": "Run these additional validators on your site to check additional SEO best practices.",
       "supportedModes": [
         "navigation",
@@ -6716,7 +6740,7 @@
     },
     "pwa": {
       "title": "PWA",
-      "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://web.dev/pwa-checklist/).",
+      "description": "These checks validate the aspects of a Progressive Web App. [Learn what makes a good Progressive Web App](https://web.dev/pwa-checklist/).",
       "manualDescription": "These checks are required by the baseline [PWA Checklist](https://web.dev/pwa-checklist/) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
       "supportedModes": [
         "navigation"
@@ -6830,7 +6854,7 @@
     },
     "seo-mobile": {
       "title": "Mobile Friendly",
-      "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+      "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn how to make pages mobile-friendly](https://developers.google.com/search/mobile-sites/)."
     },
     "seo-content": {
       "title": "Content Best Practices",
@@ -7538,12 +7562,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:preload-lcp-image",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:LanternLargestContentfulPaint",
         "duration": 100,
         "entryType": "measure"
       },

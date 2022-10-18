@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 import fs from 'fs';
 
 import {getFlags, getYargsParser} from '../../cli-flags.js';
@@ -244,6 +244,15 @@ describe('CLI flags', function() {
       it('throws on a non-boolean value', () => {
         expect(() => getFlags(`${url} --screenEmulation.disabled=str`, {noExitOnFailure: true}))
           .toThrow(`Invalid value: 'screenEmulation.disabled' must be a boolean`);
+      });
+    });
+
+    describe('outputPath', () => {
+      it('throws when path cannot be written to', () => {
+        expect(() => getFlags(`${url} --output-path=i/do/not/exist.json`, {noExitOnFailure: true}))
+          .toThrow('--output-path (i/do/not/exist.json) cannot be written to');
+        expect(() => getFlags(`${url} --output-path=ok.json`, {noExitOnFailure: true}))
+          .not.toThrow();
       });
     });
   });

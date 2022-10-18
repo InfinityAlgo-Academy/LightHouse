@@ -3,10 +3,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {Audit} from '../audit.js';
-import URL from '../../lib/url-shim.js';
+import * as i18n from '../../lib/i18n/i18n.js';
 
 const JAVA_APPLET_TYPE = 'application/x-java-applet';
 const JAVA_BEAN_TYPE = 'application/x-java-bean';
@@ -31,14 +30,13 @@ const SOURCE_PARAMS = new Set([
   'source',
   'src',
 ]);
-import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the browser plugins used by the page. This descriptive title is shown when there is no plugin content on the page that would restrict search indexing. */
   title: 'Document avoids plugins',
   /** Descriptive title of a Lighthouse audit that provides detail on the browser plugins used by the page. This title is shown when there is plugin content on the page. */
   failureTitle: 'Document uses plugins',
-  /** Description of a Lighthouse audit that tells the user *why* they need to avoid using browser plugins in their content. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they need to avoid using browser plugins in their content. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Search engines can\'t index plugin content, and ' +
     'many devices restrict plugins or don\'t support them. ' +
     '[Learn more about avoiding plugins](https://web.dev/plugins/).',

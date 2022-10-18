@@ -4,7 +4,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import ManualAudit from '../../manual/manual-audit.js';
 
@@ -19,7 +18,7 @@ class LogicalTabOrder extends ManualAudit {
   static get meta() {
     return Object.assign({
       id: 'logical-tab-order',
-      description: 'Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more about logical tab ordering](https://web.dev/logical-tab-order/).',
+      description: 'Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more about logical tab ordering](https://developer.chrome.com/docs/lighthouse/accessibility/logical-tab-order/).',
       title: 'The page has a logical tab order',
     }, super.partialMeta);
   }

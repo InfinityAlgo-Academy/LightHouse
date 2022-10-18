@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview Audit which identifies third-party code on the page which can be lazy loaded.
@@ -21,12 +20,11 @@
 /** @typedef {{product: ThirdPartyProduct, entity: ThirdPartyEntity}} FacadableProduct */
 
 import {Audit} from './audit.js';
-
 import * as i18n from '../lib/i18n/i18n.js';
 import thirdPartyWeb from '../lib/third-party-web.js';
-import NetworkRecords from '../computed/network-records.js';
-import MainResource from '../computed/main-resource.js';
-import MainThreadTasks from '../computed/main-thread-tasks.js';
+import {NetworkRecords} from '../computed/network-records.js';
+import {MainResource} from '../computed/main-resource.js';
+import {MainThreadTasks} from '../computed/main-thread-tasks.js';
 import ThirdPartySummary from './third-party-summary.js';
 
 const UIStrings = {
@@ -34,7 +32,7 @@ const UIStrings = {
   title: 'Lazy load third-party resources with facades',
   /** Title of a diagnostic audit that provides details about the third-party code on a web page that can be lazy loaded with a facade alternative. This descriptive title is shown to users when one or more third-party resources have available facade alternatives. A facade is a lightweight component which looks like the desired resource. Lazy loading means resources are deferred until they are needed. Third-party code refers to resources that are not within the control of the site owner. */
   failureTitle: 'Some third-party resources can be lazy loaded with a facade',
-  /** Description of a Lighthouse audit that identifies the third-party code on the page that can be lazy loaded with a facade alternative. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. A facade is a lightweight component which looks like the desired resource. Lazy loading means resources are deferred until they are needed. Third-party code refers to resources that are not within the control of the site owner. */
+  /** Description of a Lighthouse audit that identifies the third-party code on the page that can be lazy loaded with a facade alternative. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. A facade is a lightweight component which looks like the desired resource. Lazy loading means resources are deferred until they are needed. Third-party code refers to resources that are not within the control of the site owner. */
   description: 'Some third-party embeds can be lazy loaded. ' +
     'Consider replacing them with a facade until they are required. ' +
     '[Learn how to defer third-parties with a facade](https://web.dev/third-party-facades/).',

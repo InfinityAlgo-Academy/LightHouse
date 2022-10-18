@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /** @typedef {import('../../../shared/localization/locales').LhlMessages} LhlMessages */
 
@@ -11,8 +10,9 @@ import path from 'path';
 import url from 'url';
 
 import lookupClosestLocale from 'lookup-closest-locale';
-import {getAvailableLocales} from '../../../shared/localization/format.js';
 import log from 'lighthouse-logger';
+
+import {getAvailableLocales} from '../../../shared/localization/format.js';
 import {LH_ROOT} from '../../../root.js';
 import {isIcuMessage, formatMessage, DEFAULT_LOCALE} from '../../../shared/localization/format.js';
 import {getModulePath} from '../../../esm-utils.js';
@@ -155,7 +155,7 @@ function lookupLocale(locales, possibleLocales) {
   if (!closestLocale) {
     // Log extra info if we're pretty sure this version of Node was built with `--with-intl=small-icu`.
     if (Intl.NumberFormat.supportedLocalesOf('es').length === 0) {
-      log.warn('i18n', 'Requested locale not available in this version of node. The `full-icu` npm module can provide additional locales. For help, see https://github.com/GoogleChrome/lighthouse/blob/master/readme.md#how-do-i-get-localized-lighthouse-results-via-the-cli');
+      log.warn('i18n', 'Requested locale not available in this version of node. The `full-icu` npm module can provide additional locales. For help, see https://github.com/GoogleChrome/lighthouse/blob/main/readme.md#how-do-i-get-localized-lighthouse-results-via-the-cli');
     }
     // eslint-disable-next-line max-len
     log.warn('i18n', `locale(s) '${locales}' not available. Falling back to default '${DEFAULT_LOCALE}'`);

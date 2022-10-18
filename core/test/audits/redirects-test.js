@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import RedirectsAudit from '../../audits/redirects.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
@@ -103,7 +103,7 @@ const FAILING_CLIENTSIDE = [
 ];
 
 describe('Performance: Redirects audit', () => {
-  const mockArtifacts = (networkRecords, finalUrl) => {
+  const mockArtifacts = (networkRecords, finalDisplayedUrl) => {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
     const frameUrl = networkRecords[0].url;
 
@@ -112,10 +112,9 @@ describe('Performance: Redirects audit', () => {
       traces: {defaultPass: createTestTrace({frameUrl, traceEnd: 5000})},
       devtoolsLogs: {defaultPass: devtoolsLog},
       URL: {
-        initialUrl: 'about:blank',
         requestedUrl: networkRecords[0].url,
-        mainDocumentUrl: finalUrl,
-        finalUrl,
+        mainDocumentUrl: finalDisplayedUrl,
+        finalDisplayedUrl,
       },
     };
   };

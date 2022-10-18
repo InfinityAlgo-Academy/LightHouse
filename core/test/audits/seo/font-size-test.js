@@ -4,14 +4,14 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import FontSizeAudit from '../../../audits/seo/font-size.js';
 import * as constants from '../../../config/constants.js';
 
 const URL = {
   requestedUrl: 'https://example.com',
-  finalUrl: 'https://example.com',
+  finalDisplayedUrl: 'https://example.com',
 };
 const validViewport = 'width=device-width';
 
@@ -282,7 +282,7 @@ describe('SEO: Font size audit', () => {
       expect(auditResult.details.items[0]).toMatchObject({
         source: {
           type: 'url',
-          value: URL.finalUrl,
+          value: URL.finalDisplayedUrl,
         },
         selector: {
           type: 'node',
@@ -304,7 +304,7 @@ describe('SEO: Font size audit', () => {
       expect(auditResult.details.items[0]).toMatchObject({
         source: {
           type: 'url',
-          value: URL.finalUrl,
+          value: URL.finalDisplayedUrl,
         },
         selector: {
           type: 'node',

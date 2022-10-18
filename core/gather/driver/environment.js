@@ -3,9 +3,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import log from 'lighthouse-logger';
+
 import * as constants from '../../config/constants.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 import * as i18n from '../../lib/i18n/i18n.js';
@@ -17,7 +17,7 @@ const UIStrings = {
    */
   warningSlowHostCpu: 'The tested device appears to have a slower CPU than  ' +
   'Lighthouse expects. This can negatively affect your performance score. Learn more about ' +
-  '[calibrating an appropriate CPU slowdown multiplier](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling).',
+  '[calibrating an appropriate CPU slowdown multiplier](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling).',
 };
 
 /**
@@ -80,7 +80,7 @@ function getSlowHostCpuWarning(context) {
   if (!isThrottledMethod || !isDefaultMultiplier) return;
 
   // Only warn if the device didn't meet the threshold.
-  // See https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling
+  // See https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling
   if (baseArtifacts.BenchmarkIndex > SLOW_CPU_BENCHMARK_INDEX_THRESHOLD) return;
 
   return str_(UIStrings.warningSlowHostCpu);

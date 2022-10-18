@@ -170,13 +170,17 @@
     "onlyAudits": null,
     "onlyCategories": null,
     "skipAudits": null,
-    "skipAboutBlank": false
+    "skipAboutBlank": false,
+    "pauseAfterFcpMs": 1000,
+    "pauseAfterLoadMs": 1000,
+    "networkQuietThresholdMs": 1000,
+    "cpuQuietThresholdMs": 1000,
+    "blankPage": "about:blank"
   },
   "URL": {
-    "initialUrl": "about:blank",
     "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
     "mainDocumentUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",
-    "finalUrl": "http://localhost:10200/dobetterweb/dbw_tester.html"
+    "finalDisplayedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html"
   },
   "Timing": [
     {
@@ -11523,7 +11527,8 @@
         "snippet": "<h2>",
         "nodeLabel": "Do better web tester page"
       },
-      "nodeId": 6
+      "nodeId": 6,
+      "type": "text"
     },
     {
       "traceEventType": "layout-shift",

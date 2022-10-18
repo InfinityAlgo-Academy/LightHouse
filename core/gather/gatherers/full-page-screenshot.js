@@ -3,12 +3,10 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* globals window document getBoundingClientRect requestAnimationFrame */
+/* globals window getBoundingClientRect requestAnimationFrame */
 
-import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
-
+import FRGatherer from '../base-gatherer.js';
 import * as emulation from '../../lib/emulation.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 import {NetworkMonitor} from '../driver/network-monitor.js';
@@ -33,13 +31,20 @@ function getObservedDeviceMetrics() {
   // Convert the Web API's kebab case (landscape-primary) to camel case (landscapePrimary).
   const screenOrientationType = kebabCaseToCamelCase(window.screen.orientation.type);
   return {
-    width: document.documentElement.clientWidth,
-    height: document.documentElement.clientHeight,
+    width: window.outerWidth,
+    height: window.outerHeight,
     screenOrientation: {
       type: screenOrientationType,
       angle: window.screen.orientation.angle,
     },
     deviceScaleFactor: window.devicePixelRatio,
+  };
+}
+
+function getScreenshotAreaSize() {
+  return {
+    width: window.innerWidth,
+    height: window.innerHeight,
   };
 }
 
@@ -125,10 +130,16 @@ class FullPageScreenshot extends FRGatherer {
     });
     const data = 'data:image/webp;base64,' + result.data;
 
+    const screenshotAreaSize =
+      await context.driver.executionContext.evaluate(getScreenshotAreaSize, {
+        args: [],
+        useIsolation: true,
+        deps: [kebabCaseToCamelCase],
+      });
     return {
       data,
-      width: deviceMetrics.width,
-      height,
+      width: screenshotAreaSize.width,
+      height: screenshotAreaSize.height,
     };
   }
 
@@ -165,7 +176,7 @@ class FullPageScreenshot extends FRGatherer {
       return context.driver.executionContext.evaluate(resolveNodes, {
         args: [],
         useIsolation,
-        deps: [pageFunctions.getBoundingClientRectString],
+        deps: [pageFunctions.getBoundingClientRect],
       });
     }
 

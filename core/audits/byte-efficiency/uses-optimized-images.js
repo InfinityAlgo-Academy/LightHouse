@@ -7,16 +7,16 @@
  * @fileoverview This audit determines if the images used are sufficiently larger
  * than JPEG compressed images without metadata at quality 85.
  */
-'use strict';
+
 
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
-import URL from '../../lib/url-shim.js';
+import UrlUtils from '../../lib/url-utils.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to encode images with optimization (better compression). This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Efficiently encode images',
-  /** Description of a Lighthouse audit that tells the user *why* they need to efficiently encode images. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they need to efficiently encode images. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Optimized images load faster and consume less cellular data. ' +
   '[Learn how to efficiently encode images](https://web.dev/uses-optimized-images/).',
 };
@@ -69,7 +69,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
    * @return {import('./byte-efficiency-audit.js').ByteEfficiencyProduct}
    */
   static audit_(artifacts) {
-    const pageURL = artifacts.URL.finalUrl;
+    const pageURL = artifacts.URL.finalDisplayedUrl;
     const images = artifacts.OptimizedImages;
     const imageElements = artifacts.ImageElements;
     /** @type {Map<string, LH.Artifacts.ImageElement>} */
@@ -83,7 +83,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
       const imageElement = imageElementsByURL.get(image.url);
 
       if (image.failed) {
-        warnings.push(`Unable to decode ${URL.getURLDisplayName(image.url)}`);
+        warnings.push(`Unable to decode ${UrlUtils.getURLDisplayName(image.url)}`);
         continue;
       } else if (/(jpeg|bmp)/.test(image.mimeType) === false) {
         continue;
@@ -94,7 +94,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
 
       if (typeof jpegSize === 'undefined') {
         if (!imageElement) {
-          warnings.push(`Unable to locate resource ${URL.getURLDisplayName(image.url)}`);
+          warnings.push(`Unable to locate resource ${UrlUtils.getURLDisplayName(image.url)}`);
           continue;
         }
 
@@ -111,8 +111,8 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
 
       if (image.originalSize < jpegSize + IGNORE_THRESHOLD_IN_BYTES) continue;
 
-      const url = URL.elideDataURI(image.url);
-      const isCrossOrigin = !URL.originsMatch(pageURL, image.url);
+      const url = UrlUtils.elideDataURI(image.url);
+      const isCrossOrigin = !UrlUtils.originsMatch(pageURL, image.url);
       const jpegSavings = UsesOptimizedImages.computeSavings({...image, jpegSize});
 
       items.push({

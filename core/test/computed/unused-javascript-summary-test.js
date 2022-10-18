@@ -4,9 +4,9 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import assert from 'assert';
+import assert from 'assert/strict';
 
-import UnusedJavaScriptSummary from '../../computed/unused-javascript-summary.js';
+import {UnusedJavascriptSummary} from '../../computed/unused-javascript-summary.js';
 
 function generateUsage(url, ranges) {
   const functions = ranges.map(range => {
@@ -24,17 +24,17 @@ function generateUsage(url, ranges) {
   return {url, functions};
 }
 
-describe('UnusedJavaScriptSummary computed artifact', () => {
+describe('UnusedJavascriptSummary computed artifact', () => {
   it('should identify used', () => {
     const usage = generateUsage('myscript.js', [[0, 100, true]]);
-    const result = UnusedJavaScriptSummary.computeWaste(usage);
+    const result = UnusedJavascriptSummary.computeWaste(usage);
     assert.equal(result.unusedLength, 0);
     assert.equal(result.contentLength, 100);
   });
 
   it('should identify unused', () => {
     const usage = generateUsage('myscript.js', [[0, 100, false]]);
-    const result = UnusedJavaScriptSummary.computeWaste(usage);
+    const result = UnusedJavascriptSummary.computeWaste(usage);
     assert.equal(result.unusedLength, 100);
     assert.equal(result.contentLength, 100);
   });
@@ -55,7 +55,7 @@ describe('UnusedJavaScriptSummary computed artifact', () => {
       [100, 200, true], // 30% used overall
     ]);
 
-    const result = UnusedJavaScriptSummary.computeWaste(usage);
+    const result = UnusedJavascriptSummary.computeWaste(usage);
     assert.equal(result.unusedLength, 130);
     assert.equal(result.contentLength, 200);
   });

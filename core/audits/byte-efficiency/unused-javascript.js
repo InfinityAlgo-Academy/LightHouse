@@ -3,18 +3,17 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
-import UnusedJavaScriptSummary from '../../computed/unused-javascript-summary.js';
-import JsBundles from '../../computed/js-bundles.js';
+import {UnusedJavascriptSummary} from '../../computed/unused-javascript-summary.js';
+import {JSBundles} from '../../computed/js-bundles.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {getRequestForScript} from '../../lib/script-helpers.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to reduce JavaScript that is never evaluated during page load. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Reduce unused JavaScript',
-  /** Description of a Lighthouse audit that tells the user *why* they should reduce JavaScript that is never needed/evaluated by the browser. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should reduce JavaScript that is never needed/evaluated by the browser. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Reduce unused JavaScript and defer loading scripts until they are required to ' +
     'decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://web.dev/unused-javascript/).',
 };
@@ -80,7 +79,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
    * @return {Promise<import('./byte-efficiency-audit.js').ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
-    const bundles = await JsBundles.request(artifacts, context);
+    const bundles = await JSBundles.request(artifacts, context);
     const {
       unusedThreshold = UNUSED_BYTES_IGNORE_THRESHOLD,
       bundleSourceUnusedThreshold = UNUSED_BYTES_IGNORE_BUNDLE_SOURCE_THRESHOLD,
@@ -96,7 +95,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
 
       const bundle = bundles.find(b => b.script.scriptId === scriptId);
       const unusedJsSummary =
-        await UnusedJavaScriptSummary.request({scriptId, scriptCoverage, bundle}, context);
+        await UnusedJavascriptSummary.request({scriptId, scriptCoverage, bundle}, context);
       if (unusedJsSummary.wastedBytes === 0 || unusedJsSummary.totalBytes === 0) continue;
 
       const transfer = ByteEfficiencyAudit

@@ -3,18 +3,17 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {Audit} from './audit.js';
-import ResourceSummary from '../computed/resource-summary.js';
-import MainResource from '../computed/main-resource.js';
+import {ResourceSummary} from '../computed/resource-summary.js';
+import {MainResource} from '../computed/main-resource.js';
 import {Budget} from '../config/budget.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that compares the size and quantity of page resources against targets set by the user. These targets are thought of as "performance budgets" because these metrics impact page performance (i.e. how quickly a page loads). */
   title: 'Performance budget',
-  /** Description of a Lighthouse audit where a user sets budgets for the quantity and size of page resources. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit where a user sets budgets for the quantity and size of page resources. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Keep the quantity and size of network requests under the targets ' +
     'set by the provided performance budget. ' +
     '[Learn more about performance budgets](https://developers.google.com/web/tools/lighthouse/audits/budgets).',

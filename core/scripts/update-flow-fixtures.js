@@ -7,7 +7,7 @@
 /* global document */
 
 import fs from 'fs';
-import assert from 'assert';
+import assert from 'assert/strict';
 
 import open from 'open';
 import waitForExpect from 'wait-for-expect';
@@ -16,7 +16,7 @@ import yargs from 'yargs';
 import {getChromePath} from 'chrome-launcher';
 
 import {LH_ROOT} from '../../root.js';
-import * as api from '../fraggle-rock/api.js';
+import * as api from '../api.js';
 import * as assetSaver from '../lib/asset-saver.js';
 
 const ARTIFACTS_PATH =
@@ -41,7 +41,7 @@ const args = yargs(process.argv.slice(2))
   })
   .parseSync();
 
-/** @param {LH.Puppeteer.Page} page */
+/** @param {puppeteer.Page} page */
 async function waitForImagesToLoad(page) {
   const TIMEOUT = 30_000;
   const QUIET_WINDOW = 3_000;
@@ -120,6 +120,12 @@ async function rebaselineArtifacts(artifactKeys) {
     for (let i = 0; i < flowArtifacts.gatherSteps.length; ++i) {
       const gatherStep = flowArtifacts.gatherSteps[i];
       const newGatherStep = newFlowArtifacts.gatherSteps[i];
+
+      // Always update these three values
+      gatherStep.config = newGatherStep.config;
+      gatherStep.flags = newGatherStep.flags;
+      gatherStep.name = newGatherStep.name;
+
       for (const key of artifactKeys) {
         // @ts-expect-error
         gatherStep.artifacts[key] = newGatherStep.artifacts[key];
