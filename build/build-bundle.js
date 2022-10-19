@@ -129,6 +129,15 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     shimsObj['./locales.js'] = 'export const locales = {};';
   }
 
+  // Exclude problematic code from google3 (new Function).
+  // We currently don't make use of puppeteer's ExecutionContext.js
+  if (isLightrider(entryPath)) {
+    shimsObj[require.resolve('puppeteer-core/lib/esm/puppeteer/common/ExecutionContext.js')] = `
+      export const EVALUATION_SCRIPT_URL = 'pptr://__puppeteer_evaluation_script__';
+      export class ExecutionContext {};
+    `;
+  }
+
   for (const modulePath of modulesToIgnore) {
     shimsObj[modulePath] = 'export default {}';
   }

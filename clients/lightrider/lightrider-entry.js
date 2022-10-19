@@ -161,6 +161,16 @@ if (typeof window !== 'undefined') {
   self.listenForStatus = listenForStatus;
 }
 
+// For direct consumers inside google3.
+if (typeof module !== undefined) {
+  module.exports = {
+    runLighthouseInLR,
+    lighthouse,
+    listenForStatus,
+    LR_PRESETS,
+  };
+}
+
 export {
   runLighthouseInLR,
 };
