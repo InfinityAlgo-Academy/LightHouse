@@ -3552,13 +3552,8 @@
       "id": "bypass",
       "title": "The page contains a heading, skip link, or landmark region",
       "description": "Adding ways to bypass repetitive content lets keyboard users navigate the page more efficiently. [Learn more about bypass blocks](https://dequeuniversity.com/rules/axe/4.4/bypass).",
-      "score": 1,
-      "scoreDisplayMode": "binary",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "score": null,
+      "scoreDisplayMode": "notApplicable"
     },
     "color-contrast": {
       "id": "color-contrast",
@@ -6392,7 +6387,7 @@
         },
         {
           "id": "bypass",
-          "weight": 3,
+          "weight": 0,
           "group": "a11y-navigation"
         },
         {
@@ -6562,7 +6557,7 @@
         }
       ],
       "id": "accessibility",
-      "score": 0.78
+      "score": 0.77
     },
     "best-practices": {
       "title": "Best Practices",
