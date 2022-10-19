@@ -128,29 +128,6 @@ function assertValidGatherer(gathererInstance, gathererName) {
   }
 }
 
-
-/**
- * Validate the LH.Flags
- * @param {LH.Flags} flags
- */
-function assertValidFlags(flags) {
-  // COMPAT: compatibility layer for devtools as it uses the old way and we need tests to pass
-  // TODO(paulirish): remove this from LH once emulation refactor has rolled into DevTools
-  // @ts-expect-error Deprecated flag
-  if (flags.channel === 'devtools' && flags.internalDisableDeviceScreenEmulation) {
-    // @ts-expect-error Deprecated flag
-    flags.formFactor = flags.emulatedFormFactor;
-    // @ts-expect-error Deprecated flag
-    flags.emulatedFormFactor = flags.internalDisableDeviceScreenEmulation = undefined;
-  }
-
-
-  // @ts-expect-error Checking for removed flags
-  if (flags.emulatedFormFactor || flags.internalDisableDeviceScreenEmulation) {
-    throw new Error('Invalid emulation flag. Emulation configuration changed in LH 7.0. See https://github.com/GoogleChrome/lighthouse/blob/main/docs/emulation.md');
-  }
-}
-
 /**
  * @implements {LH.Config.Config}
  */
@@ -193,9 +170,6 @@ class Config {
     // Validate and merge in plugins (if any).
     configJSON = await mergePlugins(configJSON, configDir, flags);
 
-    if (flags) {
-      assertValidFlags(flags);
-    }
     const settings = resolveSettings(configJSON.settings || {}, flags);
 
     // Augment passes with necessary defaults and require gatherers.
