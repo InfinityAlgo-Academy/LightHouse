@@ -14,11 +14,12 @@ import {initializeConfig} from '../config/config.js';
 import {getBaseArtifacts, finalizeArtifacts} from './base-artifacts.js';
 
 /**
- * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, flags?: LH.Flags}} options
+ * @param {LH.Puppeteer.Page} page
+ * @param {{config?: LH.Config.Json, flags?: LH.Flags}} [options]
  * @return {Promise<{endTimespanGather(): Promise<LH.Gatherer.FRGatherResult>}>}
  */
-async function startTimespanGather(options) {
-  const {page, flags = {}} = options;
+async function startTimespanGather(page, options = {}) {
+  const {flags = {}} = options;
   log.setLevel(flags.logLevel || 'error');
 
   const {config} = await initializeConfig('timespan', options.config, flags);

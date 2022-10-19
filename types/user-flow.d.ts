@@ -6,11 +6,18 @@ declare module UserFlow {
     name?: string;
   }
 
+  export interface Options {
+    config: LH.Config.Json;
+    name?: string;
+  }
+
+  export interface StepFlags extends LH.Flags {
+    name?: string;
+  }
+
   export interface GatherStep {
     artifacts: LH.Artifacts;
-    name: string;
-    config?: LH.Config.Json;
-    flags?: LH.Flags;
+    flags?: StepFlags;
   }
 }
 

@@ -26,7 +26,7 @@ describe('Cross origin timespan', function() {
   it('should resolve all stylesheets', async () => {
     await state.page.goto(`${state.serverBaseUrl}/start.html`, {waitUntil: ['networkidle0']});
 
-    const timespan = await lighthouse.startTimespan({page: state.page});
+    const timespan = await lighthouse.startTimespan(state.page);
     await state.page.goto(`${state.secondaryServerBaseUrl}/end.html`);
     const result = await timespan.endTimespan();
     if (!result) throw new Error('Lighthouse did not return a result');

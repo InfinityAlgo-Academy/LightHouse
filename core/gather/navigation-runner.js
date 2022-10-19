@@ -300,11 +300,12 @@ async function _cleanup({requestedUrl, driver, config}) {
 }
 
 /**
+ * @param {LH.Puppeteer.Page|undefined} page
  * @param {LH.NavigationRequestor|undefined} requestor
- * @param {{page?: LH.Puppeteer.Page, config?: LH.Config.Json, flags?: LH.Flags}} options
+ * @param {{config?: LH.Config.Json, flags?: LH.Flags}} [options]
  * @return {Promise<LH.Gatherer.FRGatherResult>}
  */
-async function navigationGather(requestor, options) {
+async function navigationGather(page, requestor, options = {}) {
   const {flags = {}} = options;
   log.setLevel(flags.logLevel || 'error');
 
@@ -316,7 +317,6 @@ async function navigationGather(requestor, options) {
   const runnerOptions = {config, computedCache};
   const artifacts = await Runner.gather(
     async () => {
-      let {page} = options;
       const normalizedRequestor = isCallback ? requestor : UrlUtils.normalizeUrl(requestor);
 
       // For navigation mode, we shouldn't connect to a browser in audit mode,

@@ -89,18 +89,18 @@ describe('UserFlow', () => {
     it('should invoke navigation runner', async () => {
       const flow = new UserFlow(mockPage.asPage());
 
-      await flow.navigate('https://example.com/1', {stepName: 'My Step'});
+      await flow.navigate('https://example.com/1', {name: 'My Step'});
 
       const flags = {maxWaitForLoad: 1000};
-      await flow.navigate('https://example.com/2', {flags});
+      await flow.navigate('https://example.com/2', flags);
 
       await flow.navigate('https://example.com/3');
 
       expect(navigationModule.navigationGather).toHaveBeenCalledTimes(3);
       expect(flow._gatherSteps).toMatchObject([
-        {name: 'My Step'},
-        {name: 'Navigation report (www.example.com/)'},
-        {name: 'Navigation report (www.example.com/)'},
+        {flags: {name: 'My Step'}},
+        {flags: {maxWaitForLoad: 1000, skipAboutBlank: true, disableStorageReset: true}},
+        {flags: {skipAboutBlank: true, disableStorageReset: true}},
       ]);
     });
 
@@ -110,19 +110,19 @@ describe('UserFlow', () => {
 
       // Try once when we have some other settings.
       const flags = {maxWaitForLoad: 1000};
-      await flow.navigate('https://example.com/2', {flags});
+      await flow.navigate('https://example.com/2', flags);
 
       // Try once when we don't have any other settings.
       await flow.navigate('https://example.com/3');
 
       // Try once when we explicitly set it.
       const flagsExplicit = {disableStorageReset: false};
-      await flow.navigate('https://example.com/4', {flags: flagsExplicit});
+      await flow.navigate('https://example.com/4', flagsExplicit);
 
       // Check that we have the property set.
       expect(navigationModule.navigationGather).toHaveBeenCalledTimes(4);
       /** @type {any[][]} */
-      const [[, call1], [, call2], [, call3], [, call4]] =
+      const [[,, call1], [,, call2], [,, call3], [,, call4]] =
         navigationModule.navigationGather.mock.calls;
       expect(call1).not.toHaveProperty('flags.disableStorageReset');
       expect(call2).toHaveProperty('flags.disableStorageReset');
@@ -143,16 +143,16 @@ describe('UserFlow', () => {
 
       // Try once when we have some other settings.
       const flags = {maxWaitForLoad: 1000};
-      await flow.navigate('https://example.com/2', {flags});
+      await flow.navigate('https://example.com/2', flags);
 
       // Try once when we explicitly set it.
       const flagsExplicit = {skipAboutBlank: false};
-      await flow.navigate('https://example.com/3', {flags: flagsExplicit});
+      await flow.navigate('https://example.com/3', flagsExplicit);
 
       // Check that we have the property set.
       expect(navigationModule.navigationGather).toHaveBeenCalledTimes(3);
       /** @type {any[][]} */
-      const [[, call1], [, call2], [, call3]] = navigationModule.navigationGather.mock.calls;
+      const [[,, call1], [,, call2], [,, call3]] = navigationModule.navigationGather.mock.calls;
       expect(call1).toHaveProperty('flags.skipAboutBlank');
       expect(call2).toHaveProperty('flags.skipAboutBlank');
       expect(call3).toHaveProperty('flags.skipAboutBlank');
@@ -170,7 +170,7 @@ describe('UserFlow', () => {
     it('should only run navigation setup', async () => {
       let setupDone = false;
       let teardownDone = false;
-      navigationModule.navigationGather.mockImplementation(async cb => {
+      navigationModule.navigationGather.mockImplementation(async (_, cb) => {
         setupDone = true;
         // @ts-expect-error
         await cb();
@@ -203,7 +203,7 @@ describe('UserFlow', () => {
     });
 
     it('should throw errors from the teardown phase', async () => {
-      navigationModule.navigationGather.mockImplementation(async cb => {
+      navigationModule.navigationGather.mockImplementation(async (_, cb) => {
         // @ts-expect-error
         await cb();
         throw new Error('Teardown Error');
@@ -228,7 +228,7 @@ describe('UserFlow', () => {
     it('should invoke timespan runner', async () => {
       const flow = new UserFlow(mockPage.asPage());
 
-      await flow.startTimespan({stepName: 'My Timespan'});
+      await flow.startTimespan({name: 'My Timespan'});
       await flow.endTimespan();
 
       await flow.startTimespan();
@@ -236,8 +236,8 @@ describe('UserFlow', () => {
 
       expect(timespanModule.startTimespanGather).toHaveBeenCalledTimes(2);
       expect(flow._gatherSteps).toMatchObject([
-        {name: 'My Timespan'},
-        {name: 'Timespan report (www.example.com/)'},
+        {flags: {name: 'My Timespan'}},
+        {flags: undefined},
       ]);
     });
   });
@@ -259,13 +259,13 @@ describe('UserFlow', () => {
     it('should invoke snapshot runner', async () => {
       const flow = new UserFlow(mockPage.asPage());
 
-      await flow.snapshot({stepName: 'My Snapshot'});
+      await flow.snapshot({name: 'My Snapshot'});
       await flow.snapshot();
 
       expect(snapshotModule.snapshotGather).toHaveBeenCalledTimes(2);
       expect(flow._gatherSteps).toMatchObject([
-        {name: 'My Snapshot'},
-        {name: 'Snapshot report (www.example.com/)'},
+        {flags: {name: 'My Snapshot'}},
+        {flags: undefined},
       ]);
     });
   });
@@ -287,9 +287,9 @@ describe('UserFlow', () => {
       const flow = new UserFlow(mockPage.asPage());
 
       await flow.navigate('https://www.example.com/');
-      await flow.startTimespan({stepName: 'My Timespan'});
+      await flow.startTimespan({name: 'My Timespan'});
       await flow.endTimespan();
-      await flow.snapshot({stepName: 'My Snapshot'});
+      await flow.snapshot({name: 'My Snapshot'});
 
       const flowResult = await flow.createFlowResult();
       expect(flowResult).toMatchObject({
@@ -331,23 +331,10 @@ describe('UserFlow', () => {
         },
       };
 
-      /** @type {LH.Config.Json} */
-      const timespanConfig = {
-        extends: 'lighthouse:default',
-        settings: {
-          onlyCategories: ['performance'],
-        },
-      };
-
-      /** @type {LH.Flags} */
-      const snapshotFlags = {
-        onlyCategories: ['accessibility'],
-      };
-
       /** @type {LH.UserFlow.GatherStep[]} */
       const gatherSteps = [
         {
-          name: 'Navigation',
+          flags: {name: 'Navigation'},
           // @ts-expect-error Only these artifacts are used by the test.
           artifacts: {
             URL: {
@@ -359,7 +346,7 @@ describe('UserFlow', () => {
           },
         },
         {
-          name: 'Timespan',
+          flags: {name: 'Timespan', onlyCategories: ['performance']},
           // @ts-expect-error Only these artifacts are used by the test.
           artifacts: {
             URL: {
@@ -367,10 +354,9 @@ describe('UserFlow', () => {
             },
             GatherContext: {gatherMode: 'timespan'},
           },
-          config: timespanConfig,
         },
         {
-          name: 'Snapshot',
+          flags: {name: 'Snapshot', onlyCategories: ['accessibility']},
           // @ts-expect-error Only these artifacts are used by the test.
           artifacts: {
             URL: {
@@ -378,7 +364,6 @@ describe('UserFlow', () => {
             },
             GatherContext: {gatherMode: 'snapshot'},
           },
-          flags: snapshotFlags,
         },
       ];
 

@@ -604,10 +604,7 @@ describe('NavigationRunner', () => {
     it('should throw on invalid URL', async () => {
       mockRunner.gather.mockImplementation(runnerActual.gather);
 
-      const navigatePromise = runner.navigationGather(
-        '',
-        {page: mockDriver._page.asPage()}
-      );
+      const navigatePromise = runner.navigationGather(mockDriver._page.asPage(), '');
 
       await expect(navigatePromise).rejects.toThrow('INVALID_URL');
     });
@@ -620,11 +617,9 @@ describe('NavigationRunner', () => {
       };
 
       await runner.navigationGather(
+        mockDriver._page.asPage(),
         'http://example.com',
-        {
-          page: mockDriver._page.asPage(),
-          flags,
-        }
+        {flags}
       );
 
       expect(mockRunner.gather.mock.calls[0][1]).toMatchObject({

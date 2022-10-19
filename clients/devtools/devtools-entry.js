@@ -82,6 +82,31 @@ function lookupCanonicalLocale(locales) {
   return lookupLocale(locales, getCanonicalLocales());
 }
 
+/**
+ * TODO: Expose api directly when DevTools usage is updated.
+ * @param {string} url
+ * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, flags?: LH.Flags}} args
+ */
+function runLighthouseNavigation(url, {page, ...options}) {
+  return navigation(page, url, options);
+}
+
+/**
+ * TODO: Expose api directly when DevTools usage is updated.
+ * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, flags?: LH.Flags}} args
+ */
+function startLighthouseTimespan({page, ...options}) {
+  return startTimespan(page, options);
+}
+
+/**
+ * TODO: Expose api directly when DevTools usage is updated.
+ * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, flags?: LH.Flags}} args
+ */
+function runLighthouseSnapshot({page, ...options}) {
+  return snapshot(page, options);
+}
+
 // Expose only in DevTools' worker
 if (typeof self !== 'undefined') {
   // TODO: refactor and delete `global.isDevtools`.
@@ -92,11 +117,17 @@ if (typeof self !== 'undefined') {
   // @ts-expect-error
   self.runLighthouse = legacyNavigation;
   // @ts-expect-error
-  self.runLighthouseNavigation = navigation;
+  self.runLighthouseNavigation = runLighthouseNavigation;
   // @ts-expect-error
-  self.startLighthouseTimespan = startTimespan;
+  self.navigation = navigation;
   // @ts-expect-error
-  self.runLighthouseSnapshot = snapshot;
+  self.startLighthouseTimespan = startLighthouseTimespan;
+  // @ts-expect-error
+  self.startTimespan = startTimespan;
+  // @ts-expect-error
+  self.runLighthouseSnapshot = runLighthouseSnapshot;
+  // @ts-expect-error
+  self.snapshot = snapshot;
   // @ts-expect-error
   self.createConfig = createConfig;
   // @ts-expect-error
