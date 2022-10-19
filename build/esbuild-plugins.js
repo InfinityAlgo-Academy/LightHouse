@@ -17,7 +17,7 @@ import {inlineFsPlugin} from './plugins/esbuild-inline-fs.js';
 /**
  * @typedef PartialLoader
  * @property {string} name
- * @property {(code: string, args: esbuild.OnLoadArgs) => Promise<{code: string, warnings?: esbuild.PartialMessage[]}>} onLoad
+ * @property {(code: string, args: esbuild.OnLoadArgs) => Promise<{code: string, warnings?: esbuild.PartialMessage[]} | null>} onLoad
  */
 
 const partialLoaders = {
@@ -57,8 +57,8 @@ const partialLoaders = {
 
 /**
  * Bundles multiple partial loaders (string => string JS transforms) into a single esbuild Loader plugin.
- * A partial loader that doesn't want to do any transform should just return the code given to it.
- * @param {Array<{name: string, onLoad: (code: string, args: esbuild.OnLoadArgs) => Promise<{code: string, warnings?: esbuild.PartialMessage[]}>}>} partialLoaders
+ * A partial loader that doesn't want to do any transform should return null.
+ * @param {PartialLoader[]} partialLoaders
  * @return {esbuild.Plugin}
  */
 function bulkLoader(partialLoaders) {
@@ -73,6 +73,8 @@ function bulkLoader(partialLoaders) {
 
         for (const partialLoader of partialLoaders) {
           const partialResult = await partialLoader.onLoad(code, args);
+          if (partialResult === null) continue;
+
           code = partialResult.code;
           if (partialResult.warnings) {
             for (const warning of partialResult.warnings) {
