@@ -90,10 +90,15 @@ function bulkLoader(partialLoaders) {
 }
 
 /**
- * Given absolute module paths (or a bare builtin specifier/package path), replace the module contents with the
- * provided text.
- * Ignores modules inside node_modules (but will still replace any requested builtins).
- * This plugin should always be the first loader plugin.
+ * Given a module path, replace the contents with the provided text.
+ *
+ * - If the module is a file on disk, the path MUST be absolute.
+ * - Bare builtin specifiers (ex: 'fs', 'path') work too.
+ * - Other loaders may give a resolved path that doesn't reference a filepath–
+ * - In all cases where a module is replaced, no other loaders will process that module.
+ *   If this is ever problematic, this plugin should be converted to be a partial loader.
+ * - This plugin should always be the first loader plugin.
+ *
  * @param {Record<string, string>} replaceMap
  * @param {{disableUnusedError: boolean}} opts
  * @return {esbuild.Plugin}
@@ -116,10 +121,9 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
   return {
     name: 'replace-modules',
     setup(build) {
+      // Capture modules of interest and resolve them to their absolute paths.
+      // This handles real-files on disk, and builtin specifiers.
       build.onResolve({filter: /.*/}, (args) => {
-        // TODO: delete, right? and update jsdoc.
-        // if (args.path.includes('node_modules')) return;
-
         // const isBuiltin = builtin.includes(args.path);
         // TODO: delete, right?
         // if (!isBuiltin && args.resolveDir.includes('node_modules')) return;
@@ -149,6 +153,10 @@ function replaceModules(replaceMap, opts = {disableUnusedError: false}) {
         modulesNotSeen.delete(args.path);
         return {contents: replaceMap[args.path], resolveDir: path.dirname(args.path)};
       });
+
+      // Handle the third case - when the module i
+      // Note that if there is a match here, that means the module is something that could not
+      // be `require.resolve`'d above, ie. a fake resolved path from some other plugin.
       build.onLoad({filter: /.*/}, async (args) => {
         if (args.path in replaceMap) {
           modulesNotSeen.delete(args.path);

@@ -50,7 +50,6 @@ function nodeModulesPolyfillPlugin(
           const key = removeEndingSlash(args.path);
           const contents = polyfilledBuiltins.get(key) || polyfillLib[key + '.js'];
           const resolveDir = path.dirname(key);
-          if (args.path.includes('zlib')) console.log(args.path);
 
           if (isCommonjs) {
             return {
