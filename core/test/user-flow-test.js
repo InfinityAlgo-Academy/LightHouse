@@ -9,19 +9,6 @@ import * as td from 'testdouble';
 
 import {Runner} from '../runner.js';
 import {createMockPage, mockRunnerModule} from './gather/mock-driver.js';
-// import UserFlow from '../../user-flow.js';
-
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {typeof import('../user-flow.js').UserFlow} */
-let UserFlow;
-/** @type {typeof import('../user-flow.js')['auditGatherSteps']} */
-let auditGatherSteps;
-
-before(async () => {
-  ({UserFlow, auditGatherSteps} = await import('../user-flow.js'));
-});
 
 const snapshotModule = {snapshotGather: jestMock.fn()};
 await td.replaceEsm('../gather/snapshot-runner.js', snapshotModule);
@@ -31,6 +18,11 @@ const timespanModule = {startTimespanGather: jestMock.fn()};
 await td.replaceEsm('../gather/timespan-runner.js', timespanModule);
 
 const mockRunner = await mockRunnerModule();
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
+//      https://github.com/facebook/jest/issues/10025
+const {getStepName, getFlowName, UserFlow, auditGatherSteps} = await import('../user-flow.js');
 
 describe('UserFlow', () => {
   let mockPage = createMockPage();
@@ -45,6 +37,7 @@ describe('UserFlow', () => {
       artifacts: {
         URL: {finalDisplayedUrl: 'https://www.example.com'},
         GatherContext: {gatherMode: 'snapshot'},
+        settings: {locale: 'en-US'},
       },
       runnerOptions: {
         config: {},
@@ -57,6 +50,7 @@ describe('UserFlow', () => {
       artifacts: {
         URL: {finalDisplayedUrl: 'https://www.example.com'},
         GatherContext: {gatherMode: 'navigation'},
+        settings: {locale: 'en-US'},
       },
       runnerOptions: {
         config: {},
@@ -68,6 +62,7 @@ describe('UserFlow', () => {
       artifacts: {
         URL: {finalDisplayedUrl: 'https://www.example.com'},
         GatherContext: {gatherMode: 'timespan'},
+        settings: {locale: 'en-US'},
       },
       runnerOptions: {
         config: {},
@@ -331,11 +326,10 @@ describe('UserFlow', () => {
         },
       };
 
-      /** @type {LH.UserFlow.GatherStep[]} */
+      /** @type {any} */
       const gatherSteps = [
         {
           flags: {name: 'Navigation'},
-          // @ts-expect-error Only these artifacts are used by the test.
           artifacts: {
             URL: {
               requestedUrl: 'https://www.example.com',
@@ -343,26 +337,27 @@ describe('UserFlow', () => {
               finalDisplayedUrl: 'https://www.example.com',
             },
             GatherContext: {gatherMode: 'navigation'},
+            settings: {locale: 'en-US'},
           },
         },
         {
           flags: {name: 'Timespan', onlyCategories: ['performance']},
-          // @ts-expect-error Only these artifacts are used by the test.
           artifacts: {
             URL: {
               finalDisplayedUrl: 'https://www.example.com',
             },
             GatherContext: {gatherMode: 'timespan'},
+            settings: {locale: 'en-US'},
           },
         },
         {
           flags: {name: 'Snapshot', onlyCategories: ['accessibility']},
-          // @ts-expect-error Only these artifacts are used by the test.
           artifacts: {
             URL: {
               finalDisplayedUrl: 'https://www.example.com',
             },
             GatherContext: {gatherMode: 'snapshot'},
+            settings: {locale: 'en-US'},
           },
         },
       ];
@@ -423,6 +418,150 @@ describe('UserFlow', () => {
         ],
         name: 'User flow (www.example.com)',
       });
+    });
+  });
+
+  describe('getStepName', () => {
+    it('returns name from flags if provided', () => {
+      /** @type {any} */
+      const artifacts = {
+        URL: {
+          finalDisplayedUrl: 'https://example.com',
+        },
+        GatherContext: {gatherMode: 'navigation'},
+        settings: {
+          locale: 'en-US',
+        },
+      };
+      const name = getStepName({name: 'Example name'}, artifacts);
+      expect(name).toEqual('Example name');
+    });
+
+    it('returns default navigation name if no name provided', () => {
+      /** @type {any} */
+      const artifacts = {
+        URL: {
+          finalDisplayedUrl: 'https://example.com',
+        },
+        GatherContext: {gatherMode: 'navigation'},
+        settings: {
+          locale: 'en-US',
+        },
+      };
+      const name = getStepName({}, artifacts);
+      expect(name).toEqual('Navigation report (example.com/)');
+    });
+
+    it('returns default timespan name if no name provided', () => {
+      /** @type {any} */
+      const artifacts = {
+        URL: {
+          finalDisplayedUrl: 'https://example.com',
+        },
+        GatherContext: {gatherMode: 'timespan'},
+        settings: {
+          locale: 'en-US',
+        },
+      };
+      const name = getStepName({}, artifacts);
+      expect(name).toEqual('Timespan report (example.com/)');
+    });
+
+    it('returns default snapshot name if no name provided', () => {
+      /** @type {any} */
+      const artifacts = {
+        URL: {
+          finalDisplayedUrl: 'https://example.com',
+        },
+        GatherContext: {gatherMode: 'snapshot'},
+        settings: {
+          locale: 'en-US',
+        },
+      };
+      const name = getStepName({}, artifacts);
+      expect(name).toEqual('Snapshot report (example.com/)');
+    });
+
+    it('throws on invalid gather mode', () => {
+      /** @type {any} */
+      const artifacts = {
+        URL: {
+          finalDisplayedUrl: 'https://example.com',
+        },
+        GatherContext: {gatherMode: 'invalid'},
+        settings: {
+          locale: 'en-US',
+        },
+      };
+      expect(() => getStepName({}, artifacts)).toThrow('Unsupported gather mode');
+    });
+
+    it('returns translated name for non-default locale', () => {
+      /** @type {any} */
+      const artifacts = {
+        URL: {
+          finalDisplayedUrl: 'https://example.com',
+        },
+        GatherContext: {gatherMode: 'navigation'},
+        settings: {
+          locale: 'en-XL',
+        },
+      };
+      const name = getStepName({}, artifacts);
+      expect(name).toEqual('N̂áv̂íĝát̂íôń r̂ép̂ór̂t́ (example.com/)');
+    });
+  });
+
+  describe('getFlowName', () => {
+    it('returns name from options if provided', () => {
+      /** @type {any} */
+      const gatherSteps = [{
+        artifacts: {
+          URL: {
+            finalDisplayedUrl: 'https://example.com',
+          },
+          GatherContext: {gatherMode: 'navigation'},
+          settings: {
+            locale: 'en-US',
+          },
+        },
+      }];
+      const name = getFlowName('Example name', gatherSteps);
+      expect(name).toEqual('Example name');
+    });
+
+    it('returns default navigation name if no name provided', () => {
+      /** @type {any} */
+      const gatherSteps = [{
+        artifacts: {
+          URL: {
+            finalDisplayedUrl: 'https://example.com',
+          },
+          GatherContext: {gatherMode: 'navigation'},
+          settings: {
+            locale: 'en-US',
+          },
+        },
+      }];
+      const name = getFlowName(undefined, gatherSteps);
+      expect(name).toEqual('User flow (example.com)');
+    });
+
+    it('returns translated name for non-default locale', () => {
+      /** @type {any} */
+      const gatherSteps = [{
+        artifacts: {
+          URL: {
+            finalDisplayedUrl: 'https://example.com',
+          },
+          GatherContext: {gatherMode: 'navigation'},
+          settings: {
+            locale: 'en-XL',
+          },
+        },
+      }];
+      const name = getFlowName(undefined, gatherSteps);
+      expect(name).toEqual('Ûśêŕ f̂ĺôẃ (example.com)');
     });
   });
 });

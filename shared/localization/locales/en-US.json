@@ -2084,6 +2084,18 @@
   "core/lib/navigation-error.js | warningXhtml": {
     "message": "The page MIME type is XHTML: Lighthouse does not explicitly support this document type"
   },
+  "core/user-flow.js | defaultFlowName": {
+    "message": "User flow ({url})"
+  },
+  "core/user-flow.js | defaultNavigationName": {
+    "message": "Navigation report ({url})"
+  },
+  "core/user-flow.js | defaultSnapshotName": {
+    "message": "Snapshot report ({url})"
+  },
+  "core/user-flow.js | defaultTimespanName": {
+    "message": "Timespan report ({url})"
+  },
   "flow-report/src/i18n/ui-strings.js | allReports": {
     "message": "All Reports"
   },

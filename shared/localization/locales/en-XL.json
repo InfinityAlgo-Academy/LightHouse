@@ -2084,6 +2084,18 @@
   "core/lib/navigation-error.js | warningXhtml": {
     "message": "T̂h́ê ṕâǵê ḾÎḾÊ t́ŷṕê íŝ X́ĤT́M̂Ĺ: L̂íĝh́t̂h́ôúŝé d̂óêś n̂ót̂ éx̂ṕl̂íĉít̂ĺŷ śûṕp̂ór̂t́ t̂h́îś d̂óĉúm̂én̂t́ t̂ýp̂é"
   },
+  "core/user-flow.js | defaultFlowName": {
+    "message": "Ûśêŕ f̂ĺôẃ ({url})"
+  },
+  "core/user-flow.js | defaultNavigationName": {
+    "message": "N̂áv̂íĝát̂íôń r̂ép̂ór̂t́ ({url})"
+  },
+  "core/user-flow.js | defaultSnapshotName": {
+    "message": "Ŝńâṕŝh́ôt́ r̂ép̂ór̂t́ ({url})"
+  },
+  "core/user-flow.js | defaultTimespanName": {
+    "message": "T̂ím̂éŝṕâń r̂ép̂ór̂t́ ({url})"
+  },
   "flow-report/src/i18n/ui-strings.js | allReports": {
     "message": "Âĺl̂ Ŕêṕôŕt̂ś"
   },
