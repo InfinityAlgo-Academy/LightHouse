@@ -5,8 +5,8 @@
  */
 
 import {Audit} from './audit.js';
+import {EntityClassification} from '../computed/entity-classification.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import thirdPartyWeb from '../lib/third-party-web.js';
 import {NetworkRecords} from '../computed/network-records.js';
 import {MainThreadTasks} from '../computed/main-thread-tasks.js';
 import {getJavaScriptURLs, getAttributableURLForTask} from '../lib/tracehouse/task-summary.js';
@@ -83,9 +83,10 @@ class ThirdPartySummary extends Audit {
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {Array<LH.Artifacts.TaskNode>} mainThreadTasks
    * @param {number} cpuMultiplier
+   * @param {LH.Artifacts.ClassifiedEntities} entityClassification
    * @return {SummaryMaps}
    */
-  static getSummaries(networkRecords, mainThreadTasks, cpuMultiplier) {
+  static getSummaries(networkRecords, mainThreadTasks, cpuMultiplier, entityClassification) {
     /** @type {Map<string, Summary>} */
     const byURL = new Map();
     /** @type {Map<ThirdPartyEntity, Summary>} */
@@ -114,11 +115,11 @@ class ThirdPartySummary extends Audit {
       byURL.set(attributableURL, urlSummary);
     }
 
-    // Map each URL's stat to a particular third party entity.
+    // Map each URL's stat to a particular (third party?) entity.
     /** @type {Map<ThirdPartyEntity, string[]>} */
     const urls = new Map();
     for (const [url, urlSummary] of byURL.entries()) {
-      const entity = thirdPartyWeb.getEntity(url);
+      const entity = entityClassification.byURL.get(url);
       if (!entity) {
         byURL.delete(url);
         continue;
@@ -197,18 +198,21 @@ class ThirdPartySummary extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    const mainEntity = thirdPartyWeb.getEntity(artifacts.URL.finalDisplayedUrl);
+    const classifiedEntities = await EntityClassification.request(
+      {URL: artifacts.URL, devtoolsLog}, context);
+    const mainEntity = classifiedEntities.firstParty;
     const tasks = await MainThreadTasks.request(trace, context);
     const multiplier = settings.throttlingMethod === 'simulate' ?
       settings.throttling.cpuSlowdownMultiplier : 1;
 
-    const summaries = ThirdPartySummary.getSummaries(networkRecords, tasks, multiplier);
+    const summaries = ThirdPartySummary.getSummaries(
+      networkRecords, tasks, multiplier, classifiedEntities);
     const overallSummary = {wastedBytes: 0, wastedMs: 0};
 
     const results = Array.from(summaries.byEntity.entries())
       // Don't consider the page we're on to be third-party.
       // e.g. Facebook SDK isn't a third-party script on facebook.com
-      .filter(([entity]) => !(mainEntity && mainEntity.name === entity.name))
+      .filter(([entity]) => !(mainEntity && mainEntity === entity))
       .map(([entity, stats]) => {
         overallSummary.wastedBytes += stats.transferSize;
         overallSummary.wastedMs += stats.blockingTime;
