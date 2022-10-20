@@ -4,6 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {EntityClassification} from './entity-classification.js';
 import {makeComputedArtifact} from './computed-artifact.js';
 import {NetworkRecords} from './network-records.js';
 import {NetworkRequest} from '../lib/network-request.js';
@@ -35,9 +36,10 @@ class ResourceSummary {
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Artifacts.URL} URLArtifact
    * @param {ImmutableObject<LH.Budget[]|null>} budgets
+   * @param {LH.Artifacts.ClassifiedEntities} classifiedEntities
    * @return {Record<LH.Budget.ResourceType, ResourceEntry>}
    */
-  static summarize(networkRecords, URLArtifact, budgets) {
+  static summarize(networkRecords, URLArtifact, budgets, classifiedEntities) {
     /** @type {Record<LH.Budget.ResourceType, ResourceEntry>} */
     const resourceSummary = {
       'stylesheet': {count: 0, resourceSize: 0, transferSize: 0},
@@ -81,13 +83,15 @@ class ResourceSummary {
       resourceSummary.total.resourceSize += record.resourceSize;
       resourceSummary.total.transferSize += record.transferSize;
 
-      const isFirstParty = firstPartyHosts.some((hostExp) => {
-        const url = new URL(record.url);
-        if (hostExp.startsWith('*.')) {
-          return url.hostname.endsWith(hostExp.slice(2));
-        }
-        return url.hostname === hostExp;
-      });
+      const isFirstParty = classifiedEntities.firstParty ?
+        classifiedEntities.firstParty === classifiedEntities.byURL.get(record.url) :
+        firstPartyHosts.some((hostExp) => {
+          const url = new URL(record.url);
+          if (hostExp.startsWith('*.')) {
+            return url.hostname.endsWith(hostExp.slice(2));
+          }
+          return url.hostname === hostExp;
+        });
 
       if (!isFirstParty) {
         resourceSummary['third-party'].count++;
@@ -105,7 +109,8 @@ class ResourceSummary {
    */
   static async compute_(data, context) {
     const networkRecords = await NetworkRecords.request(data.devtoolsLog, context);
-    return ResourceSummary.summarize(networkRecords, data.URL, data.budgets);
+    const classifiedEntities = await EntityClassification.request(data, context);
+    return ResourceSummary.summarize(networkRecords, data.URL, data.budgets, classifiedEntities);
   }
 }
 
