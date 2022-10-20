@@ -921,10 +921,14 @@ declare module Artifacts {
     mimeType?: string;
   }
 
+  interface RecognizableEntity extends IEntity {
+    isUnrecognized?: boolean;
+  }
+
   interface ClassifiedEntities {
-    byEntity: Map<IEntity, Array<string>>,
-    byURL: Map<string, IEntity | undefined>,
-    firstParty: IEntity | undefined}
+    byEntity: Map<RecognizableEntity, Array<string>>,
+    byURL: Map<string, RecognizableEntity | undefined>,
+    firstParty: RecognizableEntity | undefined}
   }
 }
 

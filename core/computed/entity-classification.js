@@ -10,9 +10,7 @@ import {Util} from '../util.cjs';
 import UrlUtils from '../lib/url-utils.js';
 import thirdPartyWeb from '../lib/third-party-web.js';
 
-/** @typedef {import("third-party-web").IEntity} Entity */
-/** @typedef {Record<string, Entity>} EntityCache */
-// /** @typedef {{byEntity: Map<Entity, Array<string>>, byURL: Map<string, Entity | undefined>, firstParty: Entity | undefined}} ClassifiedEntities */
+/** @typedef {Record<string, LH.Artifacts.RecognizableEntity>} EntityCache */
 
 class EntityClassification {
   /**
@@ -26,7 +24,7 @@ class EntityClassification {
     if (!rootDomain) return undefined;
     if (rootDomain in entityCache) return entityCache[rootDomain];
 
-    return /** @type Entity */ (entityCache[rootDomain] = {
+    return /** @type LH.Artifacts.RecognizableEntity */ (entityCache[rootDomain] = {
       name: rootDomain,
       company: rootDomain,
       categories: [],
@@ -34,6 +32,7 @@ class EntityClassification {
       averageExecutionTime: 0,
       totalExecutionTime: 0,
       totalOccurrences: 0,
+      isUnrecognized: true,
     });
   }
 
@@ -41,12 +40,12 @@ class EntityClassification {
    *
    * @param {EntityCache} entityCache
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @return {{byEntity: Map<Entity, Array<string>>, byURL: Map<string, Entity | undefined>}}
+   * @return {{byEntity: Map<LH.Artifacts.RecognizableEntity, Array<string>>, byURL: Map<string, LH.Artifacts.RecognizableEntity | undefined>}}
    */
   static classify(entityCache, networkRecords) {
-    /** @type {Map<string, Entity | undefined>} */
+    /** @type {Map<string, LH.Artifacts.RecognizableEntity | undefined>} */
     const byURL = new Map();
-    /** @type {Map<Entity, Array<string>>} */
+    /** @type {Map<LH.Artifacts.RecognizableEntity, Array<string>>} */
     const byEntity = new Map();
 
     for (const request of networkRecords) {

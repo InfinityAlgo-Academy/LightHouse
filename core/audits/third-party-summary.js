@@ -33,8 +33,6 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 // A page passes when all third-party code blocks for less than 250 ms.
 const PASS_THRESHOLD_IN_MS = 250;
 
-/** @typedef {import("third-party-web").IEntity} ThirdPartyEntity */
-
 /**
  * @typedef Summary
  * @property {number} mainThreadTime
@@ -50,9 +48,9 @@ const PASS_THRESHOLD_IN_MS = 250;
  */
 
 /** @typedef SummaryMaps
- * @property {Map<ThirdPartyEntity, Summary>} byEntity Map of impact summaries for each entity.
+ * @property {Map<LH.Artifacts.RecognizableEntity, Summary>} byEntity Map of impact summaries for each entity.
  * @property {Map<string, Summary>} byURL Map of impact summaries for each URL.
- * @property {Map<ThirdPartyEntity, string[]>} urls Map of URLs under each entity.
+ * @property {Map<LH.Artifacts.RecognizableEntity, string[]>} urls Map of URLs under each entity.
  */
 
 /**
@@ -89,7 +87,7 @@ class ThirdPartySummary extends Audit {
   static getSummaries(networkRecords, mainThreadTasks, cpuMultiplier, entityClassification) {
     /** @type {Map<string, Summary>} */
     const byURL = new Map();
-    /** @type {Map<ThirdPartyEntity, Summary>} */
+    /** @type {Map<LH.Artifacts.RecognizableEntity, Summary>} */
     const byEntity = new Map();
     const defaultSummary = {mainThreadTime: 0, blockingTime: 0, transferSize: 0};
 
@@ -116,7 +114,7 @@ class ThirdPartySummary extends Audit {
     }
 
     // Map each URL's stat to a particular (third party?) entity.
-    /** @type {Map<ThirdPartyEntity, string[]>} */
+    /** @type {Map<LH.Artifacts.RecognizableEntity, string[]>} */
     const urls = new Map();
     for (const [url, urlSummary] of byURL.entries()) {
       const entity = entityClassification.byURL.get(url);
@@ -140,7 +138,7 @@ class ThirdPartySummary extends Audit {
   }
 
   /**
-   * @param {ThirdPartyEntity} entity
+   * @param {LH.Artifacts.RecognizableEntity} entity
    * @param {SummaryMaps} summaries
    * @param {Summary} stats
    * @return {Array<URLSummary>}
