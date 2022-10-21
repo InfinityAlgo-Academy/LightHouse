@@ -3,17 +3,19 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const fs = require('fs');
+import fs from 'fs';
 
-const MessageFormat = require('intl-messageformat');
-const {isObjectOfUnknownValues, isObjectOrArrayOfUnknownValues} = require('../type-verifiers.js');
+import IntlMessageFormat from 'intl-messageformat';
+
+import {getModuleDirectory} from '../../esm-utils.js';
+import {isObjectOfUnknownValues, isObjectOrArrayOfUnknownValues} from '../type-verifiers.js';
+import {locales} from './locales.js';
+
+const moduleDir = getModuleDirectory(import.meta);
 
 /** Contains available locales with messages. May be an empty object if bundled. */
-/** @type {import('./locales')} */
-// @ts-expect-error TODO(esmodules): remove when file is es modules.
-const LOCALE_MESSAGES = require('./locales.js').default || require('./locales.js');
+const LOCALE_MESSAGES = locales;
 
 const DEFAULT_LOCALE = 'en-US';
 
@@ -23,7 +25,7 @@ const DEFAULT_LOCALE = 'en-US';
  * These locales are considered the "canonical" locales. We support other locales which
  * are simply aliases to one of these. ex: es-AR (alias) -> es-419 (canonical)
  */
-const CANONICAL_LOCALES = fs.readdirSync(__dirname + '/locales/')
+const CANONICAL_LOCALES = fs.readdirSync(moduleDir + '/locales/')
   .filter(basename => basename.endsWith('.json') && !basename.endsWith('.ctc.json'))
   .map(locale => locale.replace('.json', ''))
   .sort();
@@ -95,7 +97,7 @@ function collectAllCustomElementsFromICU(icuElements, seenElementsById = new Map
  * Returns a copy of the `values` object, with the values formatted based on how
  * they will be used in their icuMessage, e.g. KB or milliseconds. The original
  * object is unchanged.
- * @param {MessageFormat.IntlMessageFormat} messageFormatter
+ * @param {IntlMessageFormat} messageFormatter
  * @param {Readonly<Record<string, string | number>>} values
  * @param {string} lhlMessage Used for clear error logging.
  * @return {Record<string, string | number>}
@@ -177,10 +179,7 @@ function formatMessage(message, values, locale) {
   // When using accented english, force the use of a different locale for number formatting.
   const localeForMessageFormat = (locale === 'en-XA' || locale === 'en-XL') ? 'de-DE' : locale;
 
-  // This package is not correctly bundled by Rollup.
-  /** @type {typeof MessageFormat.IntlMessageFormat} */
-  const MessageFormatCtor = MessageFormat.IntlMessageFormat || MessageFormat;
-  const formatter = new MessageFormatCtor(message, localeForMessageFormat, formats);
+  const formatter = new IntlMessageFormat(message, localeForMessageFormat, formats);
 
   // Preformat values for the message format like KB and milliseconds.
   const valuesForMessageFormat = _preformatValues(formatter, values, message);
@@ -383,7 +382,7 @@ function _getLocaleMessages(locale) {
 }
 
 /**
- * Returns whether the `requestedLocale` can be used.
+ * Returns whether the `requestedLocale` is registered and available for use
  * @param {LH.Locale} requestedLocale
  * @return {boolean}
  */
@@ -443,7 +442,7 @@ function getIcuMessageIdParts(i18nMessageId) {
   return {filename, key};
 }
 
-module.exports = {
+export {
   DEFAULT_LOCALE,
   _formatPathAsString,
   collectAllCustomElementsFromICU,

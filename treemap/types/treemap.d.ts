@@ -5,7 +5,7 @@ import * as Settings from '../../types/lhr/settings';
 import 'google.analytics';
 import LHResult from '../../types/lhr/lhr';
 import {TreemapUtil} from '../app/src/util';
-import FlowResult_ from '../../types/lhr/flow';
+import FlowResult_ from '../../types/lhr/flow-result';
 
 // Import for needed DOM type augmentation.
 import '../../report/types/augment-dom';

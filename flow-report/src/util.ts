@@ -97,7 +97,7 @@ function useHashParams(...params: string[]) {
   return paramValues;
 }
 
-function useHashState(): LH.FlowResult.HashState|null {
+function useHashState(): LH.HashState|null {
   const flowResult = useFlowResult();
   const [indexString, anchor] = useHashParams('index', 'anchor');
 

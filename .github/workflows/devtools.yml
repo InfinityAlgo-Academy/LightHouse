@@ -2,7 +2,7 @@ name: DevTools
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
 env:
@@ -22,10 +22,10 @@ jobs:
       with:
         path: lighthouse
 
-    - name: Use Node.js 14.x
+    - name: Use Node.js 16.x
       uses: actions/setup-node@v1
       with:
-        node-version: 14.x
+        node-version: 16.x
 
     - name: Generate cache hash
       run: bash $GITHUB_WORKSPACE/lighthouse/.github/scripts/generate-devtools-hash.sh > cdt-test-hash.txt
@@ -49,8 +49,8 @@ jobs:
         # 3) every change to file in Lighthouse repo important to running these tests.
         #
         # The number is how many times this hash key was manually updated to break the cache.
-        key: ${{ runner.os }}-9-${{ env.WEEK_OF_THE_YEAR }}-${{ hashFiles('cdt-test-hash.txt') }}
-        restore-keys: ${{ runner.os }}-9
+        key: ${{ runner.os }}-10-${{ env.WEEK_OF_THE_YEAR }}-${{ hashFiles('cdt-test-hash.txt') }}
+        restore-keys: ${{ runner.os }}-10
     - name: Set GHA_DEVTOOLS_CACHE_HIT
       if: steps.devtools-cache.outputs.cache-hit == 'true'
       run: echo "GHA_DEVTOOLS_CACHE_HIT=1" >> $GITHUB_ENV
@@ -59,12 +59,12 @@ jobs:
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/download-depot-tools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
     - name: Download DevTools Frontend
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/download-devtools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-devtools.sh
 
     - name: Roll Lighthouse + build DevTools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/roll-devtools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/roll-devtools.sh
 
     - name: Cache build artifacts
       id: devtools-build-artifacts
@@ -86,10 +86,10 @@ jobs:
       with:
         path: lighthouse
 
-    - name: Use Node.js 14.x
+    - name: Use Node.js 16.x
       uses: actions/setup-node@v1
       with:
-        node-version: 14.x
+        node-version: 16.x
 
     - run: yarn --frozen-lockfile --network-timeout 1000000
       working-directory: ${{ github.workspace }}/lighthouse
@@ -98,7 +98,7 @@ jobs:
       run: echo "$DEPOT_TOOLS_PATH" >> $GITHUB_PATH
     # For vpython.
     - name: Download depot tools
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/download-depot-tools.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/download-depot-tools.sh
 
     - name: Load build artifacts
       id: devtools-build-artifacts
@@ -111,7 +111,7 @@ jobs:
         key: devtools-build-artifacts-${{ github.run_id }}
 
     - name: Run e2e tests
-      run: bash $GITHUB_WORKSPACE/lighthouse/lighthouse-core/test/devtools-tests/run-e2e-tests.sh
+      run: bash $GITHUB_WORKSPACE/lighthouse/core/test/devtools-tests/run-e2e-tests.sh
 
   smoke:
     needs: [build]
@@ -129,10 +129,10 @@ jobs:
       with:
         path: lighthouse
 
-    - name: Use Node.js 14.x
+    - name: Use Node.js 16.x
       uses: actions/setup-node@v1
       with:
-        node-version: 14.x
+        node-version: 16.x
 
     - name: Load build artifacts
       id: devtools-build-artifacts
@@ -156,16 +156,12 @@ jobs:
       run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
     - name: Install Chrome ToT
       working-directory: /home/runner
-      run: bash ${{ github.workspace }}/lighthouse/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+      run: bash ${{ github.workspace }}/lighthouse/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: mkdir latest-run
       working-directory: ${{ github.workspace }}/lighthouse
     - name: yarn smoke --runner devtools
-      # Disabled because normal Chrome usage makes DevTools not function on these poorly constructed pages
-      #   errors-expired-ssl errors-infinite-loop
-      # Disabled because Chrome will follow the redirect first, and Lighthouse will only ever see/run the final URL.
-      #   redirects-client-paint-server redirects-multiple-server redirects-single-server redirects-single-client
-      run: xvfb-run --auto-servernum yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=2 --invert-match a11y byte-efficiency byte-gzip dbw errors-expired-ssl errors-infinite-loop lantern-idle-callback-short legacy-javascript metrics-tricky-tti metrics-tricky-tti-late-fcp perf-budgets perf-fonts perf-frame-metrics perf-preload perf-trace-elements pwa redirects-client-paint-server redirects-history-push-state redirects-multiple-server redirects-single-server redirects-single-client redirects-scripts screenshot seo-passing seo-tap-targets
+      run: xvfb-run --auto-servernum yarn smoke --runner devtools --shard=${{ matrix.smoke-test-shard }}/${{ strategy.job-total }} --jobs=3 --retries=2
       working-directory: ${{ github.workspace }}/lighthouse
 
     - name: Upload failures

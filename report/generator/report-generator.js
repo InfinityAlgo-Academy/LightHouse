@@ -5,10 +5,10 @@
  */
 'use strict';
 
-const htmlReportAssets = require('./report-assets.js');
+import {reportAssets} from './report-assets.js';
 
 /** @typedef {import('../../types/lhr/lhr').default} LHResult */
-/** @typedef {import('../../types/lhr/flow').default} FlowResult */
+/** @typedef {import('../../types/lhr/flow-result').default} FlowResult */
 
 class ReportGenerator {
   /**
@@ -50,9 +50,9 @@ class ReportGenerator {
     const sanitizedJson = ReportGenerator.sanitizeJson(lhr);
     // terser does its own sanitization, but keep this basic replace for when
     // we want to generate a report without minification.
-    const sanitizedJavascript = htmlReportAssets.REPORT_JAVASCRIPT.replace(/<\//g, '\\u003c/');
+    const sanitizedJavascript = reportAssets.REPORT_JAVASCRIPT.replace(/<\//g, '\\u003c/');
 
-    return ReportGenerator.replaceStrings(htmlReportAssets.REPORT_TEMPLATE, [
+    return ReportGenerator.replaceStrings(reportAssets.REPORT_TEMPLATE, [
       {search: '%%LIGHTHOUSE_JSON%%', replacement: sanitizedJson},
       {search: '%%LIGHTHOUSE_JAVASCRIPT%%', replacement: sanitizedJavascript},
     ]);
@@ -65,11 +65,14 @@ class ReportGenerator {
    */
   static generateFlowReportHtml(flow) {
     const sanitizedJson = ReportGenerator.sanitizeJson(flow);
-    return ReportGenerator.replaceStrings(htmlReportAssets.FLOW_REPORT_TEMPLATE, [
+    // terser does its own sanitization, but keep this basic replace for when
+    // we want to generate a report without minification.
+    const sanitizedJavascript = reportAssets.FLOW_REPORT_JAVASCRIPT.replace(/<\//g, '\\u003c/');
+    return ReportGenerator.replaceStrings(reportAssets.FLOW_REPORT_TEMPLATE, [
       /* eslint-disable max-len */
       {search: '%%LIGHTHOUSE_FLOW_JSON%%', replacement: sanitizedJson},
-      {search: '%%LIGHTHOUSE_FLOW_JAVASCRIPT%%', replacement: htmlReportAssets.FLOW_REPORT_JAVASCRIPT},
-      {search: '/*%%LIGHTHOUSE_FLOW_CSS%%*/', replacement: htmlReportAssets.FLOW_REPORT_CSS},
+      {search: '%%LIGHTHOUSE_FLOW_JAVASCRIPT%%', replacement: sanitizedJavascript},
+      {search: '/*%%LIGHTHOUSE_FLOW_CSS%%*/', replacement: reportAssets.FLOW_REPORT_CSS},
       /* eslint-enable max-len */
     ]);
   }
@@ -101,7 +104,7 @@ class ReportGenerator {
 
     const rows = [];
     const topLevelKeys = /** @type {const} */(
-      ['requestedUrl', 'finalUrl', 'fetchTime', 'gatherMode']);
+      ['requestedUrl', 'finalDisplayedUrl', 'fetchTime', 'gatherMode']);
 
     // First we have metadata about the LHR.
     rows.push(rowFormatter(topLevelKeys));
@@ -174,4 +177,4 @@ class ReportGenerator {
   }
 }
 
-module.exports = ReportGenerator;
+export {ReportGenerator};

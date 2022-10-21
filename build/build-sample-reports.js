@@ -10,20 +10,20 @@
 import fs from 'fs';
 import path from 'path';
 
-import swapLocale from '../shared/localization/swap-locale.js';
-import swapFlowLocale from '../shared/localization/swap-flow-locale.js';
-import ReportGenerator from '../report/generator/report-generator.js';
-import {defaultSettings} from '../lighthouse-core/config/constants.js';
-import lighthouse from '../lighthouse-core/index.js';
+import {swapLocale} from '../shared/localization/swap-locale.js';
+import {swapFlowLocale} from '../shared/localization/swap-flow-locale.js';
+import {ReportGenerator} from '../report/generator/report-generator.js';
+import {defaultSettings} from '../core/config/constants.js';
+import lighthouse from '../core/index.js';
 import {LH_ROOT} from '../root.js';
-import {readJson} from '../lighthouse-core/test/test-utils.js';
+import {readJson} from '../core/test/test-utils.js';
 
 /** @type {LH.Result} */
-const lhr = readJson(`${LH_ROOT}/lighthouse-core/test/results/sample_v2.json`);
+const lhr = readJson(`${LH_ROOT}/core/test/results/sample_v2.json`);
 
 /** @type {LH.FlowResult} */
 const flowResult = readJson(
-  `${LH_ROOT}/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`
+  `${LH_ROOT}/core/test/fixtures/fraggle-rock/reports/sample-flow-result.json`
 );
 
 const DIST = path.join(LH_ROOT, 'dist');
@@ -157,10 +157,9 @@ async function generateErrorLHR() {
     Stacks: [],
     settings: defaultSettings,
     URL: {
-      initialUrl: 'about:blank',
       requestedUrl: 'http://fakeurl.com',
       mainDocumentUrl: 'http://fakeurl.com',
-      finalUrl: 'http://fakeurl.com',
+      finalDisplayedUrl: 'http://fakeurl.com',
     },
     GatherContext: {gatherMode: 'navigation'},
     Timing: [],
@@ -191,14 +190,6 @@ async function generateErrorLHR() {
   offscreenImagesAudit.errorMessage = undefined;
   offscreenImagesAudit.scoreDisplayMode = 'binary';
   offscreenImagesAudit.score = 1;
-  // pwa-apple-touch-icon - set as passing but with a warning
-  const appleTouchIconAudit = errorLhr.audits['apple-touch-icon'];
-  appleTouchIconAudit.warnings = [
-    '`apple-touch-icon-precomposed` is out of date; `apple-touch-icon` is preferred.',
-  ];
-  appleTouchIconAudit.errorMessage = undefined;
-  appleTouchIconAudit.scoreDisplayMode = 'binary';
-  appleTouchIconAudit.score = 1;
 
   fs.rmSync(TMP, {recursive: true, force: true});
   return errorLhr;

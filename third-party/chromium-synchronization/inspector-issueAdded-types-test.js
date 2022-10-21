@@ -10,7 +10,7 @@ import fetch from 'node-fetch';
 import { LH_ROOT } from '../../root.js';
 
 const inspectorIssuesGathererPath = LH_ROOT +
-  '/lighthouse-core/gather/gatherers/inspector-issues.js';
+  '/core/gather/gatherers/inspector-issues.js';
 const inspectorIssuesGathererSource = fs.readFileSync(inspectorIssuesGathererPath, 'utf-8');
 
 describe('issueAdded types', () => {
