@@ -4,7 +4,9 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {Audit} from '../audit.js';
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
+import {EntityClassification} from '../../computed/entity-classification.js';
 import {UnusedJavascriptSummary} from '../../computed/unused-javascript-summary.js';
 import {JSBundles} from '../../computed/js-bundles.js';
 import * as i18n from '../../lib/i18n/i18n.js';
@@ -80,6 +82,9 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
    */
   static async audit_(artifacts, networkRecords, context) {
     const bundles = await JSBundles.request(artifacts, context);
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const classifiedEntities = await EntityClassification.request(
+      {URL: artifacts.URL, devtoolsLog}, context);
     const {
       unusedThreshold = UNUSED_BYTES_IGNORE_THRESHOLD,
       bundleSourceUnusedThreshold = UNUSED_BYTES_IGNORE_BUNDLE_SOURCE_THRESHOLD,
@@ -107,6 +112,8 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
         totalBytes: Math.round(transferRatio * unusedJsSummary.totalBytes),
         wastedBytes: Math.round(transferRatio * unusedJsSummary.wastedBytes),
         wastedPercent: unusedJsSummary.wastedPercent,
+        entity: classifiedEntities.byURL.get(script.url)?.name,
+        is3p: classifiedEntities.byURL.get(script.url) !== classifiedEntities.firstParty,
       };
 
       if (item.wastedBytes <= unusedThreshold) continue;
