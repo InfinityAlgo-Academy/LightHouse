@@ -272,11 +272,11 @@ class CacheHeaders extends Audit {
 
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
-        {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
+        {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
         // TODO(i18n): pre-compute localized duration
-        {key: 'cacheLifetimeMs', itemType: 'ms', text: str_(i18n.UIStrings.columnCacheTTL),
+        {key: 'cacheLifetimeMs', valueType: 'ms', label: str_(i18n.UIStrings.columnCacheTTL),
           displayUnit: 'duration'},
-        {key: 'totalBytes', itemType: 'bytes', text: str_(i18n.UIStrings.columnTransferSize),
+        {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize),
           displayUnit: 'kb', granularity: 1},
       ];
 

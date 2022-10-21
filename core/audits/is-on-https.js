@@ -82,8 +82,8 @@ class HTTPS extends Audit {
 
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
-        {key: 'url', itemType: 'url', text: str_(UIStrings.columnInsecureURL)},
-        {key: 'resolution', itemType: 'text', text: str_(UIStrings.columnResolution)},
+        {key: 'url', valueType: 'url', label: str_(UIStrings.columnInsecureURL)},
+        {key: 'resolution', valueType: 'text', label: str_(UIStrings.columnResolution)},
       ];
 
       for (const details of artifacts.InspectorIssues.mixedContentIssue) {

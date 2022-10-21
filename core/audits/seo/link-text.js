@@ -137,8 +137,8 @@ class LinkText extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'href', itemType: 'url', text: 'Link destination'},
-      {key: 'text', itemType: 'text', text: 'Link Text'},
+      {key: 'href', valueType: 'url', label: 'Link destination'},
+      {key: 'text', valueType: 'text', label: 'Link Text'},
     ];
 
     const details = Audit.makeTableDetails(headings, failingLinks, {});

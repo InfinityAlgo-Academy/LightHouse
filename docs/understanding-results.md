@@ -80,8 +80,8 @@ An object containing the results of the audits, keyed by their name.
         "headings": [
           {
             "key": "url",
-            "itemType": "url",
-            "text": "Insecure URL"
+            "valueType": "url",
+            "label": "Insecure URL"
           }
         ],
         "items": [

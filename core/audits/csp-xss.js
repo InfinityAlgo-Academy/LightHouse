@@ -163,9 +163,9 @@ class CspXss extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'description', itemType: 'text', subItemsHeading: {key: 'description'}, text: str_(i18n.UIStrings.columnDescription)},
-      {key: 'directive', itemType: 'code', subItemsHeading: {key: 'directive'}, text: str_(UIStrings.columnDirective)},
-      {key: 'severity', itemType: 'text', subItemsHeading: {key: 'severity'}, text: str_(UIStrings.columnSeverity)},
+      {key: 'description', valueType: 'text', subItemsHeading: {key: 'description'}, label: str_(i18n.UIStrings.columnDescription)},
+      {key: 'directive', valueType: 'code', subItemsHeading: {key: 'directive'}, label: str_(UIStrings.columnDirective)},
+      {key: 'severity', valueType: 'text', subItemsHeading: {key: 'severity'}, label: str_(UIStrings.columnSeverity)},
       /* eslint-enable max-len */
     ];
     const details = Audit.makeTableDetails(headings, results);

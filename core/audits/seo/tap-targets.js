@@ -286,9 +286,9 @@ class TapTargets extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'tapTarget', itemType: 'node', text: str_(UIStrings.tapTargetHeader)},
-      {key: 'size', itemType: 'text', text: str_(i18n.UIStrings.columnSize)},
-      {key: 'overlappingTarget', itemType: 'node', text: str_(UIStrings.overlappingTargetHeader)},
+      {key: 'tapTarget', valueType: 'node', label: str_(UIStrings.tapTargetHeader)},
+      {key: 'size', valueType: 'text', label: str_(i18n.UIStrings.columnSize)},
+      {key: 'overlappingTarget', valueType: 'node', label: str_(UIStrings.overlappingTargetHeader)},
     ];
 
     const details = Audit.makeTableDetails(headings, tableItems);

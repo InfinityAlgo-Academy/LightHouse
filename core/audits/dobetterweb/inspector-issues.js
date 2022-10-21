@@ -152,7 +152,7 @@ class IssuesPanelEntries extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'issueType', itemType: 'text', subItemsHeading: {key: 'url', itemType: 'url'}, text: str_(UIStrings.columnIssueType)},
+      {key: 'issueType', valueType: 'text', subItemsHeading: {key: 'url', valueType: 'url'}, label: str_(UIStrings.columnIssueType)},
       /* eslint-enable max-len */
     ];
 

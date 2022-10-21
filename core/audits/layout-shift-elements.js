@@ -49,9 +49,9 @@ class LayoutShiftElements extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'node', itemType: 'node', text: str_(i18n.UIStrings.columnElement)},
-      {key: 'score', itemType: 'numeric',
-        granularity: 0.001, text: str_(UIStrings.columnContribution)},
+      {key: 'node', valueType: 'node', label: str_(i18n.UIStrings.columnElement)},
+      {key: 'score', valueType: 'numeric',
+        granularity: 0.001, label: str_(UIStrings.columnContribution)},
     ];
 
     const details = Audit.makeTableDetails(headings, clsElementData);

@@ -80,10 +80,10 @@ class UsesResponsiveImagesSnapshot extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'node', itemType: 'node', text: ''},
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'displayedDimensions', itemType: 'text', text: str_(UIStrings.columnDisplayedDimensions)},
-      {key: 'actualDimensions', itemType: 'text', text: str_(UIStrings.columnActualDimensions)},
+      {key: 'node', valueType: 'node', label: ''},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'displayedDimensions', valueType: 'text', label: str_(UIStrings.columnDisplayedDimensions)},
+      {key: 'actualDimensions', valueType: 'text', label: str_(UIStrings.columnActualDimensions)},
       /* eslint-enable max-len */
     ];
 

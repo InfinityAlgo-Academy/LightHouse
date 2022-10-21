@@ -71,8 +71,8 @@ class CrawlableAnchors extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [{
       key: 'node',
-      itemType: 'node',
-      text: str_(UIStrings.columnFailingLink),
+      valueType: 'node',
+      label: str_(UIStrings.columnFailingLink),
     }];
 
     /** @type {LH.Audit.Details.Table['items']} */

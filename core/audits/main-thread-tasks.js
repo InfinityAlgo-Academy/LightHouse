@@ -42,8 +42,8 @@ class MainThreadTasks extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'startTime', itemType: 'ms', granularity: 1, text: 'Start Time'},
-      {key: 'duration', itemType: 'ms', granularity: 1, text: 'End Time'},
+      {key: 'startTime', valueType: 'ms', granularity: 1, label: 'Start Time'},
+      {key: 'duration', valueType: 'ms', granularity: 1, label: 'End Time'},
     ];
 
     const tableDetails = Audit.makeTableDetails(headings, results);

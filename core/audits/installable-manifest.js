@@ -216,7 +216,7 @@ class InstallableManifest extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'reason', itemType: 'text', text: str_(UIStrings.columnValue)},
+      {key: 'reason', valueType: 'text', label: str_(UIStrings.columnValue)},
     ];
 
     // Errors for report table.

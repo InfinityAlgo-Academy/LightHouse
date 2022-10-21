@@ -57,9 +57,9 @@ describe('DetailsRenderer', () => {
       const el = renderer.render({
         type: 'table',
         headings: [
-          {text: 'First', key: 'a', itemType: 'text'},
-          {text: 'Second', key: 'b', itemType: 'text'},
-          {text: 'Preview', key: 'c', itemType: 'thumbnail'},
+          {text: 'First', key: 'a', valueType: 'text'},
+          {text: 'Second', key: 'b', valueType: 'text'},
+          {text: 'Preview', key: 'c', valueType: 'thumbnail'},
         ],
         items: [
           {
@@ -88,11 +88,11 @@ describe('DetailsRenderer', () => {
       const el = renderer.render({
         type: 'table',
         headings: [
-          {text: '', key: 'bytes', itemType: 'bytes'},
-          {text: '', key: 'numeric', itemType: 'numeric'},
-          {text: '', key: 'ms', itemType: 'ms'},
+          {text: '', key: 'bytes', valueType: 'bytes'},
+          {text: '', key: 'numeric', valueType: 'numeric'},
+          {text: '', key: 'ms', valueType: 'ms'},
           // Verify that 0 is ignored.
-          {text: '', key: 'ms', itemType: 'ms', granularity: 0},
+          {text: '', key: 'ms', valueType: 'ms', granularity: 0},
         ],
         items: [
           {
@@ -114,9 +114,9 @@ describe('DetailsRenderer', () => {
       const el = renderer.render({
         type: 'table',
         headings: [
-          {text: '', key: 'bytes', itemType: 'bytes', granularity: 0.01},
-          {text: '', key: 'numeric', itemType: 'numeric', granularity: 100},
-          {text: '', key: 'ms', itemType: 'ms', granularity: 1},
+          {text: '', key: 'bytes', valueType: 'bytes', granularity: 0.01},
+          {text: '', key: 'numeric', valueType: 'numeric', granularity: 100},
+          {text: '', key: 'ms', valueType: 'ms', granularity: 1},
         ],
         items: [
           {
@@ -190,7 +190,7 @@ describe('DetailsRenderer', () => {
     it('renders lists', () => {
       const table = {
         type: 'table',
-        headings: [{text: '', key: 'numeric', itemType: 'numeric'}],
+        headings: [{text: '', key: 'numeric', valueType: 'numeric'}],
         items: [{numeric: 1234.567}],
       };
 
@@ -264,7 +264,7 @@ describe('DetailsRenderer', () => {
     it('renders text values', () => {
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'text', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'text', label: 'Heading'}],
         items: [{content: 'My text content'}],
       };
 
@@ -277,7 +277,7 @@ describe('DetailsRenderer', () => {
     it('renders not much if items are empty', () => {
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'text', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'text', label: 'Heading'}],
         items: [],
       };
 
@@ -288,7 +288,7 @@ describe('DetailsRenderer', () => {
     it('renders an empty cell if item is missing a property', () => {
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'text', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'text', label: 'Heading'}],
         items: [
           {},
           {content: undefined},
@@ -316,7 +316,7 @@ describe('DetailsRenderer', () => {
     it('renders code values from a string', () => {
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'code', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'code', label: 'Heading'}],
         items: [{content: 'code snippet'}],
       };
 
@@ -334,7 +334,7 @@ describe('DetailsRenderer', () => {
 
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'code', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'code', label: 'Heading'}],
         items: [{content: code}],
       };
 
@@ -347,7 +347,7 @@ describe('DetailsRenderer', () => {
     it('renders thumbnail values', () => {
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'thumbnail', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'thumbnail', label: 'Heading'}],
         items: [{content: 'http://example.com/my-image.jpg'}],
       };
 
@@ -369,7 +369,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'link', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'link', label: 'Heading'}],
         items: [{content: link}],
       };
 
@@ -391,7 +391,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'link', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'link', label: 'Heading'}],
         items: [{content: link}],
       };
 
@@ -411,7 +411,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'link', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'link', label: 'Heading'}],
         items: [{content: link}],
       };
 
@@ -431,7 +431,7 @@ describe('DetailsRenderer', () => {
         };
         const details = {
           type: 'table',
-          headings: [{key: 'content', itemType: 'node', text: 'Heading'}],
+          headings: [{key: 'content', valueType: 'node', label: 'Heading'}],
           items: [{content: node}],
         };
 
@@ -466,7 +466,7 @@ describe('DetailsRenderer', () => {
         };
         const details = {
           type: 'table',
-          headings: [{key: 'content', itemType: 'node', text: 'Heading'}],
+          headings: [{key: 'content', valueType: 'node', label: 'Heading'}],
           items: [{content: node}],
         };
 
@@ -498,7 +498,7 @@ describe('DetailsRenderer', () => {
         };
         const details = {
           type: 'table',
-          headings: [{key: 'content', itemType: 'node', text: 'Heading'}],
+          headings: [{key: 'content', valueType: 'node', label: 'Heading'}],
           items: [{content: node}],
         };
 
@@ -519,7 +519,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'source-location', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'source-location', label: 'Heading'}],
         items: [{content: sourceLocation}],
       };
 
@@ -549,7 +549,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'source-location', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'source-location', label: 'Heading'}],
         items: [{content: sourceLocation}],
       };
 
@@ -575,7 +575,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'source-location', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'source-location', label: 'Heading'}],
         items: [{content: sourceLocation}],
       };
 
@@ -600,7 +600,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'source-location', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'source-location', label: 'Heading'}],
         items: [{content: sourceLocation}],
       };
 
@@ -625,7 +625,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'source-location', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'source-location', label: 'Heading'}],
         items: [{content: sourceLocation}],
       };
 
@@ -646,7 +646,7 @@ describe('DetailsRenderer', () => {
 
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'url', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'url', label: 'Heading'}],
         items: [{content: urlText}],
       };
 
@@ -673,7 +673,7 @@ describe('DetailsRenderer', () => {
 
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'url', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'url', label: 'Heading'}],
         items: [{content: url}],
         overallSavingsMs: 100,
       };
@@ -693,7 +693,7 @@ describe('DetailsRenderer', () => {
 
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'url', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'url', label: 'Heading'}],
         items: [{content: urlText}],
       };
 
@@ -712,11 +712,11 @@ describe('DetailsRenderer', () => {
         console.error = consoleError;
       });
 
-      it('renders an unknown heading itemType', () => {
+      it('renders an unknown heading valueType', () => {
         // Disallowed by type system, but test that we get an error message out just in case.
         const details = {
           type: 'table',
-          headings: [{key: 'content', itemType: 'notRealValueType', text: 'Heading'}],
+          headings: [{key: 'content', valueType: 'notRealValueType', label: 'Heading'}],
           items: [{content: 'some string'}],
         };
 
@@ -737,7 +737,7 @@ describe('DetailsRenderer', () => {
 
         const details = {
           type: 'table',
-          headings: [{key: 'content', itemType: 'url', text: 'Heading'}],
+          headings: [{key: 'content', valueType: 'url', label: 'Heading'}],
           items: [{content: item}],
         };
 
@@ -753,8 +753,8 @@ describe('DetailsRenderer', () => {
     it('uses the item\'s type over the heading type', () => {
       const details = {
         type: 'table',
-        // itemType is overriden by code object
-        headings: [{key: 'content', itemType: 'url', text: 'Heading'}],
+        // valueType is overriden by code object
+        headings: [{key: 'content', valueType: 'url', label: 'Heading'}],
         items: [
           {content: {type: 'code', value: 'https://codeobject.com'}},
           {content: 'https://example.com'},
@@ -790,7 +790,7 @@ describe('DetailsRenderer', () => {
         const details = {
           type: 'table',
           headings: [
-            {key: 'url', itemType: 'url', subItemsHeading: {key: 'source', itemType: 'code'}},
+            {key: 'url', valueType: 'url', subItemsHeading: {key: 'source', valueType: 'code'}},
           ],
           items: [
             {
@@ -832,7 +832,7 @@ describe('DetailsRenderer', () => {
       it('renders, uses heading properties as fallback', () => {
         const details = {
           type: 'table',
-          headings: [{key: 'url', itemType: 'url', subItemsHeading: {key: 'source'}}],
+          headings: [{key: 'url', valueType: 'url', subItemsHeading: {key: 'source'}}],
           items: [
             {
               url: 'https://www.example.com',

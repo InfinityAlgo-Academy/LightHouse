@@ -85,9 +85,9 @@ class DOMSize extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'statistic', itemType: 'text', text: str_(UIStrings.columnStatistic)},
-      {key: 'node', itemType: 'node', text: str_(i18n.UIStrings.columnElement)},
-      {key: 'value', itemType: 'numeric', text: str_(UIStrings.columnValue)},
+      {key: 'statistic', valueType: 'text', label: str_(UIStrings.columnStatistic)},
+      {key: 'node', valueType: 'node', label: str_(i18n.UIStrings.columnElement)},
+      {key: 'value', valueType: 'numeric', label: str_(UIStrings.columnValue)},
     ];
 
     /** @type {LH.Audit.Details.Table['items']} */
