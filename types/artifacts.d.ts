@@ -122,6 +122,7 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   Accessibility: Artifacts.Accessibility;
   /** Array of all anchors on the page. */
   AnchorElements: Artifacts.AnchorElement[];
+  BFCacheErrors: Artifacts.BFCacheErrors;
   /** Array of all URLs cached in CacheStorage. */
   CacheContents: string[];
   /** CSS coverage information for styles used by page's final state. */
@@ -408,6 +409,10 @@ declare module Artifacts {
     listeners?: Array<{
       type: LH.Crdp.DOMDebugger.EventListener['type']
     }>
+  }
+
+  interface BFCacheErrors {
+    errors: LH.Crdp.Page.BackForwardCacheNotRestoredExplanation[];
   }
 
   interface Font {
