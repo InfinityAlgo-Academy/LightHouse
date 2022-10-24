@@ -13,7 +13,7 @@ import {LH_ROOT} from '../../../root.js';
 
 const require = createRequire(import.meta.url);
 
-const filepath = `${LH_ROOT}/lighthouse-core/index.js`;
+const filepath = `${LH_ROOT}/core/index.js`;
 
 describe('inline-fs', () => {
   const tmpPath = `${LH_ROOT}/.tmp/inline-fs/test.txt`;
@@ -263,6 +263,11 @@ describe('inline-fs', () => {
           code: `const myTextContent = "\\"quoted\\", and an unbalanced quote: \\"";`,
           warnings: [],
         });
+      });
+
+      it('throws fatal error if file is missing', async () => {
+        const content = `const myTextContent = fs.readFileSync('i-never-exist.lol', 'utf8');`;
+        await expect(inlineFs(content, filepath)).rejects.toThrow('ENOENT');
       });
 
       it('inlines multiple fs.readFileSync calls', async () => {

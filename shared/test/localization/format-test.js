@@ -3,20 +3,17 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const path = require('path');
+import path from 'path';
 
-const format = require('../../localization/format.js');
-const locales = require('../../localization/locales.js');
+import * as i18n from '../../../core/lib/i18n/i18n.js';
+import * as constants from '../../../core/config/constants.js';
+import * as format from '../../localization/format.js';
+import {locales} from '../../localization/locales.js';
+import {getModuleDirectory, getModulePath} from '../../../esm-utils.js';
 
-// TODO(esmodules): remove when shared/ is esm
-let i18n;
-let constants;
-before(async () => {
-  i18n = await import('../../../lighthouse-core/lib/i18n/i18n.js');
-  constants = await import('../../../lighthouse-core/config/constants.js');
-});
+const moduleDir = getModuleDirectory(import.meta);
+const modulePath = getModulePath(import.meta);
 
 describe('format', () => {
   describe('DEFAULT_LOCALE', () => {
@@ -83,9 +80,9 @@ describe('format', () => {
 
   describe('#replaceIcuMessages', () => {
     it('replaces the references in the LHR', () => {
-      const fakeFile = path.join(__dirname, 'fake-file-number-2.js');
+      const fakeFile = path.join(moduleDir, 'fake-file-number-2.js');
       const UIStrings = {aString: 'different {x}!'};
-      const formatter = i18n.createMessageInstanceIdFn(fakeFile, UIStrings);
+      const formatter = i18n.createIcuMessageFn(fakeFile, UIStrings);
 
       const title = formatter(UIStrings.aString, {x: 1});
       const lhr = {audits: {'fake-audit': {title}}};
@@ -115,14 +112,14 @@ describe('format', () => {
   describe('#getFormatted', () => {
     it('returns the formatted string', () => {
       const UIStrings = {testMessage: 'happy test'};
-      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+      const str_ = i18n.createIcuMessageFn(modulePath, UIStrings);
       const formattedStr = format.getFormatted(str_(UIStrings.testMessage), 'en');
       expect(formattedStr).toEqual('happy test');
     });
 
     it('returns the formatted string with replacements', () => {
       const UIStrings = {testMessage: 'replacement test ({errorCode})'};
-      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+      const str_ = i18n.createIcuMessageFn(modulePath, UIStrings);
       const formattedStr = format.getFormatted(str_(UIStrings.testMessage,
           {errorCode: 'BOO'}), 'en');
       expect(formattedStr).toEqual('replacement test (BOO)');
@@ -131,7 +128,7 @@ describe('format', () => {
     it('throws an error for invalid locales', () => {
       // Populate a string to try to localize to a bad locale.
       const UIStrings = {testMessage: 'testy test'};
-      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+      const str_ = i18n.createIcuMessageFn(modulePath, UIStrings);
 
       expect(_ => format.getFormatted(str_(UIStrings.testMessage), 'still-not-a-locale'))
         .toThrow(`Unsupported locale 'still-not-a-locale'`);
@@ -141,7 +138,7 @@ describe('format', () => {
       const UIStrings = {
         testMessage: 'needs {count, number, bytes}KB test {str} in {timeInMs, number, seconds}s',
       };
-      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+      const str_ = i18n.createIcuMessageFn(modulePath, UIStrings);
 
       const replacements = {
         count: 2555,
@@ -172,8 +169,7 @@ describe('format', () => {
 
   describe('#registerLocaleData', () => {
     // Store original locale data so we can restore at the end
-    const moduleLocales = require('../../localization/locales.js');
-    const clonedLocales = JSON.parse(JSON.stringify(moduleLocales));
+    const clonedLocales = JSON.parse(JSON.stringify(locales));
 
     it('installs new locale strings', () => {
       const localeData = {
@@ -184,15 +180,15 @@ describe('format', () => {
       format.registerLocaleData('en-XZ', localeData);
 
       const UIStrings = {testString: 'en-US string!'};
-      const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+      const str_ = i18n.createIcuMessageFn(modulePath, UIStrings);
       const formattedStr = format.getFormatted(str_(UIStrings.testString), 'en-XZ');
       expect(formattedStr).toEqual('en-XZ cuerda!');
     });
 
     it('overwrites existing locale strings', async () => {
-      const filename = 'lighthouse-core/audits/is-on-https.js';
-      const {UIStrings} = await import('../../../lighthouse-core/audits/is-on-https.js');
-      const str_ = i18n.createMessageInstanceIdFn(filename, UIStrings);
+      const filename = 'core/audits/is-on-https.js';
+      const {UIStrings} = await import('../../../core/audits/is-on-https.js');
+      const str_ = i18n.createIcuMessageFn(filename, UIStrings);
 
       // To start with, we get back the intended string..
       const origTitle = format.getFormatted(str_(UIStrings.title), 'es-419');
@@ -202,7 +198,7 @@ describe('format', () => {
 
       // Now we declare and register the new string...
       const localeData = {
-        'lighthouse-core/audits/is-on-https.js | title': {
+        'core/audits/is-on-https.js | title': {
           'message': 'new string for es-419 uses https!',
         },
       };
@@ -217,7 +213,7 @@ describe('format', () => {
       expect(newFailureTitle).toEqual('Does not use HTTPS');
 
       // Restore overwritten strings to avoid messing with other tests
-      moduleLocales['es-419'] = clonedLocales['es-419'];
+      locales['es-419'] = clonedLocales['es-419'];
       const title = format.getFormatted(str_(UIStrings.title), 'es-419');
       expect(title).toEqual('Usa HTTPS');
     });
@@ -324,7 +320,7 @@ describe('format', () => {
 
     let str_;
     before(() => {
-      str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
+      str_ = i18n.createIcuMessageFn(modulePath, UIStrings);
     });
 
     it('formats a basic message', () => {

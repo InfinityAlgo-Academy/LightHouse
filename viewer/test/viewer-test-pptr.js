@@ -5,20 +5,20 @@
  */
 
 import fs from 'fs';
-import assert from 'assert';
+import assert from 'assert/strict';
 
 import puppeteer from 'puppeteer';
 
-import {server} from '../../lighthouse-cli/test/fixtures/static-server.js';
-import defaultConfig from '../../lighthouse-core/config/default-config.js';
+import {Server} from '../../cli/test/fixtures/static-server.js';
+import defaultConfig from '../../core/config/default-config.js';
 import {LH_ROOT} from '../../root.js';
 import {getCanonicalLocales} from '../../shared/localization/format.js';
 
 const portNumber = 10200;
 const viewerUrl = `http://localhost:${portNumber}/dist/gh-pages/viewer/index.html`;
-const sampleLhr = LH_ROOT + '/lighthouse-core/test/results/sample_v2.json';
+const sampleLhr = LH_ROOT + '/core/test/results/sample_v2.json';
 // eslint-disable-next-line max-len
-const sampleFlowResult = LH_ROOT + '/lighthouse-core/test/fixtures/fraggle-rock/reports/sample-flow-result.json';
+const sampleFlowResult = LH_ROOT + '/core/test/fixtures/fraggle-rock/reports/sample-flow-result.json';
 
 const lighthouseCategories = Object.keys(defaultConfig.categories);
 const getAuditsOfCategory = category => defaultConfig.categories[category].auditRefs;
@@ -55,7 +55,9 @@ describe('Lighthouse Viewer', () => {
       });
   }
 
+  let server;
   before(async () => {
+    server = new Server(portNumber);
     await server.listen(portNumber, 'localhost');
 
     // start puppeteer
@@ -124,10 +126,16 @@ describe('Lighthouse Viewer', () => {
     });
 
     it('should contain audits of all categories', async () => {
+      const nonNavigationAudits = [
+        'experimental-interaction-to-next-paint',
+        'uses-responsive-images-snapshot',
+        'work-during-interaction',
+      ];
       for (const category of lighthouseCategories) {
         let expected = getAuditsOfCategory(category);
         if (category === 'performance') {
-          expected = getAuditsOfCategory(category).filter(a => a.group !== 'hidden');
+          expected = getAuditsOfCategory(category)
+            .filter(a => a.group !== 'hidden' && !nonNavigationAudits.includes(a.id));
         }
         expected = expected.map(audit => audit.id);
         const elementIds = await getAuditElementsIds({category, selector: selectors.audits});
@@ -165,7 +173,8 @@ describe('Lighthouse Viewer', () => {
     });
 
     it('should support swapping locales', async () => {
-      function queryLocaleState() {
+      async function queryLocaleState() {
+        await viewerPage.waitForSelector('.lh-locale-selector');
         return viewerPage.$$eval('.lh-locale-selector', (elems) => {
           const selectEl = elems[0];
           const optionEls = [...selectEl.querySelectorAll('option')];
@@ -197,9 +206,11 @@ describe('Lighthouse Viewer', () => {
     it('should support saving as html', async () => {
       const tmpDir = `${LH_ROOT}/.tmp/pptr-downloads`;
       fs.rmSync(tmpDir, {force: true, recursive: true});
-      await viewerPage._client.send('Page.setDownloadBehavior', {
+      const session = await viewerPage.target().createCDPSession();
+      await session.send('Browser.setDownloadBehavior', {
         behavior: 'allow',
         downloadPath: tmpDir,
+        eventsEnabled: true,
       });
 
       await viewerPage.click('.lh-tools__button');
@@ -208,19 +219,26 @@ describe('Lighthouse Viewer', () => {
           document.querySelector('.lh-tools__dropdown')).visibility === 'visible';
       });
 
+      // For some reason, clicking this button doesn't always initiate the download after upgrading to Puppeteer 16.
+      // As a workaround, we send another click signal 1s after the first to make sure the download starts.
+      // TODO: Find a more robust fix for this issue.
+      const timeoutHandle = setTimeout(() => viewerPage.click('a[data-action="save-html"]'), 1000);
+
       const [, filename] = await Promise.all([
         viewerPage.click('a[data-action="save-html"]'),
         new Promise(resolve => {
-          viewerPage._client.on('Page.downloadWillBegin', ({suggestedFilename}) => {
+          session.on('Browser.downloadWillBegin', ({suggestedFilename}) => {
             resolve(suggestedFilename);
           });
         }),
         new Promise(resolve => {
-          viewerPage._client.on('Page.downloadProgress', ({state}) => {
+          session.on('Browser.downloadProgress', ({state}) => {
             if (state === 'completed') resolve();
           });
         }),
       ]);
+
+      clearTimeout(timeoutHandle);
 
       const savedPage = await browser.newPage();
       const savedPageErrors = [];

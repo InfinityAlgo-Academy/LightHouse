@@ -18,6 +18,20 @@ import typescript from '@rollup/plugin-typescript';
 
 import inlineFs from './plugins/rollup-plugin-inline-fs.js';
 
+/**
+ * These expressions should never show up in a bundle, otherwise they'll never
+ * run inside a browser. They are only ever used to set a variable `moduleDir`,
+ * which the inline-fs replaces anyways.
+ */
+function removeModuleDirCalls() {
+  return replace({
+    delimiters: ['', ''],
+    values: {
+      'getModuleDirectory(import.meta)': '""',
+    },
+  });
+}
+
 export {
   alias,
   commonjs,
@@ -26,6 +40,7 @@ export {
   nodePolyfills,
   nodeResolve,
   postprocess,
+  removeModuleDirCalls,
   replace,
   shim,
   terser,

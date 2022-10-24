@@ -30,7 +30,7 @@ Getting errors like these?
 Use [`--trace-warnings`](https://medium.com/@jasnell/introducing-process-warnings-in-node-v6-3096700537ee) to get actual stack traces.
 
 ```sh
-node --trace-warnings lighthouse-cli http://example.com
+node --trace-warnings cli http://example.com
 ```
 
 ## Iterating on the report

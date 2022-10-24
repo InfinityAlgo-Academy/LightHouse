@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import jsdom from 'jsdom';
 
@@ -13,9 +13,9 @@ import {I18n} from '../../renderer/i18n.js';
 import {DOM} from '../../renderer/dom.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
 import {CategoryRenderer} from '../../renderer/category-renderer.js';
-import {readJson} from '../../../lighthouse-core/test/test-utils.js';
+import {readJson} from '../../../core/test/test-utils.js';
 
-const sampleResultsOrig = readJson('../../../lighthouse-core/test/results/sample_v2.json', import.meta);
+const sampleResultsOrig = readJson('../../../core/test/results/sample_v2.json', import.meta);
 
 describe('CategoryRenderer', () => {
   let renderer;
@@ -296,7 +296,7 @@ describe('CategoryRenderer', () => {
       );
 
       const gauge = categoryDOM.querySelector('.lh-fraction__content');
-      assert.equal(gauge.textContent.trim(), '13/18', 'fraction is included');
+      assert.equal(gauge.textContent.trim(), '12/17', 'fraction is included');
 
       const score = categoryDOM.querySelector('.lh-category-header');
       const title = score.querySelector('.lh-fraction__label');
@@ -421,7 +421,7 @@ describe('CategoryRenderer', () => {
       const naAudits = elem.querySelectorAll('.lh-clump--notapplicable .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 5);
+      assert.equal(failedAudits.length, 4);
       assert.equal(warningAudits.length, 2);
       assert.equal(manualAudits.length, 3);
       assert.equal(naAudits.length, 1);
@@ -441,7 +441,7 @@ describe('CategoryRenderer', () => {
       const failedAudits = elem.querySelectorAll('.lh-clump--failed .lh-audit');
 
       assert.equal(passedAudits.length, 0);
-      assert.equal(failedAudits.length, 8);
+      assert.equal(failedAudits.length, 7);
     });
 
     it('expands warning audit group', () => {

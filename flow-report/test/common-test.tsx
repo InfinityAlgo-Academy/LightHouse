@@ -7,7 +7,7 @@
 import jestMock from 'jest-mock';
 import {act, render} from '@testing-library/preact';
 
-import {timers} from '../../lighthouse-core/test/test-env/fake-timers.js';
+import {timers} from '../../core/test/test-env/fake-timers.js';
 import {FlowStepThumbnail} from '../src/common';
 
 let lhr: LH.Result;

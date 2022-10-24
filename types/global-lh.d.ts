@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {ArbitraryEqualityMap as ArbitraryEqualityMap_} from '../lighthouse-core/lib/arbitrary-equality-map.js';
+import {ArbitraryEqualityMap as ArbitraryEqualityMap_} from '../core/lib/arbitrary-equality-map.js';
 import * as Artifacts_ from './artifacts';
 import Audit_ from './audit';
 import Budget_ from './lhr/budget';
@@ -14,15 +14,14 @@ import _CrdpMappings from 'devtools-protocol/types/protocol-mapping';
 import * as Externs from './externs';
 import Gatherer_ from './gatherer';
 import * as I18n from './lhr/i18n';
-import {LighthouseError as LighthouseError_} from '../lighthouse-core/lib/lh-error.js';
+import {LighthouseError as LighthouseError_} from '../core/lib/lh-error.js';
 import LHResult from './lhr/lhr';
-import FlowResult_ from './lhr/flow';
+import FlowResult_ from './lhr/flow-result';
 import Protocol_ from './protocol';
 import * as Settings from './lhr/settings';
-import StructuredData_ from './structured-data';
 import Treemap_ from './lhr/treemap';
 import UserFlow_ from './user-flow';
-import puppeteer from 'puppeteer-core';
+import Puppeteer_ from './puppeteer';
 
 // Construct hierarchy of global types under the LH namespace.
 declare global {
@@ -30,7 +29,7 @@ declare global {
     export type ArbitraryEqualityMap = ArbitraryEqualityMap_;
     export type NavigationRequestor = string | (() => Promise<void> | void);
 
-    export import Puppeteer = puppeteer;
+    export import Puppeteer = Puppeteer_;
 
     // artifacts.d.ts
     export import Artifacts = Artifacts_.Artifacts;
@@ -78,7 +77,6 @@ declare global {
     export import OutputMode = Settings.OutputMode;
     export import PrecomputedLanternData = Settings.PrecomputedLanternData;
 
-    export import StructuredData = StructuredData_;
     export import Treemap = Treemap_;
   }
 }

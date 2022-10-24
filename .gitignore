@@ -13,7 +13,7 @@ lcov.info
 .nyc_output
 *.lcov
 
-lighthouse-cli/results
+cli/results
 results.html
 last-run-results.html
 /lighthouse-plugin-simple
@@ -28,16 +28,16 @@ last-run-results.html
 *.artifacts.log
 *.ctc.json
 
-!lighthouse-core/test/results/artifacts/*.trace.json
-!lighthouse-core/test/results/artifacts/*.devtoolslog.json
-!lighthouse-core/test/fixtures/artifacts/**/*.trace.json
-!lighthouse-core/test/fixtures/artifacts/**/*.devtoolslog.json
-!lighthouse-core/test/fixtures/traces/**/*.trace.json
-!lighthouse-core/test/fixtures/traces/**/*.devtoolslog.json
-!lighthouse-core/test/fixtures/config/**/node_modules
+!core/test/results/artifacts/*.trace.json
+!core/test/results/artifacts/*.devtoolslog.json
+!core/test/fixtures/artifacts/**/*.trace.json
+!core/test/fixtures/artifacts/**/*.devtoolslog.json
+!core/test/fixtures/traces/**/*.trace.json
+!core/test/fixtures/traces/**/*.devtoolslog.json
+!core/test/fixtures/config/**/node_modules
 
-lighthouse-core/scripts/legacy-javascript/variants
-lighthouse-core/scripts/gcp-collection/gcp-data
+core/scripts/legacy-javascript/variants
+core/scripts/gcp-collection/gcp-data
 
 latest-run
 lantern-data

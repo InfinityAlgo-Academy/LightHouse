@@ -8,11 +8,11 @@ _Some incomplete notes_
 
 * **Driver** - Interfaces with [Puppeteer](https://github.com/puppeteer/puppeteer) and [Chrome Debugging Protocol](https://developer.chrome.com/devtools/docs/debugger-protocol)  ([API viewer](https://chromedevtools.github.io/debugger-protocol-viewer/))
 * **Gatherers** - Uses Driver to collect information about the page. Minimal post-processing.  Run Lighthouse with `--gather-mode` to see the 3 primary outputs from gathering:
-  1. `artifacts.json`: The output from all [gatherers](../lighthouse-core/gather/gatherers).
+  1. `artifacts.json`: The output from all [gatherers](../core/gather/gatherers).
   2. `defaultPass.trace.json`: Most performance characteristics come from here. You can view it in the DevTools Peformance panel.
   3. `defaultPass.devtoolslog.json`: A log of all the [DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) events. Primary signal about network requests and page state.
-* **Audit** - The [audits](../lighthouse-core/audits) are tests for a single feature/optimization/metric. Using the Artifacts as input, an audit evaluates a test and resolves to a numeric score. See [Understanding Results](./understanding-results.md) for details of the LHR (Lighthouse Result object).
-  * **Computed Artifacts** - [Generated](../lighthouse-core/computed) on-demand from artifacts, these add additional meaning, and are often shared amongst multiple audits.
+* **Audit** - The [audits](../core/audits) are tests for a single feature/optimization/metric. Using the Artifacts as input, an audit evaluates a test and resolves to a numeric score. See [Understanding Results](./understanding-results.md) for details of the LHR (Lighthouse Result object).
+  * **Computed Artifacts** - [Generated](../core/computed) on-demand from artifacts, these add additional meaning, and are often shared amongst multiple audits.
 * **Report** - The report UI, created client-side from the LHR. See [HTML Report Generation Overview](../report/README.md) for details.
 
 ### Audit/Report terminology
@@ -41,7 +41,7 @@ driver.defaultSession.sendCommand('Security.enable');
 
 ## Understanding a Trace
 
-`lighthouse-core/lib/tracehouse/trace-processor.js` provides the core transformation of a trace into more meaningful objects. Each raw trace event has a monotonically increasing timestamp in microseconds, a thread ID, a process ID, a duration in microseconds (potentially), and other applicable metadata properties such as the event type, the task name, the frame, etc. [Learn more about trace events](https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview).
+`core/lib/tracehouse/trace-processor.js` provides the core transformation of a trace into more meaningful objects. Each raw trace event has a monotonically increasing timestamp in microseconds, a thread ID, a process ID, a duration in microseconds (potentially), and other applicable metadata properties such as the event type, the task name, the frame, etc. [Learn more about trace events](https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview).
 
 ### Example Trace Event
 ```js
@@ -86,11 +86,11 @@ The return value of each audit [takes this shape](https://github.com/GoogleChrom
 
 The `details` object is parsed in report-renderer.js. View other audits for guidance on how to structure `details`.
 
-## Lighthouse-core internal module dependencies
+## Core internal module dependencies
 
 ![image](https://user-images.githubusercontent.com/6752989/168904554-082aa9c3-46f3-448f-92b8-20ad3a02258f.png)
 
-(Generated May 17, 2022 via `madge lighthouse-core/index.js --image arch.png --layout dot --exclude="(locales\/)|(stack-packs\/packs)"`)
+(Generated May 17, 2022 via `madge core/index.js --image arch.png --layout dot --exclude="(locales\/)|(stack-packs\/packs)"`)
 
 ## Lantern
 
