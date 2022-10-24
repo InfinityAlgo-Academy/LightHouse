@@ -6033,7 +6033,8 @@ query-string@^4.1.0:
 
 quibble@^0.6.7, quibble@connorjclark/quibble#fork:
   version "0.6.12"
-  resolved "https://codeload.github.com/connorjclark/quibble/tar.gz/f49c6c6122f08a4872a1fafc1d2aca68a7fdc2df"
+  uid "8550a6ab8ac7bfbdd71558536533d5e2a2282797"
+  resolved "https://codeload.github.com/connorjclark/quibble/tar.gz/8550a6ab8ac7bfbdd71558536533d5e2a2282797"
   dependencies:
     lodash "^4.17.21"
     resolve "^1.20.0"
