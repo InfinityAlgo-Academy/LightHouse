@@ -8,7 +8,9 @@ import jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
 const mockMainResource = jestMock.fn();
-await td.replaceEsm('../../../computed/main-resource.js', {request: mockMainResource});
+await td.replaceEsm('../../../computed/main-resource.js', {
+  MainResource: {request: mockMainResource},
+});
 
 /** @typedef {typeof testContext} TestContext */
 const testContext = {
