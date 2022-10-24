@@ -13,6 +13,7 @@ import fs from 'fs';
 import path from 'path';
 import {Worker, isMainThread, parentPort, workerData} from 'worker_threads';
 import {once} from 'events';
+import {pathToFileURL} from 'url';
 
 import Mocha from 'mocha';
 import yargs from 'yargs';
@@ -304,7 +305,7 @@ async function runMocha(tests, mochaArgs, invocationNumber) {
 
     if (mocksFilePath && fs.existsSync(mocksFilePath)) {
       // @ts-expect-error
-      global.lighthouseTestContext = (await import(mocksFilePath)).testContext;
+      global.lighthouseTestContext = (await import(pathToFileURL(mocksFilePath))).testContext;
     } else {
       // @ts-expect-error
       global.lighthouseTestContext = undefined;
