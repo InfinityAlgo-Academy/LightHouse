@@ -11,6 +11,7 @@ import {navigationGather} from './gather/navigation-runner.js';
 import {Runner} from './runner.js';
 import {initializeConfig} from './config/config.js';
 import {getFormatted} from '../shared/localization/format.js';
+import {mergeConfigFragment, deepClone} from './config/config-helpers.js';
 import * as i18n from './lib/i18n/i18n.js';
 
 /** @typedef {WeakMap<LH.UserFlow.GatherStep, LH.Gatherer.FRGatherResult['runnerOptions']>} GatherStepRunnerOptions */
@@ -67,30 +68,39 @@ class UserFlow {
   }
 
   /**
-   * @param {LH.UserFlow.StepFlags} [flags]
+   * @param {LH.UserFlow.StepFlags|undefined} flags
+   * @return {LH.UserFlow.StepFlags|undefined}
+   */
+  _getNextFlags(flags) {
+    const clonedFlowFlags = this._options?.flags && deepClone(this._options?.flags);
+    if (!flags) return clonedFlowFlags;
+    return mergeConfigFragment(clonedFlowFlags || {}, flags, true);
+  }
+
+  /**
+   * @param {LH.UserFlow.StepFlags|undefined} flags
    * @return {LH.UserFlow.StepFlags}
    */
   _getNextNavigationFlags(flags) {
-    const newStepFlags = {...flags};
+    const nextFlags = this._getNextFlags(flags) || {};
 
-    if (newStepFlags.skipAboutBlank === undefined) {
-      newStepFlags.skipAboutBlank = true;
+    if (nextFlags.skipAboutBlank === undefined) {
+      nextFlags.skipAboutBlank = true;
     }
 
     // On repeat navigations, we want to disable storage reset by default (i.e. it's not a cold load).
     const isSubsequentNavigation = this._gatherSteps
       .some(step => step.artifacts.GatherContext.gatherMode === 'navigation');
     if (isSubsequentNavigation) {
-      if (newStepFlags.disableStorageReset === undefined) {
-        newStepFlags.disableStorageReset = true;
+      if (nextFlags.disableStorageReset === undefined) {
+        nextFlags.disableStorageReset = true;
       }
     }
 
-    return newStepFlags;
+    return nextFlags;
   }
 
   /**
-   *
    * @param {LH.Gatherer.FRGatherResult} gatherResult
    * @param {LH.UserFlow.StepFlags} [flags]
    */
@@ -111,13 +121,13 @@ class UserFlow {
     if (this.currentTimespan) throw new Error('Timespan already in progress');
     if (this.currentNavigation) throw new Error('Navigation already in progress');
 
-    const newStepFlags = this._getNextNavigationFlags(flags);
+    const nextFlags = this._getNextNavigationFlags(flags);
     const gatherResult = await navigationGather(this._page, requestor, {
       config: this._options?.config,
-      flags: newStepFlags,
+      flags: nextFlags,
     });
 
-    this._addGatherStep(gatherResult, newStepFlags);
+    this._addGatherStep(gatherResult, nextFlags);
   }
 
   /**
@@ -179,11 +189,13 @@ class UserFlow {
     if (this.currentTimespan) throw new Error('Timespan already in progress');
     if (this.currentNavigation) throw new Error('Navigation already in progress');
 
+    const nextFlags = this._getNextFlags(flags);
+
     const timespan = await startTimespanGather(this._page, {
       config: this._options?.config,
-      flags: flags,
+      flags: nextFlags,
     });
-    this.currentTimespan = {timespan, flags};
+    this.currentTimespan = {timespan, flags: nextFlags};
   }
 
   async endTimespan() {
@@ -204,12 +216,14 @@ class UserFlow {
     if (this.currentTimespan) throw new Error('Timespan already in progress');
     if (this.currentNavigation) throw new Error('Navigation already in progress');
 
+    const nextFlags = this._getNextFlags(flags);
+
     const gatherResult = await snapshotGather(this._page, {
       config: this._options?.config,
-      flags: flags,
+      flags: nextFlags,
     });
 
-    this._addGatherStep(gatherResult, flags);
+    this._addGatherStep(gatherResult, nextFlags);
   }
 
   /**
