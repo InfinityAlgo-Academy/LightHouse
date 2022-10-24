@@ -9,61 +9,30 @@ import assert from 'assert/strict';
 import path from 'path';
 
 import jestMock from 'jest-mock';
-import * as td from 'testdouble';
 
-// import Runner from '../runner.js';
-// import {GatherRunner} from '../legacy/gather/gather-runner.js';
-import {fakeDriver as driverMock} from './legacy/gather/fake-driver.js';
-// import {Config} from '../legacy/config/config.js';
+import {Runner} from '../runner.js';
+import {GatherRunner} from '../legacy/gather/gather-runner.js';
+import {fakeDriver as driverMock} from '../test/legacy/gather/fake-driver.js';
+import {Config} from '../legacy/config/config.js';
 import {Audit} from '../audits/audit.js';
 import {Gatherer} from '../gather/gatherers/gatherer.js';
 import * as assetSaver from '../lib/asset-saver.js';
 import {LighthouseError} from '../lib/lh-error.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import {importMock, makeMocksForGatherRunner} from './test-utils.js';
+import {importMock} from './test-utils.js';
 import {getModuleDirectory} from '../../esm-utils.js';
 
 const moduleDir = getModuleDirectory(import.meta);
 
-await makeMocksForGatherRunner();
+/** @type {import('./runner-test.mocks.js').TestContext} */
+// @ts-expect-error
+const testContext = global.lighthouseTestContext;
+const {saveArtifactsSpy, saveLhrSpy, loadArtifactsSpy} = testContext;
 
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {typeof import('../runner.js').Runner} */
-let Runner;
-/** @type {typeof import('../legacy/gather/gather-runner.js').GatherRunner} */
-let GatherRunner;
-/** @type {typeof import('../legacy/config/config.js').Config} */
-let Config;
-
-/** @type {jestMock.Mock} */
-let saveArtifactsSpy;
-/** @type {jestMock.Mock} */
-let saveLhrSpy;
-/** @type {jestMock.Mock} */
-let loadArtifactsSpy;
 /** @type {jestMock.Mock} */
 let gatherRunnerRunSpy;
 /** @type {jestMock.Mock} */
 let runAuditSpy;
-
-await td.replaceEsm('../lib/asset-saver.js', {
-  saveArtifacts: saveArtifactsSpy = jestMock.fn(assetSaver.saveArtifacts),
-  saveLhr: saveLhrSpy = jestMock.fn(),
-  loadArtifacts: loadArtifactsSpy = jestMock.fn(assetSaver.loadArtifacts),
-});
-
-await td.replaceEsm('../gather/driver/service-workers.js', {
-  getServiceWorkerVersions: jestMock.fn().mockResolvedValue({versions: []}),
-  getServiceWorkerRegistrations: jestMock.fn().mockResolvedValue({registrations: []}),
-});
-
-before(async () => {
-  Runner = (await import('../runner.js')).Runner;
-  GatherRunner = (await import('../legacy/gather/gather-runner.js')).GatherRunner;
-  Config = (await import('../legacy/config/config.js')).Config;
-});
 
 beforeEach(() => {
   gatherRunnerRunSpy = jestMock.spyOn(GatherRunner, 'run');

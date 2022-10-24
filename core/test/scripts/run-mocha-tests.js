@@ -13,6 +13,7 @@ import fs from 'fs';
 import path from 'path';
 import {Worker, isMainThread, parentPort, workerData} from 'worker_threads';
 import {once} from 'events';
+import {pathToFileURL} from 'url';
 
 import Mocha from 'mocha';
 import yargs from 'yargs';
@@ -171,6 +172,8 @@ const rawArgv = y
 const argv =
   /** @type {Awaited<typeof rawArgv> & CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
 
+process.env.SNAPSHOT_UPDATE = argv.update ? '1' : '';
+
 // This captures all of our mocha tests except for:
 // * flow-report, because it needs to provide additional mocha flags
 // * various *-test-pptr.js integration tests, which are long so are handled explicitly in
@@ -289,6 +292,11 @@ async function runMocha(tests, mochaArgs, invocationNumber) {
   const rootHooksPath = mochaArgs.require || '../test-env/mocha-setup.js';
   const {rootHooks} = await import(rootHooksPath);
 
+  let mocksFilePath;
+  if (tests.length === 1 && tests[0].endsWith('.js')) {
+    mocksFilePath = `${LH_ROOT}/${tests[0].replace('.js', '.mocks.js')}`;
+  }
+
   try {
     const mocha = new Mocha({
       rootHooks,
@@ -299,6 +307,14 @@ async function runMocha(tests, mochaArgs, invocationNumber) {
       // parallel: tests.length > 1 && mochaArgs.parallel,
       parallel: false,
     });
+
+    if (mocksFilePath && fs.existsSync(mocksFilePath)) {
+      // @ts-expect-error
+      global.lighthouseTestContext = (await import(pathToFileURL(mocksFilePath))).testContext;
+    } else {
+      // @ts-expect-error
+      global.lighthouseTestContext = undefined;
+    }
 
     // @ts-expect-error - not in types.
     mocha.lazyLoadFiles(true);

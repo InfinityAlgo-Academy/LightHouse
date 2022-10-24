@@ -9,8 +9,6 @@ import jestMock from 'jest-mock';
 import {
   createMockDriver,
   createMockBaseArtifacts,
-  mockDriverSubmodules,
-  mockRunnerModule,
 } from './mock-driver.js';
 import {initializeConfig} from '../../config/config.js';
 import {defaultNavigationConfig} from '../../config/constants.js';
@@ -19,21 +17,17 @@ import DevtoolsLogGatherer from '../../gather/gatherers/devtools-log.js';
 import TraceGatherer from '../../gather/gatherers/trace.js';
 import {fnAny} from '../test-utils.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
-import {Runner as runnerActual} from '../../runner.js';
+import * as runner from '../../gather/navigation-runner.js';
 
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {import('../../gather/navigation-runner.js')} */
-let runner;
+/** @type {import('./navigation-runner-test.mocks.js').TestContext} */
+// @ts-expect-error
+const testContext = global.lighthouseTestContext;
+const {mocks, mockRunner, actualRunner} = testContext;
 
-const mocks = await mockDriverSubmodules();
-const mockRunner = await mockRunnerModule();
 beforeEach(async () => {
   mockRunner.reset();
-  mockRunner.getGathererList.mockImplementation(runnerActual.getGathererList);
-  mockRunner.getAuditList.mockImplementation(runnerActual.getAuditList);
-  runner = (await import('../../gather/navigation-runner.js'));
+  mockRunner.getGathererList.mockImplementation(actualRunner.getGathererList);
+  mockRunner.getAuditList.mockImplementation(actualRunner.getAuditList);
 });
 
 /** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: Mock<any, any>, startInstrumentation: Mock<any, any>, stopInstrumentation: Mock<any, any>, startSensitiveInstrumentation: Mock<any, any>, stopSensitiveInstrumentation:  Mock<any, any>}} MockGatherer */
@@ -602,7 +596,7 @@ describe('NavigationRunner', () => {
 
   describe('navigation', () => {
     it('should throw on invalid URL', async () => {
-      mockRunner.gather.mockImplementation(runnerActual.gather);
+      mockRunner.gather.mockImplementation(actualRunner.gather);
 
       const navigatePromise = runner.navigationGather(mockDriver._page.asPage(), '');
 

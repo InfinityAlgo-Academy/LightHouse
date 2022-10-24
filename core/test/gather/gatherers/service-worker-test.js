@@ -8,22 +8,12 @@ import assert from 'assert/strict';
 
 import * as td from 'testdouble';
 
-import {fnAny} from '../../test-utils.js';
+import ServiceWorkerGather from '../../../gather/gatherers/service-worker.js';
 
-// import ServiceWorkerGather from '../../../gather/gatherers/service-worker.js';
-
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {typeof import('../../../gather/gatherers/service-worker.js').default} */
-let ServiceWorkerGather;
-
-before(async () => {
-  ServiceWorkerGather = (await import('../../../gather/gatherers/service-worker.js')).default;
-});
-
-const getServiceWorkerVersions = fnAny();
-const getServiceWorkerRegistrations = fnAny();
+/** @type {import('./service-worker-test.mocks.js').TestContext} */
+// @ts-expect-error
+const testContext = global.lighthouseTestContext;
+const {getServiceWorkerVersions, getServiceWorkerRegistrations} = testContext;
 
 await td.replaceEsm('../../../gather/driver/service-workers.js', {
   getServiceWorkerVersions,

@@ -5,24 +5,14 @@
  */
 
 import jestMock from 'jest-mock';
-import * as td from 'testdouble';
 
-import {Runner} from '../runner.js';
-import {createMockPage, mockRunnerModule} from './gather/mock-driver.js';
+import {createMockPage} from './gather/mock-driver.js';
+import {getStepName, getFlowName, UserFlow, auditGatherSteps} from '../user-flow.js';
 
-const snapshotModule = {snapshotGather: jestMock.fn()};
-await td.replaceEsm('../gather/snapshot-runner.js', snapshotModule);
-const navigationModule = {navigationGather: jestMock.fn()};
-await td.replaceEsm('../gather/navigation-runner.js', navigationModule);
-const timespanModule = {startTimespanGather: jestMock.fn()};
-await td.replaceEsm('../gather/timespan-runner.js', timespanModule);
-
-const mockRunner = await mockRunnerModule();
-
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-const {getStepName, getFlowName, UserFlow, auditGatherSteps} = await import('../user-flow.js');
+/** @type {import('./user-flow-test.mocks.js').TestContext} */
+// @ts-expect-error
+const testContext = global.lighthouseTestContext;
+const {snapshotModule, navigationModule, timespanModule, mockRunner, actualRunner} = testContext;
 
 describe('UserFlow', () => {
   let mockPage = createMockPage();
@@ -397,8 +387,8 @@ describe('UserFlow', () => {
 
   describe('auditGatherSteps', () => {
     it('should audit gather steps', async () => {
-      mockRunner.getGathererList.mockImplementation(Runner.getGathererList);
-      mockRunner.getAuditList.mockImplementation(Runner.getAuditList);
+      mockRunner.getGathererList.mockImplementation(actualRunner.getGathererList);
+      mockRunner.getAuditList.mockImplementation(actualRunner.getAuditList);
       mockRunner.audit.mockImplementation(artifacts => ({
         lhr: {
           finalDisplayedUrl: artifacts.URL.finalDisplayedUrl,
@@ -653,4 +643,3 @@ describe('UserFlow', () => {
     });
   });
 });
-

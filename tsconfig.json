@@ -100,6 +100,7 @@
     "core/test/lib/url-utils-test.js",
     "core/test/network-records-to-devtools-log-test.js",
     "core/test/runner-test.js",
+    "core/test/runner-test.mocks.js",
     "core/test/scoring-test.js",
     "core/test/scripts/i18n/bake-ctc-to-lhl-test.js",
   ],
