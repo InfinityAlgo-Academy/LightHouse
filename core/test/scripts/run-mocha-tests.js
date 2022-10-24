@@ -287,11 +287,13 @@ async function runMocha(tests, mochaArgs, invocationNumber) {
   const rootHooksPath = mochaArgs.require || '../test-env/mocha-setup.js';
   const {rootHooks} = await import(rootHooksPath);
 
-  console.log(tests);
   let mocksFilePath;
   if (tests.length === 1 && tests[0].endsWith('.js')) {
     mocksFilePath = `${LH_ROOT}/${tests[0].replace('.js', '.mocks.js')}`;
   }
+  console.log(tests);
+  console.log(mocksFilePath);
+  console.log(LH_ROOT);
 
   try {
     const mocha = new Mocha({
