@@ -186,7 +186,7 @@ const runnerMock = {
   },
 };
 async function mockRunnerModule() {
-  await td.replaceEsm('../../../runner.js', {Runner: runnerMock});
+  await td.replaceEsm('../../runner.js', {Runner: runnerMock});
   return runnerMock;
 }
 
