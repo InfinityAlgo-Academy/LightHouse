@@ -306,9 +306,11 @@ async function runMocha(tests, mochaArgs, invocationNumber) {
       parallel: false,
     });
 
+    if (mocksFilePath) console.log('exists', fs.existsSync(mocksFilePath));
     if (mocksFilePath && fs.existsSync(mocksFilePath)) {
+      console.log(await import(pathToFileURL(mocksFilePath).href));
       // @ts-expect-error
-      global.lighthouseTestContext = (await import(pathToFileURL(mocksFilePath))).testContext;
+      global.lighthouseTestContext = (await import(pathToFileURL(mocksFilePath).href)).testContext;
     } else {
       // @ts-expect-error
       global.lighthouseTestContext = undefined;
