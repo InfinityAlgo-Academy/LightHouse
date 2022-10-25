@@ -51,30 +51,83 @@ class BFCache extends Audit {
   }
 
   /**
-   * @param {LH.Artifacts} artifacts
-   * @return {Array<LH.IcuMessage | string>}
+   * We only want to surface errors that are actionable (i.e. have type "PageSupportNeeded")
+   *
+   * @param {LH.Crdp.Page.BackForwardCacheNotRestoredExplanation} err
    */
-  static getBfCacheErrors(artifacts) {
-    const bfCacheErrors = artifacts.BFCacheErrors.errors;
-    const i18nErrors = [];
+  static shouldIgnoreError(err) {
+    return err.type !== 'PageSupportNeeded';
+  }
 
-    for (const err of bfCacheErrors) {
-      // Only show errors which can be addressed by the user.
-      if (err.type !== 'PageSupportNeeded') continue;
+  /**
+   * @param {LH.Crdp.Page.BackForwardCacheNotRestoredReason} reason
+   */
+  static getDescriptionForReason(reason) {
+    const matchingString = NotRestoredReasonDescription[reason];
 
-
-      const matchingString = NotRestoredReasonDescription[err.reason];
-
-      // Handle an errorId we don't recognize.
-      if (matchingString === undefined) {
-        i18nErrors.push(str_(UIStrings.unknownReason, {reason: err.reason}));
-        continue;
-      }
-
-      i18nErrors.push(matchingString.name);
+    if (matchingString === undefined) {
+      return str_(UIStrings.unknownReason, {reason: reason});
     }
 
-    return i18nErrors;
+    return matchingString.name;
+  }
+
+  /**
+   * @param {LH.Crdp.Page.BackForwardCacheNotRestoredExplanation[]} errorList
+   * @return {LH.Audit.Details.TableItem[]}
+   */
+  static constructResultsFromList(errorList) {
+    const results = [];
+
+    for (const err of errorList) {
+      if (this.shouldIgnoreError(err)) continue;
+      results.push({
+        reason: this.getDescriptionForReason(err.reason),
+      });
+    }
+
+    return results;
+  }
+
+  /**
+   * @param {LH.Crdp.Page.BackForwardCacheNotRestoredExplanationTree} errorTree
+   * @return {LH.Audit.Details.TableItem[]}
+   */
+  static constructResultsFromTree(errorTree) {
+    /** @type {Map<LH.Crdp.Page.BackForwardCacheNotRestoredReason, string[]>} */
+    const frameUrlsByFailureReason = new Map();
+
+    /**
+     * @param {LH.Crdp.Page.BackForwardCacheNotRestoredExplanationTree} node
+     */
+    function traverse(node) {
+      for (const error of node.explanations) {
+        if (BFCache.shouldIgnoreError(error)) continue;
+
+        const frameUrls = frameUrlsByFailureReason.get(error.reason) || [];
+        frameUrls.push(node.url);
+        frameUrlsByFailureReason.set(error.reason, frameUrls);
+      }
+
+      for (const child of node.children) {
+        traverse(child);
+      }
+    }
+
+    traverse(errorTree);
+
+    /** @type {LH.Audit.Details.TableItem[]} */
+    const results = [];
+    for (const [reason, frameUrls] of frameUrlsByFailureReason.entries()) {
+      results.push({
+        reason: this.getDescriptionForReason(reason),
+        subItems: {
+          type: 'subitems',
+          items: frameUrls.map(frameUrl => ({frameUrl})),
+        },
+      });
+    }
+    return results;
   }
 
   /**
@@ -83,21 +136,29 @@ class BFCache extends Audit {
    *
    */
   static async audit(artifacts) {
-    const i18nErrors = BFCache.getBfCacheErrors(artifacts);
+    const {list, tree} = artifacts.BFCacheErrors;
+
+    // The BF cache failure tree cans sometimes be undefined.
+    // In this case we can still construct the results from the list result.
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=1281855
+    /** @type {LH.Audit.Details.TableItem[]} */
+    let results = [];
+    if (tree) {
+      results = BFCache.constructResultsFromTree(tree);
+    } else if (list) {
+      results = BFCache.constructResultsFromList(list);
+    }
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'reason', valueType: 'text', label: str_(UIStrings.failureColumn)},
+      /* eslint-disable max-len */
+      {key: 'reason', valueType: 'text', subItemsHeading: {key: 'frameUrl', valueType: 'url'}, label: str_(UIStrings.failureColumn)},
+      /* eslint-enable max-len */
     ];
 
-    /** @type {LH.Audit.Details.Table['items']} */
-    const errorReasons = i18nErrors.map(reason => {
-      return {reason};
-    });
+    const details = Audit.makeTableDetails(headings, results);
 
-    const details = Audit.makeTableDetails(headings, errorReasons);
-
-    if (errorReasons.length === 0) {
+    if (results.length === 0) {
       return {
         score: 1,
         details,
@@ -106,7 +167,7 @@ class BFCache extends Audit {
 
     return {
       score: 0,
-      displayValue: str_(UIStrings.displayValue, {itemCount: errorReasons.length}),
+      displayValue: str_(UIStrings.displayValue, {itemCount: results.length}),
       details,
     };
   }

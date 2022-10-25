@@ -20,16 +20,17 @@ class BFCacheErrors extends FRGatherer {
   async getArtifact(context) {
     const session = context.driver.defaultSession;
 
-    /**
-     * @type {LH.Crdp.Page.BackForwardCacheNotRestoredExplanation[]}
-     */
-    let errors = [];
+    /** @type {LH.Crdp.Page.BackForwardCacheNotRestoredExplanation[]|undefined} */
+    let errors = undefined;
+    /** @type {LH.Crdp.Page.BackForwardCacheNotRestoredExplanationTree|undefined} */
+    let tree = undefined;
 
     /**
      * @param {LH.Crdp.Page.BackForwardCacheNotUsedEvent} event
      */
     function onBfCacheNotUsed(event) {
       errors = event.notRestoredExplanations;
+      tree = event.notRestoredExplanationsTree;
     }
 
     session.on('Page.backForwardCacheNotUsed', onBfCacheNotUsed);
@@ -49,7 +50,7 @@ class BFCacheErrors extends FRGatherer {
 
     session.off('Page.backForwardCacheNotUsed', onBfCacheNotUsed);
 
-    return {errors};
+    return {list: errors, tree};
   }
 }
 
