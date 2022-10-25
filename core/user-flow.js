@@ -18,23 +18,23 @@ import * as i18n from './lib/i18n/i18n.js';
 
 const UIStrings = {
   /**
-   * @description Default name for a user flow on the given url. "User flow" refers to the series of page navigations and user interactions being tested on the page.
-   * @example {https://example.com} url
+   * @description Default name for a user flow on the given url. "User flow" refers to the series of page navigations and user interactions being tested on the page. "url" is a trimmed version of a url that only includes the domain name.
+   * @example {example.com} url
    */
   defaultFlowName: 'User flow ({url})',
   /**
-   * @description Default name for a user flow step that analyzes a page navigation.
-   * @example {https://example.com} url
+   * @description Default name for a Lighthouse report that analyzes a page navigation. "url" is a trimmed version of a url that only includes the domain name and path.
+   * @example {example.com/page} url
    */
   defaultNavigationName: 'Navigation report ({url})',
   /**
-   * @description Default name for a user flow step that analyzes user interactions over a period of time.
-   * @example {https://example.com} url
+   * @description Default name for a Lighthouse report that analyzes user interactions over a period of time. "url" is a trimmed version of a url that only includes the domain name and path.
+   * @example {example.com/page} url
    */
   defaultTimespanName: 'Timespan report ({url})',
   /**
-   * @description Default name for a user flow step that analyzes the page state at a point in time.
-   * @example {https://example.com} url
+   * @description Default name for a Lighthouse report that analyzes the page state at a point in time. "url" is a trimmed version of a url that only includes the domain name and path.
+   * @example {example.com/page} url
    */
   defaultSnapshotName: 'Snapshot report ({url})',
 };
