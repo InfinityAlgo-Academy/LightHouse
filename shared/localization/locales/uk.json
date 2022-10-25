@@ -1605,7 +1605,7 @@
     "message": "Сторінка містить дійсні карти джерел"
   },
   "core/audits/viewport.js | description": {
-    "message": "За допомогою метатегу `<meta name=\"viewport\">` можна не лише оптимізувати додаток для мобільних пристроїв, а й запобігти [затримці тривалістю 300 мілісекунд під час того, як користувач вводить дані](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Докладніше.](https://web.dev/viewport/)"
+    "message": "За допомогою метатегу `<meta name=\"viewport\">` можна не лише оптимізувати додаток для мобільних пристроїв, а й запобігти [затримці тривалістю 300 мілісекунд під час того, як користувач вводить дані](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Докладніше.](https://web.dev/viewport/)"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Тег `<meta name=\"viewport\">` не знайдено"

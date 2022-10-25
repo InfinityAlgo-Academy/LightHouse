@@ -1605,7 +1605,7 @@
     "message": "頁面包含有效的來源對應"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` 不但會針對流動裝置螢幕大小來優化應用程式，還能夠防止[使用者輸入時發生 300 毫秒的延遲](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away)。[瞭解詳情](https://web.dev/viewport/)。"
+    "message": "`<meta name=\"viewport\">` 不但會針對流動裝置螢幕大小來優化應用程式，還能夠防止[使用者輸入時發生 300 毫秒的延遲](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)。[瞭解詳情](https://web.dev/viewport/)。"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "找不到任何 `<meta name=\"viewport\">` 標籤"

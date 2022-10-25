@@ -1605,7 +1605,7 @@
     "message": "У страницы правильные карты исходного кода"
   },
   "core/audits/viewport.js | description": {
-    "message": "С помощью метатега `<meta name=\"viewport\">` можно не только оптимизировать приложение для мобильных устройств с экранами разных размеров, но и предотвратить [задержку длительностью 300 мс при вводе данных пользователем](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Подробнее…](https://web.dev/viewport/)"
+    "message": "С помощью метатега `<meta name=\"viewport\">` можно не только оптимизировать приложение для мобильных устройств с экранами разных размеров, но и предотвратить [задержку длительностью 300 мс при вводе данных пользователем](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Подробнее…](https://web.dev/viewport/)"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Метатег `<meta name=\"viewport\">` не найден."

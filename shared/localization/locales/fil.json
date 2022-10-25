@@ -1605,7 +1605,7 @@
     "message": "May mga valid na source map ang page"
   },
   "core/audits/viewport.js | description": {
-    "message": "Hindi lang ino-optimize ng `<meta name=\"viewport\">` ang iyong app para sa mga laki ng mobile screen, pinipigilan din nito ang [300 millisecond na pagkaantala sa input ng user](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Matuto pa](https://web.dev/viewport/)."
+    "message": "Hindi lang ino-optimize ng `<meta name=\"viewport\">` ang iyong app para sa mga laki ng mobile screen, pinipigilan din nito ang [300 millisecond na pagkaantala sa input ng user](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Matuto pa](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Walang nahanap na tag na `<meta name=\"viewport\">`"

@@ -1605,7 +1605,7 @@
     "message": "Pagina are hărți sursă valide"
   },
   "core/audits/viewport.js | description": {
-    "message": "Pe lângă faptul că `<meta name=\"viewport\">` optimizează aplicația pentru dimensiunile ecranelor de dispozitive mobile, împiedică [o întârziere de 300 milisecunde a intrării de la utilizator](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Află mai multe](https://web.dev/viewport/)."
+    "message": "Pe lângă faptul că `<meta name=\"viewport\">` optimizează aplicația pentru dimensiunile ecranelor de dispozitive mobile, împiedică [o întârziere de 300 milisecunde a intrării de la utilizator](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Află mai multe](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Nu s-a găsit nicio etichetă `<meta name=\"viewport\">`"

@@ -1605,7 +1605,7 @@
     "message": "Stránka má platné soubory sourcemap"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` optimalizuje aplikaci pro velikosti obrazovek mobilů a brání [300milisekundové prodlevě uživatelského vstupu](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Další informace](https://web.dev/viewport/)"
+    "message": "`<meta name=\"viewport\">` optimalizuje aplikaci pro velikosti obrazovek mobilů a brání [300milisekundové prodlevě uživatelského vstupu](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Další informace](https://web.dev/viewport/)"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Nebyla nalezena značka `<meta name=\"viewport\">`"

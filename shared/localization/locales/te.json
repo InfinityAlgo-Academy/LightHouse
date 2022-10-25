@@ -1605,7 +1605,7 @@
     "message": "పేజీలో చెల్లుబాటు అయ్యే సోర్స్ మ్యాప్‌లు ఉన్నాయి"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">`, మీ యాప్‌ను మొబైల్ స్క్రీన్ సైజులకు తగ్గట్టుగా ఆప్టిమైజ్ చేయడమే కాకుండా, [యూజర్ ఇన్‌పుట్‌లో 300 మిల్లీసెకన్ల ఆలస్యాన్ని](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away) కూడా నివారిస్తుంది. [మరింత తెలుసుకోండి](https://web.dev/viewport/)."
+    "message": "`<meta name=\"viewport\">`, మీ యాప్‌ను మొబైల్ స్క్రీన్ సైజులకు తగ్గట్టుగా ఆప్టిమైజ్ చేయడమే కాకుండా, [యూజర్ ఇన్‌పుట్‌లో 300 మిల్లీసెకన్ల ఆలస్యాన్ని](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) కూడా నివారిస్తుంది. [మరింత తెలుసుకోండి](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "'`<meta name=\"viewport\">`' ట్యాగ్ ఏదీ కనుగొనబడలేదు"
