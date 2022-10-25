@@ -8,7 +8,7 @@
 const config = {
   extends: 'lighthouse:default',
   settings: {
-    // BF cache will request the page an additional time, which can initiates additional network requests.
+    // BF cache will request the page again, initiating additional network requests.
     // Disable the audit so we only detect requests from the normal page load.
     skipAudits: ['bf-cache'],
   },
