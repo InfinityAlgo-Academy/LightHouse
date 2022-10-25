@@ -960,7 +960,7 @@
     "message": "CLS Contribution"
   },
   "core/audits/layout-shift-elements.js | description": {
-    "message": "These DOM elements contribute most to the CLS of the page."
+    "message": "These DOM elements contribute most to the CLS of the page. [Learn how to improve CLS](https://web.dev/optimize-cls/)"
   },
   "core/audits/layout-shift-elements.js | title": {
     "message": "Avoid large layout shifts"

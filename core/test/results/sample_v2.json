@@ -2259,7 +2259,7 @@
     "layout-shift-elements": {
       "id": "layout-shift-elements",
       "title": "Avoid large layout shifts",
-      "description": "These DOM elements contribute most to the CLS of the page.",
+      "description": "These DOM elements contribute most to the CLS of the page. [Learn how to improve CLS](https://web.dev/optimize-cls/)",
       "score": null,
       "scoreDisplayMode": "informative",
       "displayValue": "5 elements found",
