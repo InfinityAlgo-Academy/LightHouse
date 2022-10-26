@@ -425,23 +425,26 @@
   "core/audits/autocomplete.js | warningOrder": {
     "message": "R̂év̂íêẃ ôŕd̂ér̂ óf̂ t́ôḱêńŝ: \"{tokens}\" ín̂ {snippet}"
   },
+  "core/audits/bf-cache.js | actionableColumn": {
+    "message": "Âćt̂íôńâb́l̂é f̂áîĺûŕê"
+  },
   "core/audits/bf-cache.js | description": {
     "message": "T̂h́ê b́âćk̂/f́ôŕŵár̂d́ ĉáĉh́ê ćâń ŝṕêéd̂ úp̂ t́ĥé p̂áĝé l̂óâd́ âf́t̂ér̂ ńâv́îǵât́îńĝ áŵáŷ."
   },
   "core/audits/bf-cache.js | displayValue": {
-    "message": "{itemCount, plural,\n    =1 {1 f̂áîĺûŕê ŕêáŝón̂}\n    other {# f́âíl̂úr̂é r̂éâśôńŝ}\n    }"
-  },
-  "core/audits/bf-cache.js | failureColumn": {
-    "message": "F̂áîĺûŕê ŕêáŝón̂"
+    "message": "{itemCount, plural,\n    =1 {1 âćt̂íôńâb́l̂é f̂áîĺûŕê ŕêáŝón̂}\n    other {# áĉt́îón̂áb̂ĺê f́âíl̂úr̂é r̂éâśôńŝ}\n    }"
   },
   "core/audits/bf-cache.js | failureTitle": {
     "message": "B̂áĉḱ/f̂ór̂ẃâŕd̂ ćâćĥé îś n̂ót̂ úŝéd̂"
   },
+  "core/audits/bf-cache.js | notActionableColumn": {
+    "message": "N̂ót̂ áĉt́îón̂áb̂ĺê f́âíl̂úr̂é"
+  },
+  "core/audits/bf-cache.js | supportPendingColumn": {
+    "message": "P̂én̂d́îńĝ b́r̂óŵśêŕ ŝúp̂ṕôŕt̂"
+  },
   "core/audits/bf-cache.js | title": {
     "message": "B̂áĉḱ/f̂ór̂ẃâŕd̂ ćâćĥé îś ûśêd́"
-  },
-  "core/audits/bf-cache.js | unknownReason": {
-    "message": "B̂áĉḱ/f̂ór̂ẃâŕd̂ ćâćĥé f̂áîĺûŕê ŕêáŝón̂ '{reason}' íŝ ńôt́ r̂éĉóĝńîźêd́"
   },
   "core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Ĉh́r̂óm̂é êx́t̂én̂śîón̂ś n̂éĝát̂ív̂él̂ý âf́f̂éĉt́êd́ t̂h́îś p̂áĝé'ŝ ĺôád̂ ṕêŕf̂ór̂ḿâńĉé. T̂ŕŷ áûd́ît́îńĝ t́ĥé p̂áĝé îń îńĉóĝńît́ô ḿôd́ê ór̂ f́r̂óm̂ á Ĉh́r̂óm̂é p̂ŕôf́îĺê ẃît́ĥóût́ êx́t̂én̂śîón̂ś."

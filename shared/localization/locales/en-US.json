@@ -425,23 +425,26 @@
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Review order of tokens: \"{tokens}\" in {snippet}"
   },
+  "core/audits/bf-cache.js | actionableColumn": {
+    "message": "Actionable failure"
+  },
   "core/audits/bf-cache.js | description": {
     "message": "The back/forward cache can speed up the page load after navigating away."
   },
   "core/audits/bf-cache.js | displayValue": {
-    "message": "{itemCount, plural,\n    =1 {1 failure reason}\n    other {# failure reasons}\n    }"
-  },
-  "core/audits/bf-cache.js | failureColumn": {
-    "message": "Failure reason"
+    "message": "{itemCount, plural,\n    =1 {1 actionable failure reason}\n    other {# actionable failure reasons}\n    }"
   },
   "core/audits/bf-cache.js | failureTitle": {
     "message": "Back/forward cache is not used"
   },
+  "core/audits/bf-cache.js | notActionableColumn": {
+    "message": "Not actionable failure"
+  },
+  "core/audits/bf-cache.js | supportPendingColumn": {
+    "message": "Pending browser support"
+  },
   "core/audits/bf-cache.js | title": {
     "message": "Back/forward cache is used"
-  },
-  "core/audits/bf-cache.js | unknownReason": {
-    "message": "Back/forward cache failure reason '{reason}' is not recognized"
   },
   "core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Chrome extensions negatively affected this page's load performance. Try auditing the page in incognito mode or from a Chrome profile without extensions."

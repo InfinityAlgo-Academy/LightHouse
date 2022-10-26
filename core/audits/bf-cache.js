@@ -17,19 +17,18 @@ const UIStrings = {
   /** TODO */
   description: 'The back/forward cache can speed up the page load after navigating away.',
   /** TODO */
-  failureColumn: 'Failure reason',
+  actionableColumn: 'Actionable failure',
+  /** TODO */
+  notActionableColumn: 'Not actionable failure',
+  /** TODO */
+  supportPendingColumn: 'Pending browser support',
   /**
    * @description [ICU Syntax] Label for an audit identifying the number of back/forward cache failure reasons found in the page.
    */
   displayValue: `{itemCount, plural,
-    =1 {1 failure reason}
-    other {# failure reasons}
+    =1 {1 actionable failure reason}
+    other {# actionable failure reasons}
     }`,
-  /**
-   * @description Error message describing a DevTools error id that was found and has not been identified by this audit.
-   * @example {platform-not-supported-on-android} reason
-   */
-  unknownReason: `Back/forward cache failure reason '{reason}' is not recognized`,
 };
 /* eslint-enable max-len */
 
@@ -57,29 +56,27 @@ class BFCache extends Audit {
     const matchingString = NotRestoredReasonDescription[reason];
 
     if (matchingString === undefined) {
-      return str_(UIStrings.unknownReason, {reason: reason});
+      return reason;
     }
 
     return matchingString.name;
   }
 
   /**
-   * @param {LH.Artifacts} artifacts
-   * @return {Promise<LH.Audit.Product>}
-   *
+   * @param {LH.Artifacts.BFCacheErrorMap} errors
+   * @param {LH.IcuMessage | string} label
+   * @return {LH.Audit.Details.Table}
    */
-  static async audit(artifacts) {
+  static makeTableForFailureType(errors, label) {
     /** @type {LH.Audit.Details.TableItem[]} */
     const results = [];
 
-    const actionableErrors = artifacts.BFCacheErrors.PageSupportNeeded;
-
     // https://github.com/Microsoft/TypeScript/issues/12870
     const reasons = /** @type {LH.Crdp.Page.BackForwardCacheNotRestoredReason[]} */
-      (Object.keys(actionableErrors));
+      (Object.keys(errors));
 
     for (const reason of reasons) {
-      const frameUrls = actionableErrors[reason] || [];
+      const frameUrls = errors[reason] || [];
       results.push({
         reason: this.getDescriptionForReason(reason),
         subItems: {
@@ -92,23 +89,50 @@ class BFCache extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'reason', valueType: 'text', subItemsHeading: {key: 'frameUrl', valueType: 'url'}, label: str_(UIStrings.failureColumn)},
+      {key: 'reason', valueType: 'text', subItemsHeading: {key: 'frameUrl', valueType: 'url'}, label},
       /* eslint-enable max-len */
     ];
 
-    const details = Audit.makeTableDetails(headings, results);
+    return Audit.makeTableDetails(headings, results);
+  }
 
-    if (results.length === 0) {
+  /**
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<LH.Audit.Product>}
+   */
+  static async audit(artifacts) {
+    const {PageSupportNeeded, SupportPending, Circumstantial} = artifacts.BFCacheErrors;
+
+    const actionableTable =
+      this.makeTableForFailureType(PageSupportNeeded, str_(UIStrings.actionableColumn));
+    const notActionableTable =
+      this.makeTableForFailureType(Circumstantial, str_(UIStrings.notActionableColumn));
+    const supportPendingTable =
+      this.makeTableForFailureType(SupportPending, str_(UIStrings.supportPendingColumn));
+
+    const items = [
+      actionableTable,
+      notActionableTable,
+      supportPendingTable,
+    ];
+
+    if (actionableTable.items.length === 0) {
       return {
         score: 1,
-        details,
+        details: {
+          type: 'list',
+          items,
+        },
       };
     }
 
     return {
       score: 0,
-      displayValue: str_(UIStrings.displayValue, {itemCount: results.length}),
-      details,
+      displayValue: str_(UIStrings.displayValue, {itemCount: actionableTable.items.length}),
+      details: {
+        type: 'list',
+        items,
+      },
     };
   }
 }
