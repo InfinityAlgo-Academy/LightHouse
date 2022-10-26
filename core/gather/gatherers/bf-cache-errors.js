@@ -7,6 +7,60 @@
 import FRGatherer from '../base-gatherer.js';
 import {waitForFrameNavigated, waitForLoadEvent} from '../driver/wait-for-condition.js';
 
+/**
+ * @param {LH.Crdp.Page.BackForwardCacheNotRestoredExplanation[]} errorList
+ * @return {LH.Artifacts.BFCacheErrors}
+ */
+function constructArtifactFromList(errorList) {
+  /** @type {LH.Artifacts.BFCacheErrors} */
+  const bfCacheErrors = {
+    Circumstantial: {},
+    PageSupportNeeded: {},
+    SupportPending: {},
+  };
+
+  for (const err of errorList) {
+    const bfCacheErrorsMap = bfCacheErrors[err.type];
+    bfCacheErrorsMap[err.reason] = [];
+  }
+
+  return bfCacheErrors;
+}
+
+/**
+ * @param {LH.Crdp.Page.BackForwardCacheNotRestoredExplanationTree} errorTree
+ * @return {LH.Artifacts.BFCacheErrors}
+ */
+function constructArtifactFromTree(errorTree) {
+  /** @type {LH.Artifacts.BFCacheErrors} */
+  const bfCacheErrors = {
+    Circumstantial: {},
+    PageSupportNeeded: {},
+    SupportPending: {},
+  };
+
+  /**
+   * @param {LH.Crdp.Page.BackForwardCacheNotRestoredExplanationTree} node
+   */
+  function traverse(node) {
+    for (const error of node.explanations) {
+      const bfCacheErrorsMap = bfCacheErrors[error.type];
+      const frameUrls = bfCacheErrorsMap[error.reason] || [];
+      frameUrls.push(node.url);
+      bfCacheErrorsMap[error.reason] = frameUrls;
+    }
+
+    for (const child of node.children) {
+      traverse(child);
+    }
+  }
+
+  traverse(errorTree);
+
+  return bfCacheErrors;
+}
+
+
 class BFCacheErrors extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
   meta = {
@@ -20,8 +74,8 @@ class BFCacheErrors extends FRGatherer {
   async getArtifact(context) {
     const session = context.driver.defaultSession;
 
-    /** @type {LH.Crdp.Page.BackForwardCacheNotRestoredExplanation[]|undefined} */
-    let errors = undefined;
+    /** @type {LH.Crdp.Page.BackForwardCacheNotRestoredExplanation[]} */
+    let list = [];
     /** @type {LH.Crdp.Page.BackForwardCacheNotRestoredExplanationTree|undefined} */
     let tree = undefined;
 
@@ -29,7 +83,7 @@ class BFCacheErrors extends FRGatherer {
      * @param {LH.Crdp.Page.BackForwardCacheNotUsedEvent} event
      */
     function onBfCacheNotUsed(event) {
-      errors = event.notRestoredExplanations;
+      list = event.notRestoredExplanations;
       tree = event.notRestoredExplanationsTree;
     }
 
@@ -50,7 +104,10 @@ class BFCacheErrors extends FRGatherer {
 
     session.off('Page.backForwardCacheNotUsed', onBfCacheNotUsed);
 
-    return {list: errors, tree};
+    if (tree) {
+      return constructArtifactFromTree(tree);
+    }
+    return constructArtifactFromList(list);
   }
 }
 

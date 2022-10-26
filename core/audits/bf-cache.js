@@ -51,15 +51,6 @@ class BFCache extends Audit {
   }
 
   /**
-   * We only want to surface errors that are actionable (i.e. have type "PageSupportNeeded")
-   *
-   * @param {LH.Crdp.Page.BackForwardCacheNotRestoredExplanation} err
-   */
-  static shouldIgnoreError(err) {
-    return err.type !== 'PageSupportNeeded';
-  }
-
-  /**
    * @param {LH.Crdp.Page.BackForwardCacheNotRestoredReason} reason
    */
   static getDescriptionForReason(reason) {
@@ -73,52 +64,22 @@ class BFCache extends Audit {
   }
 
   /**
-   * @param {LH.Crdp.Page.BackForwardCacheNotRestoredExplanation[]} errorList
-   * @return {LH.Audit.Details.TableItem[]}
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<LH.Audit.Product>}
+   *
    */
-  static constructResultsFromList(errorList) {
-    const results = [];
-
-    for (const err of errorList) {
-      if (this.shouldIgnoreError(err)) continue;
-      results.push({
-        reason: this.getDescriptionForReason(err.reason),
-      });
-    }
-
-    return results;
-  }
-
-  /**
-   * @param {LH.Crdp.Page.BackForwardCacheNotRestoredExplanationTree} errorTree
-   * @return {LH.Audit.Details.TableItem[]}
-   */
-  static constructResultsFromTree(errorTree) {
-    /** @type {Map<LH.Crdp.Page.BackForwardCacheNotRestoredReason, string[]>} */
-    const frameUrlsByFailureReason = new Map();
-
-    /**
-     * @param {LH.Crdp.Page.BackForwardCacheNotRestoredExplanationTree} node
-     */
-    function traverse(node) {
-      for (const error of node.explanations) {
-        if (BFCache.shouldIgnoreError(error)) continue;
-
-        const frameUrls = frameUrlsByFailureReason.get(error.reason) || [];
-        frameUrls.push(node.url);
-        frameUrlsByFailureReason.set(error.reason, frameUrls);
-      }
-
-      for (const child of node.children) {
-        traverse(child);
-      }
-    }
-
-    traverse(errorTree);
-
+  static async audit(artifacts) {
     /** @type {LH.Audit.Details.TableItem[]} */
     const results = [];
-    for (const [reason, frameUrls] of frameUrlsByFailureReason.entries()) {
+
+    const actionableErrors = artifacts.BFCacheErrors.PageSupportNeeded;
+
+    // https://github.com/Microsoft/TypeScript/issues/12870
+    const reasons = /** @type {LH.Crdp.Page.BackForwardCacheNotRestoredReason[]} */
+      (Object.keys(actionableErrors));
+
+    for (const reason of reasons) {
+      const frameUrls = actionableErrors[reason] || [];
       results.push({
         reason: this.getDescriptionForReason(reason),
         subItems: {
@@ -126,27 +87,6 @@ class BFCache extends Audit {
           items: frameUrls.map(frameUrl => ({frameUrl})),
         },
       });
-    }
-    return results;
-  }
-
-  /**
-   * @param {LH.Artifacts} artifacts
-   * @return {Promise<LH.Audit.Product>}
-   *
-   */
-  static async audit(artifacts) {
-    const {list, tree} = artifacts.BFCacheErrors;
-
-    // The BF cache failure tree cans sometimes be undefined.
-    // In this case we can still construct the results from the list result.
-    // https://bugs.chromium.org/p/chromium/issues/detail?id=1281855
-    /** @type {LH.Audit.Details.TableItem[]} */
-    let results = [];
-    if (tree) {
-      results = BFCache.constructResultsFromTree(tree);
-    } else if (list) {
-      results = BFCache.constructResultsFromList(list);
     }
 
     /** @type {LH.Audit.Details.Table['headings']} */

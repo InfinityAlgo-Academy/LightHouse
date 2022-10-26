@@ -411,10 +411,11 @@ declare module Artifacts {
     }>
   }
 
-  interface BFCacheErrors {
-    list?: LH.Crdp.Page.BackForwardCacheNotRestoredExplanation[];
-    tree?: LH.Crdp.Page.BackForwardCacheNotRestoredExplanationTree;
-  }
+  type BFCacheErrorMap = {
+    [key in LH.Crdp.Page.BackForwardCacheNotRestoredReason]?: string[];
+  };
+
+  type BFCacheErrors = Record<LH.Crdp.Page.BackForwardCacheNotRestoredReasonType, BFCacheErrorMap>;
 
   interface Font {
     display: string;
