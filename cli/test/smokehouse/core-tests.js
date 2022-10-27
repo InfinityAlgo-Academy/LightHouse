@@ -44,7 +44,7 @@ import perfPreload from './test-definitions/perf-preload.js';
 import perfTraceElements from './test-definitions/perf-trace-elements.js';
 import pubads from './test-definitions/pubads.js';
 import pwaAirhorner from './test-definitions/pwa-airhorner.js';
-import pwaCaltrain from './test-definitions/pwa-caltrain.js';
+// import pwaCaltrain from './test-definitions/pwa-caltrain.js';
 import pwaChromestatus from './test-definitions/pwa-chromestatus.js';
 import pwaRocks from './test-definitions/pwa-rocks.js';
 import pwaSvgomg from './test-definitions/pwa-svgomg.js';
@@ -108,7 +108,8 @@ const smokeTests = [
   pwaAirhorner,
   pwaChromestatus,
   pwaSvgomg,
-  pwaCaltrain,
+  // TODO: Reenable if/when this site becomes a valid PWA again.
+  // pwaCaltrain,
   pwaRocks,
   redirectsClientPaintServer,
   redirectsHistoryPushState,
