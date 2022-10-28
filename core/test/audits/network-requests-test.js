@@ -68,11 +68,11 @@ describe('Network requests audit', () => {
 
   it('should handle times correctly', async () => {
     const records = [
-      // Note: should use mainThreadEndTime but that is currently a "dummy" value equivalent
+      // Note: should use rendererEndTime but that is currently a "dummy" value equivalent
       // to networkEndTime, and our networkRecordsToDevtoolsLog has no ability to roundtrip
       // that.
-      {url: 'https://example.com/0', mainThreadStartTime: 15_000, networkEndTime: 15_500},
-      {url: 'https://example.com/1', mainThreadStartTime: 15_500, networkEndTime: -1},
+      {url: 'https://example.com/0', rendererStartTime: 15_000, networkEndTime: 15_500},
+      {url: 'https://example.com/1', rendererStartTime: 15_500, networkEndTime: -1},
     ];
 
     const artifacts = {

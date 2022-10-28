@@ -188,7 +188,7 @@ class NetworkAnalyzer {
    * headers of the response (~TTFB).
    * NOTE: this is the most inaccurate way to estimate the RTT, but in some environments it's all
    * we have access to :(
-   * TODO: could this use record.responseHeadersReceivedTime?
+   * TODO: could this use record.responseHeadersEndTime?
    *
    * @param {LH.Artifacts.NetworkRequest[]} records
    * @return {Map<string, number[]>}
@@ -401,7 +401,7 @@ class NetworkAnalyzer {
 
       // If we've made it this far, all the times we need should be valid (i.e. not undefined/-1).
       totalBytes += record.transferSize;
-      boundaries.push({time: record.responseHeadersReceivedTime / 1000, isStart: true});
+      boundaries.push({time: record.responseHeadersEndTime / 1000, isStart: true});
       boundaries.push({time: record.networkEndTime / 1000, isStart: false});
       return boundaries;
     }, /** @type {Array<{time: number, isStart: boolean}>} */([])).sort((a, b) => a.time - b.time);

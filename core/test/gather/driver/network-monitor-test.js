@@ -195,9 +195,9 @@ describe('NetworkMonitor', () => {
 
       // One server redirect followed by a client redirect
       const devtoolsLog = networkRecordsToDevtoolsLog([
-        {requestId: '1', mainThreadStartTime: 100, url: 'https://example.com', priority: 'VeryHigh'},
-        {requestId: '1:redirect', mainThreadStartTime: 200, url: 'https://intermediate.example.com', priority: 'VeryHigh'},
-        {requestId: '2', mainThreadStartTime: 300, url: 'https://page.example.com', priority: 'VeryHigh'},
+        {requestId: '1', rendererStartTime: 100, url: 'https://example.com', priority: 'VeryHigh'},
+        {requestId: '1:redirect', rendererStartTime: 200, url: 'https://intermediate.example.com', priority: 'VeryHigh'},
+        {requestId: '2', rendererStartTime: 300, url: 'https://page.example.com', priority: 'VeryHigh'},
       ]);
       for (const event of devtoolsLog) {
         rootDispatch(event);

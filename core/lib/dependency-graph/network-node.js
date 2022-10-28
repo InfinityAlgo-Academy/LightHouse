@@ -25,7 +25,7 @@ class NetworkNode extends BaseNode {
    * @return {number}
    */
   get startTime() {
-    // TODO change to mainThreadStartTime
+    // TODO change to rendererStartTime
     return this._record.networkRequestTime * 1000;
   }
 

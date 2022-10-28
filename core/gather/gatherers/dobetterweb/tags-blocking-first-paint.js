@@ -180,7 +180,7 @@ class TagsBlockingFirstPaint extends FRGatherer {
         if (timesResourceBecameNonBlocking.length > 0) {
           const earliestNonBlockingTime = Math.min(...timesResourceBecameNonBlocking);
           const lastTimeResourceWasBlocking = Math.max(
-            request.mainThreadStartTime,
+            request.rendererStartTime,
             firstRequestEndTime + earliestNonBlockingTime
           );
           endTime = Math.min(endTime, lastTimeResourceWasBlocking);
@@ -194,7 +194,7 @@ class TagsBlockingFirstPaint extends FRGatherer {
       result.push({
         tag: {tagName, url, mediaChanges},
         transferSize: request.transferSize,
-        mainThreadStartTime: request.mainThreadStartTime,
+        rendererStartTime: request.rendererStartTime,
         networkEndTime: endTime,
       });
 

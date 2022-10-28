@@ -277,12 +277,12 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   describe('#estimateThroughput', () => {
     const estimateThroughput = NetworkAnalyzer.estimateThroughput;
 
-    function createThroughputRecord(responseHeadersReceivedTime, networkEndTime, extras) {
-      responseHeadersReceivedTime *= 1000;
+    function createThroughputRecord(responseHeadersEndTime, networkEndTime, extras) {
+      responseHeadersEndTime *= 1000;
       networkEndTime *= 1000;
       return Object.assign(
         {
-          responseHeadersReceivedTime,
+          responseHeadersEndTime,
           networkEndTime,
           transferSize: 1000,
           finished: true,

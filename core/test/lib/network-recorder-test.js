@@ -157,12 +157,12 @@ describe('network recorder', function() {
   });
 
   it('should ignore invalid `timing` data', () => {
-    const inputRecords = [{url: 'http://example.com', mainThreadStartTime: 1, networkEndTime: 2}];
+    const inputRecords = [{url: 'http://example.com', rendererStartTime: 1, networkEndTime: 2}];
     const devtoolsLogs = networkRecordsToDevtoolsLog(inputRecords);
     const responseReceived = devtoolsLogs.find(item => item.method === 'Network.responseReceived');
     responseReceived.params.response.timing = {requestTime: 0, receiveHeadersEnd: -1};
     const records = NetworkRecorder.recordsFromLogs(devtoolsLogs);
-    expect(records).toMatchObject([{url: 'http://example.com', mainThreadStartTime: 1, networkEndTime: 2}]);
+    expect(records).toMatchObject([{url: 'http://example.com', rendererStartTime: 1, networkEndTime: 2}]);
   });
 
   it('should use X-TotalFetchedSize in Lightrider for transferSize', () => {
@@ -218,7 +218,8 @@ describe('network recorder', function() {
 
     const [mainDocument, loaderPrefetch, _ /* favicon */, loaderScript, implScript] = records;
     expect(mainDocument.initiatorRequest).toBe(undefined);
-    expect(loaderPrefetch.mainThreadStartTime < loaderScript.mainThreadStartTime).toBe(true);
+    expect(loaderPrefetch.networkRequestTime < loaderScript.networkRequestTime).toBe(true);
+    expect(loaderPrefetch.rendererStartTime < loaderScript.rendererStartTime).toBe(true);
     expect(loaderPrefetch.resourceType).toBe('Other');
     expect(loaderPrefetch.initiatorRequest).toBe(mainDocument);
     expect(loaderScript.resourceType).toBe('Script');
@@ -607,7 +608,7 @@ describe('network recorder', function() {
     expect(initiator1.initiatorRequest).toBe(undefined);
     expect(initiator2.frameId).toBe('2');
     expect(initiator2.initiatorRequest).toBe(undefined);
-    expect(initiator2.mainThreadStartTime).toBeGreaterThan(initiated.mainThreadStartTime);
+    expect(initiator2.rendererStartTime).toBeGreaterThan(initiated.rendererStartTime);
     expect(initiated.initiatorRequest).toBe(initiator1);
   });
 

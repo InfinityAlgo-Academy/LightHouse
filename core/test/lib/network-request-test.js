@@ -114,7 +114,7 @@ describe('NetworkRequest', () => {
         // units = ms
         networkRequestTime: 0,
         networkEndTime: 2000,
-        responseHeadersReceivedTime: 1000,
+        responseHeadersEndTime: 1000,
 
         // units = ms
         responseHeaders: [
@@ -136,7 +136,7 @@ describe('NetworkRequest', () => {
 
       expect(record.networkRequestTime).toStrictEqual(0);
       expect(record.networkEndTime).toStrictEqual(2000);
-      expect(record.responseHeadersReceivedTime).toStrictEqual(1000);
+      expect(record.responseHeadersEndTime).toStrictEqual(1000);
       expect(record.lrStatistics).toStrictEqual({
         endTimeDeltaMs: -8000,
         TCPMs: 5000,

@@ -32,7 +32,7 @@ class NetworkRequests extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const records = await NetworkRecords.request(devtoolsLog, context);
     const earliestMainThreadStartTime = records.reduce(
-      (min, record) => Math.min(min, record.mainThreadStartTime),
+      (min, record) => Math.min(min, record.rendererStartTime),
       Infinity
     );
 
@@ -64,8 +64,10 @@ class NetworkRequests extends Audit {
       return {
         url: UrlUtils.elideDataURI(record.url),
         protocol: record.protocol,
-        startTime: normalizeTime(record.mainThreadStartTime),
-        endTime: normalizeTime(record.mainThreadEndTime),
+        rendererEndTime: normalizeTime(record.rendererEndTime),
+        networkEndTime: normalizeTime(record.networkEndTime),
+        networkRequestTime: normalizeTime(record.networkRequestTime),
+        rendererStartTime: normalizeTime(record.rendererStartTime),
         finished: record.finished,
         transferSize: record.transferSize,
         resourceSize: record.resourceSize,

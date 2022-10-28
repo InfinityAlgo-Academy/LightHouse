@@ -62,7 +62,7 @@ function getRequestWillBeSentEvent(networkRecord, index) {
         isLinkPreload: networkRecord.isLinkPreload,
       },
       timestamp:
-        networkRecord.redirectResponseTimestamp || networkRecord.mainThreadStartTime / 1000 || 0,
+        networkRecord.redirectResponseTimestamp ?? networkRecord.rendererStartTime / 1000 ?? 0,
       wallTime: 0,
       initiator,
       type: networkRecord.resourceType || 'Document',
@@ -103,7 +103,7 @@ function getResponseReceivedEvent(networkRecord, index) {
     method: 'Network.responseReceived',
     params: {
       requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
-      timestamp: networkRecord.responseHeadersReceivedTime / 1000 || 1,
+      timestamp: networkRecord.responseHeadersEndTime / 1000 || 1,
       type: networkRecord.resourceType || undefined,
       response: {
         url: networkRecord.url || exampleUrl,

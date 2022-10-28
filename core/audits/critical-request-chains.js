@@ -65,7 +65,7 @@ class CriticalRequestChains extends Audit {
       children.forEach(id => {
         const child = tree[id];
         if (!startTime) {
-          startTime = child.request.mainThreadStartTime;
+          startTime = child.request.rendererStartTime;
         }
 
         // Call the callback with the info for this child.
@@ -167,9 +167,9 @@ class CriticalRequestChains extends Audit {
       const request = opts.node.request;
       const simpleRequest = {
         url: request.url,
-        startTime: request.mainThreadStartTime,
-        endTime: request.mainThreadEndTime,
-        responseReceivedTime: request.responseHeadersReceivedTime,
+        startTime: request.rendererStartTime,
+        endTime: request.rendererEndTime,
+        responseReceivedTime: request.responseHeadersEndTime,
         transferSize: request.transferSize,
       };
 

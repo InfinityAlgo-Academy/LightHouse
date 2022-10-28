@@ -172,7 +172,7 @@ class UsesRelPreconnectAudit extends Audit {
     origins.forEach(records => {
       // We just need a single record, let's grab the earliest there is.
       const firstRecordOfOrigin = records.reduce((firstRecord, record) =>
-        record.mainThreadStartTime < firstRecord.mainThreadStartTime ? record : firstRecord
+        record.rendererStartTime < firstRecord.rendererStartTime ? record : firstRecord
       );
 
       // Skip the origin if we don't have timing information

@@ -48,17 +48,17 @@ describe('Performance: Font Display audit', () => {
     networkRecords = [
       {
         url: 'https://example.com/foo/bar/font-a.woff',
-        networkEndTime: 3_000, mainThreadStartTime: 1_000,
+        networkEndTime: 3_000, rendererStartTime: 1_000,
         resourceType: 'Font',
       },
       {
         url: 'https://example.com/foo/font-b.woff',
-        networkEndTime: 5_000, mainThreadStartTime: 1_000,
+        networkEndTime: 5_000, rendererStartTime: 1_000,
         resourceType: 'Font',
       },
       {
         url: 'https://example.com/foo/bar/font.woff',
-        networkEndTime: 2_000, mainThreadStartTime: 1_000,
+        networkEndTime: 2_000, rendererStartTime: 1_000,
         resourceType: 'Font',
       },
     ];
@@ -105,22 +105,22 @@ describe('Performance: Font Display audit', () => {
     networkRecords = [
       {
         url: 'https://example.com/foo/bar/document-font.woff',
-        networkEndTime: 3_000, mainThreadStartTime: 1_000,
+        networkEndTime: 3_000, rendererStartTime: 1_000,
         resourceType: 'Font',
       },
       {
         url: 'https://cdn.example.com/foo/bar/font-a.woff',
-        networkEndTime: 3_000, mainThreadStartTime: 1_000,
+        networkEndTime: 3_000, rendererStartTime: 1_000,
         resourceType: 'Font',
       },
       {
         url: 'https://cdn.example.com/foo/font-b.woff',
-        networkEndTime: 5_000, mainThreadStartTime: 1_000,
+        networkEndTime: 5_000, rendererStartTime: 1_000,
         resourceType: 'Font',
       },
       {
         url: 'https://cdn.example.com/foo/bar/font.woff',
-        networkEndTime: 2_000, mainThreadStartTime: 1_000,
+        networkEndTime: 2_000, rendererStartTime: 1_000,
         resourceType: 'Font',
       },
     ];
@@ -157,22 +157,22 @@ describe('Performance: Font Display audit', () => {
     networkRecords = [
       {
         url: 'https://example.com/foo/bar/font-a.woff',
-        networkEndTime: 3_000, mainThreadStartTime: 1_000,
+        networkEndTime: 3_000, rendererStartTime: 1_000,
         resourceType: 'Font',
       },
       {
         url: 'https://example.com/foo/font-b.woff',
-        networkEndTime: 5_000, mainThreadStartTime: 1_000,
+        networkEndTime: 5_000, rendererStartTime: 1_000,
         resourceType: 'Font',
       },
       {
         url: 'https://example.com/foo/bar/font.woff',
-        networkEndTime: 2_000, mainThreadStartTime: 1_000,
+        networkEndTime: 2_000, rendererStartTime: 1_000,
         resourceType: 'Font',
       },
       {
         url: 'data:application/font-woff',
-        networkEndTime: 7_000, mainThreadStartTime: 1_000,
+        networkEndTime: 7_000, rendererStartTime: 1_000,
         resourceType: 'Font',
       },
     ];
@@ -198,22 +198,22 @@ describe('Performance: Font Display audit', () => {
     networkRecords = [
       {
         url: 'https://edition.i.cdn.cnn.com/.a/fonts/cnn/3.7.2/cnnclock-black.woff2',
-        mainThreadStartTime: 1_000, networkEndTime: 5_000,
+        rendererStartTime: 1_000, networkEndTime: 5_000,
         resourceType: 'Font',
       },
       {
         url: 'https://registry.api.cnn.io/assets/fave/fonts/2.0.15/cnnsans-bold.woff',
-        mainThreadStartTime: 1_000, networkEndTime: 5_000,
+        rendererStartTime: 1_000, networkEndTime: 5_000,
         resourceType: 'Font',
       },
       {
         url: 'https://example.com/foo/fonts/fontawesome-webfont.woff2?v=4.6.1',
-        mainThreadStartTime: 1_000, networkEndTime: 5_000,
+        rendererStartTime: 1_000, networkEndTime: 5_000,
         resourceType: 'Font',
       },
       {
         url: 'https://fonts.gstatic.com/s/lato/v14/S6u9w4BMUTPHh50XSwiPGQ3q5d0.woff2',
-        mainThreadStartTime: 1_000, networkEndTime: 5_000,
+        rendererStartTime: 1_000, networkEndTime: 5_000,
         resourceType: 'Font',
       },
     ];
@@ -253,7 +253,7 @@ describe('Performance: Font Display audit', () => {
 
     networkRecords = Array.from({length: 5}).map((_, idx) => ({
       url: `https://example.com/foo/bar/font-${idx}.woff`,
-      networkEndTime: 2_000, mainThreadStartTime: 1_000,
+      networkEndTime: 2_000, rendererStartTime: 1_000,
       resourceType: 'Font',
     }));
 
@@ -275,7 +275,7 @@ describe('Performance: Font Display audit', () => {
 
     networkRecords = [{
       url: `https://example.com/foo/bar/font-0.woff`,
-      networkEndTime: 2_000, mainThreadStartTime: 1_000,
+      networkEndTime: 2_000, rendererStartTime: 1_000,
       resourceType: 'Font',
     }];
 
@@ -290,7 +290,7 @@ describe('Performance: Font Display audit', () => {
 
     networkRecords = [{
       url: `https://example.com/foo/bar/font-0.woff`,
-      networkEndTime: 2_000, mainThreadStartTime: 1_000,
+      networkEndTime: 2_000, rendererStartTime: 1_000,
       resourceType: 'Font',
     }];
 
@@ -305,11 +305,11 @@ describe('Performance: Font Display audit', () => {
   it('should handle mixed content', async () => {
     networkRecords = [{
       url: `https://example.com/foo/bar/font-0.woff`,
-      networkEndTime: 2_000, mainThreadStartTime: 1_000,
+      networkEndTime: 2_000, rendererStartTime: 1_000,
       resourceType: 'Font',
     }, {
       url: `https://example.com/foo/bar/font-1.woff`,
-      networkEndTime: 2_000, mainThreadStartTime: 1_000,
+      networkEndTime: 2_000, rendererStartTime: 1_000,
       resourceType: 'Font',
     }];
 
@@ -342,19 +342,19 @@ describe('Performance: Font Display audit', () => {
 
     networkRecords = [{
       url: 'https://example.com/foo/bar/font-a.woff',
-      networkEndTime: 3_000, mainThreadStartTime: 1_000,
+      networkEndTime: 3_000, rendererStartTime: 1_000,
       resourceType: 'Font',
     }, {
       url: 'https://example.com/foo/font-b.woff',
-      networkEndTime: 5_000, mainThreadStartTime: 1_000,
+      networkEndTime: 5_000, rendererStartTime: 1_000,
       resourceType: 'Font',
     }, {
       url: 'https://example.com/foo/bar/font.woff',
-      networkEndTime: 2_000, mainThreadStartTime: 1_000,
+      networkEndTime: 2_000, rendererStartTime: 1_000,
       resourceType: 'Font',
     }, {
       url: 'https://fonts.gstatic.com/s/would-you-look-at-this-font.woff2',
-      networkEndTime: 7_000, mainThreadStartTime: 1_000,
+      networkEndTime: 7_000, rendererStartTime: 1_000,
       resourceType: 'Font',
     }];
 

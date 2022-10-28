@@ -126,7 +126,7 @@ function getPageLoadError(navigationError, context) {
     );
     if (documentRequests.length) {
       mainRecord = documentRequests
-        .reduce((min, r) => r.mainThreadStartTime < min.mainThreadStartTime ? r : min);
+        .reduce((min, r) => r.rendererStartTime < min.rendererStartTime ? r : min);
     }
   }
 

@@ -124,25 +124,25 @@ class NetworkRequest {
     this.parsedURL = /** @type {ParsedURL} */ ({scheme: ''});
     this.documentURL = '';
 
-    /** ms. When the main thread initially discovers a network request. */
-    this.mainThreadStartTime = -1;
+    /** When the renderer process initially discovers a network request, in milliseconds. */
+    this.rendererStartTime = -1;
     /**
-     * ms. When the network service is about to handle a request, ie. just before going to the
-     * HTTP cache or going to the network for DNS/connection setup.
+     * When the network service is about to handle a request, ie. just before going to the
+     * HTTP cache or going to the network for DNS/connection setup, in milliseconds.
      */
     this.networkRequestTime = -1;
-    /** ms. When the first byte of the response headers is received. */
-    this.responseHeadersReceivedTime = -1;
-    /** ms. When the last byte of the response body is received. */
+    /** When the last byte of the response headers is received, in milliseconds. */
+    this.responseHeadersEndTime = -1;
+    /** When the last byte of the response body is received, in milliseconds. */
     this.networkEndTime = -1;
     /**
-     * ms. Network response is done, this marks the time when the main thread is first available
-     * to actualy utilize the network resource.
+     * Network response is done, this marks the time when the main thread is first available
+     * to actually utilize the network resource, in milliseconds.
      *
      * TODO: we don't have this on the CDP, but it exists in trace as ResourceFinish.ts
      * So currently this is equivalent to networkEndTime.
      */
-    this.mainThreadEndTime = -1;
+    this.rendererEndTime = -1;
 
     // Go read the comment on _updateTransferSizeForLightrider.
     this.transferSize = 0;
@@ -231,9 +231,9 @@ class NetworkRequest {
     };
     this.isSecure = UrlUtils.isSecureScheme(this.parsedURL.scheme);
 
-    this.mainThreadStartTime = data.timestamp * 1000;
+    this.rendererStartTime = data.timestamp * 1000;
     // Expected to be overriden with better value in `_recomputeTimesWithResourceTiming`.
-    this.networkRequestTime = this.mainThreadStartTime;
+    this.networkRequestTime = this.rendererStartTime;
 
     this.requestMethod = data.request.method;
 
@@ -278,7 +278,7 @@ class NetworkRequest {
 
     this.finished = true;
     this.networkEndTime = data.timestamp * 1000;
-    this.mainThreadEndTime = this.networkEndTime;
+    this.rendererEndTime = this.networkEndTime;
     if (data.encodedDataLength >= 0) {
       this.transferSize = data.encodedDataLength;
     }
@@ -297,7 +297,7 @@ class NetworkRequest {
 
     this.finished = true;
     this.networkEndTime = data.timestamp * 1000;
-    this.mainThreadEndTime = this.networkEndTime;
+    this.rendererEndTime = this.networkEndTime;
 
     this.failed = true;
     this.resourceType = data.type && RESOURCE_TYPES[data.type];
@@ -324,7 +324,7 @@ class NetworkRequest {
     this.resourceType = undefined;
     this.finished = true;
     this.networkEndTime = data.timestamp * 1000;
-    this.mainThreadEndTime = this.networkEndTime;
+    this.rendererEndTime = this.networkEndTime;
 
     this._updateResponseReceivedTimeIfNecessary();
   }
@@ -349,7 +349,7 @@ class NetworkRequest {
 
     if (response.protocol) this.protocol = response.protocol;
 
-    this.responseHeadersReceivedTime = ms;
+    this.responseHeadersEndTime = ms;
 
     this.transferSize = response.encodedDataLength;
     if (typeof response.fromDiskCache === 'boolean') this.fromDiskCache = response.fromDiskCache;
@@ -384,27 +384,27 @@ class NetworkRequest {
     // Timing's requestTime is a baseline in seconds, rest of the numbers there are ticks in millis.
     this.networkRequestTime = timing.requestTime * 1000;
     const headersReceivedTime = this.networkRequestTime + timing.receiveHeadersEnd;
-    if (!this.responseHeadersReceivedTime || this.responseHeadersReceivedTime < 0) {
-      this.responseHeadersReceivedTime = headersReceivedTime;
+    if (!this.responseHeadersEndTime || this.responseHeadersEndTime < 0) {
+      this.responseHeadersEndTime = headersReceivedTime;
     }
 
-    this.responseHeadersReceivedTime =
-      Math.min(this.responseHeadersReceivedTime, headersReceivedTime);
-    this.responseHeadersReceivedTime =
-      Math.max(this.responseHeadersReceivedTime, this.networkRequestTime);
+    this.responseHeadersEndTime =
+      Math.min(this.responseHeadersEndTime, headersReceivedTime);
+    this.responseHeadersEndTime =
+      Math.max(this.responseHeadersEndTime, this.networkRequestTime);
     // We're only at responseReceived (_onResponse) at this point.
     // This endTime may be redefined again after onLoading is done.
-    this.networkEndTime = Math.max(this.networkEndTime, this.responseHeadersReceivedTime);
-    this.mainThreadEndTime = this.networkEndTime;
+    this.networkEndTime = Math.max(this.networkEndTime, this.responseHeadersEndTime);
+    this.rendererEndTime = this.networkEndTime;
   }
 
   /**
-   * Update responseHeadersReceivedTime to the networkEndTime if networkEndTime is earlier.
+   * Update responseHeadersEndTime to the networkEndTime if networkEndTime is earlier.
    * A response can't be received after the entire request finished.
    */
   _updateResponseReceivedTimeIfNecessary() {
-    this.responseHeadersReceivedTime =
-      Math.min(this.networkEndTime, this.responseHeadersReceivedTime);
+    this.responseHeadersEndTime =
+      Math.min(this.networkEndTime, this.responseHeadersEndTime);
   }
 
   /**

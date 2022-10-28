@@ -13,13 +13,13 @@ import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log
 function generateRecord({
   resourceSizeInKb,
   url = 'https://google.com/logo.png',
-  mainThreadStartTime = 0,
+  rendererStartTime = 0,
   mimeType = 'image/png',
 }) {
   return {
     url,
     mimeType,
-    mainThreadStartTime,
+    rendererStartTime,
     resourceSize: resourceSizeInKb * 1024,
     transferSize: resourceSizeInKb * 1024,
   };
@@ -359,7 +359,7 @@ describe('OffscreenImages audit', () => {
 
   it('disregards images loaded after TTI', () => {
     const topLevelTasks = [{ts: 1900, duration: 100}];
-    const networkRecord = generateRecord({resourceSizeInKb: 100, mainThreadStartTime: 3_000});
+    const networkRecord = generateRecord({resourceSizeInKb: 100, rendererStartTime: 3_000});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       GatherContext: {gatherMode: 'navigation'},
@@ -377,7 +377,7 @@ describe('OffscreenImages audit', () => {
   });
 
   it('disregards images loaded after Trace End when interactive throws error', () => {
-    const networkRecord = generateRecord({resourceSizeInKb: 100, mainThreadStartTime: 3_000});
+    const networkRecord = generateRecord({resourceSizeInKb: 100, rendererStartTime: 3_000});
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
       GatherContext: {gatherMode: 'navigation'},
@@ -420,7 +420,7 @@ describe('OffscreenImages audit', () => {
       resourceSize: wastedSize,
       transferSize: wastedSize,
       requestId: 'a',
-      mainThreadStartTime: 1_000,
+      rendererStartTime: 1_000,
       priority: 'High',
       timing: {receiveHeadersEnd: 1.25},
     };
@@ -429,7 +429,7 @@ describe('OffscreenImages audit', () => {
       resourceSize: wastedSize,
       transferSize: wastedSize,
       requestId: 'b',
-      mainThreadStartTime: 2_250,
+      rendererStartTime: 2_250,
       priority: 'High',
       timing: {receiveHeadersEnd: 2.5},
     };
@@ -481,7 +481,7 @@ describe('OffscreenImages audit', () => {
       resourceSize: wastedSize,
       transferSize: wastedSize,
       requestId: 'a',
-      mainThreadStartTime: 1_000,
+      rendererStartTime: 1_000,
       priority: 'High',
       timing: {receiveHeadersEnd: 1.25},
     };
@@ -490,7 +490,7 @@ describe('OffscreenImages audit', () => {
       resourceSize: wastedSize,
       transferSize: wastedSize,
       requestId: 'b',
-      mainThreadStartTime: 1_250,
+      rendererStartTime: 1_250,
       priority: 'High',
       timing: {receiveHeadersEnd: 1.5},
     };
@@ -542,8 +542,8 @@ describe('OffscreenImages audit', () => {
   it('rethrow error when interactive throws error in Lantern', async () => {
     context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const networkRecords = [
-      generateRecord({url: 'a', resourceSizeInKb: 100, mainThreadStartTime: 3_000}),
-      generateRecord({url: 'b', resourceSizeInKb: 100, mainThreadStartTime: 4_000}),
+      generateRecord({url: 'a', resourceSizeInKb: 100, rendererStartTime: 3_000}),
+      generateRecord({url: 'b', resourceSizeInKb: 100, rendererStartTime: 4_000}),
     ];
     const artifacts = {
       ViewportDimensions: DEFAULT_DIMENSIONS,
@@ -583,7 +583,7 @@ describe('OffscreenImages audit', () => {
       resourceSize: wastedSize,
       transferSize: 0,
       requestId: 'a',
-      mainThreadStartTime: 1_000,
+      rendererStartTime: 1_000,
       priority: 'High',
       timing: {receiveHeadersEnd: 1.25},
     };
