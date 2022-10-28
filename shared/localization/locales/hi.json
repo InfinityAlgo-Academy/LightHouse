@@ -1605,7 +1605,7 @@
     "message": "पेज में मान्य सोर्स मैप हैं"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">`, आपके ऐप्लिकेशन को मोबाइल की स्क्रीन के साइज़ के हिसाब से ऑप्टिमाइज़ करता है. साथ ही, यह [उपयोगकर्ता के इनपुट में, 300 मिलीसेकंड की देरी नहीं होने देता है](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [ज़्यादा जानें](https://web.dev/viewport/)."
+    "message": "`<meta name=\"viewport\">`, आपके ऐप्लिकेशन को मोबाइल की स्क्रीन के साइज़ के हिसाब से ऑप्टिमाइज़ करता है. साथ ही, यह [उपयोगकर्ता के इनपुट में, 300 मिलीसेकंड की देरी नहीं होने देता है](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [ज़्यादा जानें](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "कोई `<meta name=\"viewport\">` टैग नहीं मिला"

@@ -1605,7 +1605,7 @@
     "message": "Siden har gyldige kildekort"
   },
   "core/audits/viewport.js | description": {
-    "message": "En `<meta name=\"viewport\">` optimerer ikke blot din app til mobilskærme, men den forhindrer også [en forsinkelse af brugerinput på 300 millisekunder](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Få flere oplysninger](https://web.dev/viewport/)."
+    "message": "En `<meta name=\"viewport\">` optimerer ikke blot din app til mobilskærme, men den forhindrer også [en forsinkelse af brugerinput på 300 millisekunder](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Få flere oplysninger](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Der blev ikke fundet noget `<meta name=\"viewport\">`-tag"

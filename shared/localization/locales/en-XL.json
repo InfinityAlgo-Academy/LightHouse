@@ -981,7 +981,7 @@
     "message": "ĈĹŜ Ćôńt̂ŕîb́ût́îón̂"
   },
   "core/audits/layout-shift-elements.js | description": {
-    "message": "T̂h́êśê D́ÔḾ êĺêḿêńt̂ś ĉón̂t́r̂íb̂út̂é m̂óŝt́ t̂ó t̂h́ê ĆL̂Ś ôf́ t̂h́ê ṕâǵê."
+    "message": "T̂h́êśê D́ÔḾ êĺêḿêńt̂ś ĉón̂t́r̂íb̂út̂é m̂óŝt́ t̂ó t̂h́ê ĆL̂Ś ôf́ t̂h́ê ṕâǵê. [Ĺêár̂ń ĥóŵ t́ô ím̂ṕr̂óv̂é ĈĹŜ](https://web.dev/optimize-cls/)"
   },
   "core/audits/layout-shift-elements.js | title": {
     "message": "Âv́ôíd̂ ĺâŕĝé l̂áŷóût́ ŝh́îf́t̂ś"
@@ -1503,7 +1503,7 @@
     "message": "P̂áĝé ĥáŝ v́âĺîd́ ŝóûŕĉé m̂áp̂ś"
   },
   "core/audits/viewport.js | description": {
-    "message": "Â `<meta name=\"viewport\">` ńôt́ ôńl̂ý ôṕt̂ím̂íẑéŝ ýôúr̂ áp̂ṕ f̂ór̂ ḿôb́îĺê śĉŕêén̂ śîźêś, b̂út̂ ál̂śô ṕr̂év̂én̂t́ŝ [á 300 m̂íl̂ĺîśêćôńd̂ d́êĺâý t̂ó ûśêŕ îńp̂út̂](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Ĺêár̂ń m̂ór̂é âb́ôút̂ úŝín̂ǵ t̂h́ê v́îéŵṕôŕt̂ ḿêt́â t́âǵ](https://web.dev/viewport/)."
+    "message": "Â `<meta name=\"viewport\">` ńôt́ ôńl̂ý ôṕt̂ím̂íẑéŝ ýôúr̂ áp̂ṕ f̂ór̂ ḿôb́îĺê śĉŕêén̂ śîźêś, b̂út̂ ál̂śô ṕr̂év̂én̂t́ŝ [á 300 m̂íl̂ĺîśêćôńd̂ d́êĺâý t̂ó ûśêŕ îńp̂út̂](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Ĺêár̂ń m̂ór̂é âb́ôút̂ úŝín̂ǵ t̂h́ê v́îéŵṕôŕt̂ ḿêt́â t́âǵ](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "N̂ó `<meta name=\"viewport\">` t̂áĝ f́ôún̂d́"

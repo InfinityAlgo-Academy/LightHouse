@@ -1605,7 +1605,7 @@
     "message": "[Þåĝé ĥåš våļîð šöûŕçé måþš one two three four five six]"
   },
   "core/audits/viewport.js | description": {
-    "message": "[Å ᐅ`<meta name=\"viewport\">`ᐊ ñöţ öñļý öþţîmîžéš ýöûŕ åþþ ƒöŕ möбîļé šçŕééñ šîžéš, бûţ åļšö þŕévéñţš ᐅ[ᐊå 300 mîļļîšéçöñð ðéļåý ţö ûšéŕ îñþûţᐅ](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away)ᐊ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/viewport/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone]"
+    "message": "[Å ᐅ`<meta name=\"viewport\">`ᐊ ñöţ öñļý öþţîmîžéš ýöûŕ åþþ ƒöŕ möбîļé šçŕééñ šîžéš, бûţ åļšö þŕévéñţš ᐅ[ᐊå 300 mîļļîšéçöñð ðéļåý ţö ûšéŕ îñþûţᐅ](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)ᐊ. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/viewport/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone]"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "[Ñö ᐅ`<meta name=\"viewport\">`ᐊ ţåĝ ƒöûñð one two three four]"

@@ -1605,7 +1605,7 @@
     "message": "หน้าเว็บมีแผนที่แหล่งที่มาถูกต้อง"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` ไม่เพียงเพิ่มประสิทธิภาพแอปสำหรับขนาดหน้าจออุปกรณ์เคลื่อนที่เท่านั้น แต่ยังป้องกัน[ไม่ให้เกิดความล่าช้าต่อข้อมูลจากผู้ใช้เป็นเวลา 300 มิลลิวินาที](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away)ด้วย [ดูข้อมูลเพิ่มเติม](https://web.dev/viewport/)"
+    "message": "`<meta name=\"viewport\">` ไม่เพียงเพิ่มประสิทธิภาพแอปสำหรับขนาดหน้าจออุปกรณ์เคลื่อนที่เท่านั้น แต่ยังป้องกัน[ไม่ให้เกิดความล่าช้าต่อข้อมูลจากผู้ใช้เป็นเวลา 300 มิลลิวินาที](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)ด้วย [ดูข้อมูลเพิ่มเติม](https://web.dev/viewport/)"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "ไม่พบแท็ก `<meta name=\"viewport\">`"

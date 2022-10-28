@@ -1605,7 +1605,7 @@
     "message": "Page has valid source maps"
   },
   "core/audits/viewport.js | description": {
-    "message": "A `<meta name=\"viewport\">` not only optimises your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Learn more](https://web.dev/viewport/)."
+    "message": "A `<meta name=\"viewport\">` not only optimises your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Learn more](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "No `<meta name=\"viewport\">` tag found"

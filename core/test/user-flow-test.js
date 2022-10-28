@@ -99,6 +99,29 @@ describe('UserFlow', () => {
       ]);
     });
 
+    it('should merge flow flags with step flags', async () => {
+      const flowFlags = {maxWaitForLoad: 500, maxWaitForFcp: 500};
+      const flow = new UserFlow(mockPage.asPage(), {flags: flowFlags});
+      await flow.navigate('https://example.com/1');
+
+      const flags = {maxWaitForLoad: 1000};
+      await flow.navigate('https://example.com/2', flags);
+
+      expect(navigationModule.navigationGather).toHaveBeenCalledTimes(2);
+      /** @type {any[][]} */
+      const [[,, call1], [,, call2]] =
+        navigationModule.navigationGather.mock.calls;
+
+      expect(call1.flags.maxWaitForLoad).toBe(500);
+      expect(call1.flags.maxWaitForFcp).toBe(500);
+      expect(call2.flags.maxWaitForLoad).toBe(1000);
+      expect(call2.flags.maxWaitForFcp).toBe(500);
+
+      // Check that we didn't mutate the original objects.
+      expect(flowFlags).toEqual({maxWaitForLoad: 500, maxWaitForFcp: 500});
+      expect(flags).toEqual({maxWaitForLoad: 1000});
+    });
+
     it('should disable storage reset on subsequent navigations', async () => {
       const flow = new UserFlow(mockPage.asPage());
       await flow.navigate('https://example.com/1');
@@ -114,22 +137,30 @@ describe('UserFlow', () => {
       const flagsExplicit = {disableStorageReset: false};
       await flow.navigate('https://example.com/4', flagsExplicit);
 
+      // Try once when we explicitly set it on the flow.
+      const flowFlagsExplicit = {disableStorageReset: false};
+      const flow2 = new UserFlow(mockPage.asPage(), {flags: flowFlagsExplicit});
+      await flow2.navigate('https://example.com/5');
+
       // Check that we have the property set.
-      expect(navigationModule.navigationGather).toHaveBeenCalledTimes(4);
+      expect(navigationModule.navigationGather).toHaveBeenCalledTimes(5);
       /** @type {any[][]} */
-      const [[,, call1], [,, call2], [,, call3], [,, call4]] =
+      const [[,, call1], [,, call2], [,, call3], [,, call4], [,, call5]] =
         navigationModule.navigationGather.mock.calls;
       expect(call1).not.toHaveProperty('flags.disableStorageReset');
       expect(call2).toHaveProperty('flags.disableStorageReset');
       expect(call3).toHaveProperty('flags.disableStorageReset');
       expect(call4).toHaveProperty('flags.disableStorageReset');
+      expect(call5).toHaveProperty('flags.disableStorageReset');
       expect(call2.flags.disableStorageReset).toBe(true);
       expect(call3.flags.disableStorageReset).toBe(true);
       expect(call4.flags.disableStorageReset).toBe(false);
+      expect(call5.flags.disableStorageReset).toBe(false);
 
       // Check that we didn't mutate the original objects.
       expect(flags).toEqual({maxWaitForLoad: 1000});
       expect(flagsExplicit).toEqual({disableStorageReset: false});
+      expect(flowFlagsExplicit).toEqual({disableStorageReset: false});
     });
 
     it('should disable about:blank jumps by default', async () => {
@@ -144,20 +175,29 @@ describe('UserFlow', () => {
       const flagsExplicit = {skipAboutBlank: false};
       await flow.navigate('https://example.com/3', flagsExplicit);
 
+      // Try once when we explicitly set it on the flow.
+      const flowFlagsExplicit = {skipAboutBlank: false};
+      const flow2 = new UserFlow(mockPage.asPage(), {flags: flowFlagsExplicit});
+      await flow2.navigate('https://example.com/5');
+
       // Check that we have the property set.
-      expect(navigationModule.navigationGather).toHaveBeenCalledTimes(3);
+      expect(navigationModule.navigationGather).toHaveBeenCalledTimes(4);
       /** @type {any[][]} */
-      const [[,, call1], [,, call2], [,, call3]] = navigationModule.navigationGather.mock.calls;
+      const [[,, call1], [,, call2], [,, call3], [,, call4]] =
+        navigationModule.navigationGather.mock.calls;
       expect(call1).toHaveProperty('flags.skipAboutBlank');
       expect(call2).toHaveProperty('flags.skipAboutBlank');
       expect(call3).toHaveProperty('flags.skipAboutBlank');
+      expect(call4).toHaveProperty('flags.skipAboutBlank');
       expect(call1.flags.skipAboutBlank).toBe(true);
       expect(call2.flags.skipAboutBlank).toBe(true);
       expect(call3.flags.skipAboutBlank).toBe(false);
+      expect(call4.flags.skipAboutBlank).toBe(false);
 
       // Check that we didn't mutate the original objects.
       expect(flags).toEqual({maxWaitForLoad: 1000});
       expect(flagsExplicit).toEqual({skipAboutBlank: false});
+      expect(flowFlagsExplicit).toEqual({skipAboutBlank: false});
     });
   });
 
@@ -235,6 +275,31 @@ describe('UserFlow', () => {
         {flags: undefined},
       ]);
     });
+
+    it('should merge flow flags with step flags', async () => {
+      const flowFlags = {maxWaitForLoad: 500, maxWaitForFcp: 500};
+      const flow = new UserFlow(mockPage.asPage(), {flags: flowFlags});
+      await flow.startTimespan();
+      await flow.endTimespan();
+
+      const flags = {maxWaitForLoad: 1000};
+      await flow.startTimespan(flags);
+      await flow.endTimespan();
+
+      expect(timespanModule.startTimespanGather).toHaveBeenCalledTimes(2);
+      /** @type {any[][]} */
+      const [[, call1], [, call2]] =
+        timespanModule.startTimespanGather.mock.calls;
+
+      expect(call1.flags.maxWaitForLoad).toBe(500);
+      expect(call1.flags.maxWaitForFcp).toBe(500);
+      expect(call2.flags.maxWaitForLoad).toBe(1000);
+      expect(call2.flags.maxWaitForFcp).toBe(500);
+
+      // Check that we didn't mutate the original objects.
+      expect(flowFlags).toEqual({maxWaitForLoad: 500, maxWaitForFcp: 500});
+      expect(flags).toEqual({maxWaitForLoad: 1000});
+    });
   });
 
   describe('.endTimespan()', () => {
@@ -262,6 +327,29 @@ describe('UserFlow', () => {
         {flags: {name: 'My Snapshot'}},
         {flags: undefined},
       ]);
+    });
+
+    it('should merge flow flags with step flags', async () => {
+      const flowFlags = {maxWaitForLoad: 500, maxWaitForFcp: 500};
+      const flow = new UserFlow(mockPage.asPage(), {flags: flowFlags});
+      await flow.snapshot();
+
+      const flags = {maxWaitForLoad: 1000};
+      await flow.snapshot(flags);
+
+      expect(snapshotModule.snapshotGather).toHaveBeenCalledTimes(2);
+      /** @type {any[][]} */
+      const [[, call1], [, call2]] =
+        snapshotModule.snapshotGather.mock.calls;
+
+      expect(call1.flags.maxWaitForLoad).toBe(500);
+      expect(call1.flags.maxWaitForFcp).toBe(500);
+      expect(call2.flags.maxWaitForLoad).toBe(1000);
+      expect(call2.flags.maxWaitForFcp).toBe(500);
+
+      // Check that we didn't mutate the original objects.
+      expect(flowFlags).toEqual({maxWaitForLoad: 500, maxWaitForFcp: 500});
+      expect(flags).toEqual({maxWaitForLoad: 1000});
     });
   });
 
