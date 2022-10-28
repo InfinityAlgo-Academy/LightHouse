@@ -27,8 +27,8 @@ describe('Network requests audit', () => {
     const output = await NetworkRequests.audit(artifacts, {computedCache: new Map()});
 
     expect(output.details.items[0]).toMatchObject({
-      startTime: 0,
-      endTime: expect.toBeApproximately(702, 0),
+      rendererStartTime: 0,
+      rendererEndTime: expect.toBeApproximately(702, 0),
       finished: true,
       transferSize: 11358,
       resourceSize: 39471,
@@ -38,8 +38,8 @@ describe('Network requests audit', () => {
       priority: 'VeryHigh',
     });
     expect(output.details.items[2]).toMatchObject({
-      startTime: expect.toBeApproximately(710, 0),
-      endTime: expect.toBeApproximately(1289, 0),
+      rendererStartTime: expect.toBeApproximately(710, 0),
+      rendererEndTime: expect.toBeApproximately(1289, 0),
       finished: false,
       transferSize: 26441,
       resourceSize: 0,
@@ -49,8 +49,8 @@ describe('Network requests audit', () => {
       priority: 'Low',
     });
     expect(output.details.items[5]).toMatchObject({
-      startTime: expect.toBeApproximately(713, 0),
-      endTime: expect.toBeApproximately(1297, 0),
+      rendererStartTime: expect.toBeApproximately(713, 0),
+      rendererEndTime: expect.toBeApproximately(1297, 0),
       finished: false,
       transferSize: 58571,
       resourceSize: 0,
@@ -85,12 +85,12 @@ describe('Network requests audit', () => {
     const output = await NetworkRequests.audit(artifacts, {computedCache: new Map()});
 
     expect(output.details.items).toMatchObject([{
-      startTime: 0,
-      endTime: 500,
+      rendererStartTime: 0,
+      networkEndTime: 500,
       finished: true,
     }, {
-      startTime: 500,
-      endTime: undefined,
+      rendererStartTime: 500,
+      networkEndTime: undefined,
       finished: true,
     }]);
   });

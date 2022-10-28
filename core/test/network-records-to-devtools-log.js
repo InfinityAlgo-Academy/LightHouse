@@ -62,7 +62,7 @@ function getRequestWillBeSentEvent(networkRecord, index) {
         isLinkPreload: networkRecord.isLinkPreload,
       },
       timestamp:
-        networkRecord.redirectResponseTimestamp ?? networkRecord.rendererStartTime / 1000 ?? 0,
+        networkRecord.redirectResponseTimestamp || networkRecord.rendererStartTime / 1000 || 0,
       wallTime: 0,
       initiator,
       type: networkRecord.resourceType || 'Document',
