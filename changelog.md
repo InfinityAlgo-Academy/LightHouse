@@ -1,3 +1,14 @@
+ <a name="9.6.8"></a>
+# 9.6.8 (2022-10-31)
+[Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.6.7...v9.6.8)
+
+We expect this release to ship in the DevTools of [Chrome 109](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
+
+## Core
+
+* deprecations: use translated strings from devtools repo ([#13961](https://github.com/GoogleChrome/lighthouse/pull/13961))
+* network-request: backport rendererStartTime ([#14481](https://github.com/GoogleChrome/lighthouse/pull/14481))
+
 <a name="9.6.7"></a>
 # 9.6.7 (2022-09-01)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.6.6...v9.6.7)
