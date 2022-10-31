@@ -53,6 +53,14 @@ describe('Deprecations audit', () => {
               columnNumber: 100,
             },
           },
+          {
+            type: 'PrefixedVideoDisplayingFullscreen',
+            sourceCodeLocation: {
+              url: URL,
+              lineNumber: 101,
+              columnNumber: 100,
+            },
+          },
         ],
       },
       SourceMaps: [],
@@ -60,8 +68,8 @@ describe('Deprecations audit', () => {
     }, context);
 
     assert.equal(auditResult.score, 0);
-    expect(auditResult.displayValue).toBeDisplayString('3 warnings found');
-    assert.equal(auditResult.details.items.length, 3);
+    expect(auditResult.displayValue).toBeDisplayString('4 warnings found');
+    assert.equal(auditResult.details.items.length, 4);
     assert.equal(auditResult.details.items[0].value, 'Deprecation message 123');
     assert.equal(auditResult.details.items[0].source.url, URL);
     assert.equal(auditResult.details.items[0].source.line, 123);
@@ -77,5 +85,8 @@ describe('Deprecations audit', () => {
       text: expect.toBeDisplayString('This change will go into effect with milestone 109.'),
       url: 'https://chromiumdash.appspot.com/schedule',
     });
+    expect(auditResult.details.items[3].value).toBeDisplayString(
+      // eslint-disable-next-line max-len
+      'HTMLVideoElement.webkitDisplayingFullscreen is deprecated. Please use Document.fullscreenElement instead.');
   });
 });

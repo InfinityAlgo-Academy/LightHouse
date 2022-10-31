@@ -307,13 +307,12 @@ const expectations = {
         },
       },
       'deprecations': {
-        _maxChromiumVersion: '103.0.5017.0', // TODO: deprecation strings need to be translated
         // see https://github.com/GoogleChrome/lighthouse/issues/13895
         score: 0,
         details: {
           items: [
             {
-              value: /'window.webkitStorageInfo' is deprecated/,
+              value: /`window.webkitStorageInfo` is deprecated/,
               source: {
                 type: 'source-location',
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.js',
@@ -324,8 +323,7 @@ const expectations = {
               subItems: undefined,
             },
             {
-              _maxChromiumVersion: '103.0.5017.0',
-              value: /Synchronous XMLHttpRequest on the main thread is deprecated/,
+              value: /Synchronous `XMLHttpRequest` on the main thread is deprecated/,
               source: {
                 type: 'source-location',
                 url: 'http://localhost:10200/dobetterweb/dbw_tester.html',
