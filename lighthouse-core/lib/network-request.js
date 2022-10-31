@@ -83,6 +83,9 @@ class NetworkRequest {
     this.parsedURL = /** @type {ParsedURL} */ ({scheme: ''});
     this.documentURL = '';
 
+    /** When the renderer process initially discovers a network request. */
+    this.rendererStartTime = -1;
+
     this.startTime = -1;
     /** @type {number} */
     this.endTime = -1;
@@ -176,6 +179,7 @@ class NetworkRequest {
     };
     this.isSecure = URL.isSecureScheme(this.parsedURL.scheme);
 
+    this.rendererStartTime = data.timestamp;
     this.startTime = data.timestamp;
 
     this.requestMethod = data.request.method;

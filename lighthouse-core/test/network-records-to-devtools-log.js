@@ -63,7 +63,8 @@ function getRequestWillBeSentEvent(networkRecord, index) {
         initialPriority: networkRecord.priority || 'Low',
         isLinkPreload: networkRecord.isLinkPreload,
       },
-      timestamp: networkRecord.redirectResponseTimestamp || networkRecord.startTime || 0,
+      timestamp: networkRecord.redirectResponseTimestamp || networkRecord.rendererStartTime ||
+          networkRecord.startTime || 0,
       wallTime: 0,
       initiator,
       type: networkRecord.resourceType || 'Document',
