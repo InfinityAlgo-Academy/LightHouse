@@ -145,7 +145,7 @@ class BFCacheErrors extends FRGatherer {
    * @return {Promise<LH.Artifacts.BFCacheErrors>}
    */
   async afterPass(passContext, loadData) {
-    return this.getArtifact({...passContext, dependencies: {DevtoolsLog: loadData.devtoolsLog}})
+    return this.getArtifact({...passContext, dependencies: {DevtoolsLog: loadData.devtoolsLog}});
   }
 }
 
