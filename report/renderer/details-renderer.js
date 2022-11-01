@@ -457,6 +457,7 @@ export class DetailsRenderer {
 
     const tbodyElem = this._dom.createChildOf(tableElem, 'tbody');
     let even = true;
+
     if (details.groups) {
       for (const group of details.groups) {
         const groupItem = this._renderTableRow(group, headings);

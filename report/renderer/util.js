@@ -123,6 +123,10 @@ class Util {
             }
           }
         }
+
+        /** @type {LH.Audit.Details.TableItem} */  // erg this is another type.....
+        const entities = clone.audits['entity-classification']?.details?.entities;
+        Util.buildAuditItemGroups(audit.details, entities);
       }
     }
 
@@ -436,7 +440,44 @@ class Util {
     return hostname.split('.').slice(-splitTld.length).join('.');
   }
 
+  /**
+   * @param {LH.Audit.Details} details
 
+   */
+  static buildAuditItemGroups(details, entities) {
+    if (details.type !== 'opportunity' && details.type !== 'table') return;
+
+    if (details.groups) {
+      details.oldGroups = details.groups;
+      delete details.groups;
+    }
+
+    const groups = new Map();
+    const newGroup = {
+      groupByColumn: 'entity',
+      totalBytes: 0,
+      wastedBytes: 0,
+    };
+
+    for (const item of details.items) {
+      if (!item.entity) continue;
+      const matchedEntity = entities.find(e => e.name = item.entity);
+      if (!matchedEntity) throw new Error('no match!');
+
+      const matchedGroup = groups.get(item.entity) || {...newGroup};
+      matchedGroup.groupByValue = item.entity;
+      matchedGroup.totalBytes += item.totalBytes;
+      matchedGroup.wastedBytes += item.wastedBytes;
+      matchedGroup.wastedPercent = matchedGroup.wastedBytes / matchedGroup.totalBytes * 100;
+      groups.set(item.entity, matchedGroup);
+    }
+
+    details.groups = [...groups.values()];
+
+    if (details.oldGroups?.length) {
+      console.log(details);
+    }
+  }
   /**
    * @param {LH.Result['configSettings']} settings
    * @return {!{deviceEmulation: string, networkThrottling: string, cpuThrottling: string, summary: string}}

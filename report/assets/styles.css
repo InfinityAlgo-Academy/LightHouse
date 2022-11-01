@@ -145,12 +145,14 @@
   --sparkline-height: 5px;
   --stackpack-padding-horizontal: 10px;
   --sticky-header-background-color: var(--report-background-color);
+  --sticky-header-height: calc(var(--gauge-circle-size-sm) + var(--score-container-padding) * 2);
   --table-higlight-background-color: hsla(210, 17%, 77%, 0.1);
   --tools-icon-color: var(--color-gray-600);
   --topbar-background-color: var(--color-white);
   --topbar-height: 32px;
   --topbar-logo-size: 24px;
   --topbar-padding: 0 8px;
+  --topbar-plus-sticky-header: calc(var(--topbar-height) + var(--sticky-header-height));
   --toplevel-warning-background-color: hsla(30, 100%, 75%, 10%);
   --toplevel-warning-message-text-color: var(--color-average-secondary);
   --toplevel-warning-padding: 18px;
@@ -936,6 +938,8 @@
 
 .lh-audit {
   border-bottom: 1px solid var(--report-border-color-secondary);
+
+  scroll-margin-top: calc(var(--topbar-plus-sticky-header) + var(--default-padding) + 5px);
 }
 
 /* Apply border-top to just the first audit. */
@@ -1409,8 +1413,7 @@
   max-width: var(--report-content-max-width);
   margin: 0 auto;
 
-  --sticky-header-height: calc(var(--gauge-circle-size-sm) + var(--score-container-padding) * 2);
-  --topbar-plus-sticky-header: calc(var(--topbar-height) + var(--sticky-header-height));
+  /* Scrolling to category shouldn't have the sticky header overlapping */
   scroll-margin-top: var(--topbar-plus-sticky-header);
 
   /* Faster recalc style & layout of the report. https://web.dev/content-visibility/ */
