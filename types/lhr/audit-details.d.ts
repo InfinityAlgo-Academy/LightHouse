@@ -10,13 +10,14 @@ import Treemap from './treemap';
 type Details =
   Details.CriticalRequestChain |
   Details.DebugData |
-  Details.TreemapData |
+  Details.EntityClassification | 
   Details.Filmstrip |
+  Details.FullPageScreenshot |
   Details.List |
   Details.Opportunity |
   Details.Screenshot |
-  Details.FullPageScreenshot |
-  Details.Table;
+  Details.Table |
+  Details.TreemapData;
 
 // Details namespace.
 declare module Details {
@@ -69,6 +70,7 @@ declare module Details {
     overallSavingsBytes?: number;
     headings: OpportunityColumnHeading[];
     items: OpportunityItem[];
+    groups?: OpportunityGroupItem[];
     debugData?: DebugData;
   }
 
@@ -77,6 +79,23 @@ declare module Details {
     timing: number;
     timestamp: number;
     data: string;
+  }
+
+  /**
+   * Entities (1P and 3P) classified and exposed in LHR.
+   */
+  interface EntityClassificationEntity {
+    name: string;
+    domains: Array<string>;
+    company?: string;
+    isFirstParty?: boolean;
+    isUnrecognized?: boolean;
+  }
+
+  interface EntityClassification {
+    type: 'entity-classification';
+    origins: Record<string, number>;
+    entities: Array<EntityClassificationEntity>;
   }
 
   /**
@@ -113,6 +132,7 @@ declare module Details {
       wastedBytes?: number;
     };
     debugData?: DebugData;
+    groups?: OpportunityGroupItem[];
   }
 
   /** A table item for rows that are nested within a top-level TableItem (row). */
@@ -176,6 +196,10 @@ declare module Details {
     [p: string]: undefined | ItemValue;
   }
 
+  interface TableGroupItem {
+    [p: string]: undefined | ItemValue;
+  }
+
   interface OpportunityColumnHeading {
     /**
      * The name of the property within items being described.
@@ -208,6 +232,17 @@ declare module Details {
     url: string;
     wastedBytes?: number;
     totalBytes?: number;
+    wastedMs?: number;
+    debugData?: DebugData;
+    [p: string]: undefined | ItemValue;
+  }
+
+  interface OpportunityGroupItem extends TableGroupItem {
+    groupByColumn: string;
+    groupByValue: string;
+    wastedBytes?: number;
+    totalBytes?: number;
+    wastedPercent?: number;
     wastedMs?: number;
     debugData?: DebugData;
     [p: string]: undefined | ItemValue;
