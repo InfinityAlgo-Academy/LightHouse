@@ -90,6 +90,8 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       bundleSourceUnusedThreshold = UNUSED_BYTES_IGNORE_BUNDLE_SOURCE_THRESHOLD,
     } = context.options || {};
 
+    /** @type {Map<LH.Artifacts.RecognizableEntity | undefined, LH.Audit.Details.OpportunityGroupItem>} */
+    const byEntity = new Map();
     const items = [];
     for (const [scriptId, scriptCoverage] of Object.entries(artifacts.JsUsage)) {
       const script = artifacts.Scripts.find(s => s.scriptId === scriptId);
@@ -106,18 +108,36 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       const transfer = ByteEfficiencyAudit
         .estimateTransferSize(networkRecord, unusedJsSummary.totalBytes, 'Script');
       const transferRatio = transfer / unusedJsSummary.totalBytes;
+      const classifiedEntity = classifiedEntities.byURL.get(script.url);
       /** @type {LH.Audit.ByteEfficiencyItem} */
       const item = {
         url: script.url,
         totalBytes: Math.round(transferRatio * unusedJsSummary.totalBytes),
         wastedBytes: Math.round(transferRatio * unusedJsSummary.wastedBytes),
         wastedPercent: unusedJsSummary.wastedPercent,
-        entity: classifiedEntities.byURL.get(script.url)?.name,
-        is3p: classifiedEntities.byURL.get(script.url) !== classifiedEntities.firstParty,
+        entity: classifiedEntity?.name,
+        is3p: classifiedEntity !== classifiedEntities.firstParty, // TODO: move to a central audit result.
       };
 
       if (item.wastedBytes <= unusedThreshold) continue;
       items.push(item);
+
+      // Which entity group would this item fall into?
+      const entityGroup = byEntity.get(classifiedEntity) || {
+        url: {
+          text: classifiedEntity?.name || '',
+          type: 'link',
+          url: classifiedEntity?.homepage || '#',
+        },
+        groupByColumn: 'entity',
+        groupByValue: classifiedEntity?.name || '',
+        wastedBytes: 0,
+        totalBytes: 0,
+      };
+      entityGroup.totalBytes = (entityGroup.totalBytes || 0) + item.totalBytes;
+      entityGroup.wastedBytes = (entityGroup.wastedBytes || 0) + item.wastedBytes;
+      entityGroup.wastedPercent = entityGroup.wastedBytes / entityGroup.totalBytes * 100;
+      byEntity.set(classifiedEntity, entityGroup);
 
       // If there was an error calculating the bundle sizes, we can't
       // create any sub-items.
@@ -153,8 +173,12 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       }
     }
 
+    // We group by entities that wasted most number of absolute bytes (and not %).
+    const groups = [...byEntity.values()];
+
     return {
       items,
+      groups,
       headings: [
         /* eslint-disable max-len */
         {key: 'url', valueType: 'url', subItemsHeading: {key: 'source', valueType: 'code'}, label: str_(i18n.UIStrings.columnURL)},

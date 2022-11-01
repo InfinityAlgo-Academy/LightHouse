@@ -73,6 +73,7 @@ class ServerResponseTime extends Audit {
     const details = Audit.makeOpportunityDetails(
       headings,
       [{url: mainResource.url, responseTime}],
+      undefined,
       responseTime - TARGET_MS
     );
 

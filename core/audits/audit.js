@@ -214,17 +214,19 @@ class Audit {
   /**
    * @param {LH.Audit.Details.Opportunity['headings']} headings
    * @param {LH.Audit.Details.Opportunity['items']} items
+  * @param {LH.Audit.Details.Opportunity['groups']} groups
    * @param {number} overallSavingsMs
    * @param {number=} overallSavingsBytes
    * @return {LH.Audit.Details.Opportunity}
    */
-  static makeOpportunityDetails(headings, items, overallSavingsMs, overallSavingsBytes) {
+  static makeOpportunityDetails(headings, items, groups, overallSavingsMs, overallSavingsBytes) {
     Audit.assertHeadingKeysExist(headings, items);
 
     return {
       type: 'opportunity',
       headings: items.length === 0 ? [] : headings,
       items,
+      groups,
       overallSavingsMs,
       overallSavingsBytes,
     };

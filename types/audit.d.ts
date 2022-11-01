@@ -59,8 +59,11 @@ declare module Audit {
     wastedBytes: number;
     totalBytes: number;
     wastedPercent?: number;
-    entity: string;
-    is3p: boolean
+    entity?: string;
+  }
+
+  interface ByteEfficiencyGroupItem extends AuditDetails.OpportunityGroupItem {
+
   }
 
   // TODO: consider making some of the `string | IcuMessage` into just `IcuMessage` to require i18n.

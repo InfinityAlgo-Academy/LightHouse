@@ -141,7 +141,7 @@ class Redirects extends Audit {
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnTimeSpent)},
     ];
-    const details = Audit.makeOpportunityDetails(headings, tableRows, totalWastedMs);
+    const details = Audit.makeOpportunityDetails(headings, tableRows, undefined, totalWastedMs);
 
     return {
       // We award a passing grade if you only have 1 redirect
