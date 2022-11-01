@@ -122,6 +122,8 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       if (item.wastedBytes <= unusedThreshold) continue;
       items.push(item);
 
+
+      // TODO: remove from here.
       // Which entity group would this item fall into?
       const entityGroup = byEntity.get(classifiedEntity) || {
         url: {

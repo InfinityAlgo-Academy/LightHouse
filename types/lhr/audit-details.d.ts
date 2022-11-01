@@ -10,7 +10,7 @@ import Treemap from './treemap';
 type Details =
   Details.CriticalRequestChain |
   Details.DebugData |
-  Details.EntityClassification | 
+  Details.EntityClassification |
   Details.Filmstrip |
   Details.FullPageScreenshot |
   Details.List |
@@ -88,6 +88,7 @@ declare module Details {
     name: string;
     domains: Array<string>;
     company?: string;
+    url?: string;
     isFirstParty?: boolean;
     isUnrecognized?: boolean;
   }

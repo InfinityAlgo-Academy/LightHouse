@@ -44,7 +44,10 @@ class EntityClassification extends Audit {
         name: entity.name,
         company: entity.company,
         domains: entity.domains,
+        url: entity.homepage,
       };
+
+      console.log({shortEntity});
 
       // Reduce payload size in LHR by omitting where falsy.
       if (entity === classifiedEntities.firstParty) shortEntity.isFirstParty = true;

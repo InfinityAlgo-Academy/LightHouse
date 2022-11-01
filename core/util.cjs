@@ -130,7 +130,10 @@ class Util {
 
         /** @type {LH.Audit.Details.TableItem} */  // erg this is another type.....
         const entities = clone.audits['entity-classification']?.details?.entities;
-        Util.buildAuditItemGroups(audit.details, entities);
+        if (audit.id != 'third-party-summary') {
+          console.log({entities});
+          Util.buildAuditItemGroups(audit.details, entities);
+        }
       }
     }
 
@@ -457,19 +460,24 @@ class Util {
     }
 
     const groups = new Map();
-    const newGroup = {
-      groupByColumn: 'entity',
-      totalBytes: 0,
-      wastedBytes: 0,
-    };
-
     for (const item of details.items) {
       if (!item.entity) continue;
-      const matchedEntity = entities.find(e => e.name = item.entity);
+      if (typeof item.entity !== 'string') throw new Error('unexpected details');
+
+      const matchedEntity = entities.find(ent => ent.name === item.entity);
+      // console.log(item, matchedEntity);
       if (!matchedEntity) throw new Error('no match!');
 
-      const matchedGroup = groups.get(item.entity) || {...newGroup};
-      matchedGroup.groupByValue = item.entity;
+      const matchedGroup = groups.get(item.entity) || {
+        groupByColumn: 'entity',
+        totalBytes: 0,
+        wastedBytes: 0,
+        url: {
+          type: 'link',
+        },
+      };
+      matchedGroup.groupByValue = matchedGroup.url.text = item.entity;
+      matchedGroup.url.url = matchedEntity.url;
       matchedGroup.totalBytes += item.totalBytes;
       matchedGroup.wastedBytes += item.wastedBytes;
       matchedGroup.wastedPercent = matchedGroup.wastedBytes / matchedGroup.totalBytes * 100;
