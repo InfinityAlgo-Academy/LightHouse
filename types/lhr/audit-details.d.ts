@@ -238,8 +238,8 @@ declare module Details {
   }
 
   interface OpportunityGroupItem extends TableGroupItem {
-    groupByColumn: string;
-    groupByValue: string;
+    groupBy: string;
+    entity?: string;
     wastedBytes?: number;
     totalBytes?: number;
     wastedPercent?: number;

@@ -116,7 +116,6 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
         wastedBytes: Math.round(transferRatio * unusedJsSummary.wastedBytes),
         wastedPercent: unusedJsSummary.wastedPercent,
         entity: classifiedEntity?.name,
-        is3p: classifiedEntity !== classifiedEntities.firstParty, // TODO: move to a central audit result.
       };
 
       if (item.wastedBytes <= unusedThreshold) continue;
@@ -129,8 +128,8 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
           type: 'link',
           url: classifiedEntity?.homepage || '#',
         },
-        groupByColumn: 'entity',
-        groupByValue: classifiedEntity?.name || '',
+        groupBy: 'entity',
+        entity: classifiedEntity?.name || '',
         wastedBytes: 0,
         totalBytes: 0,
       };

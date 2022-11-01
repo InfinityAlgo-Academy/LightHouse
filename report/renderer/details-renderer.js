@@ -33,11 +33,15 @@ const URL_PREFIXES = ['http://', 'https://', 'data:'];
 export class DetailsRenderer {
   /**
    * @param {DOM} dom
-   * @param {{fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot}} [options]
+   * @param {{
+   *  fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot,
+   *  entityClassification?: LH.Audit.Details.EntityClassification,
+   * }} [options]
    */
   constructor(dom, options = {}) {
     this._dom = dom;
     this._fullPageScreenshot = options.fullPageScreenshot;
+    this._entityClassification = options.entityClassification;
   }
 
   /**
@@ -407,6 +411,11 @@ export class DetailsRenderer {
       }
     }
 
+    // If entity name is available, markup the row for filtering.
+    if (item.entity) {
+      rowElem.dataset.entity = item.entity.toString();
+    }
+
     return rowElem;
   }
 
@@ -464,7 +473,7 @@ export class DetailsRenderer {
         tbodyElem.append(groupItem);
 
         for (const item of details.items.filter(
-            (item) => item[group.groupByColumn] === group.groupByValue)) {
+            (item) => item[group.groupBy] === group[group.groupBy])) {
           const rowsFragment = this._renderTableRowsFromItem(item, headings);
           for (const rowEl of this._dom.findAll('tr', rowsFragment)) {
             // For zebra styling.
