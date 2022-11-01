@@ -3342,7 +3342,11 @@
               "items": [
                 {
                   "statistic": "Total DOM Elements",
-                  "value": 70
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 70
+                  }
                 },
                 {
                   "node": {
@@ -3362,7 +3366,11 @@
                     "nodeLabel": "div.flex > div.inline-block > svg.h-6 > path"
                   },
                   "statistic": "Maximum DOM Depth",
-                  "value": 9
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 9
+                  }
                 },
                 {
                   "node": {
@@ -3382,7 +3390,11 @@
                     "nodeLabel": "body"
                   },
                   "statistic": "Maximum Child Elements",
-                  "value": 14
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 14
+                  }
                 }
               ]
             }
@@ -12025,7 +12037,11 @@
               "items": [
                 {
                   "statistic": "Total DOM Elements",
-                  "value": 155
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 155
+                  }
                 },
                 {
                   "node": {
@@ -12045,7 +12061,11 @@
                     "nodeLabel": "Oscar:"
                   },
                   "statistic": "Maximum DOM Depth",
-                  "value": 11
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 11
+                  }
                 },
                 {
                   "node": {
@@ -12065,7 +12085,11 @@
                     "nodeLabel": "body"
                   },
                   "statistic": "Maximum Child Elements",
-                  "value": 17
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 17
+                  }
                 }
               ]
             }
@@ -17417,7 +17441,11 @@
               "items": [
                 {
                   "statistic": "Total DOM Elements",
-                  "value": 81
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 81
+                  }
                 },
                 {
                   "node": {
@@ -17437,7 +17465,11 @@
                     "nodeLabel": "div.flex > div.inline-block > svg.h-6 > path"
                   },
                   "statistic": "Maximum DOM Depth",
-                  "value": 9
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 9
+                  }
                 },
                 {
                   "node": {
@@ -17457,7 +17489,11 @@
                     "nodeLabel": "body"
                   },
                   "statistic": "Maximum Child Elements",
-                  "value": 13
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 13
+                  }
                 }
               ]
             }
