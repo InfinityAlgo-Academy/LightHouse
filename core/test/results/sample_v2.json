@@ -5253,7 +5253,11 @@
         "items": [
           {
             "statistic": "Total DOM Elements",
-            "value": 153
+            "value": {
+              "type": "numeric",
+              "granularity": 1,
+              "value": 153
+            }
           },
           {
             "node": {
@@ -5273,7 +5277,11 @@
               "nodeLabel": "body > div > svg.social-facebook > title#social-facebook-5"
             },
             "statistic": "Maximum DOM Depth",
-            "value": 4
+            "value": {
+              "type": "numeric",
+              "granularity": 1,
+              "value": 4
+            }
           },
           {
             "node": {
@@ -5293,7 +5301,11 @@
               "nodeLabel": "body > div#shadow-root-container"
             },
             "statistic": "Maximum Child Elements",
-            "value": 100
+            "value": {
+              "type": "numeric",
+              "granularity": 1,
+              "value": 100
+            }
           }
         ]
       }
