@@ -447,6 +447,22 @@ class Util {
   }
 
   /**
+   * Copy of urlutils one
+   * @param {string} url
+   * @return {?string}
+   */
+  static getOrigin(url) {
+    try {
+      const urlInfo = new URL(url);
+      // check for both host and origin since some URLs schemes like data and file set origin to the
+      // string "null" instead of the object
+      return (urlInfo.host && urlInfo.origin) || null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
    * @param {LH.Audit.Details} details
    * @param {LH.Audit.Details.EntityClassification} entityDetails
    */
@@ -455,12 +471,27 @@ class Util {
 
     const groupsByName = new Map();
     for (const item of details.items) {
-      // Exit out of the whole fn if the audit details items have no entity data.
-      if (!item.entity) return;
-      if (typeof item.entity !== 'string') throw new Error('unexpected details');
+      if (!item.entity && item.url) {
+        // If its not explicit, we'll try to find an entity anyway
+        const origin = Util.getOrigin(item.url);
+        if (origin) {
+          const entityIndex = entityDetails.origins[origin];
+          const entity = entityDetails.entities[entityIndex];
+          item.entity = entity.name;
+        }
+      }
+    }
 
+    // Exit out of the whole fn if the audit details items have no entity data.
+    if (details.items.every(item => !item.entity)) return;
+
+    for (const item of details.items) {
       const matchedEntity = entityDetails.entities.find(ent => ent.name === item.entity);
-      if (!matchedEntity) throw new Error('no match!');
+      if (!matchedEntity || typeof item.entity !== 'string') {
+        console.warn('row doesnt have an entity', item, details);
+        groupsByName.set(item.url, item);
+        continue;
+      }
 
       const entityRow = groupsByName.get(item.entity) || {
         groupByColumn: 'entity',
