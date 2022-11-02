@@ -128,7 +128,7 @@ class ExecutionContext {
       // An error occurred before we could even create a Promise, should be *very* rare.
       // Also occurs when the expression is not valid JavaScript.
       const errorMessage = response.exceptionDetails.exception ?
-        response.exceptionDetails.exception.description :
+        `${response.exceptionDetails.exception.description} ${response.exceptionDetails.stackTrace?.callFrames.map(f => f.lineNumber).join('\n')}` :
         response.exceptionDetails.text;
       return Promise.reject(new Error(`Evaluation exception: ${errorMessage}`));
     }
@@ -187,7 +187,14 @@ class ExecutionContext {
    */
   evaluate(mainFn, options) {
     const argsSerialized = ExecutionContext.serializeArguments(options.args);
-    const depsSerialized = options.deps ? options.deps.join('\n') : '';
+    const depsSerialized = (options.deps || []).map(dep => {
+      if (typeof dep === 'function') {
+        return `const ${dep.name} = ${dep}`;
+      } else {
+        return dep;
+      }
+    }).join('\n');
+
     const expression = `(() => {
       ${depsSerialized}
       return (${mainFn})(${argsSerialized});
@@ -206,7 +213,13 @@ class ExecutionContext {
    */
   async evaluateOnNewDocument(mainFn, options) {
     const argsSerialized = ExecutionContext.serializeArguments(options.args);
-    const depsSerialized = options.deps ? options.deps.join('\n') : '';
+    const depsSerialized = (options.deps || []).map(dep => {
+      if (typeof dep === 'function') {
+        return `const ${dep.name} = ${dep}`;
+      } else {
+        return dep;
+      }
+    }).join('\n');
 
     const expression = `(() => {
       ${ExecutionContext._cachedNativesPreamble};

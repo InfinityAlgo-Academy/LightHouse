@@ -149,6 +149,8 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     treeShaking: true,
     sourcemap: DEBUG,
     banner: {js: banner},
+    // Because of page-functions!
+    // keepNames: true,
     plugins: [
       plugins.replaceModules({
         ...shimsObj,
@@ -232,30 +234,31 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
           build.onEnd(result => {
             if (!result.outputFiles) throw new Error();
 
+            // TODO !
             // esbuild sees the usages of these functions in page functions (ex: see AnchorElements)
             // and treats them as globals. Because the names are "taken" by the global, esbuild renames
             // the actual functions (ex: to getNodeDetails2). The page functions expect a certain name, so
             // here we undo what esbuild did.
 
-            const replacements = [
-              ['getBoundingClientRect2', 'getBoundingClientRect'],
-              ['getElementsInDocument2', 'getElementsInDocument'],
-              ['getNodeDetails2', 'getNodeDetails'],
-              ['getRectCenterPoint2', 'getRectCenterPoint'],
-              ['isPositionFixed2', 'isPositionFixed'],
-            ];
+            // const replacements = [
+            //   ['getBoundingClientRect2', 'getBoundingClientRect'],
+            //   ['getElementsInDocument2', 'getElementsInDocument'],
+            //   ['getNodeDetails2', 'getNodeDetails'],
+            //   ['getRectCenterPoint2', 'getRectCenterPoint'],
+            //   ['isPositionFixed2', 'isPositionFixed'],
+            // ];
 
             let code = result.outputFiles[0].text;
-            for (const [k, v] of replacements) {
-              // @ts-expect-error
-              if (String.prototype.replaceAll) {
-                // @ts-expect-error
-                code = code.replaceAll(k, v);
-              } else {
-                // TODO: delete when not supporting node 14
-                while (code.includes(k)) code = code.replace(k, v);
-              }
-            }
+            // for (const [k, v] of replacements) {
+            //   // @ts-expect-error
+            //   if (String.prototype.replaceAll) {
+            //     // @ts-expect-error
+            //     code = code.replaceAll(k, v);
+            //   } else {
+            //     // TODO: delete when not supporting node 14
+            //     while (code.includes(k)) code = code.replace(k, v);
+            //   }
+            // }
 
             // Get rid of our extra license comments.
             // https://stackoverflow.com/a/35923766

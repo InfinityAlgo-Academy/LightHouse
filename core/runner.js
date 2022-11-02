@@ -383,7 +383,7 @@ class Runner {
 
           // Create a friendlier display error and mark it as expected to avoid duplicates in Sentry
           const error = new LighthouseError(LighthouseError.errors.ERRORED_REQUIRED_ARTIFACT,
-              {artifactName, errorMessage: artifactError.message});
+              {artifactName, errorMessage: artifactError.stack});
           // @ts-expect-error Non-standard property added to Error
           error.expected = true;
           throw error;
