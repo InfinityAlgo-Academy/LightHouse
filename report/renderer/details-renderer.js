@@ -365,13 +365,14 @@ export class DetailsRenderer {
    * @return {LH.Audit.Details.OpportunityColumnHeading | null}
    */
   _getDerivedsubItemsHeading(heading) {
-    if (!heading.subItemsHeading) return null;
+    if (!heading) return null;
     return {
-      key: heading.subItemsHeading.key || '',
-      valueType: heading.subItemsHeading.valueType || heading.valueType,
-      granularity: heading.subItemsHeading.granularity || heading.granularity,
-      displayUnit: heading.subItemsHeading.displayUnit || heading.displayUnit,
+      key: heading.subItemsHeading?.key || heading.key,
+      valueType: heading.subItemsHeading?.valueType || heading.valueType,
+      granularity: heading.subItemsHeading?.granularity || heading.granularity,
+      displayUnit: heading.subItemsHeading?.displayUnit || heading.displayUnit,
       label: '',
+      subItemsHeading: heading.subItemsHeading?.subItemsHeading,
     };
   }
 
@@ -426,9 +427,13 @@ export class DetailsRenderer {
     if (!subItemsHeadings.some(Boolean)) return fragment;
 
     for (const subItem of item.subItems.items) {
-      const rowEl = this._renderTableRow(subItem, subItemsHeadings);
-      rowEl.classList.add('lh-sub-item-row');
-      fragment.append(rowEl);
+      const rowsFragment = this._renderTableRowsFromItem(subItem, subItemsHeadings);
+      for (const elem of rowsFragment.children) {
+        elem.classList.add(elem.classList.contains('lh-sub-item-row')
+          ? 'lh-subsub-item-row'
+          : 'lh-sub-item-row');
+      }
+      fragment.append(rowsFragment);
     }
 
     return fragment;

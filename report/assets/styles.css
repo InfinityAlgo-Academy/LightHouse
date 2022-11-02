@@ -1612,15 +1612,19 @@
 }
 
 .lh-sub-item-row {
-  margin-left: 20px;
   margin-bottom: 0;
   color: var(--color-gray-700);
 }
-.lh-sub-item-row td {
+.lh-sub-item-row td:first-child {
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 20px;
 }
+
+.lh-subsub-item-row td:first-child {
+  padding-left: 40px;
+}
+
 
 /* Chevron
    https://codepen.io/paulirish/pen/LmzEmK

@@ -127,7 +127,6 @@ class Util {
         /** @type {LH.Audit.Details.EntityClassification} */
         const entityDetails = clone.audits['entity-classification']?.details;
         if (entityDetails && audit.id !== 'third-party-summary') {
-          console.log(audit.id);
           Util.buildAuditItemGroups(audit.details, entityDetails);
         }
       }
@@ -484,13 +483,13 @@ class Util {
     details.items = [...groupsByName.values()];
 
     // Fix headings
-    for (const heading of details.headings) {
-      heading.subItemsHeading = {key: heading.key};
-    }
+    // for (const heading of details.headings) {
+    //   heading.subItemsHeading = {key: heading.key};
+    // }
     details.headings[0] = {
       itemType: 'link',
       key: 'entity',
-      text: 'Third-Party', // todo translate
+      label: 'Third-Party', // todo translate
       subItemsHeading: details.headings[0],
     };
   }

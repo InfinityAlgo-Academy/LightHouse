@@ -122,25 +122,6 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       if (item.wastedBytes <= unusedThreshold) continue;
       items.push(item);
 
-
-      // TODO: remove from here.
-      // Which entity group would this item fall into?
-      const entityGroup = byEntity.get(classifiedEntity) || {
-        url: {
-          text: classifiedEntity?.name || '',
-          type: 'link',
-          url: classifiedEntity?.homepage || '#',
-        },
-        groupByColumn: 'entity',
-        groupByValue: classifiedEntity?.name || '',
-        wastedBytes: 0,
-        totalBytes: 0,
-      };
-      entityGroup.totalBytes = (entityGroup.totalBytes || 0) + item.totalBytes;
-      entityGroup.wastedBytes = (entityGroup.wastedBytes || 0) + item.wastedBytes;
-      entityGroup.wastedPercent = entityGroup.wastedBytes / entityGroup.totalBytes * 100;
-      byEntity.set(classifiedEntity, entityGroup);
-
       // If there was an error calculating the bundle sizes, we can't
       // create any sub-items.
       if (!bundle || 'errorMessage' in bundle.sizes) continue;
@@ -175,12 +156,8 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       }
     }
 
-    // We group by entities that wasted most number of absolute bytes (and not %).
-    const groups = [...byEntity.values()];
-
     return {
       items,
-      groups,
       headings: [
         /* eslint-disable max-len */
         {key: 'url', valueType: 'url', subItemsHeading: {key: 'source', valueType: 'code'}, label: str_(i18n.UIStrings.columnURL)},

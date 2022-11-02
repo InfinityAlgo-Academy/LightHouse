@@ -39,20 +39,21 @@ This will generate new reports from the same results json.
 
 ```sh
 # capture some results first:
-lighthouse --output=json http://example.com > temp.report.json
+lighthouse http://example.com -GA
 
-# quickly generate reports:
-node generate_report.js > temp.report.html; open temp.report.html
+# Generate whenever files within report/ are changed. (with [entr](https://eradman.com/entrproject/))
+find report/renderer | entr bash -c "yarn build-report --standalone; node generatereport.mjs"
+
 ```
 ```js
-// generate_report.js
-'use strict';
+// generatereport.mjs
+import fs from 'fs';
 
-const ReportGenerator = require('./report/generator/report-generator.js');
-const results = require('./temp.report.json');
+import {ReportGenerator} from '../report/generator/report-generator.js';
+
+const results = JSON.parse(fs.readFileSync('./latest-run/lhr.report.json', 'utf-8'));
 const html = ReportGenerator.generateReportHtml(results);
-
-console.log(html);
+fs.writeFileSync('my.report.html', html, 'utf-8');
 ```
 
 ## Using Audit Classes Directly, Providing Your Own Artifacts
