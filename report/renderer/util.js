@@ -127,6 +127,7 @@ class Util {
         /** @type {LH.Audit.Details.EntityClassification} */
         const entityDetails = clone.audits['entity-classification']?.details;
         if (entityDetails && audit.id !== 'third-party-summary') {
+          console.log(audit.id);
           Util.buildAuditItemGroups(audit.details, entityDetails);
         }
       }
@@ -451,7 +452,8 @@ class Util {
 
     const groupsByName = new Map();
     for (const item of details.items) {
-      if (!item.entity) continue;
+      // Exit out of the whole fn if the audit details items have no entity data.
+      if (!item.entity) return;
       if (typeof item.entity !== 'string') throw new Error('unexpected details');
 
       const matchedEntity = entityDetails.entities.find(ent => ent.name === item.entity);
