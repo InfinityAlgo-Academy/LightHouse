@@ -321,12 +321,14 @@ class Audit {
   /**
    * @param {typeof Audit} audit
    * @param {string | LH.IcuMessage} errorMessage
+   * @param {string=} errorStack
    * @return {LH.RawIcu<LH.Audit.Result>}
    */
-  static generateErrorAuditResult(audit, errorMessage) {
+  static generateErrorAuditResult(audit, errorMessage, errorStack) {
     return Audit.generateAuditResult(audit, {
       score: null,
       errorMessage,
+      errorStack,
     });
   }
 
@@ -380,6 +382,7 @@ class Audit {
       displayValue: product.displayValue,
       explanation: product.explanation,
       errorMessage: product.errorMessage,
+      errorStack: product.errorStack,
       warnings: product.warnings,
 
       details: product.details,

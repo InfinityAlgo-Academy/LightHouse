@@ -383,7 +383,7 @@ class Runner {
 
           // Create a friendlier display error and mark it as expected to avoid duplicates in Sentry
           const error = new LighthouseError(LighthouseError.errors.ERRORED_REQUIRED_ARTIFACT,
-              {artifactName, errorMessage: artifactError.message});
+              {artifactName, errorMessage: artifactError.message}, artifactError);
           // @ts-expect-error Non-standard property added to Error
           error.expected = true;
           throw error;
@@ -422,7 +422,9 @@ class Runner {
       Sentry.captureException(err, {tags: {audit: audit.meta.id}, level: 'error'});
       // Errors become error audit result.
       const errorMessage = err.friendlyMessage ? err.friendlyMessage : err.message;
-      auditResult = Audit.generateErrorAuditResult(audit, errorMessage);
+      // Prefer the stack trace closest to the error.
+      const stack = err.cause?.stack ?? err.stack;
+      auditResult = Audit.generateErrorAuditResult(audit, errorMessage, stack);
     }
 
     log.timeEnd(status);

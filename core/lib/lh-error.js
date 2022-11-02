@@ -107,17 +107,18 @@ const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 const LHERROR_SENTINEL = '__LighthouseErrorSentinel';
 const ERROR_SENTINEL = '__ErrorSentinel';
 /**
- * @typedef {{sentinel: '__LighthouseErrorSentinel', code: string, stack?: string, [p: string]: string|undefined}} SerializedLighthouseError
- * @typedef {{sentinel: '__ErrorSentinel', message: string, code?: string, stack?: string}} SerializedBaseError
+ * @typedef {{sentinel: '__LighthouseErrorSentinel', code: string, stack?: string, cause?: SerializedBaseError|SerializedLighthouseError, properties?: {[p: string]: string|undefined}}} SerializedLighthouseError
+ * @typedef {{sentinel: '__ErrorSentinel', message: string, code?: string, stack?: string, cause?: SerializedBaseError|SerializedLighthouseError}} SerializedBaseError
  */
 
 class LighthouseError extends Error {
   /**
    * @param {LighthouseErrorDefinition} errorDefinition
    * @param {Record<string, string|undefined>=} properties
+   * @param {Error=} cause
    */
-  constructor(errorDefinition, properties) {
-    super(errorDefinition.code);
+  constructor(errorDefinition, properties, cause) {
+    super(errorDefinition.code, {cause});
     this.name = 'LighthouseError';
     this.code = errorDefinition.code;
     // Add additional properties to be ICU replacements in the error string.
@@ -163,19 +164,20 @@ class LighthouseError extends Error {
     if (err instanceof LighthouseError) {
       // Remove class props so that remaining values were what was passed in as `properties`.
       // eslint-disable-next-line no-unused-vars
-      const {name, code, message, friendlyMessage, lhrRuntimeError, stack, ...properties} = err;
+      const {name, code, message, friendlyMessage, lhrRuntimeError, stack, cause, ...properties} = err;
 
       return {
         sentinel: LHERROR_SENTINEL,
         code,
         stack,
-        ...properties,
+        cause: /** @type {any} */ (cause),
+        properties: /** @type {{ [p: string]: string | undefined }} */ (properties),
       };
     }
 
     // Unexpected errors won't be LighthouseErrors, but we want them serialized as well.
     if (err instanceof Error) {
-      const {message, stack} = err;
+      const {message, stack, cause} = err;
       // @ts-expect-error - code can be helpful for e.g. node errors, so preserve it if it's present.
       const code = err.code;
       return {
@@ -183,6 +185,7 @@ class LighthouseError extends Error {
         message,
         code,
         stack,
+        cause: /** @type {any} */ (cause),
       };
     }
 
@@ -203,17 +206,20 @@ class LighthouseError extends Error {
       if (possibleError.sentinel === LHERROR_SENTINEL) {
         // Include sentinel in destructuring so it doesn't end up in `properties`.
         // eslint-disable-next-line no-unused-vars
-        const {sentinel, code, stack, ...properties} = /** @type {SerializedLighthouseError} */ (possibleError);
+        const {code, stack, cause, properties} = /** @type {SerializedLighthouseError} */ (possibleError);
+        const causeRevived = cause ? LighthouseError.parseReviver(key, cause) : undefined;
         const errorDefinition = LighthouseError.errors[/** @type {keyof typeof ERRORS} */ (code)];
-        const lhError = new LighthouseError(errorDefinition, properties);
+        const lhError = new LighthouseError(errorDefinition, properties, causeRevived);
         lhError.stack = stack;
 
         return lhError;
       }
 
       if (possibleError.sentinel === ERROR_SENTINEL) {
-        const {message, code, stack} = /** @type {SerializedBaseError} */ (possibleError);
-        const error = new Error(message);
+        const {message, code, stack, cause} = /** @type {SerializedBaseError} */ (possibleError);
+        const causeRevived = cause ? LighthouseError.parseReviver(key, cause) : undefined;
+        const opts = causeRevived ? {cause: causeRevived} : undefined;
+        const error = new Error(message, opts);
         Object.assign(error, {code, stack});
         return error;
       }

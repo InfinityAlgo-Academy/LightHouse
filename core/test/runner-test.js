@@ -582,6 +582,37 @@ describe('Runner', () => {
         assert.strictEqual(auditResult.score, null);
         assert.strictEqual(auditResult.scoreDisplayMode, 'error');
         assert.ok(auditResult.errorMessage.includes(errorMessage));
+        assert.ok(auditResult.errorStack.includes('at Function.audit'));
+      });
+    });
+
+    it('produces an error audit result that prefers cause stack', async () => {
+      const errorMessage = 'Audit yourself';
+      const config = await Config.fromJson({
+        settings: {
+          auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
+        },
+        audits: [
+          class ThrowyAudit extends Audit {
+            static get meta() {
+              return testAuditMeta;
+            }
+            static audit() {
+              throw new Error(errorMessage, {cause: ThrowyAudit.aFn()});
+            }
+            static aFn() {
+              return new Error();
+            }
+          },
+        ],
+      });
+
+      return runGatherAndAudit({}, {config}).then(results => {
+        const auditResult = results.lhr.audits['throwy-audit'];
+        assert.strictEqual(auditResult.score, null);
+        assert.strictEqual(auditResult.scoreDisplayMode, 'error');
+        assert.ok(auditResult.errorMessage.includes(errorMessage));
+        assert.ok(auditResult.errorStack.includes('at Function.aFn'));
       });
     });
   });

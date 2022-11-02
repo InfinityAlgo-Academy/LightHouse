@@ -31,6 +31,8 @@ export interface Result {
   explanation?: string;
   /** Error message from any exception thrown while running this audit. */
   errorMessage?: string;
+  /** Error stack from any exception thrown while running this audit. */
+  errorStack?: string;
   warnings?: string[];
   /** The scored value of the audit, provided in the range `0-1`, or null if `scoreDisplayMode` indicates not scored. */
   score: number|null;

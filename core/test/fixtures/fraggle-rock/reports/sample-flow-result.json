@@ -9106,7 +9106,8 @@
             "description": "This is the thread-blocking work occurring during the Interaction to Next Paint measurement. [Learn more about the Interaction to Next Paint metric](https://web.dev/inp/).",
             "score": null,
             "scoreDisplayMode": "error",
-            "errorMessage": "This version of Chrome is too old to support 'detailed EventTiming trace events'. Use a newer version to see full results."
+            "errorMessage": "This version of Chrome is too old to support 'detailed EventTiming trace events'. Use a newer version to see full results.",
+            "errorStack": "LighthouseError: UNSUPPORTED_OLD_CHROME\n    at Function.audit (/core/audits/work-during-interaction.js:239:13)\n    at async Function._runAudit (/core/runner.js:412:23)\n    at async Function._runAudits (/core/runner.js:324:27)\n    at async Function.audit (/core/runner.js:60:32)\n    at async auditGatherSteps (/core/user-flow.js:333:20)\n    at async Module.auditFlowArtifacts (/core/api.js:70:10)\n    at async generateFlowResult (/core/scripts/update-flow-fixtures.js:146:22)\n    at async /core/scripts/update-flow-fixtures.js:168:1"
           }
         },
         "configSettings": {

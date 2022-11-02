@@ -370,7 +370,7 @@ describe('asset-saver helper', () => {
       // Use an LighthouseError that has an ICU replacement.
       const protocolMethod = 'Page.getFastness';
       const lhError = new LighthouseError(
-        LighthouseError.errors.PROTOCOL_TIMEOUT, {protocolMethod});
+        LighthouseError.errors.PROTOCOL_TIMEOUT, {protocolMethod}, new Error());
 
       const artifacts = {
         traces: {},
@@ -385,6 +385,7 @@ describe('asset-saver helper', () => {
       expect(roundTripArtifacts.ScriptElements).toBeInstanceOf(LighthouseError);
       expect(roundTripArtifacts.ScriptElements.code).toEqual('PROTOCOL_TIMEOUT');
       expect(roundTripArtifacts.ScriptElements.protocolMethod).toEqual(protocolMethod);
+      expect(roundTripArtifacts.ScriptElements.cause).toBeInstanceOf(Error);
       expect(roundTripArtifacts.ScriptElements.stack).toMatch(
           /^LighthouseError: PROTOCOL_TIMEOUT.*test[\\/]lib[\\/]asset-saver-test\.js/s);
       expect(roundTripArtifacts.ScriptElements.friendlyMessage)

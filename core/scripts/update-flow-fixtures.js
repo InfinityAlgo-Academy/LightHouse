@@ -19,6 +19,7 @@ import log from 'lighthouse-logger';
 import {LH_ROOT} from '../../root.js';
 import * as api from '../index.js';
 import * as assetSaver from '../lib/asset-saver.js';
+import { cleanAndFormatLHR } from './cleanup-LHR-for-diff.js';
 
 /* eslint-disable max-len */
 const ARTIFACTS_PATH = `${LH_ROOT}/core/test/fixtures/fraggle-rock/artifacts/`;
@@ -151,6 +152,9 @@ async function generateFlowResult() {
 
   // Normalize some data so it doesn't change on every update.
   for (const {lhr} of flowResult.steps) {
+    cleanAndFormatLHR(lhr, {skipDescription: true});
+    // TODO: should remove this next line if cleanAndFormatLHR is refactored
+    lhr.configSettings.auditMode = false;
     assetSaver.normalizeTimingEntries(lhr.timing.entries);
     lhr.timing.total = lhr.timing.entries.length;
   }

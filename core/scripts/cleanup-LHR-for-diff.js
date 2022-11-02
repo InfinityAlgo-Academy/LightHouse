@@ -9,22 +9,17 @@
 /** @fileoverview Read in a LHR JSON file, remove whatever shouldn't be compared, write it back. */
 
 import {readFileSync, writeFileSync} from 'fs';
+import url from 'url';
 
-const filename = process.argv[2];
-const extraFlag = process.argv[3];
-if (!filename) throw new Error('No filename provided.');
+import esMain from 'es-main';
 
-const data = readFileSync(filename, 'utf8');
-writeFileSync(filename, cleanAndFormatLHR(data), 'utf8');
+import {LH_ROOT} from '../../root.js';
 
 /**
- * @param {string} lhrString
- * @return {string}
+ * @param {LH.Result} lhr
+ * @param {{skipDescription?: boolean}=} opts
  */
-function cleanAndFormatLHR(lhrString) {
-  /** @type {LH.Result} */
-  const lhr = JSON.parse(lhrString);
-
+function cleanAndFormatLHR(lhr, opts = {}) {
   // TODO: Resolve the below so we don't need to force it to a boolean value:
   // 1) The string|boolean story for proto
   // 2) CI gets a absolute path during yarn diff:sample-json
@@ -40,11 +35,30 @@ function cleanAndFormatLHR(lhrString) {
     entry.startTime = 0; // Not realsitic, but avoids a lot of diff churn
   });
 
-  if (extraFlag !== '--only-remove-timing') {
-    for (const auditResult of Object.values(lhr.audits)) {
+  const baseCallFrameUrl = url.pathToFileURL(LH_ROOT);
+
+  for (const auditResult of Object.values(lhr.audits)) {
+    if (!opts.skipDescription) {
       auditResult.description = '**Excluded from diff**';
     }
+    if (auditResult.errorStack) {
+      auditResult.errorStack = auditResult.errorStack.replaceAll(baseCallFrameUrl.href, '');
+    }
   }
-  // Ensure we have a final newline to conform to .editorconfig
-  return `${JSON.stringify(lhr, null, 2)}\n`;
 }
+
+if (esMain(import.meta)) {
+  const filename = process.argv[2];
+  const extraFlag = process.argv[3];
+  if (!filename) throw new Error('No filename provided.');
+
+  const lhr = JSON.parse(readFileSync(filename, 'utf8'));
+  cleanAndFormatLHR(lhr, {
+    skipDescription: extraFlag === '--only-remove-timing',
+  });
+  // Ensure we have a final newline to conform to .editorconfig
+  const cleaned = `${JSON.stringify(lhr, null, 2)}\n`;
+  writeFileSync(filename, cleaned, 'utf8');
+}
+
+export {cleanAndFormatLHR};

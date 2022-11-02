@@ -74,6 +74,8 @@ declare module Audit {
     explanation?: string | IcuMessage;
     /** Error message from any exception thrown while running this audit. */
     errorMessage?: string | IcuMessage;
+    /** Error stack from any exception thrown while running this audit. */
+    errorStack?: string;
     warnings?: Array<string | IcuMessage>;
     /** Overrides scoreDisplayMode with notApplicable if set to true */
     notApplicable?: boolean;
