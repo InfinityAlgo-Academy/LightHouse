@@ -468,7 +468,8 @@ class Util {
     const groupsByName = new Map();
     for (const item of details.items) {
       if (!item.entity && item.url) {
-        // If its not explicit, we'll try to find an entity anyway
+        // If its not explicitly provided in the LHR, we'll try to resolve to an entity
+        // TODO: support other types beyond 'url' like 'source-location'.
         const origin = Util.getOrigin(item.url);
         if (origin) {
           const entityIndex = entityDetails.origins[origin];
@@ -478,13 +479,15 @@ class Util {
       }
     }
 
-    // Exit out of the whole fn if the audit details items have no entity data.
+    // Exit if none of the audit details items have entity data.
     if (details.items.every(item => !item.entity)) return;
 
     for (const item of details.items) {
       const matchedEntity = entityDetails.entities.find(ent => ent.name === item.entity);
       if (!matchedEntity || typeof item.entity !== 'string') {
+        // This catches "Unattributable", data uris and some other weird non-url stuff.
         console.warn('row doesnt have an entity', item, details);
+        // Basically just let that row continue to exist at depth=0
         groupsByName.set(item.url, item);
         continue;
       }
@@ -513,10 +516,7 @@ class Util {
 
     details.items = [...groupsByName.values()];
 
-    // Fix headings
-    // for (const heading of details.headings) {
-    //   heading.subItemsHeading = {key: heading.key};
-    // }
+    // Fix heading, by moving subitems one level deeper
     details.headings[0] = {
       itemType: 'link',
       key: 'entity',
