@@ -453,11 +453,6 @@ class Util {
   static buildAuditItemGroups(details, entityDetails) {
     if (details.type !== 'opportunity' && details.type !== 'table') return;
 
-    if (details.groups) {
-      details.oldGroups = details.groups;
-      delete details.groups;
-    }
-
     const groupsByName = new Map();
     for (const item of details.items) {
       if (!item.entity) continue;
@@ -466,28 +461,40 @@ class Util {
       const matchedEntity = entityDetails.entities.find(ent => ent.name === item.entity);
       if (!matchedEntity) throw new Error('no match!');
 
-      const entityGroup = groupsByName.get(item.entity) || {
+      const entityRow = groupsByName.get(item.entity) || {
         groupByColumn: 'entity',
         groupByValue: matchedEntity.name,
         totalBytes: 0,
         wastedBytes: 0,
-        url: {
+        entity: {
           type: 'link',
           url: matchedEntity.url,
           text: matchedEntity.name,
         },
+        subItems: {
+          type: 'subitems',
+          items: [],
+        },
       };
-      entityGroup.totalBytes += item.totalBytes;
-      entityGroup.wastedBytes += item.wastedBytes;
-      entityGroup.wastedPercent = entityGroup.wastedBytes / entityGroup.totalBytes * 100;
-      groupsByName.set(item.entity, entityGroup);
+      entityRow.totalBytes += item.totalBytes;
+      entityRow.wastedBytes += item.wastedBytes;
+      entityRow.subItems.items.push(item);
+      entityRow.wastedPercent = entityRow.wastedBytes / entityRow.totalBytes * 100;
+      groupsByName.set(item.entity, entityRow);
     }
 
-    details.groups = [...groupsByName.values()];
+    details.items = [...groupsByName.values()];
 
-    if (details.oldGroups?.length) {
-      console.log(details);
+    // Fix headings
+    for (const heading of details.headings) {
+      heading.subItemsHeading = {key: heading.key};
     }
+    details.headings[0] = {
+      itemType: 'link',
+      key: 'entity',
+      text: 'Third-Party', // todo translate
+      subItemsHeading: details.headings[0],
+    };
   }
   /**
    * @param {LH.Result['configSettings']} settings
