@@ -128,11 +128,10 @@ class Util {
           }
         }
 
-        /** @type {LH.Audit.Details.TableItem} */  // erg this is another type.....
-        const entities = clone.audits['entity-classification']?.details?.entities;
-        if (audit.id != 'third-party-summary') {
-          console.log({entities});
-          Util.buildAuditItemGroups(audit.details, entities);
+        /** @type {LH.Audit.Details.EntityClassification} */
+        const entityDetails = clone.audits['entity-classification']?.details;
+        if (entityDetails && audit.id !== 'third-party-summary') {
+          Util.buildAuditItemGroups(audit.details, entityDetails);
         }
       }
     }
@@ -449,9 +448,9 @@ class Util {
 
   /**
    * @param {LH.Audit.Details} details
-
+   * @param {LH.Audit.Details.EntityClassification} entityDetails
    */
-  static buildAuditItemGroups(details, entities) {
+  static buildAuditItemGroups(details, entityDetails) {
     if (details.type !== 'opportunity' && details.type !== 'table') return;
 
     if (details.groups) {
@@ -459,32 +458,32 @@ class Util {
       delete details.groups;
     }
 
-    const groups = new Map();
+    const groupsByName = new Map();
     for (const item of details.items) {
       if (!item.entity) continue;
       if (typeof item.entity !== 'string') throw new Error('unexpected details');
 
-      const matchedEntity = entities.find(ent => ent.name === item.entity);
-      // console.log(item, matchedEntity);
+      const matchedEntity = entityDetails.entities.find(ent => ent.name === item.entity);
       if (!matchedEntity) throw new Error('no match!');
 
-      const matchedGroup = groups.get(item.entity) || {
+      const entityGroup = groupsByName.get(item.entity) || {
         groupByColumn: 'entity',
+        groupByValue: matchedEntity.name,
         totalBytes: 0,
         wastedBytes: 0,
         url: {
           type: 'link',
+          url: matchedEntity.url,
+          text: matchedEntity.name,
         },
       };
-      matchedGroup.groupByValue = matchedGroup.url.text = item.entity;
-      matchedGroup.url.url = matchedEntity.url;
-      matchedGroup.totalBytes += item.totalBytes;
-      matchedGroup.wastedBytes += item.wastedBytes;
-      matchedGroup.wastedPercent = matchedGroup.wastedBytes / matchedGroup.totalBytes * 100;
-      groups.set(item.entity, matchedGroup);
+      entityGroup.totalBytes += item.totalBytes;
+      entityGroup.wastedBytes += item.wastedBytes;
+      entityGroup.wastedPercent = entityGroup.wastedBytes / entityGroup.totalBytes * 100;
+      groupsByName.set(item.entity, entityGroup);
     }
 
-    details.groups = [...groups.values()];
+    details.groups = [...groupsByName.values()];
 
     if (details.oldGroups?.length) {
       console.log(details);

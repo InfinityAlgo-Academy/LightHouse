@@ -458,7 +458,7 @@ export class DetailsRenderer {
     const tbodyElem = this._dom.createChildOf(tableElem, 'tbody');
     let even = true;
 
-    if (details.groups) {
+    if (details.groups?.length) {
       for (const group of details.groups) {
         const groupItem = this._renderTableRow(group, headings);
         groupItem.classList.add('lh-group-item-row');
