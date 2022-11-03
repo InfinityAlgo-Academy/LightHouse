@@ -520,7 +520,7 @@ class Util {
 
     details.items = [...groupsByName.values()];
 
-    // Fix headings
+    // Fix heading, by moving subitems one level deeper
     details.headings[0] = {
       itemType: 'link',
       key: 'entity',
