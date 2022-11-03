@@ -33,11 +33,15 @@ const URL_PREFIXES = ['http://', 'https://', 'data:'];
 export class DetailsRenderer {
   /**
    * @param {DOM} dom
-   * @param {{fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot}} [options]
+   * @param {{
+   *  fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot,
+   *  entityClassification?: LH.Audit.Details.EntityClassification,
+   * }} [options]
    */
   constructor(dom, options = {}) {
     this._dom = dom;
     this._fullPageScreenshot = options.fullPageScreenshot;
+    this._entityClassification = options.entityClassification;
   }
 
   /**
@@ -406,6 +410,11 @@ export class DetailsRenderer {
         // - the value is undefined/null
         this._dom.createChildOf(rowElem, 'td', 'lh-table-column--empty');
       }
+    }
+
+    // If entity name is available, markup the row for filtering.
+    if (item.entity) {
+      rowElem.dataset.entity = item.entity.toString();
     }
 
     return rowElem;
