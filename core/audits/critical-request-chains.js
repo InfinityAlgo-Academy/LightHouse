@@ -51,18 +51,18 @@ class CriticalRequestChains extends Audit {
     /**
      * @param {LH.Audit.Details.SimpleCriticalRequestNode} node
      * @param {number} depth
-     * @param {number=} startTime
+     * @param {number=} rendererStartTime
      * @param {number=} transferSize
      */
-    function walk(node, depth, startTime, transferSize = 0) {
+    function walk(node, depth, rendererStartTime, transferSize = 0) {
       const children = Object.keys(node);
       if (children.length === 0) {
         return;
       }
       children.forEach(id => {
         const child = node[id];
-        if (!startTime) {
-          startTime = child.request.rendererStartTime;
+        if (!rendererStartTime) {
+          rendererStartTime = child.request.rendererStartTime;
         }
 
         // Call the callback with the info for this child.
@@ -70,13 +70,13 @@ class CriticalRequestChains extends Audit {
           depth,
           id,
           node: child,
-          chainDuration: (child.request.rendererEndTime - startTime) * 1000,
+          chainDuration: (child.request.rendererEndTime - rendererStartTime) * 1000,
           chainTransferSize: (transferSize + child.request.transferSize),
         });
 
         // Carry on walking.
         if (child.children) {
-          walk(child.children, depth + 1, startTime);
+          walk(child.children, depth + 1, rendererStartTime);
         }
       }, '');
     }
@@ -123,8 +123,8 @@ class CriticalRequestChains extends Audit {
       const request = opts.node.request;
       const simpleRequest = {
         url: request.url,
-        startTime: request.rendererStartTime,
-        endTime: request.rendererEndTime,
+        rendererStartTime: request.rendererStartTime,
+        rendererEndTime: request.rendererEndTime,
         responseReceivedTime: request.responseHeadersEndTime,
         transferSize: request.transferSize,
       };
@@ -191,7 +191,6 @@ class CriticalRequestChains extends Audit {
       }
       // Convert
       const flattenedChains = CriticalRequestChains.flattenRequests(chains);
-
       // Account for initial navigation
       const initialNavKey = Object.keys(flattenedChains)[0];
       const initialNavChildren = initialNavKey && flattenedChains[initialNavKey].children;

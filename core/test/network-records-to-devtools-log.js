@@ -94,6 +94,10 @@ function getResponseReceivedEvent(networkRecord, index) {
   if (networkRecord.timing) {
     timing = {...networkRecord.timing};
     if (timing.requestTime === undefined) {
+      timing.requestTime = networkRecord.networkRequestTime;
+    }
+    // Only use this because someone was lazy writing mock reqs
+    if (timing.requestTime === undefined) {
       timing.requestTime = networkRecord.rendererStartTime || 0;
     }
     if (timing.receiveHeadersEnd === undefined) {

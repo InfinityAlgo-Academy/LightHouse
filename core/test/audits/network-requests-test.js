@@ -28,7 +28,7 @@ describe('Network requests audit', () => {
 
     expect(output.details.items[0]).toMatchObject({
       rendererStartTime: 0,
-      rendererEndTime: expect.toBeApproximately(701, 0),
+      networkEndTime: expect.toBeApproximately(701, 0),
       finished: true,
       transferSize: 11358,
       resourceSize: 39471,
@@ -39,7 +39,7 @@ describe('Network requests audit', () => {
     });
     expect(output.details.items[2]).toMatchObject({
       rendererStartTime: expect.toBeApproximately(711, 0),
-      rendererEndTime: expect.toBeApproximately(1289, 0),
+      networkEndTime: expect.toBeApproximately(1289, 0),
       finished: false,
       transferSize: 26441,
       resourceSize: 0,
@@ -50,7 +50,7 @@ describe('Network requests audit', () => {
     });
     expect(output.details.items[5]).toMatchObject({
       rendererStartTime: expect.toBeApproximately(717, 0),
-      rendererEndTime: expect.toBeApproximately(1296, 0),
+      networkEndTime: expect.toBeApproximately(1296, 0),
       finished: false,
       transferSize: 58571,
       resourceSize: 0,
@@ -68,8 +68,8 @@ describe('Network requests audit', () => {
 
   it('should handle times correctly', async () => {
     const records = [
-      {url: 'https://example.com/0', rendererStartTime: 15.0, rendererEndTime: 15.5},
-      {url: 'https://example.com/1', rendererStartTime: 15.5, rendererEndTime: -1},
+      {url: 'https://example.com/0', rendererStartTime: 15.0, networkEndTime: 15.5},
+      {url: 'https://example.com/1', rendererStartTime: 15.5, networkEndTime: -1},
     ];
 
     const artifacts = {
@@ -83,11 +83,11 @@ describe('Network requests audit', () => {
 
     expect(output.details.items).toMatchObject([{
       rendererStartTime: 0,
-      rendererEndTime: 500,
+      networkEndTime: 500,
       finished: true,
     }, {
       rendererStartTime: 500,
-      rendererEndTime: undefined,
+      networkEndTime: undefined,
       finished: true,
     }]);
   });

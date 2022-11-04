@@ -47,6 +47,7 @@ const PASSING_CHAIN_RECORDS = [
   {
     networkEndTime: 1,
     responseHeadersEndTime: 1,
+    rendererEndTime: 1,
     rendererStartTime: 0,
     url: 'https://example.com/',
     priority: 'VeryHigh',

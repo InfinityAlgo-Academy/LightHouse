@@ -34,10 +34,10 @@ declare module Details {
     [id: string]: {
       request: {
         url: string;
-        // TODO: Do we want to update these as well?
-        startTime: number;
-        endTime: number;
-        responseReceivedTime: number;
+        // TODO: We want these updated as well, right?
+        rendererStartTime: number;
+        rendererEndTime: number;
+        responseHeadersEndTime: number;
         transferSize: number;
       };
       children?: SimpleCriticalRequestNode;
