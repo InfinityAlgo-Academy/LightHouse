@@ -1605,7 +1605,7 @@
     "message": "ページで有効なソースマップが使用されています"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` を使用すると、モバイル画面サイズ向けにアプリを最適化できるほか、[ユーザー入力の遅延を 300 ミリ秒](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away)短縮できます。[詳細](https://web.dev/viewport/)"
+    "message": "`<meta name=\"viewport\">` を使用すると、モバイル画面サイズ向けにアプリを最適化できるほか、[ユーザー入力の遅延を 300 ミリ秒](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)短縮できます。[詳細](https://web.dev/viewport/)"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "`<meta name=\"viewport\">` タグが見つかりません"

@@ -1605,7 +1605,7 @@
     "message": "Halaman memiliki peta sumber yang valid"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` tidak hanya mengoptimalkan aplikasi untuk ukuran layar perangkat seluler, tetapi juga mencegah [penundaan 300 milidetik pada input pengguna](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Pelajari lebih lanjut](https://web.dev/viewport/)."
+    "message": "`<meta name=\"viewport\">` tidak hanya mengoptimalkan aplikasi untuk ukuran layar perangkat seluler, tetapi juga mencegah [penundaan 300 milidetik pada input pengguna](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Pelajari lebih lanjut](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Tag `<meta name=\"viewport\">` tidak ditemukan"

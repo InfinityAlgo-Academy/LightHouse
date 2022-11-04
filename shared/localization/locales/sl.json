@@ -1605,7 +1605,7 @@
     "message": "Stran ima veljavne zemljevide izvorne kode"
   },
   "core/audits/viewport.js | description": {
-    "message": "Poleg tega, da `<meta name=\"viewport\">` optimizira vašo aplikacijo za velikosti zaslona mobilnih naprav, preprečuje tudi [300-milisekundno zakasnitev uporabniških vnosov](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Več o tem](https://web.dev/viewport/)."
+    "message": "Poleg tega, da `<meta name=\"viewport\">` optimizira vašo aplikacijo za velikosti zaslona mobilnih naprav, preprečuje tudi [300-milisekundno zakasnitev uporabniških vnosov](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Več o tem](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Ni oznak `<meta name=\"viewport\">`"

@@ -119,11 +119,11 @@ class ValidSourceMaps extends Audit {
       /* eslint-disable max-len */
       {
         key: 'scriptUrl',
-        itemType: 'url',
+        valueType: 'url',
         subItemsHeading: {key: 'error'},
-        text: str_(i18n.UIStrings.columnURL),
+        label: str_(i18n.UIStrings.columnURL),
       },
-      {key: 'sourceMapUrl', itemType: 'url', text: str_(UIStrings.columnMapURL)},
+      {key: 'sourceMapUrl', valueType: 'url', label: str_(UIStrings.columnMapURL)},
       /* eslint-enable max-len */
     ];
 

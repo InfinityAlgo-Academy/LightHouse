@@ -1605,7 +1605,7 @@
     "message": "Az oldal érvényes forrás-hozzárendelésekkel rendelkezik"
   },
   "core/audits/viewport.js | description": {
-    "message": "A(z) `<meta name=\"viewport\">` nem csupán optimalizálja az alkalmazást a mobilképernyő-méretekre, hanem meg is akadályozza [a 300 ezredmásodperces késleltetést a felhasználói bevitelnél](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [További információ](https://web.dev/viewport/)."
+    "message": "A(z) `<meta name=\"viewport\">` nem csupán optimalizálja az alkalmazást a mobilképernyő-méretekre, hanem meg is akadályozza [a 300 ezredmásodperces késleltetést a felhasználói bevitelnél](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [További információ](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Nem található `<meta name=\"viewport\">` címke"

@@ -1605,7 +1605,7 @@
     "message": "Η σελίδα έχει έγκυρες αντιστοιχίσεις πηγής"
   },
   "core/audits/viewport.js | description": {
-    "message": "Μια μεταετικέτα `<meta name=\"viewport\">` δεν βελτιστοποιεί απλώς την εφαρμογή σας για μεγέθη οθόνης κινητών, αλλά αποτρέπει και [μια καθυστέρηση 300 χιλιοστών του δευτερολέπτου στην εισαγωγή στοιχείων από τους χρήστες](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Μάθετε περισσότερα](https://web.dev/viewport/)."
+    "message": "Μια μεταετικέτα `<meta name=\"viewport\">` δεν βελτιστοποιεί απλώς την εφαρμογή σας για μεγέθη οθόνης κινητών, αλλά αποτρέπει και [μια καθυστέρηση 300 χιλιοστών του δευτερολέπτου στην εισαγωγή στοιχείων από τους χρήστες](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Μάθετε περισσότερα](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Δεν βρέθηκε ετικέτα `<meta name=\"viewport\">`"

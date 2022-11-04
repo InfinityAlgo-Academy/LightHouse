@@ -93,7 +93,7 @@ async function rebaselineArtifacts(artifactKeys) {
 
   await flow.navigate('https://www.mikescerealshack.co');
 
-  await flow.startTimespan({stepName: 'Search input'});
+  await flow.startTimespan({name: 'Search input'});
   await page.type('input', 'call of duty');
   const networkQuietPromise = page.waitForNavigation({waitUntil: ['networkidle0']});
   await page.click('button[type=submit]');
@@ -101,7 +101,7 @@ async function rebaselineArtifacts(artifactKeys) {
   await waitForImagesToLoad(page);
   await flow.endTimespan();
 
-  await flow.snapshot({stepName: 'Search results'});
+  await flow.snapshot({name: 'Search results'});
 
   await flow.navigate('https://www.mikescerealshack.co/corrections');
 
@@ -121,10 +121,12 @@ async function rebaselineArtifacts(artifactKeys) {
       const gatherStep = flowArtifacts.gatherSteps[i];
       const newGatherStep = newFlowArtifacts.gatherSteps[i];
 
-      // Always update these three values
-      gatherStep.config = newGatherStep.config;
       gatherStep.flags = newGatherStep.flags;
-      gatherStep.name = newGatherStep.name;
+      for (const key of Object.keys(gatherStep)) {
+        if (key in newGatherStep) continue;
+        // @ts-expect-error
+        delete gatherStep[key];
+      }
 
       for (const key of artifactKeys) {
         // @ts-expect-error

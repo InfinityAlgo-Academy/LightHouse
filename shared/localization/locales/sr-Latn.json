@@ -1605,7 +1605,7 @@
     "message": "Stranica ima važeće izvorne mape"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` optimizuje aplikaciju za veličine ekrana mobilnih telefona, ali i sprečava [kašnjenje od 300 milisekundi pri unosu korisnika](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Saznajte više](https://web.dev/viewport/)."
+    "message": "`<meta name=\"viewport\">` optimizuje aplikaciju za veličine ekrana mobilnih telefona, ali i sprečava [kašnjenje od 300 milisekundi pri unosu korisnika](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Saznajte više](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Nije pronađena oznaka `<meta name=\"viewport\">`"

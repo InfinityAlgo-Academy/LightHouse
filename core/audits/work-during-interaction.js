@@ -184,11 +184,11 @@ class WorkDuringInteraction extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'phase', itemType: 'text', subItemsHeading: {key: 'url', itemType: 'url'}, text: 'Phase'},
-      {key: 'total', itemType: 'ms', subItemsHeading: {key: 'total', granularity: 1, itemType: 'ms'}, granularity: 1, text: 'Total time'},
-      {key: null, itemType: 'ms', subItemsHeading: {key: 'scripting', granularity: 1, itemType: 'ms'}, text: 'Script evaluation'},
-      {key: null, itemType: 'ms', subItemsHeading: {key: 'layout', granularity: 1, itemType: 'ms'}, text: taskGroups.styleLayout.label},
-      {key: null, itemType: 'ms', subItemsHeading: {key: 'render', granularity: 1, itemType: 'ms'}, text: taskGroups.paintCompositeRender.label},
+      {key: 'phase', valueType: 'text', subItemsHeading: {key: 'url', valueType: 'url'}, label: 'Phase'},
+      {key: 'total', valueType: 'ms', subItemsHeading: {key: 'total', granularity: 1, valueType: 'ms'}, granularity: 1, label: 'Total time'},
+      {key: null, valueType: 'ms', subItemsHeading: {key: 'scripting', granularity: 1, valueType: 'ms'}, label: 'Script evaluation'},
+      {key: null, valueType: 'ms', subItemsHeading: {key: 'layout', granularity: 1, valueType: 'ms'}, label: taskGroups.styleLayout.label},
+      {key: null, valueType: 'ms', subItemsHeading: {key: 'render', granularity: 1, valueType: 'ms'}, label: taskGroups.paintCompositeRender.label},
       /* eslint-enable max-len */
     ];
 
@@ -208,7 +208,7 @@ class WorkDuringInteraction extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'node', itemType: 'node', text: str_(UIStrings.eventTarget)},
+      {key: 'node', valueType: 'node', label: str_(UIStrings.eventTarget)},
     ];
     const elementItems = [{node: Audit.makeNodeItem(responsivenessElement.node)}];
 

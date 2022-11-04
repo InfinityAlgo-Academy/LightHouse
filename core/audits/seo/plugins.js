@@ -134,7 +134,7 @@ class Plugins extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'source', itemType: 'code', text: 'Element source'},
+      {key: 'source', valueType: 'code', label: 'Element source'},
     ];
 
     const details = Audit.makeTableDetails(headings, plugins);

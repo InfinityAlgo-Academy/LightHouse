@@ -1605,7 +1605,7 @@
     "message": "Trang có bản đồ nguồn hợp lệ"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` không chỉ tối ưu hóa ứng dụng của bạn cho các kích thước màn hình trên thiết bị di động mà còn ngăn [ độ trễ 300 mili giây xảy ra đối với hoạt động đầu vào của người dùng](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Tìm hiểu thêm](https://web.dev/viewport/)."
+    "message": "`<meta name=\"viewport\">` không chỉ tối ưu hóa ứng dụng của bạn cho các kích thước màn hình trên thiết bị di động mà còn ngăn [ độ trễ 300 mili giây xảy ra đối với hoạt động đầu vào của người dùng](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Tìm hiểu thêm](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Không tìm thấy thẻ `<meta name=\"viewport\">`"

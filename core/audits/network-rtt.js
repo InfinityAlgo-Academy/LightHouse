@@ -69,8 +69,8 @@ class NetworkRTT extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'origin', itemType: 'text', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'rtt', itemType: 'ms', granularity: 1, text: str_(i18n.UIStrings.columnTimeSpent)},
+      {key: 'origin', valueType: 'text', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'rtt', valueType: 'ms', granularity: 1, label: str_(i18n.UIStrings.columnTimeSpent)},
     ];
 
     const tableDetails = Audit.makeTableDetails(headings, results);

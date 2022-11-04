@@ -1605,7 +1605,7 @@
     "message": "Lapā ir derīgas avota kartes"
   },
   "core/audits/viewport.js | description": {
-    "message": "Parametrs `<meta name=\"viewport\">` ne tikai optimizē jūsu lietotni dažādiem mobilo ierīču ekrāna lielumiem, bet arī novērš [300 milisekunžu aizkavi lietotāja ievadei](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Uzziniet vairāk](https://web.dev/viewport/)."
+    "message": "Parametrs `<meta name=\"viewport\">` ne tikai optimizē jūsu lietotni dažādiem mobilo ierīču ekrāna lielumiem, bet arī novērš [300 milisekunžu aizkavi lietotāja ievadei](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Uzziniet vairāk](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Netika atrasts tags `<meta name=\"viewport\">`"

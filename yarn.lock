@@ -2351,10 +2351,10 @@ chownr@^1.1.1:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.4.tgz#6fc9d7b42d32a583596337666e7d08084da2cc6b"
   integrity sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==
 
-chrome-devtools-frontend@1.0.1034999:
-  version "1.0.1034999"
-  resolved "https://registry.yarnpkg.com/chrome-devtools-frontend/-/chrome-devtools-frontend-1.0.1034999.tgz#2d77667b7cc98e89c120ec24612e63f6bdbb7039"
-  integrity sha512-25DNRBte+MYCmCN2aRllhiOlBaJMn5W6RY4dYcgxdkStFIuIMEanyvE00j0PHr2TdYWxazODFE/J6exb1i53PQ==
+chrome-devtools-frontend@1.0.1040857:
+  version "1.0.1040857"
+  resolved "https://registry.yarnpkg.com/chrome-devtools-frontend/-/chrome-devtools-frontend-1.0.1040857.tgz#4a8ba8805dd773096aa867165a631323c0577277"
+  integrity sha512-N7N9QG+R/DSndqE4wdLBSdbQ9Zus4S/buvNF2EHJOzCJ2hn3I2Z/WWO767flel9Pc4Jvx+Bd/bWlUMHSjgI1Bg==
 
 chrome-launcher@^0.15.1:
   version "0.15.1"
@@ -2777,7 +2777,7 @@ cssom@0.3.x, cssom@^0.3.4:
   resolved "https://registry.yarnpkg.com/cssom/-/cssom-0.3.8.tgz#9f1276f5b2b463f2114d3f2c75250af8c1a36f4a"
   integrity sha512-b0tGHbfegbhPJpxpiBPU2sCkigAqtM9O121le6bbOlgyV+NyGyCmVfJ6QW9eRjz8CpNfWEOYBIMIGRYkLwsIYg==
 
-cssstyle@1.2.1, cssstyle@^1.1.1:
+cssstyle@^1.1.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/cssstyle/-/cssstyle-1.2.1.tgz#3aceb2759eaf514ac1a21628d723d6043a819495"
   integrity sha512-7DYm8qe+gPx/h77QlCyFmX80+fGaE/6A/Ekl0zaszYOubvySO2saYFdQ78P29D0UsULxFKCetDGNaNRUdSF+2A==

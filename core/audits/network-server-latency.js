@@ -67,9 +67,9 @@ class NetworkServerLatency extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'origin', itemType: 'text', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'serverResponseTime', itemType: 'ms', granularity: 1,
-        text: str_(i18n.UIStrings.columnTimeSpent)},
+      {key: 'origin', valueType: 'text', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'serverResponseTime', valueType: 'ms', granularity: 1,
+        label: str_(i18n.UIStrings.columnTimeSpent)},
     ];
 
     const tableDetails = Audit.makeTableDetails(headings, results);

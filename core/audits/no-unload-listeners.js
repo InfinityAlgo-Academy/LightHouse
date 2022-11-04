@@ -50,7 +50,7 @@ class NoUnloadListeners extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
+      {key: 'source', valueType: 'source-location', label: str_(i18n.UIStrings.columnSource)},
     ];
 
     /** @type {Array<{source: LH.Audit.Details.ItemValue}>} */

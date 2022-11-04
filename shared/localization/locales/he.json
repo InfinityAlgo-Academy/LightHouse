@@ -1605,7 +1605,7 @@
     "message": "הדף מכיל מפות מקור חוקיות"
   },
   "core/audits/viewport.js | description": {
-    "message": "תג `<meta name=\"viewport\">` מבצע אופטימיזציה באפליקציה לגדלי מסך בניידים, וגם מונע [עיכוב של 300 אלפיות השנייה בקלט של משתמשים](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [למידע נוסף](https://web.dev/viewport/)."
+    "message": "תג `<meta name=\"viewport\">` מבצע אופטימיזציה באפליקציה לגדלי מסך בניידים, וגם מונע [עיכוב של 300 אלפיות השנייה בקלט של משתמשים](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [למידע נוסף](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "לא נמצא תג `<meta name=\"viewport\">`"

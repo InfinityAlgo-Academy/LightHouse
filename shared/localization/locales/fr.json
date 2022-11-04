@@ -1605,7 +1605,7 @@
     "message": "La page contient des mappages source valides"
   },
   "core/audits/viewport.js | description": {
-    "message": "Un `<meta name=\"viewport\">` optimise votre appli pour les tailles d'écrans de mobiles, mais empêche aussi un [délai d'entrée utilisateur de 300 millisecondes](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [En savoir plus](https://web.dev/viewport/)"
+    "message": "Un `<meta name=\"viewport\">` optimise votre appli pour les tailles d'écrans de mobiles, mais empêche aussi un [délai d'entrée utilisateur de 300 millisecondes](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [En savoir plus](https://web.dev/viewport/)"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Aucune balise `<meta name=\"viewport\">` trouvée"

@@ -87,30 +87,32 @@ class NetworkRequests extends Audit {
     // NOTE(i18n): this audit is only for debug info in the LHR and does not appear in the report.
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'protocol', itemType: 'text', text: 'Protocol'},
-      {key: 'networkEndTime', itemType: 'ms', granularity: 1, text: 'Network End Time'},
-      {key: 'networkRequestTime', itemType: 'ms', granularity: 1, text: 'Network Request Time'},
-      {key: 'rendererEndTime', itemType: 'ms', granularity: 1, text: 'Renderer End Time'},
-      {key: 'rendererStartTime', itemType: 'ms', granularity: 1, text: 'Renderer Start Time'},
-      {key: 'endTime', itemType: 'ms', granularity: 1, text: 'End Time'},
+      {key: 'url', valueType: 'url', label: 'URL'},
+      {key: 'protocol', valueType: 'text', label: 'Protocol'},
+      {key: 'rendererStartTime', valueType: 'ms', granularity: 1, label: 'Renderer Start Time'},
+      {key: 'networkRequestTime', valueType: 'ms', granularity: 1, label: 'Network Request Time'},
+      // eslint-disable-next-line max-len
+      {key: 'responseHeadersEndTime', valueType: 'ms', granularity: 1, label: 'Response Headers End Time'},
+      {key: 'networkEndTime', valueType: 'ms', granularity: 1, label: 'Network End Time'},
+      {key: 'rendererEndTime', valueType: 'ms', granularity: 1, label: 'Renderer End Time'},
+      {key: 'endTime', valueType: 'ms', granularity: 1, label: 'End Time'},
       {
         key: 'transferSize',
-        itemType: 'bytes',
+        valueType: 'bytes',
         displayUnit: 'kb',
         granularity: 1,
-        text: 'Transfer Size',
+        label: 'Transfer Size',
       },
       {
         key: 'resourceSize',
-        itemType: 'bytes',
+        valueType: 'bytes',
         displayUnit: 'kb',
         granularity: 1,
-        text: 'Resource Size',
+        label: 'Resource Size',
       },
-      {key: 'statusCode', itemType: 'text', text: 'Status Code'},
-      {key: 'mimeType', itemType: 'text', text: 'MIME Type'},
-      {key: 'resourceType', itemType: 'text', text: 'Resource Type'},
+      {key: 'statusCode', valueType: 'text', label: 'Status Code'},
+      {key: 'mimeType', valueType: 'text', label: 'MIME Type'},
+      {key: 'resourceType', valueType: 'text', label: 'Resource Type'},
     ];
 
     const tableDetails = Audit.makeTableDetails(headings, results);

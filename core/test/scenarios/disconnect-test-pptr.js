@@ -29,8 +29,7 @@ describe('Disconnect', function() {
     const session = await state.page.target().createCDPSession();
     await session.send('Network.enable');
 
-    const timespan = await lighthouse.startTimespan({
-      page: state.page,
+    const timespan = await lighthouse.startTimespan(state.page, {
       flags: {
         blockedUrlPatterns: ['*'],
       },
