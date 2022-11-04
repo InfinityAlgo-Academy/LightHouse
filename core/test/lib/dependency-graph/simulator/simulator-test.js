@@ -23,6 +23,12 @@ function request(opts) {
   const scheme = opts.scheme || 'http';
   const url = `${scheme}://example.com`;
 
+  // Network records have lots of timings, but the simulator
+  // only cares about a start and an end value, so we keep the
+  // tests in those terms.
+  opts.networkRequestTime = opts.startTime;
+  opts.networkEndTime = opts.endTime;
+
   return Object.assign({
     requestId: opts.requestId || nextRequestId++,
     url,
@@ -202,10 +208,10 @@ describe('DependencyGraph/Simulator', () => {
     });
 
     it('should not reuse connections', () => {
-      const nodeA = new NetworkNode(request({networkRequestTime: 0, networkEndTime: 1}));
-      const nodeB = new NetworkNode(request({networkRequestTime: 2, networkEndTime: 3}));
-      const nodeC = new NetworkNode(request({networkRequestTime: 2, networkEndTime: 5}));
-      const nodeD = new NetworkNode(request({networkRequestTime: 2, networkEndTime: 7}));
+      const nodeA = new NetworkNode(request({startTime: 0, endTime: 1}));
+      const nodeB = new NetworkNode(request({startTime: 2, endTime: 3}));
+      const nodeC = new NetworkNode(request({startTime: 2, endTime: 5}));
+      const nodeD = new NetworkNode(request({startTime: 2, endTime: 7}));
 
       nodeA.addDependent(nodeB);
       nodeA.addDependent(nodeC);
@@ -241,14 +247,13 @@ describe('DependencyGraph/Simulator', () => {
     });
 
     it('should start network requests in startTime order', () => {
-      const rootNode = new NetworkNode(
-        request({networkRequestTime: 0, networkEndTime: 0.05, connectionId: '1'}));
+      const rootNode = new NetworkNode(request({startTime: 0, endTime: 0.05, connectionId: '1'}));
       const imageNodes = [
-        new NetworkNode(request({networkRequestTime: 5})),
-        new NetworkNode(request({networkRequestTime: 4})),
-        new NetworkNode(request({networkRequestTime: 3})),
-        new NetworkNode(request({networkRequestTime: 2})),
-        new NetworkNode(request({networkRequestTime: 1})),
+        new NetworkNode(request({startTime: 5})),
+        new NetworkNode(request({startTime: 4})),
+        new NetworkNode(request({startTime: 3})),
+        new NetworkNode(request({startTime: 2})),
+        new NetworkNode(request({startTime: 1})),
       ];
 
       for (const imageNode of imageNodes) {
@@ -272,13 +277,13 @@ describe('DependencyGraph/Simulator', () => {
 
     it('should start network requests in priority order to break startTime ties', () => {
       const rootNode = new NetworkNode(
-        request({networkRequestTime: 0, networkEndTime: 0.05, connectionId: '1'}));
+        request({startTime: 0, networkEndTime: 0.05, connectionId: '1'}));
       const imageNodes = [
-        new NetworkNode(request({networkRequestTime: 0.1, priority: 'VeryLow'})),
-        new NetworkNode(request({networkRequestTime: 0.2, priority: 'Low'})),
-        new NetworkNode(request({networkRequestTime: 0.3, priority: 'Medium'})),
-        new NetworkNode(request({networkRequestTime: 0.4, priority: 'High'})),
-        new NetworkNode(request({networkRequestTime: 0.5, priority: 'VeryHigh'})),
+        new NetworkNode(request({startTime: 0.1, priority: 'VeryLow'})),
+        new NetworkNode(request({startTime: 0.2, priority: 'Low'})),
+        new NetworkNode(request({startTime: 0.3, priority: 'Medium'})),
+        new NetworkNode(request({startTime: 0.4, priority: 'High'})),
+        new NetworkNode(request({startTime: 0.5, priority: 'VeryHigh'})),
       ];
 
       for (const imageNode of imageNodes) {

@@ -26,6 +26,7 @@ class NetworkNode extends BaseNode {
    */
   get startTime() {
     // TODO change to rendererStartTime
+    // https://github.com/GoogleChrome/lighthouse/issues/14500
     return this._record.networkRequestTime * 1000;
   }
 
