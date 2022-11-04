@@ -1263,6 +1263,12 @@
             "label": "Network Request Time"
           },
           {
+            "key": "responseHeadersEndTime",
+            "valueType": "ms",
+            "granularity": 1,
+            "label": "Response Headers End Time"
+          },
+          {
             "key": "networkEndTime",
             "valueType": "ms",
             "granularity": 1,
@@ -1273,12 +1279,6 @@
             "valueType": "ms",
             "granularity": 1,
             "label": "Renderer End Time"
-          },
-          {
-            "key": "endTime",
-            "valueType": "ms",
-            "granularity": 1,
-            "label": "End Time"
           },
           {
             "key": "transferSize",

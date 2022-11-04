@@ -95,7 +95,6 @@ class NetworkRequests extends Audit {
       {key: 'responseHeadersEndTime', valueType: 'ms', granularity: 1, label: 'Response Headers End Time'},
       {key: 'networkEndTime', valueType: 'ms', granularity: 1, label: 'Network End Time'},
       {key: 'rendererEndTime', valueType: 'ms', granularity: 1, label: 'Renderer End Time'},
-      {key: 'endTime', valueType: 'ms', granularity: 1, label: 'End Time'},
       {
         key: 'transferSize',
         valueType: 'bytes',

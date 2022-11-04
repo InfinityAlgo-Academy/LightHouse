@@ -136,8 +136,9 @@ class NetworkRequest {
     /** When the last byte of the response body is received, in milliseconds. */
     this.networkEndTime = -1;
     /**
-     * Network response is done, this marks the time when the main thread is first available
-     * to actually utilize the network resource, in milliseconds.
+     * Network response is done, in milliseconds; this marks the time when the network resource
+     * is available in the renderer and the main thread is unblocked and able to actually
+     * utilize it.
      *
      * TODO: we don't have this on the CDP, but it exists in trace as ResourceFinish.ts
      * So currently this is equivalent to networkEndTime.
