@@ -112,9 +112,11 @@ describe('NetworkRequest', () => {
     function getRequest() {
       return {
         // units = seconds
+        rendererStartTime: 0,
         networkRequestTime: 0,
-        networkEndTime: 2,
         responseHeadersEndTime: 1,
+        networkEndTime: 2,
+        rendererEndTime: 2,
 
         // units = ms
         responseHeaders: [

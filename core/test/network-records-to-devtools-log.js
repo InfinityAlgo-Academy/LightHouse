@@ -96,6 +96,9 @@ function getResponseReceivedEvent(networkRecord, index) {
     if (timing.requestTime === undefined) {
       timing.requestTime = networkRecord.rendererStartTime || 0;
     }
+    if (timing.receiveHeadersEnd === undefined) {
+      timing.receiveHeadersEnd = networkRecord.responseHeadersEndTime || 0;
+    }
   }
 
   return {
