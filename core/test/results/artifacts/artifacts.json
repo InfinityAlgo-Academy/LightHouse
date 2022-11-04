@@ -10787,8 +10787,8 @@
         "mediaChanges": []
       },
       "transferSize": 903,
-      "startTime": 8697.305899,
-      "endTime": 8697.877161
+      "rendererStartTime": 8697.305899,
+      "networkEndTime": 8697.877161
     },
     {
       "tag": {
@@ -10797,8 +10797,8 @@
         "mediaChanges": []
       },
       "transferSize": 209,
-      "startTime": 8697.306911,
-      "endTime": 8697.887146
+      "rendererStartTime": 8697.306911,
+      "networkEndTime": 8697.887146
     },
     {
       "tag": {
@@ -10807,8 +10807,8 @@
         "mediaChanges": []
       },
       "transferSize": 903,
-      "startTime": 8697.307719,
-      "endTime": 8699.513723
+      "rendererStartTime": 8697.307719,
+      "networkEndTime": 8699.513723
     },
     {
       "tag": {
@@ -10830,8 +10830,8 @@
         ]
       },
       "transferSize": 903,
-      "startTime": 8697.310132,
-      "endTime": 8698.823242999999
+      "rendererStartTime": 8697.310132,
+      "networkEndTime": 8698.823242999999
     },
     {
       "tag": {
@@ -10839,8 +10839,8 @@
         "url": "http://localhost:10200/dobetterweb/dbw_tester.js"
       },
       "transferSize": 1052,
-      "startTime": 8697.313513,
-      "endTime": 8698.45698
+      "rendererStartTime": 8697.313513,
+      "networkEndTime": 8698.45698
     },
     {
       "tag": {
@@ -10848,8 +10848,8 @@
         "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000"
       },
       "transferSize": 223,
-      "startTime": 8697.362422,
-      "endTime": 8703.466927
+      "rendererStartTime": 8697.362422,
+      "networkEndTime": 8703.466927
     }
   ],
   "FontSize": {

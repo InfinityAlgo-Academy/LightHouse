@@ -27,8 +27,8 @@ describe('Network requests audit', () => {
     const output = await NetworkRequests.audit(artifacts, {computedCache: new Map()});
 
     expect(output.details.items[0]).toMatchObject({
-      startTime: 0,
-      endTime: expect.toBeApproximately(701, 0),
+      rendererStartTime: 0,
+      rendererEndTime: expect.toBeApproximately(701, 0),
       finished: true,
       transferSize: 11358,
       resourceSize: 39471,
@@ -38,8 +38,8 @@ describe('Network requests audit', () => {
       priority: 'VeryHigh',
     });
     expect(output.details.items[2]).toMatchObject({
-      startTime: expect.toBeApproximately(711, 0),
-      endTime: expect.toBeApproximately(1289, 0),
+      rendererStartTime: expect.toBeApproximately(711, 0),
+      rendererEndTime: expect.toBeApproximately(1289, 0),
       finished: false,
       transferSize: 26441,
       resourceSize: 0,
@@ -49,8 +49,8 @@ describe('Network requests audit', () => {
       priority: 'Low',
     });
     expect(output.details.items[5]).toMatchObject({
-      startTime: expect.toBeApproximately(717, 0),
-      endTime: expect.toBeApproximately(1296, 0),
+      rendererStartTime: expect.toBeApproximately(717, 0),
+      rendererEndTime: expect.toBeApproximately(1296, 0),
       finished: false,
       transferSize: 58571,
       resourceSize: 0,
@@ -68,8 +68,8 @@ describe('Network requests audit', () => {
 
   it('should handle times correctly', async () => {
     const records = [
-      {url: 'https://example.com/0', startTime: 15.0, endTime: 15.5},
-      {url: 'https://example.com/1', startTime: 15.5, endTime: -1},
+      {url: 'https://example.com/0', rendererStartTime: 15.0, rendererEndTime: 15.5},
+      {url: 'https://example.com/1', rendererStartTime: 15.5, rendererEndTime: -1},
     ];
 
     const artifacts = {
@@ -82,12 +82,12 @@ describe('Network requests audit', () => {
     const output = await NetworkRequests.audit(artifacts, {computedCache: new Map()});
 
     expect(output.details.items).toMatchObject([{
-      startTime: 0,
-      endTime: 500,
+      rendererStartTime: 0,
+      rendererEndTime: 500,
       finished: true,
     }, {
-      startTime: 500,
-      endTime: undefined,
+      rendererStartTime: 500,
+      rendererEndTime: undefined,
       finished: true,
     }]);
   });

@@ -195,9 +195,9 @@ describe('NetworkMonitor', () => {
 
       // One server redirect followed by a client redirect
       const devtoolsLog = networkRecordsToDevtoolsLog([
-        {requestId: '1', startTime: 100, url: 'https://example.com', priority: 'VeryHigh'},
-        {requestId: '1:redirect', startTime: 200, url: 'https://intermediate.example.com', priority: 'VeryHigh'},
-        {requestId: '2', startTime: 300, url: 'https://page.example.com', priority: 'VeryHigh'},
+        {requestId: '1', rendererStartTime: 100, url: 'https://example.com', priority: 'VeryHigh'},
+        {requestId: '1:redirect', rendererStartTime: 200, url: 'https://intermediate.example.com', priority: 'VeryHigh'},
+        {requestId: '2', rendererStartTime: 300, url: 'https://page.example.com', priority: 'VeryHigh'},
       ]);
       for (const event of devtoolsLog) {
         rootDispatch(event);
@@ -371,7 +371,7 @@ describe('NetworkMonitor', () => {
         new NetworkRequest(),
         {
           url,
-          finished: !!data.endTime,
+          finished: !!data.networkEndTime,
           parsedURL: {scheme},
         },
         data
@@ -380,9 +380,9 @@ describe('NetworkMonitor', () => {
 
     it('should find the 0-quiet periods', () => {
       const records = [
-        record({startTime: 0, endTime: 1}),
-        record({startTime: 2, endTime: 3}),
-        record({startTime: 4, endTime: 5}),
+        record({rendererStartTime: 0, networkEndTime: 1}),
+        record({rendererStartTime: 2, networkEndTime: 3}),
+        record({rendererStartTime: 4, networkEndTime: 5}),
       ];
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 0);
@@ -395,11 +395,11 @@ describe('NetworkMonitor', () => {
 
     it('should find the 2-quiet periods', () => {
       const records = [
-        record({startTime: 0, endTime: 1.5}),
-        record({startTime: 0, endTime: 2}),
-        record({startTime: 0, endTime: 2.5}),
-        record({startTime: 2, endTime: 3}),
-        record({startTime: 4, endTime: 5}),
+        record({rendererStartTime: 0, networkEndTime: 1.5}),
+        record({rendererStartTime: 0, networkEndTime: 2}),
+        record({rendererStartTime: 0, networkEndTime: 2.5}),
+        record({rendererStartTime: 2, networkEndTime: 3}),
+        record({rendererStartTime: 4, networkEndTime: 5}),
       ];
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 2);
@@ -408,14 +408,14 @@ describe('NetworkMonitor', () => {
 
     it('should handle unfinished requests', () => {
       const records = [
-        record({startTime: 0, endTime: 1.5}),
-        record({startTime: 0, endTime: 2}),
-        record({startTime: 0, endTime: 2.5}),
-        record({startTime: 2, endTime: 3}),
-        record({startTime: 2}),
-        record({startTime: 2}),
-        record({startTime: 4, endTime: 5}),
-        record({startTime: 5.5}),
+        record({rendererStartTime: 0, networkEndTime: 1.5}),
+        record({rendererStartTime: 0, networkEndTime: 2}),
+        record({rendererStartTime: 0, networkEndTime: 2.5}),
+        record({rendererStartTime: 2, networkEndTime: 3}),
+        record({rendererStartTime: 2}),
+        record({rendererStartTime: 2}),
+        record({rendererStartTime: 4, networkEndTime: 5}),
+        record({rendererStartTime: 5.5}),
       ];
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 2);
@@ -428,8 +428,8 @@ describe('NetworkMonitor', () => {
 
     it('should ignore data URIs', () => {
       const records = [
-        record({startTime: 0, endTime: 1}),
-        record({startTime: 0, endTime: 2, url: 'data:image/png;base64,', protocol: 'data'}),
+        record({rendererStartTime: 0, networkEndTime: 1}),
+        record({rendererStartTime: 0, networkEndTime: 2, url: 'data:image/png;base64,', protocol: 'data'}),
       ];
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 0);
@@ -445,8 +445,8 @@ describe('NetworkMonitor', () => {
       };
 
       const records = [
-        record({startTime: 0, endTime: 1}),
-        record({startTime: 0, endTime: 1.2, ...iframeRequest}),
+        record({rendererStartTime: 0, networkEndTime: 1}),
+        record({rendererStartTime: 0, networkEndTime: 1.2, ...iframeRequest}),
       ];
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 0);
@@ -462,8 +462,8 @@ describe('NetworkMonitor', () => {
       };
 
       const records = [
-        record({startTime: 0, endTime: 1}),
-        record({startTime: 0, endTime: 2, ...quicRequest}),
+        record({rendererStartTime: 0, networkEndTime: 1}),
+        record({rendererStartTime: 0, networkEndTime: 2, ...quicRequest}),
       ];
 
       const periods = NetworkMonitor.findNetworkQuietPeriods(records, 0);

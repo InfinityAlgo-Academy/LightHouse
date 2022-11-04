@@ -12,25 +12,25 @@ import {createTestTrace} from '../create-test-trace.js';
 
 const FAILING_THREE_REDIRECTS = [{
   requestId: '1',
-  startTime: 0,
+  rendererStartTime: 0,
   priority: 'VeryHigh',
   url: 'http://example.com/',
   timing: {receiveHeadersEnd: 11},
 }, {
   requestId: '1:redirect',
-  startTime: 1,
+  rendererStartTime: 1,
   priority: 'VeryHigh',
   url: 'https://example.com/',
   timing: {receiveHeadersEnd: 12},
 }, {
   requestId: '1:redirect:redirect',
-  startTime: 2,
+  rendererStartTime: 2,
   priority: 'VeryHigh',
   url: 'https://m.example.com/',
   timing: {receiveHeadersEnd: 17},
 }, {
   requestId: '1:redirect:redirect:redirect',
-  startTime: 3,
+  rendererStartTime: 3,
   priority: 'VeryHigh',
   url: 'https://m.example.com/final',
   timing: {receiveHeadersEnd: 19},
@@ -38,19 +38,19 @@ const FAILING_THREE_REDIRECTS = [{
 
 const FAILING_TWO_REDIRECTS = [{
   requestId: '1',
-  startTime: 445,
+  rendererStartTime: 445,
   priority: 'VeryHigh',
   url: 'http://lisairish.com/',
   timing: {receiveHeadersEnd: 446},
 }, {
   requestId: '1:redirect',
-  startTime: 446,
+  rendererStartTime: 446,
   priority: 'VeryHigh',
   url: 'https://lisairish.com/',
   timing: {receiveHeadersEnd: 447},
 }, {
   requestId: '1:redirect:redirect',
-  startTime: 447,
+  rendererStartTime: 447,
   priority: 'VeryHigh',
   url: 'https://www.lisairish.com/',
   timing: {receiveHeadersEnd: 448},
@@ -58,13 +58,13 @@ const FAILING_TWO_REDIRECTS = [{
 
 const SUCCESS_ONE_REDIRECT = [{
   requestId: '1',
-  startTime: 135,
+  rendererStartTime: 135,
   priority: 'VeryHigh',
   url: 'https://lisairish.com/',
   timing: {receiveHeadersEnd: 136},
 }, {
   requestId: '1:redirect',
-  startTime: 136,
+  rendererStartTime: 136,
   priority: 'VeryHigh',
   url: 'https://www.lisairish.com/',
   timing: {receiveHeadersEnd: 139},
@@ -72,7 +72,7 @@ const SUCCESS_ONE_REDIRECT = [{
 
 const SUCCESS_NOREDIRECT = [{
   requestId: '1',
-  startTime: 135.873,
+  rendererStartTime: 135.873,
   priority: 'VeryHigh',
   url: 'https://www.google.com/',
   timing: {receiveHeadersEnd: 140},
@@ -81,21 +81,21 @@ const SUCCESS_NOREDIRECT = [{
 const FAILING_CLIENTSIDE = [
   {
     requestId: '1',
-    startTime: 445,
+    rendererStartTime: 445,
     priority: 'VeryHigh',
     url: 'http://lisairish.com/',
     timing: {receiveHeadersEnd: 446},
   },
   {
     requestId: '1:redirect',
-    startTime: 446,
+    rendererStartTime: 446,
     priority: 'VeryHigh',
     url: 'https://lisairish.com/',
     timing: {receiveHeadersEnd: 447},
   },
   {
     requestId: '2',
-    startTime: 447,
+    rendererStartTime: 447,
     priority: 'VeryHigh',
     url: 'https://www.lisairish.com/',
     timing: {receiveHeadersEnd: 448},

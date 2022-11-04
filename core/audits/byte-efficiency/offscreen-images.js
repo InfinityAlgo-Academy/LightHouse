@@ -37,7 +37,7 @@ const IGNORE_THRESHOLD_IN_BYTES = 2048;
 const IGNORE_THRESHOLD_IN_PERCENT = 75;
 const IGNORE_THRESHOLD_IN_MS = 50;
 
-/** @typedef {{node: LH.Audit.Details.NodeValue, url: string, requestStartTime: number, totalBytes: number, wastedBytes: number, wastedPercent: number}} WasteResult */
+/** @typedef {{node: LH.Audit.Details.NodeValue, url: string, rendererStartTime: number, totalBytes: number, wastedBytes: number, wastedPercent: number}} WasteResult */
 
 class OffscreenImages extends ByteEfficiencyAudit {
   /**
@@ -102,7 +102,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
     return {
       node: ByteEfficiencyAudit.makeNodeItem(image.node),
       url,
-      requestStartTime: networkRecord.startTime,
+      rendererStartTime: networkRecord.rendererStartTime,
       totalBytes,
       wastedBytes,
       wastedPercent: 100 * wastedRatio,
@@ -151,7 +151,7 @@ class OffscreenImages extends ByteEfficiencyAudit {
     return images.filter(image => {
       if (image.wastedBytes < IGNORE_THRESHOLD_IN_BYTES) return false;
       if (image.wastedPercent < IGNORE_THRESHOLD_IN_PERCENT) return false;
-      return image.requestStartTime < interactiveTimestamp / 1e6 - IGNORE_THRESHOLD_IN_MS / 1000;
+      return image.rendererStartTime < interactiveTimestamp / 1e6 - IGNORE_THRESHOLD_IN_MS / 1000;
     });
   }
 

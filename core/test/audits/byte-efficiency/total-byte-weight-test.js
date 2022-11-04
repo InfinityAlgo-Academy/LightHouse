@@ -19,8 +19,8 @@ function generateRequest(url, size, baseUrl = 'http://google.com/') {
     url: parsedUrl.href,
     finished: true,
     transferSize: size * 1024,
-    responseReceivedTime: 1000,
-    endTime: 2000,
+    responseHeadersEndTime: 1000,
+    networkEndTime: 2000,
     parsedURL: {
       scheme,
     },

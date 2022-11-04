@@ -155,7 +155,7 @@ class TagsBlockingFirstPaint extends FRGatherer {
    */
   static async findBlockingTags(driver, networkRecords) {
     const firstRequestEndTime = networkRecords.reduce(
-      (min, record) => Math.min(min, record.endTime),
+      (min, record) => Math.min(min, record.networkEndTime),
       Infinity
     );
     const tags = await driver.executionContext.evaluate(collectTagsThatBlockFirstPaint, {args: []});
@@ -167,7 +167,7 @@ class TagsBlockingFirstPaint extends FRGatherer {
       const request = requests.get(tag.url);
       if (!request || request.isLinkPreload) continue;
 
-      let endTime = request.endTime;
+      let endTime = request.networkEndTime;
       let mediaChanges;
 
       if (tag.tagName === 'LINK') {
@@ -180,7 +180,7 @@ class TagsBlockingFirstPaint extends FRGatherer {
         if (timesResourceBecameNonBlocking.length > 0) {
           const earliestNonBlockingTime = Math.min(...timesResourceBecameNonBlocking);
           const lastTimeResourceWasBlocking = Math.max(
-            request.startTime,
+            request.rendererStartTime,
             firstRequestEndTime + earliestNonBlockingTime / 1000
           );
           endTime = Math.min(endTime, lastTimeResourceWasBlocking);
@@ -194,8 +194,8 @@ class TagsBlockingFirstPaint extends FRGatherer {
       result.push({
         tag: {tagName, url, mediaChanges},
         transferSize: request.transferSize,
-        startTime: request.startTime,
-        endTime,
+        rendererStartTime: request.rendererStartTime,
+        networkEndTime: endTime,
       });
 
       // Prevent duplicates from showing up again

@@ -31,9 +31,9 @@ async function createChainsFromMockRecords(prioritiesList, edges, setExtrasFn, r
     priority,
     initiator: {type: 'parser'},
     statusCode: 200,
-    startTime: index,
-    responseReceivedTime: index + 0.5,
-    endTime: index + 1,
+    rendererStartTime: index,
+    responseHeadersEndTime: index + 0.5,
+    networkEndTime: index + 1,
   }));
 
   if (setExtrasFn) setExtrasFn(networkRecords);
@@ -284,7 +284,7 @@ describe('CriticalRequestChain computed artifact', () => {
         // Make a fake redirect. Network recorder *appends* `:redirect` on a redirected request.
         networkRecords[1].requestId = '1';
         networkRecords[1].resourceType = undefined;
-        networkRecords[1].responseReceivedTime = 2;
+        networkRecords[1].responseHeadersEndTime = 2;
 
         networkRecords[2].requestId = '1:redirect';
         networkRecords[2].url = 'https://example.com/redirected-stylesheet';
@@ -388,7 +388,7 @@ describe('CriticalRequestChain computed artifact', () => {
         networkRecords[3].url = 'https://example.com/redirect-iframe-src';
         networkRecords[3].resourceType = undefined;
         networkRecords[3].frameId = '4';
-        networkRecords[3].responseReceivedTime = 4;
+        networkRecords[3].responseHeadersEndTime = 4;
         // 5th record is an iframe in the page that was redirect destination.
         networkRecords[4].requestId = '3:redirect';
         networkRecords[4].url = 'https://example.com/redirect-iframe-dest';

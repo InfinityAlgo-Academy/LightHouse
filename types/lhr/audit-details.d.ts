@@ -34,6 +34,7 @@ declare module Details {
     [id: string]: {
       request: {
         url: string;
+        // TODO: Do we want to update these as well?
         startTime: number;
         endTime: number;
         responseReceivedTime: number;

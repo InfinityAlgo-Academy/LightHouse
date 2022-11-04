@@ -45,7 +45,7 @@ class CriticalRequestChainRenderer {
     const rootNodes = Object.keys(tree);
     if (rootNodes.length > 0) {
       const node = tree[rootNodes[0]];
-      startTime = node.request.startTime;
+      startTime = node.request.rendererStartTime;
     }
 
     return {tree, startTime, transferSize: 0};
@@ -134,7 +134,7 @@ class CriticalRequestChainRenderer {
     treevalEl.append(linkEl);
 
     if (!segment.hasChildren) {
-      const {startTime, endTime, transferSize} = segment.node.request;
+      const {rendererStartTime: startTime, rendererEndTime: endTime, transferSize} = segment.node.request;
       const span = dom.createElement('span', 'lh-crc-node__chain-duration');
       span.textContent = ' - ' + Util.i18n.formatMilliseconds((endTime - startTime) * 1000) + ', ';
       const span2 = dom.createElement('span', 'lh-crc-node__chain-duration');

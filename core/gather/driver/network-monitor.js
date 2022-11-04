@@ -218,9 +218,9 @@ class NetworkMonitor extends NetworkMonitorEventEmitter {
       if (request.protocol === 'ws' || request.protocol === 'wss') return;
 
       // convert the network timestamp to ms
-      timeBoundaries.push({time: request.startTime * 1000, isStart: true});
+      timeBoundaries.push({time: request.networkRequestTime * 1000, isStart: true});
       if (request.finished) {
-        timeBoundaries.push({time: request.endTime * 1000, isStart: false});
+        timeBoundaries.push({time: request.networkEndTime * 1000, isStart: false});
       }
     });
 

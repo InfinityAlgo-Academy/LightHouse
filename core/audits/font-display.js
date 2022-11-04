@@ -165,7 +165,7 @@ class FontDisplay extends Audit {
       .map(record => {
         // In reality the end time should be calculated with paint time included
         // all browsers wait 3000ms to block text so we make sure 3000 is our max wasted time
-        const wastedMs = Math.min((record.endTime - record.startTime) * 1000, 3000);
+        const wastedMs = Math.min((record.rendererEndTime - record.rendererStartTime) * 1000, 3000);
 
         return {
           url: record.url,

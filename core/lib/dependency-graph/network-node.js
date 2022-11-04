@@ -25,14 +25,15 @@ class NetworkNode extends BaseNode {
    * @return {number}
    */
   get startTime() {
-    return this._record.startTime * 1000 * 1000;
+    // TODO change to rendererStartTime
+    return this._record.networkRequestTime * 1000 * 1000;
   }
 
   /**
    * @return {number}
    */
   get endTime() {
-    return this._record.endTime * 1000 * 1000;
+    return this._record.networkEndTime * 1000 * 1000;
   }
 
   /**
