@@ -322,7 +322,7 @@
   color: var(--report-text-color);
 }
 
-.lh-root :focus {
+.lh-root :focus-visible {
     outline: -webkit-focus-ring-color auto 3px;
 }
 .lh-root summary:focus {
