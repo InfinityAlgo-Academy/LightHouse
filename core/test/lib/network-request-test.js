@@ -112,9 +112,11 @@ describe('NetworkRequest', () => {
     function getRequest() {
       return {
         // units = ms
-        networkRequestTime: 0,
-        networkEndTime: 2000,
+        rendererStartTime: 10,
+        networkRequestTime: 50,
         responseHeadersEndTime: 1000,
+        networkEndTime: 2000,
+        rendererEndTime: 2000,
 
         // units = ms
         responseHeaders: [
@@ -134,11 +136,11 @@ describe('NetworkRequest', () => {
       global.isLightrider = true;
       const record = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
 
-      expect(record.networkRequestTime).toStrictEqual(0);
+      expect(record.networkRequestTime).toStrictEqual(50);
       expect(record.networkEndTime).toStrictEqual(2000);
       expect(record.responseHeadersEndTime).toStrictEqual(1000);
       expect(record.lrStatistics).toStrictEqual({
-        endTimeDeltaMs: -8000,
+        endTimeDeltaMs: -8050,
         TCPMs: 5000,
         requestMs: 2500,
         responseMs: 2500,
@@ -227,7 +229,7 @@ describe('NetworkRequest', () => {
       const record = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
 
       expect(record.lrStatistics).toStrictEqual({
-        endTimeDeltaMs: -8000,
+        endTimeDeltaMs: -8050,
         TCPMs: 0,
         requestMs: 0,
         responseMs: 10000,
@@ -245,7 +247,7 @@ describe('NetworkRequest', () => {
       const record = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
 
       expect(record.lrStatistics).toStrictEqual({
-        endTimeDeltaMs: -8000,
+        endTimeDeltaMs: -8050,
         TCPMs: 1000,
         requestMs: 0,
         responseMs: 9000,
@@ -269,7 +271,7 @@ describe('NetworkRequest', () => {
         sslStart: 35,
       });
       expect(lrRecord.lrStatistics).toStrictEqual({
-        endTimeDeltaMs: -8000,
+        endTimeDeltaMs: -8050,
         TCPMs: 5000,
         requestMs: 2500,
         responseMs: 2500,

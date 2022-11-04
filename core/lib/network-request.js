@@ -255,7 +255,7 @@ class NetworkRequest {
    * @param {LH.Crdp.Network.ResponseReceivedEvent} data
    */
   onResponseReceived(data) {
-    this._onResponse(data.response, data.timestamp * 1000, data.type);
+    this._onResponse(data.response, data.timestamp, data.type);
     this._updateProtocolForLightrider();
     this.frameId = data.frameId;
   }
@@ -321,7 +321,7 @@ class NetworkRequest {
    */
   onRedirectResponse(data) {
     if (!data.redirectResponse) throw new Error('Missing redirectResponse data');
-    this._onResponse(data.redirectResponse, data.timestamp * 1000, data.type);
+    this._onResponse(data.redirectResponse, data.timestamp, data.type);
     this.resourceType = undefined;
     this.finished = true;
     this.networkEndTime = data.timestamp * 1000;
@@ -339,10 +339,10 @@ class NetworkRequest {
 
   /**
    * @param {LH.Crdp.Network.Response} response
-   * @param {number} ms
+   * @param {number} timestamp in seconds
    * @param {LH.Crdp.Network.ResponseReceivedEvent['type']=} resourceType
    */
-  _onResponse(response, ms, resourceType) {
+  _onResponse(response, timestamp, resourceType) {
     this.url = response.url;
 
     this.connectionId = String(response.connectionId);
@@ -350,7 +350,7 @@ class NetworkRequest {
 
     if (response.protocol) this.protocol = response.protocol;
 
-    this.responseHeadersEndTime = ms;
+    this.responseHeadersEndTime = timestamp * 1000;
 
     this.transferSize = response.encodedDataLength;
     if (typeof response.fromDiskCache === 'boolean') this.fromDiskCache = response.fromDiskCache;

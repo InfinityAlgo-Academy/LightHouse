@@ -91,12 +91,12 @@ function getRequestServedFromCacheEvent(networkRecord, index) {
  */
 function getResponseReceivedEvent(networkRecord, index) {
   const headers = headersArrayToHeadersDict(networkRecord.responseHeaders);
-  let timing;
-  if (networkRecord.timing) {
-    timing = {...networkRecord.timing};
-    if (timing.requestTime === undefined) {
-      timing.requestTime = networkRecord.networkRequestTime / 1000 || 0;
-    }
+  const timing = networkRecord.timing ? {...networkRecord.timing} : {};
+  if (timing.requestTime === undefined) {
+    timing.requestTime = networkRecord.networkRequestTime / 1000 || 0;
+  }
+  if (timing.receiveHeadersEnd === undefined) {
+    timing.receiveHeadersEnd = networkRecord.responseHeadersEndTime || 0;
   }
 
   return {
