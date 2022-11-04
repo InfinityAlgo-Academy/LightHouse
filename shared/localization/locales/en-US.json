@@ -594,7 +594,7 @@
     "message": "Syntax"
   },
   "core/audits/csp-xss.js | metaTagMessage": {
-    "message": "The page contains a CSP defined in a <meta> tag. Consider defining the CSP in an HTTP header if you can."
+    "message": "The page contains a CSP defined in a <meta> tag. Consider moving the CSP to an HTTP header or defining another strict CSP in an HTTP header."
   },
   "core/audits/csp-xss.js | noCsp": {
     "message": "No CSP found in enforcement mode"

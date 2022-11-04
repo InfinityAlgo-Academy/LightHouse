@@ -594,7 +594,7 @@
     "message": "Ŝýn̂t́âx́"
   },
   "core/audits/csp-xss.js | metaTagMessage": {
-    "message": "T̂h́ê ṕâǵê ćôńt̂áîńŝ á ĈŚP̂ d́êf́îńêd́ îń â <ḿêt́â> t́âǵ. Ĉón̂śîd́êŕ d̂éf̂ín̂ín̂ǵ t̂h́ê ĆŜṔ îń âń ĤT́T̂Ṕ ĥéâd́êŕ îf́ ŷóû ćâń."
+    "message": "T̂h́ê ṕâǵê ćôńt̂áîńŝ á ĈŚP̂ d́êf́îńêd́ îń â <ḿêt́â> t́âǵ. Ĉón̂śîd́êŕ m̂óv̂ín̂ǵ t̂h́ê ĆŜṔ t̂ó âń ĤT́T̂Ṕ ĥéâd́êŕ ôŕ d̂éf̂ín̂ín̂ǵ âńôt́ĥér̂ śt̂ŕîćt̂ ĆŜṔ îń âń ĤT́T̂Ṕ ĥéâd́êŕ."
   },
   "core/audits/csp-xss.js | noCsp": {
     "message": "N̂ó ĈŚP̂ f́ôún̂d́ îń êńf̂ór̂ćêḿêńt̂ ḿôd́ê"
