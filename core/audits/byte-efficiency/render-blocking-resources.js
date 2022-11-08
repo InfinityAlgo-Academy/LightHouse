@@ -292,7 +292,7 @@ class RenderBlockingResources extends Audit {
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
 
-    const details = Audit.makeOpportunityDetails(headings, results, undefined, wastedMs);
+    const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
 
     return {
       displayValue,

@@ -466,33 +466,14 @@ export class DetailsRenderer {
 
     const tbodyElem = this._dom.createChildOf(tableElem, 'tbody');
     let even = true;
-    if (details.groups) {
-      for (const group of details.groups) {
-        const groupItem = this._renderTableRow(group, headings);
-        groupItem.classList.add('lh-group-item-row');
-        tbodyElem.append(groupItem);
-
-        for (const item of details.items.filter(
-            (item) => item[group.groupBy] === group[group.groupBy])) {
-          const rowsFragment = this._renderTableRowsFromItem(item, headings);
-          for (const rowEl of this._dom.findAll('tr', rowsFragment)) {
-            // For zebra styling.
-            rowEl.classList.add(even ? 'lh-row--even' : 'lh-row--odd');
-            even = !even;
-          }
-          tbodyElem.append(rowsFragment);
-        }
+    for (const item of details.items) {
+      const rowsFragment = this._renderTableRowsFromItem(item, headings);
+      for (const rowEl of this._dom.findAll('tr', rowsFragment)) {
+        // For zebra styling.
+        rowEl.classList.add(even ? 'lh-row--even' : 'lh-row--odd');
       }
-    } else {
-      for (const item of details.items) {
-        const rowsFragment = this._renderTableRowsFromItem(item, headings);
-        for (const rowEl of this._dom.findAll('tr', rowsFragment)) {
-          // For zebra styling.
-          rowEl.classList.add(even ? 'lh-row--even' : 'lh-row--odd');
-        }
-        even = !even;
-        tbodyElem.append(rowsFragment);
-      }
+      even = !even;
+      tbodyElem.append(rowsFragment);
     }
 
     return tableElem;

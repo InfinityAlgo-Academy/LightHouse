@@ -242,7 +242,7 @@ class PreloadLCPImageAudit extends Audit {
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
-    const details = Audit.makeOpportunityDetails(headings, results, undefined, wastedMs);
+    const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
 
     // If LCP element was an image and had valid network records (regardless of
     // if it should be preloaded), it will be found first in the `initiatorPath`.

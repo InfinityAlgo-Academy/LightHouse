@@ -70,7 +70,6 @@ declare module Details {
     overallSavingsBytes?: number;
     headings: OpportunityColumnHeading[];
     items: OpportunityItem[];
-    groups?: OpportunityGroupItem[];
     debugData?: DebugData;
   }
 
@@ -132,7 +131,6 @@ declare module Details {
       wastedBytes?: number;
     };
     debugData?: DebugData;
-    groups?: OpportunityGroupItem[];
   }
 
   /** A table item for rows that are nested within a top-level TableItem (row). */
@@ -196,10 +194,6 @@ declare module Details {
     [p: string]: undefined | ItemValue;
   }
 
-  interface TableGroupItem {
-    [p: string]: undefined | ItemValue;
-  }
-
   interface OpportunityColumnHeading {
     /**
      * The name of the property within items being described.
@@ -232,17 +226,6 @@ declare module Details {
     url: string;
     wastedBytes?: number;
     totalBytes?: number;
-    wastedMs?: number;
-    debugData?: DebugData;
-    [p: string]: undefined | ItemValue;
-  }
-
-  interface OpportunityGroupItem extends TableGroupItem {
-    groupBy: string;
-    entity?: string;
-    wastedBytes?: number;
-    totalBytes?: number;
-    wastedPercent?: number;
     wastedMs?: number;
     debugData?: DebugData;
     [p: string]: undefined | ItemValue;
