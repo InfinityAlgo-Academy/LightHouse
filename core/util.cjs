@@ -471,7 +471,7 @@ class Util {
 
     const groupsByName = new Map();
     for (const item of details.items) {
-      if (!item.entity && item.url) {
+      if (!item.entity && typeof item.url === 'string') {
         // If its not explicitly provided in the LHR, we'll try to resolve to an entity
         // TODO: support other types beyond 'url' like 'source-location'.
         const origin = Util.getOrigin(item.url);
@@ -503,7 +503,7 @@ class Util {
         wastedBytes: 0,
         entity: {
           type: 'link',
-          url: matchedEntity.url,
+          url: matchedEntity.homepage,
           text: matchedEntity.name,
         },
         subItems: {

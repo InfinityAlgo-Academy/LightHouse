@@ -369,6 +369,7 @@ export class DetailsRenderer {
    * @return {LH.Audit.Details.OpportunityColumnHeading | null}
    */
   _getDerivedsubItemsHeading(heading) {
+    // TODO: Dear alex,  The changes I made here are pretty looseygoosey. I don't feel very confident about 'em
     if (!heading) return null;
     return {
       key: heading.subItemsHeading?.key || heading.key,
@@ -438,6 +439,7 @@ export class DetailsRenderer {
     for (const subItem of item.subItems.items) {
       const rowsFragment = this._renderTableRowsFromItem(subItem, subItemsHeadings);
       for (const elem of rowsFragment.children) {
+        // ugh. Pretty gross way to manage the recursion depth, Paul. :/
         elem.classList.add(elem.classList.contains('lh-sub-item-row')
           ? 'lh-subsub-item-row'
           : 'lh-sub-item-row');

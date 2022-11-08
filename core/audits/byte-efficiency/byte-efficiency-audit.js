@@ -231,6 +231,7 @@ class ByteEfficiencyAudit extends Audit {
       displayValue = str_(i18n.UIStrings.displayValueByteSavings, {wastedBytes});
     }
 
+    // Alex, I kinda wonder if we could do this over in Audit.generateAuditResult() to make it generically work on ALL audits
     for (const item of results) {
       item.entity = classifiedEntities.byURL.get(item.url)?.name;
     }
