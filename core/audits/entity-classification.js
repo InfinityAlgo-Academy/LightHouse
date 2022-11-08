@@ -43,7 +43,7 @@ class EntityClassification extends Audit {
       const shortEntity = {
         name: entity.name,
         company: entity.company,
-        domains: entity.domains,
+        homepage: entity.homepage,
       };
 
       // Reduce payload size in LHR by omitting where falsy.

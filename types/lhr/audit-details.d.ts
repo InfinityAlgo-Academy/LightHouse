@@ -86,8 +86,8 @@ declare module Details {
    */
   interface EntityClassificationEntity {
     name: string;
-    domains: Array<string>;
     company?: string;
+    homepage?: string;
     isFirstParty?: boolean;
     isUnrecognized?: boolean;
   }
