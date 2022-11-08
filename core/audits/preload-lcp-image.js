@@ -241,8 +241,9 @@ class PreloadLCPImageAudit extends Audit {
     ]);
 
     const graph = lanternLCP.pessimisticGraph;
-    // eslint-disable-next-line max-len
-    const {lcpNodeToPreload, initiatorPath, missingInitiator} = PreloadLCPImageAudit.getLCPNodeToPreload(mainResource, graph, lcpElement, artifacts.ImageElements);
+    const {lcpNodeToPreload, initiatorPath, missingInitiator} =
+      PreloadLCPImageAudit.getLCPNodeToPreload(mainResource, graph, lcpElement,
+        artifacts.ImageElements);
 
     const {results, wastedMs} =
       PreloadLCPImageAudit.computeWasteWithGraph(lcpElement, lcpNodeToPreload, graph, simulator);
@@ -267,12 +268,24 @@ class PreloadLCPImageAudit extends Audit {
       };
     }
 
+    const warnings = [];
+    if (missingInitiator) {
+      // eslint-disable-next-line max-len
+      warnings.push([
+        'Could not determine what initiated the image.',
+        'We know for certain that the browser could not discover the img from the HTML',
+        'Known reasons: it was made lazy via `img.loading = "lazy"`',
+        'If that is not the case for your LCP image, please file a bug on https://github.com/GoogleChrome/lighthouse to let us know.',
+      ].join(' '));
+    }
+
     return {
-      score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
+      score: missingInitiator ? 0 : ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
       numericValue: wastedMs,
       numericUnit: 'millisecond',
       displayValue: wastedMs ? str_(i18n.UIStrings.displayValueMsSavings, {wastedMs}) : '',
       details,
+      warnings,
     };
   }
 }
