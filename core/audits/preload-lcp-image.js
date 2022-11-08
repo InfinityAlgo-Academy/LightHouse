@@ -121,7 +121,7 @@ class PreloadLCPImageAudit extends Audit {
     return {
       lcpNodeToPreload,
       initiatorPath,
-      // Only used for debugdata, to track the case where Chrome can't give us an initiator chain.
+      // Tracks the case where Chrome can't give us an initiator chain.
       // See img.lazy note in `shouldPreloadRequest`.
       missingInitiator: initiatorPath && !lcpNode.record.initiatorRequest,
     };
