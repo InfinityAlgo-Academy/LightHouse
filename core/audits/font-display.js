@@ -19,7 +19,7 @@ const UIStrings = {
   title: 'All text remains visible during webfont loads',
   /** Title of a diagnostic audit that provides detail on the load of the page's webfonts. Often the text is invisible for seconds before the webfont resource is loaded. This imperative title is shown to users when there is a significant amount of execution time that could be reduced. */
   failureTitle: 'Ensure text remains visible during webfont load',
-  /** Description of a Lighthouse audit that tells the user *why* they should use the font-display CSS feature. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should use the font-display CSS feature. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description:
     'Leverage the `font-display` CSS feature to ensure text is user-visible while ' +
     'webfonts are loading. ' +
@@ -100,7 +100,7 @@ class FontDisplay extends Audit {
         for (const relativeURL of relativeURLs) {
           try {
             const relativeRoot = UrlUtils.isValid(stylesheet.header.sourceURL) ?
-              stylesheet.header.sourceURL : artifacts.URL.finalUrl;
+              stylesheet.header.sourceURL : artifacts.URL.finalDisplayedUrl;
             const absoluteURL = new URL(relativeURL, relativeRoot);
             targetURLSet.add(absoluteURL.href);
           } catch (err) {
@@ -175,8 +175,8 @@ class FontDisplay extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'wastedMs', itemType: 'ms', text: str_(i18n.UIStrings.columnWastedMs)},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'wastedMs', valueType: 'ms', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
 
     const details = Audit.makeTableDetails(headings, results);

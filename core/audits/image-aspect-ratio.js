@@ -20,7 +20,7 @@ const UIStrings = {
   title: 'Displays images with correct aspect ratio',
   /** Title of a Lighthouse audit that provides detail on the aspect ratios of all images on the page. This descriptive title is shown to users when not all images use correct aspect ratios. */
   failureTitle: 'Displays images with incorrect aspect ratio',
-  /** Description of a Lighthouse audit that tells the user why they should maintain the correct aspect ratios for all images. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why they should maintain the correct aspect ratios for all images. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Image display dimensions should match natural aspect ratio. ' +
     '[Learn more about image aspect ratio](https://web.dev/image-aspect-ratio/).',
   /**  Label for a column in a data table; entries in the column will be the numeric aspect ratio of an image as displayed in a web page. */
@@ -105,10 +105,10 @@ class ImageAspectRatio extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'node', itemType: 'node', text: ''},
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'displayedAspectRatio', itemType: 'text', text: str_(UIStrings.columnDisplayed)},
-      {key: 'actualAspectRatio', itemType: 'text', text: str_(UIStrings.columnActual)},
+      {key: 'node', valueType: 'node', label: ''},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'displayedAspectRatio', valueType: 'text', label: str_(UIStrings.columnDisplayed)},
+      {key: 'actualAspectRatio', valueType: 'text', label: str_(UIStrings.columnActual)},
     ];
 
     return {

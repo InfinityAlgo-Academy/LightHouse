@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import {parseManifest} from '../../lib/manifest-parser.js';
 import {readJson} from '../test-utils.js';
@@ -545,23 +545,6 @@ describe('Manifest Parser', function() {
       assert.strictEqual(parsedManifest.background_color.warning, undefined);
       assert.strictEqual(parsedManifest.theme_color.value, themeColor);
       assert.strictEqual(parsedManifest.theme_color.warning, undefined);
-    });
-
-    it('warns on invalid colors', () => {
-      const bgColor = 'notarealcolor';
-      const themeColor = '#0123456789';
-      const parsedManifest = getParsedManifest(bgColor, themeColor).value;
-
-      assert.deepStrictEqual(parsedManifest.background_color, {
-        raw: bgColor,
-        value: undefined,
-        warning: 'ERROR: color parsing failed.',
-      });
-      assert.deepStrictEqual(parsedManifest.theme_color, {
-        raw: themeColor,
-        value: undefined,
-        warning: 'ERROR: color parsing failed.',
-      });
     });
 
     it('warns when colors are not strings', () => {

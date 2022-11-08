@@ -14,7 +14,7 @@ import {evaluateRawCspsForXss, getTranslatedDescription} from '../lib/csp-evalua
 const UIStrings = {
   /** Title of a Lighthouse audit that evaluates the security of a page's CSP. "CSP" stands for "Content Security Policy". "XSS" stands for "Cross Site Scripting". "CSP" and "XSS" do not need to be translated. */
   title: 'Ensure CSP is effective against XSS attacks',
-  /** Description of a Lighthouse audit that evaluates the security of a page's CSP. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. "CSP" stands for "Content Security Policy". "XSS" stands for "Cross Site Scripting". "CSP" and "XSS" do not need to be translated. */
+  /** Description of a Lighthouse audit that evaluates the security of a page's CSP. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. "CSP" stands for "Content Security Policy". "XSS" stands for "Cross Site Scripting". "CSP" and "XSS" do not need to be translated. */
   description: 'A strong Content Security Policy (CSP) significantly ' +
     'reduces the risk of cross-site scripting (XSS) attacks. ' +
     '[Learn how to use a CSP to prevent XSS](https://web.dev/csp-xss/)',
@@ -22,7 +22,8 @@ const UIStrings = {
   noCsp: 'No CSP found in enforcement mode',
   /** Message shown when one or more CSPs are defined in a <meta> tag. Shown in a table with a list of other CSP bypasses and warnings. "CSP" stands for "Content Security Policy". "CSP" and "HTTP" do not need to be translated. */
   metaTagMessage: 'The page contains a CSP defined in a <meta> tag. ' +
-    'Consider defining the CSP in an HTTP header if you can.',
+    'Consider moving the CSP to an HTTP header or ' +
+    'defining another strict CSP in an HTTP header.',
   /** Label for a column in a data table; entries will be a directive of a CSP. "CSP" stands for "Content Security Policy". */
   columnDirective: 'Directive',
   /** Label for a column in a data table; entries will be the severity of an issue with the CSP. "CSP" stands for "Content Security Policy". */
@@ -139,8 +140,11 @@ class CspXss extends Audit {
       ...warnings.map(f => this.findingToTableItem(f, str_(i18n.UIStrings.itemSeverityMedium))),
     ];
 
-    // Add extra warning for a CSP defined in a meta tag.
-    if (cspMetaTags.length) {
+    const headerOnlyBypasses = evaluateRawCspsForXss(cspHeaders).bypasses;
+    const headerOnlyIsInsecure = headerOnlyBypasses.length > 0 || cspHeaders.length === 0;
+
+    // Warn if there is a meta tag CSP and the header CSPs are not strict enough on their own.
+    if (cspMetaTags.length > 0 && headerOnlyIsInsecure) {
       results.push({
         severity: str_(i18n.UIStrings.itemSeverityMedium),
         description: str_(UIStrings.metaTagMessage),
@@ -163,9 +167,9 @@ class CspXss extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'description', itemType: 'text', subItemsHeading: {key: 'description'}, text: str_(i18n.UIStrings.columnDescription)},
-      {key: 'directive', itemType: 'code', subItemsHeading: {key: 'directive'}, text: str_(UIStrings.columnDirective)},
-      {key: 'severity', itemType: 'text', subItemsHeading: {key: 'severity'}, text: str_(UIStrings.columnSeverity)},
+      {key: 'description', valueType: 'text', subItemsHeading: {key: 'description'}, label: str_(i18n.UIStrings.columnDescription)},
+      {key: 'directive', valueType: 'code', subItemsHeading: {key: 'directive'}, label: str_(UIStrings.columnDirective)},
+      {key: 'severity', valueType: 'text', subItemsHeading: {key: 'severity'}, label: str_(UIStrings.columnSeverity)},
       /* eslint-enable max-len */
     ];
     const details = Audit.makeTableDetails(headings, results);

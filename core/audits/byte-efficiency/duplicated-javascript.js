@@ -16,7 +16,7 @@ import {getRequestForScript} from '../../lib/script-helpers.js';
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to remove duplicate JavaScript from their code. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Remove duplicate modules in JavaScript bundles',
-  /** Description of a Lighthouse audit that tells the user *why* they should remove duplicate JavaScript from their scripts. This is displayed after a user expands the section to see more. No word length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should remove duplicate JavaScript from their scripts. This is displayed after a user expands the section to see more. No word length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Remove large, duplicate JavaScript modules from bundles ' +
     'to reduce unnecessary bytes consumed by network activity. ', // +
   // TODO: we need docs.
@@ -225,7 +225,7 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
       });
     }
 
-    /** @type {LH.Audit.Details.OpportunityColumnHeading[]} */
+    /** @type {LH.Audit.Details.TableColumnHeading[]} */
     const headings = [
       /* eslint-disable max-len */
       {key: 'source', valueType: 'code', subItemsHeading: {key: 'url', valueType: 'url'}, label: str_(i18n.UIStrings.columnSource)},

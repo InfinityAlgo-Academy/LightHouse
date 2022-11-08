@@ -67,7 +67,7 @@ declare module Details {
     type: 'opportunity';
     overallSavingsMs: number;
     overallSavingsBytes?: number;
-    headings: OpportunityColumnHeading[];
+    headings: TableColumnHeading[];
     items: OpportunityItem[];
     debugData?: DebugData;
   }
@@ -141,42 +141,7 @@ declare module Details {
   /** Possible types of values found within table items. */
   type ItemValue = string | number | boolean | DebugData | NodeValue | SourceLocationValue | LinkValue | UrlValue | CodeValue | NumericValue | IcuMessage | TableSubItems;
 
-  // TODO: drop TableColumnHeading, rename OpportunityColumnHeading to TableColumnHeading and
-  // use that for all table-like audit details.
-
   interface TableColumnHeading {
-    /**
-     * The name of the property within items being described.
-     * If null, subItemsHeading must be defined, and the first table row in this column for
-     * every item will be empty.
-     * See legacy-javascript for an example.
-     */
-    key: string|null;
-    /** Readable text label of the field. */
-    text: IcuMessage | string;
-    /**
-     * The data format of the column of values being described. Usually
-     * those values will be primitives rendered as this type, but the values
-     * could also be objects with their own type to override this field.
-     */
-    itemType: ItemValueType;
-    /**
-     * Optional - defines an inner table of values that correspond to this column.
-     * Key is required - if other properties are not provided, the value for the heading is used.
-     */
-    subItemsHeading?: {key: string, itemType?: ItemValueType, displayUnit?: string, granularity?: number};
-
-    displayUnit?: string;
-    granularity?: number;
-  }
-
-  interface TableItem {
-    debugData?: DebugData;
-    subItems?: TableSubItems;
-    [p: string]: undefined | ItemValue;
-  }
-
-  interface OpportunityColumnHeading {
     /**
      * The name of the property within items being described.
      * If null, subItemsHeading must be defined, and the first table row in this column for
@@ -198,9 +163,14 @@ declare module Details {
      */
     subItemsHeading?: {key: string, valueType?: ItemValueType, displayUnit?: string, granularity?: number};
 
-    // NOTE: not used by opportunity details, but used in the renderer until table/opportunity unification.
     displayUnit?: string;
     granularity?: number;
+  }
+
+  interface TableItem {
+    debugData?: DebugData;
+    subItems?: TableSubItems;
+    [p: string]: undefined | ItemValue;
   }
 
   /** A more specific table element used for `opportunity` tables. */

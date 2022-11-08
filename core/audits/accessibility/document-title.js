@@ -17,7 +17,7 @@ const UIStrings = {
   title: 'Document has a `<title>` element',
   /** Title of an accesibility audit that evaluates if the page has a <title> element that describes the page. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: 'Document doesn\'t have a `<title>` element',
-  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'The title gives screen reader users an overview of the page, and search ' +
       'engine users rely on it heavily to determine if a page is relevant to their search. ' +
       '[Learn more about document titles](https://dequeuniversity.com/rules/axe/4.4/document-title).',

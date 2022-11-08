@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import DocWriteUseAudit from '../../../audits/dobetterweb/no-document-write.js';
 
@@ -14,7 +14,7 @@ describe('Page does not use document.write()', () => {
   it('passes when document.write() is not used', async () => {
     const auditResult = await DocWriteUseAudit.audit({
       ConsoleMessages: [],
-      URL: {finalUrl: URL},
+      URL: {finalDisplayedUrl: URL},
       SourceMaps: [],
       Scripts: [],
     }, {computedCache: new Map()});
@@ -25,7 +25,7 @@ describe('Page does not use document.write()', () => {
   it('fails when document.write() is used', async () => {
     const text = 'Do not use document.write';
     const auditResult = await DocWriteUseAudit.audit({
-      URL: {finalUrl: URL},
+      URL: {finalDisplayedUrl: URL},
       ConsoleMessages: [
         {source: 'violation', url: 'https://example.com/', text},
         {source: 'violation', url: 'https://example2.com/two', text},

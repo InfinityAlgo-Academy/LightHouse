@@ -19,7 +19,7 @@ const UIStrings = {
   title: 'Document has a valid `hreflang`',
   /** Title of a Lighthouse audit that provides detail on the `hreflang` attribute on a page. This descriptive title is shown when the page's `hreflang` attribute is not valid and needs to be fixed. "hreflang" is an HTML attribute and should not be translated. */
   failureTitle: 'Document doesn\'t have a valid `hreflang`',
-  /** Description of a Lighthouse audit that tells the user *why* they need to have an hreflang link on their page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. "hreflang" is an HTML attribute and should not be translated. */
+  /** Description of a Lighthouse audit that tells the user *why* they need to have an hreflang link on their page. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. "hreflang" is an HTML attribute and should not be translated. */
   description: 'hreflang links tell search engines what version of a page they should ' +
     'list in search results for a given language or region. [Learn more about `hreflang`]' +
     '(https://web.dev/hreflang/).',
@@ -127,12 +127,12 @@ class Hreflang extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [{
       key: 'source',
-      itemType: 'code',
+      valueType: 'code',
       subItemsHeading: {
         key: 'reason',
-        itemType: 'text',
+        valueType: 'text',
       },
-      text: '',
+      label: '',
     }];
 
     const details = Audit.makeTableDetails(headings, invalidHreflangs);

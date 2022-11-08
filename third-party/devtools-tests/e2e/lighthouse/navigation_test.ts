@@ -5,12 +5,16 @@
 import {assert} from 'chai';
 
 import {expectError} from '../../conductor/events.js';
-import {setDevToolsSettings} from '../../shared/helper.js';
+import {getBrowserAndPages, setDevToolsSettings, waitFor} from '../../shared/helper.js';
 import {describe, it} from '../../shared/mocha-extensions.js';
 import {
   clickStartButton,
   getAuditsBreakdown,
+  getServiceWorkerCount,
+  interceptNextFileSave,
   navigateToLighthouseTab,
+  registerServiceWorker,
+  renderHtmlInIframe,
   selectCategories,
   selectDevice,
   setLegacyNavigation,
@@ -43,52 +47,119 @@ describe('Navigation', async function() {
 
       it('successfully returns a Lighthouse report', async () => {
         await navigateToLighthouseTab('lighthouse/hello.html');
+        await registerServiceWorker();
 
         await setLegacyNavigation(mode === 'legacy');
+        await selectCategories([
+          'performance',
+          'accessibility',
+          'best-practices',
+          'seo',
+          'pwa',
+          'lighthouse-plugin-publisher-ads',
+        ]);
+
+        let numNavigations = 0;
+        const {target} = await getBrowserAndPages();
+        target.on('framenavigated', () => ++numNavigations);
 
         await clickStartButton();
 
         const {lhr, artifacts, reportEl} = await waitForResult();
 
+        if (mode === 'legacy') {
+          // 1 initial about:blank jump
+          // 1 about:blank jump + 1 navigation for the default pass
+          // 1 about:blank jump + 1 navigation for the offline pass
+          // 1 navigation after auditing to reset state
+          assert.strictEqual(numNavigations, 6);
+        } else {
+          // 1 initial about:blank jump
+          // 1 about:blank jump + 1 navigation for the default pass
+          // 1 navigation after auditing to reset state
+          assert.strictEqual(numNavigations, 4);
+        }
+
         // TODO: Reenable this for 10.0
         // 9.6.x is forked so Lighthouse ToT is still using 9.5.0 as the version.
         // assert.strictEqual(lhr.lighthouseVersion, '9.6.6');
         assert.match(lhr.finalUrl, /^https:\/\/localhost:[0-9]+\/test\/e2e\/resources\/lighthouse\/hello.html/);
+
         assert.strictEqual(lhr.configSettings.throttlingMethod, 'simulate');
         assert.strictEqual(lhr.configSettings.disableStorageReset, false);
         assert.strictEqual(lhr.configSettings.formFactor, 'mobile');
+        assert.strictEqual(lhr.configSettings.throttling.rttMs, 150);
+        assert.strictEqual(lhr.configSettings.screenEmulation.disabled, true);
+        assert.include(lhr.configSettings.emulatedUserAgent, 'Mobile');
 
-        const {innerWidth, innerHeight, outerWidth, outerHeight, devicePixelRatio} = artifacts.ViewportDimensions;
-        // This value can vary slightly, depending on the display.
-        // https://bugs.chromium.org/p/chromium/issues/detail?id=1346355
-        assert.approximately(innerHeight, 1742, 1);
-        assert.strictEqual(innerWidth, 980);
-        assert.strictEqual(outerWidth, 360);
-        assert.strictEqual(outerHeight, 640);
-        assert.strictEqual(devicePixelRatio, 3);
+        // A bug in FR caused `networkUserAgent` to be excluded from the LHR.
+        // https://github.com/GoogleChrome/lighthouse/pull/14392
+        // TODO: Reenable once the fix lands in DT.
+        if (mode === 'legacy') {
+          assert.include(lhr.environment.networkUserAgent, 'Mobile');
+        }
+
+        assert.deepStrictEqual(artifacts.ViewportDimensions, {
+          innerHeight: 640,
+          innerWidth: 360,
+          outerHeight: 640,
+          outerWidth: 360,
+          devicePixelRatio: 3,
+        });
 
         const {auditResults, erroredAudits, failedAudits} = getAuditsBreakdown(lhr);
-        assert.strictEqual(auditResults.length, 150);
+        assert.strictEqual(auditResults.length, 173);
         assert.strictEqual(erroredAudits.length, 0);
         assert.deepStrictEqual(failedAudits.map(audit => audit.id), [
           'service-worker',
-          'viewport',
           'installable-manifest',
           'splash-screen',
           'themed-omnibox',
           'maskable-icon',
-          'content-width',
           'document-title',
           'html-has-lang',
           'meta-description',
-          'font-size',
-          'tap-targets',
         ]);
 
-        const viewTraceText = await reportEl.$eval('.lh-button--trace', viewTraceEl => {
+        const viewTraceButton = await waitFor('.lh-button--trace', reportEl);
+        const viewTraceText = await viewTraceButton.evaluate(viewTraceEl => {
           return viewTraceEl.textContent;
         });
         assert.strictEqual(viewTraceText, 'View Original Trace');
+
+        await viewTraceButton.click();
+        const selectedTab = await waitFor('.tabbed-pane-header-tab.selected[aria-label="Performance"]');
+        const selectedTabText = await selectedTab.evaluate(selectedTabEl => {
+          return selectedTabEl.textContent;
+        });
+        assert.strictEqual(selectedTabText, 'Performance');
+
+        await navigateToLighthouseTab();
+
+        const waitForJson = await interceptNextFileSave();
+
+        // For some reason the CDP click command doesn't work here even if the tools menu is open.
+        await reportEl.$eval('a[data-action="save-json"]', saveJsonEl => (saveJsonEl as HTMLElement).click());
+
+        const jsonContent = await waitForJson();
+        assert.strictEqual(jsonContent, JSON.stringify(lhr, null, 2));
+
+        const waitForHtml = await interceptNextFileSave();
+
+        // Converting to ESM changed the shape of the report generator global from Lighthouse.ReportGenerator to Lighthouse.ReportGenerator.ReportGenerator.
+        // TODO: Update the report generator usage once the changes land in DevTools.
+        //
+        // // For some reason the CDP click command doesn't work here even if the tools menu is open.
+        // await reportEl.$eval('a[data-action="save-html"]', saveHtmlEl => (saveHtmlEl as HTMLElement).click());
+
+        // const htmlContent = await waitForHtml();
+        // const iframeHandle = await renderHtmlInIframe(htmlContent);
+        // const iframeAuditDivs = await iframeHandle.$$('.lh-audit');
+        // const frontendAuditDivs = await reportEl.$$('.lh-audit');
+        // assert.strictEqual(frontendAuditDivs.length, iframeAuditDivs.length);
+
+        // Ensure service worker was cleared.
+        assert.strictEqual(await getServiceWorkerCount(), 0);
       });
 
       it('successfully returns a Lighthouse report with DevTools throttling', async () => {
@@ -114,17 +185,13 @@ describe('Navigation', async function() {
         assert.strictEqual(erroredAudits.length, 0);
         assert.deepStrictEqual(failedAudits.map(audit => audit.id), [
           'service-worker',
-          'viewport',
           'installable-manifest',
           'splash-screen',
           'themed-omnibox',
           'maskable-icon',
-          'content-width',
           'document-title',
           'html-has-lang',
           'meta-description',
-          'font-size',
-          'tap-targets',
         ]);
 
         const viewTraceText = await reportEl.$eval('.lh-button--trace', viewTraceEl => {
@@ -134,11 +201,12 @@ describe('Navigation', async function() {
       });
 
       it('successfully returns a Lighthouse report when settings changed', async () => {
-        await setDevToolsSettings({language: 'en-XL'});
+        await setDevToolsSettings({language: 'es'});
         await navigateToLighthouseTab('lighthouse/hello.html');
+        await registerServiceWorker();
 
-        await setToolbarCheckboxWithText(mode === 'legacy', 'L̂éĝáĉý n̂áv̂íĝát̂íôń');
-        await setToolbarCheckboxWithText(false, 'Ĉĺêár̂ śt̂ór̂áĝé');
+        await setToolbarCheckboxWithText(mode === 'legacy', 'Navegación antigua');
+        await setToolbarCheckboxWithText(false, 'Borrar almacenamiento');
         await selectCategories(['performance', 'best-practices']);
         await selectDevice('desktop');
 
@@ -158,13 +226,30 @@ describe('Navigation', async function() {
         assert.deepStrictEqual(Object.keys(lhr.categories), ['performance', 'best-practices']);
         assert.strictEqual(lhr.configSettings.disableStorageReset, true);
         assert.strictEqual(lhr.configSettings.formFactor, 'desktop');
+        assert.strictEqual(lhr.configSettings.throttling.rttMs, 40);
+        assert.strictEqual(lhr.configSettings.screenEmulation.disabled, true);
+        assert.notInclude(lhr.configSettings.emulatedUserAgent, 'Mobile');
+
+        // A bug in FR caused `networkUserAgent` to be excluded from the LHR.
+        // https://github.com/GoogleChrome/lighthouse/pull/14392
+        // TODO: Reenable once the fix lands in DT.
+        if (mode === 'legacy') {
+          assert.notInclude(lhr.environment.networkUserAgent, 'Mobile');
+        }
 
         const viewTraceText = await reportEl.$eval('.lh-button--trace', viewTraceEl => {
           return viewTraceEl.textContent;
         });
-        assert.strictEqual(viewTraceText, 'V̂íêẃ Ôŕîǵîńâĺ T̂ŕâćê');
+        assert.strictEqual(viewTraceText, 'Ver rastro original');
 
-        assert.strictEqual(lhr.i18n.rendererFormattedStrings.footerIssue, 'F̂íl̂é âń îśŝúê');
+        const footerIssueText = await reportEl.$eval('.lh-footer__version_issue', footerIssueEl => {
+          return footerIssueEl.textContent;
+        });
+        assert.strictEqual(lhr.i18n.rendererFormattedStrings.footerIssue, 'Notificar un problema');
+        assert.strictEqual(footerIssueText, 'Notificar un problema');
+
+        // Ensure service worker is not cleared because we disable the storage reset.
+        assert.strictEqual(await getServiceWorkerCount(), 1);
       });
     });
   }

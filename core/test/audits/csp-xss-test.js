@@ -46,7 +46,8 @@ const STATIC_RESULTS = {
     description: {
       formattedDefault:
         'The page contains a CSP defined in a <meta> tag. ' +
-        'Consider defining the CSP in an HTTP header if you can.',
+        'Consider moving the CSP to an HTTP header or ' +
+        'defining another strict CSP in an HTTP header.',
     },
     directive: undefined,
   },
@@ -75,10 +76,9 @@ it('audit basic header', async () => {
       ]),
     },
     URL: {
-      initialUrl: 'about:blank',
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
-      finalUrl: 'https://example.com',
+      finalDisplayedUrl: 'https://example.com',
     },
   };
   const results = await CspXss.audit(artifacts, {computedCache: new Map()});
@@ -113,10 +113,9 @@ it('audit basic header', async () => {
 it('marked N/A if no warnings found', async () => {
   const artifacts = {
     URL: {
-      initialUrl: 'about:blank',
       requestedUrl: 'https://example.com',
       mainDocumentUrl: 'https://example.com',
-      finalUrl: 'https://example.com',
+      finalDisplayedUrl: 'https://example.com',
     },
     MetaElements: [],
     devtoolsLogs: {
@@ -141,10 +140,9 @@ describe('getRawCsps', () => {
   it('basic case', async () => {
     const artifacts = {
       URL: {
-        initialUrl: 'about:blank',
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
-        finalUrl: 'https://example.com',
+        finalDisplayedUrl: 'https://example.com',
       },
       MetaElements: [
         {
@@ -184,10 +182,9 @@ describe('getRawCsps', () => {
   it('split on comma', async () => {
     const artifacts = {
       URL: {
-        initialUrl: 'about:blank',
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
-        finalUrl: 'https://example.com',
+        finalDisplayedUrl: 'https://example.com',
       },
       MetaElements: [],
       devtoolsLogs: {
@@ -221,10 +218,9 @@ describe('getRawCsps', () => {
   it('ignore if empty', async () => {
     const artifacts = {
       URL: {
-        initialUrl: 'about:blank',
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
-        finalUrl: 'https://example.com',
+        finalDisplayedUrl: 'https://example.com',
       },
       MetaElements: [],
       devtoolsLogs: {
@@ -256,10 +252,9 @@ describe('getRawCsps', () => {
   it('ignore if only whitespace', async () => {
     const artifacts = {
       URL: {
-        initialUrl: 'about:blank',
         requestedUrl: 'https://example.com',
         mainDocumentUrl: 'https://example.com',
-        finalUrl: 'https://example.com',
+        finalDisplayedUrl: 'https://example.com',
       },
       MetaElements: [],
       devtoolsLogs: {
@@ -324,11 +319,23 @@ describe('constructResults', () => {
   });
 
   it('adds item for CSP in meta tag', () => {
-    const {score, results} = CspXss.constructResults([], [
+    const {score, results} = CspXss.constructResults([
+      `script-src https://example.com; object-src 'none'`,
+    ], [
       `script-src 'none'; object-src 'none'; report-uri https://example.com`,
     ]);
     expect(score).toEqual(1);
     expect(results).toMatchObject([STATIC_RESULTS.metaTag]);
+  });
+
+  it('does not add item for a meta CSP if header CSPs are secure', () => {
+    const {score, results} = CspXss.constructResults([
+      `script-src 'nonce-00000000' 'unsafe-inline'; object-src 'none'; base-uri 'none'`,
+    ], [
+      `script-src 'none'; object-src 'none'; report-uri https://example.com`,
+    ]);
+    expect(score).toEqual(1);
+    expect(results).toMatchObject([]);
   });
 
   it('single item for no CSP', () => {

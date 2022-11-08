@@ -85,27 +85,27 @@ class NetworkRequests extends Audit {
     // NOTE(i18n): this audit is only for debug info in the LHR and does not appear in the report.
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: 'URL'},
-      {key: 'protocol', itemType: 'text', text: 'Protocol'},
-      {key: 'startTime', itemType: 'ms', granularity: 1, text: 'Start Time'},
-      {key: 'endTime', itemType: 'ms', granularity: 1, text: 'End Time'},
+      {key: 'url', valueType: 'url', label: 'URL'},
+      {key: 'protocol', valueType: 'text', label: 'Protocol'},
+      {key: 'startTime', valueType: 'ms', granularity: 1, label: 'Start Time'},
+      {key: 'endTime', valueType: 'ms', granularity: 1, label: 'End Time'},
       {
         key: 'transferSize',
-        itemType: 'bytes',
+        valueType: 'bytes',
         displayUnit: 'kb',
         granularity: 1,
-        text: 'Transfer Size',
+        label: 'Transfer Size',
       },
       {
         key: 'resourceSize',
-        itemType: 'bytes',
+        valueType: 'bytes',
         displayUnit: 'kb',
         granularity: 1,
-        text: 'Resource Size',
+        label: 'Resource Size',
       },
-      {key: 'statusCode', itemType: 'text', text: 'Status Code'},
-      {key: 'mimeType', itemType: 'text', text: 'MIME Type'},
-      {key: 'resourceType', itemType: 'text', text: 'Resource Type'},
+      {key: 'statusCode', valueType: 'text', label: 'Status Code'},
+      {key: 'mimeType', valueType: 'text', label: 'MIME Type'},
+      {key: 'resourceType', valueType: 'text', label: 'Resource Type'},
     ];
 
     const tableDetails = Audit.makeTableDetails(headings, results);

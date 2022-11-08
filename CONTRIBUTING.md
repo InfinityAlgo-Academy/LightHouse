@@ -25,7 +25,7 @@ If you have a contribution for our [documentation](https://web.dev/learn/#lighth
 1. Ensure that your code adheres to the existing style in the sample to which you are contributing.
 1. Submit a pull request.
 
-If you've submitted a number of significant patches, feel free to add yourself in a PR to the project's `AUTHORS` [file](https://github.com/GoogleChrome/lighthouse/blob/master/AUTHORS) in the root of the repo to be recognized for your contributions!
+If you've submitted a number of significant patches, feel free to add yourself in a PR to the project's `AUTHORS` [file](https://github.com/GoogleChrome/lighthouse/blob/main/AUTHORS) in the root of the repo to be recognized for your contributions!
 
 ## Audit PRs
 
@@ -108,7 +108,7 @@ We're using [conventional-commit](https://conventionalcommits.org/) for our comm
 
 > type(scope): message subject
 
-* The `type` must be one of: `new_audit` `core` `tests` `i18n`, `docs` `deps` `report` `cli` `clients` `misc`. (See [`.cz-config`](https://github.com/GoogleChrome/lighthouse/blob/master/.cz-config.js#L13))
+* The `type` must be one of: `new_audit` `core` `tests` `i18n`, `docs` `deps` `report` `cli` `clients` `misc`. (See [`.cz-config`](https://github.com/GoogleChrome/lighthouse/blob/main/.cz-config.js#L13))
 * The `scope` is optional, but recommended. Any string is allowed; it should indicate what the change affects.
 * The `message subject` should be pithy and direct.
 
@@ -128,7 +128,7 @@ accept your pull requests.
 
 ## Tracking Errors
 
-We track our errors in the wild with Sentry. In general, do not worry about wrapping your audits or gatherers in try/catch blocks and reporting every error that could possibly occur; `core/runner.js` and `core/fraggle-rock/gather/*-runner.js` already catch and report any errors that occur while running a gatherer or audit, including errors fatal to the entire run. However, there are some situations when you might want to explicitly handle an error and report it to Sentry or wrap it to avoid reporting. Generally, you can interact with Sentry simply by requiring the `core/lib/sentry.js` file and call its methods. The module exports a delegate that will correctly handle the error reporting based on the user's opt-in preference and will simply no-op if they haven't so you don't need to check.
+We track our errors in the wild with Sentry. In general, do not worry about wrapping your audits or gatherers in try/catch blocks and reporting every error that could possibly occur; `core/runner.js` and `core/gather/*-runner.js` already catch and report any errors that occur while running a gatherer or audit, including errors fatal to the entire run. However, there are some situations when you might want to explicitly handle an error and report it to Sentry or wrap it to avoid reporting. Generally, you can interact with Sentry simply by requiring the `core/lib/sentry.js` file and call its methods. The module exports a delegate that will correctly handle the error reporting based on the user's opt-in preference and will simply no-op if they haven't so you don't need to check.
 
 
 #### If you have an expected error that is recoverable but want to track how frequently it happens, *use Sentry.captureException*.

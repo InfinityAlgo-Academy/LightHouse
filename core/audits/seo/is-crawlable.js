@@ -22,7 +22,7 @@ const UIStrings = {
   title: 'Page isn’t blocked from indexing',
   /** Title of a Lighthouse audit that provides detail on if search-engine crawlers are blocked from indexing the page. This title is shown when the page has been configured to block indexing and therefore cannot be indexed by search engines. */
   failureTitle: 'Page is blocked from indexing',
-  /** Description of a Lighthouse audit that tells the user *why* allowing search-engine crawling of their page is beneficial. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* allowing search-engine crawling of their page is beneficial. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Search engines are unable to include your pages in search results ' +
       'if they don\'t have permission to crawl them. [Learn more about crawler directives](https://web.dev/is-crawable/).',
 };
@@ -138,7 +138,7 @@ class IsCrawlable extends Audit {
 
         /** @type {LH.Audit.Details.Table['headings']} */
         const headings = [
-          {key: 'source', itemType: 'code', text: 'Blocking Directive Source'},
+          {key: 'source', valueType: 'code', label: 'Blocking Directive Source'},
         ];
         const details = Audit.makeTableDetails(headings, blockingDirectives);
 

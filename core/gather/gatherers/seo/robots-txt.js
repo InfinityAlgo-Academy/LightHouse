@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+import FRGatherer from '../../base-gatherer.js';
 
 class RobotsTxt extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
@@ -17,8 +17,8 @@ class RobotsTxt extends FRGatherer {
    * @return {Promise<LH.Artifacts['RobotsTxt']>}
    */
   async getArtifact(passContext) {
-    const {finalUrl} = passContext.baseArtifacts.URL;
-    const robotsUrl = new URL('/robots.txt', finalUrl).href;
+    const {finalDisplayedUrl} = passContext.baseArtifacts.URL;
+    const robotsUrl = new URL('/robots.txt', finalDisplayedUrl).href;
     return passContext.driver.fetcher.fetchResource(robotsUrl)
       .catch(err => ({status: null, content: null, errorMessage: err.message}));
   }

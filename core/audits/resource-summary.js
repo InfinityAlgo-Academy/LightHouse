@@ -11,7 +11,7 @@ import * as i18n from '../lib/i18n/i18n.js';
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to minimize the size and quantity of resources used to load the page. */
   title: 'Keep request counts low and transfer sizes small',
-  /** Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user that they can setup a budgets for the quantity and size of page resources. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'To set budgets for the quantity and size of page resources,' +
     ' add a budget.json file. ' +
     '[Learn more about performance budgets](https://web.dev/use-lighthouse-for-performance-budgets/).',
@@ -49,9 +49,9 @@ class ResourceSummary extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'label', itemType: 'text', text: str_(i18n.UIStrings.columnResourceType)},
-      {key: 'requestCount', itemType: 'numeric', text: str_(i18n.UIStrings.columnRequests)},
-      {key: 'transferSize', itemType: 'bytes', text: str_(i18n.UIStrings.columnTransferSize)},
+      {key: 'label', valueType: 'text', label: str_(i18n.UIStrings.columnResourceType)},
+      {key: 'requestCount', valueType: 'numeric', label: str_(i18n.UIStrings.columnRequests)},
+      {key: 'transferSize', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize)},
     ];
 
 

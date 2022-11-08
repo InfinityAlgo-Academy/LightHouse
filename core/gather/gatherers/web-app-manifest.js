@@ -7,7 +7,7 @@
 import log from 'lighthouse-logger';
 
 import {parseManifest} from '../../lib/manifest-parser.js';
-import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
+import FRGatherer from '../base-gatherer.js';
 
 class WebAppManifest extends FRGatherer {
   /** @type {LH.Gatherer.GathererMeta} */
@@ -94,8 +94,8 @@ class WebAppManifest extends FRGatherer {
    */
   getArtifact(context) {
     const driver = context.driver;
-    const {finalUrl} = context.baseArtifacts.URL;
-    return WebAppManifest.getWebAppManifest(driver.defaultSession, finalUrl);
+    const {finalDisplayedUrl} = context.baseArtifacts.URL;
+    return WebAppManifest.getWebAppManifest(driver.defaultSession, finalDisplayedUrl);
   }
 }
 

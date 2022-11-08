@@ -36,7 +36,7 @@ const UIStrings = {
   title: 'Document avoids plugins',
   /** Descriptive title of a Lighthouse audit that provides detail on the browser plugins used by the page. This title is shown when there is plugin content on the page. */
   failureTitle: 'Document uses plugins',
-  /** Description of a Lighthouse audit that tells the user *why* they need to avoid using browser plugins in their content. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they need to avoid using browser plugins in their content. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Search engines can\'t index plugin content, and ' +
     'many devices restrict plugins or don\'t support them. ' +
     '[Learn more about avoiding plugins](https://web.dev/plugins/).',
@@ -134,7 +134,7 @@ class Plugins extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'source', itemType: 'code', text: 'Element source'},
+      {key: 'source', valueType: 'code', label: 'Element source'},
     ];
 
     const details = Audit.makeTableDetails(headings, plugins);

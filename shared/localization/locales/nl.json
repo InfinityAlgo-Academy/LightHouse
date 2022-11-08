@@ -1605,7 +1605,7 @@
     "message": "De pagina heeft geldige bronkaarten"
   },
   "core/audits/viewport.js | description": {
-    "message": "Met een `<meta name=\"viewport\">` wordt je app niet alleen geoptimaliseerd voor formaten van mobiele schermen, maar wordt ook [een vertraging van 300 milliseconden voor gebruikersinvoer](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away) voorkomen. [Meer informatie](https://web.dev/viewport/)"
+    "message": "Met een `<meta name=\"viewport\">` wordt je app niet alleen geoptimaliseerd voor formaten van mobiele schermen, maar wordt ook [een vertraging van 300 milliseconden voor gebruikersinvoer](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) voorkomen. [Meer informatie](https://web.dev/viewport/)"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Geen `<meta name=\"viewport\">`-tag gevonden"

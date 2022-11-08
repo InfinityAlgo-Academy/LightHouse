@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import lighthouse, {getAuditList, legacyNavigation, traceCategories} from '../index.js';
 import {LH_ROOT} from '../../root.js';
@@ -108,7 +108,7 @@ describe('Module Tests', function() {
       assert.ok(result.artifacts.ViewportDimensions, 'did not set artifacts');
       assert.ok(result.lhr.lighthouseVersion);
       assert.ok(result.lhr.fetchTime);
-      assert.equal(result.lhr.finalUrl, exampleUrl);
+      assert.equal(result.lhr.finalDisplayedUrl, exampleUrl);
       assert.equal(result.lhr.requestedUrl, exampleUrl);
       assert.equal(Object.values(result.lhr.categories).length, 0);
       assert.ok(result.lhr.audits.viewport);
@@ -245,7 +245,7 @@ describe('Module Tests', function() {
         assert.ok(results.artifacts.ViewportDimensions, 'did not set artifacts');
         assert.ok(results.lhr.lighthouseVersion);
         assert.ok(results.lhr.fetchTime);
-        assert.equal(results.lhr.finalUrl, exampleUrl);
+        assert.equal(results.lhr.finalDisplayedUrl, exampleUrl);
         assert.equal(results.lhr.requestedUrl, exampleUrl);
         assert.equal(Object.values(results.lhr.categories).length, 0);
         assert.ok(results.lhr.audits.viewport);

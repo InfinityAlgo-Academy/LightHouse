@@ -17,7 +17,7 @@ const UIStrings = {
   title: '`<input type="image">` elements have `[alt]` text',
   /** Title of an accesibility audit that evaluates if all input elements of type image have an alt HTML attribute to describe their contents. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: '`<input type="image">` elements do not have `[alt]` text',
-  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'When an image is being used as an `<input>` button, providing alternative ' +
       'text can help screen reader users understand the purpose of the button. ' +
       '[Learn about input image alt text](https://dequeuniversity.com/rules/axe/4.4/input-image-alt).',

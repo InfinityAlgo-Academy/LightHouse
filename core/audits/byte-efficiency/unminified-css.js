@@ -12,7 +12,7 @@ import {computeCSSTokenLength as computeTokenLength} from '../../lib/minificatio
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to minify (remove whitespace) the page's CSS code. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Minify CSS',
-  /** Description of a Lighthouse audit that tells the user *why* they should minify (remove whitespace) the page's CSS code. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should minify (remove whitespace) the page's CSS code. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Minifying CSS files can reduce network payload sizes. ' +
     '[Learn how to minify CSS](https://web.dev/unminified-css/).',
 };

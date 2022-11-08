@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import DOMSize from '../../../audits/dobetterweb/dom-size.js';
 
@@ -26,9 +26,9 @@ describe('DOMSize audit', () => {
     assert.equal(auditResult.score, 0.43);
     assert.equal(auditResult.numericValue, numElements);
     expect(auditResult.displayValue).toBeDisplayString('1,500 elements');
-    assert.equal(auditResult.details.items[0].value, numElements);
-    assert.equal(auditResult.details.items[1].value, 1);
-    assert.equal(auditResult.details.items[2].value, 2);
+    assert.equal(auditResult.details.items[0].value.value, numElements);
+    assert.equal(auditResult.details.items[1].value.value, 1);
+    assert.equal(auditResult.details.items[2].value.value, 2);
   });
 
   it('calculates score hitting top distribution', () => {

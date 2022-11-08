@@ -5,7 +5,7 @@
  */
 
 import fs from 'fs';
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 import path from 'path';
 
 import jestMock from 'jest-mock';
@@ -144,7 +144,7 @@ describe('Runner', () => {
         expect(loadArtifactsSpy).toHaveBeenCalled();
         expect(gatherRunnerRunSpy).not.toHaveBeenCalled();
         expect(saveArtifactsSpy).not.toHaveBeenCalled();
-        expect(saveLhrSpy).not.toHaveBeenCalled();
+        expect(saveLhrSpy).toHaveBeenCalled();
         expect(runAuditSpy).toHaveBeenCalled();
       });
     });

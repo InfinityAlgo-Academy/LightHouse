@@ -37,7 +37,7 @@ const UIStrings = {
   title: 'Avoid serving legacy JavaScript to modern browsers',
   // eslint-disable-next-line max-len
   // TODO: web.dev article. this codelab is good starting place: https://web.dev/codelab-serve-modern-code/
-  /** Description of a Lighthouse audit that tells the user about old JavaScript that is no longer needed. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user about old JavaScript that is no longer needed. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren\'t necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn how to use modern JavaScript](https://web.dev/publish-modern-javascript/)',
 };
 
@@ -401,7 +401,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
    * @return {Promise<ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
-    const mainDocumentEntity = thirdPartyWeb.getEntity(artifacts.URL.finalUrl);
+    const mainDocumentEntity = thirdPartyWeb.getEntity(artifacts.URL.finalDisplayedUrl);
     const bundles = await JSBundles.request(artifacts, context);
 
     /** @type {Item[]} */
@@ -455,7 +455,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
       }
     }
 
-    /** @type {LH.Audit.Details.OpportunityColumnHeading[]} */
+    /** @type {LH.Audit.Details.TableColumnHeading[]} */
     const headings = [
       /* eslint-disable max-len */
       {key: 'url', valueType: 'url', subItemsHeading: {key: 'location', valueType: 'source-location'}, label: str_(i18n.UIStrings.columnURL)},

@@ -12,7 +12,7 @@ const UIStrings = {
   title: 'Registers a service worker that controls page and `start_url`',
   /** Title of a Lighthouse audit that provides detail on a page's service worker. This descriptive title is shown to users when a service worker is not present or invalid. */
   failureTitle: 'Does not register a service worker that controls page and `start_url`',
-  /** Description of a Lighthouse audit that tells the user why they should use a service worker. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why they should use a service worker. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'The service worker is the technology that enables your app to use many ' +
     'Progressive Web App features, such as offline, add to homescreen, and push ' +
     'notifications. [Learn more about Service Workers](https://web.dev/service-worker/).',
@@ -170,7 +170,7 @@ class ServiceWorker extends Audit {
       };
     }
 
-    // SW controls both finalUrl and start_url.
+    // SW controls both finalDisplayedUrl and start_url.
     return {
       score: 1,
       details,

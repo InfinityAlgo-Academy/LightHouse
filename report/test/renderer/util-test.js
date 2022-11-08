@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import {Util} from '../../renderer/util.js';
 import {I18n} from '../../renderer/i18n.js';
@@ -175,6 +175,31 @@ describe('util helpers', () => {
         const preparedResult = Util.prepareReportResult(sampleResult);
         assert.deepStrictEqual(clonedPreparedResult.categories, preparedResult.categories);
         assert.deepStrictEqual(clonedPreparedResult.categoryGroups, preparedResult.categoryGroups);
+      });
+
+      it('converts old opportunity table column headings to consolidated table headings', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+
+        const auditsWithTableDetails = Object.values(clonedSampleResult.audits)
+          .filter(audit => audit.details?.type === 'table');
+        assert.notEqual(auditsWithTableDetails.length, 0);
+        for (const audit of auditsWithTableDetails) {
+          for (const heading of audit.details.headings) {
+            heading.itemType = heading.valueType;
+            heading.text = heading.label;
+            delete heading.valueType;
+            delete heading.label;
+
+            if (heading.subItemsHeading) {
+              heading.subItemsHeading.itemType = heading.subItemsHeading.valueType;
+              // @ts-expect-error
+              delete heading.subItemsHeading.valueType;
+            }
+          }
+        }
+
+        const preparedResult = Util.prepareReportResult(clonedSampleResult);
+        assert.deepStrictEqual(sampleResult.audits, preparedResult.audits);
       });
     });
 

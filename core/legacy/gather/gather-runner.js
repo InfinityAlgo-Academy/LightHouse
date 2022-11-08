@@ -20,7 +20,7 @@ import WebAppManifest from '../../gather/gatherers/web-app-manifest.js';
 import InstallabilityErrors from '../../gather/gatherers/installability-errors.js';
 import NetworkUserAgent from '../../gather/gatherers/network-user-agent.js';
 import Stacks from '../../gather/gatherers/stacks.js';
-import {finalizeArtifacts} from '../../fraggle-rock/gather/base-artifacts.js';
+import {finalizeArtifacts} from '../../gather/base-artifacts.js';
 import UrlUtils from '../../lib/url-utils.js';
 
 /** @typedef {import('./driver.js').Driver} Driver */
@@ -82,9 +82,9 @@ class GatherRunner {
       });
       passContext.url = mainDocumentUrl;
       const {URL} = passContext.baseArtifacts;
-      if (!URL.finalUrl || !URL.mainDocumentUrl) {
-        URL.finalUrl = mainDocumentUrl;
+      if (!URL.finalDisplayedUrl || !URL.mainDocumentUrl) {
         URL.mainDocumentUrl = mainDocumentUrl;
+        URL.finalDisplayedUrl = await passContext.driver.url();
       }
       if (passContext.passConfig.loadFailureMode === 'fatal') {
         passContext.LighthouseRunWarnings.push(...warnings);
@@ -409,10 +409,9 @@ class GatherRunner {
       settings: options.settings,
       GatherContext: {gatherMode: 'navigation'},
       URL: {
-        initialUrl: await options.driver.url(),
         requestedUrl: options.requestedUrl,
         mainDocumentUrl: '',
-        finalUrl: '',
+        finalDisplayedUrl: '',
       },
       Timing: [],
       PageLoadError: null,

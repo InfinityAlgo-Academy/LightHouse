@@ -21,7 +21,7 @@ const UIStrings = {
   title: '`<input>` elements correctly use `autocomplete`',
   /** Title of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This descriptive title is shown to users when one or more inputs do not have autocomplete set or has an invalid autocomplete set. */
   failureTitle: '`<input>` elements do not have correct `autocomplete` attributes',
-  /** Description of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that lets the user know if there are any missing or invalid autocomplete attributes on page inputs. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: '`autocomplete` helps users submit forms quicker. To reduce user ' +
    'effort, consider enabling by setting the `autocomplete` ' +
    'attribute to a valid value.' +
@@ -266,9 +266,9 @@ class AutocompleteAudit extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'node', itemType: 'node', text: str_(i18n.UIStrings.columnFailingElem)},
-      {key: 'current', itemType: 'text', text: str_(UIStrings.columnCurrent)},
-      {key: 'suggestion', itemType: 'text', text: str_(UIStrings.columnSuggestions)},
+      {key: 'node', valueType: 'node', label: str_(i18n.UIStrings.columnFailingElem)},
+      {key: 'current', valueType: 'text', label: str_(UIStrings.columnCurrent)},
+      {key: 'suggestion', valueType: 'text', label: str_(UIStrings.columnSuggestions)},
     ];
     const details = Audit.makeTableDetails(headings, failingFormsData);
     let displayValue;
