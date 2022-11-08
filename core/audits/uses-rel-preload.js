@@ -239,7 +239,7 @@ class UsesRelPreloadAudit extends Audit {
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
-    const details = Audit.makeOpportunityDetails(headings, results, undefined, wastedMs);
+    const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
 
     return {
       score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
@@ -260,7 +260,7 @@ class UsesRelPreloadAudit extends Audit {
     // Preload advice is on hold until https://github.com/GoogleChrome/lighthouse/issues/11960
     // is resolved.
     return {score: 1, notApplicable: true,
-      details: Audit.makeOpportunityDetails([], [], undefined, 0)};
+      details: Audit.makeOpportunityDetails([], [], 0)};
   }
 }
 

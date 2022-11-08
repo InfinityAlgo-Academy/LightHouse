@@ -90,8 +90,6 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
       bundleSourceUnusedThreshold = UNUSED_BYTES_IGNORE_BUNDLE_SOURCE_THRESHOLD,
     } = context.options || {};
 
-    /** @type {Map<LH.Artifacts.RecognizableEntity | undefined, LH.Audit.Details.OpportunityGroupItem>} */
-    const byEntity = new Map();
     const items = [];
     for (const [scriptId, scriptCoverage] of Object.entries(artifacts.JsUsage)) {
       const script = artifacts.Scripts.find(s => s.scriptId === scriptId);

@@ -235,7 +235,7 @@ class UsesRelPreconnectAudit extends Audit {
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
 
-    const details = Audit.makeOpportunityDetails(headings, results, undefined, maxWasted);
+    const details = Audit.makeOpportunityDetails(headings, results, maxWasted);
 
     return {
       score: ByteEfficiencyAudit.scoreForWastedMs(maxWasted),

@@ -62,10 +62,6 @@ declare module Audit {
     entity?: string;
   }
 
-  interface ByteEfficiencyGroupItem extends AuditDetails.OpportunityGroupItem {
-
-  }
-
   // TODO: consider making some of the `string | IcuMessage` into just `IcuMessage` to require i18n.
 
   /** The shared properties of an Audit.Product whether it has a numericValue or not. We want to enforce `numericUnit` accompanying `numericValue` whenever it is set, so the final Audit.Product type is a discriminated union on `'numericValue' in audit`*/

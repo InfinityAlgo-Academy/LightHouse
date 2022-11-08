@@ -25,7 +25,6 @@ const WASTED_MS_FOR_SCORE_OF_ZERO = 5000;
 /**
  * @typedef {object} ByteEfficiencyProduct
  * @property {Array<LH.Audit.ByteEfficiencyItem>} items
- * @property {Array<LH.Audit.ByteEfficiencyGroupItem>} groups
  * @property {Map<string, number>=} wastedBytesByUrl
  * @property {LH.Audit.Details.Opportunity['headings']} headings
  * @property {LH.IcuMessage} [displayValue]
@@ -236,8 +235,7 @@ class ByteEfficiencyAudit extends Audit {
       item.entity = classifiedEntities.byURL.get(item.url)?.name;
     }
 
-    const details = Audit.makeOpportunityDetails(result.headings, results, undefined,
-      wastedMs, wastedBytes);
+    const details = Audit.makeOpportunityDetails(result.headings, results, wastedMs, wastedBytes);
 
     return {
       explanation: result.explanation,
