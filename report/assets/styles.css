@@ -1261,7 +1261,7 @@
 .lh-gauge-arc {
   fill: none;
   transform-origin: 50% 50%;
-  animation: load-gauge var(--transition-length) ease forwards;
+  animation: load-gauge var(--transition-length) ease both;
   animation-delay: 250ms;
 }
 
