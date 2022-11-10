@@ -71,4 +71,21 @@ describe('MainResource computed artifact', () => {
       assert.equal(output.url, 'https://beta.httparchive.org/reports/state-of-the-web');
     });
   });
+
+  it('should identify correct main resource with multiple candidates', () => {
+    const networkRecords = [
+      {url: 'https://example.com'},
+      {url: 'https://example.com/sw.js'},
+      {url: 'https://example.com#pickme'},
+    ];
+
+    const URL = {mainDocumentUrl: 'https://example.com'};
+    const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
+    const artifacts = {URL, devtoolsLog};
+
+    const context = {computedCache: new Map()};
+    return MainResource.request(artifacts, context).then(output => {
+      assert.equal(output.url, 'https://example.com#pickme');
+    });
+  });
 });
