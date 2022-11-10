@@ -24,6 +24,7 @@ class MainResource {
     const requests = await NetworkRecords.request(data.devtoolsLog, context);
 
     const mainResourceRequests = requests.filter(request =>
+      request.resourceType === 'Document' &&
       UrlUtils.equalWithExcludedFragments(request.url, mainDocumentUrl)
     );
     // We could have more than one record matching the main doucment url,
