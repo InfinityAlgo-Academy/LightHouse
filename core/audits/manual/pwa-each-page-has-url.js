@@ -10,7 +10,7 @@ import * as i18n from '../../lib/i18n/i18n.js';
 const UIStrings = {
   /** Title of a Lighthouse audit that prompts the user to manually check that each page on their website uses a unique URL. */
   title: 'Each page has a URL',
-  /** Description of a Lighthouse audit that tells the user why they should use unique URLs for each web page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why they should use unique URLs for each web page. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Ensure individual pages are deep linkable via URL and that URLs are ' +
       'unique for the purpose of shareability on social media. [Learn more about providing deep links](https://web.dev/pwa-each-page-has-url/).',
 };

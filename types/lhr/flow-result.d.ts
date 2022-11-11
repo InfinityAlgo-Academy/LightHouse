@@ -8,14 +8,10 @@ import Result from './lhr';
 
 declare module FlowResult {
   interface Step {
+    /** Lighthouse report for this flow step. */
     lhr: Result;
+    /** Display name of this flow step. */
     name: string;
-  }
-
-  interface HashState {
-    currentLhr: Result;
-    index: number;
-    anchor: string|null;
   }
 }
 
@@ -25,7 +21,7 @@ declare module FlowResult {
 interface FlowResult {
   /** Ordered list of flow steps, each corresponding to a navigation, timespan, or snapshot. */
   steps: FlowResult.Step[];
-  /** Name given to this user flow. */
+  /** Display name of this user flow. */
   name: string;
 }
 

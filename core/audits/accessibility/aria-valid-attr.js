@@ -17,7 +17,7 @@ const UIStrings = {
   title: '`[aria-*]` attributes are valid and not misspelled',
   /** Title of an accesibility audit that evaluates if all elements with ARIA HTML attributes have spelled the name of attribute correctly. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: '`[aria-*]` attributes are not valid or misspelled',
-  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Assistive technologies, like screen readers, can\'t interpret ARIA ' +
       'attributes with invalid names. [Learn ' +
       'more about valid ARIA attributes](https://dequeuniversity.com/rules/axe/4.4/aria-valid-attr).',

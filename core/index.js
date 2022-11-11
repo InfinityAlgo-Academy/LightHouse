@@ -41,7 +41,7 @@ import * as LH from '../types/lh.js';
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 async function lighthouse(url, flags = {}, configJSON, page) {
-  return fraggleRock.navigation(url, {page, config: configJSON, flags});
+  return fraggleRock.navigation(page, url, {config: configJSON, flags});
 }
 
 /**

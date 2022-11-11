@@ -8,7 +8,7 @@
 import {reportAssets} from './report-assets.js';
 
 /** @typedef {import('../../types/lhr/lhr').default} LHResult */
-/** @typedef {import('../../types/lhr/flow').default} FlowResult */
+/** @typedef {import('../../types/lhr/flow-result').default} FlowResult */
 
 class ReportGenerator {
   /**

@@ -13,7 +13,7 @@ const UIStrings = {
   title: 'Manifest has a maskable icon',
   /** Title of a Lighthouse audit that provides detial on if the manifest contains a maskable icon. this descriptive title is shown to users when the manifest contains no icons that are maskable. */
   failureTitle: 'Manifest doesn\'t have a maskable icon',
-  /** Description of a Lighthouse audit that tells the user why they their manifest should have at least one maskable icon. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why they their manifest should have at least one maskable icon. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'A maskable icon ensures that the image fills the entire ' +
     'shape without being letterboxed when installing ' +
     'the app on a device. [Learn about maskable manifest icons](https://web.dev/maskable-icon-audit/).',

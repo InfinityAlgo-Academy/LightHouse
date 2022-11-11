@@ -1605,7 +1605,7 @@
     "message": "பக்கத்திற்குச் சரியான சோர்ஸ் மேப்கள் உள்ளன"
   },
   "core/audits/viewport.js | description": {
-    "message": "மொபைல் திரை அளவுகளுக்கு ஏற்றபடி உங்கள் ஆப்ஸை `<meta name=\"viewport\">` மேம்படுத்துவதோடு [பயனர் உள்ளீட்டில் ஏற்படும் 300 மில்லிவினாடி தாமதத்தையும்](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away) தடுக்கிறது. [மேலும் அறிக](https://web.dev/viewport/)."
+    "message": "மொபைல் திரை அளவுகளுக்கு ஏற்றபடி உங்கள் ஆப்ஸை `<meta name=\"viewport\">` மேம்படுத்துவதோடு [பயனர் உள்ளீட்டில் ஏற்படும் 300 மில்லிவினாடி தாமதத்தையும்](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/) தடுக்கிறது. [மேலும் அறிக](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "`<meta name=\"viewport\">` குறிச்சொல் எதுவும் இல்லை"

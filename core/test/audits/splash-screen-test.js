@@ -98,18 +98,6 @@ describe('PWA: splash screen audit', () => {
       });
     });
 
-    it('fails when a manifest contains invalid background color', () => {
-      const artifacts = generateMockArtifacts(JSON.stringify({
-        background_color: 'no',
-      }));
-      const context = generateMockAuditContext();
-
-      return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('background_color'), result.explanation);
-      });
-    });
-
     it('fails when a manifest contains no theme color', () => {
       const artifacts = generateMockArtifacts();
       artifacts.WebAppManifest.value.theme_color.value = undefined;

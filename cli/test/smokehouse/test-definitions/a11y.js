@@ -331,12 +331,8 @@ const expectations = {
         },
       },
       'bypass': {
-        score: 1,
-        details: {
-          type: 'table',
-          headings: [],
-          items: [],
-        },
+        score: null,
+        scoreDisplayMode: 'notApplicable',
       },
       'color-contrast': {
         score: 0,

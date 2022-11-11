@@ -18,7 +18,7 @@ const UIStrings = {
   title: 'Avoids requesting the notification permission on page load',
   /** Title of a Lighthouse audit that provides detail on the page's notification permission requests. This descriptive title is shown to users when the page does ask for notification permission on load. */
   failureTitle: 'Requests the notification permission on page load',
-  /** Description of a Lighthouse audit that tells the user why they should not ask for notification permission on load. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why they should not ask for notification permission on load. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Users are mistrustful of or confused by sites that request to send ' +
       'notifications without context. Consider tying the request to user gestures ' +
       'instead. [Learn more about responsibly getting permission for notifications](https://web.dev/notification-on-start/).',
@@ -52,7 +52,7 @@ class NotificationOnStart extends ViolationAudit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
+      {key: 'source', valueType: 'source-location', label: str_(i18n.UIStrings.columnSource)},
     ];
     // TODO(bckenny): see TODO in geolocation-on-start
     const details = ViolationAudit.makeTableDetails(headings, results);

@@ -32,7 +32,7 @@ const UIStrings = {
   title: 'Lazy load third-party resources with facades',
   /** Title of a diagnostic audit that provides details about the third-party code on a web page that can be lazy loaded with a facade alternative. This descriptive title is shown to users when one or more third-party resources have available facade alternatives. A facade is a lightweight component which looks like the desired resource. Lazy loading means resources are deferred until they are needed. Third-party code refers to resources that are not within the control of the site owner. */
   failureTitle: 'Some third-party resources can be lazy loaded with a facade',
-  /** Description of a Lighthouse audit that identifies the third-party code on the page that can be lazy loaded with a facade alternative. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. A facade is a lightweight component which looks like the desired resource. Lazy loading means resources are deferred until they are needed. Third-party code refers to resources that are not within the control of the site owner. */
+  /** Description of a Lighthouse audit that identifies the third-party code on the page that can be lazy loaded with a facade alternative. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. A facade is a lightweight component which looks like the desired resource. Lazy loading means resources are deferred until they are needed. Third-party code refers to resources that are not within the control of the site owner. */
   description: 'Some third-party embeds can be lazy loaded. ' +
     'Consider replacing them with a facade until they are required. ' +
     '[Learn how to defer third-parties with a facade](https://web.dev/third-party-facades/).',
@@ -201,9 +201,9 @@ class ThirdPartyFacades extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'product', itemType: 'text', subItemsHeading: {key: 'url', itemType: 'url'}, text: str_(UIStrings.columnProduct)},
-      {key: 'transferSize', itemType: 'bytes', subItemsHeading: {key: 'transferSize'}, granularity: 1, text: str_(i18n.UIStrings.columnTransferSize)},
-      {key: 'blockingTime', itemType: 'ms', subItemsHeading: {key: 'blockingTime'}, granularity: 1, text: str_(i18n.UIStrings.columnBlockingTime)},
+      {key: 'product', valueType: 'text', subItemsHeading: {key: 'url', valueType: 'url'}, label: str_(UIStrings.columnProduct)},
+      {key: 'transferSize', valueType: 'bytes', subItemsHeading: {key: 'transferSize'}, granularity: 1, label: str_(i18n.UIStrings.columnTransferSize)},
+      {key: 'blockingTime', valueType: 'ms', subItemsHeading: {key: 'blockingTime'}, granularity: 1, label: str_(i18n.UIStrings.columnBlockingTime)},
       /* eslint-enable max-len */
     ];
 

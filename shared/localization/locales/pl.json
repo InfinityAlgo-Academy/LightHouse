@@ -1605,7 +1605,7 @@
     "message": "Strona ma prawidłowe mapy źródeł"
   },
   "core/audits/viewport.js | description": {
-    "message": "Metatag `<meta name=\"viewport\">` nie tylko optymalizuje aplikację pod kątem rozmiarów ekranu urządzeń mobilnych, ale zapobiega też [300-milisekundowemu opóźnieniu danych wejściowych użytkownika](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Więcej informacji](https://web.dev/viewport/)"
+    "message": "Metatag `<meta name=\"viewport\">` nie tylko optymalizuje aplikację pod kątem rozmiarów ekranu urządzeń mobilnych, ale zapobiega też [300-milisekundowemu opóźnieniu danych wejściowych użytkownika](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Więcej informacji](https://web.dev/viewport/)"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Nie znaleziono tagu `<meta name=\"viewport\">`"

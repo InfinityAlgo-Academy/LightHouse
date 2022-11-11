@@ -1605,7 +1605,7 @@
     "message": "Sivulla on kelvollisia lähdekarttoja"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` optimoi sovelluksesi mobiilinäyttöjen kokoja varten ja lisäksi estää [käyttäjän syötteen 300 millisekunnin viiveen](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Lue lisää](https://web.dev/viewport/)."
+    "message": "`<meta name=\"viewport\">` optimoi sovelluksesi mobiilinäyttöjen kokoja varten ja lisäksi estää [käyttäjän syötteen 300 millisekunnin viiveen](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Lue lisää](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "`<meta name=\"viewport\">`-tagia ei löytynyt"

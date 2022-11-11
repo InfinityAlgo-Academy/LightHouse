@@ -18,7 +18,7 @@ const UIStrings = {
   title: 'Avoids requesting the geolocation permission on page load',
   /** Title of a Lighthouse audit that provides detail on geolocation permissions requests. This descriptive title is shown to users when the page does ask for geolocation permissions on load. */
   failureTitle: 'Requests the geolocation permission on page load',
-  /** Description of a Lighthouse audit that tells the user why they should not ask for geolocation permissions on load. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why they should not ask for geolocation permissions on load. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Users are mistrustful of or confused by sites that request their ' +
     'location without context. Consider tying the request to a user action instead. ' +
     '[Learn more about the geolocation permission](https://web.dev/geolocation-on-start/).',
@@ -52,7 +52,7 @@ class GeolocationOnStart extends ViolationAudit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
+      {key: 'source', valueType: 'source-location', label: str_(i18n.UIStrings.columnSource)},
     ];
     // TODO(bckenny): there should actually be a ts error here. results[0].stackTrace
     // should violate the results type. Shouldn't be removed from details items regardless.

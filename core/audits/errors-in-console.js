@@ -100,8 +100,10 @@ class ErrorLogs extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'sourceLocation', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
-      {key: 'description', itemType: 'code', text: str_(i18n.UIStrings.columnDescription)},
+      /* eslint-disable max-len */
+      {key: 'sourceLocation', valueType: 'source-location', label: str_(i18n.UIStrings.columnSource)},
+      {key: 'description', valueType: 'code', label: str_(i18n.UIStrings.columnDescription)},
+      /* eslint-enable max-len */
     ];
 
     const details = Audit.makeTableDetails(headings, tableRows);

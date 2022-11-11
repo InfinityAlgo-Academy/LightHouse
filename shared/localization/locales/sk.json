@@ -1605,7 +1605,7 @@
     "message": "Stránka obsahuje platné mapy zdroja"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` nielen optimalizuje vašu aplikáciu pre veľkosti obrazoviek mobilných zariadení, ale zabraňuje aj [300 milisekundovému oneskoreniu vstupu používateľa](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Ďalšie informácie](https://web.dev/viewport/)"
+    "message": "`<meta name=\"viewport\">` nielen optimalizuje vašu aplikáciu pre veľkosti obrazoviek mobilných zariadení, ale zabraňuje aj [300 milisekundovému oneskoreniu vstupu používateľa](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Ďalšie informácie](https://web.dev/viewport/)"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Nenašla sa žiadna značka `<meta name=\"viewport\">`"

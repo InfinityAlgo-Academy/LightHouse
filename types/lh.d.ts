@@ -16,7 +16,7 @@ import Gatherer_ from './gatherer';
 import * as I18n from './lhr/i18n';
 import {LighthouseError as LighthouseError_} from '../core/lib/lh-error.js';
 import LHResult from './lhr/lhr';
-import FlowResult_ from './lhr/flow';
+import FlowResult_ from './lhr/flow-result';
 import Protocol_ from './protocol';
 import * as Settings from './lhr/settings';
 import Treemap_ from './lhr/treemap';

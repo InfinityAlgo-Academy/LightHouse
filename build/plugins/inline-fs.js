@@ -98,6 +98,11 @@ async function inlineFs(code, filepath) {
             parsed.callee.property);
       }
     } catch (err) {
+      // Consider missing files to be a fatal error.
+      if (err.code === 'ENOENT') {
+        throw err;
+      }
+
       // Use the specific node with the error if available; fallback to fs.method location.
       const offsets = getNodeOffsets(err.node || parsed);
       const location = acorn.getLineInfo(code, offsets.start);
