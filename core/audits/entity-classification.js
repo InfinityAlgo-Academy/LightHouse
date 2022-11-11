@@ -37,6 +37,8 @@ class EntityClassification extends Audit {
     const entities = [];
     /** @type {Record<string, number>} */
     const origins = {};
+    /** @type {Record<string, number>} */
+    const names = {};
 
     for (const [entity, entityUrls] of classifiedEntities.byEntity.entries()) {
       /** @type {LH.Audit.Details.EntityClassificationEntity} */
@@ -56,6 +58,7 @@ class EntityClassification extends Audit {
         if (!origin) return;
         origins[origin] = id;
       });
+      names[shortEntity.name] = id;
     }
 
     return {
@@ -64,6 +67,7 @@ class EntityClassification extends Audit {
         type: 'entity-classification',
         entities,
         origins,
+        names,
       },
     };
   }

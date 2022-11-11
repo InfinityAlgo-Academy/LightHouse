@@ -259,8 +259,7 @@ class UsesRelPreloadAudit extends Audit {
   static async audit() {
     // Preload advice is on hold until https://github.com/GoogleChrome/lighthouse/issues/11960
     // is resolved.
-    return {score: 1, notApplicable: true,
-      details: Audit.makeOpportunityDetails([], [], 0)};
+    return {score: 1, notApplicable: true, details: Audit.makeOpportunityDetails([], [], 0)};
   }
 }
 

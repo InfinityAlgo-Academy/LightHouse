@@ -95,6 +95,7 @@ declare module Details {
     type: 'entity-classification';
     origins: Record<string, number>;
     entities: Array<EntityClassificationEntity>;
+    names: Record<string, number>;
   }
 
   /**
