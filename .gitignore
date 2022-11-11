@@ -60,3 +60,14 @@ proto/scripts/*_processed.json
 # require any lock file to be checked in explicitly
 yarn.lock
 
+# ignore generated d.ts files
+core/**/*.d.ts
+core/**/*.d.cts
+clients/**/*.d.ts
+cli/**/*.d.ts
+build/**/*.d.ts
+third-party/**/*.d.ts
+report/generator/**/*.d.ts
+*.d.cts
+*.d.ts
+

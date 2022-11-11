@@ -15,5 +15,5 @@ core/scripts/legacy-javascript/variants
 third-party/**
 
 # ignore d.ts files until we can properly lint them
-*.d.ts
-types/**/*.ts
+**/*.d.ts
+**/*.d.cts
