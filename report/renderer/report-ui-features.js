@@ -217,6 +217,20 @@ export class ReportUIFeatures {
   }
 
   _setupThirdPartyFilter() {
+    /** @type {LH.Audit.Details.EntityClassification | undefined | boolean} */
+    const entityClassification =
+      this.json.audits['entity-classification'] &&
+      this.json.audits['entity-classification'].details &&
+      this.json.audits['entity-classification'].details.type === 'entity-classification' &&
+      this.json.audits['entity-classification'].details;
+    if (!entityClassification) return;
+
+    const mainEntityOrigin = Util.getOrigin(Util.getFinalDisplayedUrl(this.json));
+    if (!mainEntityOrigin) return;
+    const mainEntityId = entityClassification.origins[mainEntityOrigin];
+    const mainEntityName = entityClassification.entities[mainEntityId]?.name;
+    if (!mainEntityName) return;
+
     // Some audits should not display the third party filter option.
     const thirdPartyFilterAuditExclusions = [
       // These audits deal explicitly with third party resources.
@@ -242,7 +256,7 @@ export class ReportUIFeatures {
 
     tablesWithUrls.forEach((tableEl) => {
       const rowEls = getTableRows(tableEl);
-      const thirdPartyRows = this._getThirdPartyRows(rowEls, Util.getFinalDisplayedUrl(this.json));
+      const thirdPartyRows = this._getThirdPartyRows(rowEls, mainEntityName);
 
       // create input box
       const filterTemplate = this._dom.createComponent('3pFilter');
@@ -318,23 +332,19 @@ export class ReportUIFeatures {
    * From a table with URL entries, finds the rows containing third-party URLs
    * and returns them.
    * @param {HTMLElement[]} rowEls
-   * @param {string} finalDisplayedUrl
+   * @param {string} mainEntityName
    * @return {Array<HTMLElement>}
    */
-  _getThirdPartyRows(rowEls, finalDisplayedUrl) {
+  _getThirdPartyRows(rowEls, mainEntityName) {
     /** @type {Array<HTMLElement>} */
     const thirdPartyRows = [];
-    const finalDisplayedUrlRootDomain = Util.getRootDomain(finalDisplayedUrl);
 
     for (const rowEl of rowEls) {
       if (rowEl.classList.contains('lh-sub-item-row')) continue;
 
-      const urlItem = rowEl.querySelector('div.lh-text__url');
-      if (!urlItem) continue;
-
-      const datasetUrl = urlItem.dataset.url;
-      if (!datasetUrl) continue;
-      const isThirdParty = Util.getRootDomain(datasetUrl) !== finalDisplayedUrlRootDomain;
+      const datasetEntity = rowEl.dataset.entity;
+      if (!datasetEntity) continue;
+      const isThirdParty = datasetEntity !== mainEntityName;
       if (!isThirdParty) continue;
 
       thirdPartyRows.push(rowEl);
