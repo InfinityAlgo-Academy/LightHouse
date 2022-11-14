@@ -5,6 +5,7 @@
  */
 
 import {Audit} from '../audit.js';
+import {EntityClassification} from '../../computed/entity-classification.js';
 import {linearInterpolation} from '../../lib/statistics.js';
 import {LanternInteractive} from '../../computed/metrics/lantern-interactive.js';
 import * as i18n from '../../lib/i18n/i18n.js';
@@ -116,6 +117,7 @@ class ByteEfficiencyAudit extends Audit {
     };
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const hasContentfulRecords = networkRecords.some(record => record.transferSize);
+    const classifiedEntities = await EntityClassification.request({URL, devtoolsLog}, context);
 
     // Requesting load simulator requires non-empty network records.
     // Timespans are not guaranteed to have any network activity.
@@ -136,7 +138,7 @@ class ByteEfficiencyAudit extends Audit {
       LoadSimulator.request(simulatorOptions, context),
     ]);
 
-    return this.createAuditProduct(result, graph, simulator, gatherContext);
+    return this.createAuditProduct(result, graph, simulator, gatherContext, classifiedEntities);
   }
 
   /**
@@ -206,11 +208,12 @@ class ByteEfficiencyAudit extends Audit {
    * @param {Node|null} graph
    * @param {Simulator} simulator
    * @param {LH.Artifacts['GatherContext']} gatherContext
+   * @param {LH.Artifacts.ClassifiedEntities?} classifiedEntities
    * @return {LH.Audit.Product}
    */
-  static createAuditProduct(result, graph, simulator, gatherContext) {
-    const results = result.items.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
-
+  static createAuditProduct(result, graph, simulator, gatherContext, classifiedEntities) {
+    const results = result.items.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes)
+      .map(item => ({...item, entity: classifiedEntities?.byURL.get(item.url)?.name}));
     const wastedBytes = results.reduce((sum, item) => sum + item.wastedBytes, 0);
 
     let wastedMs;
