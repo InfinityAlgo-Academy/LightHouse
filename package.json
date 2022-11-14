@@ -71,7 +71,7 @@
     "dogfood-lhci": "./core/scripts/dogfood-lhci.sh",
     "timing-trace": "node core/scripts/generate-timing-trace.js",
     "changelog": "conventional-changelog --config ./build/changelog-generator/index.cjs --infile changelog.md --same-file",
-    "type-check": "tsc -p ./tsconfig-all.json --noEmit",
+    "type-check": "tsc --build ./tsconfig-all.json",
     "i18n:checks": "./core/scripts/i18n/assert-strings-collected.sh",
     "i18n:collect-strings": "node core/scripts/i18n/collect-strings.js",
     "update:lantern-baseline": "node core/scripts/lantern/update-baseline-lantern-values.js",
