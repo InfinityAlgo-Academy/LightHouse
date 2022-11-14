@@ -6,6 +6,7 @@
 
 import {Audit} from './audit.js';
 import {NetworkRecords} from '../computed/network-records.js';
+import {EntityClassification} from '../computed/entity-classification.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import {MainThreadTasks} from '../computed/main-thread-tasks.js';
 import {PageDependencyGraph} from '../computed/page-dependency-graph.js';
@@ -57,6 +58,7 @@ class LongTasks extends Audit {
     const tasks = await MainThreadTasks.request(trace, context);
     const devtoolsLog = artifacts.devtoolsLogs[LongTasks.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
+    const classifiedEntities = await EntityClassification.request({URL, devtoolsLog}, context);
 
     /** @type {Map<LH.TraceEvent, LH.Gatherer.Simulation.NodeTiming>} */
     const taskTimingsByEvent = new Map();
@@ -89,11 +91,15 @@ class LongTasks extends Audit {
       .slice(0, 20);
 
     // TODO(beytoven): Add start time that matches with the simulated throttling
-    const results = longtasks.map(task => ({
-      url: getAttributableURLForTask(task, jsURLs),
-      duration: task.duration,
-      startTime: task.startTime,
-    }));
+    const results = longtasks.map(task => {
+      const url = getAttributableURLForTask(task, jsURLs);
+      return {
+        url,
+        duration: task.duration,
+        startTime: task.startTime,
+        entity: classifiedEntities?.byURL.get(url)?.name,
+      };
+    });
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
