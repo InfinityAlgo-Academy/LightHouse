@@ -1,3 +1,3 @@
-// export * from '../lh';
-//
-// export as namespace LH;
+export * from '../lh.js';
+
+export as namespace LH;
