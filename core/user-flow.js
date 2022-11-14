@@ -13,6 +13,7 @@ import {initializeConfig} from './config/config.js';
 import {getFormatted} from '../shared/localization/format.js';
 import {mergeConfigFragment, deepClone} from './config/config-helpers.js';
 import * as i18n from './lib/i18n/i18n.js';
+import * as LH from '../types/lh.js';
 
 /** @typedef {WeakMap<LH.UserFlow.GatherStep, LH.Gatherer.FRGatherResult['runnerOptions']>} GatherStepRunnerOptions */
 

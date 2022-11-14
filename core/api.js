@@ -10,6 +10,7 @@ import {startTimespanGather} from './gather/timespan-runner.js';
 import {navigationGather} from './gather/navigation-runner.js';
 import {ReportGenerator} from '../report/generator/report-generator.js';
 import {Runner} from './runner.js';
+import * as LH from '../types/lh.js';
 
 /**
  * @param {LH.Puppeteer.Page} page
