@@ -5,6 +5,7 @@
  */
 
 import {Audit} from './audit.js';
+import {EntityClassification} from '../computed/entity-classification.js';
 import {taskGroups} from '../lib/tracehouse/task-groups.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import {NetworkRecords} from '../computed/network-records.js';
@@ -44,7 +45,7 @@ class BootupTime extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['traces', 'devtoolsLogs'],
+      requiredArtifacts: ['traces', 'devtoolsLogs', 'URL'],
     };
   }
 
@@ -72,6 +73,8 @@ class BootupTime extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[BootupTime.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const tasks = await MainThreadTasks.request(trace, context);
+    const classifiedEntities = await EntityClassification.request(
+      {URL: artifacts.URL, devtoolsLog}, context);
     const multiplier = settings.throttlingMethod === 'simulate' ?
       settings.throttling.cpuSlowdownMultiplier : 1;
 
@@ -105,6 +108,7 @@ class BootupTime extends Audit {
           // Highlight the JavaScript task costs
           scripting: scriptingTotal,
           scriptParseCompile: parseCompileTotal,
+          entity: classifiedEntities?.byURL.get(url)?.name,
         };
       })
       .filter(result => result.total >= context.options.thresholdInMs)
