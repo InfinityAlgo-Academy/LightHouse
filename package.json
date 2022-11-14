@@ -29,7 +29,7 @@
     "build-sample-reports": "yarn build-report && node build/build-sample-reports.js",
     "build-treemap": "node ./build/build-treemap.js",
     "build-viewer": "node ./build/build-viewer.js",
-    "build-types": "tsc --build tsconfig-all.json && rsync -a dist/tsbuildinfo/ ./ --include='*.d.ts' --include='*.d.cts' --exclude='*' --itemize-changes",
+    "build-types": "tsc --build tsconfig-all.json && rsync -a dist/tsbuildinfo/ ./ --include='*.d.ts' --include='*.d.cts' --exclude='*.map' --exclude='*.tsbuildinfo'",
     "reset-link": "(yarn unlink || true) && yarn link && yarn link lighthouse",
     "c8": "bash core/scripts/c8.sh",
     "clean": "rm -r dist proto/scripts/*.json proto/scripts/*_pb2.* proto/scripts/*_pb.* proto/scripts/__pycache__ proto/scripts/*.pyc *.report.html *.report.dom.html *.report.json *.devtoolslog.json *.trace.json shared/localization/locales/*.ctc.json || true",
