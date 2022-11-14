@@ -6,9 +6,9 @@
  */
 
 import {Audit} from '../core/audits/audit.js';
-import {SharedFlagsSettings, ConfigSettings} from './lhr/settings';
-import Gatherer from './gatherer';
-import {IcuMessage} from './lhr/i18n';
+import {SharedFlagsSettings, ConfigSettings} from './lhr/settings.js';
+import Gatherer from './gatherer.js';
+import {IcuMessage} from './lhr/i18n.js';
 
 interface ClassOf<T> {
   new (): T;

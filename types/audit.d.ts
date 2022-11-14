@@ -5,12 +5,12 @@
  */
 
 import {ArbitraryEqualityMap} from '../core/lib/arbitrary-equality-map.js';
-import Artifacts from './artifacts';
-import AuditDetails from './lhr/audit-details';
-import Config from './config';
-import Gatherer from './gatherer';
-import {IcuMessage} from './lhr/i18n';
-import * as AuditResult from './lhr/audit-result';
+import Artifacts from './artifacts.js';
+import AuditDetails from './lhr/audit-details.js';
+import Config from './config.js';
+import Gatherer from './gatherer.js';
+import {IcuMessage} from './lhr/i18n.js';
+import * as AuditResult from './lhr/audit-result.js';
 
 declare module Audit {
   export import Details = AuditDetails;

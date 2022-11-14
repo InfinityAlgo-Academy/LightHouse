@@ -4,8 +4,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import {Locale} from '../../lhr/settings';
+
 declare module 'lookup-closest-locale' {
-  function lookupClosestLocale(locale: string[]|string|undefined, available: Record<LH.Locale, any>): LH.Locale|undefined;
+  function lookupClosestLocale(locale: string[]|string|undefined, available: Record<Locale, any>): Locale|undefined;
 
   export = lookupClosestLocale;
 }

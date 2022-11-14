@@ -5,23 +5,23 @@
  */
 
 import {ArbitraryEqualityMap as ArbitraryEqualityMap_} from '../core/lib/arbitrary-equality-map.js';
-import Artifacts_ from './artifacts';
-import Audit_ from './audit';
-import Budget_ from './lhr/budget';
-import Config_ from './config';
+import Artifacts_ from './artifacts.js';
+import Audit_ from './audit.js';
+import Budget_ from './lhr/budget.js';
+import Config_ from './config.js';
 import _Crdp from 'devtools-protocol/types/protocol';
 import _CrdpMappings from 'devtools-protocol/types/protocol-mapping';
-import * as Externs from './externs';
-import Gatherer_ from './gatherer';
-import * as I18n from './lhr/i18n';
+import * as Externs from './externs.js';
+import Gatherer_ from './gatherer.js';
+import * as I18n from './lhr/i18n.js';
 import {LighthouseError as LighthouseError_} from '../core/lib/lh-error.js';
-import LHResult from './lhr/lhr';
-import FlowResult_ from './lhr/flow-result';
-import Protocol_ from './protocol';
-import * as Settings from './lhr/settings';
-import Treemap_ from './lhr/treemap';
-import UserFlow_ from './user-flow';
-import Puppeteer_ from './puppeteer';
+import LHResult from './lhr/lhr.js';
+import FlowResult_ from './lhr/flow-result.js';
+import Protocol_ from './protocol.js';
+import * as Settings from './lhr/settings.js';
+import Treemap_ from './lhr/treemap.js';
+import UserFlow_ from './user-flow.js';
+import Puppeteer_ from './puppeteer.js';
 
 // Construct hierarchy of global types under the LH namespace.
 export type ArbitraryEqualityMap = ArbitraryEqualityMap_;

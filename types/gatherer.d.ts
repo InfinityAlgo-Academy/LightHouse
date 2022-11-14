@@ -4,6 +4,9 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import Crdp from 'devtools-protocol/types/protocol';
+import CrdpMappings from 'devtools-protocol/types/protocol-mapping';
+
 import {NetworkNode as _NetworkNode} from '../core/lib/dependency-graph/network-node';
 import {CPUNode as _CPUNode} from '../core/lib/dependency-graph/cpu-node';
 import {Simulator as _Simulator} from '../core/lib/dependency-graph/simulator/simulator';
@@ -17,18 +20,22 @@ import Config from './config';
 import {IcuMessage} from './lhr/i18n';
 import Result from './lhr/lhr';
 import Protocol from './protocol';
+import Puppeteer from './puppeteer';
+
+type CrdpEvents = CrdpMappings.Events;
+type CrdpCommands = CrdpMappings.Commands;
 
 declare module Gatherer {
   /** The Lighthouse wrapper around a raw CDP session. */
   interface FRProtocolSession {
-    setTargetInfo(targetInfo: LH.Crdp.Target.TargetInfo): void;
+    setTargetInfo(targetInfo: Crdp.Target.TargetInfo): void;
     hasNextProtocolTimeout(): boolean;
     getNextProtocolTimeout(): number;
     setNextProtocolTimeout(ms: number): void;
-    on<TEvent extends keyof LH.CrdpEvents>(event: TEvent, callback: (...args: LH.CrdpEvents[TEvent]) => void): void;
-    once<TEvent extends keyof LH.CrdpEvents>(event: TEvent, callback: (...args: LH.CrdpEvents[TEvent]) => void): void;
-    off<TEvent extends keyof LH.CrdpEvents>(event: TEvent, callback: (...args: LH.CrdpEvents[TEvent]) => void): void;
-    sendCommand<TMethod extends keyof LH.CrdpCommands>(method: TMethod, ...params: LH.CrdpCommands[TMethod]['paramsType']): Promise<LH.CrdpCommands[TMethod]['returnType']>;
+    on<TEvent extends keyof CrdpEvents>(event: TEvent, callback: (...args: CrdpEvents[TEvent]) => void): void;
+    once<TEvent extends keyof CrdpEvents>(event: TEvent, callback: (...args: CrdpEvents[TEvent]) => void): void;
+    off<TEvent extends keyof CrdpEvents>(event: TEvent, callback: (...args: CrdpEvents[TEvent]) => void): void;
+    sendCommand<TMethod extends keyof CrdpCommands>(method: TMethod, ...params: CrdpCommands[TMethod]['paramsType']): Promise<CrdpCommands[TMethod]['returnType']>;
     dispose(): Promise<void>;
   }
 
@@ -52,7 +59,7 @@ declare module Gatherer {
     /** The connection to the page being analyzed. */
     driver: FRTransitionalDriver;
     /** The Puppeteer page handle. Will be undefined in legacy navigation mode. */
-    page?: LH.Puppeteer.Page;
+    page?: Puppeteer.Page;
     /** The set of base artifacts that are always collected. */
     baseArtifacts: Artifacts.FRBaseArtifacts;
     /** The cached results of computed artifacts. */

@@ -4,6 +4,11 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import CrdpMappings from 'devtools-protocol/types/protocol-mapping';
+
+type CrdpEvents = CrdpMappings.Events;
+type CrdpCommands = CrdpMappings.Commands;
+
 declare module Protocol {
   /**
    * An intermediate type, used to create a record of all possible Crdp raw event
@@ -13,10 +18,10 @@ declare module Protocol {
    * }
    */
   type RawEventMessageRecord = {
-    [K in keyof LH.CrdpEvents]: {
+    [K in keyof CrdpEvents]: {
       method: K,
       // Drop [] for `undefined` (so a JS value is valid).
-      params: LH.CrdpEvents[K] extends [] ? undefined: LH.CrdpEvents[K][number]
+      params: CrdpEvents[K] extends [] ? undefined: CrdpEvents[K][number]
       // If sessionId is not set, it means the event was from the root target.
       sessionId?: string;
     };
@@ -33,7 +38,7 @@ declare module Protocol {
    */
   type RawCommandMessage = {
     id: number;
-    result: LH.CrdpCommands[keyof LH.CrdpCommands]['returnType'];
+    result: CrdpCommands[keyof CrdpCommands]['returnType'];
     error: {
       code: number,
       message: string
