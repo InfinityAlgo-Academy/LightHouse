@@ -1,7 +1,7 @@
 import {UserFlow as UserFlow_} from '../core/user-flow.js';
-import Config from './config';
-import {Flags} from './externs';
-import Artifacts from './artifacts';
+import Config from './config.js';
+import {Flags} from './externs.js';
+import Artifacts from './artifacts.js';
 
 declare module UserFlow {
   export interface FlowArtifacts {
