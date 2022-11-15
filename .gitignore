@@ -61,13 +61,7 @@ proto/scripts/*_processed.json
 yarn.lock
 
 # ignore generated d.ts files
-core/**/*.d.ts
-core/**/*.d.cts
-clients/**/*.d.ts
-cli/**/*.d.ts
-build/**/*.d.ts
-third-party/**/*.d.ts
-report/generator/**/*.d.ts
-*.d.cts
-*.d.ts
+**/*.d.ts
+**/*.d.cts
+!**/types/**/*.d.ts
 
