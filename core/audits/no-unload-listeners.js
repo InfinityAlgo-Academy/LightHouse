@@ -5,6 +5,7 @@
  */
 
 import {Audit} from './audit.js';
+import {EntityClassification} from '../computed/entity-classification.js';
 import {JSBundles} from '../computed/js-bundles.js';
 import * as i18n from './../lib/i18n/i18n.js';
 
@@ -29,7 +30,7 @@ class NoUnloadListeners extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['GlobalListeners', 'SourceMaps', 'Scripts'],
+      requiredArtifacts: ['GlobalListeners', 'SourceMaps', 'Scripts', 'URL', 'devtoolsLogs'],
     };
   }
 
@@ -39,6 +40,10 @@ class NoUnloadListeners extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const classifiedEntities = await EntityClassification.request(
+      {URL: artifacts.URL, devtoolsLog}, context);
+
     const unloadListeners = artifacts.GlobalListeners.filter(l => l.type === 'unload');
     if (!unloadListeners.length) {
       return {
@@ -72,6 +77,7 @@ class NoUnloadListeners extends Audit {
       const bundle = bundles.find(bundle => bundle.script.scriptId === script.scriptId);
       return {
         source: Audit.makeSourceLocation(script.url, lineNumber, columnNumber, bundle),
+        entity: classifiedEntities?.byURL.get(script.url)?.name,
       };
     });
 
