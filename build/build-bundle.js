@@ -153,12 +153,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     plugins: [
       plugins.replaceModules({
         ...shimsObj,
-        // Allows for plugins to import lighthouse.
-        // TODO: not needed until pubads is back. (note: might not be needed even then?)
-        // 'lighthouse': `
-        //   import {Audit} from '${require.resolve('../core/audits/audit.js')}';
-        //   export {Audit};
-        // `,
         'url': `
           export const URL = globalThis.URL;
           export const fileURLToPath = url => url;
