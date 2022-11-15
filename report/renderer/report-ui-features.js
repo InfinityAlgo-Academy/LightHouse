@@ -340,8 +340,6 @@ export class ReportUIFeatures {
     const thirdPartyRows = [];
 
     for (const rowEl of rowEls) {
-      if (rowEl.classList.contains('lh-sub-item-row')) continue;
-
       const datasetEntity = rowEl.dataset.entity;
       if (!datasetEntity) continue;
       const isThirdParty = datasetEntity !== mainEntityName;

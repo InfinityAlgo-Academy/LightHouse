@@ -411,9 +411,10 @@ export class DetailsRenderer {
       }
     }
 
-    // If entity name is available, markup the row for filtering.
-    if (item.entity) {
-      rowElem.dataset.entity = item.entity.toString();
+    // If entity name is available and is a string, markup the row for filtering.
+    // Third-party summary has a link object so that should be skipped.
+    if (item.entity && typeof(item.entity) === 'string') {
+      rowElem.dataset.entity = item.entity;
     }
 
     return rowElem;
@@ -437,7 +438,9 @@ export class DetailsRenderer {
     for (const subItem of item.subItems.items) {
       const rowEl = this._renderTableRow(subItem, subItemsHeadings);
       rowEl.classList.add('lh-sub-item-row');
-      if (item.entity) rowEl.dataset.entity = item.entity.toString();
+      if (item.entity && typeof(item.entity) === 'string') {
+        rowEl.dataset.entity = item.entity;
+      }
       fragment.append(rowEl);
     }
 
