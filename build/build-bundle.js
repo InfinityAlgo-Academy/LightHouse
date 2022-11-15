@@ -105,7 +105,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
   const shimsObj = {
     [require.resolve('../core/legacy/gather/connections/cri.js')]:
       'export const CriConnection = {}',
-    [require.resolve('../package.json')]: `export const version = '${pkg.version}';`,
     '__zlib-lib/inflate': `
       export function inflateInit2() {};
       export function inflate() {};

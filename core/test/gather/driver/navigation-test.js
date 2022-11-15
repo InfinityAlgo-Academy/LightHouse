@@ -11,21 +11,12 @@ import {
   flushAllTimersAndMicrotasks,
   timers,
 } from '../../test-utils.js';
-// import {gotoURL, getNavigationWarnings} from '../../../gather/driver/navigation.js';
 
 const {createMockOnceFn} = mockCommands;
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {import('../../../gather/driver/navigation.js')['gotoURL']} */
-let gotoURL;
-/** @type {import('../../../gather/driver/navigation.js')['getNavigationWarnings']} */
-let getNavigationWarnings;
-
-before(async () => {
-  ({gotoURL, getNavigationWarnings} = (await import('../../../gather/driver/navigation.js')));
-});
+// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+const {gotoURL, getNavigationWarnings} = await import('../../../gather/driver/navigation.js');
 
 timers.useFakeTimers();
 
