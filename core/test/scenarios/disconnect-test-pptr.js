@@ -6,7 +6,7 @@
 
 /* eslint-env browser */
 
-import * as lighthouse from '../../api.js';
+import * as api from '../../index.js';
 import {createTestState} from './pptr-test-utils.js';
 import {LH_ROOT} from '../../../root.js';
 
@@ -29,8 +29,7 @@ describe('Disconnect', function() {
     const session = await state.page.target().createCDPSession();
     await session.send('Network.enable');
 
-    const timespan = await lighthouse.startTimespan({
-      page: state.page,
+    const timespan = await api.startTimespan(state.page, {
       flags: {
         blockedUrlPatterns: ['*'],
       },

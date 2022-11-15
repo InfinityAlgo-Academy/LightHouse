@@ -107,8 +107,10 @@ class MainThreadWorkBreakdown extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'groupLabel', itemType: 'text', text: str_(UIStrings.columnCategory)},
-      {key: 'duration', itemType: 'ms', granularity: 1, text: str_(i18n.UIStrings.columnTimeSpent)},
+      /* eslint-disable max-len */
+      {key: 'groupLabel', valueType: 'text', label: str_(UIStrings.columnCategory)},
+      {key: 'duration', valueType: 'ms', granularity: 1, label: str_(i18n.UIStrings.columnTimeSpent)},
+      /* eslint-enable max-len */
     ];
 
     results.sort((a, b) => categoryTotals[b.group] - categoryTotals[a.group]);

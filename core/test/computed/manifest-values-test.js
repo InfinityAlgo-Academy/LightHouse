@@ -91,19 +91,6 @@ describe('ManifestValues computed artifact', () => {
       assert.equal(colorResults.every(i => i.passing === false), true);
     });
 
-    it('fails when a minimal manifest contains an invalid background_color', async () => {
-      const WebAppManifest = noUrlManifestParser(JSON.stringify({
-        background_color: 'no',
-        theme_color: 'no',
-      }));
-      const InstallabilityErrors = {errors: []};
-      const artifacts = {WebAppManifest, InstallabilityErrors};
-
-      const results = await ManifestValues.request(artifacts, getMockContext());
-      const colorResults = results.allChecks.filter(i => i.id.includes('Color'));
-      assert.equal(colorResults.every(i => i.passing === false), true);
-    });
-
     it('succeeds when a minimal manifest contains a valid background_color', async () => {
       const WebAppManifest = noUrlManifestParser(JSON.stringify({
         background_color: '#FAFAFA',

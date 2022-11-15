@@ -49,9 +49,9 @@ class ResourceSummary extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'label', itemType: 'text', text: str_(i18n.UIStrings.columnResourceType)},
-      {key: 'requestCount', itemType: 'numeric', text: str_(i18n.UIStrings.columnRequests)},
-      {key: 'transferSize', itemType: 'bytes', text: str_(i18n.UIStrings.columnTransferSize)},
+      {key: 'label', valueType: 'text', label: str_(i18n.UIStrings.columnResourceType)},
+      {key: 'requestCount', valueType: 'numeric', label: str_(i18n.UIStrings.columnRequests)},
+      {key: 'transferSize', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize)},
     ];
 
 

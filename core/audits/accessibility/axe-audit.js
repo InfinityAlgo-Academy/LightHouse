@@ -88,7 +88,7 @@ class AxeAudit extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'node', itemType: 'node', subItemsHeading: {key: 'relatedNode', itemType: 'node'}, text: str_(UIStrings.failingElementsHeader)},
+      {key: 'node', valueType: 'node', subItemsHeading: {key: 'relatedNode', valueType: 'node'}, label: str_(UIStrings.failingElementsHeader)},
       /* eslint-enable max-len */
     ];
 

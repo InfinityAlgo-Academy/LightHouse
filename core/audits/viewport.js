@@ -16,7 +16,7 @@ const UIStrings = {
     'or `initial-scale`',
   /** Description of a Lighthouse audit that tells the user why they should have a viewport meta tag in their html. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'A `<meta name="viewport">` not only optimizes your app for mobile screen sizes, ' +
-    'but also prevents [a 300 millisecond delay to user input](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). ' +
+    'but also prevents [a 300 millisecond delay to user input](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). ' +
     '[Learn more about using the viewport meta tag](https://web.dev/viewport/).',
   /** Explanatory message stating that no viewport meta tag exists on the page. */
   explanationNoTag: 'No `<meta name="viewport">` tag found',

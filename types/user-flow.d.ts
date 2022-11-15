@@ -6,14 +6,26 @@ declare module UserFlow {
     name?: string;
   }
 
+  export interface Options {
+    /** Config to use for each flow step. */
+    config?: LH.Config.Json;
+    /** Base flags to use for each flow step. Step specific flags will override these flags. */
+    flags?: LH.Flags;
+    /** Display name for this user flow. */
+    name?: string;
+  }
+
+  export interface StepFlags extends LH.Flags {
+    /** Display name for this flow step. */
+    name?: string;
+  }
+
   export interface GatherStep {
     artifacts: LH.Artifacts;
-    name: string;
-    config?: LH.Config.Json;
-    flags?: LH.Flags;
+    flags?: StepFlags;
   }
 }
 
-type UserFlow = typeof UserFlow_;
+type UserFlow = InstanceType<typeof UserFlow_>;
 
 export default UserFlow;

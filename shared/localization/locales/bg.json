@@ -1605,7 +1605,7 @@
     "message": "Страницата има валидни карти на изходния код"
   },
   "core/audits/viewport.js | description": {
-    "message": "Мета маркерът `<meta name=\"viewport\">` не само оптимизира приложението ви за различни размери екрани на мобилни устройства, но и предотвратява [забавянето от 300 милисекунди за входящите данни от действие на потребител](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Научете повече](https://web.dev/viewport/)."
+    "message": "Мета маркерът `<meta name=\"viewport\">` не само оптимизира приложението ви за различни размери екрани на мобилни устройства, но и предотвратява [забавянето от 300 милисекунди за входящите данни от действие на потребител](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Научете повече](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Не бе намерен маркер `<meta name=\"viewport\">`"

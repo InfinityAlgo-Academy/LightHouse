@@ -1605,7 +1605,7 @@
     "message": "페이지에 유효한 소스 맵이 있음"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">`는 앱을 모바일 화면 크기에 최적화할 뿐만 아니라 [사용자 입력 300밀리초 지연](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away)도 방지합니다. [자세히 알아보기](https://web.dev/viewport/)"
+    "message": "`<meta name=\"viewport\">`는 앱을 모바일 화면 크기에 최적화할 뿐만 아니라 [사용자 입력 300밀리초 지연](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)도 방지합니다. [자세히 알아보기](https://web.dev/viewport/)"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "`<meta name=\"viewport\">` 태그 없음"

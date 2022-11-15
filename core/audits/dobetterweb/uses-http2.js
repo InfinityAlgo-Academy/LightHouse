@@ -214,8 +214,8 @@ class UsesHTTP2Audit extends Audit {
     if (artifacts.GatherContext.gatherMode === 'timespan') {
       /** @type {LH.Audit.Details.Table['headings']} */
       const headings = [
-        {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-        {key: 'protocol', itemType: 'text', text: str_(UIStrings.columnProtocol)},
+        {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+        {key: 'protocol', valueType: 'text', label: str_(UIStrings.columnProtocol)},
       ];
 
       const details = Audit.makeTableDetails(headings, resources);

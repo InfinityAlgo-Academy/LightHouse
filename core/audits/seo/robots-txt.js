@@ -230,9 +230,9 @@ class RobotsTxt extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'index', itemType: 'text', text: 'Line #'},
-      {key: 'line', itemType: 'code', text: 'Content'},
-      {key: 'message', itemType: 'code', text: 'Error'},
+      {key: 'index', valueType: 'text', label: 'Line #'},
+      {key: 'line', valueType: 'code', label: 'Content'},
+      {key: 'message', valueType: 'code', label: 'Error'},
     ];
 
     const details = Audit.makeTableDetails(headings, validationErrors, {});

@@ -1605,7 +1605,7 @@
     "message": "Stranica ima važeće karte izvora"
   },
   "core/audits/viewport.js | description": {
-    "message": "Isječak `<meta name=\"viewport\">` ne samo da optimizira vašu aplikaciju za veličine zaslona na mobilnom uređaju već i sprječava [ kašnjenje povratnih informacija korisnika od 300 milisekundi](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Saznajte više](https://web.dev/viewport/)."
+    "message": "Isječak `<meta name=\"viewport\">` ne samo da optimizira vašu aplikaciju za veličine zaslona na mobilnom uređaju već i sprječava [ kašnjenje povratnih informacija korisnika od 300 milisekundi](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Saznajte više](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Nijedna oznaka `<meta name=\"viewport\">` nije pronađena"

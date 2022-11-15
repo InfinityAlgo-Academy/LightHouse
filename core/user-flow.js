@@ -10,22 +10,57 @@ import {startTimespanGather} from './gather/timespan-runner.js';
 import {navigationGather} from './gather/navigation-runner.js';
 import {Runner} from './runner.js';
 import {initializeConfig} from './config/config.js';
+import {getFormatted} from '../shared/localization/format.js';
+import {mergeConfigFragment, deepClone} from './config/config-helpers.js';
+import * as i18n from './lib/i18n/i18n.js';
 
-/** @typedef {Parameters<snapshotGather>[0]} FrOptions */
-/** @typedef {Omit<FrOptions, 'page'> & {name?: string}} UserFlowOptions */
-/** @typedef {Omit<FrOptions, 'page'> & {stepName?: string}} StepOptions */
 /** @typedef {WeakMap<LH.UserFlow.GatherStep, LH.Gatherer.FRGatherResult['runnerOptions']>} GatherStepRunnerOptions */
+
+const UIStrings = {
+  /**
+   * @description Default name for a user flow on the given url. "User flow" refers to the series of page navigations and user interactions being tested on the page. "url" is a trimmed version of a url that only includes the domain name.
+   * @example {example.com} url
+   */
+  defaultFlowName: 'User flow ({url})',
+  /**
+   * @description Default name for a Lighthouse report that analyzes a page navigation. "url" is a trimmed version of a url that only includes the domain name and path.
+   * @example {example.com/page} url
+   */
+  defaultNavigationName: 'Navigation report ({url})',
+  /**
+   * @description Default name for a Lighthouse report that analyzes user interactions over a period of time. "url" is a trimmed version of a url that only includes the domain name and path.
+   * @example {example.com/page} url
+   */
+  defaultTimespanName: 'Timespan report ({url})',
+  /**
+   * @description Default name for a Lighthouse report that analyzes the page state at a point in time. "url" is a trimmed version of a url that only includes the domain name and path.
+   * @example {example.com/page} url
+   */
+  defaultSnapshotName: 'Snapshot report ({url})',
+};
+
+const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
+
+/**
+ * @param {string} message
+ * @param {Record<string, string | number>} values
+ * @param {LH.Locale} locale
+ */
+function translate(message, values, locale) {
+  const icuMessage = str_(message, values);
+  return getFormatted(icuMessage, locale);
+}
 
 class UserFlow {
   /**
-   * @param {FrOptions['page']} page
-   * @param {UserFlowOptions=} options
+   * @param {LH.Puppeteer.Page} page
+   * @param {LH.UserFlow.Options} [options]
    */
   constructor(page, options) {
-    /** @type {FrOptions} */
-    this.options = {page, ...options};
-    /** @type {string|undefined} */
-    this.name = options?.name;
+    /** @type {LH.Puppeteer.Page} */
+    this._page = page;
+    /** @type {LH.UserFlow.Options|undefined} */
+    this._options = options;
     /** @type {LH.UserFlow.GatherStep[]} */
     this._gatherSteps = [];
     /** @type {GatherStepRunnerOptions} */
@@ -33,67 +68,46 @@ class UserFlow {
   }
 
   /**
-   * @param {string} longUrl
-   * @returns {string}
+   * @param {LH.UserFlow.StepFlags|undefined} flags
+   * @return {LH.UserFlow.StepFlags|undefined}
    */
-  _shortenUrl(longUrl) {
-    const url = new URL(longUrl);
-    return `${url.hostname}${url.pathname}`;
+  _getNextFlags(flags) {
+    const clonedFlowFlags = this._options?.flags && deepClone(this._options?.flags);
+    if (!flags) return clonedFlowFlags;
+    return mergeConfigFragment(clonedFlowFlags || {}, flags, true);
   }
 
   /**
-   * @param {LH.Artifacts} artifacts
-   * @return {string}
+   * @param {LH.UserFlow.StepFlags|undefined} flags
+   * @return {LH.UserFlow.StepFlags}
    */
-  _getDefaultStepName(artifacts) {
-    const shortUrl = this._shortenUrl(artifacts.URL.finalDisplayedUrl);
-    switch (artifacts.GatherContext.gatherMode) {
-      case 'navigation':
-        return `Navigation report (${shortUrl})`;
-      case 'timespan':
-        return `Timespan report (${shortUrl})`;
-      case 'snapshot':
-        return `Snapshot report (${shortUrl})`;
-    }
-  }
+  _getNextNavigationFlags(flags) {
+    const nextFlags = this._getNextFlags(flags) || {};
 
-  /**
-   * @param {StepOptions=} stepOptions
-   */
-  _getNextNavigationOptions(stepOptions) {
-    const options = {...this.options, ...stepOptions};
-    const flags = {...options.flags};
-
-    if (flags.skipAboutBlank === undefined) {
-      flags.skipAboutBlank = true;
+    if (nextFlags.skipAboutBlank === undefined) {
+      nextFlags.skipAboutBlank = true;
     }
 
     // On repeat navigations, we want to disable storage reset by default (i.e. it's not a cold load).
     const isSubsequentNavigation = this._gatherSteps
       .some(step => step.artifacts.GatherContext.gatherMode === 'navigation');
     if (isSubsequentNavigation) {
-      if (flags.disableStorageReset === undefined) {
-        flags.disableStorageReset = true;
+      if (nextFlags.disableStorageReset === undefined) {
+        nextFlags.disableStorageReset = true;
       }
     }
 
-    options.flags = flags;
-
-    return options;
+    return nextFlags;
   }
 
   /**
-   *
    * @param {LH.Gatherer.FRGatherResult} gatherResult
-   * @param {StepOptions} options
+   * @param {LH.UserFlow.StepFlags} [flags]
    */
-  _addGatherStep(gatherResult, options) {
-    const providedName = options?.stepName;
+  _addGatherStep(gatherResult, flags) {
     const gatherStep = {
       artifacts: gatherResult.artifacts,
-      name: providedName || this._getDefaultStepName(gatherResult.artifacts),
-      config: options.config,
-      flags: options.flags,
+      flags,
     };
     this._gatherSteps.push(gatherStep);
     this._gatherStepRunnerOptions.set(gatherStep, gatherResult.runnerOptions);
@@ -101,23 +115,26 @@ class UserFlow {
 
   /**
    * @param {LH.NavigationRequestor} requestor
-   * @param {StepOptions=} stepOptions
+   * @param {LH.UserFlow.StepFlags} [flags]
    */
-  async navigate(requestor, stepOptions) {
+  async navigate(requestor, flags) {
     if (this.currentTimespan) throw new Error('Timespan already in progress');
     if (this.currentNavigation) throw new Error('Navigation already in progress');
 
-    const options = this._getNextNavigationOptions(stepOptions);
-    const gatherResult = await navigationGather(requestor, options);
+    const nextFlags = this._getNextNavigationFlags(flags);
+    const gatherResult = await navigationGather(this._page, requestor, {
+      config: this._options?.config,
+      flags: nextFlags,
+    });
 
-    this._addGatherStep(gatherResult, options);
+    this._addGatherStep(gatherResult, nextFlags);
   }
 
   /**
    * This is an alternative to `navigate()` that can be used to analyze a navigation triggered by user interaction.
    * For more on user triggered navigations, see https://github.com/GoogleChrome/lighthouse/blob/main/docs/user-flows.md#triggering-a-navigation-via-user-interactions.
    *
-   * @param {StepOptions=} stepOptions
+   * @param {LH.UserFlow.StepFlags} [stepOptions]
    */
   async startNavigation(stepOptions) {
     /** @type {(value: () => void) => void} */
@@ -166,39 +183,47 @@ class UserFlow {
   }
 
   /**
-   * @param {StepOptions=} stepOptions
+   * @param {LH.UserFlow.StepFlags} [flags]
    */
-  async startTimespan(stepOptions) {
+  async startTimespan(flags) {
     if (this.currentTimespan) throw new Error('Timespan already in progress');
     if (this.currentNavigation) throw new Error('Navigation already in progress');
 
-    const options = {...this.options, ...stepOptions};
-    const timespan = await startTimespanGather(options);
-    this.currentTimespan = {timespan, options};
+    const nextFlags = this._getNextFlags(flags);
+
+    const timespan = await startTimespanGather(this._page, {
+      config: this._options?.config,
+      flags: nextFlags,
+    });
+    this.currentTimespan = {timespan, flags: nextFlags};
   }
 
   async endTimespan() {
     if (!this.currentTimespan) throw new Error('No timespan in progress');
     if (this.currentNavigation) throw new Error('Navigation already in progress');
 
-    const {timespan, options} = this.currentTimespan;
+    const {timespan, flags} = this.currentTimespan;
     const gatherResult = await timespan.endTimespanGather();
     this.currentTimespan = undefined;
 
-    this._addGatherStep(gatherResult, options);
+    this._addGatherStep(gatherResult, flags);
   }
 
   /**
-   * @param {StepOptions=} stepOptions
+   * @param {LH.UserFlow.StepFlags} [flags]
    */
-  async snapshot(stepOptions) {
+  async snapshot(flags) {
     if (this.currentTimespan) throw new Error('Timespan already in progress');
     if (this.currentNavigation) throw new Error('Navigation already in progress');
 
-    const options = {...this.options, ...stepOptions};
-    const gatherResult = await snapshotGather(options);
+    const nextFlags = this._getNextFlags(flags);
 
-    this._addGatherStep(gatherResult, options);
+    const gatherResult = await snapshotGather(this._page, {
+      config: this._options?.config,
+      flags: nextFlags,
+    });
+
+    this._addGatherStep(gatherResult, nextFlags);
   }
 
   /**
@@ -206,8 +231,8 @@ class UserFlow {
    */
   async createFlowResult() {
     return auditGatherSteps(this._gatherSteps, {
-      name: this.name,
-      config: this.options.config,
+      name: this._options?.name,
+      config: this._options?.config,
       gatherStepRunnerOptions: this._gatherStepRunnerOptions,
     });
   }
@@ -226,9 +251,54 @@ class UserFlow {
   createArtifactsJson() {
     return {
       gatherSteps: this._gatherSteps,
-      name: this.name,
+      name: this._options?.name,
     };
   }
+}
+
+/**
+ * @param {string} longUrl
+ * @returns {string}
+ */
+function shortenUrl(longUrl) {
+  const url = new URL(longUrl);
+  return `${url.hostname}${url.pathname}`;
+}
+
+/**
+ * @param {LH.UserFlow.StepFlags|undefined} flags
+ * @param {LH.Artifacts} artifacts
+ * @return {string}
+ */
+function getStepName(flags, artifacts) {
+  if (flags?.name) return flags.name;
+
+  const {locale} = artifacts.settings;
+  const shortUrl = shortenUrl(artifacts.URL.finalDisplayedUrl);
+  switch (artifacts.GatherContext.gatherMode) {
+    case 'navigation':
+      return translate(UIStrings.defaultNavigationName, {url: shortUrl}, locale);
+    case 'timespan':
+      return translate(UIStrings.defaultTimespanName, {url: shortUrl}, locale);
+    case 'snapshot':
+      return translate(UIStrings.defaultSnapshotName, {url: shortUrl}, locale);
+    default:
+      throw new Error('Unsupported gather mode');
+  }
+}
+
+/**
+ * @param {string|undefined} name
+ * @param {LH.UserFlow.GatherStep[]} gatherSteps
+ * @return {string}
+ */
+function getFlowName(name, gatherSteps) {
+  if (name) return name;
+
+  const firstArtifacts = gatherSteps[0].artifacts;
+  const {locale} = firstArtifacts.settings;
+  const url = new URL(firstArtifacts.URL.finalDisplayedUrl).hostname;
+  return translate(UIStrings.defaultFlowName, {url}, locale);
 }
 
 /**
@@ -243,14 +313,15 @@ async function auditGatherSteps(gatherSteps, options) {
   /** @type {LH.FlowResult['steps']} */
   const steps = [];
   for (const gatherStep of gatherSteps) {
-    const {artifacts, name, flags} = gatherStep;
+    const {artifacts, flags} = gatherStep;
+    const name = getStepName(flags, artifacts);
 
     let runnerOptions = options.gatherStepRunnerOptions?.get(gatherStep);
 
     // If the gather step is not active, we must recreate the runner options.
     if (!runnerOptions) {
       // Step specific configs take precedence over a config for the entire flow.
-      const configJson = gatherStep.config || options.config;
+      const configJson = options.config;
       const {gatherMode} = artifacts.GatherContext;
       const {config} = await initializeConfig(gatherMode, configJson, flags);
       runnerOptions = {
@@ -264,13 +335,14 @@ async function auditGatherSteps(gatherSteps, options) {
     steps.push({lhr: result.lhr, name});
   }
 
-  const url = new URL(gatherSteps[0].artifacts.URL.finalDisplayedUrl);
-  const flowName = options.name || `User flow (${url.hostname})`;
-  return {steps, name: flowName};
+  return {steps, name: getFlowName(options.name, gatherSteps)};
 }
 
 
 export {
   UserFlow,
   auditGatherSteps,
+  getStepName,
+  getFlowName,
+  UIStrings,
 };

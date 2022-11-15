@@ -10,9 +10,13 @@ import {Runner} from './runner.js';
 import {CriConnection} from './legacy/gather/connections/cri.js';
 import {Config} from './legacy/config/config.js';
 import UrlUtils from './lib/url-utils.js';
-import * as fraggleRock from './api.js';
 import {Driver} from './legacy/gather/driver.js';
 import {initializeConfig} from './config/config.js';
+import {UserFlow, auditGatherSteps} from './user-flow.js';
+import {ReportGenerator} from '../report/generator/report-generator.js';
+import {startTimespanGather} from './gather/timespan-runner.js';
+import {snapshotGather} from './gather/snapshot-runner.js';
+import {navigationGather} from './gather/navigation-runner.js';
 
 /** @typedef {import('./legacy/gather/connections/connection.js').Connection} Connection */
 
@@ -40,7 +44,7 @@ import {initializeConfig} from './config/config.js';
  * @return {Promise<LH.RunnerResult|undefined>}
  */
 async function lighthouse(url, flags = {}, configJSON, page) {
-  return fraggleRock.navigation(url, {page, config: configJSON, flags});
+  return navigation(page, url, {config: configJSON, flags});
 }
 
 /**
@@ -71,6 +75,75 @@ async function legacyNavigation(url, flags = {}, configJSON, userConnection) {
     return Runner._gatherArtifactsFromBrowser(requestedUrl, options, connection);
   }, options);
   return Runner.audit(artifacts, options);
+}
+
+/**
+ * @param {LH.Puppeteer.Page} page
+ * @param {LH.UserFlow.Options} [options]
+ */
+async function startFlow(page, options) {
+  return new UserFlow(page, options);
+}
+
+/**
+ * @param {LH.Puppeteer.Page|undefined} page
+ * @param {LH.NavigationRequestor|undefined} requestor
+ * @param {{config?: LH.Config.Json, flags?: LH.Flags}} [options]
+ * @return {Promise<LH.RunnerResult|undefined>}
+ */
+async function navigation(page, requestor, options) {
+  const gatherResult = await navigationGather(page, requestor, options);
+  return Runner.audit(gatherResult.artifacts, gatherResult.runnerOptions);
+}
+
+/**
+ * @param {LH.Puppeteer.Page} page
+ * @param {{config?: LH.Config.Json, flags?: LH.Flags}} [options]
+ * @return {Promise<LH.RunnerResult|undefined>}
+ */
+async function snapshot(page, options) {
+  const gatherResult = await snapshotGather(page, options);
+  return Runner.audit(gatherResult.artifacts, gatherResult.runnerOptions);
+}
+
+/**
+ * @param {LH.Puppeteer.Page} page
+ * @param {{config?: LH.Config.Json, flags?: LH.Flags}} [options]
+ * @return {Promise<{endTimespan: () => Promise<LH.RunnerResult|undefined>}>}
+ */
+async function startTimespan(page, options) {
+  const {endTimespanGather} = await startTimespanGather(page, options);
+  const endTimespan = async () => {
+    const gatherResult = await endTimespanGather();
+    return Runner.audit(gatherResult.artifacts, gatherResult.runnerOptions);
+  };
+  return {endTimespan};
+}
+
+/**
+ * @template {LH.Result|LH.FlowResult} R
+ * @param {R} result
+ * @param {[R] extends [LH.Result] ? LH.OutputMode : Exclude<LH.OutputMode, 'csv'>} [format]
+ * @return {string}
+ */
+function generateReport(result, format = 'html') {
+  const reportOutput = ReportGenerator.generateReport(result, format);
+  if (Array.isArray(reportOutput)) {
+    // In theory the output should never be an array.
+    // This is mostly for type checking.
+    return reportOutput[0];
+  } else {
+    return reportOutput;
+  }
+}
+
+/**
+ * @param {LH.UserFlow.FlowArtifacts} flowArtifacts
+ * @param {LH.Config.Json} [config]
+ */
+async function auditFlowArtifacts(flowArtifacts, config) {
+  const {gatherSteps, name} = flowArtifacts;
+  return await auditGatherSteps(gatherSteps, {name, config});
 }
 
 /**
@@ -113,6 +186,12 @@ export {default as Gatherer} from './gather/base-gatherer.js';
 export {NetworkRecords} from './computed/network-records.js';
 export {
   legacyNavigation,
+  startFlow,
+  navigation,
+  startTimespan,
+  snapshot,
+  generateReport,
+  auditFlowArtifacts,
   generateConfig,
   generateLegacyConfig,
   getAuditList,
