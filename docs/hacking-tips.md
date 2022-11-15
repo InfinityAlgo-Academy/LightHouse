@@ -58,3 +58,21 @@ console.log(html);
 ## Using Audit Classes Directly, Providing Your Own Artifacts
 
 See [gist](https://gist.github.com/connorjclark/d4555ad90ae5b5ecf793ad2d46ca52db).
+
+## Mocking modules with testdouble
+
+We use `testdouble` and `mocha` to mock modules for testing. However, [mocha will not "hoist" the mocks](https://jestjs.io/docs/ecmascript-modules#module-mocking-in-esm) so any imports that depend on a mocked module need to be done dynamically *after* the testdouble mock is applied.
+
+Analyzing the dependency trees can be complicated, so we recommend importing as many modules as possible (read: all non-test modules, typically) dynamically and only using static imports for test libraries (e.g. `testdouble`, `jest-mock`, `assert`). For example:
+
+```js
+import jestMock from 'jest-mock';
+import * as td from 'testdouble';
+
+await td.replaceEsm('./module-to-mock.js', {
+  mockedFunction: jestMock.fn(),
+});
+
+// module-to-mock.js is imported somewhere in the dependency tree of root-module.js
+const rootModule = await import('./root-module.js');
+```
