@@ -279,7 +279,7 @@ class CacheHeaders extends Audit {
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       // TODO(i18n): pre-compute localized duration
       {key: 'cacheLifetimeMs', valueType: 'ms', label: str_(i18n.UIStrings.columnCacheTTL),
-        displayUnit: 'duration'},
+        displayUnit: 'duration', dontAggregate: true},
       {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize),
         displayUnit: 'kb', granularity: 1},
     ];
