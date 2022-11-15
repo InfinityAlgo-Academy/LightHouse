@@ -437,6 +437,7 @@ export class DetailsRenderer {
     for (const subItem of item.subItems.items) {
       const rowEl = this._renderTableRow(subItem, subItemsHeadings);
       rowEl.classList.add('lh-sub-item-row');
+      if (item.entity) rowEl.dataset.entity = item.entity.toString();
       fragment.append(rowEl);
     }
 
