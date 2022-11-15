@@ -16,7 +16,7 @@ import yargs from 'yargs';
 import {getChromePath} from 'chrome-launcher';
 
 import {LH_ROOT} from '../../root.js';
-import * as api from '../api.js';
+import * as api from '../index.js';
 import * as assetSaver from '../lib/asset-saver.js';
 
 const ARTIFACTS_PATH =
@@ -153,7 +153,7 @@ async function generateFlowResult() {
   fs.writeFileSync(args.outputPath, JSON.stringify(flowResult, null, 2));
 
   if (args.view) {
-    const htmlReport = await api.generateFlowReport(flowResult);
+    const htmlReport = await api.generateReport(flowResult);
     fs.writeFileSync(FLOW_REPORT_PATH, htmlReport);
     open(FLOW_REPORT_PATH);
   }
