@@ -6,6 +6,7 @@
 
 import {Audit} from './audit.js';
 import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
+import {EntityClassification} from '../computed/entity-classification.js';
 import UrlUtils from '../lib/url-utils.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import {NetworkRecords} from '../computed/network-records.js';
@@ -107,6 +108,8 @@ class UsesRelPreconnectAudit extends Audit {
   static async audit(artifacts, context) {
     const trace = artifacts.traces[UsesRelPreconnectAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreconnectAudit.DEFAULT_PASS];
+    const classifiedEntities = await EntityClassification.request(
+      {URL: artifacts.URL, devtoolsLog}, context);
     const settings = context.settings;
 
     let maxWasted = 0;
@@ -166,7 +169,7 @@ class UsesRelPreconnectAudit extends Audit {
     const preconnectOrigins =
       new Set(preconnectLinks.map(link => UrlUtils.getOrigin(link.href || '')));
 
-    /** @type {Array<{url: string, wastedMs: number}>}*/
+    /** @type {Array<{url: string, wastedMs: number, entity?: string}>}*/
     let results = [];
     origins.forEach(records => {
       // Sometimes requests are done simultaneous and the connection has not been made
@@ -179,6 +182,7 @@ class UsesRelPreconnectAudit extends Audit {
       if (!firstRecordOfOrigin.timing) return;
 
       const securityOrigin = firstRecordOfOrigin.parsedURL.securityOrigin;
+      const entity = classifiedEntities.byURL.get(firstRecordOfOrigin.url);
 
       // Approximate the connection time with the duration of TCP (+potentially SSL) handshake
       // DNS time can be large but can also be 0 if a commonly used origin that's cached, so make
@@ -206,6 +210,7 @@ class UsesRelPreconnectAudit extends Audit {
       results.push({
         url: securityOrigin,
         wastedMs: wastedMs,
+        entity: entity?.name,
       });
     });
 
