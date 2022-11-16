@@ -198,7 +198,7 @@ class CacheHeaders extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const classifiedEntities = await EntityClassification.request(
-      {URL: artifacts.URL, devtoolsLog: devtoolsLog}, context);
+      {URL: artifacts.URL, devtoolsLog}, context);
     const records = await NetworkRecords.request(devtoolsLog, context);
     const results = [];
     let totalWastedBytes = 0;

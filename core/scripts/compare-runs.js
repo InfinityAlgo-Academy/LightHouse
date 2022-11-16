@@ -74,7 +74,7 @@ const rawArgv = y
 // Augmenting yargs type with auto-camelCasing breaks in tsc@4.1.2 and @types/yargs@15.0.11,
 // so for now cast to add yarg's camelCase properties to type.
 const argv =
-  /** @type {Awaited<typeof rawArgv> & CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
+  /** @type {Awaited<typeof rawArgv> & LH.Util.CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
 
 const reportExcludeRegex =
   argv.reportExclude !== 'none' ? new RegExp(argv.reportExclude, 'i') : null;
