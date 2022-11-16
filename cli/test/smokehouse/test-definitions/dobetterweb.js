@@ -321,6 +321,9 @@ const expectations = {
         details: {
           items: [
             {
+              // This feature was removed in M110.
+              // TODO: Remove this expectation once M110 reaches stable.
+              _maxChromiumVersion: '109',
               value: /`window.webkitStorageInfo` is deprecated/,
               source: {
                 type: 'source-location',
