@@ -30,21 +30,19 @@ describe('Navigation', async function() {
   // The tests in this suite are particularly slow
   this.timeout(60_000);
 
+  beforeEach(() => {
+    // https://bugs.chromium.org/p/chromium/issues/detail?id=1357791
+    expectError(/Protocol Error: the message with wrong session id/);
+    expectError(/Protocol Error: the message with wrong session id/);
+    expectError(/Protocol Error: the message with wrong session id/);
+    expectError(/Protocol Error: the message with wrong session id/);
+    expectError(/Protocol Error: the message with wrong session id/);
+  });
+
   const modes = ['legacy', 'FR'];
 
   for (const mode of modes) {
     describe(`in ${mode} mode`, () => {
-      beforeEach(() => {
-        if (mode === 'FR') {
-          // https://bugs.chromium.org/p/chromium/issues/detail?id=1357791
-          expectError(/Protocol Error: the message with wrong session id/);
-          expectError(/Protocol Error: the message with wrong session id/);
-          expectError(/Protocol Error: the message with wrong session id/);
-          expectError(/Protocol Error: the message with wrong session id/);
-          expectError(/Protocol Error: the message with wrong session id/);
-        }
-      });
-
       it('successfully returns a Lighthouse report', async () => {
         await navigateToLighthouseTab('lighthouse/hello.html');
         await registerServiceWorker();
@@ -139,7 +137,8 @@ describe('Navigation', async function() {
         const waitForJson = await interceptNextFileSave();
 
         // For some reason the CDP click command doesn't work here even if the tools menu is open.
-        await reportEl.$eval('a[data-action="save-json"]', saveJsonEl => (saveJsonEl as HTMLElement).click());
+        await reportEl.$eval(
+            'a[data-action="save-json"]:not(.hidden)', saveJsonEl => (saveJsonEl as HTMLElement).click());
 
         const jsonContent = await waitForJson();
         assert.strictEqual(jsonContent, JSON.stringify(lhr, null, 2));
@@ -150,7 +149,8 @@ describe('Navigation', async function() {
         // TODO: Update the report generator usage once the changes land in DevTools.
         //
         // // For some reason the CDP click command doesn't work here even if the tools menu is open.
-        // await reportEl.$eval('a[data-action="save-html"]', saveHtmlEl => (saveHtmlEl as HTMLElement).click());
+        // await reportEl.$eval(
+        //     'a[data-action="save-html"]:not(.hidden)', saveHtmlEl => (saveHtmlEl as HTMLElement).click());
 
         // const htmlContent = await waitForHtml();
         // const iframeHandle = await renderHtmlInIframe(htmlContent);
