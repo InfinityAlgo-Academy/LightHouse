@@ -38,7 +38,7 @@
     "start": "yarn build-report --standalone && node ./cli/index.js",
     "mocha": "node --loader=testdouble core/test/scripts/run-mocha-tests.js",
     "test": "yarn diff:sample-json && yarn lint --quiet && yarn unit && yarn type-check",
-    "test-bundle": "yarn smoke --runner bundle --retries=2",
+    "test-bundle": "yarn smoke --runner bundle",
     "test-clients": "yarn mocha --testMatch clients/**/*-test.js && yarn mocha --testMatch clients/**/*-test-pptr.js",
     "test-viewer": "yarn unit-viewer && yarn mocha --testMatch viewer/**/*-test-pptr.js --timeout 35000",
     "test-treemap": "yarn unit-treemap && yarn mocha --testMatch treemap/**/*-test-pptr.js --timeout 35000",

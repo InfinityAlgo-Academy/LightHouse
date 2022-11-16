@@ -49,9 +49,9 @@ function wrapRuntimeEvalErrorInBrowser(err) {
     stack: err.stack,
   };
 }
-Object.defineProperty(wrapRuntimeEvalErrorInBrowser, 'name', {
-  value: 'wrapRuntimeEvalErrorInBrowser',
-});
+// Object.defineProperty(wrapRuntimeEvalErrorInBrowser, 'name', {
+//   value: 'wrapRuntimeEvalErrorInBrowser',
+// });
 
 /**
  * @template {string} T
@@ -84,9 +84,9 @@ function getElementsInDocument(selector) {
 
   return results;
 }
-Object.defineProperty(getElementsInDocument, 'name', {
-  value: 'getElementsInDocument',
-});
+// Object.defineProperty(getElementsInDocument, 'name', {
+//   value: 'getElementsInDocument',
+// });
 
 /**
  * Gets the opening tag text of the given node.
@@ -280,6 +280,9 @@ function getNodePath(node) {
 const isShadowRoot = node => node.nodeType === Node.DOCUMENT_FRAGMENT_NODE;
 /** @param {Node} node */
 const getNodeParent = node => isShadowRoot(node) ? node.host : node.parentNode;
+// Object.defineProperty(getNodeParent, 'name', {
+//   value: 'getNodeParent',
+// });
 
 /** @param {Node} node @return {number|'a'} */
 function getNodeIndex(node) {
@@ -301,8 +304,8 @@ function getNodeIndex(node) {
 /** @type {string} */
 const getNodePathRawString = getNodePath.toString();
 getNodePath.toString = () => `function getNodePath(element) {
-  ${isShadowRoot}
-  ${getNodeParent}
+  const isShadowRoot = ${isShadowRoot}
+  const getNodeParent = ${getNodeParent}
   ${getNodeIndex}
   return (${getNodePathRawString})(element);
 }`;
@@ -385,9 +388,9 @@ function isPositionFixed(element) {
   }
   return false;
 }
-Object.defineProperty(isPositionFixed, 'name', {
-  value: 'isPositionFixed',
-});
+// Object.defineProperty(isPositionFixed, 'name', {
+//   value: 'isPositionFixed',
+// });
 
 /**
  * Generate a human-readable label for the given element, based on end-user facing
@@ -431,9 +434,9 @@ function getNodeLabel(element) {
   }
   return null;
 }
-Object.defineProperty(getNodeLabel, 'name', {
-  value: 'getNodeLabel',
-});
+// Object.defineProperty(getNodeLabel, 'name', {
+//   value: 'getNodeLabel',
+// });
 
 /**
  * @param {Element} element
@@ -453,9 +456,9 @@ function getBoundingClientRect(element) {
     height: Math.round(rect.height),
   };
 }
-Object.defineProperty(getBoundingClientRect, 'name', {
-  value: 'getBoundingClientRect',
-});
+// Object.defineProperty(getBoundingClientRect, 'name', {
+//   value: 'getBoundingClientRect',
+// });
 
 /**
  * RequestIdleCallback shim that calculates the remaining deadline time in order to avoid a potential lighthouse
@@ -492,9 +495,9 @@ function wrapRequestIdleCallback(cpuSlowdownMultiplier) {
     return 'function requestIdleCallback() { [native code] }';
   };
 }
-Object.defineProperty(wrapRequestIdleCallback, 'name', {
-  value: 'wrapRequestIdleCallback',
-});
+// Object.defineProperty(wrapRequestIdleCallback, 'name', {
+//   value: 'wrapRequestIdleCallback',
+// });
 
 /**
  * @param {Element|ShadowRoot} element
@@ -551,9 +554,9 @@ function getNodeDetails(element) {
 
   return details;
 }
-Object.defineProperty(getNodeDetails, 'name', {
-  value: 'getNodeDetails',
-});
+// Object.defineProperty(getNodeDetails, 'name', {
+//   value: 'getNodeDetails',
+// });
 
 /** @type {string} */
 const getNodeDetailsRawString = getNodeDetails.toString();

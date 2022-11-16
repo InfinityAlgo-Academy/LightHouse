@@ -149,7 +149,7 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
     sourcemap: DEBUG,
     banner: {js: banner},
     // Because of page-functions!
-    // keepNames: true,
+    keepNames: true,
     plugins: [
       plugins.replaceModules({
         ...shimsObj,
