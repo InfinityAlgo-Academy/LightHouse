@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-// import {snapshotGather} from '../../../gather/snapshot-runner.js';
 import * as td from 'testdouble';
 
 import {
@@ -15,16 +14,6 @@ import {
   mockRunnerModule,
 } from './mock-driver.js';
 
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {import('../../gather/snapshot-runner.js')['snapshotGather']} */
-let snapshotGather;
-
-before(async () => {
-  snapshotGather = (await import('../../gather/snapshot-runner.js')).snapshotGather;
-});
-
 const mockRunner = await mockRunnerModule();
 
 // Establish the mocks before we import the file under test.
@@ -33,6 +22,10 @@ let mockDriver;
 
 await td.replaceEsm('../../gather/driver.js',
   mockDriverModule(() => mockDriver.asDriver()));
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+const {snapshotGather} = await import('../../gather/snapshot-runner.js');
 
 describe('Snapshot Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */

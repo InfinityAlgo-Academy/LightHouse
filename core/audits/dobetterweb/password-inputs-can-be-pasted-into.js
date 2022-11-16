@@ -51,7 +51,7 @@ class PasswordInputsCanBePastedIntoAudit extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'node', itemType: 'node', text: str_(i18n.UIStrings.columnFailingElem)},
+      {key: 'node', valueType: 'node', label: str_(i18n.UIStrings.columnFailingElem)},
     ];
 
     return {

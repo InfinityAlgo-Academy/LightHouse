@@ -16,6 +16,7 @@ import {ReportGenerator} from '../../generator/report-generator.js';
 import {readJson} from '../../../core/test/test-utils.js';
 
 const sampleResults = readJson('core/test/results/sample_v2.json');
+const sampleFlowResult = readJson('core/test/fixtures/fraggle-rock/reports/sample-flow-result.json');
 
 describe('ReportGenerator', () => {
   describe('#replaceStrings', () => {
@@ -75,8 +76,19 @@ describe('ReportGenerator', () => {
       assert.doesNotThrow(_ => JSON.parse(jsonOutput));
     });
 
+    it('creates JSON for flow result', () => {
+      const jsonOutput = ReportGenerator.generateReport(sampleFlowResult, 'json');
+      assert.doesNotThrow(_ => JSON.parse(jsonOutput));
+    });
+
     it('creates HTML for results', () => {
       const htmlOutput = ReportGenerator.generateReport(sampleResults, 'html');
+      assert.ok(/<!doctype/gim.test(htmlOutput));
+      assert.ok(/<html lang="en"/gim.test(htmlOutput));
+    });
+
+    it('creates HTML for flow result', () => {
+      const htmlOutput = ReportGenerator.generateReport(sampleFlowResult, 'html');
       assert.ok(/<!doctype/gim.test(htmlOutput));
       assert.ok(/<html lang="en"/gim.test(htmlOutput));
     });
@@ -124,6 +136,12 @@ category,audit,score,displayValue,description
       expect(csvOutput).toContain('best-practices');
       expect(csvOutput).toContain('seo');
       expect(csvOutput).toContain('pwa');
+    });
+
+    it('throws when creating CSV for flow result', () => {
+      expect(() => {
+        ReportGenerator.generateReport(sampleFlowResult, 'csv');
+      }).toThrow('CSV output is not support for user flows');
     });
 
     it('writes extended info', () => {

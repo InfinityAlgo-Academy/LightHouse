@@ -6,7 +6,6 @@
 
 import * as td from 'testdouble';
 
-// import {startTimespanGather} from '../../../gather/timespan-runner.js';
 import {
   createMockDriver,
   createMockPage,
@@ -16,17 +15,6 @@ import {
   mockRunnerModule,
 } from './mock-driver.js';
 
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {import('../../gather/timespan-runner.js')['startTimespanGather']} */
-let startTimespanGather;
-
-before(async () => {
-  startTimespanGather =
-    (await import('../../gather/timespan-runner.js')).startTimespanGather;
-});
-
 const mockSubmodules = await mockDriverSubmodules();
 const mockRunner = await mockRunnerModule();
 
@@ -35,6 +23,10 @@ const mockRunner = await mockRunnerModule();
 let mockDriver;
 await td.replaceEsm('../../gather/driver.js',
   mockDriverModule(() => mockDriver.asDriver()));
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+const {startTimespanGather} = await import('../../gather/timespan-runner.js');
 
 describe('Timespan Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */

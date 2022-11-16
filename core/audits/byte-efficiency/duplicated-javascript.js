@@ -225,7 +225,7 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
       });
     }
 
-    /** @type {LH.Audit.Details.OpportunityColumnHeading[]} */
+    /** @type {LH.Audit.Details.TableColumnHeading[]} */
     const headings = [
       /* eslint-disable max-len */
       {key: 'source', valueType: 'code', subItemsHeading: {key: 'url', valueType: 'url'}, label: str_(i18n.UIStrings.columnSource)},

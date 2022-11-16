@@ -1605,7 +1605,7 @@
     "message": "页面包含有效的源代码映射"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` 不仅会针对移动设备屏幕尺寸优化您的应用，还会阻止[系统在响应用户输入前出现 300 毫秒的延迟](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away)。[了解详情](https://web.dev/viewport/)。"
+    "message": "`<meta name=\"viewport\">` 不仅会针对移动设备屏幕尺寸优化您的应用，还会阻止[系统在响应用户输入前出现 300 毫秒的延迟](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/)。[了解详情](https://web.dev/viewport/)。"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "未找到任何 `<meta name=\"viewport\">` 标记"

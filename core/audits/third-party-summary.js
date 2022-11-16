@@ -234,9 +234,9 @@ class ThirdPartySummary extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'entity', itemType: 'link', text: str_(UIStrings.columnThirdParty), subItemsHeading: {key: 'url', itemType: 'url'}},
-      {key: 'transferSize', granularity: 1, itemType: 'bytes', text: str_(i18n.UIStrings.columnTransferSize), subItemsHeading: {key: 'transferSize'}},
-      {key: 'blockingTime', granularity: 1, itemType: 'ms', text: str_(i18n.UIStrings.columnBlockingTime), subItemsHeading: {key: 'blockingTime'}},
+      {key: 'entity', valueType: 'link', label: str_(UIStrings.columnThirdParty), subItemsHeading: {key: 'url', valueType: 'url'}},
+      {key: 'transferSize', granularity: 1, valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize), subItemsHeading: {key: 'transferSize'}},
+      {key: 'blockingTime', granularity: 1, valueType: 'ms', label: str_(i18n.UIStrings.columnBlockingTime), subItemsHeading: {key: 'blockingTime'}},
       /* eslint-enable max-len */
     ];
 

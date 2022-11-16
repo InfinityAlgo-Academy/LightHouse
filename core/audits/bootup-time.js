@@ -125,11 +125,11 @@ class BootupTime extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'total', granularity: 1, itemType: 'ms', text: str_(UIStrings.columnTotal)},
-      {key: 'scripting', granularity: 1, itemType: 'ms', text: str_(UIStrings.columnScriptEval)},
-      {key: 'scriptParseCompile', granularity: 1, itemType: 'ms',
-        text: str_(UIStrings.columnScriptParse)},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'total', granularity: 1, valueType: 'ms', label: str_(UIStrings.columnTotal)},
+      {key: 'scripting', granularity: 1, valueType: 'ms', label: str_(UIStrings.columnScriptEval)},
+      {key: 'scriptParseCompile', granularity: 1, valueType: 'ms',
+        label: str_(UIStrings.columnScriptParse)},
     ];
 
     const details = BootupTime.makeTableDetails(headings, results, summary);

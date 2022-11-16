@@ -1605,7 +1605,7 @@
     "message": "La pàgina té mapes d'origen vàlids"
   },
   "core/audits/viewport.js | description": {
-    "message": "Una `<meta name=\"viewport\">` no només optimitza la teva aplicació per a mides de pantalla de mòbil, sinó que també evita [que l'entrada d'usuari es retardi 300 mil·lisegons](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Obtén més informació](https://web.dev/viewport/)."
+    "message": "Una `<meta name=\"viewport\">` no només optimitza la teva aplicació per a mides de pantalla de mòbil, sinó que també evita [que l'entrada d'usuari es retardi 300 mil·lisegons](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Obtén més informació](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "No s'ha trobat cap etiqueta `<meta name=\"viewport\">`"

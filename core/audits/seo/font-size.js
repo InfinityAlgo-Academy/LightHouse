@@ -284,10 +284,10 @@ class FontSize extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
-      {key: 'selector', itemType: 'code', text: str_(UIStrings.columnSelector)},
-      {key: 'coverage', itemType: 'text', text: str_(UIStrings.columnPercentPageText)},
-      {key: 'fontSize', itemType: 'text', text: str_(UIStrings.columnFontSize)},
+      {key: 'source', valueType: 'source-location', label: str_(i18n.UIStrings.columnSource)},
+      {key: 'selector', valueType: 'code', label: str_(UIStrings.columnSelector)},
+      {key: 'coverage', valueType: 'text', label: str_(UIStrings.columnPercentPageText)},
+      {key: 'fontSize', valueType: 'text', label: str_(UIStrings.columnFontSize)},
     ];
 
     const tableData = failingRules.sort((a, b) => b.textLength - a.textLength)

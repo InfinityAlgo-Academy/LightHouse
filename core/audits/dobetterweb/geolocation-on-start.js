@@ -53,7 +53,7 @@ class GeolocationOnStart extends ViolationAudit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
+      {key: 'source', valueType: 'source-location', label: str_(i18n.UIStrings.columnSource)},
     ];
     // TODO(bckenny): there should actually be a ts error here. results[0].stackTrace
     // should violate the results type. Shouldn't be removed from details items regardless.

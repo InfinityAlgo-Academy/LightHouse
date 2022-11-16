@@ -93,8 +93,8 @@ class TotalByteWeight extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'totalBytes', itemType: 'bytes', text: str_(i18n.UIStrings.columnTransferSize)},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize)},
     ];
 
     const tableDetails = Audit.makeTableDetails(headings, results);

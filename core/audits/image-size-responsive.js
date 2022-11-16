@@ -264,11 +264,11 @@ class ImageSizeResponsive extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'node', itemType: 'node', text: ''},
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'displayedSize', itemType: 'text', text: str_(UIStrings.columnDisplayed)},
-      {key: 'actualSize', itemType: 'text', text: str_(UIStrings.columnActual)},
-      {key: 'expectedSize', itemType: 'text', text: str_(UIStrings.columnExpected)},
+      {key: 'node', valueType: 'node', label: ''},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'displayedSize', valueType: 'text', label: str_(UIStrings.columnDisplayed)},
+      {key: 'actualSize', valueType: 'text', label: str_(UIStrings.columnActual)},
+      {key: 'expectedSize', valueType: 'text', label: str_(UIStrings.columnExpected)},
     ];
 
     const finalResults = sortResultsBySizeDelta(deduplicateResultsByUrl(results));

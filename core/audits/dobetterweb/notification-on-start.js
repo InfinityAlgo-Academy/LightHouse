@@ -53,7 +53,7 @@ class NotificationOnStart extends ViolationAudit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
+      {key: 'source', valueType: 'source-location', label: str_(i18n.UIStrings.columnSource)},
     ];
     // TODO(bckenny): see TODO in geolocation-on-start
     const details = ViolationAudit.makeTableDetails(headings, results);

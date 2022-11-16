@@ -8,7 +8,7 @@
 import {reportAssets} from './report-assets.js';
 
 /** @typedef {import('../../types/lhr/lhr').default} LHResult */
-/** @typedef {import('../../types/lhr/flow').default} FlowResult */
+/** @typedef {import('../../types/lhr/flow-result').default} FlowResult */
 
 class ReportGenerator {
   /**
@@ -147,27 +147,41 @@ class ReportGenerator {
   }
 
   /**
+   * @param {LHResult|FlowResult} result
+   * @return {result is FlowResult}
+   */
+  static isFlowResult(result) {
+    return 'steps' in result;
+  }
+
+  /**
    * Creates the results output in a format based on the `mode`.
-   * @param {LHResult} lhr
+   * @param {LHResult|FlowResult} result
    * @param {LHResult['configSettings']['output']} outputModes
    * @return {string|string[]}
    */
-  static generateReport(lhr, outputModes) {
+  static generateReport(result, outputModes) {
     const outputAsArray = Array.isArray(outputModes);
     if (typeof outputModes === 'string') outputModes = [outputModes];
 
     const output = outputModes.map(outputMode => {
       // HTML report.
       if (outputMode === 'html') {
-        return ReportGenerator.generateReportHtml(lhr);
+        if (ReportGenerator.isFlowResult(result)) {
+          return ReportGenerator.generateFlowReportHtml(result);
+        }
+        return ReportGenerator.generateReportHtml(result);
       }
       // CSV report.
       if (outputMode === 'csv') {
-        return ReportGenerator.generateReportCSV(lhr);
+        if (ReportGenerator.isFlowResult(result)) {
+          throw new Error('CSV output is not support for user flows');
+        }
+        return ReportGenerator.generateReportCSV(result);
       }
       // JSON report.
       if (outputMode === 'json') {
-        return JSON.stringify(lhr, null, 2);
+        return JSON.stringify(result, null, 2);
       }
 
       throw new Error('Invalid output mode: ' + outputMode);

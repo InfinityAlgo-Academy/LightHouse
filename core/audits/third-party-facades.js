@@ -202,9 +202,9 @@ class ThirdPartyFacades extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'product', itemType: 'text', subItemsHeading: {key: 'url', itemType: 'url'}, text: str_(UIStrings.columnProduct)},
-      {key: 'transferSize', itemType: 'bytes', subItemsHeading: {key: 'transferSize'}, granularity: 1, text: str_(i18n.UIStrings.columnTransferSize)},
-      {key: 'blockingTime', itemType: 'ms', subItemsHeading: {key: 'blockingTime'}, granularity: 1, text: str_(i18n.UIStrings.columnBlockingTime)},
+      {key: 'product', valueType: 'text', subItemsHeading: {key: 'url', valueType: 'url'}, label: str_(UIStrings.columnProduct)},
+      {key: 'transferSize', valueType: 'bytes', subItemsHeading: {key: 'transferSize'}, granularity: 1, label: str_(i18n.UIStrings.columnTransferSize)},
+      {key: 'blockingTime', valueType: 'ms', subItemsHeading: {key: 'blockingTime'}, granularity: 1, label: str_(i18n.UIStrings.columnBlockingTime)},
       /* eslint-enable max-len */
     ];
 
