@@ -18,10 +18,12 @@ import Gatherer from './gatherer';
 import {IcuMessage} from './lhr/i18n';
 import LHResult from './lhr/lhr'
 import Protocol from './protocol';
+import Util from './utility-types.js';
+import Audit from './audit.js';
 
 export interface Artifacts extends BaseArtifacts, GathererArtifacts {}
 
-export type FRArtifacts = StrictOmit<Artifacts,
+export type FRArtifacts = Util.StrictOmit<Artifacts,
   | 'Fonts'
   | 'Manifest'
   | 'MixedContent'
@@ -179,7 +181,7 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
 }
 
 declare module Artifacts {
-  type ComputedContext = Immutable<{
+  type ComputedContext = Util.Immutable<{
     computedCache: Map<string, ArbitraryEqualityMap>;
   }>;
 
@@ -634,7 +636,7 @@ declare module Artifacts {
   interface MetricComputationDataInput {
     devtoolsLog: DevtoolsLog;
     trace: Trace;
-    settings: Immutable<Config.Settings>;
+    settings: Audit.Context['settings'];
     gatherContext: Artifacts['GatherContext'];
     simulator?: InstanceType<typeof Simulator>;
     URL: Artifacts['URL'];

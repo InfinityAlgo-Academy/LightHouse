@@ -34,7 +34,7 @@ class ResourceSummary {
   /**
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Artifacts.URL} URLArtifact
-   * @param {ImmutableObject<LH.Budget[]|null>} budgets
+   * @param {LH.Util.ImmutableObject<LH.Budget[]|null>} budgets
    * @return {Record<LH.Budget.ResourceType, ResourceEntry>}
    */
   static summarize(networkRecords, URLArtifact, budgets) {
@@ -99,7 +99,7 @@ class ResourceSummary {
   }
 
   /**
-   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog, budgets: ImmutableObject<LH.Budget[]|null>}} data
+   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog, budgets: LH.Util.ImmutableObject<LH.Budget[]|null>}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<Record<LH.Budget.ResourceType,ResourceEntry>>}
    */

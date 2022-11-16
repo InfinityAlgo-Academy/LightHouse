@@ -138,7 +138,7 @@ class RenderBlockingResources extends Audit {
     const simulator = await LoadSimulator.request(simulatorData, context);
     const wastedCssBytes = await RenderBlockingResources.computeWastedCSSBytes(artifacts, context);
 
-    /** @type {Immutable<LH.Config.Settings>} */
+    /** @type {LH.Audit.Context['settings']} */
     const metricSettings = {
       ...context.settings,
       throttlingMethod: 'simulate',

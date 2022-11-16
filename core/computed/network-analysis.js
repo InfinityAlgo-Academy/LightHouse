@@ -11,7 +11,7 @@ import {NetworkRecords} from './network-records.js';
 class NetworkAnalysis {
   /**
    * @param {Array<LH.Artifacts.NetworkRequest>} records
-   * @return {StrictOmit<LH.Artifacts.NetworkAnalysis, 'throughput'>}
+   * @return {LH.Util.StrictOmit<LH.Artifacts.NetworkAnalysis, 'throughput'>}
    */
   static computeRTTAndServerResponseTime(records) {
     // First pass compute the estimated observed RTT to each origin's servers.

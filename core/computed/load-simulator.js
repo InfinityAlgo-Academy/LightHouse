@@ -11,7 +11,7 @@ import {NetworkAnalysis} from './network-analysis.js';
 
 class LoadSimulator {
   /**
-   * @param {{devtoolsLog: LH.DevtoolsLog, settings: Immutable<LH.Config.Settings>}} data
+   * @param {{devtoolsLog: LH.DevtoolsLog, settings: LH.Audit.Context['settings']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<Simulator>}
    */

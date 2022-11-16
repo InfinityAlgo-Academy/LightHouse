@@ -112,7 +112,7 @@ function loadSourceMapAndUsageFixture(name) {
  * @param {(...args: TParams) => TReturn} fn
  */
 function makeParamsOptional(fn) {
-  return /** @type {(...args: RecursivePartial<TParams>) => TReturn} */ (fn);
+  return /** @type {(...args: LH.Util.RecursivePartial<TParams>) => TReturn} */ (fn);
 }
 
 /**

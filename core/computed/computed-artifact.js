@@ -12,9 +12,9 @@ import {ArbitraryEqualityMap} from '../lib/arbitrary-equality-map.js';
  * Decorate computableArtifact with a caching `request()` method which will
  * automatically call `computableArtifact.compute_()` under the hood.
  * @template {{name: string, compute_(dependencies: unknown, context: LH.Artifacts.ComputedContext): Promise<unknown>}} C
- * @template {Array<keyof FirstParamType<C['compute_']>>} K
+ * @template {Array<keyof LH.Util.FirstParamType<C['compute_']>>} K
  * @param {C} computableArtifact
- * @param {(K & ([keyof FirstParamType<C['compute_']>] extends [K[number]] ? unknown : never)) | null} keys List of properties of `dependencies` used by `compute_`; other properties are filtered out. Use `null` to allow all properties. Ensures that only required properties are used for caching result.
+ * @param {(K & ([keyof LH.Util.FirstParamType<C['compute_']>] extends [K[number]] ? unknown : never)) | null} keys List of properties of `dependencies` used by `compute_`; other properties are filtered out. Use `null` to allow all properties. Ensures that only required properties are used for caching result.
  */
 function makeComputedArtifact(computableArtifact, keys) {
   // tsc (3.1) has more difficulty with template inter-references in jsdoc, so
@@ -22,7 +22,7 @@ function makeComputedArtifact(computableArtifact, keys) {
   // polymorphic-this behavior for C.
   /**
    * Return an automatically cached result from the computed artifact.
-   * @param {FirstParamType<C['compute_']>} dependencies
+   * @param {LH.Util.FirstParamType<C['compute_']>} dependencies
    * @param {LH.Artifacts.ComputedContext} context
    * @return {ReturnType<C['compute_']>}
    */
