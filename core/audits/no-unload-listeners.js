@@ -43,7 +43,6 @@ class NoUnloadListeners extends Audit {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const classifiedEntities = await EntityClassification.request(
       {URL: artifacts.URL, devtoolsLog}, context);
-
     const unloadListeners = artifacts.GlobalListeners.filter(l => l.type === 'unload');
     if (!unloadListeners.length) {
       return {

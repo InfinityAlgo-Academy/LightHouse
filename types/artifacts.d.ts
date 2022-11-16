@@ -930,7 +930,7 @@ declare module Artifacts {
   interface ClassifiedEntities {
     byEntity: Map<RecognizableEntity, Array<string>>,
     byURL: Map<string, RecognizableEntity | undefined>,
-    firstParty: RecognizableEntity | undefined}
+    firstParty?: RecognizableEntity
   }
 }
 
