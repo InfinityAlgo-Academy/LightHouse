@@ -80,7 +80,7 @@ class TimingBudget extends Audit {
   }
 
   /**
-   * @param {Immutable<LH.Budget>} budget
+   * @param {LH.Util.Immutable<LH.Budget>} budget
    * @param {LH.Artifacts.TimingSummary} summary
    * @return {Array<BudgetItem>}
    */

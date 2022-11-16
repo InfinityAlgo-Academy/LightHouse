@@ -11,6 +11,7 @@ import Config from './config.js';
 import Gatherer from './gatherer.js';
 import {IcuMessage} from './lhr/i18n.js';
 import * as AuditResult from './lhr/audit-result.js';
+import Util from './utility-types.js';
 
 declare module Audit {
   export import Details = AuditDetails;
@@ -18,7 +19,7 @@ declare module Audit {
   export type ScoreDisplayMode = AuditResult.ScoreDisplayMode;
   export type ScoreDisplayModes = AuditResult.ScoreDisplayModes;
 
-  type Context = Immutable<{
+  type Context = Util.Immutable<{
     /** audit options */
     options: Record<string, any>;
     settings: Config.Settings;

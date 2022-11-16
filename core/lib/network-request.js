@@ -89,7 +89,7 @@ const HEADER_PROTOCOL_IS_H2 = 'X-ProtocolIsH2';
  * @property {number} responseMs
  */
 
-/** @type {SelfMap<LH.Crdp.Network.ResourceType>} */
+/** @type {LH.Util.SelfMap<LH.Crdp.Network.ResourceType>} */
 const RESOURCE_TYPES = {
   XHR: 'XHR',
   Fetch: 'Fetch',

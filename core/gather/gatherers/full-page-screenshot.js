@@ -25,7 +25,9 @@ const MAX_WEBP_SIZE = 16383;
  * @param {S} str
  */
 function kebabCaseToCamelCase(str) {
-  return /** @type {KebabToCamelCase<S>} */ (str.replace(/(-\w)/g, m => m[1].toUpperCase()));
+  return /** @type {LH.Util.KebabToCamelCase<S>} */ (
+    str.replace(/(-\w)/g, m => m[1].toUpperCase())
+  );
 }
 
 /* c8 ignore start */

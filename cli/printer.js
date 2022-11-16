@@ -13,7 +13,7 @@ import log from 'lighthouse-logger';
  *   'json': JSON formatted results
  *   'html': An HTML report
  *   'csv': CSV formatted results
- * @type {SelfMap<LH.OutputMode>}
+ * @type {LH.Util.SelfMap<LH.OutputMode>}
  */
 const OutputMode = {
   json: 'json',
