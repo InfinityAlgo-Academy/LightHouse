@@ -5,6 +5,7 @@
  */
 
 import {Audit} from './audit.js';
+import {EntityClassification} from '../computed/entity-classification.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import {MainResource} from '../computed/main-resource.js';
@@ -215,6 +216,7 @@ class PreloadLCPImageAudit extends Audit {
     const trace = artifacts.traces[PreloadLCPImageAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[PreloadLCPImageAudit.DEFAULT_PASS];
     const URL = artifacts.URL;
+    const classifiedEntities = await EntityClassification.request({URL, devtoolsLog}, context);
     const metricData = {trace, devtoolsLog, gatherContext, settings: context.settings, URL};
     const lcpElement = artifacts.TraceElements
       .find(element => element.traceEventType === 'largest-contentful-paint');
@@ -242,7 +244,7 @@ class PreloadLCPImageAudit extends Audit {
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
-    const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
+    const details = Audit.makeOpportunityDetails(headings, results, classifiedEntities, wastedMs);
 
     // If LCP element was an image and had valid network records (regardless of
     // if it should be preloaded), it will be found first in the `initiatorPath`.

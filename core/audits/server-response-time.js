@@ -5,6 +5,7 @@
  */
 
 import {Audit} from './audit.js';
+import {EntityClassification} from '../computed/entity-classification.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import {MainResource} from '../computed/main-resource.js';
 
@@ -59,7 +60,8 @@ class ServerResponseTime extends Audit {
 
     /** @type {LH.Artifacts.NetworkRequest} */
     const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
-
+    const classifiedEntities = await EntityClassification.request(
+      {URL: artifacts.URL, devtoolsLog}, context);
     const responseTime = ServerResponseTime.calculateResponseTime(mainResource);
     const passed = responseTime < TOO_SLOW_THRESHOLD_MS;
     const displayValue = str_(UIStrings.displayValue, {timeInMs: responseTime});
@@ -73,6 +75,7 @@ class ServerResponseTime extends Audit {
     const details = Audit.makeOpportunityDetails(
       headings,
       [{url: mainResource.url, responseTime}],
+      classifiedEntities,
       responseTime - TARGET_MS
     );
 

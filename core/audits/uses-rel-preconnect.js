@@ -182,7 +182,6 @@ class UsesRelPreconnectAudit extends Audit {
       if (!firstRecordOfOrigin.timing) return;
 
       const securityOrigin = firstRecordOfOrigin.parsedURL.securityOrigin;
-      const entity = classifiedEntities.byURL.get(firstRecordOfOrigin.url);
 
       // Approximate the connection time with the duration of TCP (+potentially SSL) handshake
       // DNS time can be large but can also be 0 if a commonly used origin that's cached, so make
@@ -210,7 +209,6 @@ class UsesRelPreconnectAudit extends Audit {
       results.push({
         url: securityOrigin,
         wastedMs: wastedMs,
-        entity: entity?.name,
       });
     });
 
@@ -240,7 +238,7 @@ class UsesRelPreconnectAudit extends Audit {
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
 
-    const details = Audit.makeOpportunityDetails(headings, results, maxWasted);
+    const details = Audit.makeOpportunityDetails(headings, results, classifiedEntities, maxWasted);
 
     return {
       score: ByteEfficiencyAudit.scoreForWastedMs(maxWasted),

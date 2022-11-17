@@ -208,12 +208,11 @@ class ByteEfficiencyAudit extends Audit {
    * @param {Node|null} graph
    * @param {Simulator} simulator
    * @param {LH.Artifacts['GatherContext']} gatherContext
-   * @param {LH.Artifacts.ClassifiedEntities?} classifiedEntities
+   * @param {LH.Artifacts.ClassifiedEntities} classifiedEntities
    * @return {LH.Audit.Product}
    */
   static createAuditProduct(result, graph, simulator, gatherContext, classifiedEntities) {
-    const results = result.items.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes)
-      .map(item => ({...item, entity: classifiedEntities?.byURL.get(item.url)?.name}));
+    const results = result.items.sort((itemA, itemB) => itemB.wastedBytes - itemA.wastedBytes);
     const wastedBytes = results.reduce((sum, item) => sum + item.wastedBytes, 0);
 
     let wastedMs;
@@ -231,7 +230,8 @@ class ByteEfficiencyAudit extends Audit {
       displayValue = str_(i18n.UIStrings.displayValueByteSavings, {wastedBytes});
     }
 
-    const details = Audit.makeOpportunityDetails(result.headings, results, wastedMs, wastedBytes);
+    const details = Audit.makeOpportunityDetails(result.headings, results, 
+      classifiedEntities, wastedMs, wastedBytes);
 
     return {
       explanation: result.explanation,

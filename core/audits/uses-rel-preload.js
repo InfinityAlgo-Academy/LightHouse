@@ -7,6 +7,7 @@
 import UrlUtils from '../lib/url-utils.js';
 import {NetworkRequest} from '../lib/network-request.js';
 import {Audit} from './audit.js';
+import {EntityClassification} from '../computed/entity-classification.js';
 import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
 import {CriticalRequestChains} from '../computed/critical-request-chains.js';
 import * as i18n from '../lib/i18n/i18n.js';
@@ -213,6 +214,7 @@ class UsesRelPreloadAudit extends Audit {
     const trace = artifacts.traces[UsesRelPreloadAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreloadAudit.DEFAULT_PASS];
     const URL = artifacts.URL;
+    const classifiedEntities = await EntityClassification.request({URL, devtoolsLog}, context);
     const simulatorOptions = {devtoolsLog, settings: context.settings};
 
     const [mainResource, graph, simulator] = await Promise.all([
@@ -239,7 +241,7 @@ class UsesRelPreloadAudit extends Audit {
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
-    const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
+    const details = Audit.makeOpportunityDetails(headings, results, classifiedEntities, wastedMs);
 
     return {
       score: ByteEfficiencyAudit.scoreForWastedMs(wastedMs),
@@ -259,7 +261,7 @@ class UsesRelPreloadAudit extends Audit {
   static async audit() {
     // Preload advice is on hold until https://github.com/GoogleChrome/lighthouse/issues/11960
     // is resolved.
-    return {score: 1, notApplicable: true, details: Audit.makeOpportunityDetails([], [], 0)};
+    return {score: 1, notApplicable: true, details: Audit.makeOpportunityDetails([], [], null, 0)};
   }
 }
 
