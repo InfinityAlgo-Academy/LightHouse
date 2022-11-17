@@ -389,7 +389,7 @@ export class DetailsRenderer {
       return [];
     }
 
-    const supportedAggregations = ['bytes', 'numeric', 'ms'];
+    const supportedAggregations = ['bytes', 'numeric', 'ms', 'timespanMs'];
     /** @type {string[]} */
     const aggregateKeys = [];
     for (const heading of headings) {
