@@ -1515,17 +1515,23 @@
   word-break: normal;
 }
 
+.lh-row--group {
+  background-color: var(--table-higlight-background-color);
+}
+
 .lh-row--group td {
   font-weight: bold;
+  font-size: 1.05em;
+  color: var(--color-gray-700);
 }
 
 .lh-row--group a.lh-link {
   color: inherit;
-  text-decoration: underline dotted #999;
+  text-decoration: none;
 }
 
 .lh-row--group a.lh-link:hover {
-  text-decoration: underline solid;
+  text-decoration: underline;
 }
 
 .lh-row--group ~ [data-entity]:not(.lh-row--group) td:first-child {

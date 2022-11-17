@@ -457,12 +457,6 @@ export class DetailsRenderer {
           aggregateFragment.append(this._renderTableRowsFromItem(item, details.headings));
         }
         const renderedRows = this._dom.findAll('tr', aggregateFragment);
-        for (const rowEl of renderedRows) {
-          // For zebra styling.
-          rowEl.classList.add(even ? 'lh-row--even' : 'lh-row--odd');
-          if (typeof(group.entity) === 'string') rowEl.dataset.entity = group.entity;
-        }
-        // Mark group item.
         renderedRows[0]?.classList.add('lh-row--group');
         even = !even;
         tbodyElem.append(aggregateFragment);
