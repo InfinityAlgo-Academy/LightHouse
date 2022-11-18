@@ -185,6 +185,8 @@ export default lighthouse;
 export {Audit} from './audits/audit.js';
 export {default as Gatherer} from './gather/base-gatherer.js';
 export {NetworkRecords} from './computed/network-records.js';
+export {default as defaultConfig} from './config/default-config.js';
+export {default as desktopConfig} from './config/desktop-config.js';
 export * from '../types/lh.js';
 export {
   legacyNavigation,
