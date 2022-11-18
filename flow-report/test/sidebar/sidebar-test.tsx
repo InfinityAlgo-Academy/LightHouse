@@ -58,10 +58,12 @@ describe('SidebarRuntimeSettings', () => {
         throughputKbps: 1.6 * 1024,
         rttMs: 150,
       },
+      screenEmulation: {disabled: true},
     } as any;
     const root = render(<SidebarRuntimeSettings settings={settings}/>, {wrapper});
 
     expect(root.getByText('Emulated Moto G4')).toBeTruthy();
+    expect(root.queryByText('Emulated Moto G4 -')).toBeFalsy();
     expect(root.getByText('Slow 4G throttling')).toBeTruthy();
     expect(root.getByText('4x slowdown'));
   });
@@ -78,10 +80,15 @@ describe('SidebarRuntimeSettings', () => {
         throughputKbps: 1,
         rttMs: 1,
       },
+      screenEmulation: {
+        width: 100,
+        height: 100,
+        deviceScaleFactor: 2,
+      },
     } as any;
     const root = render(<SidebarRuntimeSettings settings={settings}/>, {wrapper});
 
-    expect(root.getByText('Emulated Desktop')).toBeTruthy();
+    expect(root.getByText('Emulated Desktop - 100x100, DPR 2')).toBeTruthy();
     expect(root.getByText('Custom throttling')).toBeTruthy();
     expect(root.getByText('1x slowdown'));
   });

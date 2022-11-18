@@ -3026,6 +3026,9 @@
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Network throttling"
   },
+  "report/renderer/util.js | runtimeSettingsScreenEmulation": {
+    "message": "Screen emulation"
+  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User agent (network)"
   },

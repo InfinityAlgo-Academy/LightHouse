@@ -3026,6 +3026,9 @@
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "N̂ét̂ẃôŕk̂ t́ĥŕôt́t̂ĺîńĝ"
   },
+  "report/renderer/util.js | runtimeSettingsScreenEmulation": {
+    "message": "Ŝćr̂éêń êḿûĺât́îón̂"
+  },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Ûśêŕ âǵêńt̂ (ńêt́ŵór̂ḱ)"
   },
