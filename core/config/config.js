@@ -238,7 +238,7 @@ function resolveFakeNavigations(artifactDefns, settings) {
  * @param {LH.Gatherer.GatherMode} gatherMode
  * @param {LH.Config.Json=} configJSON
  * @param {LH.Flags=} flags
- * @return {Promise<{config: LH.Config.FRConfig, warnings: string[]}>}
+ * @return {Promise<{config: LH.Config.NormalizedConfig, warnings: string[]}>}
  */
 async function initializeConfig(gatherMode, configJSON, flags = {}) {
   const status = {msg: 'Initialize config', id: 'lh:config'};
@@ -256,7 +256,7 @@ async function initializeConfig(gatherMode, configJSON, flags = {}) {
 
   const navigations = resolveFakeNavigations(artifacts, settings);
 
-  /** @type {LH.Config.FRConfig} */
+  /** @type {LH.Config.NormalizedConfig} */
   let config = {
     artifacts,
     navigations,
@@ -276,25 +276,19 @@ async function initializeConfig(gatherMode, configJSON, flags = {}) {
 }
 
 /**
- * @param {LH.Config.FRConfig} config
+ * @param {LH.Config.NormalizedConfig} config
  * @return {string}
  */
 function getConfigDisplayString(config) {
-  /** @type {LH.Config.FRConfig} */
+  /** @type {LH.Config.NormalizedConfig} */
   const jsonConfig = JSON.parse(JSON.stringify(config));
 
-  if (jsonConfig.navigations) {
-    for (const navigation of jsonConfig.navigations) {
-      for (let i = 0; i < navigation.artifacts.length; ++i) {
-        // @ts-expect-error Breaking the Config.AnyArtifactDefn type.
-        navigation.artifacts[i] = navigation.artifacts[i].id;
-      }
-    }
-  }
+  // @ts-expect-error Breaking the NormalizedConfig type.
+  jsonConfig.navigations = undefined;
 
   if (jsonConfig.artifacts) {
     for (const artifactDefn of jsonConfig.artifacts) {
-      // @ts-expect-error Breaking the Config.AnyArtifactDefn type.
+      // @ts-expect-error Breaking the NormalizedConfig.AnyArtifactDefn type.
       artifactDefn.gatherer = artifactDefn.gatherer.path;
       // Dependencies are not declared on Config JSON
       artifactDefn.dependencies = undefined;
@@ -303,10 +297,10 @@ function getConfigDisplayString(config) {
 
   if (jsonConfig.audits) {
     for (const auditDefn of jsonConfig.audits) {
-      // @ts-expect-error Breaking the Config.AuditDefn type.
+      // @ts-expect-error Breaking the NormalizedConfig.AuditDefn type.
       auditDefn.implementation = undefined;
       if (Object.keys(auditDefn.options).length === 0) {
-        // @ts-expect-error Breaking the Config.AuditDefn type.
+        // @ts-expect-error Breaking the NormalizedConfig.AuditDefn type.
         auditDefn.options = undefined;
       }
     }

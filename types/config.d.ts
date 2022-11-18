@@ -16,7 +16,7 @@ interface ClassOf<T> {
 
 declare module Config {
   /**
-   * The pre-normalization Lighthouse Config format.
+   * The Lighthouse Config format.
    */
   interface Json {
     extends?: 'lighthouse:default' | string;
@@ -34,9 +34,9 @@ declare module Config {
   }
 
   /**
-   * The normalized and fully resolved config.
+   * The normalized and fully resolved legacy config.
    */
-  interface Config {
+  interface LegacyNormalizedConfig {
     settings: Settings;
     passes: Pass[] | null;
     audits: AuditDefn[] | null;
@@ -45,9 +45,9 @@ declare module Config {
   }
 
   /**
-   * The normalized and fully resolved Fraggle Rock config.
+   * The normalized and fully resolved config.
    */
-  interface FRConfig {
+  interface NormalizedConfig {
     settings: Settings;
     artifacts: AnyArtifactDefn[] | null;
     navigations: NavigationDefn[] | null;
