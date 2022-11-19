@@ -21,8 +21,8 @@ describe('SEO: Is page crawlable audit', () => {
       'foo, noindex, bar',
       'all, none, all',
       '     noindex      ',
-      'unavailable_after: 25 Jun 2010 15:00:00 PST, noindex',
-      ' Unavailable_after: 25-Aug-2007 15:00:00 EST, noindex',
+      'all, unavailable_after: 25 Jun 2010 15:00:00 PST',
+      ' Unavailable_after: 25-Aug-2007 15:00:00 EST, all',
     ];
 
     const allRuns = robotsValues.map(robotsValue => {
@@ -109,10 +109,10 @@ describe('SEO: Is page crawlable audit', () => {
         {name: 'x-robots-tag', value: '    noindex    '},
       ],
       [
-        {name: 'x-robots-tag', value: 'unavailable_after: 25 Jun 2010 15:00:00 PST, noindex'},
+        {name: 'x-robots-tag', value: 'unavailable_after: 25 Jun 2010 15:00:00 PST, all'},
       ],
       [
-        {name: 'x-robots-tag', value: 'noindex, unavailable_after: 25-Jun-2010 15:00:00 PST'},
+        {name: 'x-robots-tag', value: 'all, unavailable_after: 25-Jun-2010 15:00:00 PST'},
       ],
     ];
 

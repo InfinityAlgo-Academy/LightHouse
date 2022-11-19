@@ -56,19 +56,10 @@ function isUnavailable(directive) {
 
 /**
  * Returns true if any of provided directives blocks page from being indexed
- * @param {string} directives
+ * @param {string} directives assumes no user-agent prefix
  * @return {boolean}
  */
 function hasBlockingDirective(directives) {
-  // For our purposes, we can discard anything before the first ':' if there is no ','
-  // preceding it. This gets rid of unnecessary `some-user-agent: ` prefix while still
-  // correctly handling a directive such as `noindex, unavailable_after: ...`
-  const indexOfColon = directives.indexOf(':');
-  const indexOfComma = directives.indexOf(',');
-  if (indexOfColon !== -1 && (indexOfComma === -1 || indexOfColon < indexOfComma)) {
-    directives = directives.substring(indexOfColon + 1);
-  }
-
   return directives.split(',')
     .map(d => d.toLowerCase().trim())
     .some(d => BLOCKLIST.has(d) || isUnavailable(d));
@@ -147,7 +138,11 @@ class IsCrawlable extends Audit {
       const directiveUserAgent = getUserAgentFromHeaderDirectives(header.value);
       if (directiveUserAgent !== userAgent && directiveUserAgent !== undefined) continue;
 
-      if (!hasBlockingDirective(header.value)) continue;
+      let directiveWithoutUserAgentPrefix = header.value.trim();
+      if (userAgent && header.value.startsWith(`${userAgent}:`)) {
+        directiveWithoutUserAgentPrefix = header.value.replace(`${userAgent}:`, '');
+      }
+      if (!hasBlockingDirective(directiveWithoutUserAgentPrefix)) continue;
 
       blockingDirectives.push({source: `${header.name}: ${header.value}`});
     }
