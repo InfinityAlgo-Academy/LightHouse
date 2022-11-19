@@ -10,6 +10,14 @@ import {Audit} from '../audit.js';
 import {MainResource} from '../../computed/main-resource.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
+const BOT_USER_AGENTS = new Set([
+  undefined,
+  'Googlebot',
+  'bingbot',
+  'DuckDuckBot',
+  'archive.org_bot',
+]);
+
 const BLOCKLIST = new Set([
   'noindex',
   'none',
@@ -52,6 +60,15 @@ function isUnavailable(directive) {
  * @return {boolean}
  */
 function hasBlockingDirective(directives) {
+  // For our purposes, we can discard anything before the first ':' if there is no ','
+  // preceding it. This gets rid of unnecessary `some-user-agent: ` prefix while still
+  // correctly handling a directive such as `noindex, unavailable_after: ...`
+  const indexOfColon = directives.indexOf(':');
+  const indexOfComma = directives.indexOf(',');
+  if (indexOfColon !== -1 && (indexOfComma === -1 || indexOfColon < indexOfComma)) {
+    directives = directives.substring(indexOfColon + 1);
+  }
+
   return directives.split(',')
     .map(d => d.toLowerCase().trim())
     .some(d => BLOCKLIST.has(d) || isUnavailable(d));
@@ -60,14 +77,16 @@ function hasBlockingDirective(directives) {
 /**
  * Returns true if robots header specifies user agent (e.g. `googlebot: noindex`)
  * @param {string} directives
- * @return {boolean}
+ * @return {string|undefined}
  */
-function hasUserAgent(directives) {
+function getUserAgentFromHeaderDirectives(directives) {
   const parts = directives.match(/^([^,:]+):/);
 
   // Check if directives are prefixed with `googlebot:`, `googlebot-news:`, `otherbot:`, etc.
   // but ignore `unavailable_after:` which is a valid directive
-  return !!parts && parts[1].toLowerCase() !== UNAVAILABLE_AFTER;
+  if (!!parts && parts[1].toLowerCase() !== UNAVAILABLE_AFTER) {
+    return parts[1];
+  }
 }
 
 class IsCrawlable extends Audit {
@@ -86,63 +105,121 @@ class IsCrawlable extends Audit {
   }
 
   /**
+   * @param {LH.Artifacts.MetaElement} metaElement
+   */
+  static handleMetaElement(metaElement) {
+    const content = metaElement.content || '';
+    if (hasBlockingDirective(content)) {
+      return {
+        source: {
+          ...Audit.makeNodeItem(metaElement.node),
+          snippet: `<meta name="${metaElement.name}" content="${content}" />`,
+        },
+      };
+    }
+  }
+
+  /**
+   * @param {string|undefined} userAgent
+   * @param {LH.Artifacts.NetworkRequest} mainResource
+   * @param {LH.Artifacts.MetaElement[]} metaElements
+   * @param {import('robots-parser').Robot|undefined} parsedRobotsTxt
+   * @param {URL} robotsTxtUrl
+   */
+  static determineIfCrawlableForUserAgent(userAgent, mainResource, metaElements,
+      parsedRobotsTxt, robotsTxtUrl) {
+    /** @type {LH.Audit.Details.Table['items']} */
+    const blockingDirectives = [];
+
+    // Prefer a meta element specific to a user agent, fallback to generic 'robots' if not present.
+    // https://developers.google.com/search/blog/2007/03/using-robots-meta-tag#directing-a-robots-meta-tag-specifically-at-googlebot
+    let meta;
+    if (userAgent) meta = metaElements.find(meta => meta.name === userAgent.toLowerCase());
+    if (!meta) meta = metaElements.find(meta => meta.name === 'robots');
+    if (meta) {
+      const blockingDirective = IsCrawlable.handleMetaElement(meta);
+      if (blockingDirective) blockingDirectives.push(blockingDirective);
+    }
+
+    for (const header of mainResource.responseHeaders || []) {
+      if (header.name.toLowerCase() !== ROBOTS_HEADER) continue;
+
+      const directiveUserAgent = getUserAgentFromHeaderDirectives(header.value);
+      if (directiveUserAgent !== userAgent && directiveUserAgent !== undefined) continue;
+
+      if (!hasBlockingDirective(header.value)) continue;
+
+      blockingDirectives.push({source: `${header.name}: ${header.value}`});
+    }
+
+    if (parsedRobotsTxt && !parsedRobotsTxt.isAllowed(mainResource.url, userAgent)) {
+      const line = parsedRobotsTxt.getMatchingLineNumber(mainResource.url) || 1;
+      blockingDirectives.push({
+        source: {
+          type: /** @type {const} */ ('source-location'),
+          url: robotsTxtUrl.href,
+          urlProvider: /** @type {const} */ ('network'),
+          line: line - 1,
+          column: 0,
+        },
+      });
+    }
+
+    return blockingDirectives;
+  }
+
+  /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const metaRobots = artifacts.MetaElements.find(meta => meta.name === 'robots');
     const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
-    /** @type {LH.Audit.Details.Table['items']} */
-    const blockingDirectives = [];
 
-    if (metaRobots) {
-      const metaRobotsContent = metaRobots.content || '';
-      const isBlocking = hasBlockingDirective(metaRobotsContent);
+    const robotsTxtUrl = new URL('/robots.txt', mainResource.url);
+    const parsedRobotsTxt = artifacts.RobotsTxt.content ?
+      robotsParser(robotsTxtUrl.href, artifacts.RobotsTxt.content) :
+      undefined;
 
-      if (isBlocking) {
-        blockingDirectives.push({
-          source: {
-            ...Audit.makeNodeItem(metaRobots.node),
-            snippet: `<meta name="robots" content="${metaRobotsContent}" />`,
-          },
-        });
+    // Only fail if all known bots and generic bots (UserAgent '*' or 'robots' directive)
+    // are blocked from crawling.
+    // If at least one bot is allowed, we pass the audit. Any known bots that are not allowed
+    // will be listed in a warning.
+
+    /** @type {Array<string|undefined>} */
+    const blockedUserAgents = [];
+    const genericBlockingDirectives = [];
+
+    for (const userAgent of BOT_USER_AGENTS) {
+      const blockingDirectives = IsCrawlable.determineIfCrawlableForUserAgent(
+        userAgent, mainResource, artifacts.MetaElements, parsedRobotsTxt, robotsTxtUrl);
+      if (blockingDirectives.length > 0) {
+        blockedUserAgents.push(userAgent);
+      }
+      if (userAgent === undefined) {
+        genericBlockingDirectives.push(...blockingDirectives);
       }
     }
 
-    mainResource.responseHeaders && mainResource.responseHeaders
-      .filter(h => h.name.toLowerCase() === ROBOTS_HEADER && !hasUserAgent(h.value) &&
-        hasBlockingDirective(h.value))
-      .forEach(h => blockingDirectives.push({source: `${h.name}: ${h.value}`}));
-
-    if (artifacts.RobotsTxt.content) {
-      const robotsFileUrl = new URL('/robots.txt', mainResource.url);
-      const robotsTxt = robotsParser(robotsFileUrl.href, artifacts.RobotsTxt.content);
-
-      if (!robotsTxt.isAllowed(mainResource.url)) {
-        const line = robotsTxt.getMatchingLineNumber(mainResource.url) || 1;
-        blockingDirectives.push({
-          source: {
-            type: /** @type {const} */ ('source-location'),
-            url: robotsFileUrl.href,
-            urlProvider: /** @type {const} */ ('network'),
-            line: line - 1,
-            column: 0,
-          },
-        });
-      }
+    const score = blockedUserAgents.length !== BOT_USER_AGENTS.size ? 1 : 0;
+    const warnings = [];
+    if (score && blockedUserAgents.length > 0) {
+      const list = blockedUserAgents.filter(Boolean).join(', ');
+      // eslint-disable-next-line max-len
+      warnings.push(`The following bot user agents are blocked from crawling: ${list}. The audit is otherwise passing, because at least one bot was explicitly allowed.`);
     }
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       {key: 'source', valueType: 'code', label: 'Blocking Directive Source'},
     ];
-    const details = Audit.makeTableDetails(headings, blockingDirectives);
+    const details = Audit.makeTableDetails(headings, score === 0 ? genericBlockingDirectives : []);
 
     return {
-      score: Number(blockingDirectives.length === 0),
+      score,
       details,
+      warnings,
     };
   }
 }

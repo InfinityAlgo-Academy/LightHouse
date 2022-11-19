@@ -6,6 +6,8 @@
 
 import assert from 'assert/strict';
 
+import {expect} from 'expect';
+
 import IsCrawlableAudit from '../../../audits/seo/is-crawlable.js';
 import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 
@@ -19,8 +21,8 @@ describe('SEO: Is page crawlable audit', () => {
       'foo, noindex, bar',
       'all, none, all',
       '     noindex      ',
-      'unavailable_after: 25 Jun 2010 15:00:00 PST',
-      ' Unavailable_after: 25-Aug-2007 15:00:00 EST',
+      'unavailable_after: 25 Jun 2010 15:00:00 PST, noindex',
+      ' Unavailable_after: 25-Aug-2007 15:00:00 EST, noindex',
     ];
 
     const allRuns = robotsValues.map(robotsValue => {
@@ -41,6 +43,7 @@ describe('SEO: Is page crawlable audit', () => {
       return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
         assert.equal(auditResult.score, 0);
         assert.equal(auditResult.details.items.length, 1);
+        expect(auditResult.warnings).toHaveLength(0);
       });
     });
 
@@ -65,6 +68,7 @@ describe('SEO: Is page crawlable audit', () => {
     const context = {computedCache: new Map()};
     return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.score, 1);
+      expect(auditResult.warnings).toHaveLength(0);
     });
   });
 
@@ -85,6 +89,7 @@ describe('SEO: Is page crawlable audit', () => {
     const context = {computedCache: new Map()};
     return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.score, 1);
+      expect(auditResult.warnings).toHaveLength(0);
     });
   });
 
@@ -104,10 +109,10 @@ describe('SEO: Is page crawlable audit', () => {
         {name: 'x-robots-tag', value: '    noindex    '},
       ],
       [
-        {name: 'x-robots-tag', value: 'unavailable_after: 25 Jun 2010 15:00:00 PST'},
+        {name: 'x-robots-tag', value: 'unavailable_after: 25 Jun 2010 15:00:00 PST, noindex'},
       ],
       [
-        {name: 'x-robots-tag', value: 'all, unavailable_after: 25-Jun-2010 15:00:00 PST'},
+        {name: 'x-robots-tag', value: 'noindex, unavailable_after: 25-Jun-2010 15:00:00 PST'},
       ],
     ];
 
@@ -129,6 +134,7 @@ describe('SEO: Is page crawlable audit', () => {
       return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
         assert.equal(auditResult.score, 0);
         assert.equal(auditResult.details.items.length, 1);
+        expect(auditResult.warnings).toHaveLength(0);
       });
     });
 
@@ -155,6 +161,7 @@ describe('SEO: Is page crawlable audit', () => {
     const context = {computedCache: new Map()};
     return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.score, 1);
+      expect(auditResult.warnings).toHaveLength(0);
     });
   });
 
@@ -175,6 +182,7 @@ describe('SEO: Is page crawlable audit', () => {
     const context = {computedCache: new Map()};
     return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.score, 1);
+      expect(auditResult.warnings).toHaveLength(0);
     });
   });
 
@@ -198,6 +206,7 @@ describe('SEO: Is page crawlable audit', () => {
     const context = {computedCache: new Map()};
     return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.score, 1);
+      expect(auditResult.warnings).toHaveLength(0);
     });
   });
 
@@ -247,6 +256,7 @@ describe('SEO: Is page crawlable audit', () => {
       return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
         assert.equal(auditResult.score, 0);
         assert.equal(auditResult.details.items.length, 1);
+        expect(auditResult.warnings).toHaveLength(0);
       });
     });
 
@@ -285,6 +295,7 @@ describe('SEO: Is page crawlable audit', () => {
       const context = {computedCache: new Map()};
       return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
         assert.equal(auditResult.score, 1);
+        expect(auditResult.warnings).toHaveLength(0);
       });
     });
 
@@ -316,6 +327,7 @@ describe('SEO: Is page crawlable audit', () => {
     return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
       assert.equal(auditResult.score, 0);
       assert.equal(auditResult.details.items.length, 4);
+      expect(auditResult.warnings).toHaveLength(0);
 
       expect(auditResult.details.items).toMatchInlineSnapshot(`
         Array [
@@ -348,5 +360,85 @@ describe('SEO: Is page crawlable audit', () => {
         ]
       `);
     });
+  });
+
+  it('warns when page allows some crawlers but not others', () => {
+    const testCases = [
+      {
+        // Purposefully use lowercase 'googlebot' here.
+        robots: `
+        User-agent: googlebot
+        Allow: /
+
+        User-agent: *
+        Disallow: /
+        `,
+        responseHeaders: [],
+        metaElements: [],
+        expectedWarning: 'blocked from crawling: bingbot, DuckDuckBot, archive.org_bot.',
+      },
+      {
+        robots: `
+        User-agent: Googlebot
+        Disallow: /
+
+        User-agent: bingbot
+        Allow: /
+
+        User-agent: archive.org_bot
+        Allow: /
+
+        User-agent: *
+        Disallow: /
+        `,
+        responseHeaders: [
+          {name: 'x-robots-tag', value: 'bingbot: noindex'},
+        ],
+        metaElements: [],
+        expectedWarning: 'blocked from crawling: Googlebot, bingbot, DuckDuckBot.',
+      },
+      {
+        robots: `
+        User-agent: googlebot
+        Allow: /
+
+        User-agent: bingbot
+        Allow: /
+
+        User-agent: archive.org_bot
+        Allow: /
+
+        User-agent: *
+        Disallow: /
+        `,
+        responseHeaders: [],
+        metaElements: [{name: 'archive.org_bot', content: 'noindex', node: {}}],
+        expectedWarning: 'blocked from crawling: DuckDuckBot, archive.org_bot.',
+      },
+    ];
+
+    const allRuns = testCases.map(({robots, responseHeaders, metaElements, expectedWarning}) => {
+      const mainDocumentUrl = 'http://example.com/test/page.html';
+      const mainResource = {
+        url: mainDocumentUrl,
+        responseHeaders,
+      };
+      const devtoolsLog = networkRecordsToDevtoolsLog([mainResource]);
+      const artifacts = {
+        devtoolsLogs: {[IsCrawlableAudit.DEFAULT_PASS]: devtoolsLog},
+        URL: {mainDocumentUrl},
+        MetaElements: metaElements,
+        RobotsTxt: {content: robots},
+      };
+
+      const context = {computedCache: new Map()};
+      return IsCrawlableAudit.audit(artifacts, context).then(auditResult => {
+        assert.equal(auditResult.score, 1);
+        expect(auditResult.warnings).toHaveLength(1);
+        expect(auditResult.warnings[0]).toContain(expectedWarning);
+      });
+    });
+
+    return Promise.all(allRuns);
   });
 });

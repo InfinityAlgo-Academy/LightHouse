@@ -3624,6 +3624,7 @@
             "description": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more about crawler directives](https://web.dev/is-crawable/).",
             "score": 1,
             "scoreDisplayMode": "binary",
+            "warnings": [],
             "details": {
               "type": "table",
               "headings": [],
@@ -17726,6 +17727,7 @@
             "description": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more about crawler directives](https://web.dev/is-crawable/).",
             "score": 1,
             "scoreDisplayMode": "binary",
+            "warnings": [],
             "details": {
               "type": "table",
               "headings": [],
