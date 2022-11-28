@@ -8433,6 +8433,7 @@
       "runtimeSettingsCPUThrottling": "CPU throttling",
       "runtimeSettingsDevice": "Device",
       "runtimeSettingsNetworkThrottling": "Network throttling",
+      "runtimeSettingsScreenEmulation": "Screen emulation",
       "runtimeSettingsUANetwork": "User agent (network)",
       "runtimeSingleLoad": "Single page load",
       "runtimeSingleLoadTooltip": "This data is taken from a single page load, as opposed to field data summarizing many sessions.",

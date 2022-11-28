@@ -169,7 +169,7 @@ const rawArgv = y
   .wrap(y.terminalWidth())
   .argv;
 const argv =
-  /** @type {Awaited<typeof rawArgv> & CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
+  /** @type {Awaited<typeof rawArgv> & LH.Util.CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
 
 // This captures all of our mocha tests except for:
 // * flow-report, because it needs to provide additional mocha flags

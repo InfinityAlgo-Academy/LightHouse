@@ -2384,6 +2384,9 @@
   "core/lib/lh-error.js | noFcp": {
     "message": "The page did not paint any content. Please ensure you keep the browser window in the foreground during the load and try again. ({errorCode})"
   },
+  "core/lib/lh-error.js | noLcp": {
+    "message": "The page did not display content that qualifies as a Largest Contentful Paint (LCP). Ensure the page has a valid LCP element and then try again. ({errorCode})"
+  },
   "core/lib/lh-error.js | notHtml": {
     "message": "The page provided is not HTML (served as MIME type {mimeType})."
   },
@@ -3025,6 +3028,9 @@
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Network throttling"
+  },
+  "report/renderer/util.js | runtimeSettingsScreenEmulation": {
+    "message": "Screen emulation"
   },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User agent (network)"

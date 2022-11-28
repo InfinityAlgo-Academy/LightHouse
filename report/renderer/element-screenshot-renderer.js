@@ -240,10 +240,8 @@ export class ElementScreenshotRenderer {
       height: maxRenderSizeDC.height / zoomFactor,
     };
 
-    if (screenshot.width < elementPreviewSizeSC.width) {
-      elementPreviewSizeSC.width = screenshot.width;
-      elementPreviewSizeSC.height = screenshot.height;
-    }
+    elementPreviewSizeSC.width = Math.min(screenshot.width, elementPreviewSizeSC.width);
+    elementPreviewSizeSC.height = Math.min(screenshot.height, elementPreviewSizeSC.height);
 
     /* This preview size is either the size of the thumbnail or size of the Lightbox */
     const elementPreviewSizeDC = {

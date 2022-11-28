@@ -164,27 +164,6 @@ function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 
 }
 
 /**
- * Get the maximum size of a texture the GPU can handle
- * @see https://bugs.chromium.org/p/chromium/issues/detail?id=770769#c13
- * @return {number}
- */
-function getMaxTextureSize() {
-  try {
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl');
-    if (!gl) throw new Error('no webgl');
-    const maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
-    return maxTextureSize;
-  } catch (e) {
-    // If the above fails for any reason we need a fallback number;
-    // 4096 is the max texture size on a Pixel 2 XL, so to be conservative we'll use a low value like it.
-    // But we'll subtract 1 just to identify this case later on.
-    const MAX_TEXTURE_SIZE_FALLBACK = 4095;
-    return MAX_TEXTURE_SIZE_FALLBACK;
-  }
-}
-
-/**
  * Computes a memory/CPU performance benchmark index to determine rough device class.
  * @see https://github.com/GoogleChrome/lighthouse/issues/9085
  * @see https://docs.google.com/spreadsheets/d/1E0gZwKsxegudkjJl8Fki_sOwHKpqgXwt8aBAfuUaB8A/edit?usp=sharing
@@ -555,7 +534,6 @@ export const pageFunctions = {
   getElementsInDocument,
   getOuterHTMLSnippet,
   computeBenchmarkIndex,
-  getMaxTextureSize,
   getNodeDetails,
   getNodePath,
   getNodeSelector,
