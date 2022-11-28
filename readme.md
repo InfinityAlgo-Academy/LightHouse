@@ -20,7 +20,7 @@
   - [Lighthouse Integrations in Web Perf services](#lighthouse-integrations-in-web-perf-services)
   - [Lighthouse Integrations in non-Web Perf services](#lighthouse-integrations-in-non-web-perf-services)
   - [Plugins](#plugins)
-  - [Related Projects](#related-projects)
+  - [Related projects](#related-projects)
 - [FAQ](#faq)
   * [How does Lighthouse work?](#how-does-lighthouse-work)
   * [Can I configure the lighthouse run?](#can-i-configure-the-lighthouse-run)
@@ -38,7 +38,7 @@ Lighthouse is integrated directly into the Chrome DevTools, under the "Lighthous
 
 **Run it**: open Chrome DevTools, select the Lighthouse panel, and hit "Generate report".
 
-<img src="https://raw.githubusercontent.com/GoogleChrome/lighthouse/4dbab6bf5466e7220980bccd2f5883f4ad661725/assets/example_dev_tools.png" alt="Lighthouse integration in Chrome DevTools" width="500px">
+<img width="550" alt="Lighthouse integration in Chrome DevTools." src="https://user-images.githubusercontent.com/2766281/204185043-9c49abe5-baee-4b26-b5ce-ece410661213.png">
 
 ## Using the Chrome extension
 
@@ -253,14 +253,14 @@ Useful documentation, examples, and recipes to get you started.
 
 The session from Google I/O 2018 covers the new performance engine, upcoming Lighthouse REST API, and using the Chrome UX report to evaluate real-user data.
 
-[![Lighthouse @ Google I/O 2018](https://img.youtube.com/vi/UvK9zAsSM8Q/0.jpg)](https://www.youtube.com/watch?v=UvK9zAsSM8Q)
+[![Watch the Lighthouse @ Google I/O 2018 session.](https://img.youtube.com/vi/UvK9zAsSM8Q/0.jpg)](https://www.youtube.com/watch?v=UvK9zAsSM8Q)
 
 The session from Google I/O 2017 covers architecture, writing custom audits,
 GitHub/Travis/CI integration, headless Chrome, and more:
 
-[![Lighthouse @ Google I/O 2017](https://img.youtube.com/vi/NoRYn6gOtVo/0.jpg)](https://www.youtube.com/watch?v=NoRYn6gOtVo)
+[![Watch the Lighthouse @ Google I/O 2017 session.](https://img.youtube.com/vi/NoRYn6gOtVo/0.jpg)](https://www.youtube.com/watch?v=NoRYn6gOtVo)
 
-_click to watch the video_
+_Click the image to watch the video on YouTube._
 
 ## Develop
 
@@ -312,12 +312,13 @@ yarn type-check
 
 ### Docs
 
-Some of our docs have tests that run only in CI by default. If you end up needing to modify our documentation, you'll need to run `yarn build-pack && yarn test-docs` locally to make sure they pass.
+Some of our docs have tests that run only in CI by default. To modify our documentation, you'll need to run `yarn build-pack && yarn test-docs` locally to make sure they pass.
 
 **Additional Dependencies**
 - `brew install jq`
 
 ## Lighthouse Integrations in Web Perf services
+
 This section details services that have integrated Lighthouse data. If you're working on a cool project integrating Lighthouse and would like to be featured here, file an issue to this repo or tweet at us [@_____lighthouse](https://twitter.com/____lighthouse)!
 
 * **[Web Page Test](https://www.webpagetest.org)** — An [open source](https://github.com/WPO-Foundation/webpagetest) tool for measuring and analyzing the performance of web pages on real devices. Users can choose to produce a Lighthouse report alongside the analysis of WebPageTest results.
@@ -380,7 +381,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[lighthouse-plugin-crux](https://github.com/dvelasquez/lighthouse-plugin-crux)** - a plugin that quickly gathers real-user-metrics data from the [Chrome UX Report API](https://developers.google.com/web/tools/chrome-user-experience-report/api/reference).
 
-## Related Projects
+## Related projects
+
 Other awesome open source projects that use Lighthouse.
 
 * **[auto-lighthouse](https://github.com/TGiles/auto-lighthouse)** - a CLI for crawling a domain and generating mobile and desktop reports for each page.
