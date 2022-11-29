@@ -50,10 +50,9 @@ jobs:
     - run: yarn build-report
     - run: yarn reset-link
 
-    - run: sudo apt-get install xvfb
     - name: Run smoke tests
       run: |
-        xvfb-run --auto-servernum yarn c8 yarn smoke --debug -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
+        yarn c8 yarn smoke --debug -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
         yarn c8 report --reporter text-lcov > smoke-coverage.lcov
 
     - name: Upload test coverage to Codecov
@@ -148,9 +147,8 @@ jobs:
       working-directory: /home/runner
       run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
-    - run: sudo apt-get install xvfb
     - name: yarn smoke --legacy-navigation
-      run: xvfb-run --auto-servernum yarn smoke --debug --legacy-navigation -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
+      run: yarn smoke --debug --legacy-navigation -j=2 --retries=2 --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
