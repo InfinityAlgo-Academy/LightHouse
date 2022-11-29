@@ -14,12 +14,14 @@ set -euo pipefail
 # 
 # Run `bash core/test/devtools-tests/setup.sh` first to update the temporary devtools checkout.
 # Specify `$DEVTOOLS_PATH` to use a different devtools repo.
+# Specify `$BUILD_FOLDER` to use a build other than 'LighthouseIntegration' (ex: Default).
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 LH_ROOT="$SCRIPT_DIR/../.."
 TEST_DIR="$LH_ROOT/.tmp/chromium-web-tests"
 DEFAULT_DEVTOOLS_PATH="$TEST_DIR/devtools/devtools-frontend"
 DEVTOOLS_PATH=${DEVTOOLS_PATH:-"$DEFAULT_DEVTOOLS_PATH"}
+BUILD_FOLDER="${BUILD_FOLDER:-LighthouseIntegration}"
 
 echo "DEVTOOLS_PATH: $DEVTOOLS_PATH"
 
@@ -41,6 +43,10 @@ fi
 yarn devtools "$DEVTOOLS_PATH"
 
 cd "$DEVTOOLS_PATH"
-gn gen out/Default --args='devtools_dcheck_always_on=true is_debug=false'
+if git config user.email | grep -q '@google.com'; then
+  gn gen "out/$BUILD_FOLDER" --args='devtools_dcheck_always_on=true is_debug=false use_goma=true'
+else
+  gn gen "out/$BUILD_FOLDER" --args='devtools_dcheck_always_on=true is_debug=false'
+fi
 gclient sync
-autoninja -C out/Default
+autoninja -C "out/$BUILD_FOLDER"

@@ -11,11 +11,11 @@ Object {
   "pessimisticFMP": 3228,
   "pessimisticLCP": 3228,
   "pessimisticSI": 3047,
-  "pessimisticTTI": 5551,
+  "pessimisticTTI": 4944,
   "roughEstimateOfFCP": 2289,
   "roughEstimateOfFMP": 2758,
   "roughEstimateOfLCP": 2758,
   "roughEstimateOfSI": 3681,
-  "roughEstimateOfTTI": 4671,
+  "roughEstimateOfTTI": 4367,
 }
 `;

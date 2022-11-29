@@ -236,8 +236,11 @@ class Simulator {
    * currently in flight.
    */
   _updateNetworkCapacity() {
+    const inFlight = this._numberInProgress(BaseNode.TYPES.NETWORK);
+    if (inFlight === 0) return;
+
     for (const connection of this._connectionPool.connectionsInUse()) {
-      connection.setThroughput(this._throughput / this._nodes[NodeState.InProgress].size);
+      connection.setThroughput(this._throughput / inFlight);
     }
   }
 

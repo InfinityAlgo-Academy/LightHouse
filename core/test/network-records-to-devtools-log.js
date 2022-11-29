@@ -61,7 +61,8 @@ function getRequestWillBeSentEvent(networkRecord, index) {
         initialPriority: networkRecord.priority || 'Low',
         isLinkPreload: networkRecord.isLinkPreload,
       },
-      timestamp: networkRecord.redirectResponseTimestamp || networkRecord.startTime || 0,
+      timestamp:
+        networkRecord.redirectResponseTimestamp / 1000 || networkRecord.startTime / 1000 || 0,
       wallTime: 0,
       initiator,
       type: networkRecord.resourceType || 'Document',
@@ -94,7 +95,7 @@ function getResponseReceivedEvent(networkRecord, index) {
   if (networkRecord.timing) {
     timing = {...networkRecord.timing};
     if (timing.requestTime === undefined) {
-      timing.requestTime = networkRecord.startTime || 0;
+      timing.requestTime = networkRecord.startTime / 1000 || 0;
     }
   }
 
@@ -102,7 +103,7 @@ function getResponseReceivedEvent(networkRecord, index) {
     method: 'Network.responseReceived',
     params: {
       requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
-      timestamp: networkRecord.responseReceivedTime || 1,
+      timestamp: networkRecord.responseReceivedTime / 1000 || 1,
       type: networkRecord.resourceType || undefined,
       response: {
         url: networkRecord.url || exampleUrl,
@@ -148,7 +149,7 @@ function getLoadingFinishedEvent(networkRecord, index) {
     method: 'Network.loadingFinished',
     params: {
       requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
-      timestamp: networkRecord.endTime || 3,
+      timestamp: networkRecord.endTime / 1000 || 3,
       encodedDataLength: networkRecord.transferSize === undefined ?
         0 : networkRecord.transferSize,
     },
@@ -164,7 +165,7 @@ function getLoadingFailedEvent(networkRecord, index) {
     method: 'Network.loadingFailed',
     params: {
       requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
-      timestamp: networkRecord.endTime || 3,
+      timestamp: networkRecord.endTime / 1000 || 3,
       errorText: networkRecord.localizedFailDescription || 'Request failed',
     },
   };

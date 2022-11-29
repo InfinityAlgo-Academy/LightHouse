@@ -128,6 +128,7 @@ const artifacts = {
   Trace: '',
   Accessibility: '',
   AnchorElements: '',
+  BFCacheFailures: '',
   CacheContents: '',
   ConsoleMessages: '',
   CSSUsage: '',

@@ -23,6 +23,7 @@ export class I18n {
 
     this._locale = locale;
     this._strings = strings;
+    this._cachedNumberFormatters = new Map();
   }
 
   get strings() {
@@ -57,7 +58,24 @@ export class I18n {
       number = 0;
     }
 
-    return new Intl.NumberFormat(this._locale, opts).format(number).replace(' ', NBSP2);
+    let formatter;
+    // eslint-disable-next-line max-len
+    const cacheKey = [
+      opts.minimumFractionDigits,
+      opts.maximumFractionDigits,
+      opts.style,
+      opts.unit,
+      opts.unitDisplay,
+      this._locale,
+    ].join('');
+
+    formatter = this._cachedNumberFormatters.get(cacheKey);
+    if (!formatter) {
+      formatter = new Intl.NumberFormat(this._locale, opts);
+      this._cachedNumberFormatters.set(cacheKey, formatter);
+    }
+
+    return formatter.format(number).replace(' ', NBSP2);
   }
 
   /**

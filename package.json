@@ -202,6 +202,7 @@
     "parse-cache-control": "1.0.1",
     "ps-list": "^8.0.0",
     "puppeteer-core": "^18.0.5",
+    "quibble": "connorjclark/quibble#fork",
     "robots-parser": "^3.0.0",
     "semver": "^5.3.0",
     "speedline-core": "^1.4.3",
@@ -213,7 +214,7 @@
   "resolutions": {
     "puppeteer/**/devtools-protocol": "0.0.1034970",
     "puppeteer-core/**/devtools-protocol": "0.0.1034970",
-    "testdouble/**/quibble": "connorjclark/quibble#mod-cache"
+    "testdouble/**/quibble": "connorjclark/quibble#fork"
   },
   "repository": "GoogleChrome/lighthouse",
   "keywords": [
