@@ -64,54 +64,53 @@ class UserTimings extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts, context) {
+  static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
-    return ComputedUserTimings.request(trace, context).then(computedUserTimings => {
-      const userTimings = computedUserTimings.filter(UserTimings.excludeEvent);
-      const tableRows = userTimings.map(item => {
-        return {
-          name: item.name,
-          startTime: item.startTime,
-          duration: item.isMark ? undefined : item.duration,
-          timingType: item.isMark ? 'Mark' : 'Measure',
-        };
-      }).sort((itemA, itemB) => {
-        if (itemA.timingType === itemB.timingType) {
-          // If both items are the same type, sort in ascending order by time
-          return itemA.startTime - itemB.startTime;
-        } else if (itemA.timingType === 'Measure') {
-          // Put measures before marks
-          return -1;
-        } else {
-          return 1;
-        }
-      });
-
-      /** @type {LH.Audit.Details.Table['headings']} */
-      const headings = [
-        {key: 'name', valueType: 'text', label: str_(i18n.UIStrings.columnName)},
-        {key: 'timingType', valueType: 'text', label: str_(UIStrings.columnType)},
-        {key: 'startTime', valueType: 'ms', granularity: 0.01,
-          label: str_(i18n.UIStrings.columnStartTime)},
-        {key: 'duration', valueType: 'ms', granularity: 0.01,
-          label: str_(i18n.UIStrings.columnDuration)},
-      ];
-
-      const details = Audit.makeTableDetails(headings, tableRows);
-
-      let displayValue;
-      if (userTimings.length) {
-        displayValue = str_(UIStrings.displayValue, {itemCount: userTimings.length});
-      }
-
+    const computedUserTimings = await ComputedUserTimings.request(trace, context);
+    const userTimings = computedUserTimings.filter(UserTimings.excludeEvent);
+    const tableRows = userTimings.map(item => {
       return {
-        // mark the audit as notApplicable if there were no user timings
-        score: Number(userTimings.length === 0),
-        notApplicable: userTimings.length === 0,
-        displayValue,
-        details,
+        name: item.name,
+        startTime: item.startTime,
+        duration: item.isMark ? undefined : item.duration,
+        timingType: item.isMark ? 'Mark' : 'Measure',
       };
+    }).sort((itemA, itemB) => {
+      if (itemA.timingType === itemB.timingType) {
+        // If both items are the same type, sort in ascending order by time
+        return itemA.startTime - itemB.startTime;
+      } else if (itemA.timingType === 'Measure') {
+        // Put measures before marks
+        return -1;
+      } else {
+        return 1;
+      }
     });
+
+    /** @type {LH.Audit.Details.Table['headings']} */
+    const headings = [
+      {key: 'name', valueType: 'text', label: str_(i18n.UIStrings.columnName)},
+      {key: 'timingType', valueType: 'text', label: str_(UIStrings.columnType)},
+      {key: 'startTime', valueType: 'ms', granularity: 0.01,
+        label: str_(i18n.UIStrings.columnStartTime)},
+      {key: 'duration', valueType: 'ms', granularity: 0.01,
+        label: str_(i18n.UIStrings.columnDuration)},
+    ];
+
+    const details = Audit.makeTableDetails(headings, tableRows);
+
+    let displayValue;
+    if (userTimings.length) {
+      displayValue = str_(UIStrings.displayValue, {itemCount: userTimings.length});
+    }
+
+    return {
+      // mark the audit as notApplicable if there were no user timings
+      score: Number(userTimings.length === 0),
+      notApplicable: userTimings.length === 0,
+      displayValue,
+      details,
+    };
   }
 }
 

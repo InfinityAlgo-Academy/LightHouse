@@ -6,9 +6,7 @@
 
 import assert from 'assert/strict';
 
-import FontSizeGather, {
-  computeSelectorSpecificity, getEffectiveFontRule,
-} from '../../../../gather/gatherers/seo/font-size.js';
+import FontSizeGather, {getEffectiveFontRule} from '../../../../gather/gatherers/seo/font-size.js';
 
 let fontSizeGather;
 
@@ -178,59 +176,6 @@ describe('Font size gatherer', () => {
     });
   });
 
-  describe('#computeSelectorSpecificity', () => {
-    const compute = computeSelectorSpecificity;
-
-    it('should handle basic selectors', () => {
-      expect(compute('h1')).toEqual(1);
-      expect(compute('h1 > p > span')).toEqual(3);
-    });
-
-    it('should handle class selectors', () => {
-      expect(compute('h1.foo')).toEqual(11);
-      expect(compute('.foo')).toEqual(10);
-      expect(compute('h1 > p.other.yeah > span')).toEqual(23);
-    });
-
-    it('should handle ID selectors', () => {
-      expect(compute('h1#awesome.foo')).toEqual(111);
-      expect(compute('#awesome.foo')).toEqual(110);
-      expect(compute('#awesome')).toEqual(100);
-      expect(compute('h1 > p.other > span#the-text')).toEqual(113);
-    });
-
-    it('should ignore the univeral selector', () => {
-      expect(compute('.foo')).toEqual(10);
-      expect(compute('* .foo')).toEqual(10);
-      expect(compute('.foo *')).toEqual(10);
-    });
-
-    // Examples https://drafts.csswg.org/selectors-3/#specificity
-    it('should handle l3 spec selectors', () => {
-      expect(compute('*')).toEqual(0);
-      expect(compute('LI')).toEqual(1);
-      expect(compute('UL LI')).toEqual(2);
-      expect(compute('UL OL+LI')).toEqual(3);
-      // expect(compute('H1 + *[REL=up]')).toEqual(11); // TODO: Handle attribute selectors
-      expect(compute('UL OL LI.red')).toEqual(13);
-      expect(compute('LI.red.level')).toEqual(21);
-      expect(compute('#x34y')).toEqual(100);
-      // expect(compute('#s12:not(FOO)')).toEqual(101); // TODO: Handle pseudo selectors
-    });
-
-    // Examples from https://drafts.csswg.org/selectors-4/#specificity-rules
-    it('should handle l4 spec selectors', () => {
-      expect(compute(':is(em, #foo)')).toEqual(100);
-      // expect(compute('.qux:where(em, #foo#bar#baz)')).toEqual(10); // TODO: Handle pseudo selectors
-      // expect(compute(':nth-child(even of li, .item)')).toEqual(20); // TODO: Handle pseudo selectors
-      // expect(compute(':not(em, strong#foo)')).toEqual(101); // TODO: Handle pseudo selectors
-    });
-
-    it('should cap the craziness', () => {
-      expect(compute('h1.a.b.c.d.e.f.g.h.i.j.k.l.m.n.o.p')).toEqual(91);
-    });
-  });
-
   describe('#getEffectiveFontRule', () => {
     const createProps = props => Object.entries(props).map(([name, value]) => ({name, value}));
     const createStyle = ({properties, id}) => ({
@@ -366,29 +311,29 @@ describe('Font size gatherer', () => {
         style: createStyle({id: 1, properties: {'font-size': '1em'}}),
       });
 
-      // Two matching selectors where 2nd is the global most specific, ID + class
+      // Just ID
       const fontRuleB = createRule({
         origin: 'regular',
-        selectors: ['html body *', '#main.foo'],
-        style: createStyle({id: 2, properties: {'font-size': '2em'}}),
+        selectors: ['#main'],
+        style: createStyle({id: 2, properties: {'font-size': '3em'}}),
       });
 
-      // Just ID
+      // Two matching selectors where 2nd is the global most specific, ID + class
       const fontRuleC = createRule({
         origin: 'regular',
-        selectors: ['#main'],
-        style: createStyle({id: 3, properties: {'font-size': '3em'}}),
+        selectors: ['html body *', '#main.foo'],
+        style: createStyle({id: 3, properties: {'font-size': '2em'}}),
       });
 
       const matchedCSSRules = [
         {rule: fontRuleA, matchingSelectors: [0]},
-        {rule: fontRuleB, matchingSelectors: [0, 1]},
-        {rule: fontRuleC, matchingSelectors: [0]},
+        {rule: fontRuleB, matchingSelectors: [0]},
+        {rule: fontRuleC, matchingSelectors: [0, 1]},
       ];
 
       const result = getEffectiveFontRule({matchedCSSRules});
-      // fontRuleB should have one for ID + class
-      expect(result.styleSheetId).toEqual(2);
+      // fontRuleC should have one for ID + class
+      expect(result.styleSheetId).toEqual(3);
     });
 
     it('should break ties with last one declared', () => {

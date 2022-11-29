@@ -33,15 +33,22 @@ describe('util helpers', () => {
   });
 
   it('builds device emulation string', () => {
-    const get = opts => Util.getEmulationDescriptions(opts).deviceEmulation;
+    const get = opts => Util.getEmulationDescriptions({
+      ...opts,
+      screenEmulation: {disabled: true},
+    }).deviceEmulation;
     assert.equal(get({formFactor: 'mobile'}), 'Emulated Moto G4');
     assert.equal(get({formFactor: 'desktop'}), 'Emulated Desktop');
   });
 
   it('builds throttling strings when provided', () => {
-    const descriptions = Util.getEmulationDescriptions({throttlingMethod: 'provided'});
+    const descriptions = Util.getEmulationDescriptions({
+      throttlingMethod: 'provided',
+      screenEmulation: {disabled: true},
+    });
     assert.equal(descriptions.cpuThrottling, 'Provided by environment');
     assert.equal(descriptions.networkThrottling, 'Provided by environment');
+    assert.equal(descriptions.screenEmulation, undefined);
   });
 
   it('builds throttling strings when devtools', () => {
@@ -53,6 +60,7 @@ describe('util helpers', () => {
         downloadThroughputKbps: 1400.00000000001,
         uploadThroughputKbps: 600,
       },
+      screenEmulation: {disabled: true},
     });
 
     // eslint-disable-next-line max-len
@@ -68,11 +76,13 @@ describe('util helpers', () => {
         rttMs: 150,
         throughputKbps: 1600,
       },
+      screenEmulation: {width: 100, height: 100, deviceScaleFactor: 2},
     });
 
     // eslint-disable-next-line max-len
     assert.equal(descriptions.networkThrottling, '150\xa0ms TCP RTT, 1,600\xa0kb/s throughput (Simulated)');
     assert.equal(descriptions.cpuThrottling, '2x slowdown (Simulated)');
+    assert.equal(descriptions.screenEmulation, '100x100, DPR 2');
   });
 
   describe('#prepareReportResult', () => {

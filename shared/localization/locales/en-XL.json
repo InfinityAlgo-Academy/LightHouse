@@ -615,7 +615,7 @@
     "message": "Ŝýn̂t́âx́"
   },
   "core/audits/csp-xss.js | metaTagMessage": {
-    "message": "T̂h́ê ṕâǵê ćôńt̂áîńŝ á ĈŚP̂ d́êf́îńêd́ îń â <ḿêt́â> t́âǵ. Ĉón̂śîd́êŕ d̂éf̂ín̂ín̂ǵ t̂h́ê ĆŜṔ îń âń ĤT́T̂Ṕ ĥéâd́êŕ îf́ ŷóû ćâń."
+    "message": "T̂h́ê ṕâǵê ćôńt̂áîńŝ á ĈŚP̂ d́êf́îńêd́ îń â <ḿêt́â> t́âǵ. Ĉón̂śîd́êŕ m̂óv̂ín̂ǵ t̂h́ê ĆŜṔ t̂ó âń ĤT́T̂Ṕ ĥéâd́êŕ ôŕ d̂éf̂ín̂ín̂ǵ âńôt́ĥér̂ śt̂ŕîćt̂ ĆŜṔ îń âń ĤT́T̂Ṕ ĥéâd́êŕ."
   },
   "core/audits/csp-xss.js | noCsp": {
     "message": "N̂ó ĈŚP̂ f́ôún̂d́ îń êńf̂ór̂ćêḿêńt̂ ḿôd́ê"
@@ -2405,6 +2405,9 @@
   "core/lib/lh-error.js | noFcp": {
     "message": "T̂h́ê ṕâǵê d́îd́ n̂ót̂ ṕâín̂t́ âńŷ ćôńt̂én̂t́. P̂ĺêáŝé êńŝúr̂é ŷóû ḱêép̂ t́ĥé b̂ŕôẃŝér̂ ẃîńd̂óŵ ín̂ t́ĥé f̂ór̂éĝŕôún̂d́ d̂úr̂ín̂ǵ t̂h́ê ĺôád̂ án̂d́ t̂ŕŷ áĝáîń. ({errorCode})"
   },
+  "core/lib/lh-error.js | noLcp": {
+    "message": "T̂h́ê ṕâǵê d́îd́ n̂ót̂ d́îśp̂ĺâý ĉón̂t́êńt̂ t́ĥát̂ q́ûál̂íf̂íêś âś â Ĺâŕĝéŝt́ Ĉón̂t́êńt̂f́ûĺ P̂áîńt̂ (ĹĈṔ). Êńŝúr̂é t̂h́ê ṕâǵê h́âś â v́âĺîd́ L̂ĆP̂ él̂ém̂én̂t́ âńd̂ t́ĥén̂ t́r̂ý âǵâín̂. ({errorCode})"
+  },
   "core/lib/lh-error.js | notHtml": {
     "message": "T̂h́ê ṕâǵê ṕr̂óv̂íd̂éd̂ íŝ ńôt́ ĤT́M̂Ĺ (ŝér̂v́êd́ âś M̂ÍM̂É t̂ýp̂é {mimeType})."
   },
@@ -3046,6 +3049,9 @@
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "N̂ét̂ẃôŕk̂ t́ĥŕôt́t̂ĺîńĝ"
+  },
+  "report/renderer/util.js | runtimeSettingsScreenEmulation": {
+    "message": "Ŝćr̂éêń êḿûĺât́îón̂"
   },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "Ûśêŕ âǵêńt̂ (ńêt́ŵór̂ḱ)"

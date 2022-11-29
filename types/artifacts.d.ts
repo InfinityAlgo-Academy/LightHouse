@@ -18,10 +18,12 @@ import Gatherer from './gatherer';
 import {IcuMessage} from './lhr/i18n';
 import LHResult from './lhr/lhr'
 import Protocol from './protocol';
+import Util from './utility-types.js';
+import Audit from './audit.js';
 
 export interface Artifacts extends BaseArtifacts, GathererArtifacts {}
 
-export type FRArtifacts = StrictOmit<Artifacts,
+export type FRArtifacts = Util.StrictOmit<Artifacts,
   | 'Fonts'
   | 'Manifest'
   | 'MixedContent'
@@ -122,7 +124,8 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   Accessibility: Artifacts.Accessibility;
   /** Array of all anchors on the page. */
   AnchorElements: Artifacts.AnchorElement[];
-  BFCacheErrors: Artifacts.BFCacheErrors;
+  /** Errors when attempting to use the back/forward cache. */
+  BFCacheFailures: Artifacts.BFCacheFailure[];
   /** Array of all URLs cached in CacheStorage. */
   CacheContents: string[];
   /** CSS coverage information for styles used by page's final state. */
@@ -180,7 +183,7 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
 }
 
 declare module Artifacts {
-  type ComputedContext = Immutable<{
+  type ComputedContext = Util.Immutable<{
     computedCache: Map<string, ArbitraryEqualityMap>;
   }>;
 
@@ -411,11 +414,15 @@ declare module Artifacts {
     }>
   }
 
-  type BFCacheErrorMap = {
+  type BFCacheReasonMap = {
     [key in LH.Crdp.Page.BackForwardCacheNotRestoredReason]?: string[];
   };
 
-  type BFCacheErrors = Record<LH.Crdp.Page.BackForwardCacheNotRestoredReasonType, BFCacheErrorMap>;
+  type BFCacheNotRestoredReasonsTree = Record<LH.Crdp.Page.BackForwardCacheNotRestoredReasonType, BFCacheReasonMap>;
+
+  interface BFCacheFailure {
+    notRestoredReasonsTree: BFCacheNotRestoredReasonsTree;
+  }
 
   interface Font {
     display: string;
@@ -641,7 +648,7 @@ declare module Artifacts {
   interface MetricComputationDataInput {
     devtoolsLog: DevtoolsLog;
     trace: Trace;
-    settings: Immutable<Config.Settings>;
+    settings: Audit.Context['settings'];
     gatherContext: Artifacts['GatherContext'];
     simulator?: InstanceType<typeof Simulator>;
     URL: Artifacts['URL'];

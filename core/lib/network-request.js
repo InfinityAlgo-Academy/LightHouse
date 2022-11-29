@@ -89,7 +89,7 @@ const HEADER_PROTOCOL_IS_H2 = 'X-ProtocolIsH2';
  * @property {number} responseMs
  */
 
-/** @type {SelfMap<LH.Crdp.Network.ResourceType>} */
+/** @type {LH.Util.SelfMap<LH.Crdp.Network.ResourceType>} */
 const RESOURCE_TYPES = {
   XHR: 'XHR',
   Fetch: 'Fetch',
@@ -124,10 +124,14 @@ class NetworkRequest {
     this.parsedURL = /** @type {ParsedURL} */ ({scheme: ''});
     this.documentURL = '';
 
+    /**
+     * When the network service is about to handle a request, ie. just before going to the
+     * HTTP cache or going to the network for DNS/connection setup, in milliseconds.
+     */
     this.startTime = -1;
-    /** @type {number} */
+    /** When the last byte of the response body is received, in milliseconds. */
     this.endTime = -1;
-    /** @type {number} */
+    /** When the last byte of the response headers is received, in milliseconds. */
     this.responseReceivedTime = -1;
 
     // Go read the comment on _updateTransferSizeForLightrider.
@@ -217,7 +221,8 @@ class NetworkRequest {
     };
     this.isSecure = UrlUtils.isSecureScheme(this.parsedURL.scheme);
 
-    this.startTime = data.timestamp;
+    // Expected to be overriden with better value in `_recomputeTimesWithResourceTiming`.
+    this.startTime = data.timestamp * 1000;
 
     this.requestMethod = data.request.method;
 
@@ -261,7 +266,7 @@ class NetworkRequest {
     if (this.finished) return;
 
     this.finished = true;
-    this.endTime = data.timestamp;
+    this.endTime = data.timestamp * 1000;
     if (data.encodedDataLength >= 0) {
       this.transferSize = data.encodedDataLength;
     }
@@ -279,7 +284,7 @@ class NetworkRequest {
     if (this.finished) return;
 
     this.finished = true;
-    this.endTime = data.timestamp;
+    this.endTime = data.timestamp * 1000;
 
     this.failed = true;
     this.resourceType = data.type && RESOURCE_TYPES[data.type];
@@ -305,7 +310,7 @@ class NetworkRequest {
     this._onResponse(data.redirectResponse, data.timestamp, data.type);
     this.resourceType = undefined;
     this.finished = true;
-    this.endTime = data.timestamp;
+    this.endTime = data.timestamp * 1000;
 
     this._updateResponseReceivedTimeIfNecessary();
   }
@@ -319,7 +324,7 @@ class NetworkRequest {
 
   /**
    * @param {LH.Crdp.Network.Response} response
-   * @param {number} timestamp
+   * @param {number} timestamp in seconds
    * @param {LH.Crdp.Network.ResponseReceivedEvent['type']=} resourceType
    */
   _onResponse(response, timestamp, resourceType) {
@@ -330,7 +335,7 @@ class NetworkRequest {
 
     if (response.protocol) this.protocol = response.protocol;
 
-    this.responseReceivedTime = timestamp;
+    this.responseReceivedTime = timestamp * 1000;
 
     this.transferSize = response.encodedDataLength;
     if (typeof response.fromDiskCache === 'boolean') this.fromDiskCache = response.fromDiskCache;
@@ -364,8 +369,8 @@ class NetworkRequest {
     // Take startTime and responseReceivedTime from timing data for better accuracy.
     // Timing's requestTime is a baseline in seconds, rest of the numbers there are ticks in millis.
     // TODO: This skips the "queuing time" before the netstack has taken over ... is this a mistake?
-    this.startTime = timing.requestTime;
-    const headersReceivedTime = timing.requestTime + timing.receiveHeadersEnd / 1000;
+    this.startTime = timing.requestTime * 1000;
+    const headersReceivedTime = this.startTime + timing.receiveHeadersEnd;
     if (!this.responseReceivedTime || this.responseReceivedTime < 0) {
       this.responseReceivedTime = headersReceivedTime;
     }
@@ -478,7 +483,7 @@ class NetworkRequest {
     }
 
     this.lrStatistics = {
-      endTimeDeltaMs: (this.endTime - (this.startTime + (totalMs / 1000))) * 1000,
+      endTimeDeltaMs: this.endTime - (this.startTime + totalMs),
       TCPMs: TCPMs,
       requestMs: requestMs,
       responseMs: responseMs,

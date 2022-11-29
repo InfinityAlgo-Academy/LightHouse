@@ -6031,9 +6031,10 @@ query-string@^4.1.0:
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
-quibble@^0.6.7, quibble@connorjclark/quibble#mod-cache:
-  version "0.6.14"
-  resolved "https://codeload.github.com/connorjclark/quibble/tar.gz/68d53b087d4c9117cc86c7e5f19e7953a219582b"
+quibble@^0.6.7, quibble@connorjclark/quibble#fork:
+  version "0.6.12"
+  uid f49c6c6122f08a4872a1fafc1d2aca68a7fdc2df
+  resolved "https://codeload.github.com/connorjclark/quibble/tar.gz/f49c6c6122f08a4872a1fafc1d2aca68a7fdc2df"
   dependencies:
     lodash "^4.17.21"
     resolve "^1.20.0"

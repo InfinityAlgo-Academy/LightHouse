@@ -15,7 +15,12 @@ const require = createRequire(import.meta.url);
 
 const filepath = `${LH_ROOT}/core/index.js`;
 
-describe('inline-fs', () => {
+// Lots of path separator issues on Windows, because LH_ROOT has \\ slashes but
+// most tests here don't JSON.stringify the strings they interpolate into code.
+// Deferring for now.
+const describeSkipOnWindows = process.platform === 'win32' ? describe.skip : describe;
+
+describeSkipOnWindows('inline-fs', () => {
   const tmpPath = `${LH_ROOT}/.tmp/inline-fs/test.txt`;
   const tmpDir = path.dirname(tmpPath);
 

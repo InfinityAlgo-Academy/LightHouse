@@ -104,7 +104,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
   const shimsObj = {
     [require.resolve('../core/legacy/gather/connections/cri.js')]:
       'export const CriConnection = {}',
-    [require.resolve('../package.json')]: `export const version = '${pkg.version}';`,
   };
 
   const modulesToIgnore = [
@@ -170,11 +169,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
       }),
       rollupPlugins.shim({
         ...shimsObj,
-        // Allows for plugins to import lighthouse.
-        'lighthouse': `
-          import {Audit} from '${require.resolve('../core/audits/audit.js')}';
-          export {Audit};
-        `,
         'url': `
           export const URL = globalThis.URL;
           export const fileURLToPath = url => url;

@@ -7,9 +7,6 @@
 import {createMockContext} from '../../gather/mock-driver.js';
 import FullPageScreenshotGatherer from '../../../gather/gatherers/full-page-screenshot.js';
 
-// Headless's default value is (1024 * 16), but this varies by device
-const maxTextureSizeMock = 1024 * 8;
-
 /** @type {{width: number, height: number}} */
 let contentSize;
 /** @type {{width?: number, height?: number, dpr: number}} */
@@ -29,9 +26,9 @@ beforeEach(() => {
   mockContext.driver.defaultSession.sendCommand.mockImplementation((method) => {
     if (method === 'Page.getLayoutMetrics') {
       return {
-        contentSize,
+        cssContentSize: contentSize,
         // See comment within _takeScreenshot() implementation
-        layoutViewport: {clientWidth: screenSize.width, clientHeight: screenSize.height},
+        cssLayoutViewport: {clientWidth: screenSize.width, clientHeight: screenSize.height},
       };
     }
     if (method === 'Page.captureScreenshot') {
@@ -43,8 +40,6 @@ beforeEach(() => {
   mockContext.driver._executionContext.evaluate.mockImplementation(fn => {
     if (fn.name === 'resolveNodes') {
       return {};
-    } if (fn.name === 'getMaxTextureSize') {
-      return maxTextureSizeMock;
     } else if (fn.name === 'getObservedDeviceMetrics') {
       return {
         width: screenSize.width,
@@ -203,7 +198,7 @@ describe('FullPageScreenshot gatherer', () => {
         mobile: true,
         deviceScaleFactor: 1,
         width: 0,
-        height: maxTextureSizeMock,
+        height: 16383,
       }
     );
   });

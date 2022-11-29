@@ -83,10 +83,10 @@ describe('Network requests audit', () => {
 
     expect(output.details.items).toMatchObject([{
       startTime: 0,
-      endTime: 500,
+      endTime: 0.5,
       finished: true,
     }, {
-      startTime: 500,
+      startTime: 0.5,
       endTime: undefined,
       finished: true,
     }]);

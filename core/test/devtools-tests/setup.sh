@@ -8,6 +8,7 @@
 
 # Setup dependencies for devtools e2e tests.
 # Set SKIP_DOWNLOADS to skip all the downloading and just export variables.
+# Set BUILD_FOLDER to use a folder other than 'LighthouseIntegration' (ex: Default to use out/Default).
 
 set -euo pipefail
 
@@ -17,6 +18,7 @@ TEST_DIR="$LH_ROOT/.tmp/chromium-web-tests"
 
 export DEPOT_TOOLS_PATH="$TEST_DIR/depot-tools"
 export DEVTOOLS_PATH=${DEVTOOLS_PATH:-"$TEST_DIR/devtools/devtools-frontend"}
+export BUILD_FOLDER="${BUILD_FOLDER:-LighthouseIntegration}"
 
 if [ -z ${SKIP_DOWNLOADS+x} ]
 then

@@ -22,7 +22,8 @@ const UIStrings = {
   noCsp: 'No CSP found in enforcement mode',
   /** Message shown when one or more CSPs are defined in a <meta> tag. Shown in a table with a list of other CSP bypasses and warnings. "CSP" stands for "Content Security Policy". "CSP" and "HTTP" do not need to be translated. */
   metaTagMessage: 'The page contains a CSP defined in a <meta> tag. ' +
-    'Consider defining the CSP in an HTTP header if you can.',
+    'Consider moving the CSP to an HTTP header or ' +
+    'defining another strict CSP in an HTTP header.',
   /** Label for a column in a data table; entries will be a directive of a CSP. "CSP" stands for "Content Security Policy". */
   columnDirective: 'Directive',
   /** Label for a column in a data table; entries will be the severity of an issue with the CSP. "CSP" stands for "Content Security Policy". */
@@ -139,8 +140,11 @@ class CspXss extends Audit {
       ...warnings.map(f => this.findingToTableItem(f, str_(i18n.UIStrings.itemSeverityMedium))),
     ];
 
-    // Add extra warning for a CSP defined in a meta tag.
-    if (cspMetaTags.length) {
+    const headerOnlyBypasses = evaluateRawCspsForXss(cspHeaders).bypasses;
+    const headerOnlyIsInsecure = headerOnlyBypasses.length > 0 || cspHeaders.length === 0;
+
+    // Warn if there is a meta tag CSP and the header CSPs are not strict enough on their own.
+    if (cspMetaTags.length > 0 && headerOnlyIsInsecure) {
       results.push({
         severity: str_(i18n.UIStrings.itemSeverityMedium),
         description: str_(UIStrings.metaTagMessage),
