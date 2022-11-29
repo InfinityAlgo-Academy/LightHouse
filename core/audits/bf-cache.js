@@ -17,11 +17,15 @@ const UIStrings = {
   /** TODO */
   description: 'The back/forward cache can speed up the page load after navigating away.',
   /** TODO */
-  actionableColumn: 'Actionable failure',
+  actionableFailureType: 'Actionable',
   /** TODO */
-  notActionableColumn: 'Not actionable failure',
+  notActionableFailureType: 'Not actionable',
   /** TODO */
-  supportPendingColumn: 'Pending browser support',
+  supportPendingFailureType: 'Pending browser support',
+  /** TODO */
+  failureReasonColumn: 'Failure reason',
+  /** TODO */
+  failureTypeColumn: 'Failure type',
   /**
    * @description [ICU Syntax] Label for an audit identifying the number of back/forward cache failure reasons found in the page.
    */
@@ -34,6 +38,16 @@ const UIStrings = {
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
+/** @type {LH.Crdp.Page.BackForwardCacheNotRestoredReasonType[]} */
+const ORDERED_FAILURE_TYPES = ['PageSupportNeeded', 'Circumstantial', 'SupportPending'];
+
+/** @type {Record<LH.Crdp.Page.BackForwardCacheNotRestoredReasonType, string | LH.IcuMessage>} */
+const FAILURE_TYPE_TO_STRING = {
+  PageSupportNeeded: str_(UIStrings.actionableFailureType),
+  Circumstantial: str_(UIStrings.notActionableFailureType),
+  SupportPending: str_(UIStrings.supportPendingFailureType),
+};
+
 class BFCache extends Audit {
   /**
    * @return {LH.Audit.Meta}
@@ -45,7 +59,7 @@ class BFCache extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       supportedModes: ['navigation', 'timespan'],
-      requiredArtifacts: ['BFCacheErrors'],
+      requiredArtifacts: ['BFCacheFailures'],
     };
   }
 
@@ -63,76 +77,56 @@ class BFCache extends Audit {
   }
 
   /**
-   * @param {LH.Artifacts.BFCacheErrorMap} errors
-   * @param {LH.IcuMessage | string} label
-   * @return {LH.Audit.Details.Table}
+   * @param {LH.Artifacts} artifacts
+   * @return {Promise<LH.Audit.Product>}
    */
-  static makeTableForFailureType(errors, label) {
+  static async audit(artifacts) {
+    const failures = artifacts.BFCacheFailures;
+    if (!failures.length) return {score: 1};
+
+    // TODO: Analyze more than one bf cache failure.
+    const {notRestoredReasonsTree} = failures[0];
+
     /** @type {LH.Audit.Details.TableItem[]} */
     const results = [];
+    let numActionable = 0;
 
-    // https://github.com/Microsoft/TypeScript/issues/12870
-    const reasons = /** @type {LH.Crdp.Page.BackForwardCacheNotRestoredReason[]} */
-      (Object.keys(errors));
+    for (const failureType of ORDERED_FAILURE_TYPES) {
+      const reasonsMap = notRestoredReasonsTree[failureType];
 
-    for (const reason of reasons) {
-      const frameUrls = errors[reason] || [];
-      results.push({
-        reason: this.getDescriptionForReason(reason),
-        subItems: {
-          type: 'subitems',
-          items: frameUrls.map(frameUrl => ({frameUrl})),
-        },
-      });
+      // https://github.com/Microsoft/TypeScript/issues/12870
+      const reasons = /** @type {LH.Crdp.Page.BackForwardCacheNotRestoredReason[]} */
+        (Object.keys(reasonsMap));
+
+      for (const reason of reasons) {
+        if (failureType === 'PageSupportNeeded') numActionable++;
+
+        const frameUrls = reasonsMap[reason] || [];
+        results.push({
+          reason: this.getDescriptionForReason(reason),
+          failureType: FAILURE_TYPE_TO_STRING[failureType],
+          subItems: {
+            type: 'subitems',
+            items: frameUrls.map(frameUrl => ({frameUrl})),
+          },
+        });
+      }
     }
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'reason', valueType: 'text', subItemsHeading: {key: 'frameUrl', valueType: 'url'}, label},
+      {key: 'reason', valueType: 'text', subItemsHeading: {key: 'frameUrl', valueType: 'url'}, label: str_(UIStrings.failureReasonColumn)},
+      {key: 'failureType', valueType: 'text', label: str_(UIStrings.failureTypeColumn)},
       /* eslint-enable max-len */
     ];
 
-    return Audit.makeTableDetails(headings, results);
-  }
-
-  /**
-   * @param {LH.Artifacts} artifacts
-   * @return {Promise<LH.Audit.Product>}
-   */
-  static async audit(artifacts) {
-    const {PageSupportNeeded, SupportPending, Circumstantial} = artifacts.BFCacheErrors;
-
-    const actionableTable =
-      this.makeTableForFailureType(PageSupportNeeded, str_(UIStrings.actionableColumn));
-    const notActionableTable =
-      this.makeTableForFailureType(Circumstantial, str_(UIStrings.notActionableColumn));
-    const supportPendingTable =
-      this.makeTableForFailureType(SupportPending, str_(UIStrings.supportPendingColumn));
-
-    const items = [
-      actionableTable,
-      notActionableTable,
-      supportPendingTable,
-    ];
-
-    if (actionableTable.items.length === 0) {
-      return {
-        score: 1,
-        details: {
-          type: 'list',
-          items,
-        },
-      };
-    }
+    const details = Audit.makeTableDetails(headings, results);
 
     return {
-      score: 0,
-      displayValue: str_(UIStrings.displayValue, {itemCount: actionableTable.items.length}),
-      details: {
-        type: 'list',
-        items,
-      },
+      score: numActionable ? 0 : 1,
+      displayValue: str_(UIStrings.displayValue, {itemCount: numActionable}),
+      details,
     };
   }
 }

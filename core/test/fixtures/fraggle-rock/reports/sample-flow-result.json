@@ -3694,7 +3694,7 @@
             "description": "The back/forward cache can speed up the page load after navigating away.",
             "score": null,
             "scoreDisplayMode": "error",
-            "errorMessage": "Required BFCacheErrors gatherer did not run."
+            "errorMessage": "Required BFCacheFailures gatherer did not run."
           }
         },
         "configSettings": {
@@ -7250,7 +7250,7 @@
               {
                 "values": {
                   "errorCode": "MISSING_REQUIRED_ARTIFACT",
-                  "artifactName": "BFCacheErrors"
+                  "artifactName": "BFCacheFailures"
                 },
                 "path": "audits[bf-cache].errorMessage"
               }
@@ -9140,6 +9140,14 @@
             "score": null,
             "scoreDisplayMode": "error",
             "errorMessage": "This version of Chrome is too old to support 'detailed EventTiming trace events'. Use a newer version to see full results."
+          },
+          "bf-cache": {
+            "id": "bf-cache",
+            "title": "Back/forward cache is used",
+            "description": "The back/forward cache can speed up the page load after navigating away.",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required BFCacheFailures gatherer did not run."
           }
         },
         "configSettings": {
@@ -9335,6 +9343,10 @@
               },
               {
                 "id": "work-during-interaction",
+                "weight": 0
+              },
+              {
+                "id": "bf-cache",
                 "weight": 0
               },
               {
@@ -10002,12 +10014,18 @@
             },
             {
               "startTime": 81,
+              "name": "lh:audit:bf-cache",
+              "duration": 1,
+              "entryType": "measure"
+            },
+            {
+              "startTime": 82,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 82
+          "total": 83
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -10508,6 +10526,21 @@
                   "featureName": "detailed EventTiming trace events"
                 },
                 "path": "audits[work-during-interaction].errorMessage"
+              }
+            ],
+            "core/audits/bf-cache.js | title": [
+              "audits[bf-cache].title"
+            ],
+            "core/audits/bf-cache.js | description": [
+              "audits[bf-cache].description"
+            ],
+            "core/lib/lh-error.js | missingRequiredArtifact": [
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "BFCacheFailures"
+                },
+                "path": "audits[bf-cache].errorMessage"
               }
             ],
             "core/config/default-config.js | performanceCategoryTitle": [
@@ -17886,7 +17919,7 @@
             "description": "The back/forward cache can speed up the page load after navigating away.",
             "score": null,
             "scoreDisplayMode": "error",
-            "errorMessage": "Required BFCacheErrors gatherer did not run."
+            "errorMessage": "Required BFCacheFailures gatherer did not run."
           }
         },
         "configSettings": {
@@ -21440,7 +21473,7 @@
               {
                 "values": {
                   "errorCode": "MISSING_REQUIRED_ARTIFACT",
-                  "artifactName": "BFCacheErrors"
+                  "artifactName": "BFCacheFailures"
                 },
                 "path": "audits[bf-cache].errorMessage"
               }

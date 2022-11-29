@@ -5838,7 +5838,7 @@
       "description": "The back/forward cache can speed up the page load after navigating away.",
       "score": null,
       "scoreDisplayMode": "error",
-      "errorMessage": "Required BFCacheErrors gatherer did not run."
+      "errorMessage": "Required BFCacheFailures gatherer did not run."
     }
   },
   "configSettings": {
@@ -9735,7 +9735,7 @@
         {
           "values": {
             "errorCode": "MISSING_REQUIRED_ARTIFACT",
-            "artifactName": "BFCacheErrors"
+            "artifactName": "BFCacheFailures"
           },
           "path": "audits[bf-cache].errorMessage"
         }

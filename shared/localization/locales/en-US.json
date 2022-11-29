@@ -425,8 +425,8 @@
   "core/audits/autocomplete.js | warningOrder": {
     "message": "Review order of tokens: \"{tokens}\" in {snippet}"
   },
-  "core/audits/bf-cache.js | actionableColumn": {
-    "message": "Actionable failure"
+  "core/audits/bf-cache.js | actionableFailureType": {
+    "message": "Actionable"
   },
   "core/audits/bf-cache.js | description": {
     "message": "The back/forward cache can speed up the page load after navigating away."
@@ -434,13 +434,19 @@
   "core/audits/bf-cache.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 actionable failure reason}\n    other {# actionable failure reasons}\n    }"
   },
+  "core/audits/bf-cache.js | failureReasonColumn": {
+    "message": "Failure reason"
+  },
   "core/audits/bf-cache.js | failureTitle": {
     "message": "Back/forward cache is not used"
   },
-  "core/audits/bf-cache.js | notActionableColumn": {
-    "message": "Not actionable failure"
+  "core/audits/bf-cache.js | failureTypeColumn": {
+    "message": "Failure type"
   },
-  "core/audits/bf-cache.js | supportPendingColumn": {
+  "core/audits/bf-cache.js | notActionableFailureType": {
+    "message": "Not actionable"
+  },
+  "core/audits/bf-cache.js | supportPendingFailureType": {
     "message": "Pending browser support"
   },
   "core/audits/bf-cache.js | title": {

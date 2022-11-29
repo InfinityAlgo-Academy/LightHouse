@@ -425,8 +425,8 @@
   "core/audits/autocomplete.js | warningOrder": {
     "message": "R̂év̂íêẃ ôŕd̂ér̂ óf̂ t́ôḱêńŝ: \"{tokens}\" ín̂ {snippet}"
   },
-  "core/audits/bf-cache.js | actionableColumn": {
-    "message": "Âćt̂íôńâb́l̂é f̂áîĺûŕê"
+  "core/audits/bf-cache.js | actionableFailureType": {
+    "message": "Âćt̂íôńâb́l̂é"
   },
   "core/audits/bf-cache.js | description": {
     "message": "T̂h́ê b́âćk̂/f́ôŕŵár̂d́ ĉáĉh́ê ćâń ŝṕêéd̂ úp̂ t́ĥé p̂áĝé l̂óâd́ âf́t̂ér̂ ńâv́îǵât́îńĝ áŵáŷ."
@@ -434,13 +434,19 @@
   "core/audits/bf-cache.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 âćt̂íôńâb́l̂é f̂áîĺûŕê ŕêáŝón̂}\n    other {# áĉt́îón̂áb̂ĺê f́âíl̂úr̂é r̂éâśôńŝ}\n    }"
   },
+  "core/audits/bf-cache.js | failureReasonColumn": {
+    "message": "F̂áîĺûŕê ŕêáŝón̂"
+  },
   "core/audits/bf-cache.js | failureTitle": {
     "message": "B̂áĉḱ/f̂ór̂ẃâŕd̂ ćâćĥé îś n̂ót̂ úŝéd̂"
   },
-  "core/audits/bf-cache.js | notActionableColumn": {
-    "message": "N̂ót̂ áĉt́îón̂áb̂ĺê f́âíl̂úr̂é"
+  "core/audits/bf-cache.js | failureTypeColumn": {
+    "message": "F̂áîĺûŕê t́ŷṕê"
   },
-  "core/audits/bf-cache.js | supportPendingColumn": {
+  "core/audits/bf-cache.js | notActionableFailureType": {
+    "message": "N̂ót̂ áĉt́îón̂áb̂ĺê"
+  },
+  "core/audits/bf-cache.js | supportPendingFailureType": {
     "message": "P̂én̂d́îńĝ b́r̂óŵśêŕ ŝúp̂ṕôŕt̂"
   },
   "core/audits/bf-cache.js | title": {

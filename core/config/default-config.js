@@ -221,7 +221,7 @@ const defaultConfig = {
     {id: artifacts.FullPageScreenshot, gatherer: 'full-page-screenshot'},
 
     // BFCacheErrors comes at the very end because it can perform a page navigation.
-    {id: artifacts.BFCacheErrors, gatherer: 'bf-cache-errors'},
+    {id: artifacts.BFCacheFailures, gatherer: 'bf-cache-failures'},
   ],
   audits: [
     'is-on-https',
