@@ -52,7 +52,7 @@ const DEFAULT_RETRIES = 0;
  */
 async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
   const {
-    testRunnerOpts: runnerOpts,
+    testRunnerOptions,
     jobs = DEFAULT_CONCURRENT_RUNS,
     retries = DEFAULT_RETRIES,
     lighthouseRunner = Object.assign(cliLighthouseRunner, {runnerName: 'cli'}),
@@ -74,7 +74,7 @@ async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
   const concurrentMapper = new ConcurrentMapper();
 
   const testOptions = {
-    runnerOpts,
+    testRunnerOptions,
     retries,
     lighthouseRunner,
     takeNetworkRequestUrls,
@@ -162,7 +162,7 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
   const {
     lighthouseRunner,
     retries,
-    testRunnerOpts: runnerOpts,
+    testRunnerOptions,
     takeNetworkRequestUrls,
   } = testOptions;
   const requestedUrl = expectations.lhr.requestedUrl;
@@ -182,14 +182,14 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
     }
 
     let configJson = smokeTestDefn.config;
-    if (runnerOpts.useLegacyNavigation) {
+    if (testRunnerOptions.useLegacyNavigation) {
       configJson = convertToLegacyConfig(configJson);
     }
 
     // Run Lighthouse.
     try {
       result = {
-        ...await lighthouseRunner(requestedUrl, configJson, runnerOpts),
+        ...await lighthouseRunner(requestedUrl, configJson, testRunnerOptions),
         networkRequests: takeNetworkRequestUrls ? takeNetworkRequestUrls() : undefined,
       };
 
@@ -209,7 +209,7 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
     // Assert result.
     report = getAssertionReport(result, expectations, {
       runner: lighthouseRunner.runnerName,
-      ...runnerOpts,
+      ...testRunnerOptions,
     });
 
     runs.push({

@@ -47,7 +47,7 @@ if (!isMainThread && parentPort) {
 /**
  * @param {string} url
  * @param {LH.Config.Json|undefined} configJson
- * @param {Smokehouse.SmokehouseOptions['runnerOpts']} testRunnerOptions
+ * @param {Smokehouse.SmokehouseOptions['testRunnerOptions']} testRunnerOptions
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>}
  */
 async function runBundledLighthouse(url, configJson, testRunnerOptions) {
@@ -116,7 +116,7 @@ async function runBundledLighthouse(url, configJson, testRunnerOptions) {
  * Launch Chrome and do a full Lighthouse run via the Lighthouse DevTools bundle.
  * @param {string} url
  * @param {LH.Config.Json=} configJson
- * @param {Smokehouse.SmokehouseOptions['runnerOpts']=} testRunnerOptions
+ * @param {Smokehouse.SmokehouseOptions['testRunnerOptions']=} testRunnerOptions
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
  */
 async function runLighthouse(url, configJson, testRunnerOptions = {}) {

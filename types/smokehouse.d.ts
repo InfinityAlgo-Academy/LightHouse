@@ -56,7 +56,7 @@ declare global {
 
     export interface SmokehouseOptions {
       /** Options to pass to the specific Lighthouse runner. */
-      runnerOpts: {
+      testRunnerOptions: {
         /** If true, performs extra logging from the test runs. */
         isDebug?: boolean;
         /** If true, use the legacy navigation runner. */

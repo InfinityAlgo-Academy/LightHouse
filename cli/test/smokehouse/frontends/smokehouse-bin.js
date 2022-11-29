@@ -220,7 +220,7 @@ async function begin() {
     const options = {
       jobs: argv.jobs,
       retries: argv.retries,
-      runnerOpts: {
+      testRunnerOptions: {
         isDebug: argv.debug,
         useLegacyNavigation: argv.legacyNavigation,
         forceHeadful: argv.forceHeadful,

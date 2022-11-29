@@ -42,7 +42,7 @@ async function setup() {
  * CHROME_PATH determines which Chrome is used–otherwise the default is puppeteer's chrome binary.
  * @param {string} url
  * @param {LH.Config.Json=} configJson
- * @param {Smokehouse.SmokehouseOptions['runnerOpts']=} testRunnerOptions
+ * @param {Smokehouse.SmokehouseOptions['testRunnerOptions']=} testRunnerOptions
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
  */
 async function runLighthouse(url, configJson, testRunnerOptions = {}) {
