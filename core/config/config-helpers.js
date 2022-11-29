@@ -237,7 +237,6 @@ async function requireWrapper(requirePath) {
   if (module.default) return module.default;
 
   // Find a valid named export.
-  // TODO(esmodules): actually make all the audits/gatherers use named exports
   const methods = new Set(['meta']);
   const possibleNamedExports = Object.keys(module).filter(key => {
     if (!(module[key] && module[key] instanceof Object)) return false;

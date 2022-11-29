@@ -521,5 +521,4 @@ class Runner {
   }
 }
 
-// TODO(esmodules): make this not a class.
 export {Runner};

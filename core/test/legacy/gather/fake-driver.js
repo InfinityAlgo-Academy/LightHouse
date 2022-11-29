@@ -103,7 +103,6 @@ const fakeDriverUsingRealMobileDevice = makeFakeDriver({
   },
 });
 
-// TODO(esmodules): fix awkward export.
 export const fakeDriver = {
   ...makeFakeDriver({protocolGetVersionResponse}),
   fakeDriverUsingRealMobileDevice,
