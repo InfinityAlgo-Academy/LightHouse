@@ -111,14 +111,12 @@ describe('NetworkRequest', () => {
   describe('update fetch stats for Lightrider', () => {
     function getRequest() {
       return {
-        // units = ms
         rendererStartTime: 10,
         networkRequestTime: 50,
         responseHeadersEndTime: 1000,
         networkEndTime: 2000,
         rendererEndTime: 2000,
 
-        // units = ms
         responseHeaders: [
           {name: NetworkRequest.HEADER_TOTAL, value: '10000'},
           {name: NetworkRequest.HEADER_TCP, value: '5000'},

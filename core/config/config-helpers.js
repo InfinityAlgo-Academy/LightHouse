@@ -6,6 +6,7 @@
 
 import path from 'path';
 import {createRequire} from 'module';
+import url from 'url';
 
 import isDeepEqual from 'lodash/isEqual.js';
 
@@ -217,6 +218,11 @@ const bundledModules = new Map(/* BUILD_REPLACE_BUNDLED_MODULES */);
  * @param {string} requirePath
  */
 async function requireWrapper(requirePath) {
+  // For windows.
+  if (path.isAbsolute(requirePath)) {
+    requirePath = url.pathToFileURL(requirePath).href;
+  }
+
   /** @type {any} */
   let module;
   if (bundledModules.has(requirePath)) {
@@ -287,8 +293,12 @@ function requireAudit(auditPath, coreAuditList, configDir) {
     } else {
       // Otherwise, attempt to find it elsewhere. This throws if not found.
       const absolutePath = resolveModulePath(auditPath, configDir, 'audit');
-      // Use a relative path so bundler can easily expose it.
-      requirePath = path.relative(getModuleDirectory(import.meta), absolutePath);
+      if (isBundledEnvironment()) {
+        // Use a relative path so bundler can easily expose it.
+        requirePath = path.relative(getModuleDirectory(import.meta), absolutePath);
+      } else {
+        requirePath = absolutePath;
+      }
     }
   }
 

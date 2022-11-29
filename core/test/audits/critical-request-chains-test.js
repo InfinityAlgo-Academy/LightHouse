@@ -15,8 +15,8 @@ const redditDevtoolsLog = readJson('../fixtures/artifacts/perflog/defaultPass.de
 
 const FAILING_CHAIN_RECORDS = [
   {
-    networkEndTime: 5_000,
-    responseHeadersEndTime: 5_000,
+    networkEndTime: 5000,
+    responseHeadersEndTime: 5000,
     rendererStartTime: 0,
     url: 'https://example.com/',
     priority: 'VeryHigh',
@@ -45,8 +45,8 @@ const FAILING_CHAIN_RECORDS = [
 
 const PASSING_CHAIN_RECORDS = [
   {
-    networkEndTime: 1_000,
-    responseHeadersEndTime: 1_000,
+    networkEndTime: 1000,
+    responseHeadersEndTime: 1000,
     rendererStartTime: 0,
     url: 'https://example.com/',
     priority: 'VeryHigh',
@@ -56,9 +56,9 @@ const PASSING_CHAIN_RECORDS = [
 const PASSING_CHAIN_RECORDS_2 = [
   {
     url: 'http://localhost:10503/offline-ready.html',
-    rendererStartTime: 33552036.878,
-    networkEndTime: 33552285.438,
-    responseHeadersEndTime: 33552275.677,
+    rendererStartTime: 33552036,
+    networkEndTime: 33552284,
+    responseHeadersEndTime: 33552275,
     transferSize: 1849,
     priority: 'VeryHigh',
   },

@@ -20,7 +20,7 @@ import {LanternLargestContentfulPaint} from '../computed/metrics/lantern-largest
 // around for 10s. Meaning, the time delta between processing preconnect a request should be <10s,
 // otherwise it's wasted. We add a 5s margin so we are sure to capture all key requests.
 // @see https://github.com/GoogleChrome/lighthouse/issues/3106#issuecomment-333653747
-const PRECONNECT_SOCKET_MAX_IDLE = 15_000;
+const PRECONNECT_SOCKET_MAX_IDLE_IN_MS = 15_000;
 
 const IGNORE_THRESHOLD_IN_MS = 50;
 
@@ -97,7 +97,7 @@ class UsesRelPreconnectAudit extends Audit {
    */
   static connectionGoesUnusedForTooLong(record, mainResource) {
     const delta = Math.max(0, record.networkRequestTime - mainResource.networkEndTime);
-    return delta < PRECONNECT_SOCKET_MAX_IDLE;
+    return delta < PRECONNECT_SOCKET_MAX_IDLE_IN_MS;
   }
 
   /**
@@ -151,7 +151,7 @@ class UsesRelPreconnectAudit extends Audit {
           !lcpGraphURLs.has(record.url) ||
           // Filter out all resources where origins are already resolved.
           UsesRelPreconnectAudit.hasAlreadyConnectedToOrigin(record) ||
-          // Make sure the requests are below the PRECONNECT_SOCKET_MAX_IDLE (15s) mark.
+          // Make sure the requests are below the PRECONNECT_SOCKET_MAX_IDLE_IN_MS (15s) mark.
           !UsesRelPreconnectAudit.connectionGoesUnusedForTooLong(record, mainResource)
         ) {
           return;

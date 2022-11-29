@@ -62,7 +62,7 @@ function getRequestWillBeSentEvent(networkRecord, index) {
         isLinkPreload: networkRecord.isLinkPreload,
       },
       timestamp:
-        networkRecord.redirectResponseTimestamp || networkRecord.rendererStartTime / 1000 || 0,
+      networkRecord.redirectResponseTimestamp / 1000 || networkRecord.rendererStartTime / 1000 || 0,
       wallTime: 0,
       initiator,
       type: networkRecord.resourceType || 'Document',
@@ -209,7 +209,7 @@ function addRedirectResponseIfNeeded(networkRecords, record) {
   originalResponse.status = originalRecord.statusCode || 302;
   return {
     ...record,
-    redirectResponseTimestamp: originalRecord.networkEndTime / 1000,
+    redirectResponseTimestamp: originalRecord.networkEndTime,
     redirectResponse: originalResponse,
   };
 }

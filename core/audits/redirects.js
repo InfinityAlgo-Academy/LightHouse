@@ -125,10 +125,10 @@ class Redirects extends Audit {
       }
 
       const lanternTimingDeltaMs = redirectedTiming.startTime - initialTiming.startTime;
-      const observedTimingDelta =
+      const observedTimingDeltaMs =
         redirectedRequest.rendererStartTime - initialRequest.rendererStartTime;
       const wastedMs = settings.throttlingMethod === 'simulate' ?
-        lanternTimingDeltaMs : observedTimingDelta;
+        lanternTimingDeltaMs : observedTimingDeltaMs;
       totalWastedMs += wastedMs;
 
       tableRows.push({

@@ -13,7 +13,7 @@ import {createTestTrace} from '../create-test-trace.js';
 const mainResource = {
   url: 'https://www.example.com/',
   timing: {receiveHeadersEnd: 0.5},
-  networkEndTime: 1_000,
+  networkEndTime: 1000,
 };
 
 function buildArtifacts(networkRecords) {
@@ -123,7 +123,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/request',
         initiator: {},
-        networkRequestTime: 16_000,
+        networkRequestTime: 1_600,
         timing: {receiveHeadersEnd: 20},
       },
     ];
@@ -142,7 +142,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/request',
         initiator: {},
-        networkRequestTime: 2_000,
+        networkRequestTime: 2000,
         timing: {
           dnsStart: 100,
           connectStart: 150,
@@ -170,7 +170,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/first',
         initiator: {},
-        networkRequestTime: 2_000,
+        networkRequestTime: 2000,
         timing: {
           dnsStart: 100,
           connectStart: 150,
@@ -181,7 +181,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/second',
         initiator: {},
-        networkRequestTime: 3_000,
+        networkRequestTime: 3000,
         timing: {
           dnsStart: 300,
           connectStart: 350,
@@ -207,7 +207,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'http://cdn.example.com/first',
         initiator: {},
-        networkRequestTime: 2_000,
+        networkRequestTime: 2000,
         timing: {
           dnsStart: 100,
           connectStart: 250,
@@ -229,8 +229,8 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://unimportant.example.com/second',
         initiator: {},
-        networkRequestTime: 6_000,
-        networkEndTime: 8_000, // ends *after* LCP
+        networkRequestTime: 6000,
+        networkEndTime: 8000, // ends *after* LCP
         timing: {
           dnsStart: 100,
           connectStart: 200,
@@ -262,7 +262,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn1.example.com/first',
         initiator: {},
-        networkRequestTime: 2_000,
+        networkRequestTime: 2000,
         timing: {
           dnsStart: 100,
           dnsEnd: 100,
@@ -274,7 +274,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn2.example.com/first',
         initiator: {},
-        networkRequestTime: 2_000,
+        networkRequestTime: 2000,
         timing: {
           dnsStart: 100,
           dnsEnd: 100,
@@ -310,9 +310,9 @@ describe('Performance: uses-rel-preconnect audit', () => {
 
     const networkRecords = [
       mainResource,
-      {url: 'https://cdn1.example.com/first', initiator: {}, networkRequestTime: 2_000, timing},
-      {url: 'https://cdn2.example.com/first', initiator: {}, networkRequestTime: 2_000, timing},
-      {url: 'https://cdn3.example.com/first', initiator: {}, networkRequestTime: 2_000, timing},
+      {url: 'https://cdn1.example.com/first', initiator: {}, networkRequestTime: 2000, timing},
+      {url: 'https://cdn2.example.com/first', initiator: {}, networkRequestTime: 2000, timing},
+      {url: 'https://cdn3.example.com/first', initiator: {}, networkRequestTime: 2000, timing},
     ];
 
     const artifacts = {

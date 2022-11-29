@@ -12,7 +12,7 @@ import log from 'lighthouse-logger';
 import {CDPBrowser} from 'puppeteer-core/lib/esm/puppeteer/common/Browser.js';
 import {Connection as PptrConnection} from 'puppeteer-core/lib/esm/puppeteer/common/Connection.js';
 
-import lighthouse, {legacyNavigation} from '../../core/index.js';
+import lighthouse, * as api from '../../core/index.js';
 import {LighthouseError} from '../../core/lib/lh-error.js';
 import {processForProto} from '../../core/lib/proto-preprocessor.js';
 import * as assetSaver from '../../core/lib/asset-saver.js';
@@ -105,7 +105,7 @@ async function runLighthouseInLR(connection, url, flags, lrOpts) {
       const page = await getPageFromConnection(connection);
       runnerResult = await lighthouse(url, flags, config, page);
     } else {
-      runnerResult = await legacyNavigation(url, flags, config, connection);
+      runnerResult = await api.legacyNavigation(url, flags, config, connection);
     }
 
     if (!runnerResult) throw new Error('Lighthouse finished without a runnerResult');
@@ -163,4 +163,7 @@ if (typeof window !== 'undefined') {
 
 export {
   runLighthouseInLR,
+  api,
+  listenForStatus,
+  LR_PRESETS,
 };

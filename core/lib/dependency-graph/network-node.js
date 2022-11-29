@@ -22,6 +22,8 @@ class NetworkNode extends BaseNode {
   }
 
   /**
+   * In seconds.
+   * TODO: make ms.
    * @return {number}
    */
   get startTime() {
@@ -31,6 +33,8 @@ class NetworkNode extends BaseNode {
   }
 
   /**
+   * In seconds.
+   * TODO: make ms.
    * @return {number}
    */
   get endTime() {

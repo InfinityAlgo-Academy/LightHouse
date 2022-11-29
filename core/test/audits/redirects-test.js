@@ -18,19 +18,19 @@ const FAILING_THREE_REDIRECTS = [{
   timing: {receiveHeadersEnd: 11},
 }, {
   requestId: '1:redirect',
-  rendererStartTime: 1_000,
+  rendererStartTime: 1000,
   priority: 'VeryHigh',
   url: 'https://example.com/',
   timing: {receiveHeadersEnd: 12},
 }, {
   requestId: '1:redirect:redirect',
-  rendererStartTime: 2_000,
+  rendererStartTime: 2000,
   priority: 'VeryHigh',
   url: 'https://m.example.com/',
   timing: {receiveHeadersEnd: 17},
 }, {
   requestId: '1:redirect:redirect:redirect',
-  rendererStartTime: 3_000,
+  rendererStartTime: 3000,
   priority: 'VeryHigh',
   url: 'https://m.example.com/final',
   timing: {receiveHeadersEnd: 19},

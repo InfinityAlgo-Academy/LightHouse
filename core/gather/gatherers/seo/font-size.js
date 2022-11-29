@@ -35,38 +35,6 @@ function hasFontSizeDeclaration(style) {
 }
 
 /**
- * Computes the CSS specificity of a given selector, i.e. #id > .class > div
- * TODO: Handle pseudo selectors (:not(), :where, :nth-child) and attribute selectors
- * LIMITATION: !important is not respected
- *
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity
- * @see https://www.smashingmagazine.com/2010/04/css-specificity-and-inheritance/
- * @see https://drafts.csswg.org/selectors-4/#specificity-rules
- *
- * @param {string} selector
- * @return {number}
- */
-function computeSelectorSpecificity(selector) {
-  // Remove universal selector and separator characters, then split.
-  const tokens = selector.replace(/[*\s+>~]/g, ' ').split(' ');
-
-  let numIDs = 0;
-  let numClasses = 0;
-  let numTypes = 0;
-
-  for (const token of tokens) {
-    const ids = token.match(/(\b|^)#[a-z0-9_-]+/gi) || [];
-    const classes = token.match(/(\b|^)\.[a-z0-9_-]+/gi) || [];
-    const types = token.match(/^[a-z]+/i) ? [1] : [];
-    numIDs += ids.length;
-    numClasses += classes.length;
-    numTypes += types.length;
-  }
-
-  return Math.min(9, numIDs) * 100 + Math.min(9, numClasses) * 10 + Math.min(9, numTypes);
-}
-
-/**
  * Finds the most specific directly matched CSS font-size rule from the list.
  *
  * @param {Array<LH.Crdp.CSS.RuleMatch>} matchedCSSRules
@@ -74,31 +42,21 @@ function computeSelectorSpecificity(selector) {
  * @return {NodeFontData['cssRule']|undefined}
  */
 function findMostSpecificMatchedCSSRule(matchedCSSRules = [], isDeclarationOfInterest) {
-  let maxSpecificity = -Infinity;
-  /** @type {LH.Crdp.CSS.CSSRule|undefined} */
-  let maxSpecificityRule;
-
-  for (const {rule, matchingSelectors} of matchedCSSRules) {
-    if (isDeclarationOfInterest(rule.style)) {
-      const specificities = matchingSelectors.map(idx =>
-        computeSelectorSpecificity(rule.selectorList.selectors[idx].text)
-      );
-      const specificity = Math.max(...specificities);
-      // Use greater OR EQUAL so that the last rule wins in the event of a tie
-      if (specificity >= maxSpecificity) {
-        maxSpecificity = specificity;
-        maxSpecificityRule = rule;
-      }
+  let mostSpecificRule;
+  for (let i = matchedCSSRules.length - 1; i >= 0; i--) {
+    if (isDeclarationOfInterest(matchedCSSRules[i].rule.style)) {
+      mostSpecificRule = matchedCSSRules[i].rule;
+      break;
     }
   }
 
-  if (maxSpecificityRule) {
+  if (mostSpecificRule) {
     return {
       type: 'Regular',
-      ...maxSpecificityRule.style,
+      ...mostSpecificRule.style,
       parentRule: {
-        origin: maxSpecificityRule.origin,
-        selectors: maxSpecificityRule.selectorList.selectors,
+        origin: mostSpecificRule.origin,
+        selectors: mostSpecificRule.selectorList.selectors,
       },
     };
   }
@@ -376,7 +334,6 @@ class FontSize extends FRGatherer {
 
 export default FontSize;
 export {
-  computeSelectorSpecificity,
   getEffectiveFontRule,
   findMostSpecificMatchedCSSRule,
 };

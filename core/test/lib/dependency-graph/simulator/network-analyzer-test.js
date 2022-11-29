@@ -18,6 +18,8 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
 
   function createRecord(opts) {
     const url = opts.url || 'https://example.com';
+    if (opts.startTime) opts.startTime *= 1000;
+    if (opts.endTime) opts.endTime *= 1000;
     return Object.assign(
       {
         url,
@@ -277,13 +279,11 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   describe('#estimateThroughput', () => {
     const estimateThroughput = NetworkAnalyzer.estimateThroughput;
 
-    function createThroughputRecord(responseHeadersEndTime, networkEndTime, extras) {
-      responseHeadersEndTime *= 1000;
-      networkEndTime *= 1000;
+    function createThroughputRecord(responseHeadersEndTimeInS, networkEndTimeInS, extras) {
       return Object.assign(
         {
-          responseHeadersEndTime,
-          networkEndTime,
+          responseHeadersEndTime: responseHeadersEndTimeInS * 1000,
+          networkEndTime: networkEndTimeInS * 1000,
           transferSize: 1000,
           finished: true,
           failed: false,
