@@ -19,7 +19,7 @@ const UIStrings = {
   title: 'Minimizes main-thread work',
   /** Title of a diagnostic audit that provides detail on the main thread work the browser did to load the page. This imperative title is shown to users when there is a significant amount of execution time that could be reduced. */
   failureTitle: 'Minimize main-thread work',
-  /** Description of a Lighthouse audit that tells the user *why* they should reduce JS execution times. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should reduce JS execution times. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Consider reducing the time spent parsing, compiling and executing JS. ' +
     'You may find delivering smaller JS payloads helps with this. ' +
     '[Learn how to minimize main-thread work](https://web.dev/mainthread-work-breakdown/)',
@@ -107,8 +107,10 @@ class MainThreadWorkBreakdown extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'groupLabel', itemType: 'text', text: str_(UIStrings.columnCategory)},
-      {key: 'duration', itemType: 'ms', granularity: 1, text: str_(i18n.UIStrings.columnTimeSpent)},
+      /* eslint-disable max-len */
+      {key: 'groupLabel', valueType: 'text', label: str_(UIStrings.columnCategory)},
+      {key: 'duration', valueType: 'ms', granularity: 1, label: str_(i18n.UIStrings.columnTimeSpent)},
+      /* eslint-enable max-len */
     ];
 
     results.sort((a, b) => categoryTotals[b.group] - categoryTotals[a.group]);

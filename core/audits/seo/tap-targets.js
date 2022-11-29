@@ -27,7 +27,7 @@ const UIStrings = {
   title: 'Tap targets are sized appropriately',
   /** Descriptive title of a Lighthouse audit that provides detail on whether tap targets (like buttons and links) on a page are big enough so they can easily be tapped on a mobile device. This descriptive title is shown when tap targets are not easy to tap on. */
   failureTitle: 'Tap targets are not sized appropriately',
-  /** Description of a Lighthouse audit that tells the user why buttons and links need to be big enough and what 'big enough' means. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why buttons and links need to be big enough and what 'big enough' means. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more about tap targets](https://web.dev/tap-targets/).',
   /** Label of a table column that identifies tap targets (like buttons and links) that have failed the audit and aren't easy to tap on. */
   tapTargetHeader: 'Tap Target',
@@ -286,9 +286,9 @@ class TapTargets extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'tapTarget', itemType: 'node', text: str_(UIStrings.tapTargetHeader)},
-      {key: 'size', itemType: 'text', text: str_(i18n.UIStrings.columnSize)},
-      {key: 'overlappingTarget', itemType: 'node', text: str_(UIStrings.overlappingTargetHeader)},
+      {key: 'tapTarget', valueType: 'node', label: str_(UIStrings.tapTargetHeader)},
+      {key: 'size', valueType: 'text', label: str_(i18n.UIStrings.columnSize)},
+      {key: 'overlappingTarget', valueType: 'node', label: str_(UIStrings.overlappingTargetHeader)},
     ];
 
     const details = Audit.makeTableDetails(headings, tableItems);

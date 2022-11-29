@@ -1605,7 +1605,7 @@
     "message": "Sayfadaki kaynak eşlemeleri geçerli"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">`, uygulamanızı mobil ekran boyutlarına göre optimize etmekle kalmaz, ayrıca, [kullanıcı girişinde 300 milisaniyelik bir gecikmeyi de önler](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Daha fazla bilgi](https://web.dev/viewport/)."
+    "message": "`<meta name=\"viewport\">`, uygulamanızı mobil ekran boyutlarına göre optimize etmekle kalmaz, ayrıca, [kullanıcı girişinde 300 milisaniyelik bir gecikmeyi de önler](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Daha fazla bilgi](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "`<meta name=\"viewport\">` etiketi bulunamadı"

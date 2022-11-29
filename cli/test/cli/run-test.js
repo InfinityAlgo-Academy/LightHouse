@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 import path from 'path';
 import fs from 'fs';
 
@@ -66,7 +66,7 @@ describe('CLI run', function() {
       // passed results match saved results
       assert.strictEqual(fileResults.fetchTime, lhr.fetchTime);
       assert.strictEqual(fileResults.requestedUrl, lhr.requestedUrl);
-      assert.strictEqual(fileResults.finalUrl, lhr.finalUrl);
+      assert.strictEqual(fileResults.finalDisplayedUrl, lhr.finalDisplayedUrl);
       assert.strictEqual(fileResults.audits.viewport.score, lhr.audits.viewport.score);
       assert.strictEqual(
           Object.keys(fileResults.audits).length,

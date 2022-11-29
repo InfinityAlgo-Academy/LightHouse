@@ -7,13 +7,12 @@
 import {createMockContext} from '../../gather/mock-driver.js';
 import FullPageScreenshotGatherer from '../../../gather/gatherers/full-page-screenshot.js';
 
-// Headless's default value is (1024 * 16), but this varies by device
-const maxTextureSizeMock = 1024 * 8;
-
 /** @type {{width: number, height: number}} */
 let contentSize;
 /** @type {{width?: number, height?: number, dpr: number}} */
 let screenSize;
+/** @type {{width?: number, height?: number}} */
+let screenshotAreaSize;
 /** @type {string[]} */
 let screenshotData;
 let mockContext = createMockContext();
@@ -21,14 +20,15 @@ let mockContext = createMockContext();
 beforeEach(() => {
   contentSize = {width: 100, height: 100};
   screenSize = {width: 100, height: 100, dpr: 1};
+  screenshotAreaSize = contentSize;
   screenshotData = [];
   mockContext = createMockContext();
   mockContext.driver.defaultSession.sendCommand.mockImplementation((method) => {
     if (method === 'Page.getLayoutMetrics') {
       return {
-        contentSize,
+        cssContentSize: contentSize,
         // See comment within _takeScreenshot() implementation
-        layoutViewport: {clientWidth: screenSize.width, clientHeight: screenSize.height},
+        cssLayoutViewport: {clientWidth: screenSize.width, clientHeight: screenSize.height},
       };
     }
     if (method === 'Page.captureScreenshot') {
@@ -40,19 +40,20 @@ beforeEach(() => {
   mockContext.driver._executionContext.evaluate.mockImplementation(fn => {
     if (fn.name === 'resolveNodes') {
       return {};
-    } if (fn.name === 'getMaxTextureSize') {
-      return maxTextureSizeMock;
     } else if (fn.name === 'getObservedDeviceMetrics') {
       return {
         width: screenSize.width,
         height: screenSize.height,
-        screenWidth: screenSize.width,
-        screenHeight: screenSize.height,
         screenOrientation: {
           type: 'landscapePrimary',
           angle: 30,
         },
         deviceScaleFactor: screenSize.dpr,
+      };
+    } else if (fn.name === 'getScreenshotAreaSize') {
+      return {
+        width: screenshotAreaSize.width,
+        height: screenshotAreaSize.height,
       };
     } else if (fn.name === 'waitForDoubleRaf') {
       return {};
@@ -67,6 +68,7 @@ describe('FullPageScreenshot gatherer', () => {
     const fpsGatherer = new FullPageScreenshotGatherer();
     contentSize = {width: 412, height: 2000};
     screenSize = {width: 412, height: 412};
+    screenshotAreaSize = contentSize;
 
     mockContext.settings = {
       ...mockContext.settings,
@@ -95,6 +97,7 @@ describe('FullPageScreenshot gatherer', () => {
     const fpsGatherer = new FullPageScreenshotGatherer();
     contentSize = {width: 412, height: 2000};
     screenSize = {width: 412, height: 412};
+    screenshotAreaSize = contentSize;
 
     mockContext.settings = {
       ...mockContext.settings,
@@ -128,6 +131,7 @@ describe('FullPageScreenshot gatherer', () => {
     const fpsGatherer = new FullPageScreenshotGatherer();
     contentSize = {width: 500, height: 1500};
     screenSize = {width: 500, height: 500, dpr: 2};
+    screenshotAreaSize = contentSize;
     mockContext.settings = {
       ...mockContext.settings,
       screenEmulation: {
@@ -174,6 +178,7 @@ describe('FullPageScreenshot gatherer', () => {
 
     contentSize = {width: 412, height: 100000};
     screenSize = {width: 412, height: 412, dpr: 1};
+    screenshotAreaSize = contentSize;
     mockContext.settings = {
       ...mockContext.settings,
       formFactor: 'mobile',
@@ -193,7 +198,7 @@ describe('FullPageScreenshot gatherer', () => {
         mobile: true,
         deviceScaleFactor: 1,
         width: 0,
-        height: maxTextureSizeMock,
+        height: 16383,
       }
     );
   });

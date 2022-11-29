@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import {Util} from '../../renderer/util.js';
 import {I18n} from '../../renderer/i18n.js';
@@ -33,15 +33,22 @@ describe('util helpers', () => {
   });
 
   it('builds device emulation string', () => {
-    const get = opts => Util.getEmulationDescriptions(opts).deviceEmulation;
+    const get = opts => Util.getEmulationDescriptions({
+      ...opts,
+      screenEmulation: {disabled: true},
+    }).deviceEmulation;
     assert.equal(get({formFactor: 'mobile'}), 'Emulated Moto G4');
     assert.equal(get({formFactor: 'desktop'}), 'Emulated Desktop');
   });
 
   it('builds throttling strings when provided', () => {
-    const descriptions = Util.getEmulationDescriptions({throttlingMethod: 'provided'});
+    const descriptions = Util.getEmulationDescriptions({
+      throttlingMethod: 'provided',
+      screenEmulation: {disabled: true},
+    });
     assert.equal(descriptions.cpuThrottling, 'Provided by environment');
     assert.equal(descriptions.networkThrottling, 'Provided by environment');
+    assert.equal(descriptions.screenEmulation, undefined);
   });
 
   it('builds throttling strings when devtools', () => {
@@ -53,6 +60,7 @@ describe('util helpers', () => {
         downloadThroughputKbps: 1400.00000000001,
         uploadThroughputKbps: 600,
       },
+      screenEmulation: {disabled: true},
     });
 
     // eslint-disable-next-line max-len
@@ -68,11 +76,13 @@ describe('util helpers', () => {
         rttMs: 150,
         throughputKbps: 1600,
       },
+      screenEmulation: {width: 100, height: 100, deviceScaleFactor: 2},
     });
 
     // eslint-disable-next-line max-len
     assert.equal(descriptions.networkThrottling, '150\xa0ms TCP RTT, 1,600\xa0kb/s throughput (Simulated)');
     assert.equal(descriptions.cpuThrottling, '2x slowdown (Simulated)');
+    assert.equal(descriptions.screenEmulation, '100x100, DPR 2');
   });
 
   describe('#prepareReportResult', () => {
@@ -175,6 +185,31 @@ describe('util helpers', () => {
         const preparedResult = Util.prepareReportResult(sampleResult);
         assert.deepStrictEqual(clonedPreparedResult.categories, preparedResult.categories);
         assert.deepStrictEqual(clonedPreparedResult.categoryGroups, preparedResult.categoryGroups);
+      });
+
+      it('converts old opportunity table column headings to consolidated table headings', () => {
+        const clonedSampleResult = JSON.parse(JSON.stringify(sampleResult));
+
+        const auditsWithTableDetails = Object.values(clonedSampleResult.audits)
+          .filter(audit => audit.details?.type === 'table');
+        assert.notEqual(auditsWithTableDetails.length, 0);
+        for (const audit of auditsWithTableDetails) {
+          for (const heading of audit.details.headings) {
+            heading.itemType = heading.valueType;
+            heading.text = heading.label;
+            delete heading.valueType;
+            delete heading.label;
+
+            if (heading.subItemsHeading) {
+              heading.subItemsHeading.itemType = heading.subItemsHeading.valueType;
+              // @ts-expect-error
+              delete heading.subItemsHeading.valueType;
+            }
+          }
+        }
+
+        const preparedResult = Util.prepareReportResult(clonedSampleResult);
+        assert.deepStrictEqual(sampleResult.audits, preparedResult.audits);
       });
     });
 

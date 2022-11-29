@@ -17,7 +17,7 @@ const UIStrings = {
   title: '`<html>` element has a `[lang]` attribute',
   /** Title of an accesibility audit that evaluates if the root HTML tag has a lang attribute identifying the page's language. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: '`<html>` element does not have a `[lang]` attribute',
-  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'If a page doesn\'t specify a `lang` attribute, a screen reader assumes ' +
       'that the page is in the default language that the user chose when setting up the ' +
       'screen reader. If the page isn\'t actually in the default language, then the screen ' +

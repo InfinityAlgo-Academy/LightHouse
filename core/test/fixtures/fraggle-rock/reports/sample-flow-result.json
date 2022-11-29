@@ -4,6 +4,8 @@
       "lhr": {
         "lighthouseVersion": "9.5.0",
         "requestedUrl": "https://www.mikescerealshack.co/",
+        "mainDocumentUrl": "https://www.mikescerealshack.co/",
+        "finalDisplayedUrl": "https://www.mikescerealshack.co/",
         "finalUrl": "https://www.mikescerealshack.co/",
         "fetchTime": "2022-03-15T21:49:33.335Z",
         "gatherMode": "navigation",
@@ -40,7 +42,7 @@
           "viewport": {
             "id": "viewport",
             "title": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`",
-            "description": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Learn more about using the viewport meta tag](https://web.dev/viewport/).",
+            "description": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Learn more about using the viewport meta tag](https://web.dev/viewport/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "warnings": []
@@ -266,25 +268,25 @@
               "headings": [
                 {
                   "key": "name",
-                  "itemType": "text",
-                  "text": "Name"
+                  "valueType": "text",
+                  "label": "Name"
                 },
                 {
                   "key": "timingType",
-                  "itemType": "text",
-                  "text": "Type"
+                  "valueType": "text",
+                  "label": "Type"
                 },
                 {
                   "key": "startTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 0.01,
-                  "text": "Start Time"
+                  "label": "Start Time"
                 },
                 {
                   "key": "duration",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 0.01,
-                  "text": "Duration"
+                  "label": "Duration"
                 }
               ],
               "items": [
@@ -359,7 +361,7 @@
           "installable-manifest": {
             "id": "installable-manifest",
             "title": "Web app manifest or service worker do not meet the installability requirements",
-            "description": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. ' +\n  '[Learn more about manifest installability requirements](https://web.dev/installable-manifest/).",
+            "description": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more about manifest installability requirements](https://web.dev/installable-manifest/).",
             "score": 0,
             "scoreDisplayMode": "binary",
             "numericValue": 1,
@@ -371,8 +373,8 @@
               "headings": [
                 {
                   "key": "reason",
-                  "itemType": "text",
-                  "text": "Failure reason"
+                  "valueType": "text",
+                  "label": "Failure reason"
                 }
               ],
               "items": [
@@ -500,14 +502,14 @@
               "headings": [
                 {
                   "key": "groupLabel",
-                  "itemType": "text",
-                  "text": "Category"
+                  "valueType": "text",
+                  "label": "Category"
                 },
                 {
                   "key": "duration",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Time Spent"
+                  "label": "Time Spent"
                 }
               ],
               "items": [
@@ -558,26 +560,26 @@
               "headings": [
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "total",
                   "granularity": 1,
-                  "itemType": "ms",
-                  "text": "Total CPU Time"
+                  "valueType": "ms",
+                  "label": "Total CPU Time"
                 },
                 {
                   "key": "scripting",
                   "granularity": 1,
-                  "itemType": "ms",
-                  "text": "Script Evaluation"
+                  "valueType": "ms",
+                  "label": "Script Evaluation"
                 },
                 {
                   "key": "scriptParseCompile",
                   "granularity": 1,
-                  "itemType": "ms",
-                  "text": "Script Parse"
+                  "valueType": "ms",
+                  "label": "Script Parse"
                 }
               ],
               "items": [
@@ -696,54 +698,54 @@
               "headings": [
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "protocol",
-                  "itemType": "text",
-                  "text": "Protocol"
+                  "valueType": "text",
+                  "label": "Protocol"
                 },
                 {
                   "key": "startTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Start Time"
+                  "label": "Start Time"
                 },
                 {
                   "key": "endTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "End Time"
+                  "label": "End Time"
                 },
                 {
                   "key": "transferSize",
-                  "itemType": "bytes",
+                  "valueType": "bytes",
                   "displayUnit": "kb",
                   "granularity": 1,
-                  "text": "Transfer Size"
+                  "label": "Transfer Size"
                 },
                 {
                   "key": "resourceSize",
-                  "itemType": "bytes",
+                  "valueType": "bytes",
                   "displayUnit": "kb",
                   "granularity": 1,
-                  "text": "Resource Size"
+                  "label": "Resource Size"
                 },
                 {
                   "key": "statusCode",
-                  "itemType": "text",
-                  "text": "Status Code"
+                  "valueType": "text",
+                  "label": "Status Code"
                 },
                 {
                   "key": "mimeType",
-                  "itemType": "text",
-                  "text": "MIME Type"
+                  "valueType": "text",
+                  "label": "MIME Type"
                 },
                 {
                   "key": "resourceType",
-                  "itemType": "text",
-                  "text": "Resource Type"
+                  "valueType": "text",
+                  "label": "Resource Type"
                 }
               ],
               "items": [
@@ -1099,14 +1101,14 @@
               "headings": [
                 {
                   "key": "origin",
-                  "itemType": "text",
-                  "text": "URL"
+                  "valueType": "text",
+                  "label": "URL"
                 },
                 {
                   "key": "rtt",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Time Spent"
+                  "label": "Time Spent"
                 }
               ],
               "items": [
@@ -1143,14 +1145,14 @@
               "headings": [
                 {
                   "key": "origin",
-                  "itemType": "text",
-                  "text": "URL"
+                  "valueType": "text",
+                  "label": "URL"
                 },
                 {
                   "key": "serverResponseTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Time Spent"
+                  "label": "Time Spent"
                 }
               ],
               "items": [
@@ -1184,15 +1186,15 @@
               "headings": [
                 {
                   "key": "startTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Start Time"
+                  "label": "Start Time"
                 },
                 {
                   "key": "duration",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "End Time"
+                  "label": "End Time"
                 }
               ],
               "items": [
@@ -1317,18 +1319,18 @@
               "headings": [
                 {
                   "key": "label",
-                  "itemType": "text",
-                  "text": "Resource Type"
+                  "valueType": "text",
+                  "label": "Resource Type"
                 },
                 {
                   "key": "requestCount",
-                  "itemType": "numeric",
-                  "text": "Requests"
+                  "valueType": "numeric",
+                  "label": "Requests"
                 },
                 {
                   "key": "transferSize",
-                  "itemType": "bytes",
-                  "text": "Transfer Size"
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
                 }
               ],
               "items": [
@@ -1401,18 +1403,18 @@
               "headings": [
                 {
                   "key": "entity",
-                  "itemType": "link",
-                  "text": "Third-Party",
+                  "valueType": "link",
+                  "label": "Third-Party",
                   "subItemsHeading": {
                     "key": "url",
-                    "itemType": "url"
+                    "valueType": "url"
                   }
                 },
                 {
                   "key": "transferSize",
                   "granularity": 1,
-                  "itemType": "bytes",
-                  "text": "Transfer Size",
+                  "valueType": "bytes",
+                  "label": "Transfer Size",
                   "subItemsHeading": {
                     "key": "transferSize"
                   }
@@ -1420,8 +1422,8 @@
                 {
                   "key": "blockingTime",
                   "granularity": 1,
-                  "itemType": "ms",
-                  "text": "Main-Thread Blocking Time",
+                  "valueType": "ms",
+                  "label": "Main-Thread Blocking Time",
                   "subItemsHeading": {
                     "key": "blockingTime"
                   }
@@ -1481,8 +1483,8 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": "Element"
+                  "valueType": "node",
+                  "label": "Element"
                 }
               ],
               "items": [
@@ -1518,8 +1520,8 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": "Element"
+                  "valueType": "node",
+                  "label": "Element"
                 }
               ],
               "items": [
@@ -1547,7 +1549,7 @@
           "layout-shift-elements": {
             "id": "layout-shift-elements",
             "title": "Avoid large layout shifts",
-            "description": "These DOM elements contribute most to the CLS of the page.",
+            "description": "These DOM elements contribute most to the CLS of the page. [Learn how to improve CLS](https://web.dev/optimize-cls/)",
             "score": null,
             "scoreDisplayMode": "informative",
             "displayValue": "5 elements found",
@@ -1556,14 +1558,14 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": "Element"
+                  "valueType": "node",
+                  "label": "Element"
                 },
                 {
                   "key": "score",
-                  "itemType": "numeric",
+                  "valueType": "numeric",
                   "granularity": 0.001,
-                  "text": "CLS Contribution"
+                  "label": "CLS Contribution"
                 }
               ],
               "items": [
@@ -1677,20 +1679,20 @@
               "headings": [
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "startTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Start Time"
+                  "label": "Start Time"
                 },
                 {
                   "key": "duration",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Duration"
+                  "label": "Duration"
                 }
               ],
               "items": [
@@ -1742,13 +1744,13 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": ""
+                  "valueType": "node",
+                  "label": ""
                 },
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 }
               ],
               "items": [
@@ -1864,27 +1866,27 @@
               "headings": [
                 {
                   "key": "description",
-                  "itemType": "text",
+                  "valueType": "text",
                   "subItemsHeading": {
                     "key": "description"
                   },
-                  "text": "Description"
+                  "label": "Description"
                 },
                 {
                   "key": "directive",
-                  "itemType": "code",
+                  "valueType": "code",
                   "subItemsHeading": {
                     "key": "directive"
                   },
-                  "text": "Directive"
+                  "label": "Directive"
                 },
                 {
                   "key": "severity",
-                  "itemType": "text",
+                  "valueType": "text",
                   "subItemsHeading": {
                     "key": "severity"
                   },
-                  "text": "Severity"
+                  "label": "Severity"
                 }
               ],
               "items": [
@@ -2530,7 +2532,7 @@
           "aria-meter-name": {
             "id": "aria-meter-name",
             "title": "ARIA `meter` elements have accessible names",
-            "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name).",
+            "description": "When a meter element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name).",
             "score": null,
             "scoreDisplayMode": "notApplicable"
           },
@@ -2589,7 +2591,7 @@
           "aria-tooltip-name": {
             "id": "aria-tooltip-name",
             "title": "ARIA `tooltip` elements have accessible names",
-            "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name).",
+            "description": "When a tooltip element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name).",
             "score": null,
             "scoreDisplayMode": "notApplicable"
           },
@@ -2640,13 +2642,8 @@
             "id": "bypass",
             "title": "The page contains a heading, skip link, or landmark region",
             "description": "Adding ways to bypass repetitive content lets keyboard users navigate the page more efficiently. [Learn more about bypass blocks](https://dequeuniversity.com/rules/axe/4.4/bypass).",
-            "score": 1,
-            "scoreDisplayMode": "binary",
-            "details": {
-              "type": "table",
-              "headings": [],
-              "items": []
-            }
+            "score": null,
+            "scoreDisplayMode": "notApplicable"
           },
           "color-contrast": {
             "id": "color-contrast",
@@ -2881,70 +2878,70 @@
           "custom-controls-labels": {
             "id": "custom-controls-labels",
             "title": "Custom controls have associated labels",
-            "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more about custom controls and labels](https://web.dev/custom-controls-labels/).",
+            "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more about custom controls and labels](https://developer.chrome.com/docs/lighthouse/accessibility/custom-controls-labels/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "custom-controls-roles": {
             "id": "custom-controls-roles",
             "title": "Custom controls have ARIA roles",
-            "description": "Custom interactive controls have appropriate ARIA roles. [Learn how to add roles to custom controls](https://web.dev/custom-control-roles/).",
+            "description": "Custom interactive controls have appropriate ARIA roles. [Learn how to add roles to custom controls](https://developer.chrome.com/docs/lighthouse/accessibility/custom-control-roles/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "focus-traps": {
             "id": "focus-traps",
             "title": "User focus is not accidentally trapped in a region",
-            "description": "A user can tab into and out of any control or region without accidentally trapping their focus. [Learn how to avoid focus traps](https://web.dev/focus-traps/).",
+            "description": "A user can tab into and out of any control or region without accidentally trapping their focus. [Learn how to avoid focus traps](https://developer.chrome.com/docs/lighthouse/accessibility/focus-traps/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "focusable-controls": {
             "id": "focusable-controls",
             "title": "Interactive controls are keyboard focusable",
-            "description": "Custom interactive controls are keyboard focusable and display a focus indicator. [Learn how to make custom controls focusable](https://web.dev/focusable-controls/).",
+            "description": "Custom interactive controls are keyboard focusable and display a focus indicator. [Learn how to make custom controls focusable](https://developer.chrome.com/docs/lighthouse/accessibility/focusable-controls/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "interactive-element-affordance": {
             "id": "interactive-element-affordance",
             "title": "Interactive elements indicate their purpose and state",
-            "description": "Interactive elements, such as links and buttons, should indicate their state and be distinguishable from non-interactive elements. [Learn how to decorate interactive elements with affordance hints](https://web.dev/interactive-element-affordance/).",
+            "description": "Interactive elements, such as links and buttons, should indicate their state and be distinguishable from non-interactive elements. [Learn how to decorate interactive elements with affordance hints](https://developer.chrome.com/docs/lighthouse/accessibility/interactive-element-affordance/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "logical-tab-order": {
             "id": "logical-tab-order",
             "title": "The page has a logical tab order",
-            "description": "Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more about logical tab ordering](https://web.dev/logical-tab-order/).",
+            "description": "Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more about logical tab ordering](https://developer.chrome.com/docs/lighthouse/accessibility/logical-tab-order/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "managed-focus": {
             "id": "managed-focus",
             "title": "The user's focus is directed to new content added to the page",
-            "description": "If new content, such as a dialog, is added to the page, the user's focus is directed to it. [Learn how to direct focus to new content](https://web.dev/managed-focus/).",
+            "description": "If new content, such as a dialog, is added to the page, the user's focus is directed to it. [Learn how to direct focus to new content](https://developer.chrome.com/docs/lighthouse/accessibility/managed-focus/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "offscreen-content-hidden": {
             "id": "offscreen-content-hidden",
             "title": "Offscreen content is hidden from assistive technology",
-            "description": "Offscreen content is hidden with display: none or aria-hidden=true. [Learn how to properly hide offscreen content](https://web.dev/offscreen-content-hidden/).",
+            "description": "Offscreen content is hidden with display: none or aria-hidden=true. [Learn how to properly hide offscreen content](https://developer.chrome.com/docs/lighthouse/accessibility/offscreen-content-hidden/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "use-landmarks": {
             "id": "use-landmarks",
             "title": "HTML5 landmark elements are used to improve navigation",
-            "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more about landmark elements](https://web.dev/use-landmarks/).",
+            "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more about landmark elements](https://developer.chrome.com/docs/lighthouse/accessibility/use-landmarks/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "visual-order-follows-dom": {
             "id": "visual-order-follows-dom",
             "title": "Visual order on the page follows DOM order",
-            "description": "DOM order matches the visual order, improving navigation for assistive technology. [Learn more about DOM and visual ordering](https://web.dev/visual-order-follows-dom/).",
+            "description": "DOM order matches the visual order, improving navigation for assistive technology. [Learn more about DOM and visual ordering](https://developer.chrome.com/docs/lighthouse/accessibility/visual-order-follows-dom/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
@@ -2980,13 +2977,13 @@
               "headings": [
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "totalBytes",
-                  "itemType": "bytes",
-                  "text": "Transfer Size"
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
                 }
               ],
               "items": [
@@ -3328,24 +3325,28 @@
               "headings": [
                 {
                   "key": "statistic",
-                  "itemType": "text",
-                  "text": "Statistic"
+                  "valueType": "text",
+                  "label": "Statistic"
                 },
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": "Element"
+                  "valueType": "node",
+                  "label": "Element"
                 },
                 {
                   "key": "value",
-                  "itemType": "numeric",
-                  "text": "Value"
+                  "valueType": "numeric",
+                  "label": "Value"
                 }
               ],
               "items": [
                 {
                   "statistic": "Total DOM Elements",
-                  "value": 70
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 70
+                  }
                 },
                 {
                   "node": {
@@ -3365,7 +3366,11 @@
                     "nodeLabel": "div.flex > div.inline-block > svg.h-6 > path"
                   },
                   "statistic": "Maximum DOM Depth",
-                  "value": 9
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 9
+                  }
                 },
                 {
                   "node": {
@@ -3385,7 +3390,11 @@
                     "nodeLabel": "body"
                   },
                   "statistic": "Maximum Child Elements",
-                  "value": 14
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 14
+                  }
                 }
               ]
             }
@@ -3437,13 +3446,13 @@
               "headings": [
                 {
                   "key": "name",
-                  "itemType": "text",
-                  "text": "Name"
+                  "valueType": "text",
+                  "label": "Name"
                 },
                 {
                   "key": "version",
-                  "itemType": "text",
-                  "text": "Version"
+                  "valueType": "text",
+                  "label": "Version"
                 }
               ],
               "items": [
@@ -3540,23 +3549,23 @@
               "headings": [
                 {
                   "key": "source",
-                  "itemType": "source-location",
-                  "text": "Source"
+                  "valueType": "source-location",
+                  "label": "Source"
                 },
                 {
                   "key": "selector",
-                  "itemType": "code",
-                  "text": "Selector"
+                  "valueType": "code",
+                  "label": "Selector"
                 },
                 {
                   "key": "coverage",
-                  "itemType": "text",
-                  "text": "% of Page Text"
+                  "valueType": "text",
+                  "label": "% of Page Text"
                 },
                 {
                   "key": "fontSize",
-                  "itemType": "text",
-                  "text": "Font Size"
+                  "valueType": "text",
+                  "label": "Font Size"
                 }
               ],
               "items": [
@@ -4045,7 +4054,7 @@
           },
           "accessibility": {
             "title": "Accessibility",
-            "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://web.dev/lighthouse-accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
+            "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developer.chrome.com/docs/lighthouse/accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
             "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://web.dev/how-to-review/).",
             "supportedModes": [
               "navigation",
@@ -4144,7 +4153,7 @@
               },
               {
                 "id": "bypass",
-                "weight": 3,
+                "weight": 0,
                 "group": "a11y-navigation"
               },
               {
@@ -4405,7 +4414,7 @@
           },
           "seo": {
             "title": "SEO",
-            "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more](https://support.google.com/webmasters/answer/35769).",
+            "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more about Google Search Essentials](https://support.google.com/webmasters/answer/35769).",
             "manualDescription": "Run these additional validators on your site to check additional SEO best practices.",
             "supportedModes": [
               "navigation",
@@ -4492,7 +4501,7 @@
           },
           "pwa": {
             "title": "PWA",
-            "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://web.dev/pwa-checklist/).",
+            "description": "These checks validate the aspects of a Progressive Web App. [Learn what makes a good Progressive Web App](https://web.dev/pwa-checklist/).",
             "manualDescription": "These checks are required by the baseline [PWA Checklist](https://web.dev/pwa-checklist/) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
             "supportedModes": [
               "navigation"
@@ -4606,7 +4615,7 @@
           },
           "seo-mobile": {
             "title": "Mobile Friendly",
-            "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+            "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn how to make pages mobile-friendly](https://developers.google.com/search/mobile-sites/)."
           },
           "seo-content": {
             "title": "Content Best Practices",
@@ -6070,6 +6079,7 @@
             "runtimeSettingsCPUThrottling": "CPU throttling",
             "runtimeSettingsDevice": "Device",
             "runtimeSettingsNetworkThrottling": "Network throttling",
+            "runtimeSettingsScreenEmulation": "Screen emulation",
             "runtimeSettingsUANetwork": "User agent (network)",
             "runtimeSingleLoad": "Single page load",
             "runtimeSingleLoadTooltip": "This data is taken from a single page load, as opposed to field data summarizing many sessions.",
@@ -6242,20 +6252,20 @@
             ],
             "core/lib/i18n/i18n.js | columnURL": [
               "audits[server-response-time].details.headings[0].label",
-              "audits[bootup-time].details.headings[0].text",
-              "audits[network-rtt].details.headings[0].text",
-              "audits[network-server-latency].details.headings[0].text",
-              "audits[long-tasks].details.headings[0].text",
-              "audits[unsized-images].details.headings[1].text",
+              "audits[bootup-time].details.headings[0].label",
+              "audits[network-rtt].details.headings[0].label",
+              "audits[network-server-latency].details.headings[0].label",
+              "audits[long-tasks].details.headings[0].label",
+              "audits[unsized-images].details.headings[1].label",
               "audits[preload-lcp-image].details.headings[1].label",
-              "audits[total-byte-weight].details.headings[0].text",
+              "audits[total-byte-weight].details.headings[0].label",
               "audits[legacy-javascript].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnTimeSpent": [
               "audits[server-response-time].details.headings[1].label",
-              "audits[mainthread-work-breakdown].details.headings[1].text",
-              "audits[network-rtt].details.headings[1].text",
-              "audits[network-server-latency].details.headings[1].text"
+              "audits[mainthread-work-breakdown].details.headings[1].label",
+              "audits[network-rtt].details.headings[1].label",
+              "audits[network-server-latency].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | interactiveMetric": [
               "audits.interactive.title"
@@ -6278,19 +6288,19 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnName": [
-              "audits[user-timings].details.headings[0].text",
-              "audits[js-libraries].details.headings[0].text"
+              "audits[user-timings].details.headings[0].label",
+              "audits[js-libraries].details.headings[0].label"
             ],
             "core/audits/user-timings.js | columnType": [
-              "audits[user-timings].details.headings[1].text"
+              "audits[user-timings].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | columnStartTime": [
-              "audits[user-timings].details.headings[2].text",
-              "audits[long-tasks].details.headings[1].text"
+              "audits[user-timings].details.headings[2].label",
+              "audits[long-tasks].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | columnDuration": [
-              "audits[user-timings].details.headings[3].text",
-              "audits[long-tasks].details.headings[2].text"
+              "audits[user-timings].details.headings[3].label",
+              "audits[long-tasks].details.headings[2].label"
             ],
             "core/audits/critical-request-chains.js | title": [
               "audits[critical-request-chains].title"
@@ -6319,7 +6329,7 @@
               }
             ],
             "core/audits/installable-manifest.js | columnValue": [
-              "audits[installable-manifest].details.headings[0].text"
+              "audits[installable-manifest].details.headings[0].label"
             ],
             "core/audits/installable-manifest.js | no-manifest": [
               "audits[installable-manifest].details.items[0].reason"
@@ -6379,7 +6389,7 @@
               "audits[mainthread-work-breakdown].description"
             ],
             "core/audits/mainthread-work-breakdown.js | columnCategory": [
-              "audits[mainthread-work-breakdown].details.headings[0].text"
+              "audits[mainthread-work-breakdown].details.headings[0].label"
             ],
             "core/audits/bootup-time.js | title": [
               "audits[bootup-time].title"
@@ -6388,13 +6398,13 @@
               "audits[bootup-time].description"
             ],
             "core/audits/bootup-time.js | columnTotal": [
-              "audits[bootup-time].details.headings[1].text"
+              "audits[bootup-time].details.headings[1].label"
             ],
             "core/audits/bootup-time.js | columnScriptEval": [
-              "audits[bootup-time].details.headings[2].text"
+              "audits[bootup-time].details.headings[2].label"
             ],
             "core/audits/bootup-time.js | columnScriptParse": [
-              "audits[bootup-time].details.headings[3].text"
+              "audits[bootup-time].details.headings[3].label"
             ],
             "core/audits/uses-rel-preload.js | title": [
               "audits[uses-rel-preload].title"
@@ -6454,15 +6464,15 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnResourceType": [
-              "audits[resource-summary].details.headings[0].text"
+              "audits[resource-summary].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnRequests": [
-              "audits[resource-summary].details.headings[1].text"
+              "audits[resource-summary].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | columnTransferSize": [
-              "audits[resource-summary].details.headings[2].text",
-              "audits[third-party-summary].details.headings[1].text",
-              "audits[total-byte-weight].details.headings[1].text"
+              "audits[resource-summary].details.headings[2].label",
+              "audits[third-party-summary].details.headings[1].label",
+              "audits[total-byte-weight].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | totalResourceType": [
               "audits[resource-summary].details.items[0].label"
@@ -6506,10 +6516,10 @@
               }
             ],
             "core/audits/third-party-summary.js | columnThirdParty": [
-              "audits[third-party-summary].details.headings[0].text"
+              "audits[third-party-summary].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnBlockingTime": [
-              "audits[third-party-summary].details.headings[2].text"
+              "audits[third-party-summary].details.headings[2].label"
             ],
             "core/audits/third-party-facades.js | title": [
               "audits[third-party-facades].title"
@@ -6538,10 +6548,10 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnElement": [
-              "audits[largest-contentful-paint-element].details.headings[0].text",
-              "audits[lcp-lazy-loaded].details.headings[0].text",
-              "audits[layout-shift-elements].details.headings[0].text",
-              "audits[dom-size].details.headings[1].text"
+              "audits[largest-contentful-paint-element].details.headings[0].label",
+              "audits[lcp-lazy-loaded].details.headings[0].label",
+              "audits[layout-shift-elements].details.headings[0].label",
+              "audits[dom-size].details.headings[1].label"
             ],
             "core/audits/lcp-lazy-loaded.js | title": [
               "audits[lcp-lazy-loaded].title"
@@ -6556,7 +6566,7 @@
               "audits[layout-shift-elements].description"
             ],
             "core/audits/layout-shift-elements.js | columnContribution": [
-              "audits[layout-shift-elements].details.headings[1].text"
+              "audits[layout-shift-elements].details.headings[1].label"
             ],
             "core/audits/long-tasks.js | title": [
               "audits[long-tasks].title"
@@ -6613,13 +6623,13 @@
               "audits[csp-xss].description"
             ],
             "core/lib/i18n/i18n.js | columnDescription": [
-              "audits[csp-xss].details.headings[0].text"
+              "audits[csp-xss].details.headings[0].label"
             ],
             "core/audits/csp-xss.js | columnDirective": [
-              "audits[csp-xss].details.headings[1].text"
+              "audits[csp-xss].details.headings[1].label"
             ],
             "core/audits/csp-xss.js | columnSeverity": [
-              "audits[csp-xss].details.headings[2].text"
+              "audits[csp-xss].details.headings[2].label"
             ],
             "core/lib/i18n/i18n.js | itemSeverityHigh": [
               "audits[csp-xss].details.items[0].severity"
@@ -7050,10 +7060,10 @@
               }
             ],
             "core/audits/dobetterweb/dom-size.js | columnStatistic": [
-              "audits[dom-size].details.headings[0].text"
+              "audits[dom-size].details.headings[0].label"
             ],
             "core/audits/dobetterweb/dom-size.js | columnValue": [
-              "audits[dom-size].details.headings[2].text"
+              "audits[dom-size].details.headings[2].label"
             ],
             "core/audits/dobetterweb/dom-size.js | statisticDOMElements": [
               "audits[dom-size].details.items[0].statistic"
@@ -7089,7 +7099,7 @@
               "audits[js-libraries].description"
             ],
             "core/audits/dobetterweb/js-libraries.js | columnVersion": [
-              "audits[js-libraries].details.headings[1].text"
+              "audits[js-libraries].details.headings[1].label"
             ],
             "core/audits/dobetterweb/notification-on-start.js | title": [
               "audits[notification-on-start].title"
@@ -7136,16 +7146,16 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnSource": [
-              "audits[font-size].details.headings[0].text"
+              "audits[font-size].details.headings[0].label"
             ],
             "core/audits/seo/font-size.js | columnSelector": [
-              "audits[font-size].details.headings[1].text"
+              "audits[font-size].details.headings[1].label"
             ],
             "core/audits/seo/font-size.js | columnPercentPageText": [
-              "audits[font-size].details.headings[2].text"
+              "audits[font-size].details.headings[2].label"
             ],
             "core/audits/seo/font-size.js | columnFontSize": [
-              "audits[font-size].details.headings[3].text"
+              "audits[font-size].details.headings[3].label"
             ],
             "core/audits/seo/font-size.js | legibleText": [
               "audits[font-size].details.items[1].source.value"
@@ -7415,8 +7425,7 @@
     {
       "lhr": {
         "lighthouseVersion": "9.5.0",
-        "requestedUrl": "https://www.mikescerealshack.co/",
-        "finalUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
+        "finalDisplayedUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "fetchTime": "2022-03-15T21:49:45.271Z",
         "gatherMode": "timespan",
         "runWarnings": [],
@@ -7579,25 +7588,25 @@
               "headings": [
                 {
                   "key": "name",
-                  "itemType": "text",
-                  "text": "Name"
+                  "valueType": "text",
+                  "label": "Name"
                 },
                 {
                   "key": "timingType",
-                  "itemType": "text",
-                  "text": "Type"
+                  "valueType": "text",
+                  "label": "Type"
                 },
                 {
                   "key": "startTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 0.01,
-                  "text": "Start Time"
+                  "label": "Start Time"
                 },
                 {
                   "key": "duration",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 0.01,
-                  "text": "Duration"
+                  "label": "Duration"
                 }
               ],
               "items": [
@@ -7654,28 +7663,28 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": ""
+                  "valueType": "node",
+                  "label": ""
                 },
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "displayedSize",
-                  "itemType": "text",
-                  "text": "Displayed size"
+                  "valueType": "text",
+                  "label": "Displayed size"
                 },
                 {
                   "key": "actualSize",
-                  "itemType": "text",
-                  "text": "Actual size"
+                  "valueType": "text",
+                  "label": "Actual size"
                 },
                 {
                   "key": "expectedSize",
-                  "itemType": "text",
-                  "text": "Expected size"
+                  "valueType": "text",
+                  "label": "Expected size"
                 }
               ],
               "items": [
@@ -7787,14 +7796,14 @@
               "headings": [
                 {
                   "key": "groupLabel",
-                  "itemType": "text",
-                  "text": "Category"
+                  "valueType": "text",
+                  "label": "Category"
                 },
                 {
                   "key": "duration",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Time Spent"
+                  "label": "Time Spent"
                 }
               ],
               "items": [
@@ -7845,26 +7854,26 @@
               "headings": [
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "total",
                   "granularity": 1,
-                  "itemType": "ms",
-                  "text": "Total CPU Time"
+                  "valueType": "ms",
+                  "label": "Total CPU Time"
                 },
                 {
                   "key": "scripting",
                   "granularity": 1,
-                  "itemType": "ms",
-                  "text": "Script Evaluation"
+                  "valueType": "ms",
+                  "label": "Script Evaluation"
                 },
                 {
                   "key": "scriptParseCompile",
                   "granularity": 1,
-                  "itemType": "ms",
-                  "text": "Script Parse"
+                  "valueType": "ms",
+                  "label": "Script Parse"
                 }
               ],
               "items": [
@@ -7903,54 +7912,54 @@
               "headings": [
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "protocol",
-                  "itemType": "text",
-                  "text": "Protocol"
+                  "valueType": "text",
+                  "label": "Protocol"
                 },
                 {
                   "key": "startTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Start Time"
+                  "label": "Start Time"
                 },
                 {
                   "key": "endTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "End Time"
+                  "label": "End Time"
                 },
                 {
                   "key": "transferSize",
-                  "itemType": "bytes",
+                  "valueType": "bytes",
                   "displayUnit": "kb",
                   "granularity": 1,
-                  "text": "Transfer Size"
+                  "label": "Transfer Size"
                 },
                 {
                   "key": "resourceSize",
-                  "itemType": "bytes",
+                  "valueType": "bytes",
                   "displayUnit": "kb",
                   "granularity": 1,
-                  "text": "Resource Size"
+                  "label": "Resource Size"
                 },
                 {
                   "key": "statusCode",
-                  "itemType": "text",
-                  "text": "Status Code"
+                  "valueType": "text",
+                  "label": "Status Code"
                 },
                 {
                   "key": "mimeType",
-                  "itemType": "text",
-                  "text": "MIME Type"
+                  "valueType": "text",
+                  "label": "MIME Type"
                 },
                 {
                   "key": "resourceType",
-                  "itemType": "text",
-                  "text": "Resource Type"
+                  "valueType": "text",
+                  "label": "Resource Type"
                 }
               ],
               "items": [
@@ -8131,14 +8140,14 @@
               "headings": [
                 {
                   "key": "origin",
-                  "itemType": "text",
-                  "text": "URL"
+                  "valueType": "text",
+                  "label": "URL"
                 },
                 {
                   "key": "rtt",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Time Spent"
+                  "label": "Time Spent"
                 }
               ],
               "items": [
@@ -8171,14 +8180,14 @@
               "headings": [
                 {
                   "key": "origin",
-                  "itemType": "text",
-                  "text": "URL"
+                  "valueType": "text",
+                  "label": "URL"
                 },
                 {
                   "key": "serverResponseTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Time Spent"
+                  "label": "Time Spent"
                 }
               ],
               "items": [
@@ -8208,15 +8217,15 @@
               "headings": [
                 {
                   "key": "startTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Start Time"
+                  "label": "Start Time"
                 },
                 {
                   "key": "duration",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "End Time"
+                  "label": "End Time"
                 }
               ],
               "items": [
@@ -8339,18 +8348,18 @@
               "headings": [
                 {
                   "key": "label",
-                  "itemType": "text",
-                  "text": "Resource Type"
+                  "valueType": "text",
+                  "label": "Resource Type"
                 },
                 {
                   "key": "requestCount",
-                  "itemType": "numeric",
-                  "text": "Requests"
+                  "valueType": "numeric",
+                  "label": "Requests"
                 },
                 {
                   "key": "transferSize",
-                  "itemType": "bytes",
-                  "text": "Transfer Size"
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
                 }
               ],
               "items": [
@@ -8423,18 +8432,18 @@
               "headings": [
                 {
                   "key": "entity",
-                  "itemType": "link",
-                  "text": "Third-Party",
+                  "valueType": "link",
+                  "label": "Third-Party",
                   "subItemsHeading": {
                     "key": "url",
-                    "itemType": "url"
+                    "valueType": "url"
                   }
                 },
                 {
                   "key": "transferSize",
                   "granularity": 1,
-                  "itemType": "bytes",
-                  "text": "Transfer Size",
+                  "valueType": "bytes",
+                  "label": "Transfer Size",
                   "subItemsHeading": {
                     "key": "transferSize"
                   }
@@ -8442,8 +8451,8 @@
                 {
                   "key": "blockingTime",
                   "granularity": 1,
-                  "itemType": "ms",
-                  "text": "Main-Thread Blocking Time",
+                  "valueType": "ms",
+                  "label": "Main-Thread Blocking Time",
                   "subItemsHeading": {
                     "key": "blockingTime"
                   }
@@ -8474,7 +8483,7 @@
           "layout-shift-elements": {
             "id": "layout-shift-elements",
             "title": "Avoid large layout shifts",
-            "description": "These DOM elements contribute most to the CLS of the page.",
+            "description": "These DOM elements contribute most to the CLS of the page. [Learn how to improve CLS](https://web.dev/optimize-cls/)",
             "score": null,
             "scoreDisplayMode": "informative",
             "displayValue": "1 element found",
@@ -8483,14 +8492,14 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": "Element"
+                  "valueType": "node",
+                  "label": "Element"
                 },
                 {
                   "key": "score",
-                  "itemType": "numeric",
+                  "valueType": "numeric",
                   "granularity": 0.001,
-                  "text": "CLS Contribution"
+                  "label": "CLS Contribution"
                 }
               ],
               "items": [
@@ -8528,20 +8537,20 @@
               "headings": [
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "startTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Start Time"
+                  "label": "Start Time"
                 },
                 {
                   "key": "duration",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Duration"
+                  "label": "Duration"
                 }
               ],
               "items": [
@@ -8588,13 +8597,13 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": ""
+                  "valueType": "node",
+                  "label": ""
                 },
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 }
               ],
               "items": [
@@ -8746,19 +8755,19 @@
               "headings": [
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "cacheLifetimeMs",
-                  "itemType": "ms",
-                  "text": "Cache TTL",
+                  "valueType": "ms",
+                  "label": "Cache TTL",
                   "displayUnit": "duration"
                 },
                 {
                   "key": "totalBytes",
-                  "itemType": "bytes",
-                  "text": "Transfer Size",
+                  "valueType": "bytes",
+                  "label": "Transfer Size",
                   "displayUnit": "kb",
                   "granularity": 1
                 }
@@ -8820,13 +8829,13 @@
               "headings": [
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "totalBytes",
-                  "itemType": "bytes",
-                  "text": "Transfer Size"
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
                 }
               ],
               "items": [
@@ -9443,7 +9452,7 @@
           },
           "seo-mobile": {
             "title": "Mobile Friendly",
-            "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+            "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn how to make pages mobile-friendly](https://developers.google.com/search/mobile-sites/)."
           },
           "seo-content": {
             "title": "Content Best Practices",
@@ -10003,6 +10012,7 @@
             "runtimeSettingsCPUThrottling": "CPU throttling",
             "runtimeSettingsDevice": "Device",
             "runtimeSettingsNetworkThrottling": "Network throttling",
+            "runtimeSettingsScreenEmulation": "Screen emulation",
             "runtimeSettingsUANetwork": "User agent (network)",
             "runtimeSingleLoad": "Single page load",
             "runtimeSingleLoadTooltip": "This data is taken from a single page load, as opposed to field data summarizing many sessions.",
@@ -10094,18 +10104,18 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnName": [
-              "audits[user-timings].details.headings[0].text"
+              "audits[user-timings].details.headings[0].label"
             ],
             "core/audits/user-timings.js | columnType": [
-              "audits[user-timings].details.headings[1].text"
+              "audits[user-timings].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | columnStartTime": [
-              "audits[user-timings].details.headings[2].text",
-              "audits[long-tasks].details.headings[1].text"
+              "audits[user-timings].details.headings[2].label",
+              "audits[long-tasks].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | columnDuration": [
-              "audits[user-timings].details.headings[3].text",
-              "audits[long-tasks].details.headings[2].text"
+              "audits[user-timings].details.headings[3].label",
+              "audits[long-tasks].details.headings[2].label"
             ],
             "core/audits/image-aspect-ratio.js | title": [
               "audits[image-aspect-ratio].title"
@@ -10120,23 +10130,23 @@
               "audits[image-size-responsive].description"
             ],
             "core/lib/i18n/i18n.js | columnURL": [
-              "audits[image-size-responsive].details.headings[1].text",
-              "audits[bootup-time].details.headings[0].text",
-              "audits[network-rtt].details.headings[0].text",
-              "audits[network-server-latency].details.headings[0].text",
-              "audits[long-tasks].details.headings[0].text",
-              "audits[unsized-images].details.headings[1].text",
-              "audits[uses-long-cache-ttl].details.headings[0].text",
-              "audits[total-byte-weight].details.headings[0].text"
+              "audits[image-size-responsive].details.headings[1].label",
+              "audits[bootup-time].details.headings[0].label",
+              "audits[network-rtt].details.headings[0].label",
+              "audits[network-server-latency].details.headings[0].label",
+              "audits[long-tasks].details.headings[0].label",
+              "audits[unsized-images].details.headings[1].label",
+              "audits[uses-long-cache-ttl].details.headings[0].label",
+              "audits[total-byte-weight].details.headings[0].label"
             ],
             "core/audits/image-size-responsive.js | columnDisplayed": [
-              "audits[image-size-responsive].details.headings[2].text"
+              "audits[image-size-responsive].details.headings[2].label"
             ],
             "core/audits/image-size-responsive.js | columnActual": [
-              "audits[image-size-responsive].details.headings[3].text"
+              "audits[image-size-responsive].details.headings[3].label"
             ],
             "core/audits/image-size-responsive.js | columnExpected": [
-              "audits[image-size-responsive].details.headings[4].text"
+              "audits[image-size-responsive].details.headings[4].label"
             ],
             "core/audits/preload-fonts.js | title": [
               "audits[preload-fonts].title"
@@ -10171,12 +10181,12 @@
               }
             ],
             "core/audits/mainthread-work-breakdown.js | columnCategory": [
-              "audits[mainthread-work-breakdown].details.headings[0].text"
+              "audits[mainthread-work-breakdown].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnTimeSpent": [
-              "audits[mainthread-work-breakdown].details.headings[1].text",
-              "audits[network-rtt].details.headings[1].text",
-              "audits[network-server-latency].details.headings[1].text"
+              "audits[mainthread-work-breakdown].details.headings[1].label",
+              "audits[network-rtt].details.headings[1].label",
+              "audits[network-server-latency].details.headings[1].label"
             ],
             "core/audits/bootup-time.js | title": [
               "audits[bootup-time].title"
@@ -10185,13 +10195,13 @@
               "audits[bootup-time].description"
             ],
             "core/audits/bootup-time.js | columnTotal": [
-              "audits[bootup-time].details.headings[1].text"
+              "audits[bootup-time].details.headings[1].label"
             ],
             "core/audits/bootup-time.js | columnScriptEval": [
-              "audits[bootup-time].details.headings[2].text"
+              "audits[bootup-time].details.headings[2].label"
             ],
             "core/audits/bootup-time.js | columnScriptParse": [
-              "audits[bootup-time].details.headings[3].text"
+              "audits[bootup-time].details.headings[3].label"
             ],
             "core/audits/network-rtt.js | title": [
               "audits[network-rtt].title"
@@ -10221,16 +10231,16 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnResourceType": [
-              "audits[resource-summary].details.headings[0].text"
+              "audits[resource-summary].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnRequests": [
-              "audits[resource-summary].details.headings[1].text"
+              "audits[resource-summary].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | columnTransferSize": [
-              "audits[resource-summary].details.headings[2].text",
-              "audits[third-party-summary].details.headings[1].text",
-              "audits[uses-long-cache-ttl].details.headings[2].text",
-              "audits[total-byte-weight].details.headings[1].text"
+              "audits[resource-summary].details.headings[2].label",
+              "audits[third-party-summary].details.headings[1].label",
+              "audits[uses-long-cache-ttl].details.headings[2].label",
+              "audits[total-byte-weight].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | totalResourceType": [
               "audits[resource-summary].details.items[0].label"
@@ -10274,10 +10284,10 @@
               }
             ],
             "core/audits/third-party-summary.js | columnThirdParty": [
-              "audits[third-party-summary].details.headings[0].text"
+              "audits[third-party-summary].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnBlockingTime": [
-              "audits[third-party-summary].details.headings[2].text"
+              "audits[third-party-summary].details.headings[2].label"
             ],
             "core/audits/layout-shift-elements.js | title": [
               "audits[layout-shift-elements].title"
@@ -10294,10 +10304,10 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnElement": [
-              "audits[layout-shift-elements].details.headings[0].text"
+              "audits[layout-shift-elements].details.headings[0].label"
             ],
             "core/audits/layout-shift-elements.js | columnContribution": [
-              "audits[layout-shift-elements].details.headings[1].text"
+              "audits[layout-shift-elements].details.headings[1].label"
             ],
             "core/audits/long-tasks.js | title": [
               "audits[long-tasks].title"
@@ -10352,7 +10362,7 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnCacheTTL": [
-              "audits[uses-long-cache-ttl].details.headings[1].text"
+              "audits[uses-long-cache-ttl].details.headings[1].label"
             ],
             "core/audits/byte-efficiency/total-byte-weight.js | title": [
               "audits[total-byte-weight].title"
@@ -10586,8 +10596,7 @@
     {
       "lhr": {
         "lighthouseVersion": "9.5.0",
-        "requestedUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
-        "finalUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
+        "finalDisplayedUrl": "https://www.mikescerealshack.co/search?q=call+of+duty",
         "fetchTime": "2022-03-15T21:49:59.811Z",
         "gatherMode": "snapshot",
         "runWarnings": [],
@@ -10604,7 +10613,7 @@
           "viewport": {
             "id": "viewport",
             "title": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`",
-            "description": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Learn more about using the viewport meta tag](https://web.dev/viewport/).",
+            "description": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Learn more about using the viewport meta tag](https://web.dev/viewport/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "warnings": []
@@ -10632,28 +10641,28 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": ""
+                  "valueType": "node",
+                  "label": ""
                 },
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "displayedSize",
-                  "itemType": "text",
-                  "text": "Displayed size"
+                  "valueType": "text",
+                  "label": "Displayed size"
                 },
                 {
                   "key": "actualSize",
-                  "itemType": "text",
-                  "text": "Actual size"
+                  "valueType": "text",
+                  "label": "Actual size"
                 },
                 {
                   "key": "expectedSize",
-                  "itemType": "text",
-                  "text": "Expected size"
+                  "valueType": "text",
+                  "label": "Expected size"
                 }
               ],
               "items": [
@@ -10743,13 +10752,13 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": ""
+                  "valueType": "node",
+                  "label": ""
                 },
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 }
               ],
               "items": [
@@ -11172,7 +11181,7 @@
           "aria-meter-name": {
             "id": "aria-meter-name",
             "title": "ARIA `meter` elements have accessible names",
-            "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name).",
+            "description": "When a meter element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name).",
             "score": null,
             "scoreDisplayMode": "notApplicable"
           },
@@ -11231,7 +11240,7 @@
           "aria-tooltip-name": {
             "id": "aria-tooltip-name",
             "title": "ARIA `tooltip` elements have accessible names",
-            "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name).",
+            "description": "When a tooltip element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name).",
             "score": null,
             "scoreDisplayMode": "notApplicable"
           },
@@ -11282,13 +11291,8 @@
             "id": "bypass",
             "title": "The page contains a heading, skip link, or landmark region",
             "description": "Adding ways to bypass repetitive content lets keyboard users navigate the page more efficiently. [Learn more about bypass blocks](https://dequeuniversity.com/rules/axe/4.4/bypass).",
-            "score": 1,
-            "scoreDisplayMode": "binary",
-            "details": {
-              "type": "table",
-              "headings": [],
-              "items": []
-            }
+            "score": null,
+            "scoreDisplayMode": "notApplicable"
           },
           "color-contrast": {
             "id": "color-contrast",
@@ -11301,12 +11305,12 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
+                  "valueType": "node",
                   "subItemsHeading": {
                     "key": "relatedNode",
-                    "itemType": "node"
+                    "valueType": "node"
                   },
-                  "text": "Failing Elements"
+                  "label": "Failing Elements"
                 }
               ],
               "items": [
@@ -11675,12 +11679,12 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
+                  "valueType": "node",
                   "subItemsHeading": {
                     "key": "relatedNode",
-                    "itemType": "node"
+                    "valueType": "node"
                   },
-                  "text": "Failing Elements"
+                  "label": "Failing Elements"
                 }
               ],
               "items": [
@@ -11875,70 +11879,70 @@
           "custom-controls-labels": {
             "id": "custom-controls-labels",
             "title": "Custom controls have associated labels",
-            "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more about custom controls and labels](https://web.dev/custom-controls-labels/).",
+            "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more about custom controls and labels](https://developer.chrome.com/docs/lighthouse/accessibility/custom-controls-labels/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "custom-controls-roles": {
             "id": "custom-controls-roles",
             "title": "Custom controls have ARIA roles",
-            "description": "Custom interactive controls have appropriate ARIA roles. [Learn how to add roles to custom controls](https://web.dev/custom-control-roles/).",
+            "description": "Custom interactive controls have appropriate ARIA roles. [Learn how to add roles to custom controls](https://developer.chrome.com/docs/lighthouse/accessibility/custom-control-roles/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "focus-traps": {
             "id": "focus-traps",
             "title": "User focus is not accidentally trapped in a region",
-            "description": "A user can tab into and out of any control or region without accidentally trapping their focus. [Learn how to avoid focus traps](https://web.dev/focus-traps/).",
+            "description": "A user can tab into and out of any control or region without accidentally trapping their focus. [Learn how to avoid focus traps](https://developer.chrome.com/docs/lighthouse/accessibility/focus-traps/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "focusable-controls": {
             "id": "focusable-controls",
             "title": "Interactive controls are keyboard focusable",
-            "description": "Custom interactive controls are keyboard focusable and display a focus indicator. [Learn how to make custom controls focusable](https://web.dev/focusable-controls/).",
+            "description": "Custom interactive controls are keyboard focusable and display a focus indicator. [Learn how to make custom controls focusable](https://developer.chrome.com/docs/lighthouse/accessibility/focusable-controls/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "interactive-element-affordance": {
             "id": "interactive-element-affordance",
             "title": "Interactive elements indicate their purpose and state",
-            "description": "Interactive elements, such as links and buttons, should indicate their state and be distinguishable from non-interactive elements. [Learn how to decorate interactive elements with affordance hints](https://web.dev/interactive-element-affordance/).",
+            "description": "Interactive elements, such as links and buttons, should indicate their state and be distinguishable from non-interactive elements. [Learn how to decorate interactive elements with affordance hints](https://developer.chrome.com/docs/lighthouse/accessibility/interactive-element-affordance/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "logical-tab-order": {
             "id": "logical-tab-order",
             "title": "The page has a logical tab order",
-            "description": "Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more about logical tab ordering](https://web.dev/logical-tab-order/).",
+            "description": "Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more about logical tab ordering](https://developer.chrome.com/docs/lighthouse/accessibility/logical-tab-order/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "managed-focus": {
             "id": "managed-focus",
             "title": "The user's focus is directed to new content added to the page",
-            "description": "If new content, such as a dialog, is added to the page, the user's focus is directed to it. [Learn how to direct focus to new content](https://web.dev/managed-focus/).",
+            "description": "If new content, such as a dialog, is added to the page, the user's focus is directed to it. [Learn how to direct focus to new content](https://developer.chrome.com/docs/lighthouse/accessibility/managed-focus/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "offscreen-content-hidden": {
             "id": "offscreen-content-hidden",
             "title": "Offscreen content is hidden from assistive technology",
-            "description": "Offscreen content is hidden with display: none or aria-hidden=true. [Learn how to properly hide offscreen content](https://web.dev/offscreen-content-hidden/).",
+            "description": "Offscreen content is hidden with display: none or aria-hidden=true. [Learn how to properly hide offscreen content](https://developer.chrome.com/docs/lighthouse/accessibility/offscreen-content-hidden/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "use-landmarks": {
             "id": "use-landmarks",
             "title": "HTML5 landmark elements are used to improve navigation",
-            "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more about landmark elements](https://web.dev/use-landmarks/).",
+            "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more about landmark elements](https://developer.chrome.com/docs/lighthouse/accessibility/use-landmarks/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "visual-order-follows-dom": {
             "id": "visual-order-follows-dom",
             "title": "Visual order on the page follows DOM order",
-            "description": "DOM order matches the visual order, improving navigation for assistive technology. [Learn more about DOM and visual ordering](https://web.dev/visual-order-follows-dom/).",
+            "description": "DOM order matches the visual order, improving navigation for assistive technology. [Learn more about DOM and visual ordering](https://developer.chrome.com/docs/lighthouse/accessibility/visual-order-follows-dom/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
@@ -11953,23 +11957,23 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": ""
+                  "valueType": "node",
+                  "label": ""
                 },
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "displayedDimensions",
-                  "itemType": "text",
-                  "text": "Displayed dimensions"
+                  "valueType": "text",
+                  "label": "Displayed dimensions"
                 },
                 {
                   "key": "actualDimensions",
-                  "itemType": "text",
-                  "text": "Actual dimensions"
+                  "valueType": "text",
+                  "label": "Actual dimensions"
                 }
               ],
               "items": [
@@ -12018,24 +12022,28 @@
               "headings": [
                 {
                   "key": "statistic",
-                  "itemType": "text",
-                  "text": "Statistic"
+                  "valueType": "text",
+                  "label": "Statistic"
                 },
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": "Element"
+                  "valueType": "node",
+                  "label": "Element"
                 },
                 {
                   "key": "value",
-                  "itemType": "numeric",
-                  "text": "Value"
+                  "valueType": "numeric",
+                  "label": "Value"
                 }
               ],
               "items": [
                 {
                   "statistic": "Total DOM Elements",
-                  "value": 155
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 155
+                  }
                 },
                 {
                   "node": {
@@ -12055,7 +12063,11 @@
                     "nodeLabel": "Oscar:"
                   },
                   "statistic": "Maximum DOM Depth",
-                  "value": 11
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 11
+                  }
                 },
                 {
                   "node": {
@@ -12075,7 +12087,11 @@
                     "nodeLabel": "body"
                   },
                   "statistic": "Maximum Child Elements",
-                  "value": 17
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 17
+                  }
                 }
               ]
             }
@@ -12091,13 +12107,13 @@
               "headings": [
                 {
                   "key": "name",
-                  "itemType": "text",
-                  "text": "Name"
+                  "valueType": "text",
+                  "label": "Name"
                 },
                 {
                   "key": "version",
-                  "itemType": "text",
-                  "text": "Version"
+                  "valueType": "text",
+                  "label": "Version"
                 }
               ],
               "items": [
@@ -12163,23 +12179,23 @@
               "headings": [
                 {
                   "key": "source",
-                  "itemType": "source-location",
-                  "text": "Source"
+                  "valueType": "source-location",
+                  "label": "Source"
                 },
                 {
                   "key": "selector",
-                  "itemType": "code",
-                  "text": "Selector"
+                  "valueType": "code",
+                  "label": "Selector"
                 },
                 {
                   "key": "coverage",
-                  "itemType": "text",
-                  "text": "% of Page Text"
+                  "valueType": "text",
+                  "label": "% of Page Text"
                 },
                 {
                   "key": "fontSize",
-                  "itemType": "text",
-                  "text": "Font Size"
+                  "valueType": "text",
+                  "label": "Font Size"
                 }
               ],
               "items": [
@@ -12251,18 +12267,18 @@
               "headings": [
                 {
                   "key": "tapTarget",
-                  "itemType": "node",
-                  "text": "Tap Target"
+                  "valueType": "node",
+                  "label": "Tap Target"
                 },
                 {
                   "key": "size",
-                  "itemType": "text",
-                  "text": "Size"
+                  "valueType": "text",
+                  "label": "Size"
                 },
                 {
                   "key": "overlappingTarget",
-                  "itemType": "node",
-                  "text": "Overlapping Target"
+                  "valueType": "node",
+                  "label": "Overlapping Target"
                 }
               ],
               "items": [
@@ -12405,7 +12421,7 @@
           },
           "accessibility": {
             "title": "Accessibility",
-            "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://web.dev/lighthouse-accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
+            "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developer.chrome.com/docs/lighthouse/accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
             "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://web.dev/how-to-review/).",
             "supportedModes": [
               "navigation",
@@ -12504,7 +12520,7 @@
               },
               {
                 "id": "bypass",
-                "weight": 3,
+                "weight": 0,
                 "group": "a11y-navigation"
               },
               {
@@ -12715,7 +12731,7 @@
           },
           "seo": {
             "title": "SEO",
-            "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more](https://support.google.com/webmasters/answer/35769).",
+            "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more about Google Search Essentials](https://support.google.com/webmasters/answer/35769).",
             "manualDescription": "Run these additional validators on your site to check additional SEO best practices.",
             "supportedModes": [
               "navigation",
@@ -12837,7 +12853,7 @@
           },
           "seo-mobile": {
             "title": "Mobile Friendly",
-            "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+            "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn how to make pages mobile-friendly](https://developers.google.com/search/mobile-sites/)."
           },
           "seo-content": {
             "title": "Content Best Practices",
@@ -13473,6 +13489,7 @@
             "runtimeSettingsCPUThrottling": "CPU throttling",
             "runtimeSettingsDevice": "Device",
             "runtimeSettingsNetworkThrottling": "Network throttling",
+            "runtimeSettingsScreenEmulation": "Screen emulation",
             "runtimeSettingsUANetwork": "User agent (network)",
             "runtimeSingleLoad": "Single page load",
             "runtimeSingleLoadTooltip": "This data is taken from a single page load, as opposed to field data summarizing many sessions.",
@@ -13512,18 +13529,18 @@
               "audits[image-size-responsive].description"
             ],
             "core/lib/i18n/i18n.js | columnURL": [
-              "audits[image-size-responsive].details.headings[1].text",
-              "audits[unsized-images].details.headings[1].text",
-              "audits[uses-responsive-images-snapshot].details.headings[1].text"
+              "audits[image-size-responsive].details.headings[1].label",
+              "audits[unsized-images].details.headings[1].label",
+              "audits[uses-responsive-images-snapshot].details.headings[1].label"
             ],
             "core/audits/image-size-responsive.js | columnDisplayed": [
-              "audits[image-size-responsive].details.headings[2].text"
+              "audits[image-size-responsive].details.headings[2].label"
             ],
             "core/audits/image-size-responsive.js | columnActual": [
-              "audits[image-size-responsive].details.headings[3].text"
+              "audits[image-size-responsive].details.headings[3].label"
             ],
             "core/audits/image-size-responsive.js | columnExpected": [
-              "audits[image-size-responsive].details.headings[4].text"
+              "audits[image-size-responsive].details.headings[4].label"
             ],
             "core/audits/unsized-images.js | failureTitle": [
               "audits[unsized-images].title"
@@ -13652,8 +13669,8 @@
               "audits[color-contrast].description"
             ],
             "core/lib/i18n/i18n.js | columnFailingElem": [
-              "audits[color-contrast].details.headings[0].text",
-              "audits[image-alt].details.headings[0].text"
+              "audits[color-contrast].details.headings[0].label",
+              "audits[image-alt].details.headings[0].label"
             ],
             "core/audits/accessibility/definition-list.js | title": [
               "audits[definition-list].title"
@@ -13806,10 +13823,10 @@
               "audits[uses-responsive-images-snapshot].description"
             ],
             "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnDisplayedDimensions": [
-              "audits[uses-responsive-images-snapshot].details.headings[2].text"
+              "audits[uses-responsive-images-snapshot].details.headings[2].label"
             ],
             "core/audits/byte-efficiency/uses-responsive-images-snapshot.js | columnActualDimensions": [
-              "audits[uses-responsive-images-snapshot].details.headings[3].text"
+              "audits[uses-responsive-images-snapshot].details.headings[3].label"
             ],
             "core/audits/dobetterweb/doctype.js | title": [
               "audits.doctype.title"
@@ -13832,13 +13849,13 @@
               }
             ],
             "core/audits/dobetterweb/dom-size.js | columnStatistic": [
-              "audits[dom-size].details.headings[0].text"
+              "audits[dom-size].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnElement": [
-              "audits[dom-size].details.headings[1].text"
+              "audits[dom-size].details.headings[1].label"
             ],
             "core/audits/dobetterweb/dom-size.js | columnValue": [
-              "audits[dom-size].details.headings[2].text"
+              "audits[dom-size].details.headings[2].label"
             ],
             "core/audits/dobetterweb/dom-size.js | statisticDOMElements": [
               "audits[dom-size].details.items[0].statistic"
@@ -13856,10 +13873,10 @@
               "audits[js-libraries].description"
             ],
             "core/lib/i18n/i18n.js | columnName": [
-              "audits[js-libraries].details.headings[0].text"
+              "audits[js-libraries].details.headings[0].label"
             ],
             "core/audits/dobetterweb/js-libraries.js | columnVersion": [
-              "audits[js-libraries].details.headings[1].text"
+              "audits[js-libraries].details.headings[1].label"
             ],
             "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": [
               "audits[password-inputs-can-be-pasted-into].title"
@@ -13888,16 +13905,16 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnSource": [
-              "audits[font-size].details.headings[0].text"
+              "audits[font-size].details.headings[0].label"
             ],
             "core/audits/seo/font-size.js | columnSelector": [
-              "audits[font-size].details.headings[1].text"
+              "audits[font-size].details.headings[1].label"
             ],
             "core/audits/seo/font-size.js | columnPercentPageText": [
-              "audits[font-size].details.headings[2].text"
+              "audits[font-size].details.headings[2].label"
             ],
             "core/audits/seo/font-size.js | columnFontSize": [
-              "audits[font-size].details.headings[3].text"
+              "audits[font-size].details.headings[3].label"
             ],
             "core/audits/seo/font-size.js | legibleText": [
               "audits[font-size].details.items[1].source.value"
@@ -13935,13 +13952,13 @@
               }
             ],
             "core/audits/seo/tap-targets.js | tapTargetHeader": [
-              "audits[tap-targets].details.headings[0].text"
+              "audits[tap-targets].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnSize": [
-              "audits[tap-targets].details.headings[1].text"
+              "audits[tap-targets].details.headings[1].label"
             ],
             "core/audits/seo/tap-targets.js | overlappingTargetHeader": [
-              "audits[tap-targets].details.headings[2].text"
+              "audits[tap-targets].details.headings[2].label"
             ],
             "core/audits/seo/plugins.js | title": [
               "audits.plugins.title"
@@ -14150,6 +14167,8 @@
       "lhr": {
         "lighthouseVersion": "9.5.0",
         "requestedUrl": "https://www.mikescerealshack.co/corrections",
+        "mainDocumentUrl": "https://www.mikescerealshack.co/corrections",
+        "finalDisplayedUrl": "https://www.mikescerealshack.co/corrections",
         "finalUrl": "https://www.mikescerealshack.co/corrections",
         "fetchTime": "2022-03-15T21:50:06.558Z",
         "gatherMode": "navigation",
@@ -14186,7 +14205,7 @@
           "viewport": {
             "id": "viewport",
             "title": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`",
-            "description": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Learn more about using the viewport meta tag](https://web.dev/viewport/).",
+            "description": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Learn more about using the viewport meta tag](https://web.dev/viewport/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "warnings": []
@@ -14412,25 +14431,25 @@
               "headings": [
                 {
                   "key": "name",
-                  "itemType": "text",
-                  "text": "Name"
+                  "valueType": "text",
+                  "label": "Name"
                 },
                 {
                   "key": "timingType",
-                  "itemType": "text",
-                  "text": "Type"
+                  "valueType": "text",
+                  "label": "Type"
                 },
                 {
                   "key": "startTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 0.01,
-                  "text": "Start Time"
+                  "label": "Start Time"
                 },
                 {
                   "key": "duration",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 0.01,
-                  "text": "Duration"
+                  "label": "Duration"
                 }
               ],
               "items": [
@@ -14505,7 +14524,7 @@
           "installable-manifest": {
             "id": "installable-manifest",
             "title": "Web app manifest or service worker do not meet the installability requirements",
-            "description": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. ' +\n  '[Learn more about manifest installability requirements](https://web.dev/installable-manifest/).",
+            "description": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more about manifest installability requirements](https://web.dev/installable-manifest/).",
             "score": 0,
             "scoreDisplayMode": "binary",
             "numericValue": 1,
@@ -14517,8 +14536,8 @@
               "headings": [
                 {
                   "key": "reason",
-                  "itemType": "text",
-                  "text": "Failure reason"
+                  "valueType": "text",
+                  "label": "Failure reason"
                 }
               ],
               "items": [
@@ -14646,14 +14665,14 @@
               "headings": [
                 {
                   "key": "groupLabel",
-                  "itemType": "text",
-                  "text": "Category"
+                  "valueType": "text",
+                  "label": "Category"
                 },
                 {
                   "key": "duration",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Time Spent"
+                  "label": "Time Spent"
                 }
               ],
               "items": [
@@ -14709,26 +14728,26 @@
               "headings": [
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "total",
                   "granularity": 1,
-                  "itemType": "ms",
-                  "text": "Total CPU Time"
+                  "valueType": "ms",
+                  "label": "Total CPU Time"
                 },
                 {
                   "key": "scripting",
                   "granularity": 1,
-                  "itemType": "ms",
-                  "text": "Script Evaluation"
+                  "valueType": "ms",
+                  "label": "Script Evaluation"
                 },
                 {
                   "key": "scriptParseCompile",
                   "granularity": 1,
-                  "itemType": "ms",
-                  "text": "Script Parse"
+                  "valueType": "ms",
+                  "label": "Script Parse"
                 }
               ],
               "items": [
@@ -14847,54 +14866,54 @@
               "headings": [
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "protocol",
-                  "itemType": "text",
-                  "text": "Protocol"
+                  "valueType": "text",
+                  "label": "Protocol"
                 },
                 {
                   "key": "startTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Start Time"
+                  "label": "Start Time"
                 },
                 {
                   "key": "endTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "End Time"
+                  "label": "End Time"
                 },
                 {
                   "key": "transferSize",
-                  "itemType": "bytes",
+                  "valueType": "bytes",
                   "displayUnit": "kb",
                   "granularity": 1,
-                  "text": "Transfer Size"
+                  "label": "Transfer Size"
                 },
                 {
                   "key": "resourceSize",
-                  "itemType": "bytes",
+                  "valueType": "bytes",
                   "displayUnit": "kb",
                   "granularity": 1,
-                  "text": "Resource Size"
+                  "label": "Resource Size"
                 },
                 {
                   "key": "statusCode",
-                  "itemType": "text",
-                  "text": "Status Code"
+                  "valueType": "text",
+                  "label": "Status Code"
                 },
                 {
                   "key": "mimeType",
-                  "itemType": "text",
-                  "text": "MIME Type"
+                  "valueType": "text",
+                  "label": "MIME Type"
                 },
                 {
                   "key": "resourceType",
-                  "itemType": "text",
-                  "text": "Resource Type"
+                  "valueType": "text",
+                  "label": "Resource Type"
                 }
               ],
               "items": [
@@ -15222,14 +15241,14 @@
               "headings": [
                 {
                   "key": "origin",
-                  "itemType": "text",
-                  "text": "URL"
+                  "valueType": "text",
+                  "label": "URL"
                 },
                 {
                   "key": "rtt",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Time Spent"
+                  "label": "Time Spent"
                 }
               ],
               "items": [
@@ -15266,14 +15285,14 @@
               "headings": [
                 {
                   "key": "origin",
-                  "itemType": "text",
-                  "text": "URL"
+                  "valueType": "text",
+                  "label": "URL"
                 },
                 {
                   "key": "serverResponseTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Time Spent"
+                  "label": "Time Spent"
                 }
               ],
               "items": [
@@ -15307,15 +15326,15 @@
               "headings": [
                 {
                   "key": "startTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Start Time"
+                  "label": "Start Time"
                 },
                 {
                   "key": "duration",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "End Time"
+                  "label": "End Time"
                 }
               ],
               "items": [
@@ -15424,18 +15443,18 @@
               "headings": [
                 {
                   "key": "label",
-                  "itemType": "text",
-                  "text": "Resource Type"
+                  "valueType": "text",
+                  "label": "Resource Type"
                 },
                 {
                   "key": "requestCount",
-                  "itemType": "numeric",
-                  "text": "Requests"
+                  "valueType": "numeric",
+                  "label": "Requests"
                 },
                 {
                   "key": "transferSize",
-                  "itemType": "bytes",
-                  "text": "Transfer Size"
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
                 }
               ],
               "items": [
@@ -15508,18 +15527,18 @@
               "headings": [
                 {
                   "key": "entity",
-                  "itemType": "link",
-                  "text": "Third-Party",
+                  "valueType": "link",
+                  "label": "Third-Party",
                   "subItemsHeading": {
                     "key": "url",
-                    "itemType": "url"
+                    "valueType": "url"
                   }
                 },
                 {
                   "key": "transferSize",
                   "granularity": 1,
-                  "itemType": "bytes",
-                  "text": "Transfer Size",
+                  "valueType": "bytes",
+                  "label": "Transfer Size",
                   "subItemsHeading": {
                     "key": "transferSize"
                   }
@@ -15527,8 +15546,8 @@
                 {
                   "key": "blockingTime",
                   "granularity": 1,
-                  "itemType": "ms",
-                  "text": "Main-Thread Blocking Time",
+                  "valueType": "ms",
+                  "label": "Main-Thread Blocking Time",
                   "subItemsHeading": {
                     "key": "blockingTime"
                   }
@@ -15575,8 +15594,8 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": "Element"
+                  "valueType": "node",
+                  "label": "Element"
                 }
               ],
               "items": [
@@ -15612,8 +15631,8 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": "Element"
+                  "valueType": "node",
+                  "label": "Element"
                 }
               ],
               "items": [
@@ -15641,7 +15660,7 @@
           "layout-shift-elements": {
             "id": "layout-shift-elements",
             "title": "Avoid large layout shifts",
-            "description": "These DOM elements contribute most to the CLS of the page.",
+            "description": "These DOM elements contribute most to the CLS of the page. [Learn how to improve CLS](https://web.dev/optimize-cls/)",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "details": {
@@ -15662,20 +15681,20 @@
               "headings": [
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "startTime",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Start Time"
+                  "label": "Start Time"
                 },
                 {
                   "key": "duration",
-                  "itemType": "ms",
+                  "valueType": "ms",
                   "granularity": 1,
-                  "text": "Duration"
+                  "label": "Duration"
                 }
               ],
               "items": [
@@ -15717,13 +15736,13 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": ""
+                  "valueType": "node",
+                  "label": ""
                 },
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 }
               ],
               "items": [
@@ -15858,27 +15877,27 @@
               "headings": [
                 {
                   "key": "description",
-                  "itemType": "text",
+                  "valueType": "text",
                   "subItemsHeading": {
                     "key": "description"
                   },
-                  "text": "Description"
+                  "label": "Description"
                 },
                 {
                   "key": "directive",
-                  "itemType": "code",
+                  "valueType": "code",
                   "subItemsHeading": {
                     "key": "directive"
                   },
-                  "text": "Directive"
+                  "label": "Directive"
                 },
                 {
                   "key": "severity",
-                  "itemType": "text",
+                  "valueType": "text",
                   "subItemsHeading": {
                     "key": "severity"
                   },
-                  "text": "Severity"
+                  "label": "Severity"
                 }
               ],
               "items": [
@@ -16503,7 +16522,7 @@
           "aria-meter-name": {
             "id": "aria-meter-name",
             "title": "ARIA `meter` elements have accessible names",
-            "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name).",
+            "description": "When a meter element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name).",
             "score": null,
             "scoreDisplayMode": "notApplicable"
           },
@@ -16562,7 +16581,7 @@
           "aria-tooltip-name": {
             "id": "aria-tooltip-name",
             "title": "ARIA `tooltip` elements have accessible names",
-            "description": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name).",
+            "description": "When a tooltip element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name).",
             "score": null,
             "scoreDisplayMode": "notApplicable"
           },
@@ -16613,13 +16632,8 @@
             "id": "bypass",
             "title": "The page contains a heading, skip link, or landmark region",
             "description": "Adding ways to bypass repetitive content lets keyboard users navigate the page more efficiently. [Learn more about bypass blocks](https://dequeuniversity.com/rules/axe/4.4/bypass).",
-            "score": 1,
-            "scoreDisplayMode": "binary",
-            "details": {
-              "type": "table",
-              "headings": [],
-              "items": []
-            }
+            "score": null,
+            "scoreDisplayMode": "notApplicable"
           },
           "color-contrast": {
             "id": "color-contrast",
@@ -16734,12 +16748,12 @@
               "headings": [
                 {
                   "key": "node",
-                  "itemType": "node",
+                  "valueType": "node",
                   "subItemsHeading": {
                     "key": "relatedNode",
-                    "itemType": "node"
+                    "valueType": "node"
                   },
-                  "text": "Failing Elements"
+                  "label": "Failing Elements"
                 }
               ],
               "items": [
@@ -16896,70 +16910,70 @@
           "custom-controls-labels": {
             "id": "custom-controls-labels",
             "title": "Custom controls have associated labels",
-            "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more about custom controls and labels](https://web.dev/custom-controls-labels/).",
+            "description": "Custom interactive controls have associated labels, provided by aria-label or aria-labelledby. [Learn more about custom controls and labels](https://developer.chrome.com/docs/lighthouse/accessibility/custom-controls-labels/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "custom-controls-roles": {
             "id": "custom-controls-roles",
             "title": "Custom controls have ARIA roles",
-            "description": "Custom interactive controls have appropriate ARIA roles. [Learn how to add roles to custom controls](https://web.dev/custom-control-roles/).",
+            "description": "Custom interactive controls have appropriate ARIA roles. [Learn how to add roles to custom controls](https://developer.chrome.com/docs/lighthouse/accessibility/custom-control-roles/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "focus-traps": {
             "id": "focus-traps",
             "title": "User focus is not accidentally trapped in a region",
-            "description": "A user can tab into and out of any control or region without accidentally trapping their focus. [Learn how to avoid focus traps](https://web.dev/focus-traps/).",
+            "description": "A user can tab into and out of any control or region without accidentally trapping their focus. [Learn how to avoid focus traps](https://developer.chrome.com/docs/lighthouse/accessibility/focus-traps/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "focusable-controls": {
             "id": "focusable-controls",
             "title": "Interactive controls are keyboard focusable",
-            "description": "Custom interactive controls are keyboard focusable and display a focus indicator. [Learn how to make custom controls focusable](https://web.dev/focusable-controls/).",
+            "description": "Custom interactive controls are keyboard focusable and display a focus indicator. [Learn how to make custom controls focusable](https://developer.chrome.com/docs/lighthouse/accessibility/focusable-controls/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "interactive-element-affordance": {
             "id": "interactive-element-affordance",
             "title": "Interactive elements indicate their purpose and state",
-            "description": "Interactive elements, such as links and buttons, should indicate their state and be distinguishable from non-interactive elements. [Learn how to decorate interactive elements with affordance hints](https://web.dev/interactive-element-affordance/).",
+            "description": "Interactive elements, such as links and buttons, should indicate their state and be distinguishable from non-interactive elements. [Learn how to decorate interactive elements with affordance hints](https://developer.chrome.com/docs/lighthouse/accessibility/interactive-element-affordance/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "logical-tab-order": {
             "id": "logical-tab-order",
             "title": "The page has a logical tab order",
-            "description": "Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more about logical tab ordering](https://web.dev/logical-tab-order/).",
+            "description": "Tabbing through the page follows the visual layout. Users cannot focus elements that are offscreen. [Learn more about logical tab ordering](https://developer.chrome.com/docs/lighthouse/accessibility/logical-tab-order/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "managed-focus": {
             "id": "managed-focus",
             "title": "The user's focus is directed to new content added to the page",
-            "description": "If new content, such as a dialog, is added to the page, the user's focus is directed to it. [Learn how to direct focus to new content](https://web.dev/managed-focus/).",
+            "description": "If new content, such as a dialog, is added to the page, the user's focus is directed to it. [Learn how to direct focus to new content](https://developer.chrome.com/docs/lighthouse/accessibility/managed-focus/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "offscreen-content-hidden": {
             "id": "offscreen-content-hidden",
             "title": "Offscreen content is hidden from assistive technology",
-            "description": "Offscreen content is hidden with display: none or aria-hidden=true. [Learn how to properly hide offscreen content](https://web.dev/offscreen-content-hidden/).",
+            "description": "Offscreen content is hidden with display: none or aria-hidden=true. [Learn how to properly hide offscreen content](https://developer.chrome.com/docs/lighthouse/accessibility/offscreen-content-hidden/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "use-landmarks": {
             "id": "use-landmarks",
             "title": "HTML5 landmark elements are used to improve navigation",
-            "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more about landmark elements](https://web.dev/use-landmarks/).",
+            "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more about landmark elements](https://developer.chrome.com/docs/lighthouse/accessibility/use-landmarks/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "visual-order-follows-dom": {
             "id": "visual-order-follows-dom",
             "title": "Visual order on the page follows DOM order",
-            "description": "DOM order matches the visual order, improving navigation for assistive technology. [Learn more about DOM and visual ordering](https://web.dev/visual-order-follows-dom/).",
+            "description": "DOM order matches the visual order, improving navigation for assistive technology. [Learn more about DOM and visual ordering](https://developer.chrome.com/docs/lighthouse/accessibility/visual-order-follows-dom/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
@@ -16995,13 +17009,13 @@
               "headings": [
                 {
                   "key": "url",
-                  "itemType": "url",
-                  "text": "URL"
+                  "valueType": "url",
+                  "label": "URL"
                 },
                 {
                   "key": "totalBytes",
-                  "itemType": "bytes",
-                  "text": "Transfer Size"
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
                 }
               ],
               "items": [
@@ -17413,24 +17427,28 @@
               "headings": [
                 {
                   "key": "statistic",
-                  "itemType": "text",
-                  "text": "Statistic"
+                  "valueType": "text",
+                  "label": "Statistic"
                 },
                 {
                   "key": "node",
-                  "itemType": "node",
-                  "text": "Element"
+                  "valueType": "node",
+                  "label": "Element"
                 },
                 {
                   "key": "value",
-                  "itemType": "numeric",
-                  "text": "Value"
+                  "valueType": "numeric",
+                  "label": "Value"
                 }
               ],
               "items": [
                 {
                   "statistic": "Total DOM Elements",
-                  "value": 81
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 81
+                  }
                 },
                 {
                   "node": {
@@ -17450,7 +17468,11 @@
                     "nodeLabel": "div.flex > div.inline-block > svg.h-6 > path"
                   },
                   "statistic": "Maximum DOM Depth",
-                  "value": 9
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 9
+                  }
                 },
                 {
                   "node": {
@@ -17470,7 +17492,11 @@
                     "nodeLabel": "body"
                   },
                   "statistic": "Maximum Child Elements",
-                  "value": 13
+                  "value": {
+                    "type": "numeric",
+                    "granularity": 1,
+                    "value": 13
+                  }
                 }
               ]
             }
@@ -17522,13 +17548,13 @@
               "headings": [
                 {
                   "key": "name",
-                  "itemType": "text",
-                  "text": "Name"
+                  "valueType": "text",
+                  "label": "Name"
                 },
                 {
                   "key": "version",
-                  "itemType": "text",
-                  "text": "Version"
+                  "valueType": "text",
+                  "label": "Version"
                 }
               ],
               "items": [
@@ -17625,23 +17651,23 @@
               "headings": [
                 {
                   "key": "source",
-                  "itemType": "source-location",
-                  "text": "Source"
+                  "valueType": "source-location",
+                  "label": "Source"
                 },
                 {
                   "key": "selector",
-                  "itemType": "code",
-                  "text": "Selector"
+                  "valueType": "code",
+                  "label": "Selector"
                 },
                 {
                   "key": "coverage",
-                  "itemType": "text",
-                  "text": "% of Page Text"
+                  "valueType": "text",
+                  "label": "% of Page Text"
                 },
                 {
                   "key": "fontSize",
-                  "itemType": "text",
-                  "text": "Font Size"
+                  "valueType": "text",
+                  "label": "Font Size"
                 }
               ],
               "items": [
@@ -17725,18 +17751,18 @@
               "headings": [
                 {
                   "key": "tapTarget",
-                  "itemType": "node",
-                  "text": "Tap Target"
+                  "valueType": "node",
+                  "label": "Tap Target"
                 },
                 {
                   "key": "size",
-                  "itemType": "text",
-                  "text": "Size"
+                  "valueType": "text",
+                  "label": "Size"
                 },
                 {
                   "key": "overlappingTarget",
-                  "itemType": "node",
-                  "text": "Overlapping Target"
+                  "valueType": "node",
+                  "label": "Overlapping Target"
                 }
               ],
               "items": [
@@ -18187,7 +18213,7 @@
           },
           "accessibility": {
             "title": "Accessibility",
-            "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://web.dev/lighthouse-accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
+            "description": "These checks highlight opportunities to [improve the accessibility of your web app](https://developer.chrome.com/docs/lighthouse/accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged.",
             "manualDescription": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://web.dev/how-to-review/).",
             "supportedModes": [
               "navigation",
@@ -18286,7 +18312,7 @@
               },
               {
                 "id": "bypass",
-                "weight": 3,
+                "weight": 0,
                 "group": "a11y-navigation"
               },
               {
@@ -18547,7 +18573,7 @@
           },
           "seo": {
             "title": "SEO",
-            "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more](https://support.google.com/webmasters/answer/35769).",
+            "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more about Google Search Essentials](https://support.google.com/webmasters/answer/35769).",
             "manualDescription": "Run these additional validators on your site to check additional SEO best practices.",
             "supportedModes": [
               "navigation",
@@ -18634,7 +18660,7 @@
           },
           "pwa": {
             "title": "PWA",
-            "description": "These checks validate the aspects of a Progressive Web App. [Learn more](https://web.dev/pwa-checklist/).",
+            "description": "These checks validate the aspects of a Progressive Web App. [Learn what makes a good Progressive Web App](https://web.dev/pwa-checklist/).",
             "manualDescription": "These checks are required by the baseline [PWA Checklist](https://web.dev/pwa-checklist/) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually.",
             "supportedModes": [
               "navigation"
@@ -18748,7 +18774,7 @@
           },
           "seo-mobile": {
             "title": "Mobile Friendly",
-            "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+            "description": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn how to make pages mobile-friendly](https://developers.google.com/search/mobile-sites/)."
           },
           "seo-content": {
             "title": "Content Best Practices",
@@ -20194,6 +20220,7 @@
             "runtimeSettingsCPUThrottling": "CPU throttling",
             "runtimeSettingsDevice": "Device",
             "runtimeSettingsNetworkThrottling": "Network throttling",
+            "runtimeSettingsScreenEmulation": "Screen emulation",
             "runtimeSettingsUANetwork": "User agent (network)",
             "runtimeSingleLoad": "Single page load",
             "runtimeSingleLoadTooltip": "This data is taken from a single page load, as opposed to field data summarizing many sessions.",
@@ -20366,22 +20393,22 @@
             ],
             "core/lib/i18n/i18n.js | columnURL": [
               "audits[server-response-time].details.headings[0].label",
-              "audits[bootup-time].details.headings[0].text",
-              "audits[network-rtt].details.headings[0].text",
-              "audits[network-server-latency].details.headings[0].text",
-              "audits[long-tasks].details.headings[0].text",
-              "audits[unsized-images].details.headings[1].text",
+              "audits[bootup-time].details.headings[0].label",
+              "audits[network-rtt].details.headings[0].label",
+              "audits[network-server-latency].details.headings[0].label",
+              "audits[long-tasks].details.headings[0].label",
+              "audits[unsized-images].details.headings[1].label",
               "audits[preload-lcp-image].details.headings[1].label",
-              "audits[total-byte-weight].details.headings[0].text",
+              "audits[total-byte-weight].details.headings[0].label",
               "audits[modern-image-formats].details.headings[1].label",
               "audits[uses-responsive-images].details.headings[1].label",
               "audits[legacy-javascript].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnTimeSpent": [
               "audits[server-response-time].details.headings[1].label",
-              "audits[mainthread-work-breakdown].details.headings[1].text",
-              "audits[network-rtt].details.headings[1].text",
-              "audits[network-server-latency].details.headings[1].text"
+              "audits[mainthread-work-breakdown].details.headings[1].label",
+              "audits[network-rtt].details.headings[1].label",
+              "audits[network-server-latency].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | interactiveMetric": [
               "audits.interactive.title"
@@ -20404,19 +20431,19 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnName": [
-              "audits[user-timings].details.headings[0].text",
-              "audits[js-libraries].details.headings[0].text"
+              "audits[user-timings].details.headings[0].label",
+              "audits[js-libraries].details.headings[0].label"
             ],
             "core/audits/user-timings.js | columnType": [
-              "audits[user-timings].details.headings[1].text"
+              "audits[user-timings].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | columnStartTime": [
-              "audits[user-timings].details.headings[2].text",
-              "audits[long-tasks].details.headings[1].text"
+              "audits[user-timings].details.headings[2].label",
+              "audits[long-tasks].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | columnDuration": [
-              "audits[user-timings].details.headings[3].text",
-              "audits[long-tasks].details.headings[2].text"
+              "audits[user-timings].details.headings[3].label",
+              "audits[long-tasks].details.headings[2].label"
             ],
             "core/audits/critical-request-chains.js | title": [
               "audits[critical-request-chains].title"
@@ -20445,7 +20472,7 @@
               }
             ],
             "core/audits/installable-manifest.js | columnValue": [
-              "audits[installable-manifest].details.headings[0].text"
+              "audits[installable-manifest].details.headings[0].label"
             ],
             "core/audits/installable-manifest.js | no-manifest": [
               "audits[installable-manifest].details.items[0].reason"
@@ -20505,7 +20532,7 @@
               "audits[mainthread-work-breakdown].description"
             ],
             "core/audits/mainthread-work-breakdown.js | columnCategory": [
-              "audits[mainthread-work-breakdown].details.headings[0].text"
+              "audits[mainthread-work-breakdown].details.headings[0].label"
             ],
             "core/audits/bootup-time.js | title": [
               "audits[bootup-time].title"
@@ -20514,13 +20541,13 @@
               "audits[bootup-time].description"
             ],
             "core/audits/bootup-time.js | columnTotal": [
-              "audits[bootup-time].details.headings[1].text"
+              "audits[bootup-time].details.headings[1].label"
             ],
             "core/audits/bootup-time.js | columnScriptEval": [
-              "audits[bootup-time].details.headings[2].text"
+              "audits[bootup-time].details.headings[2].label"
             ],
             "core/audits/bootup-time.js | columnScriptParse": [
-              "audits[bootup-time].details.headings[3].text"
+              "audits[bootup-time].details.headings[3].label"
             ],
             "core/audits/uses-rel-preload.js | title": [
               "audits[uses-rel-preload].title"
@@ -20580,15 +20607,15 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnResourceType": [
-              "audits[resource-summary].details.headings[0].text"
+              "audits[resource-summary].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnRequests": [
-              "audits[resource-summary].details.headings[1].text"
+              "audits[resource-summary].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | columnTransferSize": [
-              "audits[resource-summary].details.headings[2].text",
-              "audits[third-party-summary].details.headings[1].text",
-              "audits[total-byte-weight].details.headings[1].text"
+              "audits[resource-summary].details.headings[2].label",
+              "audits[third-party-summary].details.headings[1].label",
+              "audits[total-byte-weight].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | totalResourceType": [
               "audits[resource-summary].details.items[0].label"
@@ -20632,10 +20659,10 @@
               }
             ],
             "core/audits/third-party-summary.js | columnThirdParty": [
-              "audits[third-party-summary].details.headings[0].text"
+              "audits[third-party-summary].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnBlockingTime": [
-              "audits[third-party-summary].details.headings[2].text"
+              "audits[third-party-summary].details.headings[2].label"
             ],
             "core/audits/third-party-facades.js | title": [
               "audits[third-party-facades].title"
@@ -20658,9 +20685,9 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnElement": [
-              "audits[largest-contentful-paint-element].details.headings[0].text",
-              "audits[lcp-lazy-loaded].details.headings[0].text",
-              "audits[dom-size].details.headings[1].text"
+              "audits[largest-contentful-paint-element].details.headings[0].label",
+              "audits[lcp-lazy-loaded].details.headings[0].label",
+              "audits[dom-size].details.headings[1].label"
             ],
             "core/audits/lcp-lazy-loaded.js | title": [
               "audits[lcp-lazy-loaded].title"
@@ -20731,13 +20758,13 @@
               "audits[csp-xss].description"
             ],
             "core/lib/i18n/i18n.js | columnDescription": [
-              "audits[csp-xss].details.headings[0].text"
+              "audits[csp-xss].details.headings[0].label"
             ],
             "core/audits/csp-xss.js | columnDirective": [
-              "audits[csp-xss].details.headings[1].text"
+              "audits[csp-xss].details.headings[1].label"
             ],
             "core/audits/csp-xss.js | columnSeverity": [
-              "audits[csp-xss].details.headings[2].text"
+              "audits[csp-xss].details.headings[2].label"
             ],
             "core/lib/i18n/i18n.js | itemSeverityHigh": [
               "audits[csp-xss].details.items[0].severity"
@@ -20950,7 +20977,7 @@
               "audits[image-alt].description"
             ],
             "core/lib/i18n/i18n.js | columnFailingElem": [
-              "audits[image-alt].details.headings[0].text"
+              "audits[image-alt].details.headings[0].label"
             ],
             "core/audits/accessibility/input-image-alt.js | title": [
               "audits[input-image-alt].title"
@@ -21181,10 +21208,10 @@
               }
             ],
             "core/audits/dobetterweb/dom-size.js | columnStatistic": [
-              "audits[dom-size].details.headings[0].text"
+              "audits[dom-size].details.headings[0].label"
             ],
             "core/audits/dobetterweb/dom-size.js | columnValue": [
-              "audits[dom-size].details.headings[2].text"
+              "audits[dom-size].details.headings[2].label"
             ],
             "core/audits/dobetterweb/dom-size.js | statisticDOMElements": [
               "audits[dom-size].details.items[0].statistic"
@@ -21220,7 +21247,7 @@
               "audits[js-libraries].description"
             ],
             "core/audits/dobetterweb/js-libraries.js | columnVersion": [
-              "audits[js-libraries].details.headings[1].text"
+              "audits[js-libraries].details.headings[1].label"
             ],
             "core/audits/dobetterweb/notification-on-start.js | title": [
               "audits[notification-on-start].title"
@@ -21267,16 +21294,16 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnSource": [
-              "audits[font-size].details.headings[0].text"
+              "audits[font-size].details.headings[0].label"
             ],
             "core/audits/seo/font-size.js | columnSelector": [
-              "audits[font-size].details.headings[1].text"
+              "audits[font-size].details.headings[1].label"
             ],
             "core/audits/seo/font-size.js | columnPercentPageText": [
-              "audits[font-size].details.headings[2].text"
+              "audits[font-size].details.headings[2].label"
             ],
             "core/audits/seo/font-size.js | columnFontSize": [
-              "audits[font-size].details.headings[3].text"
+              "audits[font-size].details.headings[3].label"
             ],
             "core/audits/seo/font-size.js | legibleText": [
               "audits[font-size].details.items[1].source.value"
@@ -21320,13 +21347,13 @@
               }
             ],
             "core/audits/seo/tap-targets.js | tapTargetHeader": [
-              "audits[tap-targets].details.headings[0].text"
+              "audits[tap-targets].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnSize": [
-              "audits[tap-targets].details.headings[1].text"
+              "audits[tap-targets].details.headings[1].label"
             ],
             "core/audits/seo/tap-targets.js | overlappingTargetHeader": [
-              "audits[tap-targets].details.headings[2].text"
+              "audits[tap-targets].details.headings[2].label"
             ],
             "core/audits/seo/hreflang.js | title": [
               "audits.hreflang.title"

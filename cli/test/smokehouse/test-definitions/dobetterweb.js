@@ -216,7 +216,7 @@ const expectations = {
   },
   lhr: {
     requestedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
-    finalUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+    finalDisplayedUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
     audits: {
       'errors-in-console': {
         score: 0,
@@ -321,6 +321,9 @@ const expectations = {
         details: {
           items: [
             {
+              // This feature was removed in M110.
+              // TODO: Remove this expectation once M110 reaches stable.
+              _maxChromiumVersion: '109',
               value: /`window.webkitStorageInfo` is deprecated/,
               source: {
                 type: 'source-location',
@@ -405,11 +408,29 @@ const expectations = {
         numericValue: 153,
         details: {
           items: [
-            {statistic: 'Total DOM Elements', value: 153},
-            {statistic: 'Maximum DOM Depth', value: 4},
+            {
+              statistic: 'Total DOM Elements',
+              value: {
+                type: 'numeric',
+                granularity: 1,
+                value: 153,
+              },
+            },
+            {
+              statistic: 'Maximum DOM Depth',
+              value: {
+                type: 'numeric',
+                granularity: 1,
+                value: 4,
+              },
+            },
             {
               statistic: 'Maximum Child Elements',
-              value: 100,
+              value: {
+                type: 'numeric',
+                granularity: 1,
+                value: 100,
+              },
               node: {snippet: '<div id="shadow-root-container">'},
             },
           ],

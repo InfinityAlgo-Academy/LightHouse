@@ -10,8 +10,8 @@ import * as i18n from '../lib/i18n/i18n.js';
 const UIStrings = {
   /** Descriptive title of a diagnostic audit that provides up to the top five elements contributing to Cumulative Layout Shift. */
   title: 'Avoid large layout shifts',
-  /** Description of a diagnostic audit that provides up to the top five elements contributing to Cumulative Layout Shift. */
-  description: 'These DOM elements contribute most to the CLS of the page.',
+  /** Description of a diagnostic audit that provides up to the top five elements contributing to Cumulative Layout Shift. The last sentence starting with 'Learn' becomes link text to additional documentation. */
+  description: 'These DOM elements contribute most to the CLS of the page. [Learn how to improve CLS](https://web.dev/optimize-cls/)',
   /**  Label for a column in a data table; entries in this column will be the amount that the corresponding element contributes to the total CLS metric score. */
   columnContribution: 'CLS Contribution',
 };
@@ -49,9 +49,9 @@ class LayoutShiftElements extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'node', itemType: 'node', text: str_(i18n.UIStrings.columnElement)},
-      {key: 'score', itemType: 'numeric',
-        granularity: 0.001, text: str_(UIStrings.columnContribution)},
+      {key: 'node', valueType: 'node', label: str_(i18n.UIStrings.columnElement)},
+      {key: 'score', valueType: 'numeric',
+        granularity: 0.001, label: str_(UIStrings.columnContribution)},
     ];
 
     const details = Audit.makeTableDetails(headings, clsElementData);

@@ -16,7 +16,8 @@ For an always up-to-date definition of the LHR, take a look [at our typedefs](ht
 | fetchTime | The ISO-8601 timestamp of when the result was generated. |
 | userAgent | The user agent string of the version of Chrome that was used by Lighthouse. |
 | requestedUrl | The URL that was supplied to Lighthouse and initially navigated to. |
-| finalUrl | The URL that Lighthouse ended up auditing after redirects were followed. |
+| mainDocumentUrl | The URL of the main document request during the final page navigation. |
+| finalDisplayedUrl | The URL displayed on the page after all redirects, history API updates, etc. |
 | [audits](#audits) | An object containing the results of the audits. |
 | [configSettings](#config-settings) | An object containing information about the configuration used by Lighthouse. |
 | [timing](#timing) | An object containing information about how long Lighthouse spent auditing. |
@@ -32,7 +33,8 @@ For an always up-to-date definition of the LHR, take a look [at our typedefs](ht
   "fetchTime": "2019-05-05T20:50:54.185Z",
   "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3358.0 Safari/537.36",
   "requestedUrl": "http://example.com",
-  "finalUrl": "https://www.example.com/",
+  "mainDocumentUrl": "https://www.example.com/",
+  "finalDisplayedUrl": "https://www.example.com/",
   "audits": {...},
   "configSettings": {...},
   "timing": {...},
@@ -78,8 +80,8 @@ An object containing the results of the audits, keyed by their name.
         "headings": [
           {
             "key": "url",
-            "itemType": "url",
-            "text": "Insecure URL"
+            "valueType": "url",
+            "label": "Insecure URL"
           }
         ],
         "items": [

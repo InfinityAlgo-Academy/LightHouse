@@ -1605,7 +1605,7 @@
     "message": "A página tem mapas de origem válidos"
   },
   "core/audits/viewport.js | description": {
-    "message": "Uma metatag `<meta name=\"viewport\">` não só otimiza seu app para tamanhos de tela de dispositivos móveis, como também evita [um atraso de 300 milissegundos na entrada do usuário](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Saiba mais](https://web.dev/viewport/)."
+    "message": "Uma metatag `<meta name=\"viewport\">` não só otimiza seu app para tamanhos de tela de dispositivos móveis, como também evita [um atraso de 300 milissegundos na entrada do usuário](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Saiba mais](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Nenhuma tag `<meta name=\"viewport\">` foi encontrada."

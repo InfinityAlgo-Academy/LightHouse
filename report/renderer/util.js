@@ -51,6 +51,28 @@ class Util {
   }
 
   /**
+   * If LHR is older than 10.0 it will not have the `finalDisplayedUrl` property.
+   * Old LHRs should have the `finalUrl` property which will work fine for the report.
+   *
+   * @param {LH.Result} lhr
+   */
+  static getFinalDisplayedUrl(lhr) {
+    if (lhr.finalDisplayedUrl) return lhr.finalDisplayedUrl;
+    if (lhr.finalUrl) return lhr.finalUrl;
+    throw new Error('Could not determine final displayed URL');
+  }
+
+  /**
+   * If LHR is older than 10.0 it will not have the `mainDocumentUrl` property.
+   * Old LHRs should have the `finalUrl` property which is the same as `mainDocumentUrl`.
+   *
+   * @param {LH.Result} lhr
+   */
+  static getMainDocumentUrl(lhr) {
+    return lhr.mainDocumentUrl || lhr.finalUrl;
+  }
+
+  /**
    * Returns a new LHR that's reshaped for slightly better ergonomics within the report rendereer.
    * Also, sets up the localized UI strings used within renderer and makes changes to old LHRs to be
    * compatible with current renderer.
@@ -71,6 +93,9 @@ class Util {
       // @ts-expect-error fallback handling for emulatedFormFactor
       clone.configSettings.formFactor = clone.configSettings.emulatedFormFactor;
     }
+
+    clone.finalDisplayedUrl = this.getFinalDisplayedUrl(clone);
+    clone.mainDocumentUrl = this.getMainDocumentUrl(clone);
 
     for (const audit of Object.values(clone.audits)) {
       // Turn 'not-applicable' (LHR <4.0) and 'not_applicable' (older proto versions)
@@ -95,6 +120,33 @@ class Util {
           for (const screenshot of audit.details.items) {
             if (!screenshot.data.startsWith(SCREENSHOT_PREFIX)) {
               screenshot.data = SCREENSHOT_PREFIX + screenshot.data;
+            }
+          }
+        }
+
+        // Circa 10.0, table items were refactored.
+        if (audit.details.type === 'table') {
+          for (const heading of audit.details.headings) {
+            /** @type {{itemType: LH.Audit.Details.ItemValueType|undefined, text: string|undefined}} */
+            // @ts-expect-error
+            const {itemType, text} = heading;
+            if (itemType !== undefined) {
+              heading.valueType = itemType;
+              // @ts-expect-error
+              delete heading.itemType;
+            }
+            if (text !== undefined) {
+              heading.label = text;
+              // @ts-expect-error
+              delete heading.text;
+            }
+
+            // @ts-expect-error
+            const subItemsItemType = heading.subItemsHeading?.itemType;
+            if (heading.subItemsHeading && subItemsItemType !== undefined) {
+              heading.subItemsHeading.valueType = subItemsItemType;
+              // @ts-expect-error
+              delete heading.subItemsHeading.itemType;
             }
           }
         }
@@ -414,7 +466,7 @@ class Util {
 
   /**
    * @param {LH.Result['configSettings']} settings
-   * @return {!{deviceEmulation: string, networkThrottling: string, cpuThrottling: string, summary: string}}
+   * @return {!{deviceEmulation: string, screenEmulation?: string, networkThrottling: string, cpuThrottling: string, summary: string}}
    */
   static getEmulationDescriptions(settings) {
     let cpuThrottling;
@@ -460,14 +512,19 @@ class Util {
         summary = cpuThrottling = networkThrottling = Util.i18n.strings.runtimeUnknown;
     }
 
-    // TODO(paulirish): revise Runtime Settings strings: https://github.com/GoogleChrome/lighthouse/pull/11796
     const deviceEmulation = {
       mobile: Util.i18n.strings.runtimeMobileEmulation,
       desktop: Util.i18n.strings.runtimeDesktopEmulation,
     }[settings.formFactor] || Util.i18n.strings.runtimeNoEmulation;
 
+    const screenEmulation = settings.screenEmulation.disabled ?
+      undefined :
+      // eslint-disable-next-line max-len
+      `${settings.screenEmulation.width}x${settings.screenEmulation.height}, DPR ${settings.screenEmulation.deviceScaleFactor}`;
+
     return {
       deviceEmulation,
+      screenEmulation,
       cpuThrottling,
       networkThrottling,
       summary,
@@ -665,6 +722,8 @@ const UIStrings = {
   runtimeSettingsBenchmark: 'CPU/Memory Power',
   /** Label for a row in a table that shows the version of the Axe library used. Example row values: 2.1.0, 3.2.3 */
   runtimeSettingsAxeVersion: 'Axe version',
+  /** Label for a row in a table that shows the screen resolution and DPR that was emulated for the Lighthouse run. Example values: '800x600, DPR: 3' */
+  runtimeSettingsScreenEmulation: 'Screen emulation',
 
   /** Label for button to create an issue against the Lighthouse GitHub project. */
   footerIssue: 'File an issue',

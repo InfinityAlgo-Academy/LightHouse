@@ -26,7 +26,7 @@ const UIStrings = {
   title: 'Minimizes work during key interaction',
   /** Title of a diagnostic audit that provides detail on the main thread work the browser did during a key user interaction. This imperative title is shown to users when there is a significant amount of execution time that could be reduced. */
   failureTitle: 'Minimize work during key interaction',
-  /** Description of the work-during-interaction metric. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of the work-during-interaction metric. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'This is the thread-blocking work occurring during the Interaction to Next Paint measurement. [Learn more about the Interaction to Next Paint metric](https://web.dev/inp/).',
   /** Label for a column in a data table; entries will be information on the time that the browser is delayed before responding to user input. Ideally fits within a ~40 character limit. */
   inputDelay: 'Input delay',
@@ -184,11 +184,11 @@ class WorkDuringInteraction extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'phase', itemType: 'text', subItemsHeading: {key: 'url', itemType: 'url'}, text: 'Phase'},
-      {key: 'total', itemType: 'ms', subItemsHeading: {key: 'total', granularity: 1, itemType: 'ms'}, granularity: 1, text: 'Total time'},
-      {key: null, itemType: 'ms', subItemsHeading: {key: 'scripting', granularity: 1, itemType: 'ms'}, text: 'Script evaluation'},
-      {key: null, itemType: 'ms', subItemsHeading: {key: 'layout', granularity: 1, itemType: 'ms'}, text: taskGroups.styleLayout.label},
-      {key: null, itemType: 'ms', subItemsHeading: {key: 'render', granularity: 1, itemType: 'ms'}, text: taskGroups.paintCompositeRender.label},
+      {key: 'phase', valueType: 'text', subItemsHeading: {key: 'url', valueType: 'url'}, label: 'Phase'},
+      {key: 'total', valueType: 'ms', subItemsHeading: {key: 'total', granularity: 1, valueType: 'ms'}, granularity: 1, label: 'Total time'},
+      {key: null, valueType: 'ms', subItemsHeading: {key: 'scripting', granularity: 1, valueType: 'ms'}, label: 'Script evaluation'},
+      {key: null, valueType: 'ms', subItemsHeading: {key: 'layout', granularity: 1, valueType: 'ms'}, label: taskGroups.styleLayout.label},
+      {key: null, valueType: 'ms', subItemsHeading: {key: 'render', granularity: 1, valueType: 'ms'}, label: taskGroups.paintCompositeRender.label},
       /* eslint-enable max-len */
     ];
 
@@ -208,7 +208,7 @@ class WorkDuringInteraction extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'node', itemType: 'node', text: str_(UIStrings.eventTarget)},
+      {key: 'node', valueType: 'node', label: str_(UIStrings.eventTarget)},
     ];
     const elementItems = [{node: Audit.makeNodeItem(responsivenessElement.node)}];
 

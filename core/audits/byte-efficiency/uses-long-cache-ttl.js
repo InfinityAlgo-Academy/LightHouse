@@ -18,7 +18,7 @@ const UIStrings = {
   title: 'Uses efficient cache policy on static assets',
   /** Title of a diagnostic audit that provides details on the any page resources that could have been served with more efficient cache policies. Cache refers to browser disk cache, which keeps old versions of network resources around for future use. This imperative title is shown to users when there is a significant amount of assets served with poor cache policies. */
   failureTitle: 'Serve static assets with an efficient cache policy',
-  /** Description of a Lighthouse audit that tells the user *why* they need to adopt a long cache lifetime policy. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they need to adopt a long cache lifetime policy. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description:
     'A long cache lifetime can speed up repeat visits to your page. ' +
     '[Learn more about efficient cache policies](https://web.dev/uses-long-cache-ttl/).',
@@ -194,103 +194,102 @@ class CacheHeaders extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts, context) {
+  static async audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    return NetworkRecords.request(devtoolsLogs, context).then(records => {
-      const results = [];
-      let totalWastedBytes = 0;
+    const records = await NetworkRecords.request(devtoolsLogs, context);
+    const results = [];
+    let totalWastedBytes = 0;
 
-      for (const record of records) {
-        if (!CacheHeaders.isCacheableAsset(record)) continue;
+    for (const record of records) {
+      if (!CacheHeaders.isCacheableAsset(record)) continue;
 
-        /** @type {Map<string, string>} */
-        const headers = new Map();
-        for (const header of record.responseHeaders || []) {
-          if (headers.has(header.name.toLowerCase())) {
-            const previousHeaderValue = headers.get(header.name.toLowerCase());
-            headers.set(header.name.toLowerCase(),
-              `${previousHeaderValue}, ${header.value}`);
-          } else {
-            headers.set(header.name.toLowerCase(), header.value);
-          }
+      /** @type {Map<string, string>} */
+      const headers = new Map();
+      for (const header of record.responseHeaders || []) {
+        if (headers.has(header.name.toLowerCase())) {
+          const previousHeaderValue = headers.get(header.name.toLowerCase());
+          headers.set(header.name.toLowerCase(),
+            `${previousHeaderValue}, ${header.value}`);
+        } else {
+          headers.set(header.name.toLowerCase(), header.value);
         }
-
-        const cacheControl = parseCacheControl(headers.get('cache-control'));
-        if (this.shouldSkipRecord(headers, cacheControl)) {
-          continue;
-        }
-
-        // Ignore if cacheLifetimeInSeconds is a nonpositive number.
-        let cacheLifetimeInSeconds = CacheHeaders.computeCacheLifetimeInSeconds(
-          headers, cacheControl);
-        if (cacheLifetimeInSeconds !== null &&
-          (!Number.isFinite(cacheLifetimeInSeconds) || cacheLifetimeInSeconds <= 0)) {
-          continue;
-        }
-        cacheLifetimeInSeconds = cacheLifetimeInSeconds || 0;
-
-        // Ignore assets whose cache lifetime is already high enough
-        const cacheHitProbability = CacheHeaders.getCacheHitProbability(cacheLifetimeInSeconds);
-        if (cacheHitProbability > IGNORE_THRESHOLD_IN_PERCENT) continue;
-
-        const url = UrlUtils.elideDataURI(record.url);
-        const totalBytes = record.transferSize || 0;
-        const wastedBytes = (1 - cacheHitProbability) * totalBytes;
-
-        totalWastedBytes += wastedBytes;
-
-        // Include cacheControl info (if it exists) per url as a diagnostic.
-        /** @type {LH.Audit.Details.DebugData|undefined} */
-        let debugData;
-        if (cacheControl) {
-          debugData = {
-            type: 'debugdata',
-            ...cacheControl,
-          };
-        }
-
-        results.push({
-          url,
-          debugData,
-          cacheLifetimeMs: cacheLifetimeInSeconds * 1000,
-          cacheHitProbability,
-          totalBytes,
-          wastedBytes,
-        });
       }
 
-      results.sort((a, b) => {
-        return a.cacheLifetimeMs - b.cacheLifetimeMs ||
-          b.totalBytes - a.totalBytes ||
-          a.url.localeCompare(b.url);
+      const cacheControl = parseCacheControl(headers.get('cache-control'));
+      if (this.shouldSkipRecord(headers, cacheControl)) {
+        continue;
+      }
+
+      // Ignore if cacheLifetimeInSeconds is a nonpositive number.
+      let cacheLifetimeInSeconds = CacheHeaders.computeCacheLifetimeInSeconds(
+        headers, cacheControl);
+      if (cacheLifetimeInSeconds !== null &&
+        (!Number.isFinite(cacheLifetimeInSeconds) || cacheLifetimeInSeconds <= 0)) {
+        continue;
+      }
+      cacheLifetimeInSeconds = cacheLifetimeInSeconds || 0;
+
+      // Ignore assets whose cache lifetime is already high enough
+      const cacheHitProbability = CacheHeaders.getCacheHitProbability(cacheLifetimeInSeconds);
+      if (cacheHitProbability > IGNORE_THRESHOLD_IN_PERCENT) continue;
+
+      const url = UrlUtils.elideDataURI(record.url);
+      const totalBytes = record.transferSize || 0;
+      const wastedBytes = (1 - cacheHitProbability) * totalBytes;
+
+      totalWastedBytes += wastedBytes;
+
+      // Include cacheControl info (if it exists) per url as a diagnostic.
+      /** @type {LH.Audit.Details.DebugData|undefined} */
+      let debugData;
+      if (cacheControl) {
+        debugData = {
+          type: 'debugdata',
+          ...cacheControl,
+        };
+      }
+
+      results.push({
+        url,
+        debugData,
+        cacheLifetimeMs: cacheLifetimeInSeconds * 1000,
+        cacheHitProbability,
+        totalBytes,
+        wastedBytes,
       });
+    }
 
-      const score = Audit.computeLogNormalScore(
-        {p10: context.options.p10, median: context.options.median},
-        totalWastedBytes
-      );
-
-      /** @type {LH.Audit.Details.Table['headings']} */
-      const headings = [
-        {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-        // TODO(i18n): pre-compute localized duration
-        {key: 'cacheLifetimeMs', itemType: 'ms', text: str_(i18n.UIStrings.columnCacheTTL),
-          displayUnit: 'duration'},
-        {key: 'totalBytes', itemType: 'bytes', text: str_(i18n.UIStrings.columnTransferSize),
-          displayUnit: 'kb', granularity: 1},
-      ];
-
-      const summary = {wastedBytes: totalWastedBytes};
-      const details = Audit.makeTableDetails(headings, results, summary);
-
-      return {
-        score,
-        numericValue: totalWastedBytes,
-        numericUnit: 'byte',
-        displayValue: str_(UIStrings.displayValue, {itemCount: results.length}),
-        details,
-      };
+    results.sort((a, b) => {
+      return a.cacheLifetimeMs - b.cacheLifetimeMs ||
+        b.totalBytes - a.totalBytes ||
+        a.url.localeCompare(b.url);
     });
+
+    const score = Audit.computeLogNormalScore(
+      {p10: context.options.p10, median: context.options.median},
+      totalWastedBytes
+    );
+
+    /** @type {LH.Audit.Details.Table['headings']} */
+    const headings = [
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      // TODO(i18n): pre-compute localized duration
+      {key: 'cacheLifetimeMs', valueType: 'ms', label: str_(i18n.UIStrings.columnCacheTTL),
+        displayUnit: 'duration'},
+      {key: 'totalBytes', valueType: 'bytes', label: str_(i18n.UIStrings.columnTransferSize),
+        displayUnit: 'kb', granularity: 1},
+    ];
+
+    const summary = {wastedBytes: totalWastedBytes};
+    const details = Audit.makeTableDetails(headings, results, summary);
+
+    return {
+      score,
+      numericValue: totalWastedBytes,
+      numericUnit: 'byte',
+      displayValue: str_(UIStrings.displayValue, {itemCount: results.length}),
+      details,
+    };
   }
 }
 

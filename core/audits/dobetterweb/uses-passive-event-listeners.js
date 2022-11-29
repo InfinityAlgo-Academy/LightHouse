@@ -18,7 +18,7 @@ const UIStrings = {
   title: 'Uses passive listeners to improve scrolling performance',
   /** Title of a Lighthouse audit that provides detail on the page's use of passive event listeners used to improve the scrolling performance of the page. This descriptive title is shown to users when the page does not use passive listeners. */
   failureTitle: 'Does not use passive listeners to improve scrolling performance',
-  /** Description of a Lighthouse audit that tells the user why they should use passive event listeners on the page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why they should use passive event listeners on the page. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Consider marking your touch and wheel event listeners as `passive` ' +
       'to improve your page\'s scroll performance. ' +
       '[Learn more about adopting passive event listeners](https://web.dev/uses-passive-event-listeners/).',
@@ -51,7 +51,7 @@ class PassiveEventsAudit extends ViolationAudit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
+      {key: 'source', valueType: 'source-location', label: str_(i18n.UIStrings.columnSource)},
     ];
     // TODO(bckenny): see TODO in geolocation-on-start
     const details = ViolationAudit.makeTableDetails(headings, results);

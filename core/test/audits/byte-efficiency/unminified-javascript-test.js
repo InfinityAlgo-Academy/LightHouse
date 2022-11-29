@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import UnminifiedJavascriptAudit from '../../../audits/byte-efficiency/unminified-javascript.js';
 import {createScript} from '../../test-utils.js';
@@ -15,7 +15,7 @@ const resourceType = 'Script';
 describe('Page uses optimized responses', () => {
   it('fails when given unminified scripts', () => {
     const auditResult = UnminifiedJavascriptAudit.audit_({
-      URL: {finalUrl: 'https://www.example.com'},
+      URL: {finalDisplayedUrl: 'https://www.example.com'},
       Scripts: [
         {
           scriptId: '123.1',
@@ -79,7 +79,7 @@ describe('Page uses optimized responses', () => {
 
   it('fails when given unminified scripts even with missing network record', () => {
     const auditResult = UnminifiedJavascriptAudit.audit_({
-      URL: {finalUrl: 'https://www.example.com'},
+      URL: {finalDisplayedUrl: 'https://www.example.com'},
       Scripts: [
         {
           startLine: 30,
@@ -113,7 +113,7 @@ describe('Page uses optimized responses', () => {
 
   it('passes when scripts are already minified', () => {
     const auditResult = UnminifiedJavascriptAudit.audit_({
-      URL: {finalUrl: 'https://www.example.com'},
+      URL: {finalDisplayedUrl: 'https://www.example.com'},
       Scripts: [
         {
           scriptId: '123.1',

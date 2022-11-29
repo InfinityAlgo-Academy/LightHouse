@@ -15,7 +15,7 @@ const UIStrings = {
   title: 'Uses HTTPS',
   /** Title of a Lighthouse audit that provides detail on the useage of HTTPS on a page. This descriptive title is shown to users when some, or all, requests on the page use HTTP instead of HTTPS. */
   failureTitle: 'Does not use HTTPS',
-  /** Description of a Lighthouse audit that tells the user *why* HTTPS use *for all resources* is important. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* HTTPS use *for all resources* is important. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'All sites should be protected with HTTPS, even ones that don\'t handle ' +
       'sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), ' +
       'where some resources are loaded over HTTP despite the initial request being served ' +
@@ -70,53 +70,52 @@ class HTTPS extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts, context) {
+  static async audit(artifacts, context) {
     const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    return NetworkRecords.request(devtoolsLogs, context).then(networkRecords => {
-      const insecureURLs = networkRecords
-          .filter(record => !NetworkRequest.isSecureRequest(record))
-          .map(record => UrlUtils.elideDataURI(record.url));
+    const networkRecords = await NetworkRecords.request(devtoolsLogs, context);
+    const insecureURLs = networkRecords
+      .filter(record => !NetworkRequest.isSecureRequest(record))
+      .map(record => UrlUtils.elideDataURI(record.url));
 
-      /** @type {Array<{url: string, resolution?: LH.IcuMessage|string}>}  */
-      const items = Array.from(new Set(insecureURLs)).map(url => ({url, resolution: undefined}));
+    /** @type {Array<{url: string, resolution?: LH.IcuMessage|string}>}  */
+    const items = Array.from(new Set(insecureURLs)).map(url => ({url, resolution: undefined}));
 
-      /** @type {LH.Audit.Details.Table['headings']} */
-      const headings = [
-        {key: 'url', itemType: 'url', text: str_(UIStrings.columnInsecureURL)},
-        {key: 'resolution', itemType: 'text', text: str_(UIStrings.columnResolution)},
-      ];
+    /** @type {LH.Audit.Details.Table['headings']} */
+    const headings = [
+      {key: 'url', valueType: 'url', label: str_(UIStrings.columnInsecureURL)},
+      {key: 'resolution', valueType: 'text', label: str_(UIStrings.columnResolution)},
+    ];
 
-      for (const details of artifacts.InspectorIssues.mixedContentIssue) {
-        let item = items.find(item => item.url === details.insecureURL);
-        if (!item) {
-          item = {url: details.insecureURL};
-          items.push(item);
-        }
-        item.resolution = resolutionToString[details.resolutionStatus] ?
-          str_(resolutionToString[details.resolutionStatus]) :
-          details.resolutionStatus;
+    for (const details of artifacts.InspectorIssues.mixedContentIssue) {
+      let item = items.find(item => item.url === details.insecureURL);
+      if (!item) {
+        item = {url: details.insecureURL};
+        items.push(item);
       }
+      item.resolution = resolutionToString[details.resolutionStatus] ?
+        str_(resolutionToString[details.resolutionStatus]) :
+        details.resolutionStatus;
+    }
 
-      // If a resolution wasn't assigned from an InspectorIssue, then the item
-      // is not blocked by the browser but we've determined it is insecure anyhow.
-      // For example, if the URL is localhost, all `http` requests are valid
-      // (localhost is a secure context), but we still identify `http` requests
-      // as an "Allowed" insecure URL.
-      for (const item of items) {
-        if (!item.resolution) item.resolution = str_(UIStrings.allowed);
-      }
+    // If a resolution wasn't assigned from an InspectorIssue, then the item
+    // is not blocked by the browser but we've determined it is insecure anyhow.
+    // For example, if the URL is localhost, all `http` requests are valid
+    // (localhost is a secure context), but we still identify `http` requests
+    // as an "Allowed" insecure URL.
+    for (const item of items) {
+      if (!item.resolution) item.resolution = str_(UIStrings.allowed);
+    }
 
-      let displayValue;
-      if (items.length > 0) {
-        displayValue = str_(UIStrings.displayValue, {itemCount: items.length});
-      }
+    let displayValue;
+    if (items.length > 0) {
+      displayValue = str_(UIStrings.displayValue, {itemCount: items.length});
+    }
 
-      return {
-        score: Number(items.length === 0),
-        displayValue,
-        details: Audit.makeTableDetails(headings, items),
-      };
-    });
+    return {
+      score: Number(items.length === 0),
+      displayValue,
+      details: Audit.makeTableDetails(headings, items),
+    };
   }
 }
 

@@ -12,20 +12,9 @@ import {
   mockDriverSubmodules,
   mockRunnerModule,
 } from './mock-driver.js';
-import {initializeConfig} from '../../config/config.js';
-import {defaultNavigationConfig} from '../../config/constants.js';
-import {LighthouseError} from '../../lib/lh-error.js';
-import DevtoolsLogGatherer from '../../gather/gatherers/devtools-log.js';
-import TraceGatherer from '../../gather/gatherers/trace.js';
 import {fnAny} from '../test-utils.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {Runner as runnerActual} from '../../runner.js';
-
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {import('../../gather/navigation-runner.js')} */
-let runner;
 
 const mocks = await mockDriverSubmodules();
 const mockRunner = await mockRunnerModule();
@@ -33,8 +22,16 @@ beforeEach(async () => {
   mockRunner.reset();
   mockRunner.getGathererList.mockImplementation(runnerActual.getGathererList);
   mockRunner.getAuditList.mockImplementation(runnerActual.getAuditList);
-  runner = (await import('../../gather/navigation-runner.js'));
 });
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+const runner = await import('../../gather/navigation-runner.js');
+const {LighthouseError} = await import('../../lib/lh-error.js');
+const DevtoolsLogGatherer = (await import('../../gather/gatherers/devtools-log.js')).default;
+const TraceGatherer = (await import('../../gather/gatherers/trace.js')).default;
+const {initializeConfig} = await import('../../config/config.js');
+const {defaultNavigationConfig} = await import('../../config/constants.js');
 
 /** @typedef {{meta: LH.Gatherer.GathererMeta<'Accessibility'>, getArtifact: Mock<any, any>, startInstrumentation: Mock<any, any>, stopInstrumentation: Mock<any, any>, startSensitiveInstrumentation: Mock<any, any>, stopSensitiveInstrumentation:  Mock<any, any>}} MockGatherer */
 
@@ -110,10 +107,12 @@ describe('NavigationRunner', () => {
     navigation = createNavigation().navigation;
     computedCache = new Map();
     baseArtifacts = createMockBaseArtifacts();
-    baseArtifacts.URL = {initialUrl: '', finalUrl: ''};
+    baseArtifacts.URL = {finalDisplayedUrl: ''};
 
     mockDriver = createMockDriver();
-    mockDriver.url.mockReturnValue('about:blank');
+    mockDriver.url
+      .mockReturnValueOnce('about:blank')
+      .mockImplementationOnce(() => requestedUrl);
     driver = mockDriver.asDriver();
     page = mockDriver._page.asPage();
 
@@ -167,8 +166,7 @@ describe('NavigationRunner', () => {
       const {baseArtifacts} = await runner._setup({driver, config, requestor: requestedUrl});
       expect(baseArtifacts).toMatchObject({
         URL: {
-          initialUrl: '',
-          finalUrl: '',
+          finalDisplayedUrl: '',
         },
       });
     });
@@ -244,10 +242,9 @@ describe('NavigationRunner', () => {
       const {artifacts} = await run();
       expect(artifacts.URL).toBeUndefined();
       expect(baseArtifacts.URL).toEqual({
-        initialUrl: 'about:blank',
         requestedUrl,
         mainDocumentUrl: requestedUrl,
-        finalUrl: requestedUrl,
+        finalDisplayedUrl: requestedUrl,
       });
     });
 
@@ -286,7 +283,7 @@ describe('NavigationRunner', () => {
 
       // Ensure the first real page load fails.
       mocks.navigationMock.gotoURL.mockImplementation((driver, url) => {
-        if (url === 'about:blank') return {finalUrl: 'about:blank', warnings: []};
+        if (url === 'about:blank') return {finalDisplayedUrl: 'about:blank', warnings: []};
         throw new LighthouseError(LighthouseError.errors.PAGE_HUNG);
       });
 
@@ -303,10 +300,9 @@ describe('NavigationRunner', () => {
       expect(artifacts.LighthouseRunWarnings).toHaveLength(1);
 
       expect(baseArtifacts.URL).toEqual({
-        initialUrl: 'about:blank',
         requestedUrl,
         mainDocumentUrl: requestedUrl,
-        finalUrl: requestedUrl,
+        finalDisplayedUrl: requestedUrl,
       });
     });
   });
@@ -454,7 +450,7 @@ describe('NavigationRunner', () => {
       mocks.navigationMock.gotoURL.mockImplementation(
         /** @param {*} context @param {string} url */
         (context, url) => {
-          if (url.includes('blank')) return {finalUrl: 'about:blank', warnings: []};
+          if (url.includes('blank')) return {finalDisplayedUrl: 'about:blank', warnings: []};
           throw noFcp;
         }
       );
@@ -605,10 +601,7 @@ describe('NavigationRunner', () => {
     it('should throw on invalid URL', async () => {
       mockRunner.gather.mockImplementation(runnerActual.gather);
 
-      const navigatePromise = runner.navigationGather(
-        '',
-        {page: mockDriver._page.asPage()}
-      );
+      const navigatePromise = runner.navigationGather(mockDriver._page.asPage(), '');
 
       await expect(navigatePromise).rejects.toThrow('INVALID_URL');
     });
@@ -621,11 +614,9 @@ describe('NavigationRunner', () => {
       };
 
       await runner.navigationGather(
+        mockDriver._page.asPage(),
         'http://example.com',
-        {
-          page: mockDriver._page.asPage(),
-          flags,
-        }
+        {flags}
       );
 
       expect(mockRunner.gather.mock.calls[0][1]).toMatchObject({

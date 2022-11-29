@@ -1605,7 +1605,7 @@
     "message": "Puslapyje yra galiojančių šaltinio žemėlapių"
   },
   "core/audits/viewport.js | description": {
-    "message": "„`<meta name=\"viewport\">`“ ne tik optimizuoja programą pagal mobiliojo įrenginio ekrano dydį, bet taip pat padeda išvengti [300 milisekundžių naudotojo įvesties delsos](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Sužinokite daugiau](https://web.dev/viewport/)."
+    "message": "„`<meta name=\"viewport\">`“ ne tik optimizuoja programą pagal mobiliojo įrenginio ekrano dydį, bet taip pat padeda išvengti [300 milisekundžių naudotojo įvesties delsos](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Sužinokite daugiau](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Žyma `<meta name=\"viewport\">` nerasta"

@@ -2,6 +2,7 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="basic.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
   <h1>Hello</h1>
@@ -14,6 +15,10 @@
       const input = document.createElement('input');
       input.type = 'text';
       document.body.append(input);
+    }
+
+    window.registerServiceWorker = async () => {
+      await navigator.serviceWorker.register('./sw.js');
     }
   </script>
 </body>

@@ -18,10 +18,12 @@ import Gatherer from './gatherer';
 import {IcuMessage} from './lhr/i18n';
 import LHResult from './lhr/lhr'
 import Protocol from './protocol';
+import Util from './utility-types.js';
+import Audit from './audit.js';
 
 export interface Artifacts extends BaseArtifacts, GathererArtifacts {}
 
-export type FRArtifacts = StrictOmit<Artifacts,
+export type FRArtifacts = Util.StrictOmit<Artifacts,
   | 'Fonts'
   | 'Manifest'
   | 'MixedContent'
@@ -179,7 +181,7 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
 }
 
 declare module Artifacts {
-  type ComputedContext = Immutable<{
+  type ComputedContext = Util.Immutable<{
     computedCache: Map<string, ArbitraryEqualityMap>;
   }>;
 
@@ -188,8 +190,6 @@ declare module Artifacts {
   type MetaElement = Artifacts['MetaElements'][0];
 
   interface URL {
-    /** URL of the main frame before Lighthouse starts. */
-    initialUrl: string;
     /**
      * URL of the initially requested URL during a Lighthouse navigation.
      * Will be `undefined` in timespan/snapshot.
@@ -200,12 +200,8 @@ declare module Artifacts {
      * Will be `undefined` in timespan/snapshot.
      */
     mainDocumentUrl?: string;
-    /**
-     * Will be the same as `mainDocumentUrl` in navigation mode.
-     * Wil be the URL of the main frame after Lighthouse finishes in timespan/snapshot.
-     * TODO: Use the main frame URL in navigation mode as well.
-     */
-    finalUrl: string;
+    /** URL displayed on the page after Lighthouse finishes. */
+    finalDisplayedUrl: string;
   }
 
   interface NodeDetails {
@@ -640,7 +636,7 @@ declare module Artifacts {
   interface MetricComputationDataInput {
     devtoolsLog: DevtoolsLog;
     trace: Trace;
-    settings: Immutable<Config.Settings>;
+    settings: Audit.Context['settings'];
     gatherContext: Artifacts['GatherContext'];
     simulator?: InstanceType<typeof Simulator>;
     URL: Artifacts['URL'];

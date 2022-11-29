@@ -19,7 +19,7 @@ const UIStrings = {
   title: 'Avoids an excessive DOM size',
   /** Title of a diagnostic audit that provides detail on the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM elements and greatest DOM depth. This imperative title is shown to users when there is a significant amount of execution time that could be reduced. */
   failureTitle: 'Avoid an excessive DOM size',
-  /** Description of a Lighthouse audit that tells the user *why* they should reduce the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM elements and greatest DOM depth. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should reduce the size of the web page's DOM. The size of a DOM is characterized by the total number of DOM elements and greatest DOM depth. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'A large DOM will increase memory usage, cause longer ' +
     '[style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), ' +
     'and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn how to avoid an excessive DOM size](https://web.dev/dom-size/).',
@@ -85,26 +85,38 @@ class DOMSize extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'statistic', itemType: 'text', text: str_(UIStrings.columnStatistic)},
-      {key: 'node', itemType: 'node', text: str_(i18n.UIStrings.columnElement)},
-      {key: 'value', itemType: 'numeric', text: str_(UIStrings.columnValue)},
+      {key: 'statistic', valueType: 'text', label: str_(UIStrings.columnStatistic)},
+      {key: 'node', valueType: 'node', label: str_(i18n.UIStrings.columnElement)},
+      {key: 'value', valueType: 'numeric', label: str_(UIStrings.columnValue)},
     ];
 
     /** @type {LH.Audit.Details.Table['items']} */
     const items = [
       {
         statistic: str_(UIStrings.statisticDOMElements),
-        value: stats.totalBodyElements,
+        value: {
+          type: 'numeric',
+          granularity: 1,
+          value: stats.totalBodyElements,
+        },
       },
       {
         node: Audit.makeNodeItem(stats.depth),
         statistic: str_(UIStrings.statisticDOMDepth),
-        value: stats.depth.max,
+        value: {
+          type: 'numeric',
+          granularity: 1,
+          value: stats.depth.max,
+        },
       },
       {
         node: Audit.makeNodeItem(stats.width),
         statistic: str_(UIStrings.statisticDOMWidth),
-        value: stats.width.max,
+        value: {
+          type: 'numeric',
+          granularity: 1,
+          value: stats.width.max,
+        },
       },
     ];
 

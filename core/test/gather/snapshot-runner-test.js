@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-// import {snapshotGather} from '../../../gather/snapshot-runner.js';
 import * as td from 'testdouble';
 
 import {
@@ -15,16 +14,6 @@ import {
   mockRunnerModule,
 } from './mock-driver.js';
 
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {import('../../gather/snapshot-runner.js')['snapshotGather']} */
-let snapshotGather;
-
-before(async () => {
-  snapshotGather = (await import('../../gather/snapshot-runner.js')).snapshotGather;
-});
-
 const mockRunner = await mockRunnerModule();
 
 // Establish the mocks before we import the file under test.
@@ -33,6 +22,10 @@ let mockDriver;
 
 await td.replaceEsm('../../gather/driver.js',
   mockDriverModule(() => mockDriver.asDriver()));
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+const {snapshotGather} = await import('../../gather/snapshot-runner.js');
 
 describe('Snapshot Runner', () => {
   /** @type {ReturnType<typeof createMockPage>} */
@@ -72,7 +65,7 @@ describe('Snapshot Runner', () => {
   });
 
   it('should connect to the page and run', async () => {
-    await snapshotGather({page, config});
+    await snapshotGather(page, {config});
     expect(mockDriver.connect).toHaveBeenCalled();
     expect(mockRunner.gather).toHaveBeenCalled();
     expect(mockRunner.audit).not.toHaveBeenCalled();
@@ -81,19 +74,18 @@ describe('Snapshot Runner', () => {
   it('should collect base artifacts', async () => {
     mockDriver.url.mockResolvedValue('https://lighthouse.example.com/');
 
-    await snapshotGather({page, config});
+    await snapshotGather(page, {config});
     const artifacts = await mockRunner.gather.mock.calls[0][0]();
     expect(artifacts).toMatchObject({
       fetchTime: expect.any(String),
       URL: {
-        initialUrl: 'https://lighthouse.example.com/',
-        finalUrl: 'https://lighthouse.example.com/',
+        finalDisplayedUrl: 'https://lighthouse.example.com/',
       },
     });
   });
 
   it('should collect snapshot artifacts', async () => {
-    await snapshotGather({page, config});
+    await snapshotGather(page, {config});
     const artifacts = await mockRunner.gather.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A', B: 'Artifact B'});
     expect(gathererA.getArtifact).toHaveBeenCalled();
@@ -108,7 +100,7 @@ describe('Snapshot Runner', () => {
       screenEmulation: {mobile: false},
     };
 
-    await snapshotGather({page, config, flags});
+    await snapshotGather(page, {config, flags});
 
     expect(mockRunner.gather.mock.calls[0][1]).toMatchObject({
       config: {
@@ -118,7 +110,7 @@ describe('Snapshot Runner', () => {
   });
 
   it('should not invoke instrumentation methods', async () => {
-    await snapshotGather({page, config});
+    await snapshotGather(page, {config});
     await mockRunner.gather.mock.calls[0][0]();
     expect(gathererA.startInstrumentation).not.toHaveBeenCalled();
     expect(gathererA.startSensitiveInstrumentation).not.toHaveBeenCalled();
@@ -129,7 +121,7 @@ describe('Snapshot Runner', () => {
   it('should skip timespan artifacts', async () => {
     gathererB.meta.supportedModes = ['timespan'];
 
-    await snapshotGather({page, config});
+    await snapshotGather(page, {config});
     const artifacts = await mockRunner.gather.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A'});
     expect(artifacts).not.toHaveProperty('B');
@@ -142,7 +134,7 @@ describe('Snapshot Runner', () => {
     // @ts-expect-error - the default fixture was defined as one without dependencies.
     gathererB.meta.dependencies = {ImageElements: dependencySymbol};
 
-    await snapshotGather({page, config});
+    await snapshotGather(page, {config});
     const artifacts = await mockRunner.gather.mock.calls[0][0]();
     expect(artifacts).toMatchObject({A: 'Artifact A', B: 'Artifact B'});
     expect(gathererB.getArtifact.mock.calls[0][0]).toMatchObject({

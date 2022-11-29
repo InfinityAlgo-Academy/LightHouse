@@ -18,7 +18,7 @@ const UIStrings = {
   title: 'The page contains a heading, skip link, or landmark region',
   /** Title of an accesibility audit that evaluates if the page has elements that let screen reader users skip over repetitive content. `heading`, `skip link`, and `landmark region` are technical terms for the elements that enable quick page navigation. This title is descriptive of the failing state and is shown to users when there is a failure that needs to be addressed. */
   failureTitle: 'The page does not contain a heading, skip link, or landmark region',
-  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should try to pass. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Adding ways to bypass repetitive content lets keyboard users navigate the ' +
       'page more efficiently. ' +
       '[Learn more about bypass blocks](https://dequeuniversity.com/rules/axe/4.4/bypass).',
@@ -36,6 +36,7 @@ class Bypass extends AxeAudit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
+      scoreDisplayMode: AxeAudit.SCORING_MODES.INFORMATIVE,
       requiredArtifacts: ['Accessibility'],
     };
   }

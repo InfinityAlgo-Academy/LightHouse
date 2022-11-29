@@ -169,7 +169,7 @@ const rawArgv = y
   .wrap(y.terminalWidth())
   .argv;
 const argv =
-  /** @type {Awaited<typeof rawArgv> & CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
+  /** @type {Awaited<typeof rawArgv> & LH.Util.CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
 
 // This captures all of our mocha tests except for:
 // * flow-report, because it needs to provide additional mocha flags
@@ -188,23 +188,28 @@ const defaultTestMatches = [
   'viewer/**/*-test.js',
 ];
 
-const filterFilePatterns = argv._.filter(arg => !(typeof arg !== 'string' || arg.startsWith('--')));
+const filterFilePatterns = argv._.filter(arg => !(typeof arg !== 'string' || arg.startsWith('--')))
+  .map(pattern => {
+    if (path.isAbsolute(pattern)) {
+      // Allows this to work:
+      //     yarn mocha /Users/cjamcl/src/lighthouse/core/test/runner-test.js
+      return path.relative(LH_ROOT, pattern);
+    } else {
+      return pattern;
+    }
+  });
 
 function getTestFiles() {
   // Collect all the possible test files, based off the provided testMatch glob pattern
   // or the default patterns defined above.
   const testsGlob = argv.testMatch || `{${defaultTestMatches.join(',')}}`;
-  const allTestFiles = glob.sync(testsGlob, {cwd: LH_ROOT, absolute: true});
+  const allTestFiles = glob.sync(testsGlob, {cwd: LH_ROOT});
 
   // If provided, filter the test files using a basic string includes on the absolute path of
-  // each test file. Map back to a relative path because it's nice to keep the printed commands shorter.
-  // Why pass `absolute: true` to glob above? So that this works:
-  //     yarn mocha /Users/cjamcl/src/lighthouse/core/test/runner-test.js
-  let filteredTests = (
-    filterFilePatterns.length ?
-      allTestFiles.filter((file) => filterFilePatterns.some(pattern => file.includes(pattern))) :
-      allTestFiles
-  ).map(testPath => path.relative(process.cwd(), testPath));
+  // each test file.
+  let filteredTests = filterFilePatterns.length ?
+    allTestFiles.filter((file) => filterFilePatterns.some(pattern => file.includes(pattern))) :
+    allTestFiles;
 
   let grep;
   if (argv.onlyFailures) {

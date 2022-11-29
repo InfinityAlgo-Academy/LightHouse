@@ -16,7 +16,7 @@ const UIStrings = {
   title: 'JavaScript execution time',
   /** Title of a diagnostic audit that provides detail on the time spent executing javascript files during the load. This imperative title is shown to users when there is a significant amount of execution time that could be reduced. */
   failureTitle: 'Reduce JavaScript execution time',
-  /** Description of a Lighthouse audit that tells the user that they should reduce the amount of time spent executing javascript and one method of doing so. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user that they should reduce the amount of time spent executing javascript and one method of doing so. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Consider reducing the time spent parsing, compiling, and executing JS. ' +
     'You may find delivering smaller JS payloads helps with this. ' +
     '[Learn how to reduce Javascript execution time](https://web.dev/bootup-time/).',
@@ -121,11 +121,11 @@ class BootupTime extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'total', granularity: 1, itemType: 'ms', text: str_(UIStrings.columnTotal)},
-      {key: 'scripting', granularity: 1, itemType: 'ms', text: str_(UIStrings.columnScriptEval)},
-      {key: 'scriptParseCompile', granularity: 1, itemType: 'ms',
-        text: str_(UIStrings.columnScriptParse)},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'total', granularity: 1, valueType: 'ms', label: str_(UIStrings.columnTotal)},
+      {key: 'scripting', granularity: 1, valueType: 'ms', label: str_(UIStrings.columnScriptEval)},
+      {key: 'scriptParseCompile', granularity: 1, valueType: 'ms',
+        label: str_(UIStrings.columnScriptParse)},
     ];
 
     const details = BootupTime.makeTableDetails(headings, results, summary);

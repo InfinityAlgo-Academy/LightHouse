@@ -82,9 +82,9 @@ export class ReportRenderer {
   _renderReportTopbar(report) {
     const el = this._dom.createComponent('topbar');
     const metadataUrl = this._dom.find('a.lh-topbar__url', el);
-    metadataUrl.textContent = report.finalUrl;
-    metadataUrl.title = report.finalUrl;
-    this._dom.safelySetHref(metadataUrl, report.finalUrl);
+    metadataUrl.textContent = report.finalDisplayedUrl;
+    metadataUrl.title = report.finalDisplayedUrl;
+    this._dom.safelySetHref(metadataUrl, report.finalDisplayedUrl);
     return el;
   }
 
@@ -119,8 +119,6 @@ export class ReportRenderer {
    */
   _renderMetaBlock(report, footer) {
     const envValues = Util.getEmulationDescriptions(report.configSettings || {});
-
-
     const match = report.userAgent.match(/(\w*Chrome\/[\d.]+)/); // \w* to include 'HeadlessChrome'
     const chromeVer = Array.isArray(match)
       ? match[1].replace('/', ' ').replace('Chrome', 'Chromium')
@@ -129,15 +127,25 @@ export class ReportRenderer {
     const benchmarkIndex = report.environment.benchmarkIndex.toFixed(0);
     const axeVersion = report.environment.credits?.['axe-core'];
 
+    const devicesTooltipTextLines = [
+      `${Util.i18n.strings.runtimeSettingsBenchmark}: ${benchmarkIndex}`,
+      `${Util.i18n.strings.runtimeSettingsCPUThrottling}: ${envValues.cpuThrottling}`,
+    ];
+    if (envValues.screenEmulation) {
+      devicesTooltipTextLines.push(
+        `${Util.i18n.strings.runtimeSettingsScreenEmulation}: ${envValues.screenEmulation}`);
+    }
+    if (axeVersion) {
+      devicesTooltipTextLines.push(`${Util.i18n.strings.runtimeSettingsAxeVersion}: ${axeVersion}`);
+    }
+
     // [CSS icon class, textContent, tooltipText]
     const metaItems = [
       ['date',
         `Captured at ${Util.i18n.formatDateTime(report.fetchTime)}`],
       ['devices',
         `${envValues.deviceEmulation} with Lighthouse ${report.lighthouseVersion}`,
-        `${Util.i18n.strings.runtimeSettingsBenchmark}: ${benchmarkIndex}` +
-            `\n${Util.i18n.strings.runtimeSettingsCPUThrottling}: ${envValues.cpuThrottling}` +
-            (axeVersion ? `\n${Util.i18n.strings.runtimeSettingsAxeVersion}: ${axeVersion}` : '')],
+        devicesTooltipTextLines.join('\n')],
       ['samples-one',
         Util.i18n.strings.runtimeSingleLoad,
         Util.i18n.strings.runtimeSingleLoadTooltip],

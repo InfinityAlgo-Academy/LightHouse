@@ -40,7 +40,7 @@ async function buildEntryPoint() {
         '___BROWSER_BRAND___': browserBrand,
       }),
       rollupPlugins.nodeResolve(),
-      rollupPlugins.inlineFs({verbose: false}),
+      rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
       rollupPlugins.terser(),
     ],
   });

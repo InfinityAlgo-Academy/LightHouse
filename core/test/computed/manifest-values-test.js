@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import {ManifestValues} from '../../computed/manifest-values.js';
 import {parseManifest} from '../../lib/manifest-parser.js';
@@ -82,19 +82,6 @@ describe('ManifestValues computed artifact', () => {
     it('fails when a minimal manifest contains no background_color', async () => {
       const WebAppManifest = noUrlManifestParser(JSON.stringify({
         start_url: '/',
-      }));
-      const InstallabilityErrors = {errors: []};
-      const artifacts = {WebAppManifest, InstallabilityErrors};
-
-      const results = await ManifestValues.request(artifacts, getMockContext());
-      const colorResults = results.allChecks.filter(i => i.id.includes('Color'));
-      assert.equal(colorResults.every(i => i.passing === false), true);
-    });
-
-    it('fails when a minimal manifest contains an invalid background_color', async () => {
-      const WebAppManifest = noUrlManifestParser(JSON.stringify({
-        background_color: 'no',
-        theme_color: 'no',
       }));
       const InstallabilityErrors = {errors: []};
       const artifacts = {WebAppManifest, InstallabilityErrors};

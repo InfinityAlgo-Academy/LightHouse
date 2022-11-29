@@ -14,9 +14,8 @@ const UIStrings = {
   'title': 'Web app manifest and service worker meet the installability requirements',
   /** Title of a Lighthouse audit that provides detail on if a website is installable as an application. This descriptive title is shown to users when a webapp is not installable. */
   'failureTitle': 'Web app manifest or service worker do not meet the installability requirements',
-  /** Description of a Lighthouse audit that tells the user why installability is important for webapps. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  'description': `Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. ' +
-  '[Learn more about manifest installability requirements](https://web.dev/installable-manifest/).`,
+  /** Description of a Lighthouse audit that tells the user why installability is important for webapps. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
+  'description': `Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more about manifest installability requirements](https://web.dev/installable-manifest/).`,
   /** Description Table column header for the observed value of the Installability failure reason statistic. */
   'columnValue': 'Failure reason',
   /**
@@ -217,7 +216,7 @@ class InstallableManifest extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'reason', itemType: 'text', text: str_(UIStrings.columnValue)},
+      {key: 'reason', valueType: 'text', label: str_(UIStrings.columnValue)},
     ];
 
     // Errors for report table.

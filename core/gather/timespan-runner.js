@@ -14,11 +14,12 @@ import {initializeConfig} from '../config/config.js';
 import {getBaseArtifacts, finalizeArtifacts} from './base-artifacts.js';
 
 /**
- * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, flags?: LH.Flags}} options
+ * @param {LH.Puppeteer.Page} page
+ * @param {{config?: LH.Config.Json, flags?: LH.Flags}} [options]
  * @return {Promise<{endTimespanGather(): Promise<LH.Gatherer.FRGatherResult>}>}
  */
-async function startTimespanGather(options) {
-  const {page, flags = {}} = options;
+async function startTimespanGather(page, options = {}) {
+  const {flags = {}} = options;
   log.setLevel(flags.logLevel || 'error');
 
   const {config} = await initializeConfig('timespan', options.config, flags);
@@ -28,7 +29,6 @@ async function startTimespanGather(options) {
   /** @type {Map<string, LH.ArbitraryEqualityMap>} */
   const computedCache = new Map();
   const artifactDefinitions = config.artifacts || [];
-  const initialUrl = await driver.url();
   const baseArtifacts = await getBaseArtifacts(config, driver, {gatherMode: 'timespan'});
   const artifactState = getEmptyArtifactState();
   /** @type {Omit<import('./runner-helpers.js').CollectPhaseArtifactOptions, 'phase'>} */
@@ -49,15 +49,12 @@ async function startTimespanGather(options) {
 
   return {
     async endTimespanGather() {
-      const finalUrl = await driver.url();
+      const finalDisplayedUrl = await driver.url();
 
       const runnerOptions = {config, computedCache};
       const artifacts = await Runner.gather(
         async () => {
-          baseArtifacts.URL = {
-            initialUrl,
-            finalUrl,
-          };
+          baseArtifacts.URL = {finalDisplayedUrl};
 
           await collectPhaseArtifacts({phase: 'stopSensitiveInstrumentation', ...phaseOptions});
           await collectPhaseArtifacts({phase: 'stopInstrumentation', ...phaseOptions});

@@ -16,7 +16,7 @@ import * as i18n from '../../lib/i18n/i18n.js';
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to encode images with optimization (better compression). This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Efficiently encode images',
-  /** Description of a Lighthouse audit that tells the user *why* they need to efficiently encode images. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they need to efficiently encode images. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Optimized images load faster and consume less cellular data. ' +
   '[Learn how to efficiently encode images](https://web.dev/uses-optimized-images/).',
 };
@@ -69,7 +69,7 @@ class UsesOptimizedImages extends ByteEfficiencyAudit {
    * @return {import('./byte-efficiency-audit.js').ByteEfficiencyProduct}
    */
   static audit_(artifacts) {
-    const pageURL = artifacts.URL.finalUrl;
+    const pageURL = artifacts.URL.finalDisplayedUrl;
     const images = artifacts.OptimizedImages;
     const imageElements = artifacts.ImageElements;
     /** @type {Map<string, LH.Artifacts.ImageElement>} */

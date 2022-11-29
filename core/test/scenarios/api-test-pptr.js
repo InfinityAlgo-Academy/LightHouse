@@ -6,7 +6,7 @@
 
 import jestMock from 'jest-mock';
 
-import * as lighthouse from '../../api.js';
+import * as api from '../../index.js';
 import {createTestState, getAuditsBreakdown} from './pptr-test-utils.js';
 import {LH_ROOT} from '../../../root.js';
 
@@ -36,14 +36,13 @@ describe('Fraggle Rock API', function() {
     it('should compute accessibility results on the page as-is', async () => {
       await setupTestPage();
 
-      const result = await lighthouse.snapshot({page: state.page});
+      const result = await api.snapshot(state.page);
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
       const {lhr, artifacts} = result;
       const url = `${state.serverBaseUrl}/onclick.html#done`;
       expect(artifacts.URL).toEqual({
-        initialUrl: url,
-        finalUrl: url,
+        finalDisplayedUrl: url,
       });
 
       const accessibility = lhr.categories.accessibility;
@@ -64,7 +63,7 @@ describe('Fraggle Rock API', function() {
     });
 
     it('should compute ConsoleMessage results across a span of time', async () => {
-      const run = await lighthouse.startTimespan({page: state.page});
+      const run = await api.startTimespan(state.page);
 
       await setupTestPage();
 
@@ -76,8 +75,7 @@ describe('Fraggle Rock API', function() {
 
       const {lhr, artifacts} = result;
       expect(artifacts.URL).toEqual({
-        initialUrl: 'about:blank',
-        finalUrl: `${state.serverBaseUrl}/onclick.html#done`,
+        finalDisplayedUrl: `${state.serverBaseUrl}/onclick.html#done`,
       });
 
       const bestPractices = lhr.categories['best-practices'];
@@ -119,11 +117,10 @@ describe('Fraggle Rock API', function() {
 
     it('should compute results from timespan after page load', async () => {
       const {page, serverBaseUrl} = state;
-      const initialUrl = `${serverBaseUrl}/onclick.html`;
-      await page.goto(initialUrl);
+      await page.goto(`${serverBaseUrl}/onclick.html`);
       await page.waitForSelector('button');
 
-      const run = await lighthouse.startTimespan({page});
+      const run = await api.startTimespan(state.page);
 
       await page.click('button');
       await page.waitForSelector('input');
@@ -136,8 +133,7 @@ describe('Fraggle Rock API', function() {
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
       expect(result.artifacts.URL).toEqual({
-        initialUrl,
-        finalUrl: `${initialUrl}#done`,
+        finalDisplayedUrl: `${serverBaseUrl}/onclick.html#done`,
       });
 
       const {auditResults, erroredAudits, notApplicableAudits} = getAuditsBreakdown(result.lhr);
@@ -159,15 +155,14 @@ describe('Fraggle Rock API', function() {
     it('should compute both snapshot & timespan results', async () => {
       const {page, serverBaseUrl} = state;
       const url = `${serverBaseUrl}/index.html`;
-      const result = await lighthouse.navigation(url, {page});
+      const result = await api.navigation(page, url);
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
       const {lhr, artifacts} = result;
       expect(artifacts.URL).toEqual({
-        initialUrl: 'about:blank',
         requestedUrl: url,
         mainDocumentUrl: url,
-        finalUrl: url,
+        finalDisplayedUrl: url,
       });
 
       const {auditResults, failedAudits, erroredAudits} = getAuditsBreakdown(lhr);
@@ -191,28 +186,26 @@ describe('Fraggle Rock API', function() {
 
     it('should compute results with callback requestor', async () => {
       const {page, serverBaseUrl} = state;
-      const initialUrl = `${serverBaseUrl}/links-to-index.html`;
       const requestedUrl = `${serverBaseUrl}/?redirect=/index.html`;
       const mainDocumentUrl = `${serverBaseUrl}/index.html`;
-      await page.goto(initialUrl);
+      await page.goto(`${serverBaseUrl}/links-to-index.html`);
 
       const requestor = jestMock.fn(async () => {
         await page.click('a');
       });
 
-      const result = await lighthouse.navigation(requestor, {page});
+      const result = await api.navigation(page, requestor);
       if (!result) throw new Error('Lighthouse failed to produce a result');
 
       expect(requestor).toHaveBeenCalled();
 
       const {lhr, artifacts} = result;
       expect(lhr.requestedUrl).toEqual(requestedUrl);
-      expect(lhr.finalUrl).toEqual(mainDocumentUrl);
+      expect(lhr.finalDisplayedUrl).toEqual(mainDocumentUrl);
       expect(artifacts.URL).toEqual({
-        initialUrl,
         requestedUrl,
         mainDocumentUrl,
-        finalUrl: mainDocumentUrl,
+        finalDisplayedUrl: mainDocumentUrl,
       });
 
       const {auditResults, failedAudits, erroredAudits} = getAuditsBreakdown(lhr);

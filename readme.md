@@ -20,7 +20,7 @@
   - [Lighthouse Integrations in Web Perf services](#lighthouse-integrations-in-web-perf-services)
   - [Lighthouse Integrations in non-Web Perf services](#lighthouse-integrations-in-non-web-perf-services)
   - [Plugins](#plugins)
-  - [Related Projects](#related-projects)
+  - [Related projects](#related-projects)
 - [FAQ](#faq)
   * [How does Lighthouse work?](#how-does-lighthouse-work)
   * [Can I configure the lighthouse run?](#can-i-configure-the-lighthouse-run)
@@ -38,7 +38,7 @@ Lighthouse is integrated directly into the Chrome DevTools, under the "Lighthous
 
 **Run it**: open Chrome DevTools, select the Lighthouse panel, and hit "Generate report".
 
-<img src="https://raw.githubusercontent.com/GoogleChrome/lighthouse/4dbab6bf5466e7220980bccd2f5883f4ad661725/assets/example_dev_tools.png" alt="Lighthouse integration in Chrome DevTools" width="500px">
+<img width="550" alt="Lighthouse integration in Chrome DevTools." src="https://user-images.githubusercontent.com/2766281/204185043-9c49abe5-baee-4b26-b5ce-ece410661213.png">
 
 ## Using the Chrome extension
 
@@ -52,7 +52,7 @@ The Chrome extension was available prior to Lighthouse being available in Chrome
 
 The Node CLI provides the most flexibility in how Lighthouse runs can be configured and reported. Users who want more advanced usage, or want to run Lighthouse in an automated fashion should use the Node CLI.
 
-_Lighthouse requires Node 14 LTS (14.x) or later._
+_Lighthouse requires Node 16 LTS (16.x) or later._
 
 **Installation**:
 
@@ -253,14 +253,14 @@ Useful documentation, examples, and recipes to get you started.
 
 The session from Google I/O 2018 covers the new performance engine, upcoming Lighthouse REST API, and using the Chrome UX report to evaluate real-user data.
 
-[![Lighthouse @ Google I/O 2018](https://img.youtube.com/vi/UvK9zAsSM8Q/0.jpg)](https://www.youtube.com/watch?v=UvK9zAsSM8Q)
+[![Watch the Lighthouse @ Google I/O 2018 session.](https://img.youtube.com/vi/UvK9zAsSM8Q/0.jpg)](https://www.youtube.com/watch?v=UvK9zAsSM8Q)
 
 The session from Google I/O 2017 covers architecture, writing custom audits,
 GitHub/Travis/CI integration, headless Chrome, and more:
 
-[![Lighthouse @ Google I/O 2017](https://img.youtube.com/vi/NoRYn6gOtVo/0.jpg)](https://www.youtube.com/watch?v=NoRYn6gOtVo)
+[![Watch the Lighthouse @ Google I/O 2017 session.](https://img.youtube.com/vi/NoRYn6gOtVo/0.jpg)](https://www.youtube.com/watch?v=NoRYn6gOtVo)
 
-_click to watch the video_
+_Click the image to watch the video on YouTube._
 
 ## Develop
 
@@ -312,12 +312,13 @@ yarn type-check
 
 ### Docs
 
-Some of our docs have tests that run only in CI by default. If you end up needing to modify our documentation, you'll need to run `yarn build-pack && yarn test-docs` locally to make sure they pass.
+Some of our docs have tests that run only in CI by default. To modify our documentation, you'll need to run `yarn build-pack && yarn test-docs` locally to make sure they pass.
 
 **Additional Dependencies**
 - `brew install jq`
 
 ## Lighthouse Integrations in Web Perf services
+
 This section details services that have integrated Lighthouse data. If you're working on a cool project integrating Lighthouse and would like to be featured here, file an issue to this repo or tweet at us [@_____lighthouse](https://twitter.com/____lighthouse)!
 
 * **[Web Page Test](https://www.webpagetest.org)** — An [open source](https://github.com/WPO-Foundation/webpagetest) tool for measuring and analyzing the performance of web pages on real devices. Users can choose to produce a Lighthouse report alongside the analysis of WebPageTest results.
@@ -380,7 +381,8 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[lighthouse-plugin-crux](https://github.com/dvelasquez/lighthouse-plugin-crux)** - a plugin that quickly gathers real-user-metrics data from the [Chrome UX Report API](https://developers.google.com/web/tools/chrome-user-experience-report/api/reference).
 
-## Related Projects
+## Related projects
+
 Other awesome open source projects that use Lighthouse.
 
 * **[auto-lighthouse](https://github.com/TGiles/auto-lighthouse)** - a CLI for crawling a domain and generating mobile and desktop reports for each page.
@@ -456,7 +458,7 @@ machine. Report results are never processed or beaconed to a remote server.
 
 Starting in Lighthouse 8.0, Lighthouse relies entirely on native `Intl` support and no longer uses an `Intl` polyfill. If you're using Node 14 or later, there should be no issue because Node is now [built with `full-icu` by default](https://nodejs.medium.com/node-js-12-to-lts-and-node-js-13-is-here-e28d6a4a2bd#9514).
 
-However, if you're using a `small-icu` Node build, you may see Lighthouse log messages about your locale not being available. To remedy this, you can upgrade to Node 14+ or manually install ICU data by using the [`full-icu`](https://www.npmjs.com/package/full-icu) module and the [`--icu-data-dir` node flag](https://nodejs.org/api/intl.html#intl_providing_icu_data_at_runtime) at launch.
+However, if you're using a `small-icu` Node build, you may see Lighthouse log messages about your locale not being available. To remedy this, you can manually install ICU data by using the [`full-icu`](https://www.npmjs.com/package/full-icu) module and the [`--icu-data-dir` node flag](https://nodejs.org/api/intl.html#intl_providing_icu_data_at_runtime) at launch.
 
 ### How do I author custom audits to extend Lighthouse?
 

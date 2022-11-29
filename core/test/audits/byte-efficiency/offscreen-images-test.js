@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import UnusedImages from '../../../audits/byte-efficiency/offscreen-images.js';
 import {createTestTrace} from '../../create-test-trace.js';
@@ -460,10 +460,9 @@ describe('OffscreenImages audit', () => {
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {defaultPass: devtoolsLog},
       URL: {
-        initialUrl: 'about:blank',
         requestedUrl: recordA.url,
         mainDocumentUrl: recordA.url,
-        finalUrl: recordA.url,
+        finalDisplayedUrl: recordA.url,
       },
     };
 
@@ -525,10 +524,9 @@ describe('OffscreenImages audit', () => {
       traces: {defaultPass: createTestTrace({topLevelTasks})},
       devtoolsLogs: {defaultPass: devtoolsLog},
       URL: {
-        initialUrl: 'about:blank',
         requestedUrl: recordA.url,
         mainDocumentUrl: recordA.url,
-        finalUrl: recordA.url,
+        finalDisplayedUrl: recordA.url,
       },
     };
 
