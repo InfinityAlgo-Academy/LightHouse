@@ -52,8 +52,7 @@ const DEFAULT_RETRIES = 0;
  */
 async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
   const {
-    isDebug,
-    useLegacyNavigation,
+    testRunnerOpts: runnerOpts,
     jobs = DEFAULT_CONCURRENT_RUNS,
     retries = DEFAULT_RETRIES,
     lighthouseRunner = Object.assign(cliLighthouseRunner, {runnerName: 'cli'}),
@@ -75,8 +74,7 @@ async function runSmokehouse(smokeTestDefns, smokehouseOptions) {
   const concurrentMapper = new ConcurrentMapper();
 
   const testOptions = {
-    isDebug,
-    useLegacyNavigation,
+    runnerOpts,
     retries,
     lighthouseRunner,
     takeNetworkRequestUrls,
@@ -156,7 +154,7 @@ function convertToLegacyConfig(configJson) {
 /**
  * Run Lighthouse in the selected runner.
  * @param {Smokehouse.TestDfn} smokeTestDefn
- * @param {{isDebug?: boolean, useLegacyNavigation?: boolean, retries: number, lighthouseRunner: Smokehouse.LighthouseRunner, takeNetworkRequestUrls?: () => string[]}} testOptions
+ * @param {Smokehouse.SmokehouseOptions} testOptions
  * @return {Promise<SmokehouseResult>}
  */
 async function runSmokeTest(smokeTestDefn, testOptions) {
@@ -164,8 +162,7 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
   const {
     lighthouseRunner,
     retries,
-    isDebug,
-    useLegacyNavigation,
+    testRunnerOpts: runnerOpts,
     takeNetworkRequestUrls,
   } = testOptions;
   const requestedUrl = expectations.lhr.requestedUrl;
@@ -185,14 +182,14 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
     }
 
     let configJson = smokeTestDefn.config;
-    if (useLegacyNavigation) {
+    if (runnerOpts.useLegacyNavigation) {
       configJson = convertToLegacyConfig(configJson);
     }
 
     // Run Lighthouse.
     try {
       result = {
-        ...await lighthouseRunner(requestedUrl, configJson, {isDebug, useLegacyNavigation}),
+        ...await lighthouseRunner(requestedUrl, configJson, runnerOpts),
         networkRequests: takeNetworkRequestUrls ? takeNetworkRequestUrls() : undefined,
       };
 
@@ -212,8 +209,7 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
     // Assert result.
     report = getAssertionReport(result, expectations, {
       runner: lighthouseRunner.runnerName,
-      isDebug,
-      useLegacyNavigation,
+      ...runnerOpts,
     });
 
     runs.push({
@@ -333,4 +329,6 @@ function getShardedDefinitions(testDefns, shardArg) {
 export {
   runSmokehouse,
   getShardedDefinitions,
+  DEFAULT_CONCURRENT_RUNS,
+  DEFAULT_RETRIES,
 };

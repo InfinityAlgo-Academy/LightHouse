@@ -28,7 +28,7 @@ const execFileAsync = promisify(execFile);
  * Launch Chrome and do a full Lighthouse run via the Lighthouse CLI.
  * @param {string} url
  * @param {LH.Config.Json=} configJson
- * @param {{isDebug?: boolean, useFraggleRock?: boolean}=} testRunnerOptions
+ * @param {Smokehouse.SmokehouseOptions['runnerOpts']=} testRunnerOptions
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
  */
 async function runLighthouse(url, configJson, testRunnerOptions = {}) {
@@ -46,11 +46,12 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
  * @param {string} url
  * @param {string} tmpPath
  * @param {LH.Config.Json=} configJson
- * @param {{isDebug?: boolean, useLegacyNavigation?: boolean}=} options
+ * @param {Smokehouse.SmokehouseOptions['runnerOpts']=} testRunnerOptions
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
  */
-async function internalRun(url, tmpPath, configJson, options) {
-  const {isDebug = false, useLegacyNavigation = false} = options || {};
+async function internalRun(url, tmpPath, configJson, testRunnerOptions) {
+  const {isDebug = false, useLegacyNavigation = false, forceHeadful = false} = testRunnerOptions ||
+    {};
   const localConsole = new LocalConsole();
 
   const outputPath = `${tmpPath}/smokehouse.report.json`;
@@ -62,7 +63,7 @@ async function internalRun(url, tmpPath, configJson, options) {
     `--output-path=${outputPath}`,
     '--output=json',
     // native headless, as full headless has several behavior differences that break tests. http://go/rooxt
-    '--chrome-flags="--headless=chrome"',
+    forceHeadful ? '' : '--chrome-flags="--headless=chrome"',
     `-G=${artifactsDirectory}`,
     `-A=${artifactsDirectory}`,
     '--port=0',

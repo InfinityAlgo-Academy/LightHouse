@@ -47,7 +47,7 @@ if (!isMainThread && parentPort) {
 /**
  * @param {string} url
  * @param {LH.Config.Json|undefined} configJson
- * @param {{isDebug?: boolean, useLegacyNavigation?: boolean}} testRunnerOptions
+ * @param {Smokehouse.SmokehouseOptions['runnerOpts']} testRunnerOptions
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>}
  */
 async function runBundledLighthouse(url, configJson, testRunnerOptions) {
@@ -93,7 +93,9 @@ async function runBundledLighthouse(url, configJson, testRunnerOptions) {
       // Puppeteer is not included in the bundle, we must create the page here.
       const browser = await puppeteer.launch({
         executablePath: chromePath,
-        args: ['--headless=chrome'],
+        args: [
+          testRunnerOptions?.forceHeadful ? '' : '--headless=chrome',
+        ],
       });
       const page = await browser.newPage();
       runnerResult = await lighthouse(url, {logLevel}, configJson, page);
@@ -114,7 +116,7 @@ async function runBundledLighthouse(url, configJson, testRunnerOptions) {
  * Launch Chrome and do a full Lighthouse run via the Lighthouse DevTools bundle.
  * @param {string} url
  * @param {LH.Config.Json=} configJson
- * @param {{isDebug?: boolean, useLegacyNavigation?: boolean}=} testRunnerOptions
+ * @param {Smokehouse.SmokehouseOptions['runnerOpts']=} testRunnerOptions
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
  */
 async function runLighthouse(url, configJson, testRunnerOptions = {}) {

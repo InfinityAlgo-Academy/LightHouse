@@ -55,16 +55,21 @@ declare global {
       {runnerName?: string} & ((url: string, configJson?: Config.Json, runnerOptions?: {isDebug?: boolean; useLegacyNavigation?: boolean}) => Promise<{lhr: LHResult, artifacts: Artifacts, log: string}>);
 
     export interface SmokehouseOptions {
-      /** If true, performs extra logging from the test runs. */
-      isDebug?: boolean;
-      /** If true, use the legacy navigation runner. */
-      useLegacyNavigation?: boolean;
+      /** Options to pass to the specific Lighthouse runner. */
+      runnerOpts: {
+        /** If true, performs extra logging from the test runs. */
+        isDebug?: boolean;
+        /** If true, use the legacy navigation runner. */
+        useLegacyNavigation?: boolean;
+        /** Launch Chrome in typical desktop headful mode, rather than our default of `--headless-chrome`. */
+        forceHeadful?: boolean;
+      };
       /** Manually set the number of jobs to run at once. `1` runs all tests serially. */
       jobs?: number;
       /** The number of times to retry failing tests before accepting. Defaults to 0. */
-      retries?: number;
+      retries: number;
       /** A function that runs Lighthouse with the given options. Defaults to running Lighthouse via the CLI. */
-      lighthouseRunner?: LighthouseRunner;
+      lighthouseRunner: LighthouseRunner;
       /** A function that gets a list of URLs requested to the server since the last fetch. */
       takeNetworkRequestUrls?: () => string[];
       /** A function run once before all smoke tests. */
