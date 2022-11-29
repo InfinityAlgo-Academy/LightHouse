@@ -150,7 +150,7 @@ class NetworkAnalyzer {
       if (!Number.isFinite(timing.receiveHeadersEnd) || timing.receiveHeadersEnd < 0) return;
 
       // Compute the amount of time downloading everything after the first congestion window took
-      const totalTime = (record.endTime - record.startTime) * 1000;
+      const totalTime = record.endTime - record.startTime;
       const downloadTimeAfterFirstByte = totalTime - timing.receiveHeadersEnd;
       const numberOfRoundTrips = Math.log2(record.transferSize / INITIAL_CWD);
 
@@ -399,8 +399,8 @@ class NetworkAnalyzer {
 
       // If we've made it this far, all the times we need should be valid (i.e. not undefined/-1).
       totalBytes += record.transferSize;
-      boundaries.push({time: record.responseReceivedTime, isStart: true});
-      boundaries.push({time: record.endTime, isStart: false});
+      boundaries.push({time: record.responseReceivedTime / 1000, isStart: true});
+      boundaries.push({time: record.endTime / 1000, isStart: false});
       return boundaries;
     }, /** @type {Array<{time: number, isStart: boolean}>} */([])).sort((a, b) => a.time - b.time);
 

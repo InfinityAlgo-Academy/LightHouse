@@ -47,8 +47,8 @@ class NetworkRequests extends Audit {
     }
 
     /** @param {number} time */
-    const timeToMs = time => time < earliestStartTime || !Number.isFinite(time) ?
-      undefined : (time - earliestStartTime) * 1000;
+    const normalizeTime = time => time < earliestStartTime || !Number.isFinite(time) ?
+      undefined : (time - earliestStartTime);
 
     const results = records.map(record => {
       const endTimeDeltaMs = record.lrStatistics?.endTimeDeltaMs;
@@ -64,8 +64,8 @@ class NetworkRequests extends Audit {
       return {
         url: UrlUtils.elideDataURI(record.url),
         protocol: record.protocol,
-        startTime: timeToMs(record.startTime),
-        endTime: timeToMs(record.endTime),
+        startTime: normalizeTime(record.startTime),
+        endTime: normalizeTime(record.endTime),
         finished: record.finished,
         transferSize: record.transferSize,
         resourceSize: record.resourceSize,
@@ -112,7 +112,7 @@ class NetworkRequests extends Audit {
 
     // Include starting timestamp to allow syncing requests with navStart/metric timestamps.
     const networkStartTimeTs = Number.isFinite(earliestStartTime) ?
-        earliestStartTime * 1_000_000 : undefined;
+        earliestStartTime * 1000 : undefined;
     tableDetails.debugData = {
       type: 'debugdata',
       networkStartTimeTs,

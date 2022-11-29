@@ -22,17 +22,21 @@ class NetworkNode extends BaseNode {
   }
 
   /**
+   * In seconds.
+   * TODO: make ms.
    * @return {number}
    */
   get startTime() {
-    return this._record.startTime * 1000 * 1000;
+    return this._record.startTime * 1000;
   }
 
   /**
+   * In seconds.
+   * TODO: make ms.
    * @return {number}
    */
   get endTime() {
-    return this._record.endTime * 1000 * 1000;
+    return this._record.endTime * 1000;
   }
 
   /**

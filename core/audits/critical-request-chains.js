@@ -70,8 +70,8 @@ class CriticalRequestChains extends Audit {
           depth,
           id,
           node: child,
-          chainDuration: (child.request.endTime - startTime) * 1000,
-          chainTransferSize: (transferSize + child.request.transferSize),
+          chainDuration: child.request.endTime - startTime,
+          chainTransferSize: transferSize + child.request.transferSize,
         });
 
         // Carry on walking.
@@ -96,7 +96,7 @@ class CriticalRequestChains extends Audit {
       transferSize: 0,
     };
     CriticalRequestChains._traverse(tree, opts => {
-      const duration = opts.chainDuration;
+      const duration = opts.chainDuration * 1000;
       if (duration > longest.duration) {
         longest.duration = duration;
         longest.transferSize = opts.chainTransferSize;
@@ -123,9 +123,9 @@ class CriticalRequestChains extends Audit {
       const request = opts.node.request;
       const simpleRequest = {
         url: request.url,
-        startTime: request.startTime,
-        endTime: request.endTime,
-        responseReceivedTime: request.responseReceivedTime,
+        startTime: request.startTime / 1000,
+        endTime: request.endTime / 1000,
+        responseReceivedTime: request.responseReceivedTime / 1000,
         transferSize: request.transferSize,
       };
 
