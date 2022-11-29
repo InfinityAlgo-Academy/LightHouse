@@ -50,7 +50,7 @@ class BaseNode {
   }
 
   /**
-   * In microseconds
+   * In milliseconds
    * @return {number}
    */
   get startTime() {
@@ -58,10 +58,18 @@ class BaseNode {
   }
 
   /**
-   * In microseconds
+   * In milliseconds
    * @return {number}
    */
   get endTime() {
+    throw new Error('Unimplemented');
+  }
+
+  /**
+   * In milliseconds
+   * @return {number}
+   */
+  get duration() {
     throw new Error('Unimplemented');
   }
 

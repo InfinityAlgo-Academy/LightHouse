@@ -269,7 +269,7 @@ class Simulator {
       ? this._layoutTaskMultiplier
       : this._cpuSlowdownMultiplier;
     const totalDuration = Math.min(
-      Math.round(cpuNode.event.dur / 1000 * multiplier),
+      Math.round(cpuNode.duration * multiplier),
       DEFAULT_MAXIMUM_CPU_TASK_DURATION
     );
     const estimatedTimeElapsed = totalDuration - timingData.timeElapsed;
@@ -520,7 +520,7 @@ class Simulator {
    */
   static _computeNodeStartPosition(node) {
     if (node.type === 'cpu') return node.startTime;
-    return node.startTime + (PriorityStartTimePenalty[node.record.priority] * 1000 * 1000 || 0);
+    return node.startTime + (PriorityStartTimePenalty[node.record.priority] * 1000 || 0);
   }
 }
 

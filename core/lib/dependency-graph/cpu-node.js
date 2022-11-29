@@ -27,14 +27,21 @@ class CPUNode extends BaseNode {
    * @return {number}
    */
   get startTime() {
-    return this._event.ts;
+    return this._event.ts / 1000;
   }
 
   /**
    * @return {number}
    */
   get endTime() {
-    return this._event.ts + this._event.dur;
+    return (this._event.ts + this._event.dur) / 1000;
+  }
+
+  /**
+   * @return {number}
+   */
+  get duration() {
+    return this._event.dur / 1000;
   }
 
   /**
