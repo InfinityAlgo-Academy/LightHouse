@@ -58,15 +58,22 @@ class TargetManager extends ProtocolEventEmitter {
   async _onFrameNavigated(frameNavigatedEvent) {
     // Child frames are handled in `_onSessionAttached`.
     if (frameNavigatedEvent.frame.parentId) return;
+    if (!this._enabled) return;
 
     // It's not entirely clear when this is necessary, but when the page switches processes on
     // navigating from about:blank to the `requestedUrl`, resetting `setAutoAttach` has been
     // necessary in the past.
-    await this._rootCdpSession.send('Target.setAutoAttach', {
-      autoAttach: true,
-      flatten: true,
-      waitForDebuggerOnStart: true,
-    });
+    try {
+      await this._rootCdpSession.send('Target.setAutoAttach', {
+        autoAttach: true,
+        flatten: true,
+        waitForDebuggerOnStart: true,
+      });
+    } catch (err) {
+      // The page can be closed at the end of the run before this CDP function returns.
+      // In these cases, just ignore the error since we won't need the page anyway.
+      if (this._enabled) throw err;
+    }
   }
 
   /**
