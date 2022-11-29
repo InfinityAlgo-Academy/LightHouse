@@ -10,24 +10,24 @@ import {NotRestoredReasonDescription} from '../lib/bfcache-strings.js';
 
 /* eslint-disable max-len */
 const UIStrings = {
-  /** TODO */
-  title: 'Back/forward cache is used',
-  /** TODO */
-  failureTitle: 'Back/forward cache is not used',
-  /** TODO */
-  description: 'The back/forward cache can speed up the page load after navigating away.',
-  /** TODO */
+  /** Title of a diagnostic Lighthouse audit that identifies when the back/forward cache is being used. "back/forward" refers to the back and forward buttons found in modern browsers. This title is shown to users if the back/forward cache was used, or if the back/forward cache was not used for reasons outside the user's control. */
+  title: 'Back/forward cache did not fail with actionable reasons',
+  /** Title of a diagnostic Lighthouse audit that identifies when the back/forward cache is being used. "back/forward" refers to the back and forward buttons found in modern browsers. This title is shown to users if the back/forward cache was not used for reasons that the user can address. */
+  failureTitle: 'Back/forward failed with actionable reasons',
+  /** Description of a diagnostic Lighthouse audit that identifies when the back/forward cache is being used. "back/forward" refers to the back and forward buttons found in modern browsers. */
+  description: 'Many navigations are performed using the back/forward buttons. The back/forward cache can speed up these return navigations. [Learn more about the back/forward cache](https://web.dev/bfcache/)',
+  /** Back/forward cache failure type for a back/forward cache failure that the user should be able to address themselves. Shown in a table column with other failure types. */
   actionableFailureType: 'Actionable',
-  /** TODO */
+  /** Back/forward cache failure type for a back/forward cache failure that the user cannot address themselves. Shown in a table column with other failure types. */
   notActionableFailureType: 'Not actionable',
-  /** TODO */
+  /** Back/forward cache failure type for a back/forward cache failure caused by missing browser support. Shown in a table column with other failure types. */
   supportPendingFailureType: 'Pending browser support',
-  /** TODO */
+  /** Label for a column in a data table; entries in the column will be a string representing a reason the back/forward cache could not be used. */
   failureReasonColumn: 'Failure reason',
-  /** TODO */
+  /** Label for a column in a data table; entries in the column will be a string representing the type of failure preventing the back/forward cache from being used. */
   failureTypeColumn: 'Failure type',
   /**
-   * @description [ICU Syntax] Label for an audit identifying the number of back/forward cache failure reasons found in the page.
+   * @description [ICU Syntax] Label for an audit identifying the number of back/forward cache failure reasons found in the page that the user can address.
    */
   displayValue: `{itemCount, plural,
     =1 {1 actionable failure reason}
