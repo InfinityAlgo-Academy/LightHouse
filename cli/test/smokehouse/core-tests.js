@@ -64,6 +64,7 @@ import sourceMaps from './test-definitions/source-maps.js';
 import timing from './test-definitions/timing.js';
 import fpsScaled from './test-definitions/fps-scaled.js';
 import fpsMax from './test-definitions/fps-max.js';
+import bfCache from './test-definitions/bf-cache.js';
 
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
 const smokeTests = [
@@ -127,6 +128,7 @@ const smokeTests = [
   timing,
   fpsScaled,
   fpsMax,
+  bfCache,
 ];
 
 export default smokeTests;
