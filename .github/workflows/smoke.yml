@@ -195,9 +195,8 @@ jobs:
       working-directory: /home/runner
       run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
-    - run: sudo apt-get install xvfb
     - name: yarn test-bundle
-      run: xvfb-run --auto-servernum yarn test-bundle --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
+      run: yarn test-bundle --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code
@@ -242,9 +241,8 @@ jobs:
       working-directory: /home/runner
       run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
-    - run: sudo apt-get install xvfb
     - name: yarn test-bundle
-      run: xvfb-run --auto-servernum yarn test-bundle --legacy-navigation --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
+      run: yarn test-bundle --legacy-navigation --shard=${{ matrix.smoke-test-shard }}/$SHARD_TOTAL
 
     # Fail if any changes were written to source files.
     - run: git diff --exit-code

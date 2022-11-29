@@ -77,22 +77,26 @@ async function runBundledLighthouse(url, configJson, testRunnerOptions) {
   const legacyNavigation = global.runBundledLighthouseLegacyNavigation;
 
   // Launch and connect to Chrome.
-  const launchedChrome = await ChromeLauncher.launch();
-  const port = launchedChrome.port;
-
+  let launchedChrome;
   // Run Lighthouse.
   try {
     const logLevel = testRunnerOptions.isDebug ? 'info' : undefined;
     let runnerResult;
     if (testRunnerOptions.useLegacyNavigation) {
+      launchedChrome = await ChromeLauncher.launch();
+      const port = launchedChrome.port;
       const connection = new CriConnection(port);
       runnerResult =
         await legacyNavigation(url, {port, logLevel}, configJson, connection);
     } else {
+      const chromePath = await ChromeLauncher.getChromePath();
       // Puppeteer is not included in the bundle, we must create the page here.
-      const browser = await puppeteer.connect({browserURL: `http://localhost:${port}`});
+      const browser = await puppeteer.launch({
+        executablePath: chromePath,
+        args: ['--headless=chrome'],
+      });
       const page = await browser.newPage();
-      runnerResult = await lighthouse(url, {port, logLevel}, configJson, page);
+      runnerResult = await lighthouse(url, {logLevel}, configJson, page);
     }
     if (!runnerResult) throw new Error('No runnerResult');
 
@@ -102,7 +106,7 @@ async function runBundledLighthouse(url, configJson, testRunnerOptions) {
     };
   } finally {
     // Clean up and return results.
-    await launchedChrome.kill();
+    await launchedChrome?.kill();
   }
 }
 
