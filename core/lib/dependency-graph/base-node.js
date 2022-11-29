@@ -50,6 +50,7 @@ class BaseNode {
   }
 
   /**
+   * In microseconds
    * @return {number}
    */
   get startTime() {
@@ -57,6 +58,7 @@ class BaseNode {
   }
 
   /**
+   * In microseconds
    * @return {number}
    */
   get endTime() {
