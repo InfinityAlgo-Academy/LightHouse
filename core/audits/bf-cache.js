@@ -64,19 +64,6 @@ class BFCache extends Audit {
   }
 
   /**
-   * @param {LH.Crdp.Page.BackForwardCacheNotRestoredReason} reason
-   */
-  static getDescriptionForReason(reason) {
-    const matchingString = NotRestoredReasonDescription[reason];
-
-    if (matchingString === undefined) {
-      return reason;
-    }
-
-    return matchingString.name;
-  }
-
-  /**
    * @param {LH.Artifacts} artifacts
    * @return {Promise<LH.Audit.Product>}
    */
@@ -103,7 +90,7 @@ class BFCache extends Audit {
 
         const frameUrls = reasonsMap[reason] || [];
         results.push({
-          reason: this.getDescriptionForReason(reason),
+          reason: NotRestoredReasonDescription[reason]?.name ?? reason,
           failureType: FAILURE_TYPE_TO_STRING[failureType],
           subItems: {
             type: 'subitems',
