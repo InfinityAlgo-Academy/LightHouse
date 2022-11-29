@@ -1,3 +1,4 @@
 *.js eol=lf
 **/locales/*.json linguist-generated=true
 build/** linguist-generated=false
+*.psd filter=lfs diff=lfs merge=lfs -text
