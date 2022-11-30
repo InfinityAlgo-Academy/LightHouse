@@ -62,7 +62,7 @@ function getRequestWillBeSentEvent(networkRecord, index) {
         isLinkPreload: networkRecord.isLinkPreload,
       },
       timestamp:
-        networkRecord.redirectResponseTimestamp / 1000 || networkRecord.startTime / 1000 || 0,
+        (networkRecord.redirectResponseTimestamp || networkRecord.rendererStartTime || 0) / 1000,
       wallTime: 0,
       initiator,
       type: networkRecord.resourceType || 'Document',
@@ -91,19 +91,36 @@ function getRequestServedFromCacheEvent(networkRecord, index) {
  */
 function getResponseReceivedEvent(networkRecord, index) {
   const headers = headersArrayToHeadersDict(networkRecord.responseHeaders);
-  let timing;
-  if (networkRecord.timing) {
-    timing = {...networkRecord.timing};
-    if (timing.requestTime === undefined) {
-      timing.requestTime = networkRecord.startTime / 1000 || 0;
-    }
-  }
+  // let timing;
+  // if (networkRecord.timing) {
+  //   timing = {...networkRecord.timing};
+  //   if (timing.requestTime === undefined) {
+  //     timing.requestTime = networkRecord.networkRequestTime / 1000 || 0;
+  //   }
+  //   if (timing.receiveHeadersEnd === undefined) {
+  //     timing.receiveHeadersEnd = networkRecord.responseHeadersEndTime || 0;
+  //   }
+  // }
+
+  // Set timing.requestTime and timing.receiveHeadersEnd to be values that
+  // NetworkRequest will pull from for networkRequestTime and responseHeadersEndTime,
+  // so this roundtrips correctly. Unless, of course, timing values are explicitly set
+  // already.
+  // const timing = networkRecord.timing ? {...networkRecord.timing} : {};
+  // if (timing.requestTime === undefined) {
+  //   timing.requestTime = networkRecord.networkRequestTime / 1000 || 0;
+  // }
+  // if (timing.receiveHeadersEnd === undefined) {
+  //   timing.receiveHeadersEnd = networkRecord.responseHeadersEndTime || 0;
+  // }
+
+  const timing = networkRecord.timing;
 
   return {
     method: 'Network.responseReceived',
     params: {
       requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
-      timestamp: networkRecord.responseReceivedTime / 1000 || 1,
+      timestamp: networkRecord.responseHeadersEndTime / 1000 || 1,
       type: networkRecord.resourceType || undefined,
       response: {
         url: networkRecord.url || exampleUrl,
@@ -149,7 +166,7 @@ function getLoadingFinishedEvent(networkRecord, index) {
     method: 'Network.loadingFinished',
     params: {
       requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
-      timestamp: networkRecord.endTime / 1000 || 3,
+      timestamp: networkRecord.networkEndTime / 1000 || 3,
       encodedDataLength: networkRecord.transferSize === undefined ?
         0 : networkRecord.transferSize,
     },
@@ -165,7 +182,7 @@ function getLoadingFailedEvent(networkRecord, index) {
     method: 'Network.loadingFailed',
     params: {
       requestId: getBaseRequestId(networkRecord) || `${idBase}.${index}`,
-      timestamp: networkRecord.endTime / 1000 || 3,
+      timestamp: networkRecord.networkEndTime / 1000 || 3,
       errorText: networkRecord.localizedFailDescription || 'Request failed',
     },
   };
@@ -209,7 +226,7 @@ function addRedirectResponseIfNeeded(networkRecords, record) {
   originalResponse.status = originalRecord.statusCode || 302;
   return {
     ...record,
-    redirectResponseTimestamp: originalRecord.endTime,
+    redirectResponseTimestamp: originalRecord.networkEndTime,
     redirectResponse: originalResponse,
   };
 }
@@ -227,6 +244,48 @@ function addRedirectResponseIfNeeded(networkRecords, record) {
 function networkRecordsToDevtoolsLog(networkRecords, options = {}) {
   const devtoolsLog = [];
   networkRecords.forEach((networkRecord, index) => {
+    // If we're operating on network record raw objects (not NetworkRequest instances),
+    // then we're operating on test data that may need to be massaged a bit.
+    if (networkRecord.constructor === Object) {
+      // Temporary code while we transition away from startTime and endTime.
+      // This allows us to defer slightly changes to test files.
+      // TODO: remove after timing refactor is done
+      // See https://github.com/GoogleChrome/lighthouse/pull/14311
+      if (networkRecord.startTime !== undefined) {
+        networkRecord.networkRequestTime = networkRecord.startTime;
+        // Old tests never distinguished between these two.
+        networkRecord.rendererStartTime = networkRecord.startTime;
+      }
+      if (networkRecord.endTime !== undefined) {
+        networkRecord.networkEndTime = networkRecord.endTime;
+      }
+      if (networkRecord.responseReceivedTime !== undefined) {
+        networkRecord.responseHeadersEndTime = networkRecord.responseReceivedTime;
+      }
+
+      // Set timing.requestTime and timing.receiveHeadersEnd to be values that
+      // NetworkRequest will pull from for networkRequestTime and responseHeadersEndTime,
+      // so this roundtrips correctly. Unless, of course, timing values are explicitly set
+      // already.
+
+      // If networkRecord.timing explicitly does not having a timing object, only create one
+      // if we absolutely need it. See _recomputeTimesWithResourceTiming.
+      const netReqTime = networkRecord.networkRequestTime;
+      const willNeedTimingObject =
+        (netReqTime !== undefined && netReqTime !== networkRecord.rendererStartTime) ||
+        (networkRecord.responseHeadersEndTime !== undefined);
+      if (willNeedTimingObject) networkRecord.timing = networkRecord.timing || {};
+
+      if (networkRecord.timing) {
+        if (networkRecord.timing.requestTime === undefined) {
+          networkRecord.timing.requestTime = networkRecord.networkRequestTime / 1000 || 0;
+        }
+        if (networkRecord.timing.receiveHeadersEnd === undefined) {
+          networkRecord.timing.receiveHeadersEnd = networkRecord.responseHeadersEndTime || 0;
+        }
+      }
+    }
+
     networkRecord = addRedirectResponseIfNeeded(networkRecords, networkRecord);
     devtoolsLog.push(getRequestWillBeSentEvent(networkRecord, index));
 
