@@ -82,10 +82,10 @@ class UserFlow {
    * @return {LH.UserFlow.StepFlags}
    */
   _getNextNavigationFlags(flags) {
-    const nextFlags = this._getNextFlags(flags) || {};
+    const newStepFlags = this._getNextFlags(flags) || {};
 
-    if (nextFlags.skipAboutBlank === undefined) {
-      nextFlags.skipAboutBlank = true;
+    if (newStepFlags.skipAboutBlank === undefined) {
+      newStepFlags.skipAboutBlank = true;
     }
 
     // BFCache will actively load the page in navigation mode.
@@ -100,12 +100,12 @@ class UserFlow {
     const isSubsequentNavigation = this._gatherSteps
       .some(step => step.artifacts.GatherContext.gatherMode === 'navigation');
     if (isSubsequentNavigation) {
-      if (nextFlags.disableStorageReset === undefined) {
-        nextFlags.disableStorageReset = true;
+      if (newStepFlags.disableStorageReset === undefined) {
+        newStepFlags.disableStorageReset = true;
       }
     }
 
-    return nextFlags;
+    return newStepFlags;
   }
 
   /**
