@@ -298,6 +298,11 @@ async function testUrlFromDevtools(url, options = {}) {
   const browser = await puppeteer.launch({
     executablePath: getChromePath(),
     args: chromeFlags,
+    ignoreDefaultArgs: [
+      // eslint-disable-next-line max-len
+      '--disable-features=Translate,BackForwardCache,AcceptCHFrame,AvoidUnnecessaryBeforeUnloadCheckSync',
+      '--enable-automation',
+    ],
     devtools: true,
   });
 

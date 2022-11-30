@@ -82,7 +82,7 @@ describe('BFCacheFailures', () => {
     const artifact = await gatherer.getArtifact(context);
 
     expect(mockContext.driver.defaultSession.sendCommand)
-      .toHaveBeenCalledWith('Page.navigate', {url: 'about:blank'});
+      .toHaveBeenCalledWith('Page.navigate', {url: 'chrome://terms'});
     expect(mockContext.driver.defaultSession.sendCommand)
       .toHaveBeenCalledWith('Page.navigateToHistoryEntry', {entryId: 1});
 
@@ -108,7 +108,7 @@ describe('BFCacheFailures', () => {
     });
 
     expect(mockContext.driver.defaultSession.sendCommand)
-      .toHaveBeenCalledWith('Page.navigate', {url: 'about:blank'});
+      .toHaveBeenCalledWith('Page.navigate', {url: 'chrome://terms'});
     expect(mockContext.driver.defaultSession.sendCommand)
       .toHaveBeenCalledWith('Page.navigateToHistoryEntry', {entryId: 1});
 
@@ -137,7 +137,7 @@ describe('BFCacheFailures', () => {
     const artifact = await gatherer.getArtifact(context);
 
     expect(mockContext.driver.defaultSession.sendCommand)
-      .not.toHaveBeenCalledWith('Page.navigate', {url: 'about:blank'});
+      .not.toHaveBeenCalledWith('Page.navigate', {url: 'chrome://terms'});
     expect(mockContext.driver.defaultSession.sendCommand)
       .not.toHaveBeenCalledWith('Page.navigateToHistoryEntry', {entryId: 1});
 
@@ -162,7 +162,7 @@ describe('BFCacheFailures', () => {
     const artifact = await gatherer.getArtifact(context);
 
     expect(mockContext.driver.defaultSession.sendCommand)
-      .toHaveBeenCalledWith('Page.navigate', {url: 'about:blank'});
+      .toHaveBeenCalledWith('Page.navigate', {url: 'chrome://terms'});
     expect(mockContext.driver.defaultSession.sendCommand)
       .toHaveBeenCalledWith('Page.navigateToHistoryEntry', {entryId: 1});
 
@@ -187,7 +187,7 @@ describe('BFCacheFailures', () => {
     const artifact = await gatherer.getArtifact(context);
 
     expect(mockContext.driver.defaultSession.sendCommand)
-      .toHaveBeenCalledWith('Page.navigate', {url: 'about:blank'});
+      .toHaveBeenCalledWith('Page.navigate', {url: 'chrome://terms'});
     expect(mockContext.driver.defaultSession.sendCommand)
       .toHaveBeenCalledWith('Page.navigateToHistoryEntry', {entryId: 1});
 

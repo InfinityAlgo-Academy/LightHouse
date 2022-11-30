@@ -24,6 +24,8 @@ const expectations = {
             'http://localhost:10200/prevent-bf-cache.html',
           ],
         },
+        Circumstantial: {},
+        SupportPending: {},
       },
     }],
   },
@@ -43,10 +45,8 @@ const expectations = {
                 }],
               },
             }],
-            // There should be no other actionable failure types.
-            _excludes: [{
-              failureType: 'Actionable',
-            }],
+            // There should be no other failure reasons.
+            _excludes: [{}],
           },
         },
       },
