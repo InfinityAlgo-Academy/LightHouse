@@ -5,5 +5,4 @@
 build/** linguist-generated=false
 
 # Git large file storage
-*.psd filter=lfs diff=lfs merge=lfs -text
-**/fixtures/lfs-traces/** filter=lfs diff=lfs merge=lfs -text
+**/fixtures/lfs-traces/** filter=lfs diff=lfs merge=lfs
