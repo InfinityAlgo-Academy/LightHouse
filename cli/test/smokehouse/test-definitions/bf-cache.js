@@ -36,15 +36,33 @@ const expectations = {
       'bf-cache': {
         details: {
           items: {
-            _includes: [{
-              reason: 'The page has an unload handler in the main frame.',
-              failureType: 'Actionable',
-              subItems: {
-                items: [{
-                  frameUrl: 'http://localhost:10200/prevent-bf-cache.html',
-                }],
+            _includes: [
+              {
+                reason: 'The page has an unload handler in the main frame.',
+                failureType: 'Actionable',
+                subItems: {
+                  items: [{
+                    frameUrl: 'http://localhost:10200/prevent-bf-cache.html',
+                  }],
+                },
               },
-            }],
+              {
+                // The DevTools runner uses Puppeteer to launch Chrome which disables BFCache by default.
+                // https://github.com/puppeteer/puppeteer/issues/8197
+                //
+                // If we ignore the Puppeteer args and force BFCache to be enabled, it causes thew viewport to be sized incorrectly for other tests.
+                // These viewport issues are not present when Lighthouse is run from DevTools manually.
+                // TODO: Investigate why BFCache causes viewport issues only in our DevTools smoke tests.
+                _runner: 'devtools',
+                reason: 'Back/forward cache is disabled by flags. Visit chrome://flags/#back-forward-cache to enable it locally on this device.',
+                failureType: 'Not actionable',
+                subItems: {
+                  items: [{
+                    frameUrl: 'http://localhost:10200/prevent-bf-cache.html',
+                  }],
+                },
+              },
+            ],
             // There should be no other failure reasons.
             _excludes: [{}],
           },
