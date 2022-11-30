@@ -19,6 +19,7 @@ Array [
   "aria-treeitem-name",
   "aria-valid-attr",
   "aria-valid-attr-value",
+  "bf-cache",
   "bootup-time",
   "button-name",
   "bypass",
@@ -174,6 +175,7 @@ Array [
   "aria-treeitem-name",
   "aria-valid-attr",
   "aria-valid-attr-value",
+  "bf-cache",
   "bootup-time",
   "button-name",
   "bypass",
@@ -389,6 +391,7 @@ Array [
 
 exports[`Fraggle Rock API startTimespan should compute ConsoleMessage results across a span of time 1`] = `
 Array [
+  "bf-cache",
   "bootup-time",
   "cumulative-layout-shift",
   "deprecations",
@@ -450,6 +453,7 @@ Array [
 
 exports[`Fraggle Rock API startTimespan should compute results from timespan after page load 1`] = `
 Array [
+  "bf-cache",
   "bootup-time",
   "cumulative-layout-shift",
   "deprecations",
