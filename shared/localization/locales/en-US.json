@@ -429,7 +429,7 @@
     "message": "Actionable"
   },
   "core/audits/bf-cache.js | description": {
-    "message": "The back/forward cache can speed up the page load after navigating away."
+    "message": "Many navigations are performed using the back/forward buttons. The back/forward cache can speed up these return navigations. [Learn more about the back/forward cache](https://web.dev/bfcache/)"
   },
   "core/audits/bf-cache.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 actionable failure reason}\n    other {# actionable failure reasons}\n    }"
@@ -438,7 +438,7 @@
     "message": "Failure reason"
   },
   "core/audits/bf-cache.js | failureTitle": {
-    "message": "Back/forward cache is not used"
+    "message": "Back/forward failed with actionable reasons"
   },
   "core/audits/bf-cache.js | failureTypeColumn": {
     "message": "Failure type"
@@ -450,7 +450,7 @@
     "message": "Pending browser support"
   },
   "core/audits/bf-cache.js | title": {
-    "message": "Back/forward cache is used"
+    "message": "Back/forward cache did not fail with actionable reasons"
   },
   "core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Chrome extensions negatively affected this page's load performance. Try auditing the page in incognito mode or from a Chrome profile without extensions."

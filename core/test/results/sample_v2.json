@@ -5834,11 +5834,56 @@
     },
     "bf-cache": {
       "id": "bf-cache",
-      "title": "Back/forward cache is used",
-      "description": "The back/forward cache can speed up the page load after navigating away.",
-      "score": null,
-      "scoreDisplayMode": "error",
-      "errorMessage": "Required BFCacheFailures gatherer did not run."
+      "title": "Back/forward failed with actionable reasons",
+      "description": "Many navigations are performed using the back/forward buttons. The back/forward cache can speed up these return navigations. [Learn more about the back/forward cache](https://web.dev/bfcache/)",
+      "score": 0,
+      "scoreDisplayMode": "binary",
+      "displayValue": "1 actionable failure reason",
+      "details": {
+        "type": "table",
+        "headings": [
+          {
+            "key": "reason",
+            "valueType": "text",
+            "subItemsHeading": {
+              "key": "frameUrl",
+              "valueType": "url"
+            },
+            "label": "Failure reason"
+          },
+          {
+            "key": "failureType",
+            "valueType": "text",
+            "label": "Failure type"
+          }
+        ],
+        "items": [
+          {
+            "reason": "The page has an unload handler in the main frame.",
+            "failureType": "Actionable",
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "frameUrl": "http://localhost:10200/dobetterweb/dbw_tester.html"
+                }
+              ]
+            }
+          },
+          {
+            "reason": "Internal error.",
+            "failureType": "Not actionable",
+            "subItems": {
+              "type": "subitems",
+              "items": [
+                {
+                  "frameUrl": "http://localhost:10200/dobetterweb/dbw_tester.html"
+                }
+              ]
+            }
+          }
+        ]
+      }
     }
   },
   "configSettings": {
@@ -9725,20 +9770,37 @@
       "core/audits/seo/manual/structured-data.js | description": [
         "audits[structured-data].description"
       ],
-      "core/audits/bf-cache.js | title": [
+      "core/audits/bf-cache.js | failureTitle": [
         "audits[bf-cache].title"
       ],
       "core/audits/bf-cache.js | description": [
         "audits[bf-cache].description"
       ],
-      "core/lib/lh-error.js | missingRequiredArtifact": [
+      "core/audits/bf-cache.js | displayValue": [
         {
           "values": {
-            "errorCode": "MISSING_REQUIRED_ARTIFACT",
-            "artifactName": "BFCacheFailures"
+            "itemCount": 1
           },
-          "path": "audits[bf-cache].errorMessage"
+          "path": "audits[bf-cache].displayValue"
         }
+      ],
+      "core/audits/bf-cache.js | failureReasonColumn": [
+        "audits[bf-cache].details.headings[0].label"
+      ],
+      "core/audits/bf-cache.js | failureTypeColumn": [
+        "audits[bf-cache].details.headings[1].label"
+      ],
+      "core/lib/bfcache-strings.js | unloadHandlerExistsInMainFrame": [
+        "audits[bf-cache].details.items[0].reason"
+      ],
+      "core/audits/bf-cache.js | actionableFailureType": [
+        "audits[bf-cache].details.items[0].failureType"
+      ],
+      "core/lib/bfcache-strings.js | internalError": [
+        "audits[bf-cache].details.items[1].reason"
+      ],
+      "core/audits/bf-cache.js | notActionableFailureType": [
+        "audits[bf-cache].details.items[1].failureType"
       ],
       "core/config/default-config.js | performanceCategoryTitle": [
         "categories.performance.title"

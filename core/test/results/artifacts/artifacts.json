@@ -12841,5 +12841,22 @@
       "embedderName": "http://localhost:10200/dobetterweb/dbw_tester.html",
       "content": "\n  // Log console.error calls in the console.\n  console.error('Error! Error!');\n"
     }
+  ],
+  "BFCacheFailures": [
+    {
+      "notRestoredReasonsTree": {
+        "Circumstantial": {
+          "BrowsingInstanceNotSwapped": [
+            "http://localhost:10200/dobetterweb/dbw_tester.html"
+          ]
+        },
+        "PageSupportNeeded": {
+          "UnloadHandlerExistsInMainFrame": [
+            "http://localhost:10200/dobetterweb/dbw_tester.html"
+          ]
+        },
+        "SupportPending": {}
+      }
+    }
   ]
 }

@@ -3687,14 +3687,6 @@
             "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more about Structured Data](https://web.dev/structured-data/).",
             "score": null,
             "scoreDisplayMode": "manual"
-          },
-          "bf-cache": {
-            "id": "bf-cache",
-            "title": "Back/forward cache is used",
-            "description": "The back/forward cache can speed up the page load after navigating away.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "Required BFCacheFailures gatherer did not run."
           }
         },
         "configSettings": {
@@ -3739,7 +3731,8 @@
           "onlyAudits": null,
           "onlyCategories": null,
           "skipAudits": [
-            "uses-http2"
+            "uses-http2",
+            "bf-cache"
           ]
         },
         "categories": {
@@ -3999,10 +3992,6 @@
               },
               {
                 "id": "no-unload-listeners",
-                "weight": 0
-              },
-              {
-                "id": "bf-cache",
                 "weight": 0
               },
               {
@@ -6048,18 +6037,12 @@
             },
             {
               "startTime": 226,
-              "name": "lh:audit:bf-cache",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 227,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 228
+          "total": 227
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -7239,21 +7222,6 @@
             ],
             "core/audits/seo/manual/structured-data.js | description": [
               "audits[structured-data].description"
-            ],
-            "core/audits/bf-cache.js | title": [
-              "audits[bf-cache].title"
-            ],
-            "core/audits/bf-cache.js | description": [
-              "audits[bf-cache].description"
-            ],
-            "core/lib/lh-error.js | missingRequiredArtifact": [
-              {
-                "values": {
-                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
-                  "artifactName": "BFCacheFailures"
-                },
-                "path": "audits[bf-cache].errorMessage"
-              }
             ],
             "core/config/default-config.js | performanceCategoryTitle": [
               "categories.performance.title"
@@ -9143,11 +9111,10 @@
           },
           "bf-cache": {
             "id": "bf-cache",
-            "title": "Back/forward cache is used",
-            "description": "The back/forward cache can speed up the page load after navigating away.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "Required BFCacheFailures gatherer did not run."
+            "title": "Back/forward cache did not fail with actionable reasons",
+            "description": "Many navigations are performed using the back/forward buttons. The back/forward cache can speed up these return navigations. [Learn more about the back/forward cache](https://web.dev/bfcache/)",
+            "score": 1,
+            "scoreDisplayMode": "binary"
           }
         },
         "configSettings": {
@@ -10533,15 +10500,6 @@
             ],
             "core/audits/bf-cache.js | description": [
               "audits[bf-cache].description"
-            ],
-            "core/lib/lh-error.js | missingRequiredArtifact": [
-              {
-                "values": {
-                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
-                  "artifactName": "BFCacheFailures"
-                },
-                "path": "audits[bf-cache].errorMessage"
-              }
             ],
             "core/config/default-config.js | performanceCategoryTitle": [
               "categories.performance.title"
@@ -17912,14 +17870,6 @@
             "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more about Structured Data](https://web.dev/structured-data/).",
             "score": null,
             "scoreDisplayMode": "manual"
-          },
-          "bf-cache": {
-            "id": "bf-cache",
-            "title": "Back/forward cache is used",
-            "description": "The back/forward cache can speed up the page load after navigating away.",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "Required BFCacheFailures gatherer did not run."
           }
         },
         "configSettings": {
@@ -17964,7 +17914,8 @@
           "onlyAudits": null,
           "onlyCategories": null,
           "skipAudits": [
-            "uses-http2"
+            "uses-http2",
+            "bf-cache"
           ]
         },
         "categories": {
@@ -18224,10 +18175,6 @@
               },
               {
                 "id": "no-unload-listeners",
-                "weight": 0
-              },
-              {
-                "id": "bf-cache",
                 "weight": 0
               },
               {
@@ -20255,18 +20202,12 @@
             },
             {
               "startTime": 223,
-              "name": "lh:audit:bf-cache",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 224,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 225
+          "total": 224
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -21462,21 +21403,6 @@
             ],
             "core/audits/seo/manual/structured-data.js | description": [
               "audits[structured-data].description"
-            ],
-            "core/audits/bf-cache.js | title": [
-              "audits[bf-cache].title"
-            ],
-            "core/audits/bf-cache.js | description": [
-              "audits[bf-cache].description"
-            ],
-            "core/lib/lh-error.js | missingRequiredArtifact": [
-              {
-                "values": {
-                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
-                  "artifactName": "BFCacheFailures"
-                },
-                "path": "audits[bf-cache].errorMessage"
-              }
             ],
             "core/config/default-config.js | performanceCategoryTitle": [
               "categories.performance.title"
