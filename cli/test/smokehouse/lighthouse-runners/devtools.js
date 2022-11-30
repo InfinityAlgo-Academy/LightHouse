@@ -47,7 +47,7 @@ async function setup() {
  */
 async function runLighthouse(url, configJson, testRunnerOptions = {}) {
   const chromeFlags = [
-    `--custom-devtools-frontend=file://${devtoolsDir}/out/Default/gen/front_end`,
+    `--custom-devtools-frontend=file://${devtoolsDir}/out/LighthouseIntegration/gen/front_end`,
   ];
   const {lhr, artifacts, logs} = await testUrlFromDevtools(url, {
     config: configJson,

@@ -127,6 +127,8 @@ declare module Artifacts {
     Accessibility: Artifacts.Accessibility;
     /** Array of all anchors on the page. */
     AnchorElements: Artifacts.AnchorElement[];
+    /** Errors when attempting to use the back/forward cache. */
+    BFCacheFailures: Artifacts.BFCacheFailure[];
     /** Array of all URLs cached in CacheStorage. */
     CacheContents: string[];
     /** CSS coverage information for styles used by page's final state. */
@@ -412,6 +414,16 @@ declare module Artifacts {
     listeners?: Array<{
       type: Crdp.DOMDebugger.EventListener['type']
     }>
+  }
+
+  type BFCacheReasonMap = {
+    [key in LH.Crdp.Page.BackForwardCacheNotRestoredReason]?: string[];
+  };
+
+  type BFCacheNotRestoredReasonsTree = Record<LH.Crdp.Page.BackForwardCacheNotRestoredReasonType, BFCacheReasonMap>;
+
+  interface BFCacheFailure {
+    notRestoredReasonsTree: BFCacheNotRestoredReasonsTree;
   }
 
   interface Font {

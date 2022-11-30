@@ -103,5 +103,4 @@ class FRGatherer {
   }
 }
 
-// TODO(esmodules): do not use default export
 export default FRGatherer;

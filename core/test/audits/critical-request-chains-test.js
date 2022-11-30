@@ -15,15 +15,15 @@ const redditDevtoolsLog = readJson('../fixtures/artifacts/perflog/defaultPass.de
 
 const FAILING_CHAIN_RECORDS = [
   {
-    endTime: 5,
-    responseReceivedTime: 5,
+    endTime: 5000,
+    responseReceivedTime: 5000,
     startTime: 0,
     url: 'https://example.com/',
     priority: 'VeryHigh',
   }, {
-    endTime: 16,
-    responseReceivedTime: 14,
-    startTime: 11,
+    endTime: 16_000,
+    responseReceivedTime: 14_000,
+    startTime: 11_000,
     url: 'https://example.com/b.js',
     priority: 'VeryHigh',
     initiator: {
@@ -31,9 +31,9 @@ const FAILING_CHAIN_RECORDS = [
       url: 'https://example.com/',
     },
   }, {
-    endTime: 17,
-    responseReceivedTime: 15,
-    startTime: 12,
+    endTime: 17_000,
+    responseReceivedTime: 15_000,
+    startTime: 12_000,
     url: 'https://example.com/c.js',
     priority: 'VeryHigh',
     initiator: {
@@ -45,8 +45,8 @@ const FAILING_CHAIN_RECORDS = [
 
 const PASSING_CHAIN_RECORDS = [
   {
-    endTime: 1,
-    responseReceivedTime: 1,
+    endTime: 1000,
+    responseReceivedTime: 1000,
     startTime: 0,
     url: 'https://example.com/',
     priority: 'VeryHigh',
@@ -56,9 +56,9 @@ const PASSING_CHAIN_RECORDS = [
 const PASSING_CHAIN_RECORDS_2 = [
   {
     url: 'http://localhost:10503/offline-ready.html',
-    startTime: 33552.036878,
-    endTime: 33552.285438,
-    responseReceivedTime: 33552.275677,
+    startTime: 33552036,
+    endTime: 33552284,
+    responseReceivedTime: 33552275,
     transferSize: 1849,
     priority: 'VeryHigh',
   },

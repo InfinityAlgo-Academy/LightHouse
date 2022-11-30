@@ -18,14 +18,16 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
 
   function createRecord(opts) {
     const url = opts.url || 'https://example.com';
+    if (opts.startTime) opts.startTime *= 1000;
+    if (opts.endTime) opts.endTime *= 1000;
     return Object.assign(
       {
         url,
         requestId: recordId++,
         connectionId: 0,
         connectionReused: false,
-        startTime: 0.01,
-        endTime: 0.01,
+        startTime: 10,
+        endTime: 10,
         transferSize: 0,
         protocol: 'http/1.1',
         parsedURL: {scheme: url.match(/https?/)[0], securityOrigin: url.match(/.*\.com/)[0]},
@@ -274,11 +276,11 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   describe('#estimateThroughput', () => {
     const estimateThroughput = NetworkAnalyzer.estimateThroughput;
 
-    function createThroughputRecord(responseReceivedTime, endTime, extras) {
+    function createThroughputRecord(responseReceivedTimeInS, endTimeInS, extras) {
       return Object.assign(
         {
-          responseReceivedTime,
-          endTime,
+          responseReceivedTime: responseReceivedTimeInS * 1000,
+          endTime: endTimeInS * 1000,
           transferSize: 1000,
           finished: true,
           failed: false,

@@ -221,6 +221,7 @@ describe('ReportRenderer', () => {
       expect(itemsTxt).toContain('RTT');
       expect(itemsTxt).toMatch(/\dx/);
       expect(itemsTxt).toContain(sampleResults.environment.networkUserAgent);
+      expect(itemsTxt).toMatch('360x640, DPR 2.625');
     });
   });
 

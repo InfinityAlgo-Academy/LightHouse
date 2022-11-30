@@ -6,6 +6,7 @@
 
 import path from 'path';
 import {createRequire} from 'module';
+import url from 'url';
 
 import isDeepEqual from 'lodash/isEqual.js';
 
@@ -217,6 +218,11 @@ const bundledModules = new Map(/* BUILD_REPLACE_BUNDLED_MODULES */);
  * @param {string} requirePath
  */
 async function requireWrapper(requirePath) {
+  // For windows.
+  if (path.isAbsolute(requirePath)) {
+    requirePath = url.pathToFileURL(requirePath).href;
+  }
+
   /** @type {any} */
   let module;
   if (bundledModules.has(requirePath)) {
@@ -231,7 +237,6 @@ async function requireWrapper(requirePath) {
   if (module.default) return module.default;
 
   // Find a valid named export.
-  // TODO(esmodules): actually make all the audits/gatherers use named exports
   const methods = new Set(['meta']);
   const possibleNamedExports = Object.keys(module).filter(key => {
     if (!(module[key] && module[key] instanceof Object)) return false;
@@ -287,8 +292,12 @@ function requireAudit(auditPath, coreAuditList, configDir) {
     } else {
       // Otherwise, attempt to find it elsewhere. This throws if not found.
       const absolutePath = resolveModulePath(auditPath, configDir, 'audit');
-      // Use a relative path so bundler can easily expose it.
-      requirePath = path.relative(getModuleDirectory(import.meta), absolutePath);
+      if (isBundledEnvironment()) {
+        // Use a relative path so bundler can easily expose it.
+        requirePath = path.relative(getModuleDirectory(import.meta), absolutePath);
+      } else {
+        requirePath = absolutePath;
+      }
     }
   }
 

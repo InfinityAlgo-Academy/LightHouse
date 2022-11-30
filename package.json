@@ -86,8 +86,8 @@
     "computeBenchmarkIndex": "./core/scripts/benchmark.js",
     "minify-latest-run": "./core/scripts/lantern/minify-trace.js ./latest-run/defaultPass.trace.json ./latest-run/defaultPass.trace.min.json && ./core/scripts/lantern/minify-devtoolslog.js ./latest-run/defaultPass.devtoolslog.json ./latest-run/defaultPass.devtoolslog.min.json",
     "save-latest-run": "./core/scripts/save-latest-run.sh",
-    "compile-proto": "protoc --python_out=./ ./proto/lighthouse-result.proto && mv ./proto/*_pb2.py ./proto/scripts || (echo \"❌ Install protobuf ≥ 3.7.1 to compile the proto file.\" && false)",
-    "build-proto-roundtrip": "mkdir -p .tmp && cross-env PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION_VERSION=2 python proto/scripts/json_roundtrip_via_proto.py",
+    "compile-proto": "protoc --python_out=./ ./proto/lighthouse-result.proto && mv ./proto/*_pb2.py ./proto/scripts || (echo \"❌ Install protobuf = 3.20.x to compile the proto file.\" && false)",
+    "build-proto-roundtrip": "mkdir -p .tmp && python3 proto/scripts/json_roundtrip_via_proto.py",
     "static-server": "node cli/test/fixtures/static-server.js",
     "serve-dist": "cd dist && python3 -m http.server 7878",
     "serve-gh-pages": "cd dist/gh-pages && python3 -m http.server 7333",
@@ -203,6 +203,7 @@
     "parse-cache-control": "1.0.1",
     "ps-list": "^8.0.0",
     "puppeteer-core": "^18.0.5",
+    "quibble": "connorjclark/quibble#fork",
     "robots-parser": "^3.0.0",
     "semver": "^5.3.0",
     "speedline-core": "^1.4.3",
@@ -214,7 +215,7 @@
   "resolutions": {
     "puppeteer/**/devtools-protocol": "0.0.1034970",
     "puppeteer-core/**/devtools-protocol": "0.0.1034970",
-    "testdouble/**/quibble": "connorjclark/quibble#mod-cache"
+    "testdouble/**/quibble": "connorjclark/quibble#fork"
   },
   "repository": "GoogleChrome/lighthouse",
   "keywords": [
