@@ -242,13 +242,21 @@ function addRedirectResponseIfNeeded(networkRecords, record) {
  * @return {LH.DevtoolsLog}
  */
 function networkRecordsToDevtoolsLog(networkRecords, options = {}) {
+  // Clone test network records objects before potential modifications.
+  networkRecords = networkRecords.map(record => {
+    if (record.constructor === Object) {
+      record = {...record};
+      record.timing = {...record.timing};
+    }
+
+    return record;
+  });
+
   const devtoolsLog = [];
   networkRecords.forEach((record, index) => {
     // If we're operating on network record raw objects (not NetworkRequest instances),
     // then we're operating on test data that may need to be massaged a bit.
     if (record.constructor === Object) {
-      record = {...record};
-
       // Temporary code while we transition away from startTime and endTime.
       // This allows us to defer slightly changes to test files.
       // TODO: remove after timing refactor is done
@@ -285,8 +293,6 @@ function networkRecordsToDevtoolsLog(networkRecords, options = {}) {
       if (willNeedTimingObject) record.timing = record.timing || {};
 
       if (record.timing) {
-        // TODO: why does this break tests?
-        // record.timing = {...record.timing};
         if (record.timing.requestTime === undefined) {
           record.timing.requestTime = record.networkRequestTime / 1000 || 0;
         }
