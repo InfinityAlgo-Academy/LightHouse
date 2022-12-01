@@ -246,7 +246,7 @@ function networkRecordsToDevtoolsLog(networkRecords, options = {}) {
   networkRecords = networkRecords.map(record => {
     if (record.constructor === Object) {
       record = {...record};
-      record.timing = {...record.timing};
+      if (record.timing) record.timing = {...record.timing};
     }
 
     return record;
