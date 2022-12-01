@@ -243,69 +243,80 @@ function addRedirectResponseIfNeeded(networkRecords, record) {
  */
 function networkRecordsToDevtoolsLog(networkRecords, options = {}) {
   const devtoolsLog = [];
-  networkRecords.forEach((networkRecord, index) => {
+  networkRecords.forEach((record, index) => {
     // If we're operating on network record raw objects (not NetworkRequest instances),
     // then we're operating on test data that may need to be massaged a bit.
-    if (networkRecord.constructor === Object) {
+    if (record.constructor === Object) {
+      record = {...record};
+
       // Temporary code while we transition away from startTime and endTime.
       // This allows us to defer slightly changes to test files.
       // TODO: remove after timing refactor is done
       // See https://github.com/GoogleChrome/lighthouse/pull/14311
-      if (networkRecord.startTime !== undefined) {
-        networkRecord.networkRequestTime = networkRecord.startTime;
+      if (record.startTime !== undefined) {
+        record.networkRequestTime = record.startTime;
         // Old tests never distinguished between these two.
-        networkRecord.rendererStartTime = networkRecord.startTime;
+        record.rendererStartTime = record.startTime;
       }
-      if (networkRecord.endTime !== undefined) {
-        networkRecord.networkEndTime = networkRecord.endTime;
+      if (record.endTime !== undefined) {
+        record.networkEndTime = record.endTime;
       }
-      if (networkRecord.responseReceivedTime !== undefined) {
-        networkRecord.responseHeadersEndTime = networkRecord.responseReceivedTime;
+      if (record.responseReceivedTime !== undefined) {
+        record.responseHeadersEndTime = record.responseReceivedTime;
       }
+
+      // TODO: good?
+      // if (record.rendererStartTime === undefined ^ record.networkEndTime === undefined) {
+      //   // eslint-disable-next-line max-len
+      //   throw new Error('expected test record to define rendererStartTime and networkEndTime together, but never just one');
+      // }
 
       // Set timing.requestTime and timing.receiveHeadersEnd to be values that
       // NetworkRequest will pull from for networkRequestTime and responseHeadersEndTime,
       // so this roundtrips correctly. Unless, of course, timing values are explicitly set
       // already.
 
-      // If networkRecord.timing explicitly does not having a timing object, only create one
+      // If record.timing explicitly does not having a timing object, only create one
       // if we absolutely need it. See _recomputeTimesWithResourceTiming.
-      const netReqTime = networkRecord.networkRequestTime;
+      const netReqTime = record.networkRequestTime;
       const willNeedTimingObject =
-        (netReqTime !== undefined && netReqTime !== networkRecord.rendererStartTime) ||
-        (networkRecord.responseHeadersEndTime !== undefined);
-      if (willNeedTimingObject) networkRecord.timing = networkRecord.timing || {};
+        (netReqTime !== undefined && netReqTime !== record.rendererStartTime) ||
+        (record.responseHeadersEndTime !== undefined);
+      if (willNeedTimingObject) record.timing = record.timing || {};
 
-      if (networkRecord.timing) {
-        if (networkRecord.timing.requestTime === undefined) {
-          networkRecord.timing.requestTime = networkRecord.networkRequestTime / 1000 || 0;
+      if (record.timing) {
+        // TODO: why does this break tests?
+        // record.timing = {...record.timing};
+        if (record.timing.requestTime === undefined) {
+          record.timing.requestTime = record.networkRequestTime / 1000 || 0;
         }
-        if (networkRecord.timing.receiveHeadersEnd === undefined) {
-          networkRecord.timing.receiveHeadersEnd = networkRecord.responseHeadersEndTime || 0;
+        if (record.timing.receiveHeadersEnd === undefined) {
+          record.timing.receiveHeadersEnd =
+            (record.responseHeadersEndTime - record.networkRequestTime) || 0;
         }
       }
     }
 
-    networkRecord = addRedirectResponseIfNeeded(networkRecords, networkRecord);
-    devtoolsLog.push(getRequestWillBeSentEvent(networkRecord, index));
+    record = addRedirectResponseIfNeeded(networkRecords, record);
+    devtoolsLog.push(getRequestWillBeSentEvent(record, index));
 
-    if (willBeRedirected(networkRecords, networkRecord)) {
+    if (willBeRedirected(networkRecords, record)) {
       // If record is going to redirect, only issue the first event.
       return;
     }
 
-    if (networkRecord.fromMemoryCache) {
-      devtoolsLog.push(getRequestServedFromCacheEvent(networkRecord, index));
+    if (record.fromMemoryCache) {
+      devtoolsLog.push(getRequestServedFromCacheEvent(record, index));
     }
 
-    if (networkRecord.failed) {
-      devtoolsLog.push(getLoadingFailedEvent(networkRecord, index));
+    if (record.failed) {
+      devtoolsLog.push(getLoadingFailedEvent(record, index));
       return;
     }
 
-    devtoolsLog.push(getResponseReceivedEvent(networkRecord, index));
-    devtoolsLog.push(getDataReceivedEvent(networkRecord, index));
-    devtoolsLog.push(getLoadingFinishedEvent(networkRecord, index));
+    devtoolsLog.push(getResponseReceivedEvent(record, index));
+    devtoolsLog.push(getDataReceivedEvent(record, index));
+    devtoolsLog.push(getLoadingFinishedEvent(record, index));
   });
 
   // If in a test, assert that the log will turn into an equivalent networkRecords.

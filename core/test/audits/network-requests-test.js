@@ -86,11 +86,17 @@ describe('Network requests audit', () => {
 
     expect(output.details.items).toMatchObject([{
       rendererStartTime: 0,
+      networkRequestTime: 0,
+      responseHeadersEndTime: 0.5,
       networkEndTime: 0.5,
+      rendererEndTime: 0.5,
       finished: true,
     }, {
       rendererStartTime: 0.5,
+      networkRequestTime: 0.5,
+      responseHeadersEndTime: undefined,
       networkEndTime: undefined,
+      rendererEndTime: undefined,
       finished: true,
     }]);
   });
