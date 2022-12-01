@@ -441,7 +441,6 @@ class NetworkRequest {
     // We're only at responseReceived (_onResponse) at this point.
     // This endTime may be redefined again after onLoading is done.
     this.networkEndTime = Math.max(this.networkEndTime, this.responseHeadersEndTime);
-    this.rendererEndTime = this.networkEndTime;
   }
 
   /**
