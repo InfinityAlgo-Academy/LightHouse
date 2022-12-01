@@ -28,6 +28,9 @@ describe('Network requests audit', () => {
 
     expect(output.details.items[0]).toMatchObject({
       rendererStartTime: 0,
+      networkRequestTime: expect.toBeApproximately(0.7, 1),
+      responseHeadersEndTime: expect.toBeApproximately(645, 0),
+      networkEndTime: expect.toBeApproximately(702, 0),
       rendererEndTime: expect.toBeApproximately(702, 0),
       finished: true,
       transferSize: 11358,
@@ -39,6 +42,9 @@ describe('Network requests audit', () => {
     });
     expect(output.details.items[2]).toMatchObject({
       rendererStartTime: expect.toBeApproximately(710, 0),
+      networkRequestTime: expect.toBeApproximately(712, 0),
+      responseHeadersEndTime: expect.toBeApproximately(1289, 0),
+      networkEndTime: expect.toBeApproximately(1289, 0),
       rendererEndTime: expect.toBeApproximately(1289, 0),
       finished: false,
       transferSize: 26441,
@@ -50,6 +56,9 @@ describe('Network requests audit', () => {
     });
     expect(output.details.items[5]).toMatchObject({
       rendererStartTime: expect.toBeApproximately(713, 0),
+      networkRequestTime: expect.toBeApproximately(717, 0),
+      responseHeadersEndTime: expect.toBeApproximately(1297, 0),
+      networkEndTime: expect.toBeApproximately(1297, 0),
       rendererEndTime: expect.toBeApproximately(1297, 0),
       finished: false,
       transferSize: 58571,
