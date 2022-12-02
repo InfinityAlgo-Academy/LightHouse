@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import UsesRelPreload from '../../audits/uses-rel-preload.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
@@ -32,15 +32,14 @@ const defaultMainResource = {
 };
 
 describe('Performance: uses-rel-preload audit', () => {
-  const mockArtifacts = (networkRecords, finalUrl) => {
+  const mockArtifacts = (networkRecords, finalDisplayedUrl) => {
     return {
       traces: {[UsesRelPreload.DEFAULT_PASS]: createTestTrace({traceEnd: 5000})},
       devtoolsLogs: {[UsesRelPreload.DEFAULT_PASS]: networkRecordsToDevtoolsLog(networkRecords)},
       URL: {
-        initialUrl: 'about:blank',
-        requestedUrl: finalUrl,
-        mainDocumentUrl: finalUrl,
-        finalUrl,
+        requestedUrl: finalDisplayedUrl,
+        mainDocumentUrl: finalDisplayedUrl,
+        finalDisplayedUrl,
       },
     };
   };
@@ -51,7 +50,7 @@ describe('Performance: uses-rel-preload audit', () => {
       defaultMainResource,
       {
         requestId: '2',
-        startTime: 10,
+        startTime: 10_000,
         isLinkPreload: false,
         url: secondRecordUrl,
         timing: defaultMainResource.timing,
@@ -63,7 +62,7 @@ describe('Performance: uses-rel-preload audit', () => {
       }, {
         // Normally this request would be flagged for preloading.
         requestId: '3',
-        startTime: 20,
+        startTime: 20_000,
         isLinkPreload: false,
         url: 'http://www.example.com/a-different-script.js',
         timing: defaultMainResource.timing,
@@ -90,7 +89,7 @@ describe('Performance: uses-rel-preload audit', () => {
         priority: 'High',
         isLinkPreload: false,
         startTime: 0,
-        endTime: 0.5,
+        endTime: 500,
         timing: {receiveHeadersEnd: 500},
         url: rootNodeUrl,
       },
@@ -99,8 +98,8 @@ describe('Performance: uses-rel-preload audit', () => {
         resourceType: 'Document',
         priority: 'High',
         isLinkPreload: false,
-        startTime: 0.5,
-        endTime: 1,
+        startTime: 500,
+        endTime: 1000,
         timing: {receiveHeadersEnd: 500},
         url: mainDocumentNodeUrl,
       },
@@ -109,8 +108,8 @@ describe('Performance: uses-rel-preload audit', () => {
         resourceType: 'Script',
         priority: 'High',
         isLinkPreload: false,
-        startTime: 1,
-        endTime: 2,
+        startTime: 1000,
+        endTime: 2000,
         timing: {receiveHeadersEnd: 1000},
         url: scriptNodeUrl,
         initiator: {type: 'parser', url: mainDocumentNodeUrl},
@@ -120,8 +119,8 @@ describe('Performance: uses-rel-preload audit', () => {
         resourceType: 'Script',
         priority: 'High',
         isLinkPreload: false,
-        startTime: 2,
-        endTime: 3.25,
+        startTime: 2000,
+        endTime: 3_250,
         timing: {receiveHeadersEnd: 1250},
         url: scriptAddedNodeUrl,
         initiator: {type: 'script', url: scriptNodeUrl},
@@ -131,8 +130,8 @@ describe('Performance: uses-rel-preload audit', () => {
         resourceType: 'Script',
         priority: 'High',
         isLinkPreload: false,
-        startTime: 2,
-        endTime: 3,
+        startTime: 2000,
+        endTime: 3000,
         timing: {receiveHeadersEnd: 1000},
         url: scriptSubNodeUrl,
         initiator: {type: 'script', url: scriptNodeUrl},
@@ -142,8 +141,8 @@ describe('Performance: uses-rel-preload audit', () => {
         resourceType: 'Script',
         priority: 'High',
         isLinkPreload: false,
-        startTime: 2,
-        endTime: 3.5,
+        startTime: 2000,
+        endTime: 3_500,
         timing: {receiveHeadersEnd: 1500},
         url: scriptOtherNodeUrl,
         initiator: {type: 'script', url: scriptNodeUrl},

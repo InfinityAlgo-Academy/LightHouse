@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview Base class for all aXe audits. Provides a consistent way to
@@ -11,7 +10,6 @@
  */
 
 import {Audit} from '../audit.js';
-
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
@@ -90,7 +88,7 @@ class AxeAudit extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'node', itemType: 'node', subItemsHeading: {key: 'relatedNode', itemType: 'node'}, text: str_(UIStrings.failingElementsHeader)},
+      {key: 'node', valueType: 'node', subItemsHeading: {key: 'relatedNode', valueType: 'node'}, label: str_(UIStrings.failingElementsHeader)},
       /* eslint-enable max-len */
     ];
 

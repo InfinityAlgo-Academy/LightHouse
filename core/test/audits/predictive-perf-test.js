@@ -25,7 +25,7 @@ describe('Performance: predictive performance audit', () => {
     const context = {computedCache: new Map(), settings: {locale: 'en'}};
 
     const output = await PredictivePerf.audit(artifacts, context);
-    expect(output.displayValue).toBeDisplayString('4,670 ms');
+    expect(output.displayValue).toBeDisplayString('4,370 ms');
     const metrics = output.details.items[0];
     for (const [key, value] of Object.entries(metrics)) {
       metrics[key] = Math.round(value);

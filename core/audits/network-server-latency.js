@@ -3,17 +3,16 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {Audit} from './audit.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import NetworkRecords from '../computed/network-records.js';
-import NetworkAnalysisComputed from '../computed/network-analysis.js';
+import {NetworkRecords} from '../computed/network-records.js';
+import {NetworkAnalysis} from '../computed/network-analysis.js';
 
 const UIStrings = {
   /** Descriptive title of a Lighthouse audit that tells the user the server latencies observed from each origin the page connected to. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Server Backend Latencies',
-  /** Description of a Lighthouse audit that tells the user that server latency can effect their website's performance negatively. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user that server latency can effect their website's performance negatively. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Server latencies can impact web performance. ' +
     'If the server latency of an origin is high, it\'s an indication the server is overloaded ' +
     'or has poor backend performance. [Learn more about server response time](https://hpbn.co/primer-on-web-performance/#analyzing-the-resource-waterfall).',
@@ -50,7 +49,7 @@ class NetworkServerLatency extends Audit {
       };
     }
 
-    const analysis = await NetworkAnalysisComputed.request(devtoolsLog, context);
+    const analysis = await NetworkAnalysis.request(devtoolsLog, context);
 
     /** @type {number} */
     let maxLatency = 0;
@@ -68,9 +67,9 @@ class NetworkServerLatency extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'origin', itemType: 'text', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'serverResponseTime', itemType: 'ms', granularity: 1,
-        text: str_(i18n.UIStrings.columnTimeSpent)},
+      {key: 'origin', valueType: 'text', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'serverResponseTime', valueType: 'ms', granularity: 1,
+        label: str_(i18n.UIStrings.columnTimeSpent)},
     ];
 
     const tableDetails = Audit.makeTableDetails(headings, results);

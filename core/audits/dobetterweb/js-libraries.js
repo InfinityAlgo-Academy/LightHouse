@@ -8,7 +8,6 @@
  * @fileoverview Diagnostic audit that lists all JavaScript libraries detected on the page
  */
 
-'use strict';
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
@@ -55,8 +54,8 @@ class JsLibrariesAudit extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'name', itemType: 'text', text: str_(i18n.UIStrings.columnName)},
-      {key: 'version', itemType: 'text', text: str_(UIStrings.columnVersion)},
+      {key: 'name', valueType: 'text', label: str_(i18n.UIStrings.columnName)},
+      {key: 'version', valueType: 'text', label: str_(UIStrings.columnVersion)},
     ];
     const details = Audit.makeTableDetails(headings, libDetails, {});
 

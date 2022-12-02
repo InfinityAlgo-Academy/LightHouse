@@ -21,7 +21,7 @@ import path from 'path';
 import colors from 'colors';
 
 import LegacyJavascript from '../../audits/byte-efficiency/legacy-javascript.js';
-import format from '../../../shared/localization/format.js';
+import * as format from '../../../shared/localization/format.js';
 import {LH_ROOT} from '../../../root.js';
 import {readJson} from '../../test/test-utils.js';
 

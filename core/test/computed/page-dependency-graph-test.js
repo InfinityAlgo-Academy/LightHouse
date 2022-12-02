@@ -4,9 +4,9 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
-import PageDependencyGraph from '../../computed/page-dependency-graph.js';
+import {PageDependencyGraph} from '../../computed/page-dependency-graph.js';
 import {BaseNode} from '../../lib/dependency-graph/base-node.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../test-utils.js';
@@ -23,8 +23,7 @@ function createRequest(
   initiator = null,
   resourceType = NetworkRequest.TYPES.Document
 ) {
-  startTime = startTime / 1000;
-  const endTime = startTime + 0.05;
+  const endTime = startTime + 50;
   return {requestId, url, startTime, endTime, initiator, resourceType};
 }
 

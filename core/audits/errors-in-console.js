@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview Audits a page to determine whether it contains console errors.
@@ -13,7 +12,7 @@
 import log from 'lighthouse-logger';
 
 import {Audit} from './audit.js';
-import JsBundles from '../computed/js-bundles.js';
+import {JSBundles} from '../computed/js-bundles.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
@@ -82,7 +81,7 @@ class ErrorLogs extends Audit {
   static async audit(artifacts, context) {
     /** @type {AuditOptions} */
     const auditOptions = context.options;
-    const bundles = await JsBundles.request(artifacts, context);
+    const bundles = await JSBundles.request(artifacts, context);
 
     /** @type {Array<{source: string, description: string|undefined, sourceLocation: LH.Audit.Details.SourceLocationValue|undefined}>} */
     const consoleRows = artifacts.ConsoleMessages
@@ -101,8 +100,10 @@ class ErrorLogs extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'sourceLocation', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
-      {key: 'description', itemType: 'code', text: str_(i18n.UIStrings.columnDescription)},
+      /* eslint-disable max-len */
+      {key: 'sourceLocation', valueType: 'source-location', label: str_(i18n.UIStrings.columnSource)},
+      {key: 'description', valueType: 'code', label: str_(i18n.UIStrings.columnDescription)},
+      /* eslint-enable max-len */
     ];
 
     const details = Audit.makeTableDetails(headings, tableRows);

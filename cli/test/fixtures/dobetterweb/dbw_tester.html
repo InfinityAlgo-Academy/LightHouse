@@ -456,8 +456,7 @@ if (location.search === '') {
 <!-- Including this validates that pages that override fetch don't crash our entire stacks gatherer. -->
 <script>window.fetch = () => new Promise(r => setTimeout(r, 90000));</script>
 
-<!-- FAIL(is-on-https): requires a non-localhost http file
-     FAIL(no-vulnerable-libraries): Loads a vulnerable JS library -->
+<!-- FAIL(is-on-https): requires a non-localhost http file -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <!-- Filesystem URL shouldn't be flagged is-on-https. -->

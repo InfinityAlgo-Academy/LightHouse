@@ -3,10 +3,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {Audit} from '../audit.js';
-import ComputedFcp from '../../computed/metrics/first-contentful-paint.js';
+import {FirstContentfulPaint as ComputedFcp} from '../../computed/metrics/first-contentful-paint.js';
 import * as constants from '../../config/constants.js';
 
 const regular3G = constants.throttling.mobileRegular3G;
@@ -50,7 +49,7 @@ class FirstContentfulPaint3G extends Audit {
     const gatherContext = artifacts.GatherContext;
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    /** @type {Immutable<LH.Config.Settings>} */
+    /** @type {LH.Audit.Context['settings']} */
     const settings = {...context.settings, throttlingMethod: 'simulate', throttling: regular3G};
     const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL: artifacts.URL};
     const metricResult = await ComputedFcp.request(metricComputationData, context);

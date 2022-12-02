@@ -4,9 +4,9 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
-import LanternFirstContentfulPaint from '../../../computed/metrics/lantern-first-contentful-paint.js'; // eslint-disable-line max-len
+import {LanternFirstContentfulPaint} from '../../../computed/metrics/lantern-first-contentful-paint.js';
 import {getURLArtifactFromDevtoolsLog, readJson} from '../../test-utils.js';
 import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 import {createTestTrace} from '../../create-test-trace.js';
@@ -45,7 +45,7 @@ describe('Metrics: Lantern FCP', () => {
         resourceType: 'Document',
         priority: 'High',
         startTime: 0,
-        endTime: 0.0000001, // Before FCP
+        endTime: 0.0001, // Before FCP
         timing: {sslStart: 50, sslEnd: 100, connectStart: 50, connectEnd: 100},
       },
       {
@@ -53,7 +53,7 @@ describe('Metrics: Lantern FCP', () => {
         url: 'https://example.com/script.js',
         resourceType: 'Script',
         priority: 'High',
-        startTime: 0.000015, // After FCP
+        startTime: 0.015, // After FCP
         endTime: -1,
         timing: {sslStart: 50, sslEnd: 100, connectStart: 50, connectEnd: 100},
       },
@@ -62,7 +62,7 @@ describe('Metrics: Lantern FCP', () => {
     const URL = {
       requestedUrl: 'https://example.com/',
       mainDocumentUrl: 'https://example.com/',
-      finalUrl: 'https://example.com/',
+      finalDisplayedUrl: 'https://example.com/',
     };
     const artifacts = {
       trace,

@@ -3,14 +3,11 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
-
-import {Audit} from '../audit.js';
 
 import robotsParser from 'robots-parser';
 
-import URL from '../../lib/url-shim.js';
-import MainResource from '../../computed/main-resource.js';
+import {Audit} from '../audit.js';
+import {MainResource} from '../../computed/main-resource.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const BLOCKLIST = new Set([
@@ -25,7 +22,7 @@ const UIStrings = {
   title: 'Page isn’t blocked from indexing',
   /** Title of a Lighthouse audit that provides detail on if search-engine crawlers are blocked from indexing the page. This title is shown when the page has been configured to block indexing and therefore cannot be indexed by search engines. */
   failureTitle: 'Page is blocked from indexing',
-  /** Description of a Lighthouse audit that tells the user *why* allowing search-engine crawling of their page is beneficial. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* allowing search-engine crawling of their page is beneficial. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Search engines are unable to include your pages in search results ' +
       'if they don\'t have permission to crawl them. [Learn more about crawler directives](https://web.dev/is-crawable/).',
 };
@@ -93,63 +90,60 @@ class IsCrawlable extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts, context) {
+  static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const metaRobots = artifacts.MetaElements.find(meta => meta.name === 'robots');
+    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
+    /** @type {LH.Audit.Details.Table['items']} */
+    const blockingDirectives = [];
 
-    return MainResource.request({devtoolsLog, URL: artifacts.URL}, context)
-      .then(mainResource => {
-        /** @type {LH.Audit.Details.Table['items']} */
-        const blockingDirectives = [];
+    if (metaRobots) {
+      const metaRobotsContent = metaRobots.content || '';
+      const isBlocking = hasBlockingDirective(metaRobotsContent);
 
-        if (metaRobots) {
-          const metaRobotsContent = metaRobots.content || '';
-          const isBlocking = hasBlockingDirective(metaRobotsContent);
+      if (isBlocking) {
+        blockingDirectives.push({
+          source: {
+            ...Audit.makeNodeItem(metaRobots.node),
+            snippet: `<meta name="robots" content="${metaRobotsContent}" />`,
+          },
+        });
+      }
+    }
 
-          if (isBlocking) {
-            blockingDirectives.push({
-              source: {
-                ...Audit.makeNodeItem(metaRobots.node),
-                snippet: `<meta name="robots" content="${metaRobotsContent}" />`,
-              },
-            });
-          }
-        }
+    mainResource.responseHeaders && mainResource.responseHeaders
+      .filter(h => h.name.toLowerCase() === ROBOTS_HEADER && !hasUserAgent(h.value) &&
+        hasBlockingDirective(h.value))
+      .forEach(h => blockingDirectives.push({source: `${h.name}: ${h.value}`}));
 
-        mainResource.responseHeaders && mainResource.responseHeaders
-          .filter(h => h.name.toLowerCase() === ROBOTS_HEADER && !hasUserAgent(h.value) &&
-            hasBlockingDirective(h.value))
-          .forEach(h => blockingDirectives.push({source: `${h.name}: ${h.value}`}));
+    if (artifacts.RobotsTxt.content) {
+      const robotsFileUrl = new URL('/robots.txt', mainResource.url);
+      const robotsTxt = robotsParser(robotsFileUrl.href, artifacts.RobotsTxt.content);
 
-        if (artifacts.RobotsTxt.content) {
-          const robotsFileUrl = new URL('/robots.txt', mainResource.url);
-          const robotsTxt = robotsParser(robotsFileUrl.href, artifacts.RobotsTxt.content);
+      if (!robotsTxt.isAllowed(mainResource.url)) {
+        const line = robotsTxt.getMatchingLineNumber(mainResource.url) || 1;
+        blockingDirectives.push({
+          source: {
+            type: /** @type {const} */ ('source-location'),
+            url: robotsFileUrl.href,
+            urlProvider: /** @type {const} */ ('network'),
+            line: line - 1,
+            column: 0,
+          },
+        });
+      }
+    }
 
-          if (!robotsTxt.isAllowed(mainResource.url)) {
-            const line = robotsTxt.getMatchingLineNumber(mainResource.url) || 1;
-            blockingDirectives.push({
-              source: {
-                type: /** @type {const} */ ('source-location'),
-                url: robotsFileUrl.href,
-                urlProvider: /** @type {const} */ ('network'),
-                line: line - 1,
-                column: 0,
-              },
-            });
-          }
-        }
+    /** @type {LH.Audit.Details.Table['headings']} */
+    const headings = [
+      {key: 'source', valueType: 'code', label: 'Blocking Directive Source'},
+    ];
+    const details = Audit.makeTableDetails(headings, blockingDirectives);
 
-        /** @type {LH.Audit.Details.Table['headings']} */
-        const headings = [
-          {key: 'source', itemType: 'code', text: 'Blocking Directive Source'},
-        ];
-        const details = Audit.makeTableDetails(headings, blockingDirectives);
-
-        return {
-          score: Number(blockingDirectives.length === 0),
-          details,
-        };
-      });
+    return {
+      score: Number(blockingDirectives.length === 0),
+      details,
+    };
   }
 }
 

@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-
 /**
  * @fileoverview Refer to driver-test.js and source-maps-test.js for intended usage.
  */
@@ -13,12 +12,12 @@ import {fnAny} from '../test-utils.js';
 
 /**
  * @template {keyof LH.CrdpCommands} C
- * @typedef {((...args: LH.CrdpCommands[C]['paramsType']) => MockResponse<C>) | RecursivePartial<LH.CrdpCommands[C]['returnType']> | Promise<Error>} MockResponse
+ * @typedef {((...args: LH.CrdpCommands[C]['paramsType']) => MockResponse<C>) | LH.Util.RecursivePartial<LH.CrdpCommands[C]['returnType']> | Promise<Error>} MockResponse
  */
 
 /**
  * @template {keyof LH.CrdpEvents} E
- * @typedef {RecursivePartial<LH.CrdpEvents[E][0]>} MockEvent
+ * @typedef {LH.Util.RecursivePartial<LH.CrdpEvents[E][0]>} MockEvent
  */
 
 /**

@@ -10,12 +10,12 @@ import fs from 'fs';
 
 import open from 'open';
 
-import reportGenerator from '../../report/generator/report-generator.js';
+import {ReportGenerator} from '../../report/generator/report-generator.js';
 import {LH_ROOT} from '../../root.js';
 import {readJson} from '../test/test-utils.js';
 
 const flow = readJson('core/test/fixtures/fraggle-rock/reports/sample-flow-result.json');
-const htmlReport = reportGenerator.generateFlowReportHtml(flow);
+const htmlReport = ReportGenerator.generateFlowReportHtml(flow);
 const filepath = `${LH_ROOT}/dist/sample-reports/flow-report/index.html`;
 fs.writeFileSync(filepath, htmlReport);
 open(filepath);

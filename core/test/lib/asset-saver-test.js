@@ -4,11 +4,11 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 import fs from 'fs';
 
 import * as assetSaver from '../../lib/asset-saver.js';
-import {Metrics} from '../../lib/traces/pwmetrics-events.js';
+import {MetricTraceEvents} from '../../lib/traces/metric-trace-events.js';
 import {LighthouseError} from '../../lib/lh-error.js';
 import {Audit} from '../../audits/audit.js';
 import {LH_ROOT} from '../../../root.js';
@@ -81,7 +81,7 @@ describe('asset-saver helper', () => {
       const beforeCount = countEvents(dbwTrace);
       return assetSaver.prepareAssets(mockArtifacts, dbwResults.audits).then(preparedAssets => {
         const afterCount = countEvents(preparedAssets[0].traceData);
-        const metricsMinusTimeOrigin = Metrics.metricsDefinitions.length - 1;
+        const metricsMinusTimeOrigin = MetricTraceEvents.metricsDefinitions.length - 1;
         assert.equal(afterCount, beforeCount + (2 * metricsMinusTimeOrigin));
       });
     });

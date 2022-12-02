@@ -4,13 +4,13 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import axeCore from 'axe-core';
 
 import AxeAudit from '../../../audits/accessibility/axe-audit.js';
 import Accesskeys from '../../../audits/accessibility/accesskeys.js';
-import format from '../../../../shared/localization/format.js';
+import * as format from '../../../../shared/localization/format.js';
 
 describe('Accessibility: axe-audit', () => {
   describe('audit()', () => {

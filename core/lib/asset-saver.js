@@ -3,23 +3,24 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import fs from 'fs';
 import path from 'path';
-import log from 'lighthouse-logger';
 import stream from 'stream';
 import util from 'util';
+
+import log from 'lighthouse-logger';
+
 import {Simulator} from './dependency-graph/simulator/simulator.js';
 import lanternTraceSaver from './lantern-trace-saver.js';
-import {Metrics} from './traces/pwmetrics-events.js';
-import NetworkAnalysisComputed from '../computed/network-analysis.js';
-import LoadSimulatorComputed from '../computed/load-simulator.js';
+import {MetricTraceEvents} from './traces/metric-trace-events.js';
+import {NetworkAnalysis} from '../computed/network-analysis.js';
+import {LoadSimulator} from '../computed/load-simulator.js';
 import {LighthouseError} from '../lib/lh-error.js';
 
 const {promisify} = util;
 
-// TODO(esmodules): Rollup does not support `promisfy` or `stream.pipeline`. Bundled files
+// Rollup does not support `promisfy` or `stream.pipeline`. Bundled files
 // don't need anything in this file except for `stringifyReplacer`, so a check for
 // truthiness before using is enough.
 // TODO: Can remove promisify(pipeline) in Node 15.
@@ -164,7 +165,7 @@ async function prepareAssets(artifacts, audits) {
 
     const traceData = Object.assign({}, trace);
     if (audits) {
-      const evts = new Metrics(traceData.traceEvents, audits).generateFakeEvents();
+      const evts = new MetricTraceEvents(traceData.traceEvents, audits).generateFakeEvents();
       traceData.traceEvents = traceData.traceEvents.concat(evts);
     }
 
@@ -309,8 +310,8 @@ async function saveLanternNetworkData(devtoolsLog, outputPath) {
   /** @type {LH.Audit.Context} */
   // @ts-expect-error - the full audit context isn't needed for analysis.
   const context = {computedCache: new Map()};
-  const networkAnalysis = await NetworkAnalysisComputed.request(devtoolsLog, context);
-  const lanternData = LoadSimulatorComputed.convertAnalysisToSaveableLanternData(networkAnalysis);
+  const networkAnalysis = await NetworkAnalysis.request(devtoolsLog, context);
+  const lanternData = LoadSimulator.convertAnalysisToSaveableLanternData(networkAnalysis);
 
   fs.writeFileSync(outputPath, JSON.stringify(lanternData));
 }

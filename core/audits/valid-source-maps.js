@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import thirdPartyWeb from '../lib/third-party-web.js';
 import {Audit} from './audit.js';
@@ -14,7 +13,7 @@ const UIStrings = {
   title: 'Page has valid source maps',
   /** Title of a Lighthouse audit that provides detail on HTTP to HTTPS redirects. This descriptive title is shown to users when HTTP traffic is not redirected to HTTPS. */
   failureTitle: 'Missing source maps for large first-party JavaScript',
-  /** Description of a Lighthouse audit that tells the user that their JavaScript source maps are invalid or missing. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user that their JavaScript source maps are invalid or missing. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Source maps translate minified code to the original source code. This helps ' +
     'developers debug in production. In addition, Lighthouse is able to provide further ' +
     'insights. Consider deploying source maps to take advantage of these benefits. ' +
@@ -78,7 +77,7 @@ class ValidSourceMaps extends Audit {
     for (const script of artifacts.Scripts) {
       const sourceMap = SourceMaps.find(m => m.scriptId === script.scriptId);
       const errors = [];
-      const isLargeFirstParty = this.isLargeFirstPartyJS(script, artifacts.URL.finalUrl);
+      const isLargeFirstParty = this.isLargeFirstPartyJS(script, artifacts.URL.finalDisplayedUrl);
 
       if (isLargeFirstParty && (!sourceMap || !sourceMap.map)) {
         missingMapsForLargeFirstPartyFile = true;
@@ -120,11 +119,11 @@ class ValidSourceMaps extends Audit {
       /* eslint-disable max-len */
       {
         key: 'scriptUrl',
-        itemType: 'url',
+        valueType: 'url',
         subItemsHeading: {key: 'error'},
-        text: str_(i18n.UIStrings.columnURL),
+        label: str_(i18n.UIStrings.columnURL),
       },
-      {key: 'sourceMapUrl', itemType: 'url', text: str_(UIStrings.columnMapURL)},
+      {key: 'sourceMapUrl', valueType: 'url', label: str_(UIStrings.columnMapURL)},
       /* eslint-enable max-len */
     ];
 

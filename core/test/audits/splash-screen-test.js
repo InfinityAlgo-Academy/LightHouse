@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import SplashScreenAudit from '../../audits/splash-screen.js';
 import {parseManifest} from '../../lib/manifest-parser.js';
@@ -90,18 +90,6 @@ describe('PWA: splash screen audit', () => {
     it('fails when a manifest contains no background color', () => {
       const artifacts = generateMockArtifacts();
       artifacts.WebAppManifest.value.background_color.value = undefined;
-      const context = generateMockAuditContext();
-
-      return SplashScreenAudit.audit(artifacts, context).then(result => {
-        assert.strictEqual(result.score, 0);
-        assert.ok(result.explanation.includes('background_color'), result.explanation);
-      });
-    });
-
-    it('fails when a manifest contains invalid background color', () => {
-      const artifacts = generateMockArtifacts(JSON.stringify({
-        background_color: 'no',
-      }));
       const context = generateMockAuditContext();
 
       return SplashScreenAudit.audit(artifacts, context).then(result => {

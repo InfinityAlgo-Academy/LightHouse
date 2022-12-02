@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "‏‮Avoids‬‏ `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "‏‮Highest‬‏ ‏‮Severity‬‏"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "‏‮Library‬‏ ‏‮Version‬‏"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "‏‮Vulnerability‬‏ ‏‮Count‬‏"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "‏‮Some‬‏ ‏‮third‬‏-‏‮party‬‏ ‏‮scripts‬‏ ‏‮may‬‏ ‏‮contain‬‏ ‏‮known‬‏ ‏‮security‬‏ ‏‮vulnerabilities‬‏ ‏‮that‬‏ ‏‮are‬‏ ‏‮easily‬‏ ‏‮identified‬‏ ‏‮and‬‏ ‏‮exploited‬‏ ‏‮by‬‏ ‏‮attackers‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 ‏‮vulnerability‬‏ ‏‮detected‬‏}zero{# ‏‮vulnerabilities‬‏ ‏‮detected‬‏}two{# ‏‮vulnerabilities‬‏ ‏‮detected‬‏}few{# ‏‮vulnerabilities‬‏ ‏‮detected‬‏}many{# ‏‮vulnerabilities‬‏ ‏‮detected‬‏}other{# ‏‮vulnerabilities‬‏ ‏‮detected‬‏}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "‏‮Includes‬‏ ‏‮front‬‏-‏‮end‬‏ ‏‮JavaScript‬‏ ‏‮libraries‬‏ ‏‮with‬‏ ‏‮known‬‏ ‏‮security‬‏ ‏‮vulnerabilities‬‏"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "‏‮Avoids‬‏ ‏‮front‬‏-‏‮end‬‏ ‏‮JavaScript‬‏ ‏‮libraries‬‏ ‏‮with‬‏ ‏‮known‬‏ ‏‮security‬‏ ‏‮vulnerabilities‬‏"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "‏‮Users‬‏ ‏‮are‬‏ ‏‮mistrustful‬‏ ‏‮of‬‏ ‏‮or‬‏ ‏‮confused‬‏ ‏‮by‬‏ ‏‮sites‬‏ ‏‮that‬‏ ‏‮request‬‏ ‏‮to‬‏ ‏‮send‬‏ ‏‮notifications‬‏ ‏‮without‬‏ ‏‮context‬‏. ‏‮Consider‬‏ ‏‮tying‬‏ ‏‮the‬‏ ‏‮request‬‏ ‏‮to‬‏ ‏‮user‬‏ ‏‮gestures‬‏ ‏‮instead‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://web.dev/notification-on-start/)."
   },
@@ -1626,7 +1605,7 @@
     "message": "‏‮Page‬‏ ‏‮has‬‏ ‏‮valid‬‏ ‏‮source‬‏ ‏‮maps‬‏"
   },
   "core/audits/viewport.js | description": {
-    "message": "‏‮A‬‏ `<meta name=\"viewport\">` ‏‮not‬‏ ‏‮only‬‏ ‏‮optimizes‬‏ ‏‮your‬‏ ‏‮app‬‏ ‏‮for‬‏ ‏‮mobile‬‏ ‏‮screen‬‏ ‏‮sizes‬‏, ‏‮but‬‏ ‏‮also‬‏ ‏‮prevents‬‏ [‏‮a‬‏ 300 ‏‮millisecond‬‏ ‏‮delay‬‏ ‏‮to‬‏ ‏‮user‬‏ ‏‮input‬‏](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [‏‮Learn‬‏ ‏‮more‬‏](https://web.dev/viewport/)."
+    "message": "‏‮A‬‏ `<meta name=\"viewport\">` ‏‮not‬‏ ‏‮only‬‏ ‏‮optimizes‬‏ ‏‮your‬‏ ‏‮app‬‏ ‏‮for‬‏ ‏‮mobile‬‏ ‏‮screen‬‏ ‏‮sizes‬‏, ‏‮but‬‏ ‏‮also‬‏ ‏‮prevents‬‏ [‏‮a‬‏ 300 ‏‮millisecond‬‏ ‏‮delay‬‏ ‏‮to‬‏ ‏‮user‬‏ ‏‮input‬‏](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [‏‮Learn‬‏ ‏‮more‬‏](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "‏‮No‬‏ `<meta name=\"viewport\">` ‏‮tag‬‏ ‏‮found‬‏"

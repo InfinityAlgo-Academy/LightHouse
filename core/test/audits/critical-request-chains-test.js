@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import CriticalRequestChains from '../../audits/critical-request-chains.js';
 import {createTestTrace} from '../create-test-trace.js';
@@ -15,15 +15,15 @@ const redditDevtoolsLog = readJson('../fixtures/artifacts/perflog/defaultPass.de
 
 const FAILING_CHAIN_RECORDS = [
   {
-    endTime: 5,
-    responseReceivedTime: 5,
+    endTime: 5000,
+    responseReceivedTime: 5000,
     startTime: 0,
     url: 'https://example.com/',
     priority: 'VeryHigh',
   }, {
-    endTime: 16,
-    responseReceivedTime: 14,
-    startTime: 11,
+    endTime: 16_000,
+    responseReceivedTime: 14_000,
+    startTime: 11_000,
     url: 'https://example.com/b.js',
     priority: 'VeryHigh',
     initiator: {
@@ -31,9 +31,9 @@ const FAILING_CHAIN_RECORDS = [
       url: 'https://example.com/',
     },
   }, {
-    endTime: 17,
-    responseReceivedTime: 15,
-    startTime: 12,
+    endTime: 17_000,
+    responseReceivedTime: 15_000,
+    startTime: 12_000,
     url: 'https://example.com/c.js',
     priority: 'VeryHigh',
     initiator: {
@@ -45,8 +45,8 @@ const FAILING_CHAIN_RECORDS = [
 
 const PASSING_CHAIN_RECORDS = [
   {
-    endTime: 1,
-    responseReceivedTime: 1,
+    endTime: 1000,
+    responseReceivedTime: 1000,
     startTime: 0,
     url: 'https://example.com/',
     priority: 'VeryHigh',
@@ -56,9 +56,9 @@ const PASSING_CHAIN_RECORDS = [
 const PASSING_CHAIN_RECORDS_2 = [
   {
     url: 'http://localhost:10503/offline-ready.html',
-    startTime: 33552.036878,
-    endTime: 33552.285438,
-    responseReceivedTime: 33552.275677,
+    startTime: 33552036,
+    endTime: 33552284,
+    responseReceivedTime: 33552275,
     transferSize: 1849,
     priority: 'VeryHigh',
   },
@@ -69,7 +69,7 @@ const EMPTY_CHAIN_RECORDS = [];
 const mockArtifacts = (chainNetworkRecords) => {
   const trace = createTestTrace({topLevelTasks: [{ts: 0}]});
   const devtoolsLog = networkRecordsToDevtoolsLog(chainNetworkRecords);
-  const finalUrl = chainNetworkRecords[0] ? chainNetworkRecords[0].url : 'https://example.com';
+  const finalDisplayedUrl = chainNetworkRecords[0] ? chainNetworkRecords[0].url : 'https://example.com';
 
   return {
     traces: {
@@ -79,10 +79,9 @@ const mockArtifacts = (chainNetworkRecords) => {
       [CriticalRequestChains.DEFAULT_PASS]: devtoolsLog,
     },
     URL: {
-      initialUrl: 'about:blank',
-      requestedUrl: finalUrl,
-      mainDocumentUrl: finalUrl,
-      finalUrl,
+      requestedUrl: finalDisplayedUrl,
+      mainDocumentUrl: finalDisplayedUrl,
+      finalDisplayedUrl,
     },
   };
 };
@@ -113,10 +112,9 @@ describe('Performance: critical-request-chains audit', () => {
       traces: {defaultPass: createTestTrace({topLevelTasks: [{ts: 0}]})},
       devtoolsLogs: {defaultPass: redditDevtoolsLog},
       URL: {
-        initialUrl: 'about:blank',
         requestedUrl: 'https://www.reddit.com/r/nba',
         mainDocumentUrl: 'https://www.reddit.com/r/nba',
-        finalUrl: 'https://www.reddit.com/r/nba',
+        finalDisplayedUrl: 'https://www.reddit.com/r/nba',
       },
     };
     const context = {computedCache: new Map()};

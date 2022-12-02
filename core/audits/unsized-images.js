@@ -8,18 +8,17 @@
  * Audit that checks whether all images have explicit width and height.
  */
 
-'use strict';
 
 import {Audit} from './audit.js';
 import * as i18n from './../lib/i18n/i18n.js';
-import URL from './../lib/url-shim.js';
+import UrlUtils from '../lib/url-utils.js';
 
 const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on whether all images have explicit width and height. This descriptive title is shown to users when every image has explicit width and height */
   title: 'Image elements have explicit `width` and `height`',
   /** Title of a Lighthouse audit that provides detail on whether all images have explicit width and height. This descriptive title is shown to users when one or more images does not have explicit width and height */
   failureTitle: 'Image elements do not have explicit `width` and `height`',
-  /** Description of a Lighthouse audit that tells the user why they should include explicit width and height for all images. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why they should include explicit width and height for all images. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Set an explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn how to set image dimensions](https://web.dev/optimize-cls/#images-without-dimensions)',
 };
 
@@ -106,9 +105,9 @@ class UnsizedImages extends Audit {
    * @return {boolean}
    */
   static isNonNetworkSvg(image) {
-    const isSvg = URL.guessMimeType(image.src) === 'image/svg+xml';
+    const isSvg = UrlUtils.guessMimeType(image.src) === 'image/svg+xml';
     const urlScheme = image.src.slice(0, image.src.indexOf(':'));
-    const isNonNetwork = URL.isNonNetworkProtocol(urlScheme);
+    const isNonNetwork = UrlUtils.isNonNetworkProtocol(urlScheme);
     return isSvg && isNonNetwork;
   }
 
@@ -140,15 +139,15 @@ class UnsizedImages extends Audit {
       if (isNotDisplayed) continue;
 
       unsizedImages.push({
-        url: URL.elideDataURI(image.src),
+        url: UrlUtils.elideDataURI(image.src),
         node: Audit.makeNodeItem(image.node),
       });
     }
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'node', itemType: 'node', text: ''},
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
+      {key: 'node', valueType: 'node', label: ''},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
     ];
 
     return {

@@ -3,16 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {Audit} from './audit.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import ComputedChains from '../computed/critical-request-chains.js';
+import {CriticalRequestChains as ComputedChains} from '../computed/critical-request-chains.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to reduce the depth of critical network requests to enhance initial load of a page. Critical request chains are series of dependent network requests that are important for page rendering. For example, here's a 4-request-deep chain: The biglogo.jpg image is required, but is requested via the styles.css style code, which is requested by the initialize.js javascript, which is requested by the page's HTML. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Avoid chaining critical requests',
-  /** Description of a Lighthouse audit that tells the user *why* they should reduce the depth of critical network requests to enhance initial load of a page . This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should reduce the depth of critical network requests to enhance initial load of a page . This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'The Critical Request Chains below show you what resources are ' +
       'loaded with a high priority. Consider reducing ' +
       'the length of chains, reducing the download size of resources, or ' +
@@ -71,8 +70,8 @@ class CriticalRequestChains extends Audit {
           depth,
           id,
           node: child,
-          chainDuration: (child.request.endTime - startTime) * 1000,
-          chainTransferSize: (transferSize + child.request.transferSize),
+          chainDuration: child.request.endTime - startTime,
+          chainTransferSize: transferSize + child.request.transferSize,
         });
 
         // Carry on walking.
@@ -97,7 +96,7 @@ class CriticalRequestChains extends Audit {
       transferSize: 0,
     };
     CriticalRequestChains._traverse(tree, opts => {
-      const duration = opts.chainDuration;
+      const duration = opts.chainDuration * 1000;
       if (duration > longest.duration) {
         longest.duration = duration;
         longest.transferSize = opts.chainTransferSize;
@@ -124,9 +123,9 @@ class CriticalRequestChains extends Audit {
       const request = opts.node.request;
       const simpleRequest = {
         url: request.url,
-        startTime: request.startTime,
-        endTime: request.endTime,
-        responseReceivedTime: request.responseReceivedTime,
+        startTime: request.startTime / 1000,
+        endTime: request.endTime / 1000,
+        responseReceivedTime: request.responseReceivedTime / 1000,
         transferSize: request.transferSize,
       };
 
@@ -167,52 +166,51 @@ class CriticalRequestChains extends Audit {
    * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static audit(artifacts, context) {
+  static async audit(artifacts, context) {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const URL = artifacts.URL;
-    return ComputedChains.request({devtoolsLog, trace, URL}, context).then(chains => {
-      let chainCount = 0;
-      /**
-       * @param {LH.Audit.Details.SimpleCriticalRequestNode} node
-       * @param {number} depth
-       */
-      function walk(node, depth) {
-        const childIds = Object.keys(node);
+    const chains = await ComputedChains.request({devtoolsLog, trace, URL}, context);
+    let chainCount = 0;
+    /**
+     * @param {LH.Audit.Details.SimpleCriticalRequestNode} node
+     * @param {number} depth
+     */
+    function walk(node, depth) {
+      const childIds = Object.keys(node);
 
-        childIds.forEach(id => {
-          const child = node[id];
-          if (child.children) {
-            walk(child.children, depth + 1);
-          } else {
-            // if the node doesn't have a children field, then it is a leaf, so +1
-            chainCount++;
-          }
-        }, '');
-      }
-      // Convert
-      const flattenedChains = CriticalRequestChains.flattenRequests(chains);
+      childIds.forEach(id => {
+        const child = node[id];
+        if (child.children) {
+          walk(child.children, depth + 1);
+        } else {
+          // if the node doesn't have a children field, then it is a leaf, so +1
+          chainCount++;
+        }
+      }, '');
+    }
+    // Convert
+    const flattenedChains = CriticalRequestChains.flattenRequests(chains);
 
-      // Account for initial navigation
-      const initialNavKey = Object.keys(flattenedChains)[0];
-      const initialNavChildren = initialNavKey && flattenedChains[initialNavKey].children;
-      if (initialNavChildren && Object.keys(initialNavChildren).length > 0) {
-        walk(initialNavChildren, 0);
-      }
+    // Account for initial navigation
+    const initialNavKey = Object.keys(flattenedChains)[0];
+    const initialNavChildren = initialNavKey && flattenedChains[initialNavKey].children;
+    if (initialNavChildren && Object.keys(initialNavChildren).length > 0) {
+      walk(initialNavChildren, 0);
+    }
 
-      const longestChain = CriticalRequestChains._getLongestChain(flattenedChains);
+    const longestChain = CriticalRequestChains._getLongestChain(flattenedChains);
 
-      return {
-        score: Number(chainCount === 0),
-        notApplicable: chainCount === 0,
-        displayValue: chainCount ? str_(UIStrings.displayValue, {itemCount: chainCount}) : '',
-        details: {
-          type: 'criticalrequestchain',
-          chains: flattenedChains,
-          longestChain,
-        },
-      };
-    });
+    return {
+      score: Number(chainCount === 0),
+      notApplicable: chainCount === 0,
+      displayValue: chainCount ? str_(UIStrings.displayValue, {itemCount: chainCount}) : '',
+      details: {
+        type: 'criticalrequestchain',
+        chains: flattenedChains,
+        longestChain,
+      },
+    };
   }
 }
 

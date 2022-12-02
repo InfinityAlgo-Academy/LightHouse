@@ -7,18 +7,18 @@
 /**
  * @fileoverview Audit a page to see if it does have resources that are blocking first paint
  */
-'use strict';
+
 
 import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {BaseNode} from '../../lib/dependency-graph/base-node.js';
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
-import UnusedCSS from '../../computed/unused-css.js';
+import {UnusedCSS} from '../../computed/unused-css.js';
 import {NetworkRequest} from '../../lib/network-request.js';
-import ProcessedTrace from '../../computed/processed-trace.js';
-import ProcessedNavigation from '../../computed/processed-navigation.js';
-import LoadSimulator from '../../computed/load-simulator.js';
-import FirstContentfulPaint from '../../computed/metrics/first-contentful-paint.js';
+import {ProcessedTrace} from '../../computed/processed-trace.js';
+import {ProcessedNavigation} from '../../computed/processed-navigation.js';
+import {LoadSimulator} from '../../computed/load-simulator.js';
+import {FirstContentfulPaint} from '../../computed/metrics/first-contentful-paint.js';
 
 /** @typedef {import('../../lib/dependency-graph/simulator/simulator').Simulator} Simulator */
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
@@ -33,7 +33,7 @@ const MINIMUM_WASTED_MS = 50;
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to reduce or remove network resources that block the initial render of the page. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Eliminate render-blocking resources',
-  /** Description of a Lighthouse audit that tells the user *why* they should reduce or remove network resources that block the initial render of the page. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they should reduce or remove network resources that block the initial render of the page. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Resources are blocking the first paint of your page. Consider ' +
     'delivering critical JS/CSS inline and deferring all non-critical ' +
     'JS/styles. [Learn how to eliminate render-blocking resources](https://web.dev/render-blocking-resources/).',
@@ -138,7 +138,7 @@ class RenderBlockingResources extends Audit {
     const simulator = await LoadSimulator.request(simulatorData, context);
     const wastedCssBytes = await RenderBlockingResources.computeWastedCSSBytes(artifacts, context);
 
-    /** @type {Immutable<LH.Config.Settings>} */
+    /** @type {LH.Audit.Context['settings']} */
     const metricSettings = {
       ...context.settings,
       throttlingMethod: 'simulate',
@@ -158,7 +158,7 @@ class RenderBlockingResources extends Audit {
     const deferredNodeIds = new Set();
     for (const resource of artifacts.TagsBlockingFirstPaint) {
       // Ignore any resources that finished after observed FCP (they're clearly not render-blocking)
-      if (resource.endTime * 1000 > fcpTsInMs) continue;
+      if (resource.endTime > fcpTsInMs) continue;
       // TODO: beacon to Sentry, https://github.com/GoogleChrome/lighthouse/issues/7041
       if (!nodesByUrl[resource.tag.url]) continue;
 

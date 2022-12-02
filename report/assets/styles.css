@@ -322,7 +322,7 @@
   color: var(--report-text-color);
 }
 
-.lh-root :focus {
+.lh-root :focus-visible {
     outline: -webkit-focus-ring-color auto 3px;
 }
 .lh-root summary:focus {
@@ -873,7 +873,7 @@
 
 .lh-audit--load-opportunity .lh-audit__display-text {
   text-align: right;
-  flex: 0 0 calc(3 * var(--report-font-size));
+  flex: 0 0 calc(4 * var(--report-font-size));
 }
 
 
@@ -1261,7 +1261,7 @@
 .lh-gauge-arc {
   fill: none;
   transform-origin: 50% 50%;
-  animation: load-gauge var(--transition-length) ease forwards;
+  animation: load-gauge var(--transition-length) ease both;
   animation-delay: 250ms;
 }
 
@@ -1401,7 +1401,6 @@
 
 .lh-categories {
   width: 100%;
-  overflow: hidden;
 }
 
 .lh-category {
@@ -1496,14 +1495,20 @@
 }
 
 .lh-table {
-  border-collapse: collapse;
+  position: relative;
+  border-collapse: separate;
+  border-spacing: 0;
   /* Can't assign padding to table, so shorten the width instead. */
   width: calc(100% - var(--audit-description-padding-left) - var(--stackpack-padding-horizontal));
   border: 1px solid var(--report-border-color-secondary);
-
 }
 
 .lh-table thead th {
+  position: sticky;
+  top: calc(var(--topbar-plus-sticky-header) + 1em);
+  z-index: 1;
+  background-color: var(--report-background-color);
+  border-bottom: 1px solid var(--report-border-color-secondary);
   font-weight: normal;
   color: var(--color-gray-600);
   /* See text-wrapping comment on .lh-container. */

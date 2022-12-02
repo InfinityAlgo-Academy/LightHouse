@@ -26,7 +26,6 @@
  *     "Parser was blocked due to document.write(<script>)". src: https://cs.chromium.org/chromium/src/third_party/blink/renderer/core/frame/performance_monitor.cc?l=294-300&rcl=40b90cafad9f219e0845879ed8648bdcc96116dc
  */
 
-'use strict';
 
 import ViolationAudit from '../violation-audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
@@ -36,7 +35,7 @@ const UIStrings = {
   title: 'Avoids `document.write()`',
   /** Title of a Lighthouse audit that provides detail on the page's use of the `document.write` API. This imperative title is shown to users when the page does use `document.write`. */
   failureTitle: 'Avoid `document.write()`',
-  /** Description of a Lighthouse audit that tells the user why they should avoid `document.write`. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why they should avoid `document.write`. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'For users on slow connections, external scripts dynamically injected via ' +
       '`document.write()` can delay page load by tens of seconds. ' +
       '[Learn how to avoid document.write()](https://web.dev/no-document-write/).',
@@ -69,7 +68,7 @@ class NoDocWriteAudit extends ViolationAudit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'source', itemType: 'source-location', text: str_(i18n.UIStrings.columnSource)},
+      {key: 'source', valueType: 'source-location', label: str_(i18n.UIStrings.columnSource)},
     ];
     // TODO(bckenny): see TODO in geolocation-on-start
     const details = ViolationAudit.makeTableDetails(headings, results);

@@ -6,20 +6,8 @@
 
 import * as td from 'testdouble';
 
-import {createMockSession, createMockDriver} from '../../fraggle-rock/gather/mock-driver.js';
+import {createMockSession, createMockDriver} from '../mock-driver.js';
 import {flushAllTimersAndMicrotasks, fnAny, timers} from '../../test-utils.js';
-// import prepare from '../../../gather/driver/prepare.js';
-import * as constants from '../../../config/constants.js';
-
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {import('../../../gather/driver/prepare.js')} */
-let prepare;
-
-before(async () => {
-  prepare = (await import('../../../gather/driver/prepare.js'));
-});
 
 const storageMock = {
   clearDataForOrigin: fnAny(),
@@ -27,6 +15,11 @@ const storageMock = {
   getImportantStorageWarning: fnAny(),
 };
 await td.replaceEsm('../../../gather/driver/storage.js', storageMock);
+
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+const prepare = await import('../../../gather/driver/prepare.js');
+const constants = await import('../../../config/constants.js');
 
 const url = 'https://example.com';
 let sessionMock = createMockSession();

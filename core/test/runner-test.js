@@ -5,37 +5,15 @@
  */
 
 import fs from 'fs';
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 import path from 'path';
 
 import jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
-// import Runner from '../runner.js';
-// import {GatherRunner} from '../gather/gather-runner.js';
-import {fakeDriver as driverMock} from './gather/fake-driver.js';
-// import {Config} from '../config/config.js';
-import {Audit} from '../audits/audit.js';
-import {Gatherer} from '../gather/gatherers/gatherer.js';
-import * as assetSaver from '../lib/asset-saver.js';
-import {LighthouseError} from '../lib/lh-error.js';
-import * as i18n from '../lib/i18n/i18n.js';
 import {importMock, makeMocksForGatherRunner} from './test-utils.js';
-import {getModuleDirectory} from '../../esm-utils.js';
-
-const moduleDir = getModuleDirectory(import.meta);
 
 await makeMocksForGatherRunner();
-
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {typeof import('../runner.js').Runner} */
-let Runner;
-/** @type {typeof import('../gather/gather-runner.js').GatherRunner} */
-let GatherRunner;
-/** @type {typeof import('../config/config.js').Config} */
-let Config;
 
 /** @type {jestMock.Mock} */
 let saveArtifactsSpy;
@@ -49,9 +27,9 @@ let gatherRunnerRunSpy;
 let runAuditSpy;
 
 await td.replaceEsm('../lib/asset-saver.js', {
-  saveArtifacts: saveArtifactsSpy = jestMock.fn(assetSaver.saveArtifacts),
+  saveArtifacts: saveArtifactsSpy = jestMock.fn((...args) => assetSaver.saveArtifacts(...args)),
   saveLhr: saveLhrSpy = jestMock.fn(),
-  loadArtifacts: loadArtifactsSpy = jestMock.fn(assetSaver.loadArtifacts),
+  loadArtifacts: loadArtifactsSpy = jestMock.fn((...args) => assetSaver.loadArtifacts(...args)),
 });
 
 await td.replaceEsm('../gather/driver/service-workers.js', {
@@ -59,11 +37,24 @@ await td.replaceEsm('../gather/driver/service-workers.js', {
   getServiceWorkerRegistrations: jestMock.fn().mockResolvedValue({registrations: []}),
 });
 
-before(async () => {
-  Runner = (await import('../runner.js')).Runner;
-  GatherRunner = (await import('../gather/gather-runner.js')).GatherRunner;
-  Config = (await import('../config/config.js')).Config;
-});
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+const {Runner} = await import('../runner.js');
+const {GatherRunner} = await import('../legacy/gather/gather-runner.js');
+const {Config} = await import('../legacy/config/config.js');
+const {Audit} = await import('../audits/audit.js');
+const {Gatherer} = await import('../gather/gatherers/gatherer.js');
+const i18n = await import('../lib/i18n/i18n.js');
+const {fakeDriver: driverMock} = await import('./legacy/gather/fake-driver.js');
+const {getModuleDirectory} = await import('../../esm-utils.js');
+const {LighthouseError} = await import('../lib/lh-error.js');
+
+// All mocks must come first, then we can load the "original" version of asset-saver (which will
+// contain references to all the correct mocked modules, and have the same LighthouseError class
+// that the test file uses).
+const assetSaver = await import('../lib/asset-saver.js?__quibbleoriginal');
+
+const moduleDir = getModuleDirectory(import.meta);
 
 beforeEach(() => {
   gatherRunnerRunSpy = jestMock.spyOn(GatherRunner, 'run');
@@ -144,7 +135,7 @@ describe('Runner', () => {
         expect(loadArtifactsSpy).toHaveBeenCalled();
         expect(gatherRunnerRunSpy).not.toHaveBeenCalled();
         expect(saveArtifactsSpy).not.toHaveBeenCalled();
-        expect(saveLhrSpy).not.toHaveBeenCalled();
+        expect(saveLhrSpy).toHaveBeenCalled();
         expect(runAuditSpy).toHaveBeenCalled();
       });
     });

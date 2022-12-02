@@ -6,7 +6,7 @@
 
 import fs from 'fs';
 import path from 'path';
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import {rollup} from 'rollup';
 
@@ -35,10 +35,10 @@ async function buildReportGenerator() {
     input: 'report/generator/report-generator.js',
     plugins: [
       rollupPlugins.shim({
-        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export default {}',
+        [`${LH_ROOT}/report/generator/flow-report-assets.js`]: 'export const flowReportAssets = {}',
       }),
-      rollupPlugins.commonjs(),
       rollupPlugins.nodeResolve(),
+      rollupPlugins.removeModuleDirCalls(),
       rollupPlugins.inlineFs({verbose: Boolean(process.env.DEBUG)}),
     ],
   });

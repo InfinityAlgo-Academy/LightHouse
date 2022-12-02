@@ -8,11 +8,12 @@ import fs from 'fs';
 
 import fetch from 'node-fetch';
 
-import {server} from './static-server.js';
-
+import {Server} from './static-server.js';
 
 describe('Server', () => {
+  let server;
   before(async () => {
+    server = new Server(10200);
     await server.listen(10200, 'localhost');
   });
 

@@ -7,6 +7,7 @@
 /* eslint-disable no-console */
 
 import path from 'path';
+import os from 'os';
 
 import psList from 'ps-list';
 import * as ChromeLauncher from 'chrome-launcher';
@@ -18,7 +19,7 @@ import * as Printer from './printer.js';
 import lighthouse, {legacyNavigation} from '../core/index.js';
 import {getLhrFilenamePrefix} from '../report/generator/file-namer.js';
 import * as assetSaver from '../core/lib/asset-saver.js';
-import URL from '../core/lib/url-shim.js';
+import UrlUtils from '../core/lib/url-utils.js';
 
 /** @typedef {Error & {code: string, friendlyMessage?: string}} ExitError */
 
@@ -70,6 +71,18 @@ function parseChromeFlags(flags = '') {
  * @return {Promise<ChromeLauncher.LaunchedChrome>}
  */
 function getDebuggableChrome(flags) {
+  if (process.platform === 'darwin' && process.arch === 'x64') {
+    const cpus = os.cpus();
+    if (cpus[0].model.includes('Apple')) {
+      throw new Error(
+        'Launching Chrome on Mac Silicon (arm64) from an x64 Node installation results in ' +
+        'Rosetta translating the Chrome binary, even if Chrome is already arm64. This would ' +
+        'result in huge performance issues. To resolve this, you must run Lighthouse CLI with ' +
+        'a version of Node built for arm64. You should also confirm that your Chrome install ' +
+        'says arm64 in chrome://version');
+    }
+  }
+
   return ChromeLauncher.launch({
     port: flags.port,
     ignoreDefaultFlags: flags.chromeIgnoreDefaultFlags,
@@ -219,7 +232,7 @@ async function runLighthouse(url, flags, config) {
     }
 
     const shouldGather = flags.gatherMode || flags.gatherMode === flags.auditMode;
-    const shouldUseLocalChrome = URL.isLikeLocalhost(flags.hostname);
+    const shouldUseLocalChrome = UrlUtils.isLikeLocalhost(flags.hostname);
     if (shouldGather && shouldUseLocalChrome) {
       launchedChrome = await getDebuggableChrome(flags);
       flags.port = launchedChrome.port;

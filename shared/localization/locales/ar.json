@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "يتم تجنُب `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "أعلى نسبة خطورة"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "إصدار المكتبة"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "عدد الثغرات"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "قد تحتوي بعض البرامج النصية للجهات الخارجية على ثغرات أمنية معروفة يمكن للمهاجمين تحديدها واستغلالها بسهولة. [مزيد من المعلومات](https://web.dev/no-vulnerable-libraries/)"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{تم رصد ثغرة واحدة}zero{تم رصد # ثغرة}two{تم رصد ثغرتين (#)}few{تم رصد # ثغرات}many{تم رصد # ثغرةً}other{تم رصد # ثغرة}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "يتم تضمين مكتبات الواجهة الأمامية JavaScript ذات الثغرات الأمنية المعروفة"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "يتم تجنُب مكتبات الواجهة الأمامية JavaScript ذات الثغرات الأمنية المعروفة"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "لا يثق المستخدمون في المواقع الإلكترونية التي تطلب إرسال الإشعارات بدون سياق أو قد يؤدي ذلك إلى إرباكهم. يمكنك ربط الطلب بإيماءات المستخدم بدلاً من ذلك. [مزيد من المعلومات](https://web.dev/notification-on-start/)"
   },
@@ -1626,7 +1605,7 @@
     "message": "تحتوي الصفحة على خرائط مصدر صالحة"
   },
   "core/audits/viewport.js | description": {
-    "message": "لا يساعد `<meta name=\"viewport\">` على تحسين تطبيقك ليناسب أحجام شاشات الأجهزة الجوّالة فحسب، بل يمنع أيضًا [تأخّر البيانات التي يدخلها المستخدم بمقدار 300 ملي ثانية](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [مزيد من المعلومات](https://web.dev/viewport/)"
+    "message": "لا يساعد `<meta name=\"viewport\">` على تحسين تطبيقك ليناسب أحجام شاشات الأجهزة الجوّالة فحسب، بل يمنع أيضًا [تأخّر البيانات التي يدخلها المستخدم بمقدار 300 ملي ثانية](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [مزيد من المعلومات](https://web.dev/viewport/)"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "لم يتم العثور على علامة `<meta name=\"viewport\">`"

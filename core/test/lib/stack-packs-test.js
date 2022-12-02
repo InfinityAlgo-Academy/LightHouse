@@ -6,11 +6,11 @@
 
 import lighthouseStackPacksDep from 'lighthouse-stack-packs';
 
-import {initializeConfig} from '../../fraggle-rock/config/config.js';
+import {initializeConfig} from '../../config/config.js';
 import {stackPacksToInclude} from '../../lib/stack-packs.js';
 
 async function getAuditIds() {
-  const {config} = await initializeConfig(undefined, {gatherMode: 'navigation'});
+  const {config} = await initializeConfig('navigation');
   return config.audits.map(a => a.implementation.meta.id);
 }
 

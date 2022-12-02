@@ -8,10 +8,10 @@
  *   the page are large enough with respect to the pixel ratio. The
  *   audit will list all visible images that are too small.
  */
-'use strict';
+
 
 import {Audit} from './audit.js';
-import URL from '../lib/url-shim.js';
+import UrlUtils from '../lib/url-utils.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
 /** @typedef {LH.Artifacts.ImageElement & Required<Pick<LH.Artifacts.ImageElement, 'naturalDimensions'>>} ImageWithNaturalDimensions */
@@ -21,7 +21,7 @@ const UIStrings = {
   title: 'Serves images with appropriate resolution',
   /** Title of a Lighthouse audit that provides detail on the size of visible images on the page. This descriptive title is shown to users when not all images have correct sizes. */
   failureTitle: 'Serves images with low resolution',
-  /** Description of a Lighthouse audit that tells the user why they should maintain an appropriate size for all images. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user why they should maintain an appropriate size for all images. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Image natural dimensions should be proportional to the display size and the ' +
     'pixel ratio to maximize image clarity. ' +
     '[Learn how to provide responsive images](https://web.dev/serve-responsive-images/).',
@@ -96,7 +96,7 @@ function isCandidate(image) {
   ) {
     return false;
   }
-  if (URL.guessMimeType(image.src) === 'image/svg+xml') {
+  if (UrlUtils.guessMimeType(image.src) === 'image/svg+xml') {
     return false;
   }
   if (image.isCss) {
@@ -147,7 +147,7 @@ function getResult(image, DPR) {
   const [expectedWidth, expectedHeight] =
       expectedImageSize(image.displayedWidth, image.displayedHeight, DPR);
   return {
-    url: URL.elideDataURI(image.src),
+    url: UrlUtils.elideDataURI(image.src),
     node: Audit.makeNodeItem(image.node),
     displayedSize: `${image.displayedWidth} x ${image.displayedHeight}`,
     actualSize: `${image.naturalDimensions.width} x ${image.naturalDimensions.height}`,
@@ -264,11 +264,11 @@ class ImageSizeResponsive extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'node', itemType: 'node', text: ''},
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'displayedSize', itemType: 'text', text: str_(UIStrings.columnDisplayed)},
-      {key: 'actualSize', itemType: 'text', text: str_(UIStrings.columnActual)},
-      {key: 'expectedSize', itemType: 'text', text: str_(UIStrings.columnExpected)},
+      {key: 'node', valueType: 'node', label: ''},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'displayedSize', valueType: 'text', label: str_(UIStrings.columnDisplayed)},
+      {key: 'actualSize', valueType: 'text', label: str_(UIStrings.columnActual)},
+      {key: 'expectedSize', valueType: 'text', label: str_(UIStrings.columnExpected)},
     ];
 
     const finalResults = sortResultsBySizeDelta(deduplicateResultsByUrl(results));

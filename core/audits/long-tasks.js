@@ -3,14 +3,13 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {Audit} from './audit.js';
-import NetworkRecords from '../computed/network-records.js';
+import {NetworkRecords} from '../computed/network-records.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import MainThreadTasks from '../computed/main-thread-tasks.js';
-import PageDependencyGraph from '../computed/page-dependency-graph.js';
-import LoadSimulator from '../computed/load-simulator.js';
+import {MainThreadTasks} from '../computed/main-thread-tasks.js';
+import {PageDependencyGraph} from '../computed/page-dependency-graph.js';
+import {LoadSimulator} from '../computed/load-simulator.js';
 import {getJavaScriptURLs, getAttributableURLForTask} from '../lib/tracehouse/task-summary.js';
 
 /** We don't always have timing data for short tasks, if we're missing timing data. Treat it as though it were 0ms. */
@@ -99,9 +98,9 @@ class LongTasks extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'startTime', itemType: 'ms', granularity: 1, text: str_(i18n.UIStrings.columnStartTime)},
-      {key: 'duration', itemType: 'ms', granularity: 1, text: str_(i18n.UIStrings.columnDuration)},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'startTime', valueType: 'ms', granularity: 1, label: str_(i18n.UIStrings.columnStartTime)},
+      {key: 'duration', valueType: 'ms', granularity: 1, label: str_(i18n.UIStrings.columnDuration)},
       /* eslint-enable max-len */
     ];
 

@@ -3,12 +3,10 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* globals window document getBoundingClientRect requestAnimationFrame */
+/* globals window getBoundingClientRect requestAnimationFrame */
 
-import FRGatherer from '../../fraggle-rock/gather/base-gatherer.js';
-
+import FRGatherer from '../base-gatherer.js';
 import * as emulation from '../../lib/emulation.js';
 import {pageFunctions} from '../../lib/page-functions.js';
 import {NetworkMonitor} from '../driver/network-monitor.js';
@@ -19,12 +17,17 @@ import {waitForNetworkIdle} from '../driver/wait-for-condition.js';
 // Note: this analysis was done for JPEG, but now we use WEBP.
 const FULL_PAGE_SCREENSHOT_QUALITY = 30;
 
+// https://developers.google.com/speed/webp/faq#what_is_the_maximum_size_a_webp_image_can_be
+const MAX_WEBP_SIZE = 16383;
+
 /**
  * @template {string} S
  * @param {S} str
  */
 function kebabCaseToCamelCase(str) {
-  return /** @type {KebabToCamelCase<S>} */ (str.replace(/(-\w)/g, m => m[1].toUpperCase()));
+  return /** @type {LH.Util.KebabToCamelCase<S>} */ (
+    str.replace(/(-\w)/g, m => m[1].toUpperCase())
+  );
 }
 
 /* c8 ignore start */
@@ -33,13 +36,24 @@ function getObservedDeviceMetrics() {
   // Convert the Web API's kebab case (landscape-primary) to camel case (landscapePrimary).
   const screenOrientationType = kebabCaseToCamelCase(window.screen.orientation.type);
   return {
-    width: document.documentElement.clientWidth,
-    height: document.documentElement.clientHeight,
+    width: window.outerWidth,
+    height: window.outerHeight,
     screenOrientation: {
       type: screenOrientationType,
       angle: window.screen.orientation.angle,
     },
     deviceScaleFactor: window.devicePixelRatio,
+  };
+}
+
+/**
+ * The screenshot dimensions are sized to `window.outerHeight` / `window.innerWidth`,
+ * however the bounding boxes of the elements are relative to `window.innerHeight` / `window.innerWidth`.
+ */
+function getScreenshotAreaSize() {
+  return {
+    width: window.innerWidth,
+    height: window.innerHeight,
   };
 }
 
@@ -59,35 +73,21 @@ class FullPageScreenshot extends FRGatherer {
 
   /**
    * @param {LH.Gatherer.FRTransitionalContext} context
-   * @return {Promise<number>}
-   * @see https://bugs.chromium.org/p/chromium/issues/detail?id=770769
-   */
-  async getMaxTextureSize(context) {
-    return await context.driver.executionContext.evaluate(pageFunctions.getMaxTextureSize, {
-      args: [],
-      useIsolation: true,
-      deps: [],
-    });
-  }
-
-  /**
-   * @param {LH.Gatherer.FRTransitionalContext} context
    * @param {{height: number, width: number, mobile: boolean}} deviceMetrics
    * @return {Promise<LH.Artifacts.FullPageScreenshot['screenshot']>}
    */
   async _takeScreenshot(context, deviceMetrics) {
     const session = context.driver.defaultSession;
-    const maxTextureSize = await this.getMaxTextureSize(context);
     const metrics = await session.sendCommand('Page.getLayoutMetrics');
 
     // Height should be as tall as the content.
     // Scale the emulated height to reach the content height.
     const fullHeight = Math.round(
       deviceMetrics.height *
-      metrics.contentSize.height /
-      metrics.layoutViewport.clientHeight
+      metrics.cssContentSize.height /
+      metrics.cssLayoutViewport.clientHeight
     );
-    const height = Math.min(fullHeight, maxTextureSize);
+    const height = Math.min(fullHeight, MAX_WEBP_SIZE);
 
     // Setup network monitor before we change the viewport.
     const networkMonitor = new NetworkMonitor(context.driver.targetManager);
@@ -125,10 +125,16 @@ class FullPageScreenshot extends FRGatherer {
     });
     const data = 'data:image/webp;base64,' + result.data;
 
+    const screenshotAreaSize =
+      await context.driver.executionContext.evaluate(getScreenshotAreaSize, {
+        args: [],
+        useIsolation: true,
+        deps: [kebabCaseToCamelCase],
+      });
     return {
       data,
-      width: deviceMetrics.width,
-      height,
+      width: screenshotAreaSize.width,
+      height: screenshotAreaSize.height,
     };
   }
 
@@ -165,7 +171,7 @@ class FullPageScreenshot extends FRGatherer {
       return context.driver.executionContext.evaluate(resolveNodes, {
         args: [],
         useIsolation,
-        deps: [pageFunctions.getBoundingClientRectString],
+        deps: [pageFunctions.getBoundingClientRect],
       });
     }
 

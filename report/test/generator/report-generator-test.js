@@ -7,16 +7,16 @@
 
 /* eslint-disable no-irregular-whitespace */
 
-const assert = require('assert').strict;
-const fs = require('fs');
+import assert from 'assert/strict';
+import fs from 'fs';
 
-const csvValidator = require('csv-validator');
+import csvValidator from 'csv-validator';
 
-const ReportGenerator = require('../../generator/report-generator.js');
-// const {readJson} = require('../../../root.js');
-// TODO(esmodules): remove when this folder is esm
-// const sampleResults = readJson('core/test/results/sample_v2.json');
-const sampleResults = require('../../../core/test/results/sample_v2.json');
+import {ReportGenerator} from '../../generator/report-generator.js';
+import {readJson} from '../../../core/test/test-utils.js';
+
+const sampleResults = readJson('core/test/results/sample_v2.json');
+const sampleFlowResult = readJson('core/test/fixtures/fraggle-rock/reports/sample-flow-result.json');
 
 describe('ReportGenerator', () => {
   describe('#replaceStrings', () => {
@@ -76,8 +76,19 @@ describe('ReportGenerator', () => {
       assert.doesNotThrow(_ => JSON.parse(jsonOutput));
     });
 
+    it('creates JSON for flow result', () => {
+      const jsonOutput = ReportGenerator.generateReport(sampleFlowResult, 'json');
+      assert.doesNotThrow(_ => JSON.parse(jsonOutput));
+    });
+
     it('creates HTML for results', () => {
       const htmlOutput = ReportGenerator.generateReport(sampleResults, 'html');
+      assert.ok(/<!doctype/gim.test(htmlOutput));
+      assert.ok(/<html lang="en"/gim.test(htmlOutput));
+    });
+
+    it('creates HTML for flow result', () => {
+      const htmlOutput = ReportGenerator.generateReport(sampleFlowResult, 'html');
       assert.ok(/<!doctype/gim.test(htmlOutput));
       assert.ok(/<html lang="en"/gim.test(htmlOutput));
     });
@@ -91,13 +102,13 @@ describe('ReportGenerator', () => {
       const lines = csvOutput.split('\n');
       expect(lines.length).toBeGreaterThan(100);
       expect(lines.slice(0, 15).join('\n')).toMatchInlineSnapshot(`
-"\\"requestedUrl\\",\\"finalUrl\\",\\"fetchTime\\",\\"gatherMode\\"
+"\\"requestedUrl\\",\\"finalDisplayedUrl\\",\\"fetchTime\\",\\"gatherMode\\"
 \\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"http://localhost:10200/dobetterweb/dbw_tester.html\\",\\"2021-09-07T20:11:11.853Z\\",\\"navigation\\"
 
 category,score
 \\"performance\\",\\"0.26\\"
-\\"accessibility\\",\\"0.78\\"
-\\"best-practices\\",\\"0.25\\"
+\\"accessibility\\",\\"0.77\\"
+\\"best-practices\\",\\"0.27\\"
 \\"seo\\",\\"0.67\\"
 \\"pwa\\",\\"0.33\\"
 
@@ -125,6 +136,12 @@ category,audit,score,displayValue,description
       expect(csvOutput).toContain('best-practices');
       expect(csvOutput).toContain('seo');
       expect(csvOutput).toContain('pwa');
+    });
+
+    it('throws when creating CSV for flow result', () => {
+      expect(() => {
+        ReportGenerator.generateReport(sampleFlowResult, 'csv');
+      }).toThrow('CSV output is not support for user flows');
     });
 
     it('writes extended info', () => {

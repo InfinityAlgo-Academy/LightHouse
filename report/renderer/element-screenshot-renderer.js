@@ -239,7 +239,10 @@ export class ElementScreenshotRenderer {
       width: maxRenderSizeDC.width / zoomFactor,
       height: maxRenderSizeDC.height / zoomFactor,
     };
+
     elementPreviewSizeSC.width = Math.min(screenshot.width, elementPreviewSizeSC.width);
+    elementPreviewSizeSC.height = Math.min(screenshot.height, elementPreviewSizeSC.height);
+
     /* This preview size is either the size of the thumbnail or size of the Lightbox */
     const elementPreviewSizeDC = {
       width: elementPreviewSizeSC.width * zoomFactor,

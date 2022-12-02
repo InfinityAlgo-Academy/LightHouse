@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {BaseNode} from '../base-node.js';
 
@@ -40,9 +39,17 @@ import {BaseNode} from '../base-node.js';
 /** @typedef {NetworkNodeTimingStarted & Pick<NodeTimingComplete, 'estimatedTimeElapsed'>} NetworkNodeTimingInProgress */
 
 /** @typedef {CpuNodeTimingInProgress & Pick<NodeTimingComplete, 'endTime'>} CpuNodeTimingComplete */
-/** @typedef {NetworkNodeTimingInProgress & Pick<NodeTimingComplete, 'endTime'>} NetworkNodeTimingComplete */
+/** @typedef {NetworkNodeTimingInProgress & Pick<NodeTimingComplete, 'endTime'> & {connectionTiming: ConnectionTiming}} NetworkNodeTimingComplete */
 
 /** @typedef {NodeTimingQueued | CpuNodeTimingStarted | NetworkNodeTimingStarted | CpuNodeTimingInProgress | NetworkNodeTimingInProgress | CpuNodeTimingComplete | NetworkNodeTimingComplete} NodeTimingData */
+
+/**
+ * @typedef ConnectionTiming A breakdown of network connection timings.
+ * @property {number} [dnsResolutionTime]
+ * @property {number} [connectionTime]
+ * @property {number} [sslTime]
+ * @property {number} timeToFirstByte
+ */
 
 class SimulatorTimingMap {
   constructor() {
@@ -84,12 +91,13 @@ class SimulatorTimingMap {
 
   /**
    * @param {Node} node
-   * @param {{endTime: number}} values
+   * @param {{endTime: number, connectionTiming?: ConnectionTiming}} values
    */
   setCompleted(node, values) {
     const nodeTiming = {
       ...this.getInProgress(node),
       endTime: values.endTime,
+      connectionTiming: values.connectionTiming,
     };
 
     this._nodeTimings.set(node, nodeTiming);

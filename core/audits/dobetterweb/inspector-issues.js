@@ -10,13 +10,11 @@
  * https://source.chromium.org/chromium/chromium/src/+/main:third_party/devtools-frontend/src/front_end/sdk/
  */
 
-'use strict';
 
 /** @typedef {{url: string}} IssueSubItem */
 /** @typedef {{issueType: string|LH.IcuMessage, subItems: Array<IssueSubItem>}} IssueItem */
 
 import {Audit} from '../audit.js';
-
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
@@ -154,7 +152,7 @@ class IssuesPanelEntries extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'issueType', itemType: 'text', subItemsHeading: {key: 'url', itemType: 'url'}, text: str_(UIStrings.columnIssueType)},
+      {key: 'issueType', valueType: 'text', subItemsHeading: {key: 'url', valueType: 'url'}, label: str_(UIStrings.columnIssueType)},
       /* eslint-enable max-len */
     ];
 

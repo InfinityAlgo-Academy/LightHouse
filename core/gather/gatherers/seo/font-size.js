@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview Extracts information about illegible text from the page.
@@ -16,14 +15,14 @@
  * This gatherer collects stylesheet metadata by itself, instead of relying on the styles gatherer which is slow (because it parses the stylesheet content).
  */
 
-import FRGatherer from '../../../fraggle-rock/gather/base-gatherer.js';
+import FRGatherer from '../../base-gatherer.js';
 
 const FONT_SIZE_PROPERTY_NAME = 'font-size';
 const MINIMAL_LEGIBLE_FONT_SIZE_PX = 12;
 // limit number of protocol calls to make sure that gatherer doesn't take more than 1-2s
 const MAX_NODES_SOURCE_RULE_FETCHED = 50; // number of nodes to fetch the source font-size rule
 
-/** @typedef {import('../../driver.js')} Driver */
+/** @typedef {import('../../../legacy/gather/driver.js')} Driver */
 /** @typedef {LH.Artifacts.FontSize['analyzedFailingNodesData'][0]} NodeFontData */
 /** @typedef {Map<number, {fontSize: number, textLength: number}>} BackendIdsToFontData */
 
@@ -36,38 +35,6 @@ function hasFontSizeDeclaration(style) {
 }
 
 /**
- * Computes the CSS specificity of a given selector, i.e. #id > .class > div
- * TODO: Handle pseudo selectors (:not(), :where, :nth-child) and attribute selectors
- * LIMITATION: !important is not respected
- *
- * @see https://developer.mozilla.org/en-US/docs/Web/CSS/Specificity
- * @see https://www.smashingmagazine.com/2010/04/css-specificity-and-inheritance/
- * @see https://drafts.csswg.org/selectors-4/#specificity-rules
- *
- * @param {string} selector
- * @return {number}
- */
-function computeSelectorSpecificity(selector) {
-  // Remove universal selector and separator characters, then split.
-  const tokens = selector.replace(/[*\s+>~]/g, ' ').split(' ');
-
-  let numIDs = 0;
-  let numClasses = 0;
-  let numTypes = 0;
-
-  for (const token of tokens) {
-    const ids = token.match(/(\b|^)#[a-z0-9_-]+/gi) || [];
-    const classes = token.match(/(\b|^)\.[a-z0-9_-]+/gi) || [];
-    const types = token.match(/^[a-z]+/i) ? [1] : [];
-    numIDs += ids.length;
-    numClasses += classes.length;
-    numTypes += types.length;
-  }
-
-  return Math.min(9, numIDs) * 100 + Math.min(9, numClasses) * 10 + Math.min(9, numTypes);
-}
-
-/**
  * Finds the most specific directly matched CSS font-size rule from the list.
  *
  * @param {Array<LH.Crdp.CSS.RuleMatch>} matchedCSSRules
@@ -75,31 +42,21 @@ function computeSelectorSpecificity(selector) {
  * @return {NodeFontData['cssRule']|undefined}
  */
 function findMostSpecificMatchedCSSRule(matchedCSSRules = [], isDeclarationOfInterest) {
-  let maxSpecificity = -Infinity;
-  /** @type {LH.Crdp.CSS.CSSRule|undefined} */
-  let maxSpecificityRule;
-
-  for (const {rule, matchingSelectors} of matchedCSSRules) {
-    if (isDeclarationOfInterest(rule.style)) {
-      const specificities = matchingSelectors.map(idx =>
-        computeSelectorSpecificity(rule.selectorList.selectors[idx].text)
-      );
-      const specificity = Math.max(...specificities);
-      // Use greater OR EQUAL so that the last rule wins in the event of a tie
-      if (specificity >= maxSpecificity) {
-        maxSpecificity = specificity;
-        maxSpecificityRule = rule;
-      }
+  let mostSpecificRule;
+  for (let i = matchedCSSRules.length - 1; i >= 0; i--) {
+    if (isDeclarationOfInterest(matchedCSSRules[i].rule.style)) {
+      mostSpecificRule = matchedCSSRules[i].rule;
+      break;
     }
   }
 
-  if (maxSpecificityRule) {
+  if (mostSpecificRule) {
     return {
       type: 'Regular',
-      ...maxSpecificityRule.style,
+      ...mostSpecificRule.style,
       parentRule: {
-        origin: maxSpecificityRule.origin,
-        selectors: maxSpecificityRule.selectorList.selectors,
+        origin: mostSpecificRule.origin,
+        selectors: mostSpecificRule.selectorList.selectors,
       },
     };
   }
@@ -377,7 +334,6 @@ class FontSize extends FRGatherer {
 
 export default FontSize;
 export {
-  computeSelectorSpecificity,
   getEffectiveFontRule,
   findMostSpecificMatchedCSSRule,
 };

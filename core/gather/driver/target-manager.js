@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview This class tracks multiple targets (the page itself and its OOPIFs) and allows consumers to
@@ -11,8 +10,10 @@
  */
 
 import EventEmitter from 'events';
+
 import log from 'lighthouse-logger';
-import {ProtocolSession} from '../../fraggle-rock/gather/session.js';
+
+import {ProtocolSession} from '../session.js';
 
 /**
  * @typedef {{
@@ -57,15 +58,22 @@ class TargetManager extends ProtocolEventEmitter {
   async _onFrameNavigated(frameNavigatedEvent) {
     // Child frames are handled in `_onSessionAttached`.
     if (frameNavigatedEvent.frame.parentId) return;
+    if (!this._enabled) return;
 
     // It's not entirely clear when this is necessary, but when the page switches processes on
     // navigating from about:blank to the `requestedUrl`, resetting `setAutoAttach` has been
     // necessary in the past.
-    await this._rootCdpSession.send('Target.setAutoAttach', {
-      autoAttach: true,
-      flatten: true,
-      waitForDebuggerOnStart: true,
-    });
+    try {
+      await this._rootCdpSession.send('Target.setAutoAttach', {
+        autoAttach: true,
+        flatten: true,
+        waitForDebuggerOnStart: true,
+      });
+    } catch (err) {
+      // The page can be closed at the end of the run before this CDP function returns.
+      // In these cases, just ignore the error since we won't need the page anyway.
+      if (this._enabled) throw err;
+    }
   }
 
   /**
@@ -116,6 +124,7 @@ class TargetManager extends ProtocolEventEmitter {
       // @ts-expect-error - pptr currently typed only for single arg emits.
       const protocolListener = trueProtocolListener;
       cdpSession.on('*', protocolListener);
+      cdpSession.on('sessionattached', this._onSessionAttached);
 
       const targetWithSession = {
         target: target.targetInfo,
@@ -175,12 +184,6 @@ class TargetManager extends ProtocolEventEmitter {
 
     this._rootCdpSession.on('Page.frameNavigated', this._onFrameNavigated);
 
-    const rootConnection = this._rootCdpSession.connection();
-    if (!rootConnection) {
-      throw new Error('Connection has been closed.');
-    }
-    rootConnection.on('sessionattached', this._onSessionAttached);
-
     await this._rootCdpSession.send('Page.enable');
 
     // Start with the already attached root session.
@@ -192,11 +195,10 @@ class TargetManager extends ProtocolEventEmitter {
    */
   async disable() {
     this._rootCdpSession.off('Page.frameNavigated', this._onFrameNavigated);
-    // No need to remove listener if connection is already closed.
-    this._rootCdpSession.connection()?.off('sessionattached', this._onSessionAttached);
 
     for (const {cdpSession, protocolListener} of this._targetIdToTargets.values()) {
       cdpSession.off('*', protocolListener);
+      cdpSession.off('sessionattached', this._onSessionAttached);
     }
 
     this._enabled = false;

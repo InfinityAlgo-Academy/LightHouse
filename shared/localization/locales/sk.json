@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Nepoužíva `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Najzávažnejšie"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Verzia knižnice"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Počet chýb zabezpečenia"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Niektoré skripty tretích strán môžu obsahovať chyby zabezpečenia, ktoré dokážu útočníci ľahko rozpoznať a zneužiť. [Ďalšie informácie](https://web.dev/no-vulnerable-libraries/)"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{Bola zistená 1 chyba zabezpečenia}few{Boli zistené # chyby zabezpečenia}many{# vulnerabilities detected}other{Bolo zistených # chýb zabezpečenia}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Zahrnuje JavaScriptové knižnice v klientskom rozhraní so známymi chybami zabezpečenia"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Nepoužíva v klientskom rozhraní knižnice JavaScriptov so známymi chybami zabezpečenia"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Používatelia nedôverujú webom, ktoré požadujú odosielanie upozornení bez kontextu, alebo ich považujú za mätúce. Zvážte namiesto toho spojenie žiadosti s gestami používateľa. [Ďalšie informácie](https://web.dev/notification-on-start/)"
   },
@@ -1626,7 +1605,7 @@
     "message": "Stránka obsahuje platné mapy zdroja"
   },
   "core/audits/viewport.js | description": {
-    "message": "`<meta name=\"viewport\">` nielen optimalizuje vašu aplikáciu pre veľkosti obrazoviek mobilných zariadení, ale zabraňuje aj [300 milisekundovému oneskoreniu vstupu používateľa](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Ďalšie informácie](https://web.dev/viewport/)"
+    "message": "`<meta name=\"viewport\">` nielen optimalizuje vašu aplikáciu pre veľkosti obrazoviek mobilných zariadení, ale zabraňuje aj [300 milisekundovému oneskoreniu vstupu používateľa](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Ďalšie informácie](https://web.dev/viewport/)"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Nenašla sa žiadna značka `<meta name=\"viewport\">`"

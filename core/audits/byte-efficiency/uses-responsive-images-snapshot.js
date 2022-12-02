@@ -9,11 +9,11 @@
  *   their display size with DPR (a 1000px wide image displayed as a
  *   500px high-res image on a Retina display is 100% used);
  */
-'use strict';
+
 
 import {Audit} from '../audit.js';
 import * as UsesResponsiveImages from './uses-responsive-images.js';
-import URL from '../../lib/url-shim.js';
+import UrlUtils from '../../lib/url-utils.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
@@ -71,7 +71,7 @@ class UsesResponsiveImagesSnapshot extends Audit {
 
       items.push({
         node: Audit.makeNodeItem(image.node),
-        url: URL.elideDataURI(image.src),
+        url: UrlUtils.elideDataURI(image.src),
         displayedDimensions: `${displayed.width}x${displayed.height}`,
         actualDimensions: `${actual.width}x${actual.height}`,
       });
@@ -80,10 +80,10 @@ class UsesResponsiveImagesSnapshot extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'node', itemType: 'node', text: ''},
-      {key: 'url', itemType: 'url', text: str_(i18n.UIStrings.columnURL)},
-      {key: 'displayedDimensions', itemType: 'text', text: str_(UIStrings.columnDisplayedDimensions)},
-      {key: 'actualDimensions', itemType: 'text', text: str_(UIStrings.columnActualDimensions)},
+      {key: 'node', valueType: 'node', label: ''},
+      {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
+      {key: 'displayedDimensions', valueType: 'text', label: str_(UIStrings.columnDisplayedDimensions)},
+      {key: 'actualDimensions', valueType: 'text', label: str_(UIStrings.columnActualDimensions)},
       /* eslint-enable max-len */
     ];
 

@@ -28,7 +28,6 @@ declare module Config {
 
     // Fraggle Rock Only
     artifacts?: ArtifactJson[] | null;
-    navigations?: NavigationJson[] | null;
 
     // Legacy Only
     passes?: PassJson[] | null;
@@ -55,19 +54,6 @@ declare module Config {
     audits: AuditDefn[] | null;
     categories: Record<string, Category> | null;
     groups: Record<string, Group> | null;
-  }
-
-  /**
-   * Additional information about the context in which a Fraggle Rock config should be interpreted.
-   * This information is typically set by the CLI or other channel integrations.
-   */
-  interface FRContext {
-    configPath?: string;
-    settingsOverrides?: SharedFlagsSettings & Pick<LH.Flags, 'plugins'>;
-    skipAboutBlank?: boolean;
-    logLevel?: string;
-    hostname?: string;
-    port?: number;
   }
 
   interface SharedPassNavigationJson {

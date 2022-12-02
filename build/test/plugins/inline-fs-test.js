@@ -15,7 +15,12 @@ const require = createRequire(import.meta.url);
 
 const filepath = `${LH_ROOT}/core/index.js`;
 
-describe('inline-fs', () => {
+// Lots of path separator issues on Windows, because LH_ROOT has \\ slashes but
+// most tests here don't JSON.stringify the strings they interpolate into code.
+// Deferring for now.
+const describeSkipOnWindows = process.platform === 'win32' ? describe.skip : describe;
+
+describeSkipOnWindows('inline-fs', () => {
   const tmpPath = `${LH_ROOT}/.tmp/inline-fs/test.txt`;
   const tmpDir = path.dirname(tmpPath);
 
@@ -263,6 +268,11 @@ describe('inline-fs', () => {
           code: `const myTextContent = "\\"quoted\\", and an unbalanced quote: \\"";`,
           warnings: [],
         });
+      });
+
+      it('throws fatal error if file is missing', async () => {
+        const content = `const myTextContent = fs.readFileSync('i-never-exist.lol', 'utf8');`;
+        await expect(inlineFs(content, filepath)).rejects.toThrow('ENOENT');
       });
 
       it('inlines multiple fs.readFileSync calls', async () => {

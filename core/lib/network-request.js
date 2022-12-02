@@ -3,15 +3,56 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview Fills most of the role of NetworkManager and NetworkRequest classes from DevTools.
  * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/sdk/NetworkRequest.js
  * @see https://cs.chromium.org/chromium/src/third_party/blink/renderer/devtools/front_end/sdk/NetworkManager.js
+
+ A detailed overview of the Chromium networking layer can be found here:
+    https://raw.githubusercontent.com/GoogleChrome/lighthouse/main/docs/Network-Timings.svg
+
+  Below is a simplified model.
+
+  DevTools box-whisker
+
+    |-------[xxxxxXXXXXX]-|
+       (1)    (2)    (3) (4)
+
+  (1) leading whisker
+
+      Covers various stages:
+
+      - Queuing (delta between renderer knowing about request and network manager knowing about it)
+      - DNS
+      - Connection setup cost (TCP, TLS, SSL, etc.)
+
+      CDP: left whisker edge is Network.requestWillBeSent timestamp
+
+  (2) light shaded region
+
+      browser network manager has initiated the request, hasn't recieved any bytes back yet
+      Note: even with early-hint response, only the "real" response is considered here
+
+      CDP: Network.requestWillBeSentExtraInfo timing.requestTime + timing.sendStart
+
+  (3) dark shaded region
+
+      browser network manager has recieved the very first header byte
+
+      CDP:   Network.requestWillBeSentExtraInfo timing.requestTime + timing.recievedHeadersEnd
+      CDP:   (right edge of box) Network.finished/Network.failed timestamp
+      Trace: ResourceFinish.finishedTime
+
+  (4) trailing whisker
+
+      Marks time when render process main thread is available to use the resource. Could be long
+      if main thread is busy. Currently don't use this anywhere.
+
+      Trace: ResourceFinish.ts
  */
 
-import URL from './url-shim.js';
+import UrlUtils from './url-utils.js';
 
 // Lightrider X-Header names for timing information.
 // See: _updateTransferSizeForLightrider and _updateTimingsForLightrider.
@@ -48,7 +89,7 @@ const HEADER_PROTOCOL_IS_H2 = 'X-ProtocolIsH2';
  * @property {number} responseMs
  */
 
-/** @type {SelfMap<LH.Crdp.Network.ResourceType>} */
+/** @type {LH.Util.SelfMap<LH.Crdp.Network.ResourceType>} */
 const RESOURCE_TYPES = {
   XHR: 'XHR',
   Fetch: 'Fetch',
@@ -67,6 +108,7 @@ const RESOURCE_TYPES = {
   Ping: 'Ping',
   Preflight: 'Preflight',
   CSPViolationReport: 'CSPViolationReport',
+  Prefetch: 'Prefetch',
 };
 
 class NetworkRequest {
@@ -82,10 +124,14 @@ class NetworkRequest {
     this.parsedURL = /** @type {ParsedURL} */ ({scheme: ''});
     this.documentURL = '';
 
+    /**
+     * When the network service is about to handle a request, ie. just before going to the
+     * HTTP cache or going to the network for DNS/connection setup, in milliseconds.
+     */
     this.startTime = -1;
-    /** @type {number} */
+    /** When the last byte of the response body is received, in milliseconds. */
     this.endTime = -1;
-    /** @type {number} */
+    /** When the last byte of the response headers is received, in milliseconds. */
     this.responseReceivedTime = -1;
 
     // Go read the comment on _updateTransferSizeForLightrider.
@@ -173,9 +219,10 @@ class NetworkRequest {
       host: url.hostname,
       securityOrigin: url.origin,
     };
-    this.isSecure = URL.isSecureScheme(this.parsedURL.scheme);
+    this.isSecure = UrlUtils.isSecureScheme(this.parsedURL.scheme);
 
-    this.startTime = data.timestamp;
+    // Expected to be overriden with better value in `_recomputeTimesWithResourceTiming`.
+    this.startTime = data.timestamp * 1000;
 
     this.requestMethod = data.request.method;
 
@@ -219,7 +266,7 @@ class NetworkRequest {
     if (this.finished) return;
 
     this.finished = true;
-    this.endTime = data.timestamp;
+    this.endTime = data.timestamp * 1000;
     if (data.encodedDataLength >= 0) {
       this.transferSize = data.encodedDataLength;
     }
@@ -237,7 +284,7 @@ class NetworkRequest {
     if (this.finished) return;
 
     this.finished = true;
-    this.endTime = data.timestamp;
+    this.endTime = data.timestamp * 1000;
 
     this.failed = true;
     this.resourceType = data.type && RESOURCE_TYPES[data.type];
@@ -263,7 +310,7 @@ class NetworkRequest {
     this._onResponse(data.redirectResponse, data.timestamp, data.type);
     this.resourceType = undefined;
     this.finished = true;
-    this.endTime = data.timestamp;
+    this.endTime = data.timestamp * 1000;
 
     this._updateResponseReceivedTimeIfNecessary();
   }
@@ -277,7 +324,7 @@ class NetworkRequest {
 
   /**
    * @param {LH.Crdp.Network.Response} response
-   * @param {number} timestamp
+   * @param {number} timestamp in seconds
    * @param {LH.Crdp.Network.ResponseReceivedEvent['type']=} resourceType
    */
   _onResponse(response, timestamp, resourceType) {
@@ -288,7 +335,7 @@ class NetworkRequest {
 
     if (response.protocol) this.protocol = response.protocol;
 
-    this.responseReceivedTime = timestamp;
+    this.responseReceivedTime = timestamp * 1000;
 
     this.transferSize = response.encodedDataLength;
     if (typeof response.fromDiskCache === 'boolean') this.fromDiskCache = response.fromDiskCache;
@@ -321,8 +368,9 @@ class NetworkRequest {
     if (timing.requestTime === 0 || timing.receiveHeadersEnd === -1) return;
     // Take startTime and responseReceivedTime from timing data for better accuracy.
     // Timing's requestTime is a baseline in seconds, rest of the numbers there are ticks in millis.
-    this.startTime = timing.requestTime;
-    const headersReceivedTime = timing.requestTime + timing.receiveHeadersEnd / 1000;
+    // TODO: This skips the "queuing time" before the netstack has taken over ... is this a mistake?
+    this.startTime = timing.requestTime * 1000;
+    const headersReceivedTime = this.startTime + timing.receiveHeadersEnd;
     if (!this.responseReceivedTime || this.responseReceivedTime < 0) {
       this.responseReceivedTime = headersReceivedTime;
     }
@@ -435,7 +483,7 @@ class NetworkRequest {
     }
 
     this.lrStatistics = {
-      endTimeDeltaMs: (this.endTime - (this.startTime + (totalMs / 1000))) * 1000,
+      endTimeDeltaMs: this.endTime - (this.startTime + totalMs),
       TCPMs: TCPMs,
       requestMs: requestMs,
       responseMs: responseMs,
@@ -479,9 +527,9 @@ class NetworkRequest {
    */
   static isNonNetworkRequest(record) {
     // The 'protocol' field in devtools a string more like a `scheme`
-    return URL.isNonNetworkProtocol(record.protocol) ||
+    return UrlUtils.isNonNetworkProtocol(record.protocol) ||
       // But `protocol` can fail to be populated if the request fails, so fallback to scheme.
-      URL.isNonNetworkProtocol(record.parsedURL.scheme);
+      UrlUtils.isNonNetworkProtocol(record.parsedURL.scheme);
   }
 
   /**
@@ -492,9 +540,9 @@ class NetworkRequest {
    * @return {boolean}
    */
   static isSecureRequest(record) {
-    return URL.isSecureScheme(record.parsedURL.scheme) ||
-        URL.isSecureScheme(record.protocol) ||
-        URL.isLikeLocalhost(record.parsedURL.host) ||
+    return UrlUtils.isSecureScheme(record.parsedURL.scheme) ||
+        UrlUtils.isSecureScheme(record.protocol) ||
+        UrlUtils.isLikeLocalhost(record.parsedURL.host) ||
         NetworkRequest.isHstsRequest(record);
   }
 

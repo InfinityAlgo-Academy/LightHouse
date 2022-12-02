@@ -11,13 +11,10 @@ document.write('<script src="/perf/level-2.js?warning&delay=500"></script>');
 
 // delay our preconnect-candidates so that they're not assumed to be working already
 setTimeout(() => {
-  // load another origin
-  fetch('http://localhost:10503/preload.html');
-
   // load another origin in a way where the `crossorigin` attribute matters
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = 'https://fonts.googleapis.com/css?family=Ranchers&display=block';
+  link.href = 'http://localhost:10503/perf/preload_style_ranchers.css';
   document.head.append(link);
 
   link.onload = () => {

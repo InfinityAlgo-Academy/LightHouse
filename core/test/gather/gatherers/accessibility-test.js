@@ -5,7 +5,7 @@
  */
 
 import fs from 'fs';
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import puppeteer from 'puppeteer';
 
@@ -52,7 +52,7 @@ describe('a11y audits + aXe', () => {
     const page = await browser.newPage();
     page.setContent(`<!doctype html><meta charset="utf8"><title>hi</title>valid.`);
     await page.evaluate(axeSource);
-    await page.evaluate(pageFunctions.getNodeDetailsString);
+    await page.evaluate(pageFunctions.getNodeDetails.toString());
     await page.evaluate(AccessibilityGather.pageFns.runA11yChecks.toString());
     await page.evaluate(AccessibilityGather.pageFns.createAxeRuleResultArtifact.toString());
 

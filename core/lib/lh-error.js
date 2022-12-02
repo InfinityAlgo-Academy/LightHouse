@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import * as i18n from './i18n/i18n.js';
 
@@ -24,6 +23,11 @@ const UIStrings = {
    * @example {NO_FCP} errorCode
    * */
   noFcp: 'The page did not paint any content. Please ensure you keep the browser window in the foreground during the load and try again. ({errorCode})',
+  /**
+   * @description Error message explaining that the Largest Contentful Paint metric was not seen during the page load.
+   * @example {NO_LCP} errorCode
+   * */
+  noLcp: 'The page did not display content that qualifies as a Largest Contentful Paint (LCP). Ensure the page has a valid LCP element and then try again. ({errorCode})',
   /**
    * @description Error message explaining that the page loaded too slowly to perform a Lighthouse run.
    * @example {NO_TTI_CPU_IDLE_PERIOD} errorCode
@@ -274,11 +278,11 @@ const ERRORS = {
   },
   NO_LCP: {
     code: 'NO_LCP',
-    message: UIStrings.badTraceRecording,
+    message: UIStrings.noLcp,
   },
   NO_LCP_ALL_FRAMES: {
     code: 'NO_LCP_ALL_FRAMES',
-    message: UIStrings.badTraceRecording,
+    message: UIStrings.noLcp,
   },
   UNSUPPORTED_OLD_CHROME: {
     code: 'UNSUPPORTED_OLD_CHROME',

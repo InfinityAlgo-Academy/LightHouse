@@ -4,10 +4,10 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import {NetworkAnalyzer} from '../../../../lib/dependency-graph/simulator/network-analyzer.js';
-import NetworkRecords from '../../../../computed/network-records.js';
+import {NetworkRecords} from '../../../../computed/network-records.js';
 import {readJson} from '../../../test-utils.js';
 
 const devtoolsLog = readJson('../../../fixtures/traces/progressive-app-m60.devtools.log.json', import.meta);
@@ -18,14 +18,16 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
 
   function createRecord(opts) {
     const url = opts.url || 'https://example.com';
+    if (opts.startTime) opts.startTime *= 1000;
+    if (opts.endTime) opts.endTime *= 1000;
     return Object.assign(
       {
         url,
         requestId: recordId++,
         connectionId: 0,
         connectionReused: false,
-        startTime: 0.01,
-        endTime: 0.01,
+        startTime: 10,
+        endTime: 10,
         transferSize: 0,
         protocol: 'http/1.1',
         parsedURL: {scheme: url.match(/https?/)[0], securityOrigin: url.match(/.*\.com/)[0]},
@@ -274,11 +276,11 @@ describe('DependencyGraph/Simulator/NetworkAnalyzer', () => {
   describe('#estimateThroughput', () => {
     const estimateThroughput = NetworkAnalyzer.estimateThroughput;
 
-    function createThroughputRecord(responseReceivedTime, endTime, extras) {
+    function createThroughputRecord(responseReceivedTimeInS, endTimeInS, extras) {
       return Object.assign(
         {
-          responseReceivedTime,
-          endTime,
+          responseReceivedTime: responseReceivedTimeInS * 1000,
+          endTime: endTimeInS * 1000,
           transferSize: 1000,
           finished: true,
           failed: false,

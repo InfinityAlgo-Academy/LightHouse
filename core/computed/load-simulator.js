@@ -3,16 +3,15 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {makeComputedArtifact} from './computed-artifact.js';
 import * as constants from '../config/constants.js';
 import {Simulator} from '../lib/dependency-graph/simulator/simulator.js';
-import NetworkAnalysis from './network-analysis.js';
+import {NetworkAnalysis} from './network-analysis.js';
 
 class LoadSimulator {
   /**
-   * @param {{devtoolsLog: LH.DevtoolsLog, settings: Immutable<LH.Config.Settings>}} data
+   * @param {{devtoolsLog: LH.DevtoolsLog, settings: LH.Audit.Context['settings']}} data
    * @param {LH.Artifacts.ComputedContext} context
    * @return {Promise<Simulator>}
    */
@@ -89,7 +88,5 @@ class LoadSimulator {
   }
 }
 
-// TODO(esmodules): For all computed artifacts:
-//   const LoadSimulatorComputed = makeComputedArtifact(LoadSimulator, ['devtoolsLog', 'settings']);
-//   export {LoadSimulator as LoadSimulatorComputed};
-export default makeComputedArtifact(LoadSimulator, ['devtoolsLog', 'settings']);
+const LoadSimulatorComputed = makeComputedArtifact(LoadSimulator, ['devtoolsLog', 'settings']);
+export {LoadSimulatorComputed as LoadSimulator};

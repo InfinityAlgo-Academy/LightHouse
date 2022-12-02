@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import RedirectsAudit from '../../audits/redirects.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
@@ -18,19 +18,19 @@ const FAILING_THREE_REDIRECTS = [{
   timing: {receiveHeadersEnd: 11},
 }, {
   requestId: '1:redirect',
-  startTime: 1,
+  startTime: 1000,
   priority: 'VeryHigh',
   url: 'https://example.com/',
   timing: {receiveHeadersEnd: 12},
 }, {
   requestId: '1:redirect:redirect',
-  startTime: 2,
+  startTime: 2000,
   priority: 'VeryHigh',
   url: 'https://m.example.com/',
   timing: {receiveHeadersEnd: 17},
 }, {
   requestId: '1:redirect:redirect:redirect',
-  startTime: 3,
+  startTime: 3000,
   priority: 'VeryHigh',
   url: 'https://m.example.com/final',
   timing: {receiveHeadersEnd: 19},
@@ -38,19 +38,19 @@ const FAILING_THREE_REDIRECTS = [{
 
 const FAILING_TWO_REDIRECTS = [{
   requestId: '1',
-  startTime: 445,
+  startTime: 445_000,
   priority: 'VeryHigh',
   url: 'http://lisairish.com/',
   timing: {receiveHeadersEnd: 446},
 }, {
   requestId: '1:redirect',
-  startTime: 446,
+  startTime: 446_000,
   priority: 'VeryHigh',
   url: 'https://lisairish.com/',
   timing: {receiveHeadersEnd: 447},
 }, {
   requestId: '1:redirect:redirect',
-  startTime: 447,
+  startTime: 447_000,
   priority: 'VeryHigh',
   url: 'https://www.lisairish.com/',
   timing: {receiveHeadersEnd: 448},
@@ -58,13 +58,13 @@ const FAILING_TWO_REDIRECTS = [{
 
 const SUCCESS_ONE_REDIRECT = [{
   requestId: '1',
-  startTime: 135,
+  startTime: 135_000,
   priority: 'VeryHigh',
   url: 'https://lisairish.com/',
   timing: {receiveHeadersEnd: 136},
 }, {
   requestId: '1:redirect',
-  startTime: 136,
+  startTime: 136_000,
   priority: 'VeryHigh',
   url: 'https://www.lisairish.com/',
   timing: {receiveHeadersEnd: 139},
@@ -72,7 +72,7 @@ const SUCCESS_ONE_REDIRECT = [{
 
 const SUCCESS_NOREDIRECT = [{
   requestId: '1',
-  startTime: 135.873,
+  startTime: 135_873,
   priority: 'VeryHigh',
   url: 'https://www.google.com/',
   timing: {receiveHeadersEnd: 140},
@@ -81,21 +81,21 @@ const SUCCESS_NOREDIRECT = [{
 const FAILING_CLIENTSIDE = [
   {
     requestId: '1',
-    startTime: 445,
+    startTime: 445_000,
     priority: 'VeryHigh',
     url: 'http://lisairish.com/',
     timing: {receiveHeadersEnd: 446},
   },
   {
     requestId: '1:redirect',
-    startTime: 446,
+    startTime: 446_000,
     priority: 'VeryHigh',
     url: 'https://lisairish.com/',
     timing: {receiveHeadersEnd: 447},
   },
   {
     requestId: '2',
-    startTime: 447,
+    startTime: 447_000,
     priority: 'VeryHigh',
     url: 'https://www.lisairish.com/',
     timing: {receiveHeadersEnd: 448},
@@ -103,7 +103,7 @@ const FAILING_CLIENTSIDE = [
 ];
 
 describe('Performance: Redirects audit', () => {
-  const mockArtifacts = (networkRecords, finalUrl) => {
+  const mockArtifacts = (networkRecords, finalDisplayedUrl) => {
     const devtoolsLog = networkRecordsToDevtoolsLog(networkRecords);
     const frameUrl = networkRecords[0].url;
 
@@ -112,10 +112,9 @@ describe('Performance: Redirects audit', () => {
       traces: {defaultPass: createTestTrace({frameUrl, traceEnd: 5000})},
       devtoolsLogs: {defaultPass: devtoolsLog},
       URL: {
-        initialUrl: 'about:blank',
         requestedUrl: networkRecords[0].url,
-        mainDocumentUrl: finalUrl,
-        finalUrl,
+        mainDocumentUrl: finalDisplayedUrl,
+        finalDisplayedUrl,
       },
     };
   };

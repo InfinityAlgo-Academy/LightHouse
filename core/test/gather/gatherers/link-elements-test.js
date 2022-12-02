@@ -7,19 +7,15 @@
 import jestMock from 'jest-mock';
 import * as td from 'testdouble';
 
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @typedef {import('../../../gather/gatherers/link-elements.js').default} LinkElements */
-/** @type {typeof import('../../../gather/gatherers/link-elements.js').default} */
-let LinkElements;
-
-before(async () => {
-  LinkElements = (await import('../../../gather/gatherers/link-elements.js')).default;
+const mockMainResource = jestMock.fn();
+await td.replaceEsm('../../../computed/main-resource.js', {
+  MainResource: {request: mockMainResource},
 });
 
-const mockMainResource = jestMock.fn();
-await td.replaceEsm('../../../computed/main-resource.js', undefined, {request: mockMainResource});
+// Some imports needs to be done dynamically, so that their dependencies will be mocked.
+// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+/** @typedef {import('../../../gather/gatherers/link-elements.js').default} LinkElements */
+const LinkElements = (await import('../../../gather/gatherers/link-elements.js')).default;
 
 beforeEach(() => {
   mockMainResource.mockReset();
@@ -54,7 +50,7 @@ describe('Link Elements gatherer', () => {
     };
     const baseArtifacts = {
       URL: {
-        finalUrl: url,
+        finalDisplayedUrl: url,
       },
     };
     const passContext = {driver, url, baseArtifacts, computedCache: new Map()};

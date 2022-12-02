@@ -65,8 +65,8 @@ function getFailedTests() {
 const testsToIsolate = new Set([
   // grep -lRE '^timers\.useFakeTimers' --include='*-test.*' --exclude-dir=node_modules
   'flow-report/test/common-test.tsx',
-  'core/test/fraggle-rock/gather/session-test.js',
-  'core/test/gather/driver-test.js',
+  'core/test/gather/session-test.js',
+  'core/test/legacy/gather/driver-test.js',
   'core/test/gather/driver/execution-context-test.js',
   'core/test/gather/driver/navigation-test.js',
   'core/test/gather/driver/wait-for-condition-test.js',
@@ -79,36 +79,36 @@ const testsToIsolate = new Set([
   'core/test/gather/gatherers/trace-test.js',
 
   // grep -lRE '^await td\.replace' --include='*-test.*' --exclude-dir=node_modules
-  'core/test/fraggle-rock/gather/snapshot-runner-test.js',
-  'core/test/fraggle-rock/gather/timespan-runner-test.js',
-  'core/test/fraggle-rock/user-flow-test.js',
+  'core/test/gather/snapshot-runner-test.js',
+  'core/test/gather/timespan-runner-test.js',
+  'core/test/user-flow-test.js',
   'core/test/gather/driver/prepare-test.js',
   'core/test/gather/gatherers/link-elements-test.js',
   'core/test/gather/gatherers/service-worker-test.js',
   'core/test/runner-test.js',
 
   // grep -lRE --include='-test.js' 'mockDriverSubmodules|mockRunnerModule|mockDriverModule|mockDriverSubmodules|makeMocksForGatherRunner' --include='*-test.*' --exclude-dir=node_modules
-  'core/test/fraggle-rock/gather/navigation-runner-test.js',
-  'core/test/fraggle-rock/gather/snapshot-runner-test.js',
-  'core/test/fraggle-rock/gather/timespan-runner-test.js',
-  'core/test/fraggle-rock/user-flow-test.js',
-  'core/test/gather/gather-runner-test.js',
+  'core/test/gather/navigation-runner-test.js',
+  'core/test/gather/snapshot-runner-test.js',
+  'core/test/gather/timespan-runner-test.js',
+  'core/test/user-flow-test.js',
+  'core/test/legacy/gather/gather-runner-test.js',
   'core/test/gather/gatherers/dobetterweb/response-compression-test.js',
   'core/test/gather/gatherers/script-elements-test.js',
   'core/test/runner-test.js',
 
   // These tend to timeout in puppeteer when run in parallel with other tests.
-  'core/test/fraggle-rock/scenarios/api-test-pptr.js',
-  'core/test/fraggle-rock/scenarios/cross-origin-test-pptr.js',
-  'core/test/fraggle-rock/scenarios/disconnect-test-pptr.js',
+  'core/test/scenarios/api-test-pptr.js',
+  'core/test/scenarios/cross-origin-test-pptr.js',
+  'core/test/scenarios/disconnect-test-pptr.js',
 
   // ?
   'clients/test/lightrider/lightrider-entry-test.js', // Runner overrides.
   'flow-report/test/flow-report-pptr-test.ts',
   'cli/test/cli/bin-test.js',
   'cli/test/cli/run-test.js',
+  'core/test/legacy/config/config-test.js',
   'core/test/config/config-test.js',
-  'core/test/fraggle-rock/config/config-test.js',
   'core/test/lib/emulation-test.js',
   'core/test/lib/sentry-test.js',
   'report/test/clients/bundle-test.js',
@@ -169,7 +169,7 @@ const rawArgv = y
   .wrap(y.terminalWidth())
   .argv;
 const argv =
-  /** @type {Awaited<typeof rawArgv> & CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
+  /** @type {Awaited<typeof rawArgv> & LH.Util.CamelCasify<Awaited<typeof rawArgv>>} */ (rawArgv);
 
 // This captures all of our mocha tests except for:
 // * flow-report, because it needs to provide additional mocha flags
@@ -180,7 +180,7 @@ const defaultTestMatches = [
   'clients/test/**/*-test.js',
   'cli/**/*-test.js',
   'core/**/*-test.js',
-  'core/test/fraggle-rock/**/*-test-pptr.js',
+  'core/test/**/*-test-pptr.js',
   'report/**/*-test.js',
   'shared/**/*-test.js',
   'third-party/**/*-test.js',
@@ -188,23 +188,28 @@ const defaultTestMatches = [
   'viewer/**/*-test.js',
 ];
 
-const filterFilePatterns = argv._.filter(arg => !(typeof arg !== 'string' || arg.startsWith('--')));
+const filterFilePatterns = argv._.filter(arg => !(typeof arg !== 'string' || arg.startsWith('--')))
+  .map(pattern => {
+    if (path.isAbsolute(pattern)) {
+      // Allows this to work:
+      //     yarn mocha /Users/cjamcl/src/lighthouse/core/test/runner-test.js
+      return path.relative(LH_ROOT, pattern);
+    } else {
+      return pattern;
+    }
+  });
 
 function getTestFiles() {
   // Collect all the possible test files, based off the provided testMatch glob pattern
   // or the default patterns defined above.
   const testsGlob = argv.testMatch || `{${defaultTestMatches.join(',')}}`;
-  const allTestFiles = glob.sync(testsGlob, {cwd: LH_ROOT, absolute: true});
+  const allTestFiles = glob.sync(testsGlob, {cwd: LH_ROOT});
 
   // If provided, filter the test files using a basic string includes on the absolute path of
-  // each test file. Map back to a relative path because it's nice to keep the printed commands shorter.
-  // Why pass `absolute: true` to glob above? So that this works:
-  //     yarn mocha /Users/cjamcl/src/lighthouse/core/test/runner-test.js
-  let filteredTests = (
-    filterFilePatterns.length ?
-      allTestFiles.filter((file) => filterFilePatterns.some(pattern => file.includes(pattern))) :
-      allTestFiles
-  ).map(testPath => path.relative(process.cwd(), testPath));
+  // each test file.
+  let filteredTests = filterFilePatterns.length ?
+    allTestFiles.filter((file) => filterFilePatterns.some(pattern => file.includes(pattern))) :
+    allTestFiles;
 
   let grep;
   if (argv.onlyFailures) {

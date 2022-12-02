@@ -1,7 +1,7 @@
 {
   "lhr": {
     "lighthouseVersion": "9.5.0",
-    "finalUrl": "https://www.coursehero.com/",
+    "finalDisplayedUrl": "https://www.coursehero.com/",
     "fetchTime": "2022-03-31T18:06:36.404Z",
     "gatherMode": "navigation",
     "runWarnings": [],
@@ -37,7 +37,7 @@
       "viewport": {
         "id": "viewport",
         "title": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`",
-        "description": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Learn more](https://web.dev/viewport/).",
+        "description": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Learn more](https://web.dev/viewport/).",
         "score": 1,
         "scoreDisplayMode": "binary",
         "warnings": []
@@ -8732,7 +8732,7 @@
           "type": "treemap-data",
           "nodes": [
             {
-              "name": "https://www.coursehero.com/ (inline)",
+              "name": "https://www.coursehero.com/",
               "resourceBytes": 66329,
               "unusedBytes": 25502,
               "children": [

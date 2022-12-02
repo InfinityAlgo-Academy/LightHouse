@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import ThemedOmniboxAudit from '../../audits/themed-omnibox.js';
 import {parseManifest} from '../../lib/manifest-parser.js';
@@ -88,16 +88,6 @@ describe('PWA: themed omnibox audit', () => {
     return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
       assert.equal(result.score, 0);
       assert.ok(result.explanation);
-    });
-  });
-
-  it('fails and warns when theme-color has an invalid CSS color', () => {
-    const artifacts = generateMockArtifacts();
-    artifacts.MetaElements = [{name: 'theme-color', content: '#1234567'}];
-    const context = generateMockAuditContext();
-    return ThemedOmniboxAudit.audit(artifacts, context).then(result => {
-      assert.equal(result.score, 0);
-      assert.ok(result.explanation.includes('valid CSS color'));
     });
   });
 

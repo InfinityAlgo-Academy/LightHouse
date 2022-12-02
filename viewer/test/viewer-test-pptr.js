@@ -5,11 +5,11 @@
  */
 
 import fs from 'fs';
-import assert from 'assert';
+import assert from 'assert/strict';
 
 import puppeteer from 'puppeteer';
 
-import {server} from '../../cli/test/fixtures/static-server.js';
+import {Server} from '../../cli/test/fixtures/static-server.js';
 import defaultConfig from '../../core/config/default-config.js';
 import {LH_ROOT} from '../../root.js';
 import {getCanonicalLocales} from '../../shared/localization/format.js';
@@ -55,7 +55,9 @@ describe('Lighthouse Viewer', () => {
       });
   }
 
+  let server;
   before(async () => {
+    server = new Server(portNumber);
     await server.listen(portNumber, 'localhost');
 
     // start puppeteer
@@ -171,7 +173,8 @@ describe('Lighthouse Viewer', () => {
     });
 
     it('should support swapping locales', async () => {
-      function queryLocaleState() {
+      async function queryLocaleState() {
+        await viewerPage.waitForSelector('.lh-locale-selector');
         return viewerPage.$$eval('.lh-locale-selector', (elems) => {
           const selectEl = elems[0];
           const optionEls = [...selectEl.querySelectorAll('option')];

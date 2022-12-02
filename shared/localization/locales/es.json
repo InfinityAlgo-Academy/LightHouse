@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Evita `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Gravedad máxima"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Versión de la biblioteca"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Número de vulnerabilidades"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Algunas secuencias de comandos externas pueden contener vulnerabilidades de seguridad conocidas que pueden ser detectadas y aprovechadas por los atacantes. [Más información](https://web.dev/no-vulnerable-libraries/)"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 vulnerabilidad detectada}other{# vulnerabilidades detectadas}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Incluye bibliotecas en el frontend de JavaScript con vulnerabilidades de seguridad conocidas"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Evita en el frontend las bibliotecas de JavaScript con vulnerabilidades de seguridad conocidas"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Los usuarios dudan o desconfían de los sitios web que solicitan enviar notificaciones sin contexto. Como alternativa, puedes vincular la solicitud a los gestos de los usuarios. [Más información](https://web.dev/notification-on-start/)"
   },
@@ -1626,7 +1605,7 @@
     "message": "La página tiene mapas de origen válidos"
   },
   "core/audits/viewport.js | description": {
-    "message": "Una etiqueta meta `<meta name=\"viewport\">` no solo optimiza tu aplicación para los tamaños de pantalla de los dispositivos móviles, sino que también evita [el retraso de 300 milisegundos de las entradas del usuario](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Más información](https://web.dev/viewport/)"
+    "message": "Una etiqueta meta `<meta name=\"viewport\">` no solo optimiza tu aplicación para los tamaños de pantalla de los dispositivos móviles, sino que también evita [el retraso de 300 milisegundos de las entradas del usuario](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Más información](https://web.dev/viewport/)"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "No se ha encontrado ninguna etiqueta `<meta name=\"viewport\">`"

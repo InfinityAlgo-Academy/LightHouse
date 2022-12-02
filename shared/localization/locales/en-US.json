@@ -54,7 +54,7 @@
     "message": "ARIA input fields have accessible names"
   },
   "core/audits/accessibility/aria-meter-name.js | description": {
-    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name)."
+    "message": "When a meter element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `meter` elements](https://dequeuniversity.com/rules/axe/4.4/aria-meter-name)."
   },
   "core/audits/accessibility/aria-meter-name.js | failureTitle": {
     "message": "ARIA `meter` elements do not have accessible names."
@@ -117,7 +117,7 @@
     "message": "ARIA toggle fields have accessible names"
   },
   "core/audits/accessibility/aria-tooltip-name.js | description": {
-    "message": "When an element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name)."
+    "message": "When a tooltip element doesn't have an accessible name, screen readers announce it with a generic name, making it unusable for users who rely on screen readers. [Learn how to name `tooltip` elements](https://dequeuniversity.com/rules/axe/4.4/aria-tooltip-name)."
   },
   "core/audits/accessibility/aria-tooltip-name.js | failureTitle": {
     "message": "ARIA `tooltip` elements do not have accessible names."
@@ -594,7 +594,7 @@
     "message": "Syntax"
   },
   "core/audits/csp-xss.js | metaTagMessage": {
-    "message": "The page contains a CSP defined in a <meta> tag. Consider defining the CSP in an HTTP header if you can."
+    "message": "The page contains a CSP defined in a <meta> tag. Consider moving the CSP to an HTTP header or defining another strict CSP in an HTTP header."
   },
   "core/audits/csp-xss.js | noCsp": {
     "message": "No CSP found in enforcement mode"
@@ -725,27 +725,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Avoids `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Highest Severity"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Library Version"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Vulnerability Count"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Some third-party scripts may contain known security vulnerabilities that are easily identified and exploited by attackers. [Learn more about vulnerable libraries](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount, plural,\n    =1 {1 vulnerability detected}\n    other {# vulnerabilities detected}\n    }"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Includes front-end JavaScript libraries with known security vulnerabilities"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Avoids front-end JavaScript libraries with known security vulnerabilities"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Users are mistrustful of or confused by sites that request to send notifications without context. Consider tying the request to user gestures instead. [Learn more about responsibly getting permission for notifications](https://web.dev/notification-on-start/)."
   },
@@ -849,7 +828,7 @@
     "message": "Failure reason"
   },
   "core/audits/installable-manifest.js | description": {
-    "message": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. ' +\n  '[Learn more about manifest installability requirements](https://web.dev/installable-manifest/)."
+    "message": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more about manifest installability requirements](https://web.dev/installable-manifest/)."
   },
   "core/audits/installable-manifest.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 reason}\n    other {# reasons}\n    }"
@@ -981,7 +960,7 @@
     "message": "CLS Contribution"
   },
   "core/audits/layout-shift-elements.js | description": {
-    "message": "These DOM elements contribute most to the CLS of the page."
+    "message": "These DOM elements contribute most to the CLS of the page. [Learn how to improve CLS](https://web.dev/optimize-cls/)"
   },
   "core/audits/layout-shift-elements.js | title": {
     "message": "Avoid large layout shifts"
@@ -1503,7 +1482,7 @@
     "message": "Page has valid source maps"
   },
   "core/audits/viewport.js | description": {
-    "message": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Learn more about using the viewport meta tag](https://web.dev/viewport/)."
+    "message": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Learn more about using the viewport meta tag](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "No `<meta name=\"viewport\">` tag found"
@@ -1557,7 +1536,7 @@
     "message": "Best practices"
   },
   "core/config/default-config.js | a11yCategoryDescription": {
-    "message": "These checks highlight opportunities to [improve the accessibility of your web app](https://web.dev/lighthouse-accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged."
+    "message": "These checks highlight opportunities to [improve the accessibility of your web app](https://developer.chrome.com/docs/lighthouse/accessibility/). Only a subset of accessibility issues can be automatically detected so manual testing is also encouraged."
   },
   "core/config/default-config.js | a11yCategoryManualDescription": {
     "message": "These items address areas which an automated testing tool cannot cover. Learn more in our guide on [conducting an accessibility review](https://web.dev/how-to-review/)."
@@ -1647,7 +1626,7 @@
     "message": "Performance"
   },
   "core/config/default-config.js | pwaCategoryDescription": {
-    "message": "These checks validate the aspects of a Progressive Web App. [Learn more](https://web.dev/pwa-checklist/)."
+    "message": "These checks validate the aspects of a Progressive Web App. [Learn what makes a good Progressive Web App](https://web.dev/pwa-checklist/)."
   },
   "core/config/default-config.js | pwaCategoryManualDescription": {
     "message": "These checks are required by the baseline [PWA Checklist](https://web.dev/pwa-checklist/) but are not automatically checked by Lighthouse. They do not affect your score but it's important that you verify them manually."
@@ -1662,7 +1641,7 @@
     "message": "PWA Optimized"
   },
   "core/config/default-config.js | seoCategoryDescription": {
-    "message": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more](https://support.google.com/webmasters/answer/35769)."
+    "message": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more about Google Search Essentials](https://support.google.com/webmasters/answer/35769)."
   },
   "core/config/default-config.js | seoCategoryManualDescription": {
     "message": "Run these additional validators on your site to check additional SEO best practices."
@@ -1683,13 +1662,13 @@
     "message": "Crawling and Indexing"
   },
   "core/config/default-config.js | seoMobileGroupDescription": {
-    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn more](https://developers.google.com/search/mobile-sites/)."
+    "message": "Make sure your pages are mobile friendly so users don’t have to pinch or zoom in order to read the content pages. [Learn how to make pages mobile-friendly](https://developers.google.com/search/mobile-sites/)."
   },
   "core/config/default-config.js | seoMobileGroupTitle": {
     "message": "Mobile Friendly"
   },
   "core/gather/driver/environment.js | warningSlowHostCpu": {
-    "message": "The tested device appears to have a slower CPU than  Lighthouse expects. This can negatively affect your performance score. Learn more about [calibrating an appropriate CPU slowdown multiplier](https://github.com/GoogleChrome/lighthouse/blob/master/docs/throttling.md#cpu-throttling)."
+    "message": "The tested device appears to have a slower CPU than  Lighthouse expects. This can negatively affect your performance score. Learn more about [calibrating an appropriate CPU slowdown multiplier](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."
   },
   "core/gather/driver/navigation.js | warningRedirected": {
     "message": "The page may not be loading as expected because your test URL ({requested}) was redirected to {final}. Try testing the second URL directly."
@@ -1699,6 +1678,345 @@
   },
   "core/gather/driver/storage.js | warningData": {
     "message": "{locationCount, plural,\n    =1 {There may be stored data affecting loading performance in this location: {locations}. Audit this page in an incognito window to prevent those resources from affecting your scores.}\n    other {There may be stored data affecting loading performance in these locations: {locations}. Audit this page in an incognito window to prevent those resources from affecting your scores.}\n  }"
+  },
+  "core/lib/bfcache-strings.js | appBanner": {
+    "message": "Pages that requested an AppBanner are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | backForwardCacheDisabled": {
+    "message": "Back/forward cache is disabled by flags. Visit chrome://flags/#back-forward-cache to enable it locally on this device."
+  },
+  "core/lib/bfcache-strings.js | backForwardCacheDisabledByCommandLine": {
+    "message": "Back/forward cache is disabled by the command line."
+  },
+  "core/lib/bfcache-strings.js | backForwardCacheDisabledByLowMemory": {
+    "message": "Back/forward cache is disabled due to insufficient memory."
+  },
+  "core/lib/bfcache-strings.js | backForwardCacheDisabledForDelegate": {
+    "message": "Back/forward cache is not supported by delegate."
+  },
+  "core/lib/bfcache-strings.js | backForwardCacheDisabledForPrerender": {
+    "message": "Back/forward cache is disabled for prerenderer."
+  },
+  "core/lib/bfcache-strings.js | broadcastChannel": {
+    "message": "The page cannot be cached because it has a BroadcastChannel instance with registered listeners."
+  },
+  "core/lib/bfcache-strings.js | cacheControlNoStore": {
+    "message": "Pages with cache-control:no-store header cannot enter back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | cacheFlushed": {
+    "message": "The cache was intentionally cleared."
+  },
+  "core/lib/bfcache-strings.js | cacheLimit": {
+    "message": "The page was evicted from the cache to allow another page to be cached."
+  },
+  "core/lib/bfcache-strings.js | containsPlugins": {
+    "message": "Pages containing plugins are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | contentFileChooser": {
+    "message": "Pages that use FileChooser API are not eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | contentFileSystemAccess": {
+    "message": "Pages that use File System Access API are not eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | contentMediaDevicesDispatcherHost": {
+    "message": "Pages that use Media Device Dispatcher are not eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | contentMediaPlay": {
+    "message": "A media player was playing upon navigating away."
+  },
+  "core/lib/bfcache-strings.js | contentMediaSession": {
+    "message": "Pages that use MediaSession API and set a playback state are not eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | contentMediaSessionService": {
+    "message": "Pages that use MediaSession API and set action handlers are not eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | contentScreenReader": {
+    "message": "Back/forward cache is disabled due to screen reader."
+  },
+  "core/lib/bfcache-strings.js | contentSecurityHandler": {
+    "message": "Pages that use SecurityHandler are not eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | contentSerial": {
+    "message": "Pages that use Serial API are not eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | contentWebAuthenticationAPI": {
+    "message": "Pages that use WebAuthetication API are not eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | contentWebBluetooth": {
+    "message": "Pages that use WebBluetooth API are not eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | contentWebUSB": {
+    "message": "Pages that use WebUSB API are not eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | dedicatedWorkerOrWorklet": {
+    "message": "Pages that use a dedicated worker or worklet are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | documentLoaded": {
+    "message": "The document did not finish loading before navigating away."
+  },
+  "core/lib/bfcache-strings.js | embedderAppBannerManager": {
+    "message": "App Banner was present upon navigating away."
+  },
+  "core/lib/bfcache-strings.js | embedderChromePasswordManagerClientBindCredentialManager": {
+    "message": "Chrome Password Manager was present upon navigating away."
+  },
+  "core/lib/bfcache-strings.js | embedderDomDistillerSelfDeletingRequestDelegate": {
+    "message": "DOM distillation was in progress upon navigating away."
+  },
+  "core/lib/bfcache-strings.js | embedderDomDistillerViewerSource": {
+    "message": "DOM Distiller Viewer was present upon navigating away."
+  },
+  "core/lib/bfcache-strings.js | embedderExtensionMessaging": {
+    "message": "Back/forward cache is disabled due to extensions using messaging API."
+  },
+  "core/lib/bfcache-strings.js | embedderExtensionMessagingForOpenPort": {
+    "message": "Extensions with long-lived connection should close the connection before entering back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | embedderExtensions": {
+    "message": "Back/forward cache is disabled due to extensions."
+  },
+  "core/lib/bfcache-strings.js | embedderExtensionSentMessageToCachedFrame": {
+    "message": "Extensions with long-lived connection attempted to send messages to frames in back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | embedderModalDialog": {
+    "message": "Modal dialog such as form resubmission or http password dialog was shown for the page upon navigating away."
+  },
+  "core/lib/bfcache-strings.js | embedderOfflinePage": {
+    "message": "The offline page was shown upon navigating away."
+  },
+  "core/lib/bfcache-strings.js | embedderOomInterventionTabHelper": {
+    "message": "Out-Of-Memory Intervention bar was present upon navigating away."
+  },
+  "core/lib/bfcache-strings.js | embedderPermissionRequestManager": {
+    "message": "There were permission requests upon navigating away."
+  },
+  "core/lib/bfcache-strings.js | embedderPopupBlockerTabHelper": {
+    "message": "Popup blocker was present upon navigating away."
+  },
+  "core/lib/bfcache-strings.js | embedderSafeBrowsingThreatDetails": {
+    "message": "Safe Browsing details were shown upon navigating away."
+  },
+  "core/lib/bfcache-strings.js | embedderSafeBrowsingTriggeredPopupBlocker": {
+    "message": "Safe Browsing considered this page to be abusive and blocked popup."
+  },
+  "core/lib/bfcache-strings.js | enteredBackForwardCacheBeforeServiceWorkerHostAdded": {
+    "message": "A service worker was activated while the page was in back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | errorDocument": {
+    "message": "Back/forward cache is disabled due to a document error."
+  },
+  "core/lib/bfcache-strings.js | fencedFramesEmbedder": {
+    "message": "Pages using FencedFrames cannot be stored in bfcache."
+  },
+  "core/lib/bfcache-strings.js | foregroundCacheLimit": {
+    "message": "The page was evicted from the cache to allow another page to be cached."
+  },
+  "core/lib/bfcache-strings.js | grantedMediaStreamAccess": {
+    "message": "Pages that have granted media stream access are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | haveInnerContents": {
+    "message": "Pages that use portals are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | HTTPMethodNotGET": {
+    "message": "Only pages loaded via a GET request are eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | HTTPStatusNotOK": {
+    "message": "Only pages with a status code of 2XX can be cached."
+  },
+  "core/lib/bfcache-strings.js | idleManager": {
+    "message": "Pages that use IdleManager are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | indexedDBConnection": {
+    "message": "Pages that have an open IndexedDB connection are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | ineligibleAPI": {
+    "message": "Ineligible APIs were used."
+  },
+  "core/lib/bfcache-strings.js | injectedJavascript": {
+    "message": "IPages that JavaScript is injected into by extensions are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | injectedStyleSheet": {
+    "message": "Pages that StyleSheet is injected into by extensions are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | internalError": {
+    "message": "Internal error."
+  },
+  "core/lib/bfcache-strings.js | JavaScriptExecution": {
+    "message": "Chrome detected an attempt to execute JavaScript while in the cache."
+  },
+  "core/lib/bfcache-strings.js | keyboardLock": {
+    "message": "Pages that use Keyboard lock are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | loading": {
+    "message": "The page did not finish loading before navigating away."
+  },
+  "core/lib/bfcache-strings.js | mainResourceHasCacheControlNoCache": {
+    "message": "Pages whose main resource has cache-control:no-cache cannot enter back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | mainResourceHasCacheControlNoStore": {
+    "message": "Pages whose main resource has cache-control:no-store cannot enter back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | navigationCancelledWhileRestoring": {
+    "message": "Navigation was cancelled before the page could be restored from back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | networkExceedsBufferLimit": {
+    "message": "The page was evicted from the cache because an active network connection received too much data. Chrome limits the amount of data that a page may receive while cached."
+  },
+  "core/lib/bfcache-strings.js | networkRequestDatapipeDrainedAsBytesConsumer": {
+    "message": "Pages that have inflight fetch() or XHR are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | networkRequestRedirected": {
+    "message": "The page was evicted from back/forward cache because an active network request involved a redirect."
+  },
+  "core/lib/bfcache-strings.js | networkRequestTimeout": {
+    "message": "The page was evicted from the cache because a network connection was open too long. Chrome limits the amount of time that a page may receive data while cached."
+  },
+  "core/lib/bfcache-strings.js | noResponseHead": {
+    "message": "Pages that do not have a valid response head cannot enter back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | notMainFrame": {
+    "message": "Navigation happened in a frame other than the main frame."
+  },
+  "core/lib/bfcache-strings.js | outstandingIndexedDBTransaction": {
+    "message": "Page with ongoing indexed DB transactions are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | outstandingNetworkRequestDirectSocket": {
+    "message": "Pages with an in-flight network request are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | outstandingNetworkRequestFetch": {
+    "message": "Pages with an in-flight fetch network request are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | outstandingNetworkRequestOthers": {
+    "message": "Pages with an in-flight network request are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | outstandingNetworkRequestXHR": {
+    "message": "Pages with an in-flight XHR network request are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | paymentManager": {
+    "message": "Pages that use PaymentManager are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | pictureInPicture": {
+    "message": "Pages that use Picture-in-Picture are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | portal": {
+    "message": "Pages that use portals are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | printing": {
+    "message": "Pages that show Printing UI are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | relatedActiveContentsExist": {
+    "message": "The page was opened using '`window.open()`' and another tab has a reference to it, or the page opened a window."
+  },
+  "core/lib/bfcache-strings.js | rendererProcessCrashed": {
+    "message": "The renderer process for the page in back/forward cache crashed."
+  },
+  "core/lib/bfcache-strings.js | rendererProcessKilled": {
+    "message": "The renderer process for the page in back/forward cache was killed."
+  },
+  "core/lib/bfcache-strings.js | requestedAudioCapturePermission": {
+    "message": "Pages that have requested audio capture permissions are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | requestedBackForwardCacheBlockedSensors": {
+    "message": "Pages that have requested sensor permissions are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | requestedBackgroundWorkPermission": {
+    "message": "Pages that have requested background sync or fetch permissions are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | requestedMIDIPermission": {
+    "message": "Pages that have requested MIDI permissions are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | requestedNotificationsPermission": {
+    "message": "Pages that have requested notifications permissions are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | requestedStorageAccessGrant": {
+    "message": "Pages that have requested storage access are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | requestedVideoCapturePermission": {
+    "message": "Pages that have requested video capture permissions are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | schemeNotHTTPOrHTTPS": {
+    "message": "Only pages whose URL scheme is HTTP / HTTPS can be cached."
+  },
+  "core/lib/bfcache-strings.js | serviceWorkerClaim": {
+    "message": "The page was claimed by a service worker while it is in back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | serviceWorkerPostMessage": {
+    "message": "A service worker attempted to send the page in back/forward cache a `MessageEvent`."
+  },
+  "core/lib/bfcache-strings.js | serviceWorkerUnregistration": {
+    "message": "ServiceWorker was unregistered while a page was in back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | serviceWorkerVersionActivation": {
+    "message": "The page was evicted from back/forward cache due to a service worker activation."
+  },
+  "core/lib/bfcache-strings.js | sessionRestored": {
+    "message": "Chrome restarted and cleared the back/forward cache entries."
+  },
+  "core/lib/bfcache-strings.js | sharedWorker": {
+    "message": "Pages that use SharedWorker are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | speechRecognizer": {
+    "message": "Pages that use SpeechRecognizer are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | speechSynthesis": {
+    "message": "Pages that use SpeechSynthesis are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | subframeIsNavigating": {
+    "message": "An iframe on the page started a navigation that did not complete."
+  },
+  "core/lib/bfcache-strings.js | subresourceHasCacheControlNoCache": {
+    "message": "Pages whose subresource has cache-control:no-cache cannot enter back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | subresourceHasCacheControlNoStore": {
+    "message": "Pages whose subresource has cache-control:no-store cannot enter back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | timeout": {
+    "message": "The page exceeded the maximum time in back/forward cache and was expired."
+  },
+  "core/lib/bfcache-strings.js | timeoutPuttingInCache": {
+    "message": "The page timed out entering back/forward cache (likely due to long-running pagehide handlers)."
+  },
+  "core/lib/bfcache-strings.js | unloadHandlerExistsInMainFrame": {
+    "message": "The page has an unload handler in the main frame."
+  },
+  "core/lib/bfcache-strings.js | unloadHandlerExistsInSubFrame": {
+    "message": "The page has an unload handler in a sub frame."
+  },
+  "core/lib/bfcache-strings.js | userAgentOverrideDiffers": {
+    "message": "Browser has changed the user agent override header."
+  },
+  "core/lib/bfcache-strings.js | wasGrantedMediaAccess": {
+    "message": "Pages that have granted access to record video or audio are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | webDatabase": {
+    "message": "Pages that use WebDatabase are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | webHID": {
+    "message": "Pages that use WebHID are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | webLocks": {
+    "message": "Pages that use WebLocks are not currently eligible for back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | webNfc": {
+    "message": "Pages that use WebNfc are not currently eligible for back/forwad cache."
+  },
+  "core/lib/bfcache-strings.js | webOTPService": {
+    "message": "Pages that use WebOTPService are not currently eligible for bfcache."
+  },
+  "core/lib/bfcache-strings.js | webRTC": {
+    "message": "Pages with WebRTC cannot enter back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | webShare": {
+    "message": "Pages that use WebShare are not currently eligible for back/forwad cache."
+  },
+  "core/lib/bfcache-strings.js | webSocket": {
+    "message": "Pages with WebSocket cannot enter back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | webTransport": {
+    "message": "Pages with WebTransport cannot enter back/forward cache."
+  },
+  "core/lib/bfcache-strings.js | webXR": {
+    "message": "Pages that use WebXR are not currently eligible for back/forward cache."
   },
   "core/lib/csp-evaluator.js | allowlistFallback": {
     "message": "Consider adding https: and http: URL schemes (ignored by browsers supporting 'strict-dynamic') to be backward compatible with older browsers."
@@ -1796,6 +2114,9 @@
   "core/lib/deprecations-strings.js | eventPath": {
     "message": "`Event.path` is deprecated and will be removed. Please use `Event.composedPath()` instead."
   },
+  "core/lib/deprecations-strings.js | expectCTHeader": {
+    "message": "The `Expect-CT` header is deprecated and will be removed. Chrome requires Certificate Transparency for all publicly trusted certificates issued after April 30, 2018."
+  },
   "core/lib/deprecations-strings.js | feature": {
     "message": "Check the feature status page for more details."
   },
@@ -1810,6 +2131,9 @@
   },
   "core/lib/deprecations-strings.js | hostCandidateAttributeGetter": {
     "message": "`RTCPeerConnectionIceErrorEvent.hostCandidate` is deprecated. Please use `RTCPeerConnectionIceErrorEvent.address` or `RTCPeerConnectionIceErrorEvent.port` instead."
+  },
+  "core/lib/deprecations-strings.js | identityInCanMakePaymentEvent": {
+    "message": "The merchant origin and arbitrary data from the `canmakepayment` service worker event are deprecated and will be removed: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`."
   },
   "core/lib/deprecations-strings.js | insecurePrivateNetworkSubresourceRequest": {
     "message": "The website requested a subresource from a network that it could only access because of its users' privileged network position. These requests expose non-public devices and servers to the internet, increasing the risk of a cross-site request forgery (CSRF) attack, and/or information leakage. To mitigate these risks, Chrome deprecates requests to non-public subresources when initiated from non-secure contexts, and will start blocking them."
@@ -1841,11 +2165,17 @@
   "core/lib/deprecations-strings.js | obsoleteWebRtcCipherSuite": {
     "message": "Your partner is negotiating an obsolete (D)TLS version. Please check with your partner to have this fixed."
   },
+  "core/lib/deprecations-strings.js | openWebDatabaseInsecureContext": {
+    "message": "WebSQL in non-secure contexts is deprecated and will be removed soon. Please use Web Storage or Indexed Database."
+  },
+  "core/lib/deprecations-strings.js | persistentQuotaType": {
+    "message": "`StorageType.persistent` is deprecated. Please use standardized `navigator.storage` instead."
+  },
   "core/lib/deprecations-strings.js | pictureSourceSrc": {
     "message": "`<source src>` with a `<picture>` parent is invalid and therefore ignored. Please use `<source srcset>` instead."
   },
   "core/lib/deprecations-strings.js | prefixedStorageInfo": {
-    "message": "`window.webkitStorageInfo` is deprecated. Please use `navigator.webkitTemporaryStorage` or `navigator.webkitPersistentStorage` instead."
+    "message": "`window.webkitStorageInfo` is deprecated. Please use standardized `navigator.storage` instead."
   },
   "core/lib/deprecations-strings.js | requestedSubresourceWithEmbeddedCredentials": {
     "message": "Subresource requests whose URLs contain embedded credentials (e.g. `https://user:pass@host/`) are blocked."
@@ -2054,6 +2384,9 @@
   "core/lib/lh-error.js | noFcp": {
     "message": "The page did not paint any content. Please ensure you keep the browser window in the foreground during the load and try again. ({errorCode})"
   },
+  "core/lib/lh-error.js | noLcp": {
+    "message": "The page did not display content that qualifies as a Largest Contentful Paint (LCP). Ensure the page has a valid LCP element and then try again. ({errorCode})"
+  },
   "core/lib/lh-error.js | notHtml": {
     "message": "The page provided is not HTML (served as MIME type {mimeType})."
   },
@@ -2092,6 +2425,18 @@
   },
   "core/lib/navigation-error.js | warningXhtml": {
     "message": "The page MIME type is XHTML: Lighthouse does not explicitly support this document type"
+  },
+  "core/user-flow.js | defaultFlowName": {
+    "message": "User flow ({url})"
+  },
+  "core/user-flow.js | defaultNavigationName": {
+    "message": "Navigation report ({url})"
+  },
+  "core/user-flow.js | defaultSnapshotName": {
+    "message": "Snapshot report ({url})"
+  },
+  "core/user-flow.js | defaultTimespanName": {
+    "message": "Timespan report ({url})"
   },
   "flow-report/src/i18n/ui-strings.js | allReports": {
     "message": "All Reports"
@@ -2683,6 +3028,9 @@
   },
   "report/renderer/util.js | runtimeSettingsNetworkThrottling": {
     "message": "Network throttling"
+  },
+  "report/renderer/util.js | runtimeSettingsScreenEmulation": {
+    "message": "Screen emulation"
   },
   "report/renderer/util.js | runtimeSettingsUANetwork": {
     "message": "User agent (network)"

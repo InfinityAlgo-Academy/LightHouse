@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Nie używa instrukcji `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Najwyższy poziom zagrożenia"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Wersja biblioteki"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Liczba luk w zabezpieczeniach"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Niektóre skrypty spoza witryny mogą mieć znane luki w zabezpieczeniach, które mogą łatwo odkryć i wykorzystać hakerzy. [Więcej informacji](https://web.dev/no-vulnerable-libraries/)"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{Wykryto 1 lukę w zabezpieczeniach}few{Wykryto # luki w zabezpieczeniach}many{Wykryto # luk w zabezpieczeniach}other{Wykryto # luki w zabezpieczeniach}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "Używa bibliotek JavaScript interfejsu użytkownika, które mają znane luki w zabezpieczeniach"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Nie używa bibliotek JavaScript interfejsu użytkownika, które mają znane luki w zabezpieczeniach"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Witryny, które bez kontekstu pytają o zgodę na wyświetlanie powiadomień, nie budzą zaufania użytkowników lub ich dezorientują. Sugerujemy powiązanie wyświetlenia tej prośby z gestami użytkownika. [Więcej informacji](https://web.dev/notification-on-start/)"
   },
@@ -1626,7 +1605,7 @@
     "message": "Strona ma prawidłowe mapy źródeł"
   },
   "core/audits/viewport.js | description": {
-    "message": "Metatag `<meta name=\"viewport\">` nie tylko optymalizuje aplikację pod kątem rozmiarów ekranu urządzeń mobilnych, ale zapobiega też [300-milisekundowemu opóźnieniu danych wejściowych użytkownika](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Więcej informacji](https://web.dev/viewport/)"
+    "message": "Metatag `<meta name=\"viewport\">` nie tylko optymalizuje aplikację pod kątem rozmiarów ekranu urządzeń mobilnych, ale zapobiega też [300-milisekundowemu opóźnieniu danych wejściowych użytkownika](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Więcej informacji](https://web.dev/viewport/)"
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Nie znaleziono tagu `<meta name=\"viewport\">`"

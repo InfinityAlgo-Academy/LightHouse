@@ -4,7 +4,7 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import UsesRelPreconnect from '../../audits/uses-rel-preconnect.js';
 import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
@@ -13,7 +13,7 @@ import {createTestTrace} from '../create-test-trace.js';
 const mainResource = {
   url: 'https://www.example.com/',
   timing: {receiveHeadersEnd: 0.5},
-  endTime: 1,
+  endTime: 1000,
 };
 
 function buildArtifacts(networkRecords) {
@@ -27,10 +27,9 @@ function buildArtifacts(networkRecords) {
   return {
     LinkElements: [],
     URL: {
-      initialUrl: 'about:blank',
       requestedUrl: mainResource.url,
       mainDocumentUrl: mainResource.url,
-      finalUrl: mainResource.url,
+      finalDisplayedUrl: mainResource.url,
     },
     devtoolsLogs: {defaultPass: devtoolsLog},
     traces: {defaultPass: trace},
@@ -124,7 +123,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/request',
         initiator: {},
-        startTime: 16,
+        startTime: 1_600,
         timing: {receiveHeadersEnd: 20},
       },
     ];
@@ -143,7 +142,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/request',
         initiator: {},
-        startTime: 2,
+        startTime: 2000,
         timing: {
           dnsStart: 100,
           connectStart: 150,
@@ -171,7 +170,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/first',
         initiator: {},
-        startTime: 2,
+        startTime: 2000,
         timing: {
           dnsStart: 100,
           connectStart: 150,
@@ -182,7 +181,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn.example.com/second',
         initiator: {},
-        startTime: 3,
+        startTime: 3000,
         timing: {
           dnsStart: 300,
           connectStart: 350,
@@ -208,7 +207,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'http://cdn.example.com/first',
         initiator: {},
-        startTime: 2,
+        startTime: 2000,
         timing: {
           dnsStart: 100,
           connectStart: 250,
@@ -219,7 +218,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://othercdn.example.com/second',
         initiator: {},
-        startTime: 1.2,
+        startTime: 1_200,
         timing: {
           dnsStart: 100,
           connectStart: 200,
@@ -230,8 +229,8 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://unimportant.example.com/second',
         initiator: {},
-        startTime: 6,
-        endTime: 8, // ends *after* LCP
+        startTime: 6000,
+        endTime: 8000, // ends *after* LCP
         timing: {
           dnsStart: 100,
           connectStart: 200,
@@ -263,7 +262,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn1.example.com/first',
         initiator: {},
-        startTime: 2,
+        startTime: 2000,
         timing: {
           dnsStart: 100,
           dnsEnd: 100,
@@ -275,7 +274,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
       {
         url: 'https://cdn2.example.com/first',
         initiator: {},
-        startTime: 2,
+        startTime: 2000,
         timing: {
           dnsStart: 100,
           dnsEnd: 100,
@@ -311,9 +310,9 @@ describe('Performance: uses-rel-preconnect audit', () => {
 
     const networkRecords = [
       mainResource,
-      {url: 'https://cdn1.example.com/first', initiator: {}, startTime: 2, timing},
-      {url: 'https://cdn2.example.com/first', initiator: {}, startTime: 2, timing},
-      {url: 'https://cdn3.example.com/first', initiator: {}, startTime: 2, timing},
+      {url: 'https://cdn1.example.com/first', initiator: {}, startTime: 2000, timing},
+      {url: 'https://cdn2.example.com/first', initiator: {}, startTime: 2000, timing},
+      {url: 'https://cdn3.example.com/first', initiator: {}, startTime: 2000, timing},
     ];
 
     const artifacts = {

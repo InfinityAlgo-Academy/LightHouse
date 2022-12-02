@@ -16,9 +16,8 @@ import {createRequire} from 'module';
 
 import esMain from 'es-main';
 import {rollup} from 'rollup';
-// TODO(esmodules): convert pubads to esm
-// // @ts-expect-error: plugin has no types.
-// import PubAdsPlugin from 'lighthouse-plugin-publisher-ads/plugin.js';
+// @ts-expect-error: plugin has no types.
+import PubAdsPlugin from 'lighthouse-plugin-publisher-ads';
 
 import * as rollupPlugins from './rollup-plugins.js';
 import {Runner} from '../core/runner.js';
@@ -27,13 +26,18 @@ import {readJson} from '../core/test/test-utils.js';
 
 const require = createRequire(import.meta.url);
 
-/** The commit hash for the current HEAD. */
-const COMMIT_HASH = execSync('git rev-parse HEAD').toString().trim();
+/**
+ * The git tag for the current HEAD (if HEAD is itself a tag),
+ * otherwise a combination of latest tag + #commits since + sha.
+ * Note: can't do this in CI because it is a shallow checkout.
+ */
+const GIT_READABLE_REF =
+  execSync(process.env.CI ? 'git rev-parse HEAD' : 'git describe').toString().trim();
 
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.
 /** @type {Array<string>} */
-// // @ts-expect-error
-// const pubAdsAudits = PubAdsPlugin.audits.map(a => a.path);
+// @ts-expect-error
+const pubAdsAudits = PubAdsPlugin.audits.map(a => a.path);
 
 /** @param {string} file */
 const isDevtools = file =>
@@ -54,7 +58,7 @@ const today = (() => {
 const pkg = readJson(`${LH_ROOT}/package.json`);
 const banner = `
 /**
- * Lighthouse v${pkg.version} ${COMMIT_HASH} (${today})
+ * Lighthouse ${GIT_READABLE_REF} (${today})
  *
  * ${pkg.description}
  *
@@ -84,12 +88,12 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
   ];
 
   // Include lighthouse-plugin-publisher-ads.
-  // if (isDevtools(entryPath) || isLightrider(entryPath)) {
-  //   dynamicModulePaths.push('lighthouse-plugin-publisher-ads');
-  //   pubAdsAudits.forEach(pubAdAudit => {
-  //     dynamicModulePaths.push(pubAdAudit);
-  //   });
-  // }
+  if (isDevtools(entryPath) || isLightrider(entryPath)) {
+    dynamicModulePaths.push('lighthouse-plugin-publisher-ads');
+    pubAdsAudits.forEach(pubAdAudit => {
+      dynamicModulePaths.push(pubAdAudit);
+    });
+  }
 
   const bundledMapEntriesCode = dynamicModulePaths.map(modulePath => {
     const pathNoExt = modulePath.replace('.js', '');
@@ -98,9 +102,8 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
 
   /** @type {Record<string, string>} */
   const shimsObj = {
-    [require.resolve('../core/gather/connections/cri.js')]:
+    [require.resolve('../core/legacy/gather/connections/cri.js')]:
       'export const CriConnection = {}',
-    [require.resolve('../package.json')]: `export const version = '${pkg.version}';`,
   };
 
   const modulesToIgnore = [
@@ -116,12 +119,13 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
   // Don't include the stringified report in DevTools - see devtools-report-assets.js
   // Don't include in Lightrider - HTML generation isn't supported, so report assets aren't needed.
   if (isDevtools(entryPath) || isLightrider(entryPath)) {
-    modulesToIgnore.push(require.resolve('../report/generator/report-assets.js'));
+    shimsObj[require.resolve('../report/generator/report-assets.js')] =
+      'export const reportAssets = {}';
   }
 
   // Don't include locales in DevTools.
   if (isDevtools(entryPath)) {
-    shimsObj['./locales.js'] = 'export default {}';
+    shimsObj['./locales.js'] = 'export const locales = {};';
   }
 
   for (const modulePath of modulesToIgnore) {
@@ -165,11 +169,6 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
       }),
       rollupPlugins.shim({
         ...shimsObj,
-        // Allows for plugins to import lighthouse.
-        'lighthouse': `
-          import {Audit} from '${require.resolve('../core/audits/audit.js')}';
-          export {Audit};
-        `,
         'url': `
           export const URL = globalThis.URL;
           export const fileURLToPath = url => url;
@@ -186,7 +185,13 @@ async function buildBundle(entryPath, distPath, opts = {minify: true}) {
         `,
       }),
       rollupPlugins.json(),
-      rollupPlugins.inlineFs({verbose: false}),
+      rollupPlugins.removeModuleDirCalls(),
+      rollupPlugins.inlineFs({
+        verbose: Boolean(process.env.DEBUG),
+        ignorePaths: [
+          require.resolve('puppeteer-core/lib/esm/puppeteer/common/Page.js'),
+        ],
+      }),
       rollupPlugins.commonjs({
         // https://github.com/rollup/plugins/issues/922
         ignoreGlobal: true,
@@ -249,6 +254,5 @@ if (esMain(import.meta)) {
 }
 
 export {
-  COMMIT_HASH,
   buildBundle,
 };

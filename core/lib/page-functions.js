@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /**
  * @fileoverview
@@ -161,27 +160,6 @@ function getOuterHTMLSnippet(element, ignoreAttrs = [], snippetCharacterLimit = 
   } catch (_) {
     // As a last resort, fall back to localName.
     return `<${element.localName}>`;
-  }
-}
-
-/**
- * Get the maximum size of a texture the GPU can handle
- * @see https://bugs.chromium.org/p/chromium/issues/detail?id=770769#c13
- * @return {number}
- */
-function getMaxTextureSize() {
-  try {
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl');
-    if (!gl) throw new Error('no webgl');
-    const maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE);
-    return maxTextureSize;
-  } catch (e) {
-    // If the above fails for any reason we need a fallback number;
-    // 4096 is the max texture size on a Pixel 2 XL, so to be conservative we'll use a low value like it.
-    // But we'll subtract 1 just to identify this case later on.
-    const MAX_TEXTURE_SIZE_FALLBACK = 4095;
-    return MAX_TEXTURE_SIZE_FALLBACK;
   }
 }
 
@@ -498,6 +476,18 @@ function getNodeDetails(element) {
   const selector = getNodeSelector(element);
 
   // Create an id that will be unique across all execution contexts.
+  //
+  // Made up of 3 components:
+  //   - prefix unique to specific execution context
+  //   - nth unique node seen by this function for this execution context
+  //   - node tagName
+  //
+  // Every page load only has up to two associated contexts - the page context
+  // (denoted as `__lighthouseExecutionContextUniqueIdentifier` being undefined)
+  // and the isolated context. The id must be unique to distinguish gatherers running
+  // on different page loads that identify the same logical element, for purposes
+  // of the full page screenshot node lookup; hence the prefix.
+  //
   // The id could be any arbitrary string, the exact value is not important.
   // For example, tagName is added only because it might be useful for debugging.
   // But execution id and map size are added to ensure uniqueness.
@@ -507,9 +497,9 @@ function getNodeDetails(element) {
   let lhId = window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.get(element);
   if (!lhId) {
     lhId = [
-      window.__lighthouseExecutionContextId !== undefined ?
-        window.__lighthouseExecutionContextId :
-        'page',
+      window.__lighthouseExecutionContextUniqueIdentifier === undefined ?
+        'page' :
+        window.__lighthouseExecutionContextUniqueIdentifier,
       window.__lighthouseNodesDontTouchOrAllVarianceGoesAway.size,
       element.tagName,
     ].join('-');
@@ -528,35 +518,27 @@ function getNodeDetails(element) {
   return details;
 }
 
-const getNodeDetailsString = `function getNodeDetails(element) {
-  ${getNodePath.toString()};
-  ${getNodeSelector.toString()};
-  ${getBoundingClientRect.toString()};
-  ${getOuterHTMLSnippet.toString()};
-  ${getNodeLabel.toString()};
-  return (${getNodeDetails.toString()})(element);
+/** @type {string} */
+const getNodeDetailsRawString = getNodeDetails.toString();
+getNodeDetails.toString = () => `function getNodeDetails(element) {
+  ${getNodePath};
+  ${getNodeSelector};
+  ${getBoundingClientRect};
+  ${getOuterHTMLSnippet};
+  ${getNodeLabel};
+  return (${getNodeDetailsRawString})(element);
 }`;
 
-// TODO(esmodules): should this be refactored to export each function individually?
 export const pageFunctions = {
-  wrapRuntimeEvalErrorInBrowserString: wrapRuntimeEvalErrorInBrowser.toString(),
   wrapRuntimeEvalErrorInBrowser,
   getElementsInDocument,
-  getElementsInDocumentString: getElementsInDocument.toString(),
-  getOuterHTMLSnippetString: getOuterHTMLSnippet.toString(),
   getOuterHTMLSnippet,
   computeBenchmarkIndex,
-  computeBenchmarkIndexString: computeBenchmarkIndex.toString(),
-  getMaxTextureSize,
-  getNodeDetailsString,
   getNodeDetails,
-  getNodePathString: getNodePath.toString(),
-  getNodeSelectorString: getNodeSelector.toString(),
   getNodePath,
   getNodeSelector,
   getNodeLabel,
-  getNodeLabelString: getNodeLabel.toString(),
-  isPositionFixedString: isPositionFixed.toString(),
+  isPositionFixed,
   wrapRequestIdleCallback,
-  getBoundingClientRectString: getBoundingClientRect.toString(),
+  getBoundingClientRect,
 };

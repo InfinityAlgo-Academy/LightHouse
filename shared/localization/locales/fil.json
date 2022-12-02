@@ -854,27 +854,6 @@
   "core/audits/dobetterweb/no-document-write.js | title": {
     "message": "Umiiwas sa `document.write()`"
   },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnSeverity": {
-    "message": "Pinakamataas na Kalalaan"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVersion": {
-    "message": "Bersyon ng Library"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | columnVuln": {
-    "message": "Bilang ng Kahinaan"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | description": {
-    "message": "Puwedeng maglaman ng mga kilalang kahinaan sa seguridad ang ilang script ng third party na madaling natutukoy at nasasamantala ng mga nang-aatake. [Matuto pa](https://web.dev/no-vulnerable-libraries/)."
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | displayValue": {
-    "message": "{itemCount,plural, =1{1 kahinaan ang natukoy}one{# kahinaan ang natukoy}other{# na kahinaan ang natukoy}}"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | failureTitle": {
-    "message": "May mga kasamang front-end na library ng JavaScript na may mga kilalang kahinaan sa seguridad"
-  },
-  "core/audits/dobetterweb/no-vulnerable-libraries.js | title": {
-    "message": "Umiiwas sa mga front-end na library ng JavaScript na may mga kilalang kahinaan sa seguridad"
-  },
   "core/audits/dobetterweb/notification-on-start.js | description": {
     "message": "Walang tiwala o nalilito ang mga user sa mga site na humihiling na magpadala ng mga notification nang walang konteksto. Sa halip ay pag-isipang iugnay ang kahilingan sa mga galaw ng user. [Matuto pa](https://web.dev/notification-on-start/)."
   },
@@ -1626,7 +1605,7 @@
     "message": "May mga valid na source map ang page"
   },
   "core/audits/viewport.js | description": {
-    "message": "Hindi lang ino-optimize ng `<meta name=\"viewport\">` ang iyong app para sa mga laki ng mobile screen, pinipigilan din nito ang [300 millisecond na pagkaantala sa input ng user](https://developers.google.com/web/updates/2013/12/300ms-tap-delay-gone-away). [Matuto pa](https://web.dev/viewport/)."
+    "message": "Hindi lang ino-optimize ng `<meta name=\"viewport\">` ang iyong app para sa mga laki ng mobile screen, pinipigilan din nito ang [300 millisecond na pagkaantala sa input ng user](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Matuto pa](https://web.dev/viewport/)."
   },
   "core/audits/viewport.js | explanationNoTag": {
     "message": "Walang nahanap na tag na `<meta name=\"viewport\">`"

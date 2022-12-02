@@ -4,28 +4,19 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {createMockDriver} from '../../fraggle-rock/gather/mock-driver.js';
+import {createMockDriver} from '../mock-driver.js';
 import {
   mockCommands,
   makePromiseInspectable,
   flushAllTimersAndMicrotasks,
   timers,
 } from '../../test-utils.js';
-// import {gotoURL, getNavigationWarnings} from '../../../gather/driver/navigation.js';
 
 const {createMockOnceFn} = mockCommands;
 
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// See: https://jestjs.io/docs/ecmascript-modules#differences-between-esm-and-commonjs
-//      https://github.com/facebook/jest/issues/10025
-/** @type {import('../../../gather/driver/navigation.js')['gotoURL']} */
-let gotoURL;
-/** @type {import('../../../gather/driver/navigation.js')['getNavigationWarnings']} */
-let getNavigationWarnings;
-
-before(async () => {
-  ({gotoURL, getNavigationWarnings} = (await import('../../../gather/driver/navigation.js')));
-});
+// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+const {gotoURL, getNavigationWarnings} = await import('../../../gather/driver/navigation.js');
 
 timers.useFakeTimers();
 

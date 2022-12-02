@@ -11,18 +11,18 @@
  *   However, the audit will only fail pages that use images that have waste
  *   beyond a particular byte threshold.
  */
-'use strict';
+
 
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
 import {NetworkRequest} from '../../lib/network-request.js';
-import ImageRecords from '../../computed/image-records.js';
-import URL from '../../lib/url-shim.js';
+import {ImageRecords} from '../../computed/image-records.js';
+import UrlUtils from '../../lib/url-utils.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 
 const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to resize images to match the display dimensions. This is displayed in a list of audit titles that Lighthouse generates. */
   title: 'Properly size images',
-  /** Description of a Lighthouse audit that tells the user *why* they need to serve appropriately sized images. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of a Lighthouse audit that tells the user *why* they need to serve appropriately sized images. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description:
   'Serve images that are appropriately-sized to save cellular data ' +
   'and improve load time. ' +
@@ -100,7 +100,7 @@ class UsesResponsiveImages extends ByteEfficiencyAudit {
     const displayed = this.getDisplayedDimensions(image, ViewportDimensions);
     const usedPixels = displayed.width * displayed.height;
 
-    const url = URL.elideDataURI(image.src);
+    const url = UrlUtils.elideDataURI(image.src);
     const actualPixels = image.naturalWidth * image.naturalHeight;
     const wastedRatio = 1 - (usedPixels / actualPixels);
     const totalBytes = NetworkRequest.getResourceSizeOnNetwork(networkRecord);

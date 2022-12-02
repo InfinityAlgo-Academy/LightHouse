@@ -3,13 +3,12 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 import {Audit} from './audit.js';
-import ComputedResponsivenes from '../computed/metrics/responsiveness.js';
-import ProcessedTrace from '../computed/processed-trace.js';
+import {Responsiveness} from '../computed/metrics/responsiveness.js';
+import {ProcessedTrace} from '../computed/processed-trace.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import NetworkRecords from '../computed/network-records.js';
+import {NetworkRecords} from '../computed/network-records.js';
 import {MainThreadTasks} from '../lib/tracehouse/main-thread-tasks.js';
 import {taskGroups} from '../lib/tracehouse/task-groups.js';
 import {TraceProcessor} from '../lib/tracehouse/trace-processor.js';
@@ -27,7 +26,7 @@ const UIStrings = {
   title: 'Minimizes work during key interaction',
   /** Title of a diagnostic audit that provides detail on the main thread work the browser did during a key user interaction. This imperative title is shown to users when there is a significant amount of execution time that could be reduced. */
   failureTitle: 'Minimize work during key interaction',
-  /** Description of the work-during-interaction metric. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
+  /** Description of the work-during-interaction metric. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'This is the thread-blocking work occurring during the Interaction to Next Paint measurement. [Learn more about the Interaction to Next Paint metric](https://web.dev/inp/).',
   /** Label for a column in a data table; entries will be information on the time that the browser is delayed before responding to user input. Ideally fits within a ~40 character limit. */
   inputDelay: 'Input delay',
@@ -185,11 +184,11 @@ class WorkDuringInteraction extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'phase', itemType: 'text', subItemsHeading: {key: 'url', itemType: 'url'}, text: 'Phase'},
-      {key: 'total', itemType: 'ms', subItemsHeading: {key: 'total', granularity: 1, itemType: 'ms'}, granularity: 1, text: 'Total time'},
-      {key: null, itemType: 'ms', subItemsHeading: {key: 'scripting', granularity: 1, itemType: 'ms'}, text: 'Script evaluation'},
-      {key: null, itemType: 'ms', subItemsHeading: {key: 'layout', granularity: 1, itemType: 'ms'}, text: taskGroups.styleLayout.label},
-      {key: null, itemType: 'ms', subItemsHeading: {key: 'render', granularity: 1, itemType: 'ms'}, text: taskGroups.paintCompositeRender.label},
+      {key: 'phase', valueType: 'text', subItemsHeading: {key: 'url', valueType: 'url'}, label: 'Phase'},
+      {key: 'total', valueType: 'ms', subItemsHeading: {key: 'total', granularity: 1, valueType: 'ms'}, granularity: 1, label: 'Total time'},
+      {key: null, valueType: 'ms', subItemsHeading: {key: 'scripting', granularity: 1, valueType: 'ms'}, label: 'Script evaluation'},
+      {key: null, valueType: 'ms', subItemsHeading: {key: 'layout', granularity: 1, valueType: 'ms'}, label: taskGroups.styleLayout.label},
+      {key: null, valueType: 'ms', subItemsHeading: {key: 'render', granularity: 1, valueType: 'ms'}, label: taskGroups.paintCompositeRender.label},
       /* eslint-enable max-len */
     ];
 
@@ -209,7 +208,7 @@ class WorkDuringInteraction extends Audit {
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
-      {key: 'node', itemType: 'node', text: str_(UIStrings.eventTarget)},
+      {key: 'node', valueType: 'node', label: str_(UIStrings.eventTarget)},
     ];
     const elementItems = [{node: Audit.makeNodeItem(responsivenessElement.node)}];
 
@@ -230,7 +229,7 @@ class WorkDuringInteraction extends Audit {
 
     const trace = artifacts.traces[WorkDuringInteraction.DEFAULT_PASS];
     const metricData = {trace, settings};
-    const interactionEvent = await ComputedResponsivenes.request(metricData, context);
+    const interactionEvent = await Responsiveness.request(metricData, context);
     // If no interaction, diagnostic audit is n/a.
     if (interactionEvent === null) {
       return {score: null, notApplicable: true};

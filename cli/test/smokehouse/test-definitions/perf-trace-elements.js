@@ -74,6 +74,7 @@ const expectations = {
             height: 318,
           },
         },
+        type: 'image',
       },
       {
         traceEventType: 'layout-shift',
@@ -135,7 +136,7 @@ const expectations = {
   },
   lhr: {
     requestedUrl: 'http://localhost:10200/perf/trace-elements.html',
-    finalUrl: 'http://localhost:10200/perf/trace-elements.html',
+    finalDisplayedUrl: 'http://localhost:10200/perf/trace-elements.html',
     audits: {
       'largest-contentful-paint-element': {
         score: null,

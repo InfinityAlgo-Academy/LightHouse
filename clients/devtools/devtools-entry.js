@@ -3,21 +3,20 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* global globalThis */
 
 import {Buffer} from 'buffer';
 
-import lighthouse, {legacyNavigation} from '../../core/index.js';
-import {navigation, startTimespan, snapshot} from '../../core/fraggle-rock/api.js';
-import {RawConnection} from '../../core/gather/connections/raw.js';
 import log from 'lighthouse-logger';
+
+import lighthouse, {legacyNavigation, navigation, startTimespan, snapshot} from '../../core/index.js';
+import {RawConnection} from '../../core/legacy/gather/connections/raw.js';
 import {lookupLocale} from '../../core/lib/i18n/i18n.js';
 import {registerLocaleData, getCanonicalLocales} from '../../shared/localization/format.js';
 import * as constants from '../../core/config/constants.js';
 
-/** @typedef {import('../../core/gather/connections/connection.js')} Connection */
+/** @typedef {import('../../core/legacy/gather/connections/connection.js')} Connection */
 
 // Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
 // (`parseSourceMapFromDataUrl` breaks without this)
@@ -52,14 +51,13 @@ function createConfig(categoryIDs, device) {
 
   return {
     extends: 'lighthouse:default',
-    // TODO(esmodules): re-enable when pubads works again
-    // plugins: ['lighthouse-plugin-publisher-ads'],
+    plugins: ['lighthouse-plugin-publisher-ads'],
     settings,
   };
 }
 
 /**
- * @param {import('../../core/gather/connections/raw.js').Port} port
+ * @param {import('../../core/legacy/gather/connections/raw.js').Port} port
  * @return {RawConnection}
  */
 function setUpWorkerConnection(port) {
@@ -83,6 +81,31 @@ function lookupCanonicalLocale(locales) {
   return lookupLocale(locales, getCanonicalLocales());
 }
 
+/**
+ * TODO: Expose api directly when DevTools usage is updated.
+ * @param {string} url
+ * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, flags?: LH.Flags}} args
+ */
+function runLighthouseNavigation(url, {page, ...options}) {
+  return navigation(page, url, options);
+}
+
+/**
+ * TODO: Expose api directly when DevTools usage is updated.
+ * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, flags?: LH.Flags}} args
+ */
+function startLighthouseTimespan({page, ...options}) {
+  return startTimespan(page, options);
+}
+
+/**
+ * TODO: Expose api directly when DevTools usage is updated.
+ * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, flags?: LH.Flags}} args
+ */
+function runLighthouseSnapshot({page, ...options}) {
+  return snapshot(page, options);
+}
+
 // Expose only in DevTools' worker
 if (typeof self !== 'undefined') {
   // TODO: refactor and delete `global.isDevtools`.
@@ -93,11 +116,17 @@ if (typeof self !== 'undefined') {
   // @ts-expect-error
   self.runLighthouse = legacyNavigation;
   // @ts-expect-error
-  self.runLighthouseNavigation = navigation;
+  self.runLighthouseNavigation = runLighthouseNavigation;
   // @ts-expect-error
-  self.startLighthouseTimespan = startTimespan;
+  self.navigation = navigation;
   // @ts-expect-error
-  self.runLighthouseSnapshot = snapshot;
+  self.startLighthouseTimespan = startLighthouseTimespan;
+  // @ts-expect-error
+  self.startTimespan = startTimespan;
+  // @ts-expect-error
+  self.runLighthouseSnapshot = runLighthouseSnapshot;
+  // @ts-expect-error
+  self.snapshot = snapshot;
   // @ts-expect-error
   self.createConfig = createConfig;
   // @ts-expect-error

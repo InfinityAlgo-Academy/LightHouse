@@ -3,7 +3,8 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
+
+/** @typedef {import('./simulator-timing-map.js').ConnectionTiming} ConnectionTiming */
 
 const INITIAL_CONGESTION_WINDOW = 10;
 const TCP_SEGMENT_SIZE = 1460;
@@ -177,12 +178,34 @@ class TcpConnection {
     const extraBytesDownloaded = this._h2 ? Math.max(totalBytesDownloaded - bytesToDownload, 0) : 0;
     const bytesDownloaded = Math.max(Math.min(totalBytesDownloaded, bytesToDownload), 0);
 
+    /** @type {ConnectionTiming} */
+    let connectionTiming;
+    if (!this._warmed) {
+      connectionTiming = {
+        dnsResolutionTime,
+        connectionTime: handshakeAndRequest - dnsResolutionTime,
+        sslTime: this._ssl ? twoWayLatency : undefined,
+        timeToFirstByte,
+      };
+    } else if (this._h2) {
+      // TODO: timing information currently difficult to model for warm h2 connections.
+      connectionTiming = {
+        timeToFirstByte,
+      };
+    } else {
+      connectionTiming = {
+        connectionTime: handshakeAndRequest,
+        timeToFirstByte,
+      };
+    }
+
     return {
       roundTrips,
       timeElapsed,
       bytesDownloaded,
       extraBytesDownloaded,
       congestionWindow,
+      connectionTiming,
     };
   }
 }
@@ -203,4 +226,5 @@ export {TcpConnection};
  * @property {number} bytesDownloaded
  * @property {number} extraBytesDownloaded
  * @property {number} congestionWindow
+ * @property {ConnectionTiming} connectionTiming
  */
