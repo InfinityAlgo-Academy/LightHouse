@@ -24,7 +24,7 @@ const UIStrings = {
   failureTitle: 'Page is blocked from indexing',
   /** Description of a Lighthouse audit that tells the user *why* allowing search-engine crawling of their page is beneficial. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Search engines are unable to include your pages in search results ' +
-      'if they don\'t have permission to crawl them. [Learn more about crawler directives](https://web.dev/is-crawable/).',
+      'if they don\'t have permission to crawl them. [Learn more about crawler directives](https://developer.chrome.com/docs/lighthouse/seo/is-crawlable/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

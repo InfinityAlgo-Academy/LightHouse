@@ -154,6 +154,13 @@ describe('DOM', () => {
       assert.equal(result.innerHTML, '<a rel="noopener" target="_blank" href="https://web.dev/tap-targets/?utm_source=lighthouse&amp;utm_medium=someChannel">Learn more</a>.');
     });
 
+    it('appends utm params to the URLs with https://developer.chrome.com origin', () => {
+      const text = '[Learn more](https://developer.chrome.com/docs/lighthouse/seo/tap-targets/).';
+
+      const result = dom.convertMarkdownLinkSnippets(text);
+      assert.equal(result.innerHTML, '<a rel="noopener" target="_blank" href="https://developer.chrome.com/docs/lighthouse/seo/tap-targets/?utm_source=lighthouse&amp;utm_medium=someChannel">Learn more</a>.');
+    });
+
     it('doesn\'t append utm params to other (non-docs) origins', () => {
       const text = '[Learn more](https://example.com/info).';
 

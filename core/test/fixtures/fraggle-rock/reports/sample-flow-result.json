@@ -23,7 +23,7 @@
           "is-on-https": {
             "id": "is-on-https",
             "title": "Uses HTTPS",
-            "description": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being served over HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more about HTTPS](https://web.dev/is-on-https/).",
+            "description": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being served over HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more about HTTPS](https://developer.chrome.com/docs/lighthouse/pwa/is-on-https/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -35,14 +35,14 @@
           "service-worker": {
             "id": "service-worker",
             "title": "Does not register a service worker that controls page and `start_url`",
-            "description": "The service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. [Learn more about Service Workers](https://web.dev/service-worker/).",
+            "description": "The service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. [Learn more about Service Workers](https://developer.chrome.com/docs/lighthouse/pwa/service-worker/).",
             "score": 0,
             "scoreDisplayMode": "binary"
           },
           "viewport": {
             "id": "viewport",
             "title": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`",
-            "description": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Learn more about using the viewport meta tag](https://web.dev/viewport/).",
+            "description": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Learn more about using the viewport meta tag](https://developer.chrome.com/docs/lighthouse/pwa/viewport/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "warnings": []
@@ -50,7 +50,7 @@
           "first-contentful-paint": {
             "id": "first-contentful-paint",
             "title": "First Contentful Paint",
-            "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more about the First Contentful Paint metric](https://web.dev/first-contentful-paint/).",
+            "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more about the First Contentful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/first-contentful-paint/).",
             "score": 0.99,
             "scoreDisplayMode": "numeric",
             "numericValue": 1178.7,
@@ -60,7 +60,7 @@
           "largest-contentful-paint": {
             "id": "largest-contentful-paint",
             "title": "Largest Contentful Paint",
-            "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn more about the Largest Contentful Paint metric](https://web.dev/lighthouse-largest-contentful-paint/)",
+            "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn more about the Largest Contentful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)",
             "score": 0.88,
             "scoreDisplayMode": "numeric",
             "numericValue": 2573.727,
@@ -70,7 +70,7 @@
           "first-meaningful-paint": {
             "id": "first-meaningful-paint",
             "title": "First Meaningful Paint",
-            "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more about the First Meaningful Paint metric](https://web.dev/first-meaningful-paint/).",
+            "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more about the First Meaningful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/first-meaningful-paint/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 1178.7,
@@ -80,7 +80,7 @@
           "speed-index": {
             "id": "speed-index",
             "title": "Speed Index",
-            "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more about the Speed Index metric](https://web.dev/speed-index/).",
+            "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more about the Speed Index metric](https://developer.chrome.com/docs/lighthouse/performance/speed-index/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 1903.3357599943133,
@@ -166,7 +166,7 @@
           "total-blocking-time": {
             "id": "total-blocking-time",
             "title": "Total Blocking Time",
-            "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more about the Total Blocking Time metric](https://web.dev/lighthouse-total-blocking-time/).",
+            "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more about the Total Blocking Time metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 31.5,
@@ -176,7 +176,7 @@
           "max-potential-fid": {
             "id": "max-potential-fid",
             "title": "Max Potential First Input Delay",
-            "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more about the Maximum Potential First Input Delay metric](https://web.dev/lighthouse-max-potential-fid/).",
+            "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more about the Maximum Potential First Input Delay metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/).",
             "score": 0.94,
             "scoreDisplayMode": "numeric",
             "numericValue": 113,
@@ -205,7 +205,7 @@
           "errors-in-console": {
             "id": "errors-in-console",
             "title": "No browser errors logged to the console",
-            "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more about this errors in console diagnostic audit](https://web.dev/errors-in-console/)",
+            "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more about this errors in console diagnostic audit](https://developer.chrome.com/docs/lighthouse/best-practices/errors-in-console/)",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -217,7 +217,7 @@
           "server-response-time": {
             "id": "server-response-time",
             "title": "Initial server response time was short",
-            "description": "Keep the server response time for the main document short because all other requests depend on it. [Learn more about the Time to First Byte metric](https://web.dev/time-to-first-byte/).",
+            "description": "Keep the server response time for the main document short because all other requests depend on it. [Learn more about the Time to First Byte metric](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "numericValue": 236.03100000000006,
@@ -249,7 +249,7 @@
           "interactive": {
             "id": "interactive",
             "title": "Time to Interactive",
-            "description": "Time to Interactive is the amount of time it takes for the page to become fully interactive. [Learn more about the Time to Interactive metric](https://web.dev/interactive/).",
+            "description": "Time to Interactive is the amount of time it takes for the page to become fully interactive. [Learn more about the Time to Interactive metric](https://developer.chrome.com/docs/lighthouse/performance/interactive/).",
             "score": 0.96,
             "scoreDisplayMode": "numeric",
             "numericValue": 2919.2315,
@@ -259,7 +259,7 @@
           "user-timings": {
             "id": "user-timings",
             "title": "User Timing marks and measures",
-            "description": "Consider instrumenting your app with the User Timing API to measure your app's real-world performance during key user experiences. [Learn more about User Timing marks](https://web.dev/user-timings/).",
+            "description": "Consider instrumenting your app with the User Timing API to measure your app's real-world performance during key user experiences. [Learn more about User Timing marks](https://developer.chrome.com/docs/lighthouse/performance/user-timings/).",
             "score": null,
             "scoreDisplayMode": "informative",
             "displayValue": "4 user timings",
@@ -318,7 +318,7 @@
           "critical-request-chains": {
             "id": "critical-request-chains",
             "title": "Avoid chaining critical requests",
-            "description": "The Critical Request Chains below show you what resources are loaded with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn how to avoid chaining critical requests](https://web.dev/critical-request-chains/).",
+            "description": "The Critical Request Chains below show you what resources are loaded with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn how to avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/).",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "displayValue": "",
@@ -345,7 +345,7 @@
           "redirects": {
             "id": "redirects",
             "title": "Avoid multiple page redirects",
-            "description": "Redirects introduce additional delays before the page can be loaded. [Learn how to avoid page redirects](https://web.dev/redirects/).",
+            "description": "Redirects introduce additional delays before the page can be loaded. [Learn how to avoid page redirects](https://developer.chrome.com/docs/lighthouse/performance/redirects/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -361,7 +361,7 @@
           "installable-manifest": {
             "id": "installable-manifest",
             "title": "Web app manifest or service worker do not meet the installability requirements",
-            "description": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more about manifest installability requirements](https://web.dev/installable-manifest/).",
+            "description": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more about manifest installability requirements](https://developer.chrome.com/docs/lighthouse/pwa/installable-manifest/).",
             "score": 0,
             "scoreDisplayMode": "binary",
             "numericValue": 1,
@@ -391,7 +391,7 @@
           "splash-screen": {
             "id": "splash-screen",
             "title": "Is not configured for a custom splash screen",
-            "description": "A themed splash screen ensures a high-quality experience when users launch your app from their homescreens. [Learn more about splash screens](https://web.dev/splash-screen/).",
+            "description": "A themed splash screen ensures a high-quality experience when users launch your app from their homescreens. [Learn more about splash screens](https://developer.chrome.com/docs/lighthouse/pwa/splash-screen/).",
             "score": 0,
             "scoreDisplayMode": "binary",
             "explanation": "Failures: No manifest was fetched.",
@@ -411,7 +411,7 @@
           "themed-omnibox": {
             "id": "themed-omnibox",
             "title": "Does not set a theme color for the address bar.",
-            "description": "The browser address bar can be themed to match your site. [Learn more about theming the address bar](https://web.dev/themed-omnibox/).",
+            "description": "The browser address bar can be themed to match your site. [Learn more about theming the address bar](https://developer.chrome.com/docs/lighthouse/pwa/themed-omnibox/).",
             "score": 0,
             "scoreDisplayMode": "binary",
             "explanation": "Failures: No manifest was fetched,\nNo `<meta name=\"theme-color\">` tag found.",
@@ -433,7 +433,7 @@
           "maskable-icon": {
             "id": "maskable-icon",
             "title": "Manifest doesn't have a maskable icon",
-            "description": "A maskable icon ensures that the image fills the entire shape without being letterboxed when installing the app on a device. [Learn about maskable manifest icons](https://web.dev/maskable-icon-audit/).",
+            "description": "A maskable icon ensures that the image fills the entire shape without being letterboxed when installing the app on a device. [Learn about maskable manifest icons](https://developer.chrome.com/docs/lighthouse/pwa/maskable-icon-audit/).",
             "score": 0,
             "scoreDisplayMode": "binary",
             "explanation": "No manifest was fetched"
@@ -441,14 +441,14 @@
           "content-width": {
             "id": "content-width",
             "title": "Content is sized correctly for the viewport",
-            "description": "If the width of your app's content doesn't match the width of the viewport, your app might not be optimized for mobile screens. [Learn how to size content for the viewport](https://web.dev/content-width/).",
+            "description": "If the width of your app's content doesn't match the width of the viewport, your app might not be optimized for mobile screens. [Learn how to size content for the viewport](https://developer.chrome.com/docs/lighthouse/pwa/content-width/).",
             "score": 1,
             "scoreDisplayMode": "binary"
           },
           "image-aspect-ratio": {
             "id": "image-aspect-ratio",
             "title": "Displays images with correct aspect ratio",
-            "description": "Image display dimensions should match natural aspect ratio. [Learn more about image aspect ratio](https://web.dev/image-aspect-ratio/).",
+            "description": "Image display dimensions should match natural aspect ratio. [Learn more about image aspect ratio](https://developer.chrome.com/docs/lighthouse/best-practices/image-aspect-ratio/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -479,7 +479,7 @@
           "deprecations": {
             "id": "deprecations",
             "title": "Avoids deprecated APIs",
-            "description": "Deprecated APIs will eventually be removed from the browser. [Learn more about deprecated APIs](https://web.dev/deprecations/).",
+            "description": "Deprecated APIs will eventually be removed from the browser. [Learn more about deprecated APIs](https://developer.chrome.com/docs/lighthouse/best-practices/deprecations/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -491,7 +491,7 @@
           "mainthread-work-breakdown": {
             "id": "mainthread-work-breakdown",
             "title": "Minimizes main-thread work",
-            "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to minimize main-thread work](https://web.dev/mainthread-work-breakdown/)",
+            "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to minimize main-thread work](https://developer.chrome.com/docs/lighthouse/performance/mainthread-work-breakdown/)",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 729.8080000000009,
@@ -549,7 +549,7 @@
           "bootup-time": {
             "id": "bootup-time",
             "title": "JavaScript execution time",
-            "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to reduce Javascript execution time](https://web.dev/bootup-time/).",
+            "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to reduce Javascript execution time](https://developer.chrome.com/docs/lighthouse/performance/bootup-time/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 203.6599999999999,
@@ -616,7 +616,7 @@
           "uses-rel-preload": {
             "id": "uses-rel-preload",
             "title": "Preload key requests",
-            "description": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn how to preload key requests](https://web.dev/uses-rel-preload/).",
+            "description": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn how to preload key requests](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preload/).",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "details": {
@@ -629,7 +629,7 @@
           "uses-rel-preconnect": {
             "id": "uses-rel-preconnect",
             "title": "Preconnect to required origins",
-            "description": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn how to preconnect to required origins](https://web.dev/uses-rel-preconnect/).",
+            "description": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn how to preconnect to required origins](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -646,7 +646,7 @@
           "font-display": {
             "id": "font-display",
             "title": "All text remains visible during webfont loads",
-            "description": "Leverage the `font-display` CSS feature to ensure text is user-visible while webfonts are loading. [Learn more about `font-display`](https://web.dev/font-display/).",
+            "description": "Leverage the `font-display` CSS feature to ensure text is user-visible while webfonts are loading. [Learn more about `font-display`](https://developer.chrome.com/docs/lighthouse/performance/font-display/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "warnings": [],
@@ -1467,14 +1467,14 @@
           "third-party-facades": {
             "id": "third-party-facades",
             "title": "Lazy load third-party resources with facades",
-            "description": "Some third-party embeds can be lazy loaded. Consider replacing them with a facade until they are required. [Learn how to defer third-parties with a facade](https://web.dev/third-party-facades/).",
+            "description": "Some third-party embeds can be lazy loaded. Consider replacing them with a facade until they are required. [Learn how to defer third-parties with a facade](https://developer.chrome.com/docs/lighthouse/performance/third-party-facades/).",
             "score": null,
             "scoreDisplayMode": "notApplicable"
           },
           "largest-contentful-paint-element": {
             "id": "largest-contentful-paint-element",
             "title": "Largest Contentful Paint element",
-            "description": "This is the largest contentful element painted within the viewport. [Learn more about the Largest Contentful Paint element](https://web.dev/lighthouse-largest-contentful-paint/)",
+            "description": "This is the largest contentful element painted within the viewport. [Learn more about the Largest Contentful Paint element](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)",
             "score": null,
             "scoreDisplayMode": "informative",
             "displayValue": "1 element found",
@@ -1724,7 +1724,7 @@
           "non-composited-animations": {
             "id": "non-composited-animations",
             "title": "Avoid non-composited animations",
-            "description": "Animations which are not composited can be janky and increase CLS. [Learn how to avoid non-composited animations](https://web.dev/non-composited-animations)",
+            "description": "Animations which are not composited can be janky and increase CLS. [Learn how to avoid non-composited animations](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "details": {
@@ -1791,7 +1791,7 @@
           "preload-lcp-image": {
             "id": "preload-lcp-image",
             "title": "Preload Largest Contentful Paint image",
-            "description": "If the LCP element is dynamically added to the page, you should preload the image in order to improve LCP. [Learn more about preloading LCP elements](https://web.dev/optimize-lcp/#preload-important-resources).",
+            "description": "If the LCP element is dynamically added to the page, you should preload the image in order to improve LCP. [Learn more about preloading LCP elements](https://web.dev/optimize-lcp/#optimize-when-the-resource-is-discovered).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -1858,7 +1858,7 @@
           "csp-xss": {
             "id": "csp-xss",
             "title": "Ensure CSP is effective against XSS attacks",
-            "description": "A strong Content Security Policy (CSP) significantly reduces the risk of cross-site scripting (XSS) attacks. [Learn how to use a CSP to prevent XSS](https://web.dev/csp-xss/)",
+            "description": "A strong Content Security Policy (CSP) significantly reduces the risk of cross-site scripting (XSS) attacks. [Learn how to use a CSP to prevent XSS](https://developer.chrome.com/docs/lighthouse/best-practices/csp-xss/)",
             "score": null,
             "scoreDisplayMode": "informative",
             "details": {
@@ -2454,21 +2454,21 @@
           "pwa-cross-browser": {
             "id": "pwa-cross-browser",
             "title": "Site works cross-browser",
-            "description": "To reach the most number of users, sites should work across every major browser. [Learn about cross-browser compatibility](https://web.dev/pwa-cross-browser/).",
+            "description": "To reach the most number of users, sites should work across every major browser. [Learn about cross-browser compatibility](https://developer.chrome.com/docs/lighthouse/pwa/pwa-cross-browser/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "pwa-page-transitions": {
             "id": "pwa-page-transitions",
             "title": "Page transitions don't feel like they block on the network",
-            "description": "Transitions should feel snappy as you tap around, even on a slow network. This experience is key to a user's perception of performance. [Learn more about page transitions](https://web.dev/pwa-page-transitions/).",
+            "description": "Transitions should feel snappy as you tap around, even on a slow network. This experience is key to a user's perception of performance. [Learn more about page transitions](https://developer.chrome.com/docs/lighthouse/pwa/pwa-page-transitions/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "pwa-each-page-has-url": {
             "id": "pwa-each-page-has-url",
             "title": "Each page has a URL",
-            "description": "Ensure individual pages are deep linkable via URL and that URLs are unique for the purpose of shareability on social media. [Learn more about providing deep links](https://web.dev/pwa-each-page-has-url/).",
+            "description": "Ensure individual pages are deep linkable via URL and that URLs are unique for the purpose of shareability on social media. [Learn more about providing deep links](https://developer.chrome.com/docs/lighthouse/pwa/pwa-each-page-has-url/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
@@ -2948,7 +2948,7 @@
           "uses-long-cache-ttl": {
             "id": "uses-long-cache-ttl",
             "title": "Uses efficient cache policy on static assets",
-            "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more about efficient cache policies](https://web.dev/uses-long-cache-ttl/).",
+            "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more about efficient cache policies](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -2966,7 +2966,7 @@
           "total-byte-weight": {
             "id": "total-byte-weight",
             "title": "Avoids enormous network payloads",
-            "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://web.dev/total-byte-weight/).",
+            "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 183724,
@@ -3033,7 +3033,7 @@
           "offscreen-images": {
             "id": "offscreen-images",
             "title": "Defer offscreen images",
-            "description": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn how to defer offscreen images](https://web.dev/offscreen-images/).",
+            "description": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn how to defer offscreen images](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -3051,7 +3051,7 @@
           "render-blocking-resources": {
             "id": "render-blocking-resources",
             "title": "Eliminate render-blocking resources",
-            "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn how to eliminate render-blocking resources](https://web.dev/render-blocking-resources/).",
+            "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn how to eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -3066,7 +3066,7 @@
           "unminified-css": {
             "id": "unminified-css",
             "title": "Minify CSS",
-            "description": "Minifying CSS files can reduce network payload sizes. [Learn how to minify CSS](https://web.dev/unminified-css/).",
+            "description": "Minifying CSS files can reduce network payload sizes. [Learn how to minify CSS](https://developer.chrome.com/docs/lighthouse/performance/unminified-css/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -3083,7 +3083,7 @@
           "unminified-javascript": {
             "id": "unminified-javascript",
             "title": "Minify JavaScript",
-            "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn how to minify JavaScript](https://web.dev/unminified-javascript/).",
+            "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn how to minify JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unminified-javascript/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -3101,7 +3101,7 @@
           "unused-css-rules": {
             "id": "unused-css-rules",
             "title": "Reduce unused CSS",
-            "description": "Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity. [Learn how to reduce unused CSS](https://web.dev/unused-css-rules/).",
+            "description": "Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity. [Learn how to reduce unused CSS](https://developer.chrome.com/docs/lighthouse/performance/unused-css-rules/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -3118,7 +3118,7 @@
           "unused-javascript": {
             "id": "unused-javascript",
             "title": "Reduce unused JavaScript",
-            "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://web.dev/unused-javascript/).",
+            "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -3135,7 +3135,7 @@
           "modern-image-formats": {
             "id": "modern-image-formats",
             "title": "Serve images in next-gen formats",
-            "description": "Image formats like WebP and AVIF often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more about modern image formats](https://web.dev/uses-webp-images/).",
+            "description": "Image formats like WebP and AVIF often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more about modern image formats](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -3153,7 +3153,7 @@
           "uses-optimized-images": {
             "id": "uses-optimized-images",
             "title": "Efficiently encode images",
-            "description": "Optimized images load faster and consume less cellular data. [Learn how to efficiently encode images](https://web.dev/uses-optimized-images/).",
+            "description": "Optimized images load faster and consume less cellular data. [Learn how to efficiently encode images](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -3171,7 +3171,7 @@
           "uses-text-compression": {
             "id": "uses-text-compression",
             "title": "Enable text compression",
-            "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more about text compression](https://web.dev/uses-text-compression/).",
+            "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more about text compression](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -3188,7 +3188,7 @@
           "uses-responsive-images": {
             "id": "uses-responsive-images",
             "title": "Properly size images",
-            "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn how to size images](https://web.dev/uses-responsive-images/).",
+            "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn how to size images](https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -3205,7 +3205,7 @@
           "efficient-animated-content": {
             "id": "efficient-animated-content",
             "title": "Use video formats for animated content",
-            "description": "Large GIFs are inefficient for delivering animated content. Consider using MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save network bytes. [Learn more about efficient video formats](https://web.dev/efficient-animated-content/)",
+            "description": "Large GIFs are inefficient for delivering animated content. Consider using MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save network bytes. [Learn more about efficient video formats](https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/)",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -3300,21 +3300,21 @@
           "doctype": {
             "id": "doctype",
             "title": "Page has the HTML doctype",
-            "description": "Specifying a doctype prevents the browser from switching to quirks-mode. [Learn more about the doctype declaration](https://web.dev/doctype/).",
+            "description": "Specifying a doctype prevents the browser from switching to quirks-mode. [Learn more about the doctype declaration](https://developer.chrome.com/docs/lighthouse/best-practices/doctype/).",
             "score": 1,
             "scoreDisplayMode": "binary"
           },
           "charset": {
             "id": "charset",
             "title": "Properly defines charset",
-            "description": "A character encoding declaration is required. It can be done with a `<meta>` tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more about declaring the character encoding](https://web.dev/charset/).",
+            "description": "A character encoding declaration is required. It can be done with a `<meta>` tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more about declaring the character encoding](https://developer.chrome.com/docs/lighthouse/best-practices/charset/).",
             "score": 1,
             "scoreDisplayMode": "binary"
           },
           "dom-size": {
             "id": "dom-size",
             "title": "Avoids an excessive DOM size",
-            "description": "A large DOM will increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn how to avoid an excessive DOM size](https://web.dev/dom-size/).",
+            "description": "A large DOM will increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn how to avoid an excessive DOM size](https://developer.chrome.com/docs/lighthouse/performance/dom-size/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 70,
@@ -3402,7 +3402,7 @@
           "geolocation-on-start": {
             "id": "geolocation-on-start",
             "title": "Avoids requesting the geolocation permission on page load",
-            "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://web.dev/geolocation-on-start/).",
+            "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -3426,7 +3426,7 @@
           "no-document-write": {
             "id": "no-document-write",
             "title": "Avoids `document.write()`",
-            "description": "For users on slow connections, external scripts dynamically injected via `document.write()` can delay page load by tens of seconds. [Learn how to avoid document.write()](https://web.dev/no-document-write/).",
+            "description": "For users on slow connections, external scripts dynamically injected via `document.write()` can delay page load by tens of seconds. [Learn how to avoid document.write()](https://developer.chrome.com/docs/lighthouse/best-practices/no-document-write/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -3438,7 +3438,7 @@
           "js-libraries": {
             "id": "js-libraries",
             "title": "Detected JavaScript libraries",
-            "description": "All front-end JavaScript libraries detected on the page. [Learn more about this JavaScript library detection diagnostic audit](https://web.dev/js-libraries/).",
+            "description": "All front-end JavaScript libraries detected on the page. [Learn more about this JavaScript library detection diagnostic audit](https://developer.chrome.com/docs/lighthouse/best-practices/js-libraries/).",
             "score": null,
             "scoreDisplayMode": "informative",
             "details": {
@@ -3490,7 +3490,7 @@
           "notification-on-start": {
             "id": "notification-on-start",
             "title": "Avoids requesting the notification permission on page load",
-            "description": "Users are mistrustful of or confused by sites that request to send notifications without context. Consider tying the request to user gestures instead. [Learn more about responsibly getting permission for notifications](https://web.dev/notification-on-start/).",
+            "description": "Users are mistrustful of or confused by sites that request to send notifications without context. Consider tying the request to user gestures instead. [Learn more about responsibly getting permission for notifications](https://developer.chrome.com/docs/lighthouse/best-practices/notification-on-start/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -3502,7 +3502,7 @@
           "password-inputs-can-be-pasted-into": {
             "id": "password-inputs-can-be-pasted-into",
             "title": "Allows users to paste into password fields",
-            "description": "Preventing password pasting undermines good security policy. [Learn more about user-friendly password fields](https://web.dev/password-inputs-can-be-pasted-into/).",
+            "description": "Preventing password pasting undermines good security policy. [Learn more about user-friendly password fields](https://developer.chrome.com/docs/lighthouse/best-practices/password-inputs-can-be-pasted-into/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -3514,7 +3514,7 @@
           "uses-passive-event-listeners": {
             "id": "uses-passive-event-listeners",
             "title": "Uses passive listeners to improve scrolling performance",
-            "description": "Consider marking your touch and wheel event listeners as `passive` to improve your page's scroll performance. [Learn more about adopting passive event listeners](https://web.dev/uses-passive-event-listeners/).",
+            "description": "Consider marking your touch and wheel event listeners as `passive` to improve your page's scroll performance. [Learn more about adopting passive event listeners](https://developer.chrome.com/docs/lighthouse/best-practices/uses-passive-event-listeners/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -3526,21 +3526,21 @@
           "meta-description": {
             "id": "meta-description",
             "title": "Document has a meta description",
-            "description": "Meta descriptions may be included in search results to concisely summarize page content. [Learn more about the meta description](https://web.dev/meta-description/).",
+            "description": "Meta descriptions may be included in search results to concisely summarize page content. [Learn more about the meta description](https://developer.chrome.com/docs/lighthouse/seo/meta-description/).",
             "score": 1,
             "scoreDisplayMode": "binary"
           },
           "http-status-code": {
             "id": "http-status-code",
             "title": "Page has successful HTTP status code",
-            "description": "Pages with unsuccessful HTTP status codes may not be indexed properly. [Learn more about HTTP status codes](https://web.dev/http-status-code/).",
+            "description": "Pages with unsuccessful HTTP status codes may not be indexed properly. [Learn more about HTTP status codes](https://developer.chrome.com/docs/lighthouse/seo/http-status-code/).",
             "score": 1,
             "scoreDisplayMode": "binary"
           },
           "font-size": {
             "id": "font-size",
             "title": "Document uses legible font sizes",
-            "description": "Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more about legible font sizes](https://web.dev/font-size/).",
+            "description": "Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more about legible font sizes](https://developer.chrome.com/docs/lighthouse/seo/font-size/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "displayValue": "73.43% legible text",
@@ -3596,7 +3596,7 @@
           "link-text": {
             "id": "link-text",
             "title": "Links have descriptive text",
-            "description": "Descriptive link text helps search engines understand your content. [Learn how to make links more accessible](https://web.dev/link-text/).",
+            "description": "Descriptive link text helps search engines understand your content. [Learn how to make links more accessible](https://developer.chrome.com/docs/lighthouse/seo/link-text/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -3621,7 +3621,7 @@
           "is-crawlable": {
             "id": "is-crawlable",
             "title": "Page isn’t blocked from indexing",
-            "description": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more about crawler directives](https://web.dev/is-crawable/).",
+            "description": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more about crawler directives](https://developer.chrome.com/docs/lighthouse/seo/is-crawlable/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -3633,14 +3633,14 @@
           "robots-txt": {
             "id": "robots-txt",
             "title": "robots.txt is valid",
-            "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. [Learn more about robots.txt](https://web.dev/robots-txt/).",
+            "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. [Learn more about robots.txt](https://developer.chrome.com/docs/lighthouse/seo/invalid-robots-txt/).",
             "score": null,
             "scoreDisplayMode": "notApplicable"
           },
           "tap-targets": {
             "id": "tap-targets",
             "title": "Tap targets are sized appropriately",
-            "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more about tap targets](https://web.dev/tap-targets/).",
+            "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more about tap targets](https://developer.chrome.com/docs/lighthouse/seo/tap-targets/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "displayValue": "100% appropriately sized tap targets",
@@ -3653,7 +3653,7 @@
           "hreflang": {
             "id": "hreflang",
             "title": "Document has a valid `hreflang`",
-            "description": "hreflang links tell search engines what version of a page they should list in search results for a given language or region. [Learn more about `hreflang`](https://web.dev/hreflang/).",
+            "description": "hreflang links tell search engines what version of a page they should list in search results for a given language or region. [Learn more about `hreflang`](https://developer.chrome.com/docs/lighthouse/seo/hreflang/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -3665,7 +3665,7 @@
           "plugins": {
             "id": "plugins",
             "title": "Document avoids plugins",
-            "description": "Search engines can't index plugin content, and many devices restrict plugins or don't support them. [Learn more about avoiding plugins](https://web.dev/plugins/).",
+            "description": "Search engines can't index plugin content, and many devices restrict plugins or don't support them. [Learn more about avoiding plugins](https://developer.chrome.com/docs/lighthouse/seo/plugins/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -3677,14 +3677,14 @@
           "canonical": {
             "id": "canonical",
             "title": "Document has a valid `rel=canonical`",
-            "description": "Canonical links suggest which URL to show in search results. [Learn more about canonical links](https://web.dev/canonical/).",
+            "description": "Canonical links suggest which URL to show in search results. [Learn more about canonical links](https://developer.chrome.com/docs/lighthouse/seo/canonical/).",
             "score": null,
             "scoreDisplayMode": "notApplicable"
           },
           "structured-data": {
             "id": "structured-data",
             "title": "Structured data is valid",
-            "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more about Structured Data](https://web.dev/structured-data/).",
+            "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more about Structured Data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/).",
             "score": null,
             "scoreDisplayMode": "manual"
           }
@@ -4414,7 +4414,7 @@
           },
           "seo": {
             "title": "SEO",
-            "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more about Google Search Essentials](https://support.google.com/webmasters/answer/35769).",
+            "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-core-web-vitals/). [Learn more about Google Search Essentials](https://support.google.com/webmasters/answer/35769).",
             "manualDescription": "Run these additional validators on your site to check additional SEO best practices.",
             "supportedModes": [
               "navigation",
@@ -4565,7 +4565,7 @@
           },
           "load-opportunities": {
             "title": "Opportunities",
-            "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score."
+            "description": "These suggestions can help your page load faster. They don't [directly affect](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) the Performance score."
           },
           "budgets": {
             "title": "Budgets",
@@ -4573,7 +4573,7 @@
           },
           "diagnostics": {
             "title": "Diagnostics",
-            "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score."
+            "description": "More information about the performance of your application. These numbers don't [directly affect](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) the Performance score."
           },
           "pwa-installable": {
             "title": "Installable"
@@ -6092,7 +6092,7 @@
             "thirdPartyResourcesLabel": "Show 3rd-party resources",
             "throttlingProvided": "Provided by environment",
             "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
-            "varianceDisclaimer": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics.",
+            "varianceDisclaimer": "Values are estimated and may vary. The [performance score is calculated](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) directly from these metrics.",
             "viewOriginalTraceLabel": "View Original Trace",
             "viewTraceLabel": "View Trace",
             "viewTreemapLabel": "View Treemap",
@@ -7440,7 +7440,7 @@
           "is-on-https": {
             "id": "is-on-https",
             "title": "Uses HTTPS",
-            "description": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being served over HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more about HTTPS](https://web.dev/is-on-https/).",
+            "description": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being served over HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more about HTTPS](https://developer.chrome.com/docs/lighthouse/pwa/is-on-https/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -7528,7 +7528,7 @@
           "total-blocking-time": {
             "id": "total-blocking-time",
             "title": "Total Blocking Time",
-            "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more about the Total Blocking Time metric](https://web.dev/lighthouse-total-blocking-time/).",
+            "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more about the Total Blocking Time metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 30.806999999999924,
@@ -7567,7 +7567,7 @@
           "errors-in-console": {
             "id": "errors-in-console",
             "title": "No browser errors logged to the console",
-            "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more about this errors in console diagnostic audit](https://web.dev/errors-in-console/)",
+            "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more about this errors in console diagnostic audit](https://developer.chrome.com/docs/lighthouse/best-practices/errors-in-console/)",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -7579,7 +7579,7 @@
           "user-timings": {
             "id": "user-timings",
             "title": "User Timing marks and measures",
-            "description": "Consider instrumenting your app with the User Timing API to measure your app's real-world performance during key user experiences. [Learn more about User Timing marks](https://web.dev/user-timings/).",
+            "description": "Consider instrumenting your app with the User Timing API to measure your app's real-world performance during key user experiences. [Learn more about User Timing marks](https://developer.chrome.com/docs/lighthouse/performance/user-timings/).",
             "score": null,
             "scoreDisplayMode": "informative",
             "displayValue": "5 user timings",
@@ -7643,7 +7643,7 @@
           "image-aspect-ratio": {
             "id": "image-aspect-ratio",
             "title": "Displays images with correct aspect ratio",
-            "description": "Image display dimensions should match natural aspect ratio. [Learn more about image aspect ratio](https://web.dev/image-aspect-ratio/).",
+            "description": "Image display dimensions should match natural aspect ratio. [Learn more about image aspect ratio](https://developer.chrome.com/docs/lighthouse/best-practices/image-aspect-ratio/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -7773,7 +7773,7 @@
           "deprecations": {
             "id": "deprecations",
             "title": "Avoids deprecated APIs",
-            "description": "Deprecated APIs will eventually be removed from the browser. [Learn more about deprecated APIs](https://web.dev/deprecations/).",
+            "description": "Deprecated APIs will eventually be removed from the browser. [Learn more about deprecated APIs](https://developer.chrome.com/docs/lighthouse/best-practices/deprecations/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -7785,7 +7785,7 @@
           "mainthread-work-breakdown": {
             "id": "mainthread-work-breakdown",
             "title": "Minimizes main-thread work",
-            "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to minimize main-thread work](https://web.dev/mainthread-work-breakdown/)",
+            "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to minimize main-thread work](https://developer.chrome.com/docs/lighthouse/performance/mainthread-work-breakdown/)",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 637.4239999999991,
@@ -7843,7 +7843,7 @@
           "bootup-time": {
             "id": "bootup-time",
             "title": "JavaScript execution time",
-            "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to reduce Javascript execution time](https://web.dev/bootup-time/).",
+            "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to reduce Javascript execution time](https://developer.chrome.com/docs/lighthouse/performance/bootup-time/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 275.90400000000034,
@@ -8577,7 +8577,7 @@
           "non-composited-animations": {
             "id": "non-composited-animations",
             "title": "Avoid non-composited animations",
-            "description": "Animations which are not composited can be janky and increase CLS. [Learn how to avoid non-composited animations](https://web.dev/non-composited-animations)",
+            "description": "Animations which are not composited can be janky and increase CLS. [Learn how to avoid non-composited animations](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "details": {
@@ -8744,7 +8744,7 @@
           "uses-long-cache-ttl": {
             "id": "uses-long-cache-ttl",
             "title": "Uses efficient cache policy on static assets",
-            "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more about efficient cache policies](https://web.dev/uses-long-cache-ttl/).",
+            "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more about efficient cache policies](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/).",
             "score": 0.99,
             "scoreDisplayMode": "numeric",
             "numericValue": 6080.5599999999995,
@@ -8818,7 +8818,7 @@
           "total-byte-weight": {
             "id": "total-byte-weight",
             "title": "Avoids enormous network payloads",
-            "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://web.dev/total-byte-weight/).",
+            "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 21964,
@@ -8877,7 +8877,7 @@
           "unminified-css": {
             "id": "unminified-css",
             "title": "Minify CSS",
-            "description": "Minifying CSS files can reduce network payload sizes. [Learn how to minify CSS](https://web.dev/unminified-css/).",
+            "description": "Minifying CSS files can reduce network payload sizes. [Learn how to minify CSS](https://developer.chrome.com/docs/lighthouse/performance/unminified-css/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -8894,7 +8894,7 @@
           "unminified-javascript": {
             "id": "unminified-javascript",
             "title": "Minify JavaScript",
-            "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn how to minify JavaScript](https://web.dev/unminified-javascript/).",
+            "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn how to minify JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unminified-javascript/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -8912,7 +8912,7 @@
           "unused-css-rules": {
             "id": "unused-css-rules",
             "title": "Reduce unused CSS",
-            "description": "Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity. [Learn how to reduce unused CSS](https://web.dev/unused-css-rules/).",
+            "description": "Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity. [Learn how to reduce unused CSS](https://developer.chrome.com/docs/lighthouse/performance/unused-css-rules/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -8929,7 +8929,7 @@
           "unused-javascript": {
             "id": "unused-javascript",
             "title": "Reduce unused JavaScript",
-            "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://web.dev/unused-javascript/).",
+            "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -8946,7 +8946,7 @@
           "modern-image-formats": {
             "id": "modern-image-formats",
             "title": "Serve images in next-gen formats",
-            "description": "Image formats like WebP and AVIF often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more about modern image formats](https://web.dev/uses-webp-images/).",
+            "description": "Image formats like WebP and AVIF often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more about modern image formats](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -8964,7 +8964,7 @@
           "uses-optimized-images": {
             "id": "uses-optimized-images",
             "title": "Efficiently encode images",
-            "description": "Optimized images load faster and consume less cellular data. [Learn how to efficiently encode images](https://web.dev/uses-optimized-images/).",
+            "description": "Optimized images load faster and consume less cellular data. [Learn how to efficiently encode images](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -8982,7 +8982,7 @@
           "uses-text-compression": {
             "id": "uses-text-compression",
             "title": "Enable text compression",
-            "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more about text compression](https://web.dev/uses-text-compression/).",
+            "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more about text compression](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -8999,7 +8999,7 @@
           "uses-responsive-images": {
             "id": "uses-responsive-images",
             "title": "Properly size images",
-            "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn how to size images](https://web.dev/uses-responsive-images/).",
+            "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn how to size images](https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -9016,7 +9016,7 @@
           "efficient-animated-content": {
             "id": "efficient-animated-content",
             "title": "Use video formats for animated content",
-            "description": "Large GIFs are inefficient for delivering animated content. Consider using MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save network bytes. [Learn more about efficient video formats](https://web.dev/efficient-animated-content/)",
+            "description": "Large GIFs are inefficient for delivering animated content. Consider using MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save network bytes. [Learn more about efficient video formats](https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/)",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -9079,7 +9079,7 @@
           "no-document-write": {
             "id": "no-document-write",
             "title": "Avoids `document.write()`",
-            "description": "For users on slow connections, external scripts dynamically injected via `document.write()` can delay page load by tens of seconds. [Learn how to avoid document.write()](https://web.dev/no-document-write/).",
+            "description": "For users on slow connections, external scripts dynamically injected via `document.write()` can delay page load by tens of seconds. [Learn how to avoid document.write()](https://developer.chrome.com/docs/lighthouse/best-practices/no-document-write/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -9091,7 +9091,7 @@
           "uses-passive-event-listeners": {
             "id": "uses-passive-event-listeners",
             "title": "Uses passive listeners to improve scrolling performance",
-            "description": "Consider marking your touch and wheel event listeners as `passive` to improve your page's scroll performance. [Learn more about adopting passive event listeners](https://web.dev/uses-passive-event-listeners/).",
+            "description": "Consider marking your touch and wheel event listeners as `passive` to improve your page's scroll performance. [Learn more about adopting passive event listeners](https://developer.chrome.com/docs/lighthouse/best-practices/uses-passive-event-listeners/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -9402,7 +9402,7 @@
           },
           "load-opportunities": {
             "title": "Opportunities",
-            "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score."
+            "description": "These suggestions can help your page load faster. They don't [directly affect](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) the Performance score."
           },
           "budgets": {
             "title": "Budgets",
@@ -9410,7 +9410,7 @@
           },
           "diagnostics": {
             "title": "Diagnostics",
-            "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score."
+            "description": "More information about the performance of your application. These numbers don't [directly affect](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) the Performance score."
           },
           "pwa-installable": {
             "title": "Installable"
@@ -10025,7 +10025,7 @@
             "thirdPartyResourcesLabel": "Show 3rd-party resources",
             "throttlingProvided": "Provided by environment",
             "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
-            "varianceDisclaimer": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics.",
+            "varianceDisclaimer": "Values are estimated and may vary. The [performance score is calculated](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) directly from these metrics.",
             "viewOriginalTraceLabel": "View Original Trace",
             "viewTraceLabel": "View Trace",
             "viewTreemapLabel": "View Treemap",
@@ -10613,7 +10613,7 @@
           "viewport": {
             "id": "viewport",
             "title": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`",
-            "description": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Learn more about using the viewport meta tag](https://web.dev/viewport/).",
+            "description": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Learn more about using the viewport meta tag](https://developer.chrome.com/docs/lighthouse/pwa/viewport/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "warnings": []
@@ -10621,7 +10621,7 @@
           "image-aspect-ratio": {
             "id": "image-aspect-ratio",
             "title": "Displays images with correct aspect ratio",
-            "description": "Image display dimensions should match natural aspect ratio. [Learn more about image aspect ratio](https://web.dev/image-aspect-ratio/).",
+            "description": "Image display dimensions should match natural aspect ratio. [Learn more about image aspect ratio](https://developer.chrome.com/docs/lighthouse/best-practices/image-aspect-ratio/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -11949,7 +11949,7 @@
           "uses-responsive-images-snapshot": {
             "id": "uses-responsive-images-snapshot",
             "title": "Images were larger than their displayed size",
-            "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn how to size images](https://web.dev/uses-responsive-images/).",
+            "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn how to size images](https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/).",
             "score": 0,
             "scoreDisplayMode": "binary",
             "details": {
@@ -12004,14 +12004,14 @@
           "doctype": {
             "id": "doctype",
             "title": "Page has the HTML doctype",
-            "description": "Specifying a doctype prevents the browser from switching to quirks-mode. [Learn more about the doctype declaration](https://web.dev/doctype/).",
+            "description": "Specifying a doctype prevents the browser from switching to quirks-mode. [Learn more about the doctype declaration](https://developer.chrome.com/docs/lighthouse/best-practices/doctype/).",
             "score": 1,
             "scoreDisplayMode": "binary"
           },
           "dom-size": {
             "id": "dom-size",
             "title": "Avoids an excessive DOM size",
-            "description": "A large DOM will increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn how to avoid an excessive DOM size](https://web.dev/dom-size/).",
+            "description": "A large DOM will increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn how to avoid an excessive DOM size](https://developer.chrome.com/docs/lighthouse/performance/dom-size/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 155,
@@ -12099,7 +12099,7 @@
           "js-libraries": {
             "id": "js-libraries",
             "title": "Detected JavaScript libraries",
-            "description": "All front-end JavaScript libraries detected on the page. [Learn more about this JavaScript library detection diagnostic audit](https://web.dev/js-libraries/).",
+            "description": "All front-end JavaScript libraries detected on the page. [Learn more about this JavaScript library detection diagnostic audit](https://developer.chrome.com/docs/lighthouse/best-practices/js-libraries/).",
             "score": null,
             "scoreDisplayMode": "informative",
             "details": {
@@ -12151,7 +12151,7 @@
           "password-inputs-can-be-pasted-into": {
             "id": "password-inputs-can-be-pasted-into",
             "title": "Allows users to paste into password fields",
-            "description": "Preventing password pasting undermines good security policy. [Learn more about user-friendly password fields](https://web.dev/password-inputs-can-be-pasted-into/).",
+            "description": "Preventing password pasting undermines good security policy. [Learn more about user-friendly password fields](https://developer.chrome.com/docs/lighthouse/best-practices/password-inputs-can-be-pasted-into/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -12163,14 +12163,14 @@
           "meta-description": {
             "id": "meta-description",
             "title": "Document has a meta description",
-            "description": "Meta descriptions may be included in search results to concisely summarize page content. [Learn more about the meta description](https://web.dev/meta-description/).",
+            "description": "Meta descriptions may be included in search results to concisely summarize page content. [Learn more about the meta description](https://developer.chrome.com/docs/lighthouse/seo/meta-description/).",
             "score": 1,
             "scoreDisplayMode": "binary"
           },
           "font-size": {
             "id": "font-size",
             "title": "Document uses legible font sizes",
-            "description": "Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more about legible font sizes](https://web.dev/font-size/).",
+            "description": "Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more about legible font sizes](https://developer.chrome.com/docs/lighthouse/seo/font-size/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "displayValue": "74.57% legible text",
@@ -12226,7 +12226,7 @@
           "link-text": {
             "id": "link-text",
             "title": "Links have descriptive text",
-            "description": "Descriptive link text helps search engines understand your content. [Learn how to make links more accessible](https://web.dev/link-text/).",
+            "description": "Descriptive link text helps search engines understand your content. [Learn how to make links more accessible](https://developer.chrome.com/docs/lighthouse/seo/link-text/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -12251,14 +12251,14 @@
           "robots-txt": {
             "id": "robots-txt",
             "title": "robots.txt is valid",
-            "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. [Learn more about robots.txt](https://web.dev/robots-txt/).",
+            "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. [Learn more about robots.txt](https://developer.chrome.com/docs/lighthouse/seo/invalid-robots-txt/).",
             "score": null,
             "scoreDisplayMode": "notApplicable"
           },
           "tap-targets": {
             "id": "tap-targets",
             "title": "Tap targets are not sized appropriately",
-            "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more about tap targets](https://web.dev/tap-targets/).",
+            "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more about tap targets](https://developer.chrome.com/docs/lighthouse/seo/tap-targets/).",
             "score": 0.67,
             "scoreDisplayMode": "binary",
             "displayValue": "75% appropriately sized tap targets",
@@ -12328,7 +12328,7 @@
           "plugins": {
             "id": "plugins",
             "title": "Document avoids plugins",
-            "description": "Search engines can't index plugin content, and many devices restrict plugins or don't support them. [Learn more about avoiding plugins](https://web.dev/plugins/).",
+            "description": "Search engines can't index plugin content, and many devices restrict plugins or don't support them. [Learn more about avoiding plugins](https://developer.chrome.com/docs/lighthouse/seo/plugins/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -12340,7 +12340,7 @@
           "structured-data": {
             "id": "structured-data",
             "title": "Structured data is valid",
-            "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more about Structured Data](https://web.dev/structured-data/).",
+            "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more about Structured Data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/).",
             "score": null,
             "scoreDisplayMode": "manual"
           }
@@ -12731,7 +12731,7 @@
           },
           "seo": {
             "title": "SEO",
-            "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more about Google Search Essentials](https://support.google.com/webmasters/answer/35769).",
+            "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-core-web-vitals/). [Learn more about Google Search Essentials](https://support.google.com/webmasters/answer/35769).",
             "manualDescription": "Run these additional validators on your site to check additional SEO best practices.",
             "supportedModes": [
               "navigation",
@@ -12803,7 +12803,7 @@
           },
           "load-opportunities": {
             "title": "Opportunities",
-            "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score."
+            "description": "These suggestions can help your page load faster. They don't [directly affect](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) the Performance score."
           },
           "budgets": {
             "title": "Budgets",
@@ -12811,7 +12811,7 @@
           },
           "diagnostics": {
             "title": "Diagnostics",
-            "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score."
+            "description": "More information about the performance of your application. These numbers don't [directly affect](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) the Performance score."
           },
           "pwa-installable": {
             "title": "Installable"
@@ -13502,7 +13502,7 @@
             "thirdPartyResourcesLabel": "Show 3rd-party resources",
             "throttlingProvided": "Provided by environment",
             "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
-            "varianceDisclaimer": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics.",
+            "varianceDisclaimer": "Values are estimated and may vary. The [performance score is calculated](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) directly from these metrics.",
             "viewOriginalTraceLabel": "View Original Trace",
             "viewTraceLabel": "View Trace",
             "viewTreemapLabel": "View Treemap",
@@ -14186,7 +14186,7 @@
           "is-on-https": {
             "id": "is-on-https",
             "title": "Uses HTTPS",
-            "description": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being served over HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more about HTTPS](https://web.dev/is-on-https/).",
+            "description": "All sites should be protected with HTTPS, even ones that don't handle sensitive data. This includes avoiding [mixed content](https://developers.google.com/web/fundamentals/security/prevent-mixed-content/what-is-mixed-content), where some resources are loaded over HTTP despite the initial request being served over HTTPS. HTTPS prevents intruders from tampering with or passively listening in on the communications between your app and your users, and is a prerequisite for HTTP/2 and many new web platform APIs. [Learn more about HTTPS](https://developer.chrome.com/docs/lighthouse/pwa/is-on-https/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -14198,14 +14198,14 @@
           "service-worker": {
             "id": "service-worker",
             "title": "Does not register a service worker that controls page and `start_url`",
-            "description": "The service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. [Learn more about Service Workers](https://web.dev/service-worker/).",
+            "description": "The service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. [Learn more about Service Workers](https://developer.chrome.com/docs/lighthouse/pwa/service-worker/).",
             "score": 0,
             "scoreDisplayMode": "binary"
           },
           "viewport": {
             "id": "viewport",
             "title": "Has a `<meta name=\"viewport\">` tag with `width` or `initial-scale`",
-            "description": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Learn more about using the viewport meta tag](https://web.dev/viewport/).",
+            "description": "A `<meta name=\"viewport\">` not only optimizes your app for mobile screen sizes, but also prevents [a 300 millisecond delay to user input](https://developer.chrome.com/blog/300ms-tap-delay-gone-away/). [Learn more about using the viewport meta tag](https://developer.chrome.com/docs/lighthouse/pwa/viewport/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "warnings": []
@@ -14213,7 +14213,7 @@
           "first-contentful-paint": {
             "id": "first-contentful-paint",
             "title": "First Contentful Paint",
-            "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more about the First Contentful Paint metric](https://web.dev/first-contentful-paint/).",
+            "description": "First Contentful Paint marks the time at which the first text or image is painted. [Learn more about the First Contentful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/first-contentful-paint/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 828.6635000000001,
@@ -14223,7 +14223,7 @@
           "largest-contentful-paint": {
             "id": "largest-contentful-paint",
             "title": "Largest Contentful Paint",
-            "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn more about the Largest Contentful Paint metric](https://web.dev/lighthouse-largest-contentful-paint/)",
+            "description": "Largest Contentful Paint marks the time at which the largest text or image is painted. [Learn more about the Largest Contentful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)",
             "score": 0.98,
             "scoreDisplayMode": "numeric",
             "numericValue": 1811.8564557556156,
@@ -14233,7 +14233,7 @@
           "first-meaningful-paint": {
             "id": "first-meaningful-paint",
             "title": "First Meaningful Paint",
-            "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more about the First Meaningful Paint metric](https://web.dev/first-meaningful-paint/).",
+            "description": "First Meaningful Paint measures when the primary content of a page is visible. [Learn more about the First Meaningful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/first-meaningful-paint/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 828.6635000000001,
@@ -14243,7 +14243,7 @@
           "speed-index": {
             "id": "speed-index",
             "title": "Speed Index",
-            "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more about the Speed Index metric](https://web.dev/speed-index/).",
+            "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more about the Speed Index metric](https://developer.chrome.com/docs/lighthouse/performance/speed-index/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 828.6635000000001,
@@ -14329,7 +14329,7 @@
           "total-blocking-time": {
             "id": "total-blocking-time",
             "title": "Total Blocking Time",
-            "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more about the Total Blocking Time metric](https://web.dev/lighthouse-total-blocking-time/).",
+            "description": "Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more about the Total Blocking Time metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 21,
@@ -14339,7 +14339,7 @@
           "max-potential-fid": {
             "id": "max-potential-fid",
             "title": "Max Potential First Input Delay",
-            "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more about the Maximum Potential First Input Delay metric](https://web.dev/lighthouse-max-potential-fid/).",
+            "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more about the Maximum Potential First Input Delay metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/).",
             "score": 0.97,
             "scoreDisplayMode": "numeric",
             "numericValue": 92,
@@ -14368,7 +14368,7 @@
           "errors-in-console": {
             "id": "errors-in-console",
             "title": "No browser errors logged to the console",
-            "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more about this errors in console diagnostic audit](https://web.dev/errors-in-console/)",
+            "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more about this errors in console diagnostic audit](https://developer.chrome.com/docs/lighthouse/best-practices/errors-in-console/)",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -14380,7 +14380,7 @@
           "server-response-time": {
             "id": "server-response-time",
             "title": "Initial server response time was short",
-            "description": "Keep the server response time for the main document short because all other requests depend on it. [Learn more about the Time to First Byte metric](https://web.dev/time-to-first-byte/).",
+            "description": "Keep the server response time for the main document short because all other requests depend on it. [Learn more about the Time to First Byte metric](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "numericValue": 115.003,
@@ -14412,7 +14412,7 @@
           "interactive": {
             "id": "interactive",
             "title": "Time to Interactive",
-            "description": "Time to Interactive is the amount of time it takes for the page to become fully interactive. [Learn more about the Time to Interactive metric](https://web.dev/interactive/).",
+            "description": "Time to Interactive is the amount of time it takes for the page to become fully interactive. [Learn more about the Time to Interactive metric](https://developer.chrome.com/docs/lighthouse/performance/interactive/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 911.4059182891847,
@@ -14422,7 +14422,7 @@
           "user-timings": {
             "id": "user-timings",
             "title": "User Timing marks and measures",
-            "description": "Consider instrumenting your app with the User Timing API to measure your app's real-world performance during key user experiences. [Learn more about User Timing marks](https://web.dev/user-timings/).",
+            "description": "Consider instrumenting your app with the User Timing API to measure your app's real-world performance during key user experiences. [Learn more about User Timing marks](https://developer.chrome.com/docs/lighthouse/performance/user-timings/).",
             "score": null,
             "scoreDisplayMode": "informative",
             "displayValue": "4 user timings",
@@ -14481,7 +14481,7 @@
           "critical-request-chains": {
             "id": "critical-request-chains",
             "title": "Avoid chaining critical requests",
-            "description": "The Critical Request Chains below show you what resources are loaded with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn how to avoid chaining critical requests](https://web.dev/critical-request-chains/).",
+            "description": "The Critical Request Chains below show you what resources are loaded with a high priority. Consider reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load. [Learn how to avoid chaining critical requests](https://developer.chrome.com/docs/lighthouse/performance/critical-request-chains/).",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "displayValue": "",
@@ -14508,7 +14508,7 @@
           "redirects": {
             "id": "redirects",
             "title": "Avoid multiple page redirects",
-            "description": "Redirects introduce additional delays before the page can be loaded. [Learn how to avoid page redirects](https://web.dev/redirects/).",
+            "description": "Redirects introduce additional delays before the page can be loaded. [Learn how to avoid page redirects](https://developer.chrome.com/docs/lighthouse/performance/redirects/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -14524,7 +14524,7 @@
           "installable-manifest": {
             "id": "installable-manifest",
             "title": "Web app manifest or service worker do not meet the installability requirements",
-            "description": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more about manifest installability requirements](https://web.dev/installable-manifest/).",
+            "description": "Service worker is the technology that enables your app to use many Progressive Web App features, such as offline, add to homescreen, and push notifications. With proper service worker and manifest implementations, browsers can proactively prompt users to add your app to their homescreen, which can lead to higher engagement. [Learn more about manifest installability requirements](https://developer.chrome.com/docs/lighthouse/pwa/installable-manifest/).",
             "score": 0,
             "scoreDisplayMode": "binary",
             "numericValue": 1,
@@ -14554,7 +14554,7 @@
           "splash-screen": {
             "id": "splash-screen",
             "title": "Is not configured for a custom splash screen",
-            "description": "A themed splash screen ensures a high-quality experience when users launch your app from their homescreens. [Learn more about splash screens](https://web.dev/splash-screen/).",
+            "description": "A themed splash screen ensures a high-quality experience when users launch your app from their homescreens. [Learn more about splash screens](https://developer.chrome.com/docs/lighthouse/pwa/splash-screen/).",
             "score": 0,
             "scoreDisplayMode": "binary",
             "explanation": "Failures: No manifest was fetched.",
@@ -14574,7 +14574,7 @@
           "themed-omnibox": {
             "id": "themed-omnibox",
             "title": "Does not set a theme color for the address bar.",
-            "description": "The browser address bar can be themed to match your site. [Learn more about theming the address bar](https://web.dev/themed-omnibox/).",
+            "description": "The browser address bar can be themed to match your site. [Learn more about theming the address bar](https://developer.chrome.com/docs/lighthouse/pwa/themed-omnibox/).",
             "score": 0,
             "scoreDisplayMode": "binary",
             "explanation": "Failures: No manifest was fetched,\nNo `<meta name=\"theme-color\">` tag found.",
@@ -14596,7 +14596,7 @@
           "maskable-icon": {
             "id": "maskable-icon",
             "title": "Manifest doesn't have a maskable icon",
-            "description": "A maskable icon ensures that the image fills the entire shape without being letterboxed when installing the app on a device. [Learn about maskable manifest icons](https://web.dev/maskable-icon-audit/).",
+            "description": "A maskable icon ensures that the image fills the entire shape without being letterboxed when installing the app on a device. [Learn about maskable manifest icons](https://developer.chrome.com/docs/lighthouse/pwa/maskable-icon-audit/).",
             "score": 0,
             "scoreDisplayMode": "binary",
             "explanation": "No manifest was fetched"
@@ -14604,14 +14604,14 @@
           "content-width": {
             "id": "content-width",
             "title": "Content is sized correctly for the viewport",
-            "description": "If the width of your app's content doesn't match the width of the viewport, your app might not be optimized for mobile screens. [Learn how to size content for the viewport](https://web.dev/content-width/).",
+            "description": "If the width of your app's content doesn't match the width of the viewport, your app might not be optimized for mobile screens. [Learn how to size content for the viewport](https://developer.chrome.com/docs/lighthouse/pwa/content-width/).",
             "score": 1,
             "scoreDisplayMode": "binary"
           },
           "image-aspect-ratio": {
             "id": "image-aspect-ratio",
             "title": "Displays images with correct aspect ratio",
-            "description": "Image display dimensions should match natural aspect ratio. [Learn more about image aspect ratio](https://web.dev/image-aspect-ratio/).",
+            "description": "Image display dimensions should match natural aspect ratio. [Learn more about image aspect ratio](https://developer.chrome.com/docs/lighthouse/best-practices/image-aspect-ratio/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -14642,7 +14642,7 @@
           "deprecations": {
             "id": "deprecations",
             "title": "Avoids deprecated APIs",
-            "description": "Deprecated APIs will eventually be removed from the browser. [Learn more about deprecated APIs](https://web.dev/deprecations/).",
+            "description": "Deprecated APIs will eventually be removed from the browser. [Learn more about deprecated APIs](https://developer.chrome.com/docs/lighthouse/best-practices/deprecations/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -14654,7 +14654,7 @@
           "mainthread-work-breakdown": {
             "id": "mainthread-work-breakdown",
             "title": "Minimizes main-thread work",
-            "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to minimize main-thread work](https://web.dev/mainthread-work-breakdown/)",
+            "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to minimize main-thread work](https://developer.chrome.com/docs/lighthouse/performance/mainthread-work-breakdown/)",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 488.18000000000063,
@@ -14717,7 +14717,7 @@
           "bootup-time": {
             "id": "bootup-time",
             "title": "JavaScript execution time",
-            "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to reduce Javascript execution time](https://web.dev/bootup-time/).",
+            "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to reduce Javascript execution time](https://developer.chrome.com/docs/lighthouse/performance/bootup-time/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 179.06400000000002,
@@ -14784,7 +14784,7 @@
           "uses-rel-preload": {
             "id": "uses-rel-preload",
             "title": "Preload key requests",
-            "description": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn how to preload key requests](https://web.dev/uses-rel-preload/).",
+            "description": "Consider using `<link rel=preload>` to prioritize fetching resources that are currently requested later in page load. [Learn how to preload key requests](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preload/).",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "details": {
@@ -14797,7 +14797,7 @@
           "uses-rel-preconnect": {
             "id": "uses-rel-preconnect",
             "title": "Preconnect to required origins",
-            "description": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn how to preconnect to required origins](https://web.dev/uses-rel-preconnect/).",
+            "description": "Consider adding `preconnect` or `dns-prefetch` resource hints to establish early connections to important third-party origins. [Learn how to preconnect to required origins](https://developer.chrome.com/docs/lighthouse/performance/uses-rel-preconnect/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -14814,7 +14814,7 @@
           "font-display": {
             "id": "font-display",
             "title": "All text remains visible during webfont loads",
-            "description": "Leverage the `font-display` CSS feature to ensure text is user-visible while webfonts are loading. [Learn more about `font-display`](https://web.dev/font-display/).",
+            "description": "Leverage the `font-display` CSS feature to ensure text is user-visible while webfonts are loading. [Learn more about `font-display`](https://developer.chrome.com/docs/lighthouse/performance/font-display/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "warnings": [],
@@ -15578,14 +15578,14 @@
           "third-party-facades": {
             "id": "third-party-facades",
             "title": "Lazy load third-party resources with facades",
-            "description": "Some third-party embeds can be lazy loaded. Consider replacing them with a facade until they are required. [Learn how to defer third-parties with a facade](https://web.dev/third-party-facades/).",
+            "description": "Some third-party embeds can be lazy loaded. Consider replacing them with a facade until they are required. [Learn how to defer third-parties with a facade](https://developer.chrome.com/docs/lighthouse/performance/third-party-facades/).",
             "score": null,
             "scoreDisplayMode": "notApplicable"
           },
           "largest-contentful-paint-element": {
             "id": "largest-contentful-paint-element",
             "title": "Largest Contentful Paint element",
-            "description": "This is the largest contentful element painted within the viewport. [Learn more about the Largest Contentful Paint element](https://web.dev/lighthouse-largest-contentful-paint/)",
+            "description": "This is the largest contentful element painted within the viewport. [Learn more about the Largest Contentful Paint element](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)",
             "score": null,
             "scoreDisplayMode": "informative",
             "displayValue": "1 element found",
@@ -15716,7 +15716,7 @@
           "non-composited-animations": {
             "id": "non-composited-animations",
             "title": "Avoid non-composited animations",
-            "description": "Animations which are not composited can be janky and increase CLS. [Learn how to avoid non-composited animations](https://web.dev/non-composited-animations)",
+            "description": "Animations which are not composited can be janky and increase CLS. [Learn how to avoid non-composited animations](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)",
             "score": null,
             "scoreDisplayMode": "notApplicable",
             "details": {
@@ -15802,7 +15802,7 @@
           "preload-lcp-image": {
             "id": "preload-lcp-image",
             "title": "Preload Largest Contentful Paint image",
-            "description": "If the LCP element is dynamically added to the page, you should preload the image in order to improve LCP. [Learn more about preloading LCP elements](https://web.dev/optimize-lcp/#preload-important-resources).",
+            "description": "If the LCP element is dynamically added to the page, you should preload the image in order to improve LCP. [Learn more about preloading LCP elements](https://web.dev/optimize-lcp/#optimize-when-the-resource-is-discovered).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -15869,7 +15869,7 @@
           "csp-xss": {
             "id": "csp-xss",
             "title": "Ensure CSP is effective against XSS attacks",
-            "description": "A strong Content Security Policy (CSP) significantly reduces the risk of cross-site scripting (XSS) attacks. [Learn how to use a CSP to prevent XSS](https://web.dev/csp-xss/)",
+            "description": "A strong Content Security Policy (CSP) significantly reduces the risk of cross-site scripting (XSS) attacks. [Learn how to use a CSP to prevent XSS](https://developer.chrome.com/docs/lighthouse/best-practices/csp-xss/)",
             "score": null,
             "scoreDisplayMode": "informative",
             "details": {
@@ -16444,21 +16444,21 @@
           "pwa-cross-browser": {
             "id": "pwa-cross-browser",
             "title": "Site works cross-browser",
-            "description": "To reach the most number of users, sites should work across every major browser. [Learn about cross-browser compatibility](https://web.dev/pwa-cross-browser/).",
+            "description": "To reach the most number of users, sites should work across every major browser. [Learn about cross-browser compatibility](https://developer.chrome.com/docs/lighthouse/pwa/pwa-cross-browser/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "pwa-page-transitions": {
             "id": "pwa-page-transitions",
             "title": "Page transitions don't feel like they block on the network",
-            "description": "Transitions should feel snappy as you tap around, even on a slow network. This experience is key to a user's perception of performance. [Learn more about page transitions](https://web.dev/pwa-page-transitions/).",
+            "description": "Transitions should feel snappy as you tap around, even on a slow network. This experience is key to a user's perception of performance. [Learn more about page transitions](https://developer.chrome.com/docs/lighthouse/pwa/pwa-page-transitions/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
           "pwa-each-page-has-url": {
             "id": "pwa-each-page-has-url",
             "title": "Each page has a URL",
-            "description": "Ensure individual pages are deep linkable via URL and that URLs are unique for the purpose of shareability on social media. [Learn more about providing deep links](https://web.dev/pwa-each-page-has-url/).",
+            "description": "Ensure individual pages are deep linkable via URL and that URLs are unique for the purpose of shareability on social media. [Learn more about providing deep links](https://developer.chrome.com/docs/lighthouse/pwa/pwa-each-page-has-url/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
@@ -16980,7 +16980,7 @@
           "uses-long-cache-ttl": {
             "id": "uses-long-cache-ttl",
             "title": "Uses efficient cache policy on static assets",
-            "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more about efficient cache policies](https://web.dev/uses-long-cache-ttl/).",
+            "description": "A long cache lifetime can speed up repeat visits to your page. [Learn more about efficient cache policies](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -16998,7 +16998,7 @@
           "total-byte-weight": {
             "id": "total-byte-weight",
             "title": "Avoids enormous network payloads",
-            "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://web.dev/total-byte-weight/).",
+            "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 127824,
@@ -17045,7 +17045,7 @@
           "offscreen-images": {
             "id": "offscreen-images",
             "title": "Defer offscreen images",
-            "description": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn how to defer offscreen images](https://web.dev/offscreen-images/).",
+            "description": "Consider lazy-loading offscreen and hidden images after all critical resources have finished loading to lower time to interactive. [Learn how to defer offscreen images](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -17063,7 +17063,7 @@
           "render-blocking-resources": {
             "id": "render-blocking-resources",
             "title": "Eliminate render-blocking resources",
-            "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn how to eliminate render-blocking resources](https://web.dev/render-blocking-resources/).",
+            "description": "Resources are blocking the first paint of your page. Consider delivering critical JS/CSS inline and deferring all non-critical JS/styles. [Learn how to eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -17078,7 +17078,7 @@
           "unminified-css": {
             "id": "unminified-css",
             "title": "Minify CSS",
-            "description": "Minifying CSS files can reduce network payload sizes. [Learn how to minify CSS](https://web.dev/unminified-css/).",
+            "description": "Minifying CSS files can reduce network payload sizes. [Learn how to minify CSS](https://developer.chrome.com/docs/lighthouse/performance/unminified-css/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -17095,7 +17095,7 @@
           "unminified-javascript": {
             "id": "unminified-javascript",
             "title": "Minify JavaScript",
-            "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn how to minify JavaScript](https://web.dev/unminified-javascript/).",
+            "description": "Minifying JavaScript files can reduce payload sizes and script parse time. [Learn how to minify JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unminified-javascript/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -17113,7 +17113,7 @@
           "unused-css-rules": {
             "id": "unused-css-rules",
             "title": "Reduce unused CSS",
-            "description": "Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity. [Learn how to reduce unused CSS](https://web.dev/unused-css-rules/).",
+            "description": "Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity. [Learn how to reduce unused CSS](https://developer.chrome.com/docs/lighthouse/performance/unused-css-rules/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -17130,7 +17130,7 @@
           "unused-javascript": {
             "id": "unused-javascript",
             "title": "Reduce unused JavaScript",
-            "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://web.dev/unused-javascript/).",
+            "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -17147,7 +17147,7 @@
           "modern-image-formats": {
             "id": "modern-image-formats",
             "title": "Serve images in next-gen formats",
-            "description": "Image formats like WebP and AVIF often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more about modern image formats](https://web.dev/uses-webp-images/).",
+            "description": "Image formats like WebP and AVIF often provide better compression than PNG or JPEG, which means faster downloads and less data consumption. [Learn more about modern image formats](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/).",
             "score": 0.75,
             "scoreDisplayMode": "numeric",
             "numericValue": 300,
@@ -17211,7 +17211,7 @@
           "uses-optimized-images": {
             "id": "uses-optimized-images",
             "title": "Efficiently encode images",
-            "description": "Optimized images load faster and consume less cellular data. [Learn how to efficiently encode images](https://web.dev/uses-optimized-images/).",
+            "description": "Optimized images load faster and consume less cellular data. [Learn how to efficiently encode images](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -17229,7 +17229,7 @@
           "uses-text-compression": {
             "id": "uses-text-compression",
             "title": "Enable text compression",
-            "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more about text compression](https://web.dev/uses-text-compression/).",
+            "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more about text compression](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -17246,7 +17246,7 @@
           "uses-responsive-images": {
             "id": "uses-responsive-images",
             "title": "Properly size images",
-            "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn how to size images](https://web.dev/uses-responsive-images/).",
+            "description": "Serve images that are appropriately-sized to save cellular data and improve load time. [Learn how to size images](https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/).",
             "score": 0.75,
             "scoreDisplayMode": "numeric",
             "numericValue": 300,
@@ -17307,7 +17307,7 @@
           "efficient-animated-content": {
             "id": "efficient-animated-content",
             "title": "Use video formats for animated content",
-            "description": "Large GIFs are inefficient for delivering animated content. Consider using MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save network bytes. [Learn more about efficient video formats](https://web.dev/efficient-animated-content/)",
+            "description": "Large GIFs are inefficient for delivering animated content. Consider using MPEG4/WebM videos for animations and PNG/WebP for static images instead of GIF to save network bytes. [Learn more about efficient video formats](https://developer.chrome.com/docs/lighthouse/performance/efficient-animated-content/)",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 0,
@@ -17402,21 +17402,21 @@
           "doctype": {
             "id": "doctype",
             "title": "Page has the HTML doctype",
-            "description": "Specifying a doctype prevents the browser from switching to quirks-mode. [Learn more about the doctype declaration](https://web.dev/doctype/).",
+            "description": "Specifying a doctype prevents the browser from switching to quirks-mode. [Learn more about the doctype declaration](https://developer.chrome.com/docs/lighthouse/best-practices/doctype/).",
             "score": 1,
             "scoreDisplayMode": "binary"
           },
           "charset": {
             "id": "charset",
             "title": "Properly defines charset",
-            "description": "A character encoding declaration is required. It can be done with a `<meta>` tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more about declaring the character encoding](https://web.dev/charset/).",
+            "description": "A character encoding declaration is required. It can be done with a `<meta>` tag in the first 1024 bytes of the HTML or in the Content-Type HTTP response header. [Learn more about declaring the character encoding](https://developer.chrome.com/docs/lighthouse/best-practices/charset/).",
             "score": 1,
             "scoreDisplayMode": "binary"
           },
           "dom-size": {
             "id": "dom-size",
             "title": "Avoids an excessive DOM size",
-            "description": "A large DOM will increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn how to avoid an excessive DOM size](https://web.dev/dom-size/).",
+            "description": "A large DOM will increase memory usage, cause longer [style calculations](https://developers.google.com/web/fundamentals/performance/rendering/reduce-the-scope-and-complexity-of-style-calculations), and produce costly [layout reflows](https://developers.google.com/speed/articles/reflow). [Learn how to avoid an excessive DOM size](https://developer.chrome.com/docs/lighthouse/performance/dom-size/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
             "numericValue": 81,
@@ -17504,7 +17504,7 @@
           "geolocation-on-start": {
             "id": "geolocation-on-start",
             "title": "Avoids requesting the geolocation permission on page load",
-            "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://web.dev/geolocation-on-start/).",
+            "description": "Users are mistrustful of or confused by sites that request their location without context. Consider tying the request to a user action instead. [Learn more about the geolocation permission](https://developer.chrome.com/docs/lighthouse/best-practices/geolocation-on-start/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -17528,7 +17528,7 @@
           "no-document-write": {
             "id": "no-document-write",
             "title": "Avoids `document.write()`",
-            "description": "For users on slow connections, external scripts dynamically injected via `document.write()` can delay page load by tens of seconds. [Learn how to avoid document.write()](https://web.dev/no-document-write/).",
+            "description": "For users on slow connections, external scripts dynamically injected via `document.write()` can delay page load by tens of seconds. [Learn how to avoid document.write()](https://developer.chrome.com/docs/lighthouse/best-practices/no-document-write/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -17540,7 +17540,7 @@
           "js-libraries": {
             "id": "js-libraries",
             "title": "Detected JavaScript libraries",
-            "description": "All front-end JavaScript libraries detected on the page. [Learn more about this JavaScript library detection diagnostic audit](https://web.dev/js-libraries/).",
+            "description": "All front-end JavaScript libraries detected on the page. [Learn more about this JavaScript library detection diagnostic audit](https://developer.chrome.com/docs/lighthouse/best-practices/js-libraries/).",
             "score": null,
             "scoreDisplayMode": "informative",
             "details": {
@@ -17592,7 +17592,7 @@
           "notification-on-start": {
             "id": "notification-on-start",
             "title": "Avoids requesting the notification permission on page load",
-            "description": "Users are mistrustful of or confused by sites that request to send notifications without context. Consider tying the request to user gestures instead. [Learn more about responsibly getting permission for notifications](https://web.dev/notification-on-start/).",
+            "description": "Users are mistrustful of or confused by sites that request to send notifications without context. Consider tying the request to user gestures instead. [Learn more about responsibly getting permission for notifications](https://developer.chrome.com/docs/lighthouse/best-practices/notification-on-start/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -17604,7 +17604,7 @@
           "password-inputs-can-be-pasted-into": {
             "id": "password-inputs-can-be-pasted-into",
             "title": "Allows users to paste into password fields",
-            "description": "Preventing password pasting undermines good security policy. [Learn more about user-friendly password fields](https://web.dev/password-inputs-can-be-pasted-into/).",
+            "description": "Preventing password pasting undermines good security policy. [Learn more about user-friendly password fields](https://developer.chrome.com/docs/lighthouse/best-practices/password-inputs-can-be-pasted-into/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -17616,7 +17616,7 @@
           "uses-passive-event-listeners": {
             "id": "uses-passive-event-listeners",
             "title": "Uses passive listeners to improve scrolling performance",
-            "description": "Consider marking your touch and wheel event listeners as `passive` to improve your page's scroll performance. [Learn more about adopting passive event listeners](https://web.dev/uses-passive-event-listeners/).",
+            "description": "Consider marking your touch and wheel event listeners as `passive` to improve your page's scroll performance. [Learn more about adopting passive event listeners](https://developer.chrome.com/docs/lighthouse/best-practices/uses-passive-event-listeners/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -17628,21 +17628,21 @@
           "meta-description": {
             "id": "meta-description",
             "title": "Document has a meta description",
-            "description": "Meta descriptions may be included in search results to concisely summarize page content. [Learn more about the meta description](https://web.dev/meta-description/).",
+            "description": "Meta descriptions may be included in search results to concisely summarize page content. [Learn more about the meta description](https://developer.chrome.com/docs/lighthouse/seo/meta-description/).",
             "score": 1,
             "scoreDisplayMode": "binary"
           },
           "http-status-code": {
             "id": "http-status-code",
             "title": "Page has successful HTTP status code",
-            "description": "Pages with unsuccessful HTTP status codes may not be indexed properly. [Learn more about HTTP status codes](https://web.dev/http-status-code/).",
+            "description": "Pages with unsuccessful HTTP status codes may not be indexed properly. [Learn more about HTTP status codes](https://developer.chrome.com/docs/lighthouse/seo/http-status-code/).",
             "score": 1,
             "scoreDisplayMode": "binary"
           },
           "font-size": {
             "id": "font-size",
             "title": "Document uses legible font sizes",
-            "description": "Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more about legible font sizes](https://web.dev/font-size/).",
+            "description": "Font sizes less than 12px are too small to be legible and require mobile visitors to “pinch to zoom” in order to read. Strive to have >60% of page text ≥12px. [Learn more about legible font sizes](https://developer.chrome.com/docs/lighthouse/seo/font-size/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "displayValue": "78.13% legible text",
@@ -17698,7 +17698,7 @@
           "link-text": {
             "id": "link-text",
             "title": "Links have descriptive text",
-            "description": "Descriptive link text helps search engines understand your content. [Learn how to make links more accessible](https://web.dev/link-text/).",
+            "description": "Descriptive link text helps search engines understand your content. [Learn how to make links more accessible](https://developer.chrome.com/docs/lighthouse/seo/link-text/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -17723,7 +17723,7 @@
           "is-crawlable": {
             "id": "is-crawlable",
             "title": "Page isn’t blocked from indexing",
-            "description": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more about crawler directives](https://web.dev/is-crawable/).",
+            "description": "Search engines are unable to include your pages in search results if they don't have permission to crawl them. [Learn more about crawler directives](https://developer.chrome.com/docs/lighthouse/seo/is-crawlable/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -17735,14 +17735,14 @@
           "robots-txt": {
             "id": "robots-txt",
             "title": "robots.txt is valid",
-            "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. [Learn more about robots.txt](https://web.dev/robots-txt/).",
+            "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. [Learn more about robots.txt](https://developer.chrome.com/docs/lighthouse/seo/invalid-robots-txt/).",
             "score": null,
             "scoreDisplayMode": "notApplicable"
           },
           "tap-targets": {
             "id": "tap-targets",
             "title": "Tap targets are not sized appropriately",
-            "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more about tap targets](https://web.dev/tap-targets/).",
+            "description": "Interactive elements like buttons and links should be large enough (48x48px), and have enough space around them, to be easy enough to tap without overlapping onto other elements. [Learn more about tap targets](https://developer.chrome.com/docs/lighthouse/seo/tap-targets/).",
             "score": 0.67,
             "scoreDisplayMode": "binary",
             "displayValue": "75% appropriately sized tap targets",
@@ -17812,7 +17812,7 @@
           "hreflang": {
             "id": "hreflang",
             "title": "Document has a valid `hreflang`",
-            "description": "hreflang links tell search engines what version of a page they should list in search results for a given language or region. [Learn more about `hreflang`](https://web.dev/hreflang/).",
+            "description": "hreflang links tell search engines what version of a page they should list in search results for a given language or region. [Learn more about `hreflang`](https://developer.chrome.com/docs/lighthouse/seo/hreflang/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -17824,7 +17824,7 @@
           "plugins": {
             "id": "plugins",
             "title": "Document avoids plugins",
-            "description": "Search engines can't index plugin content, and many devices restrict plugins or don't support them. [Learn more about avoiding plugins](https://web.dev/plugins/).",
+            "description": "Search engines can't index plugin content, and many devices restrict plugins or don't support them. [Learn more about avoiding plugins](https://developer.chrome.com/docs/lighthouse/seo/plugins/).",
             "score": 1,
             "scoreDisplayMode": "binary",
             "details": {
@@ -17836,14 +17836,14 @@
           "canonical": {
             "id": "canonical",
             "title": "Document has a valid `rel=canonical`",
-            "description": "Canonical links suggest which URL to show in search results. [Learn more about canonical links](https://web.dev/canonical/).",
+            "description": "Canonical links suggest which URL to show in search results. [Learn more about canonical links](https://developer.chrome.com/docs/lighthouse/seo/canonical/).",
             "score": null,
             "scoreDisplayMode": "notApplicable"
           },
           "structured-data": {
             "id": "structured-data",
             "title": "Structured data is valid",
-            "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more about Structured Data](https://web.dev/structured-data/).",
+            "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more about Structured Data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/).",
             "score": null,
             "scoreDisplayMode": "manual"
           }
@@ -18573,7 +18573,7 @@
           },
           "seo": {
             "title": "SEO",
-            "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-web-vitals/). [Learn more about Google Search Essentials](https://support.google.com/webmasters/answer/35769).",
+            "description": "These checks ensure that your page is following basic search engine optimization advice. There are many additional factors Lighthouse does not score here that may affect your search ranking, including performance on [Core Web Vitals](https://web.dev/learn-core-web-vitals/). [Learn more about Google Search Essentials](https://support.google.com/webmasters/answer/35769).",
             "manualDescription": "Run these additional validators on your site to check additional SEO best practices.",
             "supportedModes": [
               "navigation",
@@ -18724,7 +18724,7 @@
           },
           "load-opportunities": {
             "title": "Opportunities",
-            "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score."
+            "description": "These suggestions can help your page load faster. They don't [directly affect](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) the Performance score."
           },
           "budgets": {
             "title": "Budgets",
@@ -18732,7 +18732,7 @@
           },
           "diagnostics": {
             "title": "Diagnostics",
-            "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score."
+            "description": "More information about the performance of your application. These numbers don't [directly affect](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) the Performance score."
           },
           "pwa-installable": {
             "title": "Installable"
@@ -20233,7 +20233,7 @@
             "thirdPartyResourcesLabel": "Show 3rd-party resources",
             "throttlingProvided": "Provided by environment",
             "toplevelWarningsMessage": "There were issues affecting this run of Lighthouse:",
-            "varianceDisclaimer": "Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics.",
+            "varianceDisclaimer": "Values are estimated and may vary. The [performance score is calculated](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) directly from these metrics.",
             "viewOriginalTraceLabel": "View Original Trace",
             "viewTraceLabel": "View Trace",
             "viewTreemapLabel": "View Treemap",

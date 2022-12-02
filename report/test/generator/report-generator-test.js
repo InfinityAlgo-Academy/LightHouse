@@ -113,10 +113,10 @@ category,score
 \\"pwa\\",\\"0.33\\"
 
 category,audit,score,displayValue,description
-\\"performance\\",\\"first-contentful-paint\\",\\"0.01\\",\\"6.8 s\\",\\"First Contentful Paint marks the time at which the first text or image is painted. [Learn more about the First Contentful Paint metric](https://web.dev/first-contentful-paint/).\\"
-\\"performance\\",\\"interactive\\",\\"0.41\\",\\"8.2 s\\",\\"Time to Interactive is the amount of time it takes for the page to become fully interactive. [Learn more about the Time to Interactive metric](https://web.dev/interactive/).\\"
-\\"performance\\",\\"speed-index\\",\\"0.21\\",\\"8.1 s\\",\\"Speed Index shows how quickly the contents of a page are visibly populated. [Learn more about the Speed Index metric](https://web.dev/speed-index/).\\"
-\\"performance\\",\\"total-blocking-time\\",\\"0.2\\",\\"1,220 ms\\",\\"Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more about the Total Blocking Time metric](https://web.dev/lighthouse-total-blocking-time/).\\"
+\\"performance\\",\\"first-contentful-paint\\",\\"0.01\\",\\"6.8 s\\",\\"First Contentful Paint marks the time at which the first text or image is painted. [Learn more about the First Contentful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/first-contentful-paint/).\\"
+\\"performance\\",\\"interactive\\",\\"0.41\\",\\"8.2 s\\",\\"Time to Interactive is the amount of time it takes for the page to become fully interactive. [Learn more about the Time to Interactive metric](https://developer.chrome.com/docs/lighthouse/performance/interactive/).\\"
+\\"performance\\",\\"speed-index\\",\\"0.21\\",\\"8.1 s\\",\\"Speed Index shows how quickly the contents of a page are visibly populated. [Learn more about the Speed Index metric](https://developer.chrome.com/docs/lighthouse/performance/speed-index/).\\"
+\\"performance\\",\\"total-blocking-time\\",\\"0.2\\",\\"1,220 ms\\",\\"Sum of all time periods between FCP and Time to Interactive, when task length exceeded 50ms, expressed in milliseconds. [Learn more about the Total Blocking Time metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-total-blocking-time/).\\"
 "
 `);
 

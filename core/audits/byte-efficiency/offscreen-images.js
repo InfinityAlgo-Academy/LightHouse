@@ -24,7 +24,7 @@ const UIStrings = {
   description:
     'Consider lazy-loading offscreen and hidden images after all critical resources have ' +
     'finished loading to lower time to interactive. ' +
-    '[Learn how to defer offscreen images](https://web.dev/offscreen-images/).',
+    '[Learn how to defer offscreen images](https://developer.chrome.com/docs/lighthouse/performance/offscreen-images/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

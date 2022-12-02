@@ -19,7 +19,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* their text-based resources should be served with compression (like gzip). This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Text-based resources should be served with compression (gzip, deflate or' +
     ' brotli) to minimize total network bytes.' +
-    ' [Learn more about text compression](https://web.dev/uses-text-compression/).',
+    ' [Learn more about text compression](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

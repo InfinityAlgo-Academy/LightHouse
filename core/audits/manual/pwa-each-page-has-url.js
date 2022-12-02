@@ -12,7 +12,7 @@ const UIStrings = {
   title: 'Each page has a URL',
   /** Description of a Lighthouse audit that tells the user why they should use unique URLs for each web page. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Ensure individual pages are deep linkable via URL and that URLs are ' +
-      'unique for the purpose of shareability on social media. [Learn more about providing deep links](https://web.dev/pwa-each-page-has-url/).',
+      'unique for the purpose of shareability on social media. [Learn more about providing deep links](https://developer.chrome.com/docs/lighthouse/pwa/pwa-each-page-has-url/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

@@ -12,7 +12,7 @@ const UIStrings = {
   /** Description of the Maximum Potential First Input Delay metric that marks the maximum estimated time between the page receiving input (a user clicking, tapping, or typing) and the page responding. This description is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'The maximum potential First Input Delay that your users could experience is the ' +
       'duration of the longest task. ' +
-      '[Learn more about the Maximum Potential First Input Delay metric](https://web.dev/lighthouse-max-potential-fid/).',
+      '[Learn more about the Maximum Potential First Input Delay metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

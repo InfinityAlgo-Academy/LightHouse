@@ -26,7 +26,7 @@ const UIStrings = {
   description:
   'Serve images that are appropriately-sized to save cellular data ' +
   'and improve load time. ' +
-  '[Learn how to size images](https://web.dev/uses-responsive-images/).',
+  '[Learn how to size images](https://developer.chrome.com/docs/lighthouse/performance/uses-responsive-images/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
