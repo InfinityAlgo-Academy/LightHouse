@@ -22,6 +22,7 @@ const backgroundTabTrace = readJson('../../fixtures/traces/backgrounded-tab-miss
 const lcpTrace = readJson('../../fixtures/traces/lcp-m78.json', import.meta);
 const lcpAllFramesTrace = readJson('../../fixtures/traces/frame-metrics-m89.json', import.meta);
 const startedAfterNavstartTrace = readJson('../../fixtures/traces/tracingstarted-after-navstart.json', import.meta);
+const pidChangeTrace = readJson('../../fixtures/traces/pid-change.json', import.meta);
 
 describe('TraceProcessor', () => {
   describe('_riskPercentiles', () => {
@@ -929,5 +930,38 @@ Object {
     it('does not throw on traces missing an FCP', () => {
       expect(() => TraceProcessor.processTrace(noFCPtrace)).not.toThrow();
     });
+  });
+
+  it.only('manages cross-process / cross-iframe traces', () => {
+    function summarizeTrace(trace) {
+      const processed = TraceProcessor.processTrace(trace);
+      const keyEventsLen = processed._keyEvents.length;
+      const processEventsPct = processed.processEvents.length / keyEventsLen;
+      const frameEventsPct = processed.frameEvents.length / keyEventsLen;
+
+      const mainFramePids = new Set();
+      mainFramePids.add(processed.mainFrameInfo.startingPid);
+      [...processed._rendererPidTids.keys()].forEach(pid => mainFramePids.add(pid));
+
+      return {processEventsPct, frameEventsPct, mainFramePids};
+    }
+
+    // Single PID trace
+    const lcpTraceSummarized = summarizeTrace(lcpTrace);
+    expect(lcpTraceSummarized.mainFramePids.size).toEqual(1);
+    // The primary process events should make up more than 40% of all key trace events
+    expect(lcpTraceSummarized.processEventsPct).toBeGreaterThanOrEqual(0.4);
+    // The main frame's events should make up more than 40% of all key trace events
+    expect(lcpTraceSummarized.frameEventsPct).toBeGreaterThanOrEqual(0.4);
+
+    // Multi PID trace
+    const pidChangeTraceSummarized = summarizeTrace(pidChangeTrace);
+    expect(pidChangeTraceSummarized.mainFramePids.size).toEqual(2);
+    // The primary process events should make up more than 40% of all key trace events
+    expect(pidChangeTraceSummarized.processEventsPct).toBeGreaterThanOrEqual(0.4);
+
+    // The main frame's events should make up more than 40% of all key trace events
+    // TODO: fix!
+    // expect(pidChangeTraceSummarized.frameEventsPct).toBeGreaterThanOrEqual(0.4);
   });
 });

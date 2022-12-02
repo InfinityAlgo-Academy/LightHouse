@@ -773,6 +773,8 @@ class TraceProcessor {
         timeOrigin: timeOriginEvt.ts,
         traceEnd: traceEnd.timestamp,
       },
+      _keyEvents: keyEvents,
+      _rendererPidTids: rendererPidTids,
     };
   }
 

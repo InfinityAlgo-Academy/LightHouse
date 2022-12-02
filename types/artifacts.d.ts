@@ -724,6 +724,10 @@ declare module Artifacts {
     frames: Array<{id: string, url: string}>;
     /** The trace event marking the time at which the run should consider to have begun. Typically the same as the navigationStart but might differ due to SPA navigations, client-side redirects, etc. In the FR timespan case, this event is injected by Lighthouse itself. */
     timeOriginEvt: TraceEvent;
+    /** All received trace events subsetted to important categories. */
+    _keyEvents: Array<TraceEvent>;
+    /** Map where keys are process IDs and their values are thread IDs */
+    _rendererPidTids: Map<number, number>;
   }
 
   interface ProcessedNavigation {
