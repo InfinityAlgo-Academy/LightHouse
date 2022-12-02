@@ -82,7 +82,6 @@
     "core/test/lib/median-run-test.js",
     "core/test/lib/minification-estimator-test.js",
     "core/test/lib/minify-devtoolslog-test.js",
-    "core/test/lib/minify-trace-test.js",
     "core/test/lib/network-recorder-test.js",
     "core/test/lib/network-request-test.js",
     "core/test/lib/page-functions-test.js",

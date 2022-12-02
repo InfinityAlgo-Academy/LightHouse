@@ -83,7 +83,6 @@
     "diff:sample-json": "yarn i18n:checks && bash core/scripts/assert-golden-lhr-unchanged.sh",
     "diff:flow-sample-json": "yarn i18n:collect-strings && bash core/scripts/assert-baseline-flow-result-unchanged.sh",
     "computeBenchmarkIndex": "./core/scripts/benchmark.js",
-    "minify-latest-run": "./core/scripts/lantern/minify-trace.js ./latest-run/defaultPass.trace.json ./latest-run/defaultPass.trace.min.json && ./core/scripts/lantern/minify-devtoolslog.js ./latest-run/defaultPass.devtoolslog.json ./latest-run/defaultPass.devtoolslog.min.json",
     "save-latest-run": "./core/scripts/save-latest-run.sh",
     "compile-proto": "protoc --python_out=./ ./proto/lighthouse-result.proto && mv ./proto/*_pb2.py ./proto/scripts || (echo \"❌ Install protobuf = 3.20.x to compile the proto file.\" && false)",
     "build-proto-roundtrip": "mkdir -p .tmp && python3 proto/scripts/json_roundtrip_via_proto.py",
