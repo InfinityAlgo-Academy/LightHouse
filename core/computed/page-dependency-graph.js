@@ -468,7 +468,7 @@ class PageDependencyGraph {
    * @return {URLArtifact}
    */
   static getDocumentUrls(devtoolsLog, networkRecords, processedTrace) {
-    const mainFrameId = processedTrace.mainFrameIds.frameId;
+    const mainFrameId = processedTrace.mainFrameInfo.frameId;
 
     /** @type {string|undefined} */
     let requestedUrl;

@@ -719,7 +719,7 @@ declare module Artifacts {
     /** The subset of trace events from the main frame and any child frames, sorted by timestamp. */
     frameTreeEvents: Array<TraceEvent>;
     /** IDs for the trace's main frame, and process. The startingPid is the initial process id, however cross-origin navigations may incur changes to the pid while the frame ID remains identical. */
-    mainFrameIds: {startingPid: number, frameId: string};
+    mainFrameInfo: {startingPid: number, frameId: string};
     /** The list of frames committed in the trace. */
     frames: Array<{id: string, url: string}>;
     /** The trace event marking the time at which the run should consider to have begun. Typically the same as the navigationStart but might differ due to SPA navigations, client-side redirects, etc. In the FR timespan case, this event is injected by Lighthouse itself. */

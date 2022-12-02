@@ -93,7 +93,7 @@ describe('PageDependencyGraph computed artifact:', () => {
   describe('#getDocumentUrls', () => {
     it('should resolve redirects', () => {
       const processedTrace = {
-        mainFrameIds: {
+        mainFrameInfo: {
           frameId: 'FRAMEID',
         },
       };

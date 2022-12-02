@@ -483,14 +483,14 @@ class TraceProcessor {
 
   /**
    * If there were multiple cross-origin navigations in the trace, there'll be more than one pid returned
-   * @param {{startingPid: number, frameId: string}} mainFrameIds
+   * @param {{startingPid: number, frameId: string}} mainFrameInfo
    * @param {LH.TraceEvent[]} keyEvents
    * @return {Map<number, number>} Map where keys are process IDs and their values are thread IDs
    */
-  static findMainFramePidTids(mainFrameIds, keyEvents) {
+  static findMainFramePidTids(mainFrameInfo, keyEvents) {
     const frameCommittedEvts = keyEvents.filter(evt =>
       evt.name === 'FrameCommittedInBrowser' &&
-      evt.args?.data?.frame === mainFrameIds.frameId
+      evt.args?.data?.frame === mainFrameInfo.frameId
     );
 
     // "Modern" traces with a navigation have a FrameCommittedInBrowser event
@@ -498,7 +498,7 @@ class TraceProcessor {
       ? frameCommittedEvts.map(e => e?.args?.data?.processId)
       // …But old traces and some timespan traces may not. In these situations, we'll assume the
       // primary process ID remains constant (as there were no navigations).
-      : [mainFrameIds.startingPid];
+      : [mainFrameInfo.startingPid];
 
     const pidToTid = new Map();
 
@@ -657,8 +657,8 @@ class TraceProcessor {
     });
 
     // Find the inspected frame
-    const mainFrameIds = this.findMainFrameIds(keyEvents);
-    const rendererPidTids = this.findMainFramePidTids(mainFrameIds, keyEvents);
+    const mainFrameInfo = this.findMainFrameIds(keyEvents);
+    const rendererPidTids = this.findMainFramePidTids(mainFrameInfo, keyEvents);
 
     // Subset all trace events to just our tab's process (incl threads other than main)
     // stable-sort events to keep them correctly nested.
@@ -705,10 +705,9 @@ class TraceProcessor {
     const frames = [...framesById.values()];
     const frameIdToRootFrameId = this.resolveRootFrames(frames);
 
-
     const inspectedTreeFrameIds = [...frameIdToRootFrameId.entries()]
-      // eslint-disable-next-line no-unused-vars
-      .filter(([child, root]) => root === mainFrameIds.frameId).map(([child, root]) => child);
+      .filter(([childFrameId, rootFrameId]) => rootFrameId === mainFrameInfo.frameId) // eslint-disable-line no-unused-vars
+      .map(([child, root]) => child); // eslint-disable-line no-unused-vars
 
     // @ts-expect-error frameIdToRootFrameId's values were casted to string. Runtime check here to confirm.
     if (inspectedTreeFrameIds.includes(undefined)) {
@@ -718,8 +717,8 @@ class TraceProcessor {
     // Filter to just events matching the main frame ID, just to make sure.
     /** @param {LH.TraceEvent} e */
     function associatedToMainFrame(e) {
-      return e.args?.data?.frame === mainFrameIds.frameId ||
-      e.args.frame === mainFrameIds.frameId;
+      return e.args?.data?.frame === mainFrameInfo.frameId ||
+      e.args.frame === mainFrameInfo.frameId;
     }
 
     /** @param {LH.TraceEvent} e */
@@ -731,7 +730,7 @@ class TraceProcessor {
 
     // Filter to just events matching the main frame ID or any child frame IDs.
     let frameTreeEvents = [];
-    if (frameIdToRootFrameId.has(mainFrameIds.frameId)) {
+    if (frameIdToRootFrameId.has(mainFrameInfo.frameId)) {
       frameTreeEvents = keyEvents.filter(e => associatedToAllFrames(e));
     } else {
       // In practice, there should always be TracingStartedInBrowser/FrameCommittedInBrowser events to
@@ -741,13 +740,13 @@ class TraceProcessor {
         'trace-of-tab',
         'frameTreeEvents may be incomplete, make sure the trace has frame events'
       );
-      frameIdToRootFrameId.set(mainFrameIds.frameId, mainFrameIds.frameId);
+      frameIdToRootFrameId.set(mainFrameInfo.frameId, mainFrameInfo.frameId);
       frameTreeEvents = frameEvents;
     }
 
     // Compute our time origin to use for all relative timings.
     const timeOriginEvt = this.computeTimeOrigin(
-      {keyEvents, frameEvents, mainFrameIds},
+      {keyEvents, frameEvents, mainFrameInfo: mainFrameInfo},
       timeOriginDeterminationMethod
     );
 
@@ -764,7 +763,7 @@ class TraceProcessor {
       frameEvents,
       frameTreeEvents,
       processEvents,
-      mainFrameIds,
+      mainFrameInfo,
       timeOriginEvt,
       timings: {
         timeOrigin: 0,
@@ -877,7 +876,7 @@ class TraceProcessor {
    *      Can also be skewed by several hundred milliseconds or even seconds when the browser takes a long
    *      time to unload `about:blank`.
    *
-   * @param {{keyEvents: Array<LH.TraceEvent>, frameEvents: Array<LH.TraceEvent>, mainFrameIds: {frameId: string}}} traceEventSubsets
+   * @param {{keyEvents: Array<LH.TraceEvent>, frameEvents: Array<LH.TraceEvent>, mainFrameInfo: {frameId: string}}} traceEventSubsets
    * @param {TimeOriginDeterminationMethod} method
    * @return {LH.TraceEvent}
    */
@@ -903,7 +902,7 @@ class TraceProcessor {
         const fetchStart = traceEventSubsets.keyEvents.find(event => {
           if (event.name !== 'ResourceSendRequest') return false;
           const data = event.args.data || {};
-          return data.frame === traceEventSubsets.mainFrameIds.frameId;
+          return data.frame === traceEventSubsets.mainFrameInfo.frameId;
         });
         if (!fetchStart) throw this.createNoResourceSendRequestError();
         return fetchStart;

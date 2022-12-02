@@ -23,7 +23,7 @@ describe('ProcessedTrace', () => {
     delete processedTrace.frameEvents;
 
     expect(processedTrace).toEqual({
-      mainFrameIds: {
+      mainFrameInfo: {
         frameId: '0x25a638821e30',
         startingPid: 44277,
       },

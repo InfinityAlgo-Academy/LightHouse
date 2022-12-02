@@ -401,7 +401,7 @@ describe('TraceProcessor', () => {
         assert.equal(evt.pid, firstEvt.pid, 'A traceEvent is found from another process');
       });
 
-      assert.equal(firstEvt.pid, trace.mainFrameIds.startingPid);
+      assert.equal(firstEvt.pid, trace.mainFrameInfo.startingPid);
       assert.equal(firstEvt.pid, trace.timeOriginEvt.pid);
     });
 
@@ -474,8 +474,8 @@ describe('TraceProcessor', () => {
         const trace = TraceProcessor.processTrace(startedAfterNavstartTrace);
         const navigation = TraceProcessor.processNavigation(trace);
 
-        assert.equal(trace.mainFrameIds.startingPid, navigation.firstContentfulPaintEvt.pid);
-        assert.equal(trace.mainFrameIds.startingPid, navigation.firstMeaningfulPaintEvt.pid);
+        assert.equal(trace.mainFrameInfo.startingPid, navigation.firstContentfulPaintEvt.pid);
+        assert.equal(trace.mainFrameInfo.startingPid, navigation.firstMeaningfulPaintEvt.pid);
       });
 
       it('computes timings of each event', () => {
@@ -503,7 +503,7 @@ describe('TraceProcessor', () => {
       it('if there was a tracingStartedInPage after the frame\'s navStart', () => {
         const trace = TraceProcessor.processTrace(startedAfterNavstartTrace);
         const navigation = TraceProcessor.processNavigation(trace);
-        assert.equal(trace.mainFrameIds.frameId, '0x163736997740');
+        assert.equal(trace.mainFrameInfo.frameId, '0x163736997740');
         assert.equal(trace.timeOriginEvt.ts, 29343540951);
         assert.equal(navigation.firstContentfulPaintEvt.ts, 29343621005);
         assert.equal(navigation.firstMeaningfulPaintEvt.ts, 29344070867);
@@ -513,7 +513,7 @@ describe('TraceProcessor', () => {
       it('if there was a tracingStartedInPage after the frame\'s navStart #2', () => {
         const trace = TraceProcessor.processTrace(badNavStartTrace);
         const navigation = TraceProcessor.processNavigation(trace);
-        assert.equal(trace.mainFrameIds.frameId, '0x89915541e48');
+        assert.equal(trace.mainFrameInfo.frameId, '0x89915541e48');
         assert.equal(trace.timeOriginEvt.ts, 8885424467);
         assert.equal(navigation.firstContentfulPaintEvt.ts, 8886056886);
         assert.equal(navigation.firstMeaningfulPaintEvt.ts, 8886056891);
@@ -523,7 +523,7 @@ describe('TraceProcessor', () => {
       it('if it appears slightly before the fCP', () => {
         const trace = TraceProcessor.processTrace(preactTrace);
         const navigation = TraceProcessor.processNavigation(trace);
-        assert.equal(trace.mainFrameIds.frameId, '0x25edaa521e58');
+        assert.equal(trace.mainFrameInfo.frameId, '0x25edaa521e58');
         assert.equal(trace.timeOriginEvt.ts, 1805796384607);
         assert.equal(navigation.firstContentfulPaintEvt.ts, 1805797263653);
         assert.equal(navigation.firstMeaningfulPaintEvt.ts, 1805797262960);
@@ -533,7 +533,7 @@ describe('TraceProcessor', () => {
       it('from candidates if no defined FMP exists', () => {
         const trace = TraceProcessor.processTrace(noFMPtrace);
         const navigation = TraceProcessor.processNavigation(trace);
-        assert.equal(trace.mainFrameIds.frameId, '0x150343381dd0');
+        assert.equal(trace.mainFrameInfo.frameId, '0x150343381dd0');
         assert.equal(trace.timeOriginEvt.ts, 2146735807738);
         assert.equal(navigation.firstContentfulPaintEvt.ts, 2146737302468);
         assert.equal(navigation.firstMeaningfulPaintEvt.ts, 2146740268666);
@@ -548,7 +548,7 @@ describe('TraceProcessor', () => {
         expect({
           'firstContentfulPaintEvt.ts': navigation.firstContentfulPaintEvt.ts,
           'largestContentfulPaintEvt.ts': navigation.largestContentfulPaintEvt.ts,
-          'mainFrameIds.frameId': trace.mainFrameIds.frameId,
+          'mainFrameInfo.frameId': trace.mainFrameInfo.frameId,
           'timeOriginEvt.ts': trace.timeOriginEvt.ts,
           'timestamps.firstContentfulPaint': navigation.timestamps.firstContentfulPaint,
           'timestamps.largestContentfulPaint': navigation.timestamps.largestContentfulPaint,
@@ -558,7 +558,7 @@ describe('TraceProcessor', () => {
 Object {
   "firstContentfulPaintEvt.ts": 713038144775,
   "largestContentfulPaintEvt.ts": 713038144775,
-  "mainFrameIds.frameId": "70B6647836A0A07265E532B094184D2A",
+  "mainFrameInfo.frameId": "70B6647836A0A07265E532B094184D2A",
   "timeOriginEvt.ts": 713037023064,
   "timestamps.firstContentfulPaint": 713038144775,
   "timestamps.largestContentfulPaint": 713038144775,
@@ -629,7 +629,7 @@ Object {
         const navigation = TraceProcessor.processNavigation(trace);
         expect({
           // Main frame
-          'mainFrameIds.frameId': trace.mainFrameIds.frameId,
+          'mainFrameInfo.frameId': trace.mainFrameInfo.frameId,
           'firstContentfulPaintEvt.ts': navigation.firstContentfulPaintEvt.ts,
           'largestContentfulPaintEvt.ts': navigation.largestContentfulPaintEvt.ts,
           'timestamps.firstContentfulPaint': navigation.timestamps.firstContentfulPaint,
@@ -664,7 +664,7 @@ Object {
             "firstContentfulPaintEvt.ts": 23466886143,
             "largestContentfulPaintAllFramesEvt.ts": 23466705983,
             "largestContentfulPaintEvt.ts": 23466886143,
-            "mainFrameIds.frameId": "207613A6AD77B492759226780A40F6F4",
+            "mainFrameInfo.frameId": "207613A6AD77B492759226780A40F6F4",
             "timestamps.firstContentfulPaint": 23466886143,
             "timestamps.firstContentfulPaintAllFrames": 23466705983,
             "timestamps.largestContentfulPaint": 23466886143,
@@ -727,7 +727,7 @@ Object {
     it('handles traces missing a paints (captured in background tab)', () => {
       const trace = TraceProcessor.processTrace(backgroundTabTrace);
       const navigation = TraceProcessor.processNavigation(trace);
-      assert.equal(trace.mainFrameIds.frameId, '0x53965941e30');
+      assert.equal(trace.mainFrameInfo.frameId, '0x53965941e30');
       assert.notEqual(trace.timeOriginEvt.ts, 1966813346529, 'picked wrong frame');
       assert.notEqual(trace.timeOriginEvt.ts, 1966813520313, 'picked wrong frame');
       assert.equal(
@@ -794,14 +794,14 @@ Object {
           'args': {'name': 'CrRendererMain'},
         }]};
       const trace = TraceProcessor.processTrace(tracingStartedInBrowserTrace);
-      assert.equal(trace.mainFrameIds.frameId, 'B192D1F3355A6F961EC8F0B01623C1FB');
+      assert.equal(trace.mainFrameInfo.frameId, 'B192D1F3355A6F961EC8F0B01623C1FB');
       assert.equal(trace.timeOriginEvt.ts, 2193564790059);
     });
 
     it('handles no TracingStarted errors in m74+', () => {
       const trace = TraceProcessor.processTrace(noTracingStartedTrace);
       const navigation = TraceProcessor.processNavigation(trace);
-      expect(trace.mainFrameIds.frameId).toEqual('0E0B1AF0B1BA04676037345D18A71577');
+      expect(trace.mainFrameInfo.frameId).toEqual('0E0B1AF0B1BA04676037345D18A71577');
       expect(navigation.firstContentfulPaintEvt.ts).toEqual(2610265036367);
     });
 
