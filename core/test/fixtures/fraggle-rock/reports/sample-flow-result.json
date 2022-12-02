@@ -9115,53 +9115,53 @@
                   "headings": [
                     {
                       "key": "phase",
-                      "itemType": "text",
+                      "valueType": "text",
                       "subItemsHeading": {
                         "key": "url",
-                        "itemType": "url"
+                        "valueType": "url"
                       },
-                      "text": "Phase"
+                      "label": "Phase"
                     },
                     {
                       "key": "total",
-                      "itemType": "ms",
+                      "valueType": "ms",
                       "subItemsHeading": {
                         "key": "total",
                         "granularity": 1,
-                        "itemType": "ms"
+                        "valueType": "ms"
                       },
                       "granularity": 1,
-                      "text": "Total time"
+                      "label": "Total time"
                     },
                     {
                       "key": null,
-                      "itemType": "ms",
+                      "valueType": "ms",
                       "subItemsHeading": {
                         "key": "scripting",
                         "granularity": 1,
-                        "itemType": "ms"
+                        "valueType": "ms"
                       },
-                      "text": "Script evaluation"
+                      "label": "Script evaluation"
                     },
                     {
                       "key": null,
-                      "itemType": "ms",
+                      "valueType": "ms",
                       "subItemsHeading": {
                         "key": "layout",
                         "granularity": 1,
-                        "itemType": "ms"
+                        "valueType": "ms"
                       },
-                      "text": "Style & Layout"
+                      "label": "Style & Layout"
                     },
                     {
                       "key": null,
-                      "itemType": "ms",
+                      "valueType": "ms",
                       "subItemsHeading": {
                         "key": "render",
                         "granularity": 1,
-                        "itemType": "ms"
+                        "valueType": "ms"
                       },
-                      "text": "Rendering"
+                      "label": "Rendering"
                     }
                   ],
                   "items": [
