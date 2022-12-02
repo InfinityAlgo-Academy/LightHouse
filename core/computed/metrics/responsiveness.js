@@ -87,6 +87,8 @@ class Responsiveness {
       return evt.name === 'EventTiming' && evt.ph !== 'e';
     });
 
+    // If trace is from < m103, the timestamps cannot be trusted
+    // TODO(compat): remove FallbackTiming handling when we don't care about <m103
     if (
       candidates.length &&
       // !some == none. If none of the candidates have a frame, bail.
