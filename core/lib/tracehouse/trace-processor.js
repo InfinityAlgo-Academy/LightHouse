@@ -717,8 +717,8 @@ class TraceProcessor {
     // Filter to just events matching the main frame ID, just to make sure.
     /** @param {LH.TraceEvent} e */
     function associatedToMainFrame(e) {
-      return e.args?.data?.frame === mainFrameInfo.frameId ||
-      e.args.frame === mainFrameInfo.frameId;
+      const frameId = e.args?.data?.frame || e.args.frame;
+      return frameId === mainFrameInfo.frameId;
     }
 
     /** @param {LH.TraceEvent} e */

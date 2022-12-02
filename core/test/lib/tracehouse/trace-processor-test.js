@@ -233,23 +233,24 @@ describe('TraceProcessor', () => {
       `);
     });
 
+    // TODO(compat): no FrameCommittedInBrowser events are VERY old trace. Remove support.
     it('frameTreeEvents includes main frame events if no FrameCommittedInBrowser found', () => {
       const testTrace = createTestTrace({timeOrigin: 0, traceEnd: 2000});
+      testTrace.traceEvents = testTrace.traceEvents
+        .filter(e => e.name !== 'FrameCommittedInBrowser');
+
       const mainFrame = testTrace.traceEvents.find(e => e.name === 'navigationStart').args.frame;
       const childFrame = 'CHILDFRAME';
       const otherMainFrame = 'ANOTHERTAB';
       const cat = 'loading,rail,devtools.timeline';
       testTrace.traceEvents.push(
-        /* eslint-disable max-len */
         {name: 'Event1', cat, args: {frame: mainFrame}},
         {name: 'Event2', cat, args: {frame: childFrame}},
         {name: 'Event3', cat, args: {frame: otherMainFrame}}
-        /* eslint-enable max-len */
       );
       const trace = TraceProcessor.processTrace(testTrace);
       expect(trace.frameTreeEvents.map(e => e.name)).toEqual([
         'navigationStart',
-        'FrameCommittedInBrowser', // WTF???
         'domContentLoadedEventEnd',
         'firstContentfulPaint',
         'firstMeaningfulPaint',
