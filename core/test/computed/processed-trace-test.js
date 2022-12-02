@@ -25,8 +25,7 @@ describe('ProcessedTrace', () => {
     expect(processedTrace).toEqual({
       mainFrameIds: {
         frameId: '0x25a638821e30',
-        pid: 44277,
-        tid: 775,
+        startingPid: 44277,
       },
       timeOriginEvt: {
         args: {

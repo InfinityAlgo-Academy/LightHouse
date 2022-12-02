@@ -485,7 +485,7 @@ class TraceProcessor {
    * If there were multiple cross-origin navigations in the trace, there'll be more than one pid returned
    * @param {{startingPid: number, frameId: string}} mainFrameIds
    * @param {LH.TraceEvent[]} keyEvents
-   * @return {Map<number, number>}
+   * @return {Map<number, number>} Map where keys are process IDs and their values are thread IDs
    */
   static findMainFramePidTids(mainFrameIds, keyEvents) {
     const frameCommittedEvts = keyEvents.filter(evt =>
@@ -497,7 +497,7 @@ class TraceProcessor {
     const mainFramePids = frameCommittedEvts.length
       ? frameCommittedEvts.map(e => e?.args?.data?.processId)
       // …But old traces and some timespan traces may not. In these situations, we'll assume the
-      // priarmy process ID remains constant (as there were no navigations).
+      // primary process ID remains constant (as there were no navigations).
       : [mainFrameIds.startingPid];
 
     const pidToTid = new Map();
@@ -659,12 +659,11 @@ class TraceProcessor {
     // Find the inspected frame
     const mainFrameIds = this.findMainFrameIds(keyEvents);
     const rendererPidTids = this.findMainFramePidTids(mainFrameIds, keyEvents);
-    const rendererPids = [...rendererPidTids.keys()];
 
     // Subset all trace events to just our tab's process (incl threads other than main)
     // stable-sort events to keep them correctly nested.
     const processEvents = TraceProcessor
-      .filteredTraceSort(trace.traceEvents, e => rendererPids.includes(e.pid));
+      .filteredTraceSort(trace.traceEvents, e => rendererPidTids.has(e.pid));
 
     // TODO(paulirish): filter down frames (and subsequent actions) to the primary process tree & frame tree
 

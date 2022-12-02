@@ -718,7 +718,7 @@ declare module Artifacts {
     frameEvents: Array<TraceEvent>;
     /** The subset of trace events from the main frame and any child frames, sorted by timestamp. */
     frameTreeEvents: Array<TraceEvent>;
-    /** IDs for the trace's main frame, process, and thread. */
+    /** IDs for the trace's main frame, and process. The startingPid is the initial process id, however cross-origin navigations may incur changes to the pid while the frame ID remains identical. */
     mainFrameIds: {startingPid: number, frameId: string};
     /** The list of frames committed in the trace. */
     frames: Array<{id: string, url: string}>;
