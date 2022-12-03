@@ -18,6 +18,7 @@ import {processForProto} from '../../core/lib/proto-preprocessor.js';
 import * as assetSaver from '../../core/lib/asset-saver.js';
 import mobileConfig from '../../core/config/lr-mobile-config.js';
 import desktopConfig from '../../core/config/lr-desktop-config.js';
+import {pageFunctions} from '../../core/lib/page-functions.js';
 
 /** @type {Record<'mobile'|'desktop', LH.Config.Json>} */
 const LR_PRESETS = {
@@ -161,9 +162,12 @@ if (typeof window !== 'undefined') {
   self.listenForStatus = listenForStatus;
 }
 
+const {computeBenchmarkIndex} = pageFunctions;
+
 export {
   runLighthouseInLR,
   api,
   listenForStatus,
   LR_PRESETS,
+  computeBenchmarkIndex,
 };
