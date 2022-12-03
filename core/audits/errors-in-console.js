@@ -23,7 +23,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user why errors being logged to the devtools console are a cause for concern and so should be fixed. This is displayed after a user expands the section to see more. No character length limits. */
   description: 'Errors logged to the console indicate unresolved problems. ' +
     'They can come from network request failures and other browser concerns. ' +
-    '[Learn more about this errors in console diagnostic audit](https://web.dev/errors-in-console/)',
+    '[Learn more about this errors in console diagnostic audit](https://developer.chrome.com/docs/lighthouse/best-practices/errors-in-console/)',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

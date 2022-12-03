@@ -9,7 +9,7 @@
  * COMPAT: LCP's trace event was first introduced in m78. We can't surface an LCP for older Chrome versions
  * @see https://github.com/WICG/largest-contentful-paint
  * @see https://wicg.github.io/largest-contentful-paint/
- * @see https://web.dev/largest-contentful-paint
+ * @see https://web.dev/lcp
  */
 
 import {makeComputedArtifact} from '../computed-artifact.js';

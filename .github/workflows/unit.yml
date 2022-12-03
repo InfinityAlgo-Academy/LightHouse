@@ -16,6 +16,7 @@ jobs:
     name: node ${{ matrix.node }}
     env:
       LATEST_NODE: '18'
+      FORCE_COLOR: true
 
     steps:
     - name: git clone

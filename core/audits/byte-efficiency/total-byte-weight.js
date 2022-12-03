@@ -17,7 +17,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should reduce the size of the network resources required by the page. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description:
   'Large network payloads cost users real money and are highly correlated with ' +
-  'long load times. [Learn how to reduce payload sizes](https://web.dev/total-byte-weight/).',
+  'long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/).',
   /** Used to summarize the total byte size of the page and all its network requests. The `{totalBytes}` placeholder will be replaced with the total byte sizes, shown in kibibytes (e.g. 142 KiB) */
   displayValue: 'Total size was {totalBytes, number, bytes}\xa0KiB',
 };

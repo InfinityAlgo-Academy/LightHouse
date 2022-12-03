@@ -15,7 +15,7 @@ const UIStrings = {
   failureTitle: 'Does not set a theme color for the address bar.',
   /** Description of a Lighthouse audit that tells the user why they should set a theme color for the browser's address bar. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'The browser address bar can be themed to match your site. ' +
-    '[Learn more about theming the address bar](https://web.dev/themed-omnibox/).',
+    '[Learn more about theming the address bar](https://developer.chrome.com/docs/lighthouse/pwa/themed-omnibox/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

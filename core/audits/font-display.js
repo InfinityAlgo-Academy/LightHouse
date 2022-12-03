@@ -23,7 +23,7 @@ const UIStrings = {
   description:
     'Leverage the `font-display` CSS feature to ensure text is user-visible while ' +
     'webfonts are loading. ' +
-    '[Learn more about `font-display`](https://web.dev/font-display/).',
+    '[Learn more about `font-display`](https://developer.chrome.com/docs/lighthouse/performance/font-display/).',
   /**
    * @description [ICU Syntax] A warning message that is shown when Lighthouse couldn't automatically check some of the page's fonts, telling the user that they will need to manually check the fonts coming from a certain URL origin.
    * @example {https://font.cdn.com/} fontOrigin

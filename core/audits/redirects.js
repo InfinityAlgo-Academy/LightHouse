@@ -16,7 +16,7 @@ const UIStrings = {
   /** Imperative title of a Lighthouse audit that tells the user to eliminate the redirects taken through multiple URLs to load the page. This is shown in a list of audits that Lighthouse generates. */
   title: 'Avoid multiple page redirects',
   /** Description of a Lighthouse audit that tells users why they should reduce the number of server-side redirects on their page. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
-  description: 'Redirects introduce additional delays before the page can be loaded. [Learn how to avoid page redirects](https://web.dev/redirects/).',
+  description: 'Redirects introduce additional delays before the page can be loaded. [Learn how to avoid page redirects](https://developer.chrome.com/docs/lighthouse/performance/redirects/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

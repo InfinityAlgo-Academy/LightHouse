@@ -15,7 +15,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user why they should define an HTML doctype. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Specifying a doctype prevents the browser ' +
     'from switching to quirks-mode. ' +
-    '[Learn more about the doctype declaration](https://web.dev/doctype/).',
+    '[Learn more about the doctype declaration](https://developer.chrome.com/docs/lighthouse/best-practices/doctype/).',
   /** Explanatory message stating that the document has no doctype. */
   explanationNoDoctype: 'Document must contain a doctype',
   /** Explanatory message stating that the document has wrong doctype */

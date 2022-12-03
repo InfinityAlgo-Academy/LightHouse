@@ -107,14 +107,14 @@ Object {
       "title": "Budgets",
     },
     "diagnostics": Object {
-      "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
+      "description": "More information about the performance of your application. These numbers don't [directly affect](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) the Performance score.",
       "title": "Diagnostics",
     },
     "hidden": Object {
       "title": "",
     },
     "load-opportunities": Object {
-      "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
+      "description": "These suggestions can help your page load faster. They don't [directly affect](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) the Performance score.",
       "title": "Opportunities",
     },
     "metrics": Object {
@@ -286,14 +286,14 @@ Object {
       "title": "Budgets",
     },
     "diagnostics": Object {
-      "description": "More information about the performance of your application. These numbers don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
+      "description": "More information about the performance of your application. These numbers don't [directly affect](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) the Performance score.",
       "title": "Diagnostics",
     },
     "hidden": Object {
       "title": "",
     },
     "load-opportunities": Object {
-      "description": "These suggestions can help your page load faster. They don't [directly affect](https://web.dev/performance-scoring/) the Performance score.",
+      "description": "These suggestions can help your page load faster. They don't [directly affect](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) the Performance score.",
       "title": "Opportunities",
     },
     "metrics": Object {

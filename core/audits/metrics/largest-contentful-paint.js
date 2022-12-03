@@ -11,7 +11,7 @@ import {LargestContentfulPaint as ComputedLcp} from '../../computed/metrics/larg
 const UIStrings = {
   /** Description of the Largest Contentful Paint (LCP) metric, which marks the time at which the largest text or image is painted by the browser. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Largest Contentful Paint marks the time at which the largest text or image is ' +
-      `painted. [Learn more about the Largest Contentful Paint metric](https://web.dev/lighthouse-largest-contentful-paint/)`,
+      `painted. [Learn more about the Largest Contentful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)`,
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
