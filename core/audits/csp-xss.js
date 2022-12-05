@@ -106,7 +106,6 @@ class CspXss extends Audit {
         },
         subItems: {
           type: 'subitems',
-          label: str_(i18n.UIStrings.reasons),
           items,
         },
       });
@@ -174,6 +173,7 @@ class CspXss extends Audit {
       /* eslint-enable max-len */
     ];
     const details = Audit.makeTableDetails(headings, results);
+    details.subItemsLabel = str_(i18n.UIStrings.reasons);
 
     return {
       score,

@@ -189,7 +189,6 @@ class ThirdPartyFacades extends Audit {
         blockingTime: entitySummary.blockingTime,
         subItems: {
           type: 'subitems',
-          label: str_(i18n.UIStrings.scriptResourceType),
           items,
         },
       });
@@ -216,7 +215,10 @@ class ThirdPartyFacades extends Audit {
       displayValue: str_(UIStrings.displayValue, {
         itemCount: results.length,
       }),
-      details: Audit.makeTableDetails(headings, results),
+      details: {
+        ...Audit.makeTableDetails(headings, results),
+        subItemsLabel: str_(i18n.UIStrings.scriptResourceType),
+      },
     };
   }
 }

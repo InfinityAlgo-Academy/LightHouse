@@ -135,7 +135,6 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
         const commonSourcePrefix = commonPrefix(bundle.map.sourceURLs());
         item.subItems = {
           type: 'subitems',
-          label: str_(i18n.UIStrings.module),
           items: topUnusedSourceSizes.map(({source, unused, total}) => {
             return {
               source: trimCommonPrefix(source, commonSourcePrefix),
@@ -156,6 +155,7 @@ class UnusedJavaScript extends ByteEfficiencyAudit {
         {key: 'wastedBytes', valueType: 'bytes', subItemsHeading: {key: 'sourceWastedBytes'}, label: str_(i18n.UIStrings.columnWastedBytes)},
         /* eslint-enable max-len */
       ],
+      subItemsLabel: str_(i18n.UIStrings.module),
     };
   }
 }

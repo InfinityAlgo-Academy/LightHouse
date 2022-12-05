@@ -119,7 +119,6 @@ class Hreflang extends Audit {
         source,
         subItems: {
           type: 'subitems',
-          label: str_(i18n.UIStrings.reasons),
           items: reasons.map(reason => ({reason})),
         },
       });
@@ -137,6 +136,7 @@ class Hreflang extends Audit {
     }];
 
     const details = Audit.makeTableDetails(headings, invalidHreflangs);
+    details.subItemsLabel = str_(i18n.UIStrings.reasons);
 
     return {
       score: Number(invalidHreflangs.length === 0),

@@ -237,13 +237,13 @@
                   "label": "Time Spent"
                 }
               ],
-              "items": [
+              "subItemsLabel": [
                 {
                   "url": "https://www.mikescerealshack.co/",
                   "responseTime": 236.03100000000006
                 }
               ],
-              "overallSavingsMs": 136.03100000000006
+              "items": 136.03100000000006
             }
           },
           "interactive": {
@@ -353,9 +353,20 @@
             "displayValue": "",
             "details": {
               "type": "opportunity",
-              "headings": [],
-              "items": [],
-              "overallSavingsMs": 0
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Time Spent"
+                }
+              ],
+              "subItemsLabel": [],
+              "items": 0
             }
           },
           "installable-manifest": {
@@ -622,8 +633,8 @@
             "details": {
               "type": "opportunity",
               "headings": [],
-              "items": [],
-              "overallSavingsMs": 0
+              "subItemsLabel": [],
+              "items": 0
             }
           },
           "uses-rel-preconnect": {
@@ -638,9 +649,20 @@
             "warnings": [],
             "details": {
               "type": "opportunity",
-              "headings": [],
-              "items": [],
-              "overallSavingsMs": 0
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Potential Savings"
+                }
+              ],
+              "subItemsLabel": [],
+              "items": 0
             }
           },
           "font-display": {
@@ -1730,7 +1752,8 @@
             "details": {
               "type": "table",
               "headings": [],
-              "items": []
+              "items": [],
+              "subItemsLabel": "Reasons"
             }
           },
           "unsized-images": {
@@ -1816,7 +1839,7 @@
                   "label": "Potential Savings"
                 }
               ],
-              "items": [
+              "subItemsLabel": [
                 {
                   "node": {
                     "type": "node",
@@ -1838,7 +1861,7 @@
                   "wastedMs": 0
                 }
               ],
-              "overallSavingsMs": 0,
+              "items": 0,
               "debugData": {
                 "type": "debugdata",
                 "initiatorPath": [
@@ -1894,7 +1917,8 @@
                   "severity": "High",
                   "description": "No CSP found in enforcement mode"
                 }
-              ]
+              ],
+              "subItemsLabel": "Reasons"
             }
           },
           "full-page-screenshot": {
@@ -3058,9 +3082,25 @@
             "numericUnit": "millisecond",
             "details": {
               "type": "opportunity",
-              "headings": [],
-              "items": [],
-              "overallSavingsMs": 0
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Potential Savings"
+                }
+              ],
+              "subItemsLabel": [],
+              "items": 0
             }
           },
           "unminified-css": {
@@ -3127,6 +3167,7 @@
             "details": {
               "type": "opportunity",
               "headings": [],
+              "subItemsLabel": "Module",
               "items": [],
               "overallSavingsMs": 0,
               "overallSavingsBytes": 0
@@ -3231,6 +3272,7 @@
             "details": {
               "type": "opportunity",
               "headings": [],
+              "subItemsLabel": "Script",
               "items": [],
               "overallSavingsMs": 0,
               "overallSavingsBytes": 0
@@ -3271,12 +3313,12 @@
                   "label": "Potential Savings"
                 }
               ],
+              "subItemsLabel": "Location",
               "items": [
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/commons.49455e4fa8cc3f51203f.js",
                   "wastedBytes": 57,
                   "subItems": {
-                    "label": "Location",
                     "type": "subitems",
                     "items": [
                       {
@@ -3660,7 +3702,8 @@
             "details": {
               "type": "table",
               "headings": [],
-              "items": []
+              "items": [],
+              "subItemsLabel": "Reasons"
             }
           },
           "plugins": {
@@ -6253,17 +6296,21 @@
             ],
             "core/lib/i18n/i18n.js | columnURL": [
               "audits[server-response-time].details.headings[0].label",
+              "audits.redirects.details.headings[0].label",
               "audits[bootup-time].details.headings[0].label",
+              "audits[uses-rel-preconnect].details.headings[0].label",
               "audits[network-rtt].details.headings[0].label",
               "audits[network-server-latency].details.headings[0].label",
               "audits[long-tasks].details.headings[0].label",
               "audits[unsized-images].details.headings[1].label",
               "audits[preload-lcp-image].details.headings[1].label",
               "audits[total-byte-weight].details.headings[0].label",
+              "audits[render-blocking-resources].details.headings[0].label",
               "audits[legacy-javascript].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnTimeSpent": [
               "audits[server-response-time].details.headings[1].label",
+              "audits.redirects.details.headings[1].label",
               "audits[mainthread-work-breakdown].details.headings[1].label",
               "audits[network-rtt].details.headings[1].label",
               "audits[network-server-latency].details.headings[1].label"
@@ -6419,6 +6466,12 @@
             "core/audits/uses-rel-preconnect.js | description": [
               "audits[uses-rel-preconnect].description"
             ],
+            "core/lib/i18n/i18n.js | columnWastedBytes": [
+              "audits[uses-rel-preconnect].details.headings[1].label",
+              "audits[preload-lcp-image].details.headings[2].label",
+              "audits[render-blocking-resources].details.headings[2].label",
+              "audits[legacy-javascript].details.headings[2].label"
+            ],
             "core/audits/font-display.js | title": [
               "audits[font-display].title"
             ],
@@ -6473,13 +6526,15 @@
             "core/lib/i18n/i18n.js | columnTransferSize": [
               "audits[resource-summary].details.headings[2].label",
               "audits[third-party-summary].details.headings[1].label",
-              "audits[total-byte-weight].details.headings[1].label"
+              "audits[total-byte-weight].details.headings[1].label",
+              "audits[render-blocking-resources].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | totalResourceType": [
               "audits[resource-summary].details.items[0].label"
             ],
             "core/lib/i18n/i18n.js | scriptResourceType": [
-              "audits[resource-summary].details.items[1].label"
+              "audits[resource-summary].details.items[1].label",
+              "audits[duplicated-javascript].details.subItemsLabel"
             ],
             "core/lib/i18n/i18n.js | fontResourceType": [
               "audits[resource-summary].details.items[2].label"
@@ -6595,6 +6650,11 @@
             "core/audits/non-composited-animations.js | description": [
               "audits[non-composited-animations].description"
             ],
+            "core/lib/i18n/i18n.js | reasons": [
+              "audits[non-composited-animations].details.subItemsLabel",
+              "audits[csp-xss].details.subItemsLabel",
+              "audits.hreflang.details.subItemsLabel"
+            ],
             "core/audits/unsized-images.js | failureTitle": [
               "audits[unsized-images].title"
             ],
@@ -6612,10 +6672,6 @@
             ],
             "core/audits/preload-lcp-image.js | description": [
               "audits[preload-lcp-image].description"
-            ],
-            "core/lib/i18n/i18n.js | columnWastedBytes": [
-              "audits[preload-lcp-image].details.headings[2].label",
-              "audits[legacy-javascript].details.headings[2].label"
             ],
             "core/audits/csp-xss.js | title": [
               "audits[csp-xss].title"
@@ -6984,6 +7040,9 @@
             "core/audits/byte-efficiency/unused-javascript.js | description": [
               "audits[unused-javascript].description"
             ],
+            "core/lib/i18n/i18n.js | module": [
+              "audits[unused-javascript].details.subItemsLabel"
+            ],
             "core/audits/byte-efficiency/modern-image-formats.js | title": [
               "audits[modern-image-formats].title"
             ],
@@ -7035,7 +7094,7 @@
               }
             ],
             "core/lib/i18n/i18n.js | columnLocation": [
-              "audits[legacy-javascript].details.items[0].subItems.label"
+              "audits[legacy-javascript].details.subItemsLabel"
             ],
             "core/audits/dobetterweb/doctype.js | title": [
               "audits.doctype.title"
@@ -8587,7 +8646,8 @@
             "details": {
               "type": "table",
               "headings": [],
-              "items": []
+              "items": [],
+              "subItemsLabel": "Reasons"
             }
           },
           "unsized-images": {
@@ -8942,6 +9002,7 @@
             "details": {
               "type": "opportunity",
               "headings": [],
+              "subItemsLabel": "Module",
               "items": [],
               "overallSavingsMs": 0,
               "overallSavingsBytes": 0
@@ -9046,6 +9107,7 @@
             "details": {
               "type": "opportunity",
               "headings": [],
+              "subItemsLabel": "Script",
               "items": [],
               "overallSavingsMs": 0,
               "overallSavingsBytes": 0
@@ -9063,6 +9125,7 @@
             "details": {
               "type": "opportunity",
               "headings": [],
+              "subItemsLabel": "Location",
               "items": [],
               "overallSavingsMs": 0,
               "overallSavingsBytes": 0
@@ -10256,7 +10319,8 @@
               "audits[resource-summary].details.items[2].label"
             ],
             "core/lib/i18n/i18n.js | scriptResourceType": [
-              "audits[resource-summary].details.items[3].label"
+              "audits[resource-summary].details.items[3].label",
+              "audits[duplicated-javascript].details.subItemsLabel"
             ],
             "core/lib/i18n/i18n.js | stylesheetResourceType": [
               "audits[resource-summary].details.items[4].label"
@@ -10339,6 +10403,9 @@
             "core/audits/non-composited-animations.js | description": [
               "audits[non-composited-animations].description"
             ],
+            "core/lib/i18n/i18n.js | reasons": [
+              "audits[non-composited-animations].details.subItemsLabel"
+            ],
             "core/audits/unsized-images.js | failureTitle": [
               "audits[unsized-images].title"
             ],
@@ -10406,6 +10473,9 @@
             "core/audits/byte-efficiency/unused-javascript.js | description": [
               "audits[unused-javascript].description"
             ],
+            "core/lib/i18n/i18n.js | module": [
+              "audits[unused-javascript].details.subItemsLabel"
+            ],
             "core/audits/byte-efficiency/modern-image-formats.js | title": [
               "audits[modern-image-formats].title"
             ],
@@ -10447,6 +10517,9 @@
             ],
             "core/audits/byte-efficiency/legacy-javascript.js | description": [
               "audits[legacy-javascript].description"
+            ],
+            "core/lib/i18n/i18n.js | columnLocation": [
+              "audits[legacy-javascript].details.subItemsLabel"
             ],
             "core/audits/dobetterweb/inspector-issues.js | title": [
               "audits[inspector-issues].title"
@@ -14418,13 +14491,13 @@
                   "label": "Time Spent"
                 }
               ],
-              "items": [
+              "subItemsLabel": [
                 {
                   "url": "https://www.mikescerealshack.co/corrections",
                   "responseTime": 115.003
                 }
               ],
-              "overallSavingsMs": 15.003
+              "items": 15.003
             }
           },
           "interactive": {
@@ -14534,9 +14607,20 @@
             "displayValue": "",
             "details": {
               "type": "opportunity",
-              "headings": [],
-              "items": [],
-              "overallSavingsMs": 0
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Time Spent"
+                }
+              ],
+              "subItemsLabel": [],
+              "items": 0
             }
           },
           "installable-manifest": {
@@ -14808,8 +14892,8 @@
             "details": {
               "type": "opportunity",
               "headings": [],
-              "items": [],
-              "overallSavingsMs": 0
+              "subItemsLabel": [],
+              "items": 0
             }
           },
           "uses-rel-preconnect": {
@@ -14824,9 +14908,20 @@
             "warnings": [],
             "details": {
               "type": "opportunity",
-              "headings": [],
-              "items": [],
-              "overallSavingsMs": 0
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Potential Savings"
+                }
+              ],
+              "subItemsLabel": [],
+              "items": 0
             }
           },
           "font-display": {
@@ -15740,7 +15835,8 @@
             "details": {
               "type": "table",
               "headings": [],
-              "items": []
+              "items": [],
+              "subItemsLabel": "Reasons"
             }
           },
           "unsized-images": {
@@ -15845,7 +15941,7 @@
                   "label": "Potential Savings"
                 }
               ],
-              "items": [
+              "subItemsLabel": [
                 {
                   "node": {
                     "type": "node",
@@ -15867,7 +15963,7 @@
                   "wastedMs": 0
                 }
               ],
-              "overallSavingsMs": 0,
+              "items": 0,
               "debugData": {
                 "type": "debugdata",
                 "initiatorPath": [
@@ -15923,7 +16019,8 @@
                   "severity": "High",
                   "description": "No CSP found in enforcement mode"
                 }
-              ]
+              ],
+              "subItemsLabel": "Reasons"
             }
           },
           "full-page-screenshot": {
@@ -17088,9 +17185,25 @@
             "numericUnit": "millisecond",
             "details": {
               "type": "opportunity",
-              "headings": [],
-              "items": [],
-              "overallSavingsMs": 0
+              "headings": [
+                {
+                  "key": "url",
+                  "valueType": "url",
+                  "label": "URL"
+                },
+                {
+                  "key": "totalBytes",
+                  "valueType": "bytes",
+                  "label": "Transfer Size"
+                },
+                {
+                  "key": "wastedMs",
+                  "valueType": "timespanMs",
+                  "label": "Potential Savings"
+                }
+              ],
+              "subItemsLabel": [],
+              "items": 0
             }
           },
           "unminified-css": {
@@ -17157,6 +17270,7 @@
             "details": {
               "type": "opportunity",
               "headings": [],
+              "subItemsLabel": "Module",
               "items": [],
               "overallSavingsMs": 0,
               "overallSavingsBytes": 0
@@ -17351,6 +17465,7 @@
             "details": {
               "type": "opportunity",
               "headings": [],
+              "subItemsLabel": "Script",
               "items": [],
               "overallSavingsMs": 0,
               "overallSavingsBytes": 0
@@ -17391,12 +17506,12 @@
                   "label": "Potential Savings"
                 }
               ],
+              "subItemsLabel": "Location",
               "items": [
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/commons.49455e4fa8cc3f51203f.js",
                   "wastedBytes": 0,
                   "subItems": {
-                    "label": "Location",
                     "type": "subitems",
                     "items": [
                       {
@@ -17837,7 +17952,8 @@
             "details": {
               "type": "table",
               "headings": [],
-              "items": []
+              "items": [],
+              "subItemsLabel": "Reasons"
             }
           },
           "plugins": {
@@ -20412,19 +20528,23 @@
             ],
             "core/lib/i18n/i18n.js | columnURL": [
               "audits[server-response-time].details.headings[0].label",
+              "audits.redirects.details.headings[0].label",
               "audits[bootup-time].details.headings[0].label",
+              "audits[uses-rel-preconnect].details.headings[0].label",
               "audits[network-rtt].details.headings[0].label",
               "audits[network-server-latency].details.headings[0].label",
               "audits[long-tasks].details.headings[0].label",
               "audits[unsized-images].details.headings[1].label",
               "audits[preload-lcp-image].details.headings[1].label",
               "audits[total-byte-weight].details.headings[0].label",
+              "audits[render-blocking-resources].details.headings[0].label",
               "audits[modern-image-formats].details.headings[1].label",
               "audits[uses-responsive-images].details.headings[1].label",
               "audits[legacy-javascript].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnTimeSpent": [
               "audits[server-response-time].details.headings[1].label",
+              "audits.redirects.details.headings[1].label",
               "audits[mainthread-work-breakdown].details.headings[1].label",
               "audits[network-rtt].details.headings[1].label",
               "audits[network-server-latency].details.headings[1].label"
@@ -20580,6 +20700,14 @@
             "core/audits/uses-rel-preconnect.js | description": [
               "audits[uses-rel-preconnect].description"
             ],
+            "core/lib/i18n/i18n.js | columnWastedBytes": [
+              "audits[uses-rel-preconnect].details.headings[1].label",
+              "audits[preload-lcp-image].details.headings[2].label",
+              "audits[render-blocking-resources].details.headings[2].label",
+              "audits[modern-image-formats].details.headings[3].label",
+              "audits[uses-responsive-images].details.headings[3].label",
+              "audits[legacy-javascript].details.headings[2].label"
+            ],
             "core/audits/font-display.js | title": [
               "audits[font-display].title"
             ],
@@ -20634,7 +20762,8 @@
             "core/lib/i18n/i18n.js | columnTransferSize": [
               "audits[resource-summary].details.headings[2].label",
               "audits[third-party-summary].details.headings[1].label",
-              "audits[total-byte-weight].details.headings[1].label"
+              "audits[total-byte-weight].details.headings[1].label",
+              "audits[render-blocking-resources].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | totalResourceType": [
               "audits[resource-summary].details.items[0].label"
@@ -20646,7 +20775,8 @@
               "audits[resource-summary].details.items[2].label"
             ],
             "core/lib/i18n/i18n.js | scriptResourceType": [
-              "audits[resource-summary].details.items[3].label"
+              "audits[resource-summary].details.items[3].label",
+              "audits[duplicated-javascript].details.subItemsLabel"
             ],
             "core/lib/i18n/i18n.js | fontResourceType": [
               "audits[resource-summary].details.items[4].label"
@@ -20746,6 +20876,11 @@
             "core/audits/non-composited-animations.js | description": [
               "audits[non-composited-animations].description"
             ],
+            "core/lib/i18n/i18n.js | reasons": [
+              "audits[non-composited-animations].details.subItemsLabel",
+              "audits[csp-xss].details.subItemsLabel",
+              "audits.hreflang.details.subItemsLabel"
+            ],
             "core/audits/unsized-images.js | failureTitle": [
               "audits[unsized-images].title"
             ],
@@ -20763,12 +20898,6 @@
             ],
             "core/audits/preload-lcp-image.js | description": [
               "audits[preload-lcp-image].description"
-            ],
-            "core/lib/i18n/i18n.js | columnWastedBytes": [
-              "audits[preload-lcp-image].details.headings[2].label",
-              "audits[modern-image-formats].details.headings[3].label",
-              "audits[uses-responsive-images].details.headings[3].label",
-              "audits[legacy-javascript].details.headings[2].label"
             ],
             "core/audits/csp-xss.js | title": [
               "audits[csp-xss].title"
@@ -21140,6 +21269,9 @@
             "core/audits/byte-efficiency/unused-javascript.js | description": [
               "audits[unused-javascript].description"
             ],
+            "core/lib/i18n/i18n.js | module": [
+              "audits[unused-javascript].details.subItemsLabel"
+            ],
             "core/audits/byte-efficiency/modern-image-formats.js | title": [
               "audits[modern-image-formats].title"
             ],
@@ -21201,7 +21333,7 @@
               "audits[legacy-javascript].description"
             ],
             "core/lib/i18n/i18n.js | columnLocation": [
-              "audits[legacy-javascript].details.items[0].subItems.label"
+              "audits[legacy-javascript].details.subItemsLabel"
             ],
             "core/audits/dobetterweb/doctype.js | title": [
               "audits.doctype.title"

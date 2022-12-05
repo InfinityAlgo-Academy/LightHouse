@@ -165,7 +165,6 @@ class NonCompositedAnimations extends Audit {
         node: Audit.makeNodeItem(element.node),
         subItems: {
           type: 'subitems',
-          label: str_(i18n.UIStrings.reasons),
           items: allFailureReasons,
         },
       });
@@ -187,6 +186,7 @@ class NonCompositedAnimations extends Audit {
     }
 
     const details = Audit.makeTableDetails(headings, results);
+    details.subItemsLabel = str_(i18n.UIStrings.reasons);
 
     let displayValue;
     if (results.length > 0) {

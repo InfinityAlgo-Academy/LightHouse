@@ -207,7 +207,6 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
         totalBytes: 0,
         subItems: {
           type: 'subitems',
-          label: str_(i18n.UIStrings.scriptResourceType),
           items: subItems,
         },
       });
@@ -221,7 +220,6 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
         totalBytes: 0,
         subItems: {
           type: 'subitems',
-          label: str_(i18n.UIStrings.scriptResourceType),
           items: Array.from(overflowUrls).map(url => ({url})),
         },
       });
@@ -240,6 +238,7 @@ class DuplicatedJavascript extends ByteEfficiencyAudit {
     return {
       items,
       headings,
+      subItemsLabel: str_(i18n.UIStrings.scriptResourceType),
       wastedBytesByUrl,
     };
   }

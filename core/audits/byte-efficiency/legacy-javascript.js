@@ -426,7 +426,6 @@ class LegacyJavascript extends ByteEfficiencyAudit {
         url: script.url,
         wastedBytes,
         subItems: {
-          label: str_(i18n.UIStrings.columnLocation),
           type: 'subitems',
           items: [],
         },
@@ -468,6 +467,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     return {
       items,
       headings,
+      subItemsLabel: str_(i18n.UIStrings.columnLocation),
       wastedBytesByUrl,
     };
   }
