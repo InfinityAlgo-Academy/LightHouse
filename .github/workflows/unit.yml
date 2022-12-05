@@ -2,7 +2,7 @@ name: unit
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request: # run on all PRs, not just PRs to a particular branch
 
 jobs:
@@ -10,11 +10,13 @@ jobs:
   unit:
     strategy:
       matrix:
-        node: ['14', '16', '17']
+        node: ['16', '18']
+      fail-fast: false
     runs-on: ubuntu-latest
     name: node ${{ matrix.node }}
     env:
-      LATEST_NODE: '17'
+      LATEST_NODE: '18'
+      FORCE_COLOR: true
 
     steps:
     - name: git clone
@@ -31,26 +33,28 @@ jobs:
     - name: Set up protoc
       uses: arduino/setup-protoc@64c0c85d18e984422218383b81c52f8b077404d3
       with:
-        version: '3.7.1'
+        version: '3.20'
         repo-token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up Python
       uses: actions/setup-python@v1
       with:
-        python-version: 2.7
+        python-version: 3
     - name: Install Python dependencies
       run: |
-        python -m pip install --upgrade pip
-        pip install protobuf==3.7.1
+        python3 -m pip install --upgrade pip
+        pip install protobuf==3.20
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
+    - run: yarn reset-link
 
+    # Run pptr tests using ToT Chrome instead of stable default.
     - name: Define ToT chrome path
       run: echo "CHROME_PATH=/home/runner/chrome-linux-tot/chrome" >> $GITHUB_ENV
     - name: Install Chrome ToT
       working-directory: /home/runner
-      run: bash $GITHUB_WORKSPACE/lighthouse-core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
+      run: bash $GITHUB_WORKSPACE/core/scripts/download-chrome.sh && mv chrome-linux chrome-linux-tot
 
     - run: yarn test-proto # Run before unit-core because the roundtrip json is needed for proto tests.
 
@@ -61,7 +65,7 @@ jobs:
       run: xvfb-run --auto-servernum yarn unit:ci
 
     # Only gather coverage on latest node, where c8 is the most accurate.
-    - name: yarn unit:coverage
+    - name: yarn unit:cicoverage
       if: ${{ matrix.node == env.LATEST_NODE }}
       run: |
         xvfb-run --auto-servernum yarn unit:cicoverage
@@ -82,16 +86,15 @@ jobs:
     - name: git clone
       uses: actions/checkout@v2
 
-    - name: Use Node.js 14.x
+    - name: Use Node.js 16.x
       uses: actions/setup-node@v1
       with:
-        node-version: 14.x
+        node-version: 16.x
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
     - run: yarn build-report
 
-    - name: yarn unit-cli
-      run: yarn unit-cli
+    - run: yarn unit-cli
     - run: yarn diff:sample-json
 
     # Fail if any changes were written to any source files or generated untracked files (ex, from -GA).

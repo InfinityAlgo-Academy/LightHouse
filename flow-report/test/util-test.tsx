@@ -4,9 +4,9 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import {jest} from '@jest/globals';
+import jestMock from 'jest-mock';
 import {render} from '@testing-library/preact';
-import {renderHook} from '@testing-library/preact-hooks';
+import {renderHook} from '@testing-library/preact-hooks/src/index';
 import {FunctionComponent} from 'preact';
 import {act} from 'preact/test-utils';
 
@@ -16,7 +16,7 @@ import {flowResult} from './sample-flow';
 let wrapper: FunctionComponent;
 
 beforeEach(() => {
-  global.console.warn = jest.fn();
+  global.console.warn = jestMock.fn();
   wrapper = ({children}) => (
     <FlowResultContext.Provider value={flowResult}>{children}</FlowResultContext.Provider>
   );

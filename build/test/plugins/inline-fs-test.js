@@ -3,18 +3,24 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-/* eslint-env jest */
+import fs from 'fs';
+import path from 'path';
+import {createRequire} from 'module';
 
-const fs = require('fs');
-const path = require('path');
-const {inlineFs} = require('../../plugins/inline-fs.js');
+import {inlineFs} from '../../plugins/inline-fs.js';
+import {LH_ROOT} from '../../../root.js';
 
-const {LH_ROOT} = require('../../../root.js');
-const filepath = `${LH_ROOT}/lighthouse-core/index.js`;
+const require = createRequire(import.meta.url);
 
-describe('inline-fs', () => {
+const filepath = `${LH_ROOT}/core/index.js`;
+
+// Lots of path separator issues on Windows, because LH_ROOT has \\ slashes but
+// most tests here don't JSON.stringify the strings they interpolate into code.
+// Deferring for now.
+const describeSkipOnWindows = process.platform === 'win32' ? describe.skip : describe;
+
+describeSkipOnWindows('inline-fs', () => {
   const tmpPath = `${LH_ROOT}/.tmp/inline-fs/test.txt`;
   const tmpDir = path.dirname(tmpPath);
 
@@ -262,6 +268,11 @@ describe('inline-fs', () => {
           code: `const myTextContent = "\\"quoted\\", and an unbalanced quote: \\"";`,
           warnings: [],
         });
+      });
+
+      it('throws fatal error if file is missing', async () => {
+        const content = `const myTextContent = fs.readFileSync('i-never-exist.lol', 'utf8');`;
+        await expect(inlineFs(content, filepath)).rejects.toThrow('ENOENT');
       });
 
       it('inlines multiple fs.readFileSync calls', async () => {

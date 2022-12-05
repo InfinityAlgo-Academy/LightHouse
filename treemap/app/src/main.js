@@ -3,7 +3,6 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* eslint-env browser */
 
@@ -15,6 +14,8 @@ import {GithubApi} from '../../../viewer/app/src/github-api.js';
 import {I18n} from '../../../report/renderer/i18n.js';
 import {TextEncoding} from '../../../report/renderer/text-encoding.js';
 import {Logger} from '../../../report/renderer/logger.js';
+
+/** @typedef {LH.Treemap.Node & {dom?: HTMLElement}} NodeWithElement */
 
 const DUPLICATED_MODULES_IGNORE_THRESHOLD = 1024;
 const DUPLICATED_MODULES_IGNORE_ROOT_RATIO = 0.01;
@@ -74,7 +75,15 @@ class TreemapViewer {
     /** @type {WeakMap<LH.Treemap.Node, LH.Treemap.NodePath>} */
     this.nodeToPathMap = new WeakMap();
 
-    this.documentUrl = new URL(options.lhr.finalUrl);
+    // Priority breakdown:
+    // 1) `mainDocumentUrl`: This is what we want post-10.0 for navigation reports.
+    // 2) `finalUrl`: This is what we want pre-10.0 for navigation reports.
+    // 3) `finalDisplayedUrl`: Timespan and snapshot reports don't have either of the above URLs, so use this one for display / origin check purposes.
+    const documentUrlString = options.lhr.mainDocumentUrl ||
+      options.lhr.finalUrl ||
+      options.lhr.finalDisplayedUrl;
+
+    this.documentUrl = new URL(documentUrlString);
     this.el = el;
     this.getHueForD1NodeName = TreemapUtil.stableHasher(TreemapUtil.COLOR_HUES);
 
@@ -84,7 +93,12 @@ class TreemapViewer {
       try {
         const url = new URL(node.name);
         node.name = TreemapUtil.elideSameOrigin(url, this.documentUrl);
-        if (url.href === this.documentUrl.href) {
+        const isInlineHtmlNode =
+          node.children?.every(child => child.name.startsWith('(inline)')) ||
+          // Backport for treemap data that does not add the "(inline)" prefix to each inline script.
+          // This is pre-10.0 when the `finalUrl` represented the main document url.
+          url.href === this.documentUrl.href;
+        if (isInlineHtmlNode) {
           node.name += ' (inline)';
         }
       } catch {}

@@ -3,9 +3,8 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-import {strict as assert} from 'assert';
+import assert from 'assert/strict';
 
 import jsdom from 'jsdom';
 
@@ -13,8 +12,6 @@ import {DOM} from '../../renderer/dom.js';
 import {Util} from '../../renderer/util.js';
 import {I18n} from '../../renderer/i18n.js';
 import {DetailsRenderer} from '../../renderer/details-renderer.js';
-
-/* eslint-env jest */
 
 describe('DetailsRenderer', () => {
   let renderer;
@@ -25,12 +22,12 @@ describe('DetailsRenderer', () => {
     renderer = new DetailsRenderer(dom, options);
   }
 
-  beforeAll(() => {
+  before(() => {
     Util.i18n = new I18n('en', {...Util.UIStrings});
     createRenderer();
   });
 
-  afterAll(() => {
+  after(() => {
     Util.i18n = undefined;
   });
 
@@ -60,9 +57,9 @@ describe('DetailsRenderer', () => {
       const el = renderer.render({
         type: 'table',
         headings: [
-          {text: 'First', key: 'a', itemType: 'text'},
-          {text: 'Second', key: 'b', itemType: 'text'},
-          {text: 'Preview', key: 'c', itemType: 'thumbnail'},
+          {text: 'First', key: 'a', valueType: 'text'},
+          {text: 'Second', key: 'b', valueType: 'text'},
+          {text: 'Preview', key: 'c', valueType: 'thumbnail'},
         ],
         items: [
           {
@@ -85,6 +82,55 @@ describe('DetailsRenderer', () => {
       assert.equal(el.querySelectorAll('.lh-table-column--text').length, 6, '--text not set');
       assert.equal(el.querySelectorAll('.lh-table-column--thumbnail').length, 3,
           '--thumbnail not set');
+    });
+
+    it('renders with default granularity', () => {
+      const el = renderer.render({
+        type: 'table',
+        headings: [
+          {text: '', key: 'bytes', valueType: 'bytes'},
+          {text: '', key: 'numeric', valueType: 'numeric'},
+          {text: '', key: 'ms', valueType: 'ms'},
+          // Verify that 0 is ignored.
+          {text: '', key: 'ms', valueType: 'ms', granularity: 0},
+        ],
+        items: [
+          {
+            bytes: 1234.567,
+            numeric: 1234.567,
+            ms: 1234.567,
+          },
+        ],
+      });
+
+      assert.equal(el.querySelectorAll('td').length, 4, 'did not render table cells');
+      assert.equal(el.querySelectorAll('td')[0].textContent, '1.2\xa0KiB');
+      assert.equal(el.querySelectorAll('td')[1].textContent, '1,234.6');
+      assert.equal(el.querySelectorAll('td')[2].textContent, '1,230\xa0ms');
+      assert.equal(el.querySelectorAll('td')[3].textContent, '1,230\xa0ms');
+    });
+
+    it('renders with custom granularity', () => {
+      const el = renderer.render({
+        type: 'table',
+        headings: [
+          {text: '', key: 'bytes', valueType: 'bytes', granularity: 0.01},
+          {text: '', key: 'numeric', valueType: 'numeric', granularity: 100},
+          {text: '', key: 'ms', valueType: 'ms', granularity: 1},
+        ],
+        items: [
+          {
+            bytes: 1234.567,
+            numeric: 1234.567,
+            ms: 1234.567,
+          },
+        ],
+      });
+
+      assert.equal(el.querySelectorAll('td').length, 3, 'did not render table cells');
+      assert.equal(el.querySelectorAll('td')[0].textContent, '1.21\xa0KiB');
+      assert.equal(el.querySelectorAll('td')[1].textContent, '1,200');
+      assert.equal(el.querySelectorAll('td')[2].textContent, '1,235\xa0ms');
     });
 
     it('renders critical request chains', () => {
@@ -142,24 +188,24 @@ describe('DetailsRenderer', () => {
     });
 
     it('renders lists', () => {
-      const snippet = {
-        type: 'snippet',
-        lines: [{lineNumber: 1, content: ''}],
-        title: 'Some snippet',
-        lineMessages: [],
-        generalMessages: [],
-        lineCount: 100,
+      const table = {
+        type: 'table',
+        headings: [{text: '', key: 'numeric', valueType: 'numeric'}],
+        items: [{numeric: 1234.567}],
       };
 
       const el = renderer.render({
         type: 'list',
-        items: [snippet, snippet],
+        items: [table, table],
       });
 
       assert.equal(el.localName, 'div');
       assert.ok(el.classList.contains('lh-list'), 'has list class');
       assert.ok(el.children.length, 2, 'renders all items');
-      assert.ok(el.children[0].textContent.includes('Some snippet'), 'renders item content');
+      for (const child of el.children) {
+        assert.ok(child.classList.contains('lh-table'));
+        assert.equal(child.textContent, '1,234.6');
+      }
     });
 
     it('does not render internal-only screenshot details', () => {
@@ -218,7 +264,7 @@ describe('DetailsRenderer', () => {
     it('renders text values', () => {
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'text', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'text', label: 'Heading'}],
         items: [{content: 'My text content'}],
       };
 
@@ -231,7 +277,7 @@ describe('DetailsRenderer', () => {
     it('renders not much if items are empty', () => {
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'text', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'text', label: 'Heading'}],
         items: [],
       };
 
@@ -242,7 +288,7 @@ describe('DetailsRenderer', () => {
     it('renders an empty cell if item is missing a property', () => {
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'text', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'text', label: 'Heading'}],
         items: [
           {},
           {content: undefined},
@@ -270,7 +316,7 @@ describe('DetailsRenderer', () => {
     it('renders code values from a string', () => {
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'code', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'code', label: 'Heading'}],
         items: [{content: 'code snippet'}],
       };
 
@@ -288,7 +334,7 @@ describe('DetailsRenderer', () => {
 
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'code', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'code', label: 'Heading'}],
         items: [{content: code}],
       };
 
@@ -301,7 +347,7 @@ describe('DetailsRenderer', () => {
     it('renders thumbnail values', () => {
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'thumbnail', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'thumbnail', label: 'Heading'}],
         items: [{content: 'http://example.com/my-image.jpg'}],
       };
 
@@ -323,7 +369,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'link', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'link', label: 'Heading'}],
         items: [{content: link}],
       };
 
@@ -345,7 +391,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'link', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'link', label: 'Heading'}],
         items: [{content: link}],
       };
 
@@ -365,7 +411,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'link', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'link', label: 'Heading'}],
         items: [{content: link}],
       };
 
@@ -385,7 +431,7 @@ describe('DetailsRenderer', () => {
         };
         const details = {
           type: 'table',
-          headings: [{key: 'content', itemType: 'node', text: 'Heading'}],
+          headings: [{key: 'content', valueType: 'node', label: 'Heading'}],
           items: [{content: node}],
         };
 
@@ -420,7 +466,7 @@ describe('DetailsRenderer', () => {
         };
         const details = {
           type: 'table',
-          headings: [{key: 'content', itemType: 'node', text: 'Heading'}],
+          headings: [{key: 'content', valueType: 'node', label: 'Heading'}],
           items: [{content: node}],
         };
 
@@ -452,7 +498,7 @@ describe('DetailsRenderer', () => {
         };
         const details = {
           type: 'table',
-          headings: [{key: 'content', itemType: 'node', text: 'Heading'}],
+          headings: [{key: 'content', valueType: 'node', label: 'Heading'}],
           items: [{content: node}],
         };
 
@@ -473,7 +519,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'source-location', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'source-location', label: 'Heading'}],
         items: [{content: sourceLocation}],
       };
 
@@ -503,7 +549,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'source-location', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'source-location', label: 'Heading'}],
         items: [{content: sourceLocation}],
       };
 
@@ -529,7 +575,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'source-location', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'source-location', label: 'Heading'}],
         items: [{content: sourceLocation}],
       };
 
@@ -554,7 +600,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'source-location', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'source-location', label: 'Heading'}],
         items: [{content: sourceLocation}],
       };
 
@@ -579,7 +625,7 @@ describe('DetailsRenderer', () => {
       };
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'source-location', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'source-location', label: 'Heading'}],
         items: [{content: sourceLocation}],
       };
 
@@ -600,7 +646,7 @@ describe('DetailsRenderer', () => {
 
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'url', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'url', label: 'Heading'}],
         items: [{content: urlText}],
       };
 
@@ -627,7 +673,7 @@ describe('DetailsRenderer', () => {
 
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'url', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'url', label: 'Heading'}],
         items: [{content: url}],
         overallSavingsMs: 100,
       };
@@ -647,7 +693,7 @@ describe('DetailsRenderer', () => {
 
       const details = {
         type: 'table',
-        headings: [{key: 'content', itemType: 'url', text: 'Heading'}],
+        headings: [{key: 'content', valueType: 'url', label: 'Heading'}],
         items: [{content: urlText}],
       };
 
@@ -666,11 +712,11 @@ describe('DetailsRenderer', () => {
         console.error = consoleError;
       });
 
-      it('renders an unknown heading itemType', () => {
+      it('renders an unknown heading valueType', () => {
         // Disallowed by type system, but test that we get an error message out just in case.
         const details = {
           type: 'table',
-          headings: [{key: 'content', itemType: 'notRealValueType', text: 'Heading'}],
+          headings: [{key: 'content', valueType: 'notRealValueType', label: 'Heading'}],
           items: [{content: 'some string'}],
         };
 
@@ -691,7 +737,7 @@ describe('DetailsRenderer', () => {
 
         const details = {
           type: 'table',
-          headings: [{key: 'content', itemType: 'url', text: 'Heading'}],
+          headings: [{key: 'content', valueType: 'url', label: 'Heading'}],
           items: [{content: item}],
         };
 
@@ -707,8 +753,8 @@ describe('DetailsRenderer', () => {
     it('uses the item\'s type over the heading type', () => {
       const details = {
         type: 'table',
-        // itemType is overriden by code object
-        headings: [{key: 'content', itemType: 'url', text: 'Heading'}],
+        // valueType is overriden by code object
+        headings: [{key: 'content', valueType: 'url', label: 'Heading'}],
         items: [
           {content: {type: 'code', value: 'https://codeobject.com'}},
           {content: 'https://example.com'},
@@ -744,7 +790,7 @@ describe('DetailsRenderer', () => {
         const details = {
           type: 'table',
           headings: [
-            {key: 'url', itemType: 'url', subItemsHeading: {key: 'source', itemType: 'code'}},
+            {key: 'url', valueType: 'url', subItemsHeading: {key: 'source', valueType: 'code'}},
           ],
           items: [
             {
@@ -786,7 +832,7 @@ describe('DetailsRenderer', () => {
       it('renders, uses heading properties as fallback', () => {
         const details = {
           type: 'table',
-          headings: [{key: 'url', itemType: 'url', subItemsHeading: {key: 'source'}}],
+          headings: [{key: 'url', valueType: 'url', subItemsHeading: {key: 'source'}}],
           items: [
             {
               url: 'https://www.example.com',

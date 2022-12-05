@@ -3,21 +3,20 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
 /* global globalThis */
 
 import {Buffer} from 'buffer';
 
-import lighthouse from '../../lighthouse-core/index.js';
-import {navigation, startTimespan, snapshot} from '../../lighthouse-core/fraggle-rock/api.js';
-import RawProtocol from '../../lighthouse-core/gather/connections/raw.js';
 import log from 'lighthouse-logger';
-import {lookupLocale} from '../../lighthouse-core/lib/i18n/i18n.js';
-import {registerLocaleData, getCanonicalLocales} from '../../shared/localization/format.js';
-import constants from '../../lighthouse-core/config/constants.js';
 
-/** @typedef {import('../../lighthouse-core/gather/connections/connection.js')} Connection */
+import lighthouse, {legacyNavigation, navigation, startTimespan, snapshot} from '../../core/index.js';
+import {RawConnection} from '../../core/legacy/gather/connections/raw.js';
+import {lookupLocale} from '../../core/lib/i18n/i18n.js';
+import {registerLocaleData, getCanonicalLocales} from '../../shared/localization/format.js';
+import * as constants from '../../core/config/constants.js';
+
+/** @typedef {import('../../core/legacy/gather/connections/connection.js')} Connection */
 
 // Rollup seems to overlook some references to `Buffer`, so it must be made explicit.
 // (`parseSourceMapFromDataUrl` breaks without this)
@@ -58,16 +57,17 @@ function createConfig(categoryIDs, device) {
 }
 
 /**
- * @param {RawProtocol.Port} port
- * @return {RawProtocol}
+ * @param {import('../../core/legacy/gather/connections/raw.js').Port} port
+ * @return {RawConnection}
  */
 function setUpWorkerConnection(port) {
-  return new RawProtocol(port);
+  return new RawConnection(port);
 }
 
 /** @param {(status: [string, string, string]) => void} listenCallback */
 function listenForStatus(listenCallback) {
   log.events.addListener('status', listenCallback);
+  log.events.addListener('warning', listenCallback);
 }
 
 /**
@@ -81,6 +81,31 @@ function lookupCanonicalLocale(locales) {
   return lookupLocale(locales, getCanonicalLocales());
 }
 
+/**
+ * TODO: Expose api directly when DevTools usage is updated.
+ * @param {string} url
+ * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, flags?: LH.Flags}} args
+ */
+function runLighthouseNavigation(url, {page, ...options}) {
+  return navigation(page, url, options);
+}
+
+/**
+ * TODO: Expose api directly when DevTools usage is updated.
+ * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, flags?: LH.Flags}} args
+ */
+function startLighthouseTimespan({page, ...options}) {
+  return startTimespan(page, options);
+}
+
+/**
+ * TODO: Expose api directly when DevTools usage is updated.
+ * @param {{page: LH.Puppeteer.Page, config?: LH.Config.Json, flags?: LH.Flags}} args
+ */
+function runLighthouseSnapshot({page, ...options}) {
+  return snapshot(page, options);
+}
+
 // Expose only in DevTools' worker
 if (typeof self !== 'undefined') {
   // TODO: refactor and delete `global.isDevtools`.
@@ -89,13 +114,19 @@ if (typeof self !== 'undefined') {
   // @ts-expect-error
   self.setUpWorkerConnection = setUpWorkerConnection;
   // @ts-expect-error
-  self.runLighthouse = lighthouse.legacyNavigation;
+  self.runLighthouse = legacyNavigation;
   // @ts-expect-error
-  self.runLighthouseNavigation = navigation;
+  self.runLighthouseNavigation = runLighthouseNavigation;
   // @ts-expect-error
-  self.startLighthouseTimespan = startTimespan;
+  self.navigation = navigation;
   // @ts-expect-error
-  self.runLighthouseSnapshot = snapshot;
+  self.startLighthouseTimespan = startLighthouseTimespan;
+  // @ts-expect-error
+  self.startTimespan = startTimespan;
+  // @ts-expect-error
+  self.runLighthouseSnapshot = runLighthouseSnapshot;
+  // @ts-expect-error
+  self.snapshot = snapshot;
   // @ts-expect-error
   self.createConfig = createConfig;
   // @ts-expect-error
@@ -109,4 +140,6 @@ if (typeof self !== 'undefined') {
   // For the bundle smoke test.
   // @ts-expect-error
   global.runBundledLighthouse = lighthouse;
+  // @ts-expect-error
+  global.runBundledLighthouseLegacyNavigation = legacyNavigation;
 }

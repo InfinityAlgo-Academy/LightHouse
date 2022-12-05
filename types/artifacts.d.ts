@@ -4,26 +4,26 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import parseManifest = require('../lighthouse-core/lib/manifest-parser.js');
-import LanternSimulator = require('../lighthouse-core/lib/dependency-graph/simulator/simulator.js');
-import LighthouseError = require('../lighthouse-core/lib/lh-error.js');
-import _NetworkRequest = require('../lighthouse-core/lib/network-request.js');
-import speedline = require('speedline-core');
-import TextSourceMap = require('../lighthouse-core/lib/cdt/generated/SourceMap.js');
-import ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equality-map.js');
-
-type _TaskNode = import('../lighthouse-core/lib/tracehouse/main-thread-tasks.js').TaskNode;
-
+import {parseManifest} from '../core/lib/manifest-parser.js';
+import {Simulator} from '../core/lib/dependency-graph/simulator/simulator.js';
+import {LighthouseError} from '../core/lib/lh-error.js';
+import {NetworkRequest as _NetworkRequest} from '../core/lib/network-request.js';
+import speedline from 'speedline-core';
+import TextSourceMap from '../core/lib/cdt/generated/SourceMap.js';
+import {ArbitraryEqualityMap} from '../core/lib/arbitrary-equality-map.js';
+import type { TaskNode as _TaskNode } from '../core/lib/tracehouse/main-thread-tasks.js';
 import AuditDetails from './lhr/audit-details'
 import Config from './config';
 import Gatherer from './gatherer';
 import {IcuMessage} from './lhr/i18n';
 import LHResult from './lhr/lhr'
 import Protocol from './protocol';
+import Util from './utility-types.js';
+import Audit from './audit.js';
 
 export interface Artifacts extends BaseArtifacts, GathererArtifacts {}
 
-export type FRArtifacts = StrictOmit<Artifacts,
+export type FRArtifacts = Util.StrictOmit<Artifacts,
   | 'Fonts'
   | 'Manifest'
   | 'MixedContent'
@@ -49,6 +49,8 @@ interface UniversalBaseArtifacts {
   LighthouseRunWarnings: Array<string | IcuMessage>;
   /** The benchmark index that indicates rough device class. */
   BenchmarkIndex: number;
+  /** Many benchmark indexes. Many. */
+  BenchmarkIndexes?: number[];
   /** An object containing information about the testing configuration used by Lighthouse. */
   settings: Config.Settings;
   /** The timing instrumentation of the gather portion of a run. */
@@ -122,6 +124,8 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   Accessibility: Artifacts.Accessibility;
   /** Array of all anchors on the page. */
   AnchorElements: Artifacts.AnchorElement[];
+  /** Errors when attempting to use the back/forward cache. */
+  BFCacheFailures: Artifacts.BFCacheFailure[];
   /** Array of all URLs cached in CacheStorage. */
   CacheContents: string[];
   /** CSS coverage information for styles used by page's final state. */
@@ -179,7 +183,7 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
 }
 
 declare module Artifacts {
-  type ComputedContext = Immutable<{
+  type ComputedContext = Util.Immutable<{
     computedCache: Map<string, ArbitraryEqualityMap>;
   }>;
 
@@ -188,8 +192,6 @@ declare module Artifacts {
   type MetaElement = Artifacts['MetaElements'][0];
 
   interface URL {
-    /** URL of the main frame before Lighthouse starts. */
-    initialUrl: string;
     /**
      * URL of the initially requested URL during a Lighthouse navigation.
      * Will be `undefined` in timespan/snapshot.
@@ -200,12 +202,8 @@ declare module Artifacts {
      * Will be `undefined` in timespan/snapshot.
      */
     mainDocumentUrl?: string;
-    /**
-     * Will be the same as `mainDocumentUrl` in navigation mode.
-     * Wil be the URL of the main frame after Lighthouse finishes in timespan/snapshot.
-     * TODO: Use the main frame URL in navigation mode as well.
-     */
-    finalUrl: string;
+    /** URL displayed on the page after Lighthouse finishes. */
+    finalDisplayedUrl: string;
   }
 
   interface NodeDetails {
@@ -238,6 +236,7 @@ declare module Artifacts {
   interface Accessibility {
     violations: Array<AxeRuleResult>;
     notApplicable: Array<Pick<AxeRuleResult, 'id'>>;
+    passes: Array<Pick<AxeRuleResult, 'id'>>;
     incomplete: Array<AxeRuleResult>;
     version: string;
   }
@@ -251,6 +250,7 @@ declare module Artifacts {
     name: string;
     publicId: string;
     systemId: string;
+    documentCompatMode: string;
   }
 
   interface DOMStats {
@@ -414,6 +414,16 @@ declare module Artifacts {
     }>
   }
 
+  type BFCacheReasonMap = {
+    [key in LH.Crdp.Page.BackForwardCacheNotRestoredReason]?: string[];
+  };
+
+  type BFCacheNotRestoredReasonsTree = Record<LH.Crdp.Page.BackForwardCacheNotRestoredReasonType, BFCacheReasonMap>;
+
+  interface BFCacheFailure {
+    notRestoredReasonsTree: BFCacheNotRestoredReasonsTree;
+  }
+
   interface Font {
     display: string;
     family: string;
@@ -571,11 +581,12 @@ declare module Artifacts {
   }
 
   interface TraceElement {
-    traceEventType: 'largest-contentful-paint'|'layout-shift'|'animation';
+    traceEventType: 'largest-contentful-paint'|'layout-shift'|'animation'|'responsiveness';
     score?: number;
     node: NodeDetails;
     nodeId?: number;
     animations?: {name?: string, failureReasonsMask?: number, unsupportedProperties?: string[]}[];
+    type?: string;
   }
 
   interface ViewportDimensions {
@@ -637,9 +648,9 @@ declare module Artifacts {
   interface MetricComputationDataInput {
     devtoolsLog: DevtoolsLog;
     trace: Trace;
-    settings: Immutable<Config.Settings>;
+    settings: Audit.Context['settings'];
     gatherContext: Artifacts['GatherContext'];
-    simulator?: InstanceType<typeof LanternSimulator>;
+    simulator?: InstanceType<typeof Simulator>;
     URL: Artifacts['URL'];
   }
 
@@ -960,6 +971,7 @@ export interface TraceEvent {
       documentLoaderURL?: string;
       frames?: {
         frame: string;
+        url: string;
         parent?: string;
         processId?: number;
       }[];
@@ -996,6 +1008,10 @@ export interface TraceEvent {
       compositeFailed?: number;
       unsupportedProperties?: string[];
       size?: number;
+      /** Responsiveness data. */
+      interactionType?: 'drag'|'keyboard'|'tapOrClick';
+      maxDuration?: number;
+      type?: string;
     };
     frame?: string;
     name?: string;
@@ -1012,6 +1028,40 @@ export interface TraceEvent {
   id2?: {
     local?: string;
   };
+}
+
+declare module Trace {
+  /**
+   * Base event of a `ph: 'X'` 'complete' event. Extend with `name` and `args` as
+   * needed.
+   */
+  interface CompleteEvent {
+    ph: 'X';
+    cat: string;
+    pid: number;
+    tid: number;
+    dur: number;
+    ts: number;
+    tdur: number;
+    tts: number;
+  }
+
+  /**
+   * Base event of a `ph: 'b'|'e'|'n'` async event. Extend with `name`, `args`, and
+   * more specific `ph` (if needed).
+   */
+  interface AsyncEvent {
+    ph: 'b'|'e'|'n';
+    cat: string;
+    pid: number;
+    tid: number;
+    ts: number;
+    id: string;
+    scope?: string;
+    // TODO(bckenny): No dur on these. Sort out optional `dur` on trace events.
+    /** @deprecated there is no `dur` on async events. */
+    dur: number;
+  }
 }
 
 /**

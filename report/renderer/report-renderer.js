@@ -17,7 +17,6 @@
  * Dummy text for ensuring report robustness: </script> pre$`post %%LIGHTHOUSE_JSON%%
  * (this is handled by terser)
  */
-'use strict';
 
 /** @typedef {import('./dom.js').DOM} DOM */
 
@@ -71,7 +70,7 @@ export class ReportRenderer {
     const report = Util.prepareReportResult(lhr);
 
     this._dom.rootEl.textContent = ''; // Remove previous report.
-    this._dom.rootEl.appendChild(this._renderReport(report));
+    this._dom.rootEl.append(this._renderReport(report));
 
     return this._dom.rootEl;
   }
@@ -83,9 +82,9 @@ export class ReportRenderer {
   _renderReportTopbar(report) {
     const el = this._dom.createComponent('topbar');
     const metadataUrl = this._dom.find('a.lh-topbar__url', el);
-    metadataUrl.textContent = report.finalUrl;
-    metadataUrl.title = report.finalUrl;
-    this._dom.safelySetHref(metadataUrl, report.finalUrl);
+    metadataUrl.textContent = report.finalDisplayedUrl;
+    metadataUrl.title = report.finalDisplayedUrl;
+    this._dom.safelySetHref(metadataUrl, report.finalDisplayedUrl);
     return el;
   }
 
@@ -120,8 +119,6 @@ export class ReportRenderer {
    */
   _renderMetaBlock(report, footer) {
     const envValues = Util.getEmulationDescriptions(report.configSettings || {});
-
-
     const match = report.userAgent.match(/(\w*Chrome\/[\d.]+)/); // \w* to include 'HeadlessChrome'
     const chromeVer = Array.isArray(match)
       ? match[1].replace('/', ' ').replace('Chrome', 'Chromium')
@@ -130,15 +127,25 @@ export class ReportRenderer {
     const benchmarkIndex = report.environment.benchmarkIndex.toFixed(0);
     const axeVersion = report.environment.credits?.['axe-core'];
 
+    const devicesTooltipTextLines = [
+      `${Util.i18n.strings.runtimeSettingsBenchmark}: ${benchmarkIndex}`,
+      `${Util.i18n.strings.runtimeSettingsCPUThrottling}: ${envValues.cpuThrottling}`,
+    ];
+    if (envValues.screenEmulation) {
+      devicesTooltipTextLines.push(
+        `${Util.i18n.strings.runtimeSettingsScreenEmulation}: ${envValues.screenEmulation}`);
+    }
+    if (axeVersion) {
+      devicesTooltipTextLines.push(`${Util.i18n.strings.runtimeSettingsAxeVersion}: ${axeVersion}`);
+    }
+
     // [CSS icon class, textContent, tooltipText]
     const metaItems = [
       ['date',
         `Captured at ${Util.i18n.formatDateTime(report.fetchTime)}`],
       ['devices',
         `${envValues.deviceEmulation} with Lighthouse ${report.lighthouseVersion}`,
-        `${Util.i18n.strings.runtimeSettingsBenchmark}: ${benchmarkIndex}` +
-            `\n${Util.i18n.strings.runtimeSettingsCPUThrottling}: ${envValues.cpuThrottling}` +
-            (axeVersion ? `\n${Util.i18n.strings.runtimeSettingsAxeVersion}: ${axeVersion}` : '')],
+        devicesTooltipTextLines.join('\n')],
       ['samples-one',
         Util.i18n.strings.runtimeSingleLoad,
         Util.i18n.strings.runtimeSingleLoadTooltip],
@@ -179,11 +186,13 @@ export class ReportRenderer {
     const message = this._dom.find('.lh-warnings__msg', container);
     message.textContent = Util.i18n.strings.toplevelWarningsMessage;
 
-    const warnings = this._dom.find('ul', container);
+    const warnings = [];
     for (const warningString of report.runWarnings) {
-      const warning = warnings.appendChild(this._dom.createElement('li'));
-      warning.appendChild(this._dom.convertMarkdownLinkSnippets(warningString));
+      const warning = this._dom.createElement('li');
+      warning.append(this._dom.convertMarkdownLinkSnippets(warningString));
+      warnings.push(warning);
     }
+    this._dom.find('ul', container).append(...warnings);
 
     return container;
   }
@@ -276,11 +285,11 @@ export class ReportRenderer {
     };
 
     const headerContainer = this._dom.createElement('div');
-    headerContainer.appendChild(this._renderReportHeader());
+    headerContainer.append(this._renderReportHeader());
 
     const reportContainer = this._dom.createElement('div', 'lh-container');
     const reportSection = this._dom.createElement('div', 'lh-report');
-    reportSection.appendChild(this._renderReportWarnings(report));
+    reportSection.append(this._renderReportWarnings(report));
 
     let scoreHeader;
     const isSoloCategory = Object.keys(report.categories).length === 1;
@@ -297,23 +306,23 @@ export class ReportRenderer {
       const scoresContainer = this._dom.find('.lh-scores-container', headerContainer);
       scoreHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
-      scoresContainer.appendChild(scoreHeader);
-      scoresContainer.appendChild(scoreScale);
+      scoresContainer.append(scoreHeader, scoreScale);
 
       const stickyHeader = this._dom.createElement('div', 'lh-sticky-header');
       stickyHeader.append(
         ...this._renderScoreGauges(report, categoryRenderer, specificCategoryRenderers));
-      reportContainer.appendChild(stickyHeader);
+      reportContainer.append(stickyHeader);
     }
 
-    const categories = reportSection.appendChild(this._dom.createElement('div', 'lh-categories'));
+    const categories = this._dom.createElement('div', 'lh-categories');
+    reportSection.append(categories);
     const categoryOptions = {gatherMode: report.gatherMode};
     for (const category of Object.values(report.categories)) {
       const renderer = specificCategoryRenderers[category.id] || categoryRenderer;
       // .lh-category-wrapper is full-width and provides horizontal rules between categories.
       // .lh-category within has the max-width: var(--report-content-max-width);
       const wrapper = renderer.dom.createChildOf(categories, 'div', 'lh-category-wrapper');
-      wrapper.appendChild(renderer.render(
+      wrapper.append(renderer.render(
         category,
         report.categoryGroups,
         categoryOptions
@@ -328,13 +337,12 @@ export class ReportRenderer {
     }
 
     if (!this._opts.omitTopbar) {
-      reportFragment.appendChild(this._renderReportTopbar(report));
+      reportFragment.append(this._renderReportTopbar(report));
     }
 
-    reportFragment.appendChild(reportContainer);
-    reportContainer.appendChild(headerContainer);
-    reportContainer.appendChild(reportSection);
-    reportSection.appendChild(this._renderReportFooter(report));
+    reportFragment.append(reportContainer);
+    reportSection.append(this._renderReportFooter(report));
+    reportContainer.append(headerContainer, reportSection);
 
     if (fullPageScreenshot) {
       ElementScreenshotRenderer.installFullPageScreenshot(

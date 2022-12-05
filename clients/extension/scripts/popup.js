@@ -3,9 +3,8 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
 
-const SettingsController = require('./settings-controller.js');
+import * as SettingsController from './settings-controller.js';
 
 const VIEWER_URL = 'https://googlechrome.github.io/lighthouse/viewer/';
 const optionsVisibleClass = 'main--options-visible';
@@ -53,10 +52,11 @@ function createOptionItem(text, id, isChecked) {
   }
 
   const label = document.createElement('label');
-  label.appendChild(input);
-  label.appendChild(document.createElement('span')).textContent = text;
+  const span = document.createElement('span');
+  span.textContent = text;
+  label.append(input, span);
   const listItem = document.createElement('li');
-  listItem.appendChild(label);
+  listItem.append(label);
 
   return listItem;
 }
@@ -87,11 +87,11 @@ function generateOptionsList(settings) {
 
   SettingsController.DEFAULT_CATEGORIES.forEach(category => {
     const isChecked = settings.selectedCategories.includes(category.id);
-    frag.appendChild(createOptionItem(category.title, category.id, isChecked));
+    frag.append(createOptionItem(category.title, category.id, isChecked));
   });
 
   const optionsCategoriesList = find('.options__categories');
-  optionsCategoriesList.appendChild(frag);
+  optionsCategoriesList.append(frag);
 }
 
 function fillDevToolsShortcut() {

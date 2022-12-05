@@ -3,34 +3,36 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
-'use strict';
+
+import {nodeResolve} from '@rollup/plugin-node-resolve';
+import postprocess from '@stadtlandnetz/rollup-plugin-postprocess';
+import alias from '@rollup/plugin-alias';
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
+import replace from 'rollup-plugin-replace';
+// @ts-expect-error: no published types.
+import shim from 'rollup-plugin-shim';
+import {terser} from 'rollup-plugin-terser';
+import typescript from '@rollup/plugin-typescript';
+
+import inlineFs from './plugins/rollup-plugin-inline-fs.js';
 
 /**
- * Rollup plugins don't export types that work with commonjs.
- * @template T
- * @param {T} module
- * @return {T['default']}
+ * These expressions should never show up in a bundle, otherwise they'll never
+ * run inside a browser. They are only ever used to set a variable `moduleDir`,
+ * which the inline-fs replaces anyways.
  */
-function rollupPluginTypeCoerce(module) {
-  // @ts-expect-error
-  return module;
+function removeModuleDirCalls() {
+  return replace({
+    delimiters: ['', ''],
+    values: {
+      'getModuleDirectory(import.meta)': '""',
+    },
+  });
 }
 
-const alias = rollupPluginTypeCoerce(require('@rollup/plugin-alias'));
-const commonjs = rollupPluginTypeCoerce(require('@rollup/plugin-commonjs'));
-const json = rollupPluginTypeCoerce(require('@rollup/plugin-json'));
-const nodePolyfills = rollupPluginTypeCoerce(require('rollup-plugin-polyfill-node'));
-const {nodeResolve} = require('@rollup/plugin-node-resolve');
-const postprocess = require('@stadtlandnetz/rollup-plugin-postprocess');
-const replace = rollupPluginTypeCoerce(require('rollup-plugin-replace'));
-// @ts-expect-error: no published types.
-const shim = require('rollup-plugin-shim');
-const {terser} = require('rollup-plugin-terser');
-const typescript = rollupPluginTypeCoerce(require('@rollup/plugin-typescript'));
-
-const inlineFs = require('./plugins/rollup-plugin-inline-fs.js');
-
-module.exports = {
+export {
   alias,
   commonjs,
   inlineFs,
@@ -38,6 +40,7 @@ module.exports = {
   nodePolyfills,
   nodeResolve,
   postprocess,
+  removeModuleDirCalls,
   replace,
   shim,
   terser,

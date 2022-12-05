@@ -5,15 +5,14 @@
  */
 'use strict';
 
-const assert = require('assert').strict;
+import assert from 'assert/strict';
 
-const getLhrFilenamePrefix = require('../../generator/file-namer.js').getLhrFilenamePrefix;
+import {getLhrFilenamePrefix} from '../../generator/file-namer.js';
 
-/* eslint-env jest */
 describe('file-namer helper', () => {
   it('generates filename prefixes', () => {
     const results = {
-      finalUrl: 'https://testexample.com',
+      finalDisplayedUrl: 'https://testexample.com',
       fetchTime: '2017-01-06T02:34:56.217Z',
     };
     const str = getLhrFilenamePrefix(results);

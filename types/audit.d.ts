@@ -4,13 +4,14 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import ArbitraryEqualityMap = require('../lighthouse-core/lib/arbitrary-equality-map.js');
+import {ArbitraryEqualityMap} from '../core/lib/arbitrary-equality-map.js';
 import {Artifacts} from './artifacts';
 import AuditDetails from './lhr/audit-details';
 import Config from './config';
 import Gatherer from './gatherer';
-import {FormattedIcu, IcuMessage} from './lhr/i18n';
+import {IcuMessage} from './lhr/i18n';
 import * as AuditResult from './lhr/audit-result';
+import Util from './utility-types.js';
 
 declare module Audit {
   export import Details = AuditDetails;
@@ -18,7 +19,7 @@ declare module Audit {
   export type ScoreDisplayMode = AuditResult.ScoreDisplayMode;
   export type ScoreDisplayModes = AuditResult.ScoreDisplayModes;
 
-  type Context = Immutable<{
+  type Context = Util.Immutable<{
     /** audit options */
     options: Record<string, any>;
     settings: Config.Settings;

@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-'use strict';
 
 /** @template T @typedef {import('./i18n').I18n<T>} I18n */
 
@@ -52,6 +51,28 @@ class Util {
   }
 
   /**
+   * If LHR is older than 10.0 it will not have the `finalDisplayedUrl` property.
+   * Old LHRs should have the `finalUrl` property which will work fine for the report.
+   *
+   * @param {LH.Result} lhr
+   */
+  static getFinalDisplayedUrl(lhr) {
+    if (lhr.finalDisplayedUrl) return lhr.finalDisplayedUrl;
+    if (lhr.finalUrl) return lhr.finalUrl;
+    throw new Error('Could not determine final displayed URL');
+  }
+
+  /**
+   * If LHR is older than 10.0 it will not have the `mainDocumentUrl` property.
+   * Old LHRs should have the `finalUrl` property which is the same as `mainDocumentUrl`.
+   *
+   * @param {LH.Result} lhr
+   */
+  static getMainDocumentUrl(lhr) {
+    return lhr.mainDocumentUrl || lhr.finalUrl;
+  }
+
+  /**
    * Returns a new LHR that's reshaped for slightly better ergonomics within the report rendereer.
    * Also, sets up the localized UI strings used within renderer and makes changes to old LHRs to be
    * compatible with current renderer.
@@ -72,6 +93,9 @@ class Util {
       // @ts-expect-error fallback handling for emulatedFormFactor
       clone.configSettings.formFactor = clone.configSettings.emulatedFormFactor;
     }
+
+    clone.finalDisplayedUrl = this.getFinalDisplayedUrl(clone);
+    clone.mainDocumentUrl = this.getMainDocumentUrl(clone);
 
     for (const audit of Object.values(clone.audits)) {
       // Turn 'not-applicable' (LHR <4.0) and 'not_applicable' (older proto versions)
@@ -96,6 +120,33 @@ class Util {
           for (const screenshot of audit.details.items) {
             if (!screenshot.data.startsWith(SCREENSHOT_PREFIX)) {
               screenshot.data = SCREENSHOT_PREFIX + screenshot.data;
+            }
+          }
+        }
+
+        // Circa 10.0, table items were refactored.
+        if (audit.details.type === 'table') {
+          for (const heading of audit.details.headings) {
+            /** @type {{itemType: LH.Audit.Details.ItemValueType|undefined, text: string|undefined}} */
+            // @ts-expect-error
+            const {itemType, text} = heading;
+            if (itemType !== undefined) {
+              heading.valueType = itemType;
+              // @ts-expect-error
+              delete heading.itemType;
+            }
+            if (text !== undefined) {
+              heading.label = text;
+              // @ts-expect-error
+              delete heading.text;
+            }
+
+            // @ts-expect-error
+            const subItemsItemType = heading.subItemsHeading?.itemType;
+            if (heading.subItemsHeading && subItemsItemType !== undefined) {
+              heading.subItemsHeading.valueType = subItemsItemType;
+              // @ts-expect-error
+              delete heading.subItemsHeading.itemType;
             }
           }
         }
@@ -415,7 +466,7 @@ class Util {
 
   /**
    * @param {LH.Result['configSettings']} settings
-   * @return {!{deviceEmulation: string, networkThrottling: string, cpuThrottling: string, summary: string}}
+   * @return {!{deviceEmulation: string, screenEmulation?: string, networkThrottling: string, cpuThrottling: string, summary: string}}
    */
   static getEmulationDescriptions(settings) {
     let cpuThrottling;
@@ -430,10 +481,11 @@ class Util {
         break;
       case 'devtools': {
         const {cpuSlowdownMultiplier, requestLatencyMs} = throttling;
+        // eslint-disable-next-line max-len
         cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (DevTools)`;
-        networkThrottling = `${Util.i18n.formatNumber(requestLatencyMs)}${NBSP}ms HTTP RTT, ` +
-          `${Util.i18n.formatNumber(throttling.downloadThroughputKbps)}${NBSP}Kbps down, ` +
-          `${Util.i18n.formatNumber(throttling.uploadThroughputKbps)}${NBSP}Kbps up (DevTools)`;
+        networkThrottling = `${Util.i18n.formatMilliseconds(requestLatencyMs)} HTTP RTT, ` +
+          `${Util.i18n.formatKbps(throttling.downloadThroughputKbps)} down, ` +
+          `${Util.i18n.formatKbps(throttling.uploadThroughputKbps)} up (DevTools)`;
 
         const isSlow4G = () => {
           return requestLatencyMs === 150 * 3.75 &&
@@ -445,9 +497,10 @@ class Util {
       }
       case 'simulate': {
         const {cpuSlowdownMultiplier, rttMs, throughputKbps} = throttling;
+        // eslint-disable-next-line max-len
         cpuThrottling = `${Util.i18n.formatNumber(cpuSlowdownMultiplier)}x slowdown (Simulated)`;
-        networkThrottling = `${Util.i18n.formatNumber(rttMs)}${NBSP}ms TCP RTT, ` +
-          `${Util.i18n.formatNumber(throughputKbps)}${NBSP}Kbps throughput (Simulated)`;
+        networkThrottling = `${Util.i18n.formatMilliseconds(rttMs)} TCP RTT, ` +
+          `${Util.i18n.formatKbps(throughputKbps)} throughput (Simulated)`;
 
         const isSlow4G = () => {
           return rttMs === 150 && throughputKbps === 1.6 * 1024;
@@ -459,14 +512,19 @@ class Util {
         summary = cpuThrottling = networkThrottling = Util.i18n.strings.runtimeUnknown;
     }
 
-    // TODO(paulirish): revise Runtime Settings strings: https://github.com/GoogleChrome/lighthouse/pull/11796
     const deviceEmulation = {
       mobile: Util.i18n.strings.runtimeMobileEmulation,
       desktop: Util.i18n.strings.runtimeDesktopEmulation,
     }[settings.formFactor] || Util.i18n.strings.runtimeNoEmulation;
 
+    const screenEmulation = settings.screenEmulation.disabled ?
+      undefined :
+      // eslint-disable-next-line max-len
+      `${settings.screenEmulation.width}x${settings.screenEmulation.height}, DPR ${settings.screenEmulation.deviceScaleFactor}`;
+
     return {
       deviceEmulation,
+      screenEmulation,
       cpuThrottling,
       networkThrottling,
       summary,
@@ -567,22 +625,23 @@ class Util {
  */
 Util.reportJson = null;
 
+let svgSuffix = 0;
 /**
  * An always-increasing counter for making unique SVG ID suffixes.
  */
-Util.getUniqueSuffix = (() => {
-  let svgSuffix = 0;
-  return function() {
-    return svgSuffix++;
-  };
-})();
+Util.getUniqueSuffix = () => {
+  return svgSuffix++;
+};
+Util.resetUniqueSuffix = () => {
+  svgSuffix = 0;
+};
 
 /**
  * Report-renderer-specific strings.
  */
 const UIStrings = {
   /** Disclaimer shown to users below the metric values (First Contentful Paint, Time to Interactive, etc) to warn them that the numbers they see will likely change slightly the next time they run Lighthouse. */
-  varianceDisclaimer: 'Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics.',
+  varianceDisclaimer: 'Values are estimated and may vary. The [performance score is calculated](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) directly from these metrics.',
   /** Text link pointing to an interactive calculator that explains Lighthouse scoring. The link text should be fairly short. */
   calculatorLink: 'See calculator.',
   /** Label preceding a radio control for filtering the list of audits. The radio choices are various performance metrics (FCP, LCP, TBT), and if chosen, the audits in the report are hidden if they are not relevant to the selected metric. */
@@ -663,6 +722,8 @@ const UIStrings = {
   runtimeSettingsBenchmark: 'CPU/Memory Power',
   /** Label for a row in a table that shows the version of the Axe library used. Example row values: 2.1.0, 3.2.3 */
   runtimeSettingsAxeVersion: 'Axe version',
+  /** Label for a row in a table that shows the screen resolution and DPR that was emulated for the Lighthouse run. Example values: '800x600, DPR: 3' */
+  runtimeSettingsScreenEmulation: 'Screen emulation',
 
   /** Label for button to create an issue against the Lighthouse GitHub project. */
   footerIssue: 'File an issue',

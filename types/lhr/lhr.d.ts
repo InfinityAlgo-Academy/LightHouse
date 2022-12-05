@@ -15,8 +15,15 @@ interface Result {
   gatherMode: Result.GatherMode;
   /** The URL that Lighthouse initially navigated to. Will be `undefined` in timespan/snapshot. */
   requestedUrl?: string;
-  /** The post-redirects URL that Lighthouse loaded. */
-  finalUrl: string;
+  /** URL of the last document request during a Lighthouse navigation. Will be `undefined` in timespan/snapshot. */
+  mainDocumentUrl?: string;
+  /**
+   * For historical reasons, this will always be the same as `mainDocumentUrl`.
+   * @deprecated
+   */
+  finalUrl?: string;
+  /** The URL displayed on the page after Lighthouse finishes. */
+  finalDisplayedUrl: string;
   /** The ISO-8601 timestamp of when the results were generated. */
   fetchTime: string;
   /** The version of Lighthouse with which these results were generated. */
@@ -59,6 +66,8 @@ declare module Result {
     networkUserAgent: string;
     /** The benchmark index number that indicates rough device class. */
     benchmarkIndex: number;
+    /** Many benchmark indexes. */
+    benchmarkIndexes?: number[];
     /** The version of libraries with which these results were generated. Ex: axe-core. */
     credits?: Record<string, string|undefined>,
   }
