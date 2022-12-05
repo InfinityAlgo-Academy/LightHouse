@@ -26,7 +26,7 @@ const WASTED_MS_FOR_SCORE_OF_ZERO = 5000;
  * @property {Array<LH.Audit.ByteEfficiencyItem>} items
  * @property {Map<string, number>=} wastedBytesByUrl
  * @property {LH.Audit.Details.Opportunity['headings']} headings
- * @property {LH.Audit.Details.Table['subItemsLabel']} subItemsLabel
+ * @property {LH.Audit.Details.Table['subItemsLabel']=} subItemsLabel
  * @property {LH.IcuMessage} [displayValue]
  * @property {LH.IcuMessage} [explanation]
  * @property {Array<string | LH.IcuMessage>} [warnings]
@@ -229,8 +229,8 @@ class ByteEfficiencyAudit extends Audit {
       displayValue = str_(i18n.UIStrings.displayValueByteSavings, {wastedBytes});
     }
 
-    const details = Audit.makeOpportunityDetails(
-      result.headings, result.subItemsLabel, results, wastedMs, wastedBytes);
+    const details = Audit.makeOpportunityDetails(result.headings, results, wastedMs, wastedBytes);
+    details.subItemsLabel = result.subItemsLabel;
 
     return {
       explanation: result.explanation,

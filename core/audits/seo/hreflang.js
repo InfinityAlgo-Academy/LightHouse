@@ -5,7 +5,7 @@
  */
 
 /** @typedef {string|LH.Audit.Details.NodeValue|undefined} Source */
-/** @typedef {{source: Source, subItems: {type: 'subitems', label: LH.IcuMessage, items: SubItem[]}}} InvalidHreflang */
+/** @typedef {{source: Source, subItems: {type: 'subitems', items: SubItem[]}}} InvalidHreflang */
 /** @typedef {{reason: LH.IcuMessage}} SubItem */
 
 import {Audit} from '../audit.js';

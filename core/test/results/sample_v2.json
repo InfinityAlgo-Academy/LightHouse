@@ -340,13 +340,13 @@
             "label": "Time Spent"
           }
         ],
-        "subItemsLabel": [
+        "items": [
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "responseTime": 568.468
           }
         ],
-        "items": 468.46799999999996
+        "overallSavingsMs": 468.46799999999996
       }
     },
     "interactive": {
@@ -775,20 +775,9 @@
       "displayValue": "",
       "details": {
         "type": "opportunity",
-        "headings": [
-          {
-            "key": "url",
-            "valueType": "url",
-            "label": "URL"
-          },
-          {
-            "key": "wastedMs",
-            "valueType": "timespanMs",
-            "label": "Time Spent"
-          }
-        ],
-        "subItemsLabel": [],
-        "items": 0
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0
       }
     },
     "installable-manifest": {
@@ -1177,8 +1166,8 @@
       "details": {
         "type": "opportunity",
         "headings": [],
-        "subItemsLabel": [],
-        "items": 0
+        "items": [],
+        "overallSavingsMs": 0
       }
     },
     "uses-rel-preconnect": {
@@ -1193,20 +1182,9 @@
       "warnings": [],
       "details": {
         "type": "opportunity",
-        "headings": [
-          {
-            "key": "url",
-            "valueType": "url",
-            "label": "URL"
-          },
-          {
-            "key": "wastedMs",
-            "valueType": "timespanMs",
-            "label": "Potential Savings"
-          }
-        ],
-        "subItemsLabel": [],
-        "items": 0
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0
       }
     },
     "font-display": {
@@ -4588,7 +4566,7 @@
             "label": "Potential Savings"
           }
         ],
-        "subItemsLabel": [
+        "items": [
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
             "totalBytes": 903,
@@ -4620,7 +4598,7 @@
             "wastedMs": 879
           }
         ],
-        "items": 0
+        "overallSavingsMs": 0
       }
     },
     "unminified-css": {
@@ -4736,7 +4714,6 @@
             "label": "Potential Savings"
           }
         ],
-        "subItemsLabel": "Module",
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
@@ -4752,7 +4729,8 @@
           }
         ],
         "overallSavingsMs": 600,
-        "overallSavingsBytes": 65111
+        "overallSavingsBytes": 65111,
+        "subItemsLabel": "Module"
       }
     },
     "modern-image-formats": {
@@ -5157,10 +5135,10 @@
       "details": {
         "type": "opportunity",
         "headings": [],
-        "subItemsLabel": "Script",
         "items": [],
         "overallSavingsMs": 0,
-        "overallSavingsBytes": 0
+        "overallSavingsBytes": 0,
+        "subItemsLabel": "Script"
       }
     },
     "legacy-javascript": {
@@ -5198,7 +5176,6 @@
             "label": "Potential Savings"
           }
         ],
-        "subItemsLabel": "Location",
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
@@ -5232,7 +5209,8 @@
           }
         ],
         "overallSavingsMs": 150,
-        "overallSavingsBytes": 21189
+        "overallSavingsBytes": 21189,
+        "subItemsLabel": "Location"
       }
     },
     "doctype": {
@@ -5573,20 +5551,9 @@
       "numericUnit": "millisecond",
       "details": {
         "type": "opportunity",
-        "headings": [
-          {
-            "key": "url",
-            "valueType": "url",
-            "label": "URL"
-          },
-          {
-            "key": "protocol",
-            "valueType": "text",
-            "label": "Protocol"
-          }
-        ],
-        "subItemsLabel": [],
-        "items": 0
+        "headings": [],
+        "items": [],
+        "overallSavingsMs": 0
       }
     },
     "uses-passive-event-listeners": {
@@ -8583,11 +8550,9 @@
       ],
       "core/lib/i18n/i18n.js | columnURL": [
         "audits[server-response-time].details.headings[0].label",
-        "audits.redirects.details.headings[0].label",
         "audits[image-aspect-ratio].details.headings[1].label",
         "audits[image-size-responsive].details.headings[1].label",
         "audits[bootup-time].details.headings[0].label",
-        "audits[uses-rel-preconnect].details.headings[0].label",
         "audits[network-rtt].details.headings[0].label",
         "audits[network-server-latency].details.headings[0].label",
         "audits[long-tasks].details.headings[0].label",
@@ -8601,12 +8566,10 @@
         "audits[uses-text-compression].details.headings[0].label",
         "audits[uses-responsive-images].details.headings[1].label",
         "audits[efficient-animated-content].details.headings[0].label",
-        "audits[legacy-javascript].details.headings[0].label",
-        "audits[uses-http2].details.headings[0].label"
+        "audits[legacy-javascript].details.headings[0].label"
       ],
       "core/lib/i18n/i18n.js | columnTimeSpent": [
         "audits[server-response-time].details.headings[1].label",
-        "audits.redirects.details.headings[1].label",
         "audits[mainthread-work-breakdown].details.headings[1].label",
         "audits[network-rtt].details.headings[1].label",
         "audits[network-server-latency].details.headings[1].label"
@@ -8797,17 +8760,6 @@
       ],
       "core/audits/uses-rel-preconnect.js | description": [
         "audits[uses-rel-preconnect].description"
-      ],
-      "core/lib/i18n/i18n.js | columnWastedBytes": [
-        "audits[uses-rel-preconnect].details.headings[1].label",
-        "audits[render-blocking-resources].details.headings[2].label",
-        "audits[unminified-javascript].details.headings[2].label",
-        "audits[unused-javascript].details.headings[2].label",
-        "audits[modern-image-formats].details.headings[3].label",
-        "audits[uses-text-compression].details.headings[2].label",
-        "audits[uses-responsive-images].details.headings[3].label",
-        "audits[efficient-animated-content].details.headings[2].label",
-        "audits[legacy-javascript].details.headings[2].label"
       ],
       "core/audits/font-display.js | title": [
         "audits[font-display].title"
@@ -9438,6 +9390,16 @@
           "path": "audits[render-blocking-resources].displayValue"
         }
       ],
+      "core/lib/i18n/i18n.js | columnWastedBytes": [
+        "audits[render-blocking-resources].details.headings[2].label",
+        "audits[unminified-javascript].details.headings[2].label",
+        "audits[unused-javascript].details.headings[2].label",
+        "audits[modern-image-formats].details.headings[3].label",
+        "audits[uses-text-compression].details.headings[2].label",
+        "audits[uses-responsive-images].details.headings[3].label",
+        "audits[efficient-animated-content].details.headings[2].label",
+        "audits[legacy-javascript].details.headings[2].label"
+      ],
       "core/audits/byte-efficiency/unminified-css.js | title": [
         "audits[unminified-css].title"
       ],
@@ -9644,9 +9606,6 @@
       ],
       "core/audits/dobetterweb/uses-http2.js | description": [
         "audits[uses-http2].description"
-      ],
-      "core/audits/dobetterweb/uses-http2.js | columnProtocol": [
-        "audits[uses-http2].details.headings[1].label"
       ],
       "core/audits/dobetterweb/uses-passive-event-listeners.js | failureTitle": [
         "audits[uses-passive-event-listeners].title"

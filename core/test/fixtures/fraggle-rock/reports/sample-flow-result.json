@@ -237,13 +237,13 @@
                   "label": "Time Spent"
                 }
               ],
-              "subItemsLabel": [
+              "items": [
                 {
                   "url": "https://www.mikescerealshack.co/",
                   "responseTime": 236.03100000000006
                 }
               ],
-              "items": 136.03100000000006
+              "overallSavingsMs": 136.03100000000006
             }
           },
           "interactive": {
@@ -353,20 +353,9 @@
             "displayValue": "",
             "details": {
               "type": "opportunity",
-              "headings": [
-                {
-                  "key": "url",
-                  "valueType": "url",
-                  "label": "URL"
-                },
-                {
-                  "key": "wastedMs",
-                  "valueType": "timespanMs",
-                  "label": "Time Spent"
-                }
-              ],
-              "subItemsLabel": [],
-              "items": 0
+              "headings": [],
+              "items": [],
+              "overallSavingsMs": 0
             }
           },
           "installable-manifest": {
@@ -633,8 +622,8 @@
             "details": {
               "type": "opportunity",
               "headings": [],
-              "subItemsLabel": [],
-              "items": 0
+              "items": [],
+              "overallSavingsMs": 0
             }
           },
           "uses-rel-preconnect": {
@@ -649,20 +638,9 @@
             "warnings": [],
             "details": {
               "type": "opportunity",
-              "headings": [
-                {
-                  "key": "url",
-                  "valueType": "url",
-                  "label": "URL"
-                },
-                {
-                  "key": "wastedMs",
-                  "valueType": "timespanMs",
-                  "label": "Potential Savings"
-                }
-              ],
-              "subItemsLabel": [],
-              "items": 0
+              "headings": [],
+              "items": [],
+              "overallSavingsMs": 0
             }
           },
           "font-display": {
@@ -1839,7 +1817,7 @@
                   "label": "Potential Savings"
                 }
               ],
-              "subItemsLabel": [
+              "items": [
                 {
                   "node": {
                     "type": "node",
@@ -1861,7 +1839,7 @@
                   "wastedMs": 0
                 }
               ],
-              "items": 0,
+              "overallSavingsMs": 0,
               "debugData": {
                 "type": "debugdata",
                 "initiatorPath": [
@@ -3082,25 +3060,9 @@
             "numericUnit": "millisecond",
             "details": {
               "type": "opportunity",
-              "headings": [
-                {
-                  "key": "url",
-                  "valueType": "url",
-                  "label": "URL"
-                },
-                {
-                  "key": "totalBytes",
-                  "valueType": "bytes",
-                  "label": "Transfer Size"
-                },
-                {
-                  "key": "wastedMs",
-                  "valueType": "timespanMs",
-                  "label": "Potential Savings"
-                }
-              ],
-              "subItemsLabel": [],
-              "items": 0
+              "headings": [],
+              "items": [],
+              "overallSavingsMs": 0
             }
           },
           "unminified-css": {
@@ -3167,10 +3129,10 @@
             "details": {
               "type": "opportunity",
               "headings": [],
-              "subItemsLabel": "Module",
               "items": [],
               "overallSavingsMs": 0,
-              "overallSavingsBytes": 0
+              "overallSavingsBytes": 0,
+              "subItemsLabel": "Module"
             }
           },
           "modern-image-formats": {
@@ -3272,10 +3234,10 @@
             "details": {
               "type": "opportunity",
               "headings": [],
-              "subItemsLabel": "Script",
               "items": [],
               "overallSavingsMs": 0,
-              "overallSavingsBytes": 0
+              "overallSavingsBytes": 0,
+              "subItemsLabel": "Script"
             }
           },
           "legacy-javascript": {
@@ -3313,7 +3275,6 @@
                   "label": "Potential Savings"
                 }
               ],
-              "subItemsLabel": "Location",
               "items": [
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/commons.49455e4fa8cc3f51203f.js",
@@ -3337,7 +3298,8 @@
                 }
               ],
               "overallSavingsMs": 0,
-              "overallSavingsBytes": 57
+              "overallSavingsBytes": 57,
+              "subItemsLabel": "Location"
             }
           },
           "doctype": {
@@ -6296,21 +6258,17 @@
             ],
             "core/lib/i18n/i18n.js | columnURL": [
               "audits[server-response-time].details.headings[0].label",
-              "audits.redirects.details.headings[0].label",
               "audits[bootup-time].details.headings[0].label",
-              "audits[uses-rel-preconnect].details.headings[0].label",
               "audits[network-rtt].details.headings[0].label",
               "audits[network-server-latency].details.headings[0].label",
               "audits[long-tasks].details.headings[0].label",
               "audits[unsized-images].details.headings[1].label",
               "audits[preload-lcp-image].details.headings[1].label",
               "audits[total-byte-weight].details.headings[0].label",
-              "audits[render-blocking-resources].details.headings[0].label",
               "audits[legacy-javascript].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnTimeSpent": [
               "audits[server-response-time].details.headings[1].label",
-              "audits.redirects.details.headings[1].label",
               "audits[mainthread-work-breakdown].details.headings[1].label",
               "audits[network-rtt].details.headings[1].label",
               "audits[network-server-latency].details.headings[1].label"
@@ -6466,12 +6424,6 @@
             "core/audits/uses-rel-preconnect.js | description": [
               "audits[uses-rel-preconnect].description"
             ],
-            "core/lib/i18n/i18n.js | columnWastedBytes": [
-              "audits[uses-rel-preconnect].details.headings[1].label",
-              "audits[preload-lcp-image].details.headings[2].label",
-              "audits[render-blocking-resources].details.headings[2].label",
-              "audits[legacy-javascript].details.headings[2].label"
-            ],
             "core/audits/font-display.js | title": [
               "audits[font-display].title"
             ],
@@ -6526,8 +6478,7 @@
             "core/lib/i18n/i18n.js | columnTransferSize": [
               "audits[resource-summary].details.headings[2].label",
               "audits[third-party-summary].details.headings[1].label",
-              "audits[total-byte-weight].details.headings[1].label",
-              "audits[render-blocking-resources].details.headings[1].label"
+              "audits[total-byte-weight].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | totalResourceType": [
               "audits[resource-summary].details.items[0].label"
@@ -6672,6 +6623,10 @@
             ],
             "core/audits/preload-lcp-image.js | description": [
               "audits[preload-lcp-image].description"
+            ],
+            "core/lib/i18n/i18n.js | columnWastedBytes": [
+              "audits[preload-lcp-image].details.headings[2].label",
+              "audits[legacy-javascript].details.headings[2].label"
             ],
             "core/audits/csp-xss.js | title": [
               "audits[csp-xss].title"
@@ -9002,10 +8957,10 @@
             "details": {
               "type": "opportunity",
               "headings": [],
-              "subItemsLabel": "Module",
               "items": [],
               "overallSavingsMs": 0,
-              "overallSavingsBytes": 0
+              "overallSavingsBytes": 0,
+              "subItemsLabel": "Module"
             }
           },
           "modern-image-formats": {
@@ -9107,10 +9062,10 @@
             "details": {
               "type": "opportunity",
               "headings": [],
-              "subItemsLabel": "Script",
               "items": [],
               "overallSavingsMs": 0,
-              "overallSavingsBytes": 0
+              "overallSavingsBytes": 0,
+              "subItemsLabel": "Script"
             }
           },
           "legacy-javascript": {
@@ -9125,10 +9080,10 @@
             "details": {
               "type": "opportunity",
               "headings": [],
-              "subItemsLabel": "Location",
               "items": [],
               "overallSavingsMs": 0,
-              "overallSavingsBytes": 0
+              "overallSavingsBytes": 0,
+              "subItemsLabel": "Location"
             }
           },
           "inspector-issues": {
@@ -14491,13 +14446,13 @@
                   "label": "Time Spent"
                 }
               ],
-              "subItemsLabel": [
+              "items": [
                 {
                   "url": "https://www.mikescerealshack.co/corrections",
                   "responseTime": 115.003
                 }
               ],
-              "items": 15.003
+              "overallSavingsMs": 15.003
             }
           },
           "interactive": {
@@ -14607,20 +14562,9 @@
             "displayValue": "",
             "details": {
               "type": "opportunity",
-              "headings": [
-                {
-                  "key": "url",
-                  "valueType": "url",
-                  "label": "URL"
-                },
-                {
-                  "key": "wastedMs",
-                  "valueType": "timespanMs",
-                  "label": "Time Spent"
-                }
-              ],
-              "subItemsLabel": [],
-              "items": 0
+              "headings": [],
+              "items": [],
+              "overallSavingsMs": 0
             }
           },
           "installable-manifest": {
@@ -14892,8 +14836,8 @@
             "details": {
               "type": "opportunity",
               "headings": [],
-              "subItemsLabel": [],
-              "items": 0
+              "items": [],
+              "overallSavingsMs": 0
             }
           },
           "uses-rel-preconnect": {
@@ -14908,20 +14852,9 @@
             "warnings": [],
             "details": {
               "type": "opportunity",
-              "headings": [
-                {
-                  "key": "url",
-                  "valueType": "url",
-                  "label": "URL"
-                },
-                {
-                  "key": "wastedMs",
-                  "valueType": "timespanMs",
-                  "label": "Potential Savings"
-                }
-              ],
-              "subItemsLabel": [],
-              "items": 0
+              "headings": [],
+              "items": [],
+              "overallSavingsMs": 0
             }
           },
           "font-display": {
@@ -15941,7 +15874,7 @@
                   "label": "Potential Savings"
                 }
               ],
-              "subItemsLabel": [
+              "items": [
                 {
                   "node": {
                     "type": "node",
@@ -15963,7 +15896,7 @@
                   "wastedMs": 0
                 }
               ],
-              "items": 0,
+              "overallSavingsMs": 0,
               "debugData": {
                 "type": "debugdata",
                 "initiatorPath": [
@@ -17185,25 +17118,9 @@
             "numericUnit": "millisecond",
             "details": {
               "type": "opportunity",
-              "headings": [
-                {
-                  "key": "url",
-                  "valueType": "url",
-                  "label": "URL"
-                },
-                {
-                  "key": "totalBytes",
-                  "valueType": "bytes",
-                  "label": "Transfer Size"
-                },
-                {
-                  "key": "wastedMs",
-                  "valueType": "timespanMs",
-                  "label": "Potential Savings"
-                }
-              ],
-              "subItemsLabel": [],
-              "items": 0
+              "headings": [],
+              "items": [],
+              "overallSavingsMs": 0
             }
           },
           "unminified-css": {
@@ -17270,10 +17187,10 @@
             "details": {
               "type": "opportunity",
               "headings": [],
-              "subItemsLabel": "Module",
               "items": [],
               "overallSavingsMs": 0,
-              "overallSavingsBytes": 0
+              "overallSavingsBytes": 0,
+              "subItemsLabel": "Module"
             }
           },
           "modern-image-formats": {
@@ -17465,10 +17382,10 @@
             "details": {
               "type": "opportunity",
               "headings": [],
-              "subItemsLabel": "Script",
               "items": [],
               "overallSavingsMs": 0,
-              "overallSavingsBytes": 0
+              "overallSavingsBytes": 0,
+              "subItemsLabel": "Script"
             }
           },
           "legacy-javascript": {
@@ -17506,7 +17423,6 @@
                   "label": "Potential Savings"
                 }
               ],
-              "subItemsLabel": "Location",
               "items": [
                 {
                   "url": "https://www.mikescerealshack.co/_next/static/chunks/commons.49455e4fa8cc3f51203f.js",
@@ -17530,7 +17446,8 @@
                 }
               ],
               "overallSavingsMs": 0,
-              "overallSavingsBytes": 0
+              "overallSavingsBytes": 0,
+              "subItemsLabel": "Location"
             }
           },
           "doctype": {
@@ -20528,23 +20445,19 @@
             ],
             "core/lib/i18n/i18n.js | columnURL": [
               "audits[server-response-time].details.headings[0].label",
-              "audits.redirects.details.headings[0].label",
               "audits[bootup-time].details.headings[0].label",
-              "audits[uses-rel-preconnect].details.headings[0].label",
               "audits[network-rtt].details.headings[0].label",
               "audits[network-server-latency].details.headings[0].label",
               "audits[long-tasks].details.headings[0].label",
               "audits[unsized-images].details.headings[1].label",
               "audits[preload-lcp-image].details.headings[1].label",
               "audits[total-byte-weight].details.headings[0].label",
-              "audits[render-blocking-resources].details.headings[0].label",
               "audits[modern-image-formats].details.headings[1].label",
               "audits[uses-responsive-images].details.headings[1].label",
               "audits[legacy-javascript].details.headings[0].label"
             ],
             "core/lib/i18n/i18n.js | columnTimeSpent": [
               "audits[server-response-time].details.headings[1].label",
-              "audits.redirects.details.headings[1].label",
               "audits[mainthread-work-breakdown].details.headings[1].label",
               "audits[network-rtt].details.headings[1].label",
               "audits[network-server-latency].details.headings[1].label"
@@ -20700,14 +20613,6 @@
             "core/audits/uses-rel-preconnect.js | description": [
               "audits[uses-rel-preconnect].description"
             ],
-            "core/lib/i18n/i18n.js | columnWastedBytes": [
-              "audits[uses-rel-preconnect].details.headings[1].label",
-              "audits[preload-lcp-image].details.headings[2].label",
-              "audits[render-blocking-resources].details.headings[2].label",
-              "audits[modern-image-formats].details.headings[3].label",
-              "audits[uses-responsive-images].details.headings[3].label",
-              "audits[legacy-javascript].details.headings[2].label"
-            ],
             "core/audits/font-display.js | title": [
               "audits[font-display].title"
             ],
@@ -20762,8 +20667,7 @@
             "core/lib/i18n/i18n.js | columnTransferSize": [
               "audits[resource-summary].details.headings[2].label",
               "audits[third-party-summary].details.headings[1].label",
-              "audits[total-byte-weight].details.headings[1].label",
-              "audits[render-blocking-resources].details.headings[1].label"
+              "audits[total-byte-weight].details.headings[1].label"
             ],
             "core/lib/i18n/i18n.js | totalResourceType": [
               "audits[resource-summary].details.items[0].label"
@@ -20898,6 +20802,12 @@
             ],
             "core/audits/preload-lcp-image.js | description": [
               "audits[preload-lcp-image].description"
+            ],
+            "core/lib/i18n/i18n.js | columnWastedBytes": [
+              "audits[preload-lcp-image].details.headings[2].label",
+              "audits[modern-image-formats].details.headings[3].label",
+              "audits[uses-responsive-images].details.headings[3].label",
+              "audits[legacy-javascript].details.headings[2].label"
             ],
             "core/audits/csp-xss.js | title": [
               "audits[csp-xss].title"
