@@ -84,7 +84,7 @@ class Driver {
   /** @return {Promise<void>} */
   async disconnect() {
     if (this.defaultSession === throwingSession) return;
-    this._targetManager?.disable();
+    await this._targetManager?.disable();
     await this.defaultSession.dispose();
   }
 }

@@ -18,7 +18,7 @@ const UIStrings = {
   title: 'Efficiently encode images',
   /** Description of a Lighthouse audit that tells the user *why* they need to efficiently encode images. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Optimized images load faster and consume less cellular data. ' +
-  '[Learn how to efficiently encode images](https://web.dev/uses-optimized-images/).',
+  '[Learn how to efficiently encode images](https://developer.chrome.com/docs/lighthouse/performance/uses-optimized-images/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

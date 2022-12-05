@@ -32,4 +32,8 @@ cd `dirname $DEVTOOLS_PATH`
 fetch --nohooks --no-history devtools-frontend
 cd devtools-frontend
 gclient sync
-gn gen out/Default --args='devtools_dcheck_always_on=true is_debug=false'
+if git config user.email | grep -q '@google.com'; then
+  gn gen "out/$BUILD_FOLDER" --args='devtools_dcheck_always_on=true is_debug=false use_goma=true'
+else
+  gn gen "out/$BUILD_FOLDER" --args='devtools_dcheck_always_on=true is_debug=false'
+fi

@@ -16,6 +16,8 @@ const mobileSlow4G = constants.throttling.mobileSlow4G;
 /** @typedef {import('../base-node.js').Node} Node */
 /** @typedef {import('../network-node').NetworkNode} NetworkNode */
 /** @typedef {import('../cpu-node').CPUNode} CpuNode */
+/** @typedef {import('./simulator-timing-map.js').CpuNodeTimingComplete | import('./simulator-timing-map.js').NetworkNodeTimingComplete} CompleteNodeTiming */
+/** @typedef {import('./simulator-timing-map.js').ConnectionTiming} ConnectionTiming */
 
 // see https://cs.chromium.org/search/?q=kDefaultMaxNumDelayableRequestsPerClient&sq=package:chromium&type=cs
 const DEFAULT_MAXIMUM_CONCURRENT_REQUESTS = 10;
@@ -40,7 +42,7 @@ const PriorityStartTimePenalty = {
   VeryLow: 2,
 };
 
-/** @type {Map<string, LH.Gatherer.Simulation.Result['nodeTimings']>} */
+/** @type {Map<string, Map<Node, CompleteNodeTiming>>} */
 const ALL_SIMULATION_NODE_TIMINGS = new Map();
 
 class Simulator {
@@ -167,12 +169,13 @@ class Simulator {
   /**
    * @param {Node} node
    * @param {number} endTime
+   * @param {ConnectionTiming} [connectionTiming] Optional network connection information.
    */
-  _markNodeAsComplete(node, endTime) {
+  _markNodeAsComplete(node, endTime, connectionTiming) {
     this._nodes[NodeState.Complete].add(node);
     this._nodes[NodeState.InProgress].delete(node);
     this._numberInProgressByType.set(node.type, this._numberInProgress(node.type) - 1);
-    this._nodeTimings.setCompleted(node, {endTime});
+    this._nodeTimings.setCompleted(node, {endTime, connectionTiming});
 
     // Try to add all its dependents to the queue
     for (const dependent of node.getDependents()) {
@@ -236,8 +239,11 @@ class Simulator {
    * currently in flight.
    */
   _updateNetworkCapacity() {
+    const inFlight = this._numberInProgress(BaseNode.TYPES.NETWORK);
+    if (inFlight === 0) return;
+
     for (const connection of this._connectionPool.connectionsInUse()) {
-      connection.setThroughput(this._throughput / this._nodes[NodeState.InProgress].size);
+      connection.setThroughput(this._throughput / inFlight);
     }
   }
 
@@ -368,7 +374,7 @@ class Simulator {
     if (isFinished) {
       connection.setWarmed(true);
       this._connectionPool.release(record);
-      this._markNodeAsComplete(node, totalElapsedTime);
+      this._markNodeAsComplete(node, totalElapsedTime, calculation.connectionTiming);
     } else {
       timingData.timeElapsed += calculation.timeElapsed;
       timingData.timeElapsedOvershoot += calculation.timeElapsed - timePeriodLength;
@@ -377,23 +383,31 @@ class Simulator {
   }
 
   /**
-   * @return {Map<Node, LH.Gatherer.Simulation.NodeTiming>}
+   * @return {{nodeTimings: Map<Node, LH.Gatherer.Simulation.NodeTiming>, completeNodeTimings: Map<Node, CompleteNodeTiming>}}
    */
   _computeFinalNodeTimings() {
+    /** @type {Array<[Node, CompleteNodeTiming]>} */
+    const completeNodeTimingEntries = this._nodeTimings.getNodes().map(node => {
+      return [node, this._nodeTimings.getCompleted(node)];
+    });
+
+    // Most consumers will want the entries sorted by startTime, so insert them in that order
+    completeNodeTimingEntries.sort((a, b) => a[1].startTime - b[1].startTime);
+
+    // Trimmed version of type `LH.Gatherer.Simulation.NodeTiming`.
     /** @type {Array<[Node, LH.Gatherer.Simulation.NodeTiming]>} */
-    const nodeTimingEntries = [];
-    for (const node of this._nodeTimings.getNodes()) {
-      const timing = this._nodeTimings.getCompleted(node);
-      nodeTimingEntries.push([node, {
+    const nodeTimingEntries = completeNodeTimingEntries.map(([node, timing]) => {
+      return [node, {
         startTime: timing.startTime,
         endTime: timing.endTime,
         duration: timing.endTime - timing.startTime,
-      }]);
-    }
+      }];
+    });
 
-    // Most consumers will want the entries sorted by startTime, so insert them in that order
-    nodeTimingEntries.sort((a, b) => a[1].startTime - b[1].startTime);
-    return new Map(nodeTimingEntries);
+    return {
+      nodeTimings: new Map(nodeTimingEntries),
+      completeNodeTimings: new Map(completeNodeTimingEntries),
+    };
   }
 
   /**
@@ -478,8 +492,9 @@ class Simulator {
       }
     }
 
-    const nodeTimings = this._computeFinalNodeTimings();
-    ALL_SIMULATION_NODE_TIMINGS.set(options.label || 'unlabeled', nodeTimings);
+    // `nodeTimings` are used for simulator consumers, `completeNodeTimings` kept for debugging.
+    const {nodeTimings, completeNodeTimings} = this._computeFinalNodeTimings();
+    ALL_SIMULATION_NODE_TIMINGS.set(options.label || 'unlabeled', completeNodeTimings);
 
     return {
       timeInMs: totalElapsedTime,
@@ -504,7 +519,7 @@ class Simulator {
     return wastedMs;
   }
 
-  /** @return {Map<string, LH.Gatherer.Simulation.Result['nodeTimings']>} */
+  /** @return {Map<string, Map<Node, CompleteNodeTiming>>} */
   static get ALL_NODE_TIMINGS() {
     return ALL_SIMULATION_NODE_TIMINGS;
   }

@@ -5,6 +5,7 @@
  */
 
 import fs from 'fs';
+import {pathToFileURL} from 'url';
 
 import * as td from 'testdouble';
 import jestMock from 'jest-mock';
@@ -89,7 +90,7 @@ describe('CLI bin', function() {
       // TODO(esmodules): change this test when config file is esm.
       const configPath = `${LH_ROOT}/core/config/lr-desktop-config.js`;
       cliFlags = {...cliFlags, configPath: configPath};
-      const actualConfig = (await import(configPath)).default;
+      const actualConfig = (await import(pathToFileURL(configPath).href)).default;
       await bin.begin();
 
       expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);
@@ -99,7 +100,7 @@ describe('CLI bin', function() {
       const configPath =
         `${LH_ROOT}/cli/test/fixtures/esm-config.js`;
       cliFlags = {...cliFlags, configPath: configPath};
-      const actualConfig = (await import(configPath)).default;
+      const actualConfig = (await import(pathToFileURL(configPath).href)).default;
       await bin.begin();
 
       expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);

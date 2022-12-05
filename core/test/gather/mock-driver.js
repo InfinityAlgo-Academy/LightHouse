@@ -18,7 +18,6 @@ import {
 } from './mock-commands.js';
 import * as constants from '../../config/constants.js';
 import {fnAny} from '../test-utils.js';
-import {LH_ROOT} from '../../../root.js';
 
 /** @typedef {import('../../gather/driver.js').Driver} Driver */
 /** @typedef {import('../../gather/driver/execution-context.js')} ExecutionContext */
@@ -187,7 +186,7 @@ const runnerMock = {
   },
 };
 async function mockRunnerModule() {
-  await td.replaceEsm(`${LH_ROOT}/core/runner.js`, {Runner: runnerMock});
+  await td.replaceEsm('../../runner.js', {Runner: runnerMock});
   return runnerMock;
 }
 

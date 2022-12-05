@@ -24,6 +24,11 @@ const UIStrings = {
    * */
   noFcp: 'The page did not paint any content. Please ensure you keep the browser window in the foreground during the load and try again. ({errorCode})',
   /**
+   * @description Error message explaining that the Largest Contentful Paint metric was not seen during the page load.
+   * @example {NO_LCP} errorCode
+   * */
+  noLcp: 'The page did not display content that qualifies as a Largest Contentful Paint (LCP). Ensure the page has a valid LCP element and then try again. ({errorCode})',
+  /**
    * @description Error message explaining that the page loaded too slowly to perform a Lighthouse run.
    * @example {NO_TTI_CPU_IDLE_PERIOD} errorCode
    * */
@@ -273,11 +278,11 @@ const ERRORS = {
   },
   NO_LCP: {
     code: 'NO_LCP',
-    message: UIStrings.badTraceRecording,
+    message: UIStrings.noLcp,
   },
   NO_LCP_ALL_FRAMES: {
     code: 'NO_LCP_ALL_FRAMES',
-    message: UIStrings.badTraceRecording,
+    message: UIStrings.noLcp,
   },
   UNSUPPORTED_OLD_CHROME: {
     code: 'UNSUPPORTED_OLD_CHROME',

@@ -23,8 +23,7 @@ function createRequest(
   initiator = null,
   resourceType = NetworkRequest.TYPES.Document
 ) {
-  startTime = startTime / 1000;
-  const endTime = startTime + 0.05;
+  const endTime = startTime + 50;
   return {requestId, url, startTime, endTime, initiator, resourceType};
 }
 

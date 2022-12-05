@@ -37,7 +37,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should reduce or remove network resources that block the initial render of the page. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Resources are blocking the first paint of your page. Consider ' +
     'delivering critical JS/CSS inline and deferring all non-critical ' +
-    'JS/styles. [Learn how to eliminate render-blocking resources](https://web.dev/render-blocking-resources/).',
+    'JS/styles. [Learn how to eliminate render-blocking resources](https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -159,7 +159,7 @@ class RenderBlockingResources extends Audit {
     const deferredNodeIds = new Set();
     for (const resource of artifacts.TagsBlockingFirstPaint) {
       // Ignore any resources that finished after observed FCP (they're clearly not render-blocking)
-      if (resource.endTime * 1000 > fcpTsInMs) continue;
+      if (resource.endTime > fcpTsInMs) continue;
       // TODO: beacon to Sentry, https://github.com/GoogleChrome/lighthouse/issues/7041
       if (!nodesByUrl[resource.tag.url]) continue;
 
