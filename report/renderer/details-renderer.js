@@ -377,6 +377,37 @@ export class DetailsRenderer {
   }
 
   /**
+   * Renders a group heading item.
+   * @param {TableItem} group
+   * @param {LH.Audit.Details.TableColumnHeading[]} headings
+   */
+  _renderTableGroupRow(group, headings) {
+    const fragment = this._renderTableRowsFromItem(group, headings);
+    const renderedRows = this._dom.findAll('tr', fragment);
+    renderedRows[0]?.classList.add('lh-row--group');
+
+    const entityName = group.entity?.toString() || '';
+    const matchedEntity = this._entityClassification?.entities[
+      this._entityClassification?.names[entityName]];
+
+    if (matchedEntity?.category) {
+      const categoryChipEl = this._dom.createElement('span');
+      categoryChipEl.classList.add('lh-audit__adorn');
+      categoryChipEl.textContent = matchedEntity?.category.toString();
+      renderedRows[0]?.children[0]?.append(' ', categoryChipEl);
+    }
+
+    if (matchedEntity?.isFirstParty) {
+      const firstPartyChipEl = this._dom.createElement('span');
+      firstPartyChipEl.classList.add('lh-audit__adorn', 'lh-audit__adorn1p');
+      firstPartyChipEl.textContent = '1st party'; // TODO: i18n
+      renderedRows[0]?.children[0]?.append(' ', firstPartyChipEl);
+    }
+
+    return fragment;
+  }
+
+  /**
    * Computes aggregations and groups by entity from a list of TableItem's
    * @param {TableItem[]} items
    * @param {TableColumnHeading[]} headings
@@ -451,13 +482,11 @@ export class DetailsRenderer {
     let even = true;
     if (aggregations.length) {
       for (const group of aggregations) {
-        const aggregateFragment = this._renderTableRowsFromItem(group, details.headings);
+        const aggregateFragment = this._renderTableGroupRow(group, details.headings);
         // Find all items that match the entity.
         for (const item of details.items.filter((item) => item.entity === group.entity)) {
           aggregateFragment.append(this._renderTableRowsFromItem(item, details.headings));
         }
-        const renderedRows = this._dom.findAll('tr', aggregateFragment);
-        renderedRows[0]?.classList.add('lh-row--group');
         even = !even;
         tbodyElem.append(aggregateFragment);
       }

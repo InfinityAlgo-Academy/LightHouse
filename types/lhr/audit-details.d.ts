@@ -85,6 +85,7 @@ declare module Details {
    */
   interface EntityClassificationEntity {
     homepage?: string;
+    category?: string;
     isFirstParty?: boolean;
     isUnrecognized?: boolean;
   }

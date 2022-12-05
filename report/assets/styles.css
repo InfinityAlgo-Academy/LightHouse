@@ -1525,13 +1525,24 @@
   color: var(--color-gray-700);
 }
 
-.lh-row--group a.lh-link {
+.lh-row--group .lh-link {
   color: inherit;
   text-decoration: none;
+  display: inline-block;
 }
 
 .lh-row--group a.lh-link:hover {
   text-decoration: underline;
+}
+
+.lh-row--group .lh-audit__adorn {
+  text-transform: capitalize;
+  font-weight: normal;
+}
+
+.lh-row--group .lh-audit__adorn1p {
+  color: var(--color-blue-primary);
+  border-color: var(--color-blue-primary);
 }
 
 .lh-row--group ~ [data-entity]:not(.lh-row--group) td:first-child {
