@@ -335,13 +335,9 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[Screpy](https://screpy.com)** - Screpy is a web analysis tool that can analyze all pages of your websites in one dashboard and monitor them with your team. It's powered by Lighthouse and it also includes some different analysis tools (SERP, W3C, Uptime, etc). Screpy has free and paid plans.
 
-* **[Lighthouse Keeper](https://lighthouse-keeper.com/)** - Lighthouse Keeper monitors your pages' Lighthouse scores and notifies you if they drop below your thresholds. Lighthouse Keeper is a free service that monitors up to 3 URLs once per day.
-
 * **[Siteimprove Performance](https://siteimprove.com/en/performance/)** — Siteimprove Performance is a web Performance monitoring solution that enables a marketer, manager or decision maker to understand and optimize website load times. Get easy-to-use insights with a focus on quick and impactful wins. Siteimprove Performance is a paid product with a free 14-day trial.
 
 * **[SpeedCurve](https://speedcurve.com)** — SpeedCurve is a tool for continuously monitoring web performance across different browsers, devices, and regions. It can aggregate any metric including Lighthouse scores across multiple pages and sites, and allows you to set performance budgets with Slack or email alerts. SpeedCurve is a paid product with a free 30-day trial.
-
-* **[Speedrank](https://speedrank.app)** - Speedrank monitors the performance of your website in the background. It displays Lighthouse reports over time and delivers recommendations for improvement. Speedrank is a paid product with 14-day-trial.
 
 * **[Foo](https://www.foo.software/lighthouse)** - Lighthouse-as-a-service offering free and premium plans. Provides monitoring and historical reporting of Lighthouse audits with CircleCI, GitHub, and other integrations. Features include Slack notifications, PR comment reporting and more.
 
@@ -361,17 +357,11 @@ This section details services that have integrated Lighthouse data. If you're wo
 
 * **[PageWatch](https://pagewatch.dev/)** — PageWatch is a tool to find problem pages on your website.  It provides insights into spelling errors, layout issues, slow pages (powered by Lighthouse) and more.  PageWatch is offered via free and paid plans.
 
-* **[SEO Guard](https://www.seo-guard.com)** — SEO Guard is a website monitoring solution. It provides metrics based on Lighthouse scores. The service is offered via free and paid premium plans.
-
 * **[Fluxguard](https://fluxguard.com/)** - Fluxguard provides website DOM change monitoring orchestrated with Google Puppeteer, and audited by Lighthouse. Fluxguard is a freemium product, with monthly monitoring of up to 75 pages for free.
 
 * **[Microlink](https://microlink.io)** — Microlink is a cloud browser as API. It offers Lighthouse reports on demand, making it easy to build any service on top. Similar functionality is available via the underlying open-source project named browserless.
 
-* **[Peyk](https://peyk.com)** - Peyk is a website change detection & monitoring service. Peyk can detect changes in cookies, network requests, technologies, local & session storage, lighthouse audits, screenshots and so much more. Peyk is offered via free and paid plans.
-
 * **[Wattspeed](https://wattspeed.com/)** — Wattspeed is a free tool that generates snapshots - historical captures of your web pages that include Lighthouse scores, a list of technologies, W3C HTML validator results, DOM size, mixed content info, and more.
-
-* **[AwesomeTechStack](https://awesometechstack.com)** — AwesomeTechStack is a free to use website tech stack analyzer. AwesomeTechStack provides insights into the security, modernity, and performance of any website's technology stack and guidance to improve performance. Lighthouse insights are a crucial part of a website's tech stack rating.
 
 ## Plugins
 
@@ -387,35 +377,27 @@ Other awesome open source projects that use Lighthouse.
 
 * **[auto-lighthouse](https://github.com/TGiles/auto-lighthouse)** - a CLI for crawling a domain and generating mobile and desktop reports for each page.
 * **[Exthouse](https://github.com/treosh/exthouse)** - Analyze the impact of a browser extension on web performance.
-* **[Garie](https://github.com/boyney123/garie)** - An open source tool for monitoring performance using Lighthouse,  PageSpeed Insights, [Prometheus](https://prometheus.io/), [Grafana](https://grafana.com/) and [Docker](https://www.docker.com/).
 * **[Gimbal](https://labs.moduscreate.com/gimbal-web-performance-audit-budgeting)** - An [open source (MIT licensed)](https://github.com/ModusCreateOrg/gimbal) tool used to measure, analyze, and budget aspects of a web application. Gimbal also integrates reports with GitHub pull requests.
 * **[Gradle Lighthouse Plugin](https://github.com/Cognifide/gradle-lighthouse-plugin)** - An open source Gradle plugin that runs Lighthouse tests on multiple URLs and asserts category score thresholds (useful in continuous integration).
-* **[lightcrawler](https://github.com/github/lightcrawler)** - Crawl a website and run each page found through Lighthouse.
 * **[lighthouse-badges](https://github.com/emazzotta/lighthouse-badges)** - Generate gh-badges (shields.io) based on Lighthouse performance.
-* **[lighthouse-batch](https://www.npmjs.com/package/lighthouse-batch)** - Run Lighthouse over a number of sites and generate a summary of their metrics/scores.
-* **[lighthouse-batch-parallel](https://www.npmjs.com/package/lighthouse-batch-parallel)** - Run multiple Lighthouse runs in parallel to accelerate the data collecting process, get the result stream (csv, json, js object) in your own process (warning: performance results may be volatile).
+* **[lighthouse-batch](https://github.com/mikestead/lighthouse-batch)** - Run Lighthouse over a number of sites and generate a summary of their metrics/scores.
+* **[lighthouse-batch-parallel](https://github.com/Carr1005/lighthouse-batch-parallel)** - Run multiple Lighthouse runs in parallel to accelerate the data collecting process, get the result stream (csv, json, js object) in your own process (warning: performance results may be volatile).
 * **[lighthouse-check-action](https://github.com/foo-software/lighthouse-check-action)** - A GitHub Action to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
 * **[lighthouse-check-orb](https://circleci.com/orbs/registry/orb/foo-software/lighthouse-check)** - A CircleCI Orb to run Lighthouse in a workflow, featuring Slack notifications and report upload to S3.
 * **[andreasonny83/lighthouse-ci](https://github.com/andreasonny83/lighthouse-ci)** - Run Lighthouse and assert scores satisfy your custom thresholds.
 * **[GoogleChrome/lighthouse-ci](https://github.com/GoogleChrome/lighthouse-ci)** - (**official**) Automate running Lighthouse for every commit, viewing the changes, and preventing regressions.
 * **[lighthouse-ci-action](https://github.com/treosh/lighthouse-ci-action)** - A GitHub Action that makes it easy to run Lighthouse in CI and keep your pages small using performance budgets.
-* **[lighthouse-cron](https://github.com/thearegee/lighthouse-cron)** - Cron multiple batch Lighthouse audits and emit results for sending to remote server.
 * **[lighthouse-gh-reporter](https://github.com/carlesnunez/lighthouse-gh-reporter)** - Run Lighthouse in CI and report back in a comment on your pull requests
-* **[lighthouse-hue](https://github.com/ebidel/lighthouse-hue)** - Set the color of Philips Hue lights based on a Lighthouse score
 * **[lighthouse-jest-example](https://github.com/justinribeiro/lighthouse-jest-example)** - Gather performance metrics via Lighthouse and assert results with Jest; uses Puppeteer to start Chrome with network emulation settings defined by WebPageTest.
-* **[lighthouse-lambda](https://github.com/joytocode/lighthouse-lambda)** - Run Lighthouse on AWS Lambda with prebuilt stable desktop Headless Chrome.
-* **[lighthouse-magic-light](https://github.com/manekinekko/lighthouse-magic-light)** - Set the color of the MagicLight Bluetooth Smart Light Bulb based on Lighthouse score
+* **[lighthouse-lambda](https://github.com/Otterseer/lighthouse-lambda)** - Run Lighthouse on AWS Lambda with prebuilt stable desktop Headless Chrome.
 * **[lighthouse-mocha-example](https://github.com/rishichawda/lighthouse-mocha-example)** - Run Lighthouse performance tests with Mocha and chrome-launcher.
 * **[lighthouse-monitor](https://github.com/verivox/lighthouse-monitor)** - Run Lighthouse against all your URLs. Send metrics to any backend you want, save all reports with automatic data retention, and compare any two results in a web UI.
 * **[lighthouse-persist](https://github.com/foo-software/lighthouse-persist)** - Run Lighthouse and upload HTML reports to an AWS S3 bucket.
 * **[lighthouse-viewer](https://github.com/dvelasquez/lighthouse-viewer/tree/main/packages/lighthouse-viewer)** - Render the Lighthouse JSON into a report, using the Lighthouse Report Renderer repackaged as UMD and ESM. Also available with React, Svelte and Vue wrappers.
 * **[lighthouse4u](https://github.com/godaddy/lighthouse4u)** - LH4U provides Google Lighthouse as a service, surfaced by both a friendly UI+API, and backed by Elastic Search for easy querying and visualization.
-* **[performance-budgets](https://performance-budgets.netlify.com/)** - Easily assert Lighthouse budgets with Docker.
-* **[pwmetrics](https://github.com/paulirish/pwmetrics/)** - Gather performance metrics
 * **[react-lighthouse-viewer](https://www.npmjs.com/package/react-lighthouse-viewer)** - Render a Lighthouse JSON report in a React Component.
 * **[site-audit-seo](https://github.com/viasite/site-audit-seo)** - CLI tool for SEO site audit, crawl site, lighthouse each page. Output to console and tables in csv, xlsx, json, web or Google Drive.
 * **[webpack-lighthouse-plugin](https://github.com/addyosmani/webpack-lighthouse-plugin)** - Run Lighthouse from a Webpack build.
-* **[is-website-vulnerable](https://github.com/lirantal/is-website-vulnerable)** - An open source Node.js CLI tool that finds publicly known security vulnerabilities in a website's frontend JavaScript libraries.
 * **[cypress-audit](https://github.com/mfrachet/cypress-audit)** - Run Lighthouse and Pa11y audits directly in your E2E test suites.
 
 ## FAQ
