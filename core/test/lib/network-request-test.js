@@ -134,9 +134,12 @@ describe('NetworkRequest', () => {
       global.isLightrider = true;
       const record = NetworkRecorder.recordsFromLogs(devtoolsLog)[0];
 
+      expect(record.rendererStartTime).toStrictEqual(0);
       expect(record.networkRequestTime).toStrictEqual(50);
       expect(record.networkEndTime).toStrictEqual(2000);
       expect(record.responseHeadersEndTime).toStrictEqual(1000);
+      expect(record.networkEndTime).toStrictEqual(2000);
+      expect(record.rendererEndTime).toStrictEqual(2000);
       expect(record.lrStatistics).toStrictEqual({
         endTimeDeltaMs: -8050,
         TCPMs: 5000,

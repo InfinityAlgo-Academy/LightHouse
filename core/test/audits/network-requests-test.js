@@ -80,8 +80,8 @@ describe('Network requests audit', () => {
       // Note: should use rendererEndTime but that is currently a "dummy" value equivalent
       // to networkEndTime, and our networkRecordsToDevtoolsLog has no ability to roundtrip
       // that.
-      {url: 'https://example.com/0', rendererStartTime: 15.0, networkEndTime: 15.5},
-      {url: 'https://example.com/1', rendererStartTime: 15.5, networkEndTime: -1},
+      {url: 'https://example.com/0', rendererStartTime: 15.0, networkRequestTime: 15.25, networkEndTime: 15.5},
+      {url: 'https://example.com/1', rendererStartTime: 15.5, networkRequestTime: 15.25, networkEndTime: -1},
     ];
 
     const artifacts = {
@@ -95,14 +95,14 @@ describe('Network requests audit', () => {
 
     expect(output.details.items).toMatchObject([{
       rendererStartTime: 0,
-      networkRequestTime: 0,
-      responseHeadersEndTime: 0.5,
+      networkRequestTime: 0.25,
+      responseHeadersEndTime: 0.25,
       networkEndTime: 0.5,
       rendererEndTime: 0.5,
       finished: true,
     }, {
       rendererStartTime: 0.5,
-      networkRequestTime: 0.5,
+      networkRequestTime: 0.25,
       responseHeadersEndTime: undefined,
       networkEndTime: undefined,
       rendererEndTime: undefined,
