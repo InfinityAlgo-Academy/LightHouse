@@ -235,12 +235,15 @@ describe('ReportUIFeatures', () => {
 
         const initialExpected = [
           '/script1.js(www.cdn.com)24.0 KiB8.8 KiB',
+          'Module',
           '10.0 KiB0.0 KiB',
           '20.0 KiB0.0 KiB',
           '/script2.js(www.example.com)24.0 KiB8.8 KiB',
+          'Module',
           '30.0 KiB0.0 KiB',
           '40.0 KiB0.0 KiB',
           '/script3.js(www.notexample.com)24.0 KiB8.8 KiB',
+          'Module',
           '50.0 KiB0.0 KiB',
           '60.0 KiB0.0 KiB',
         ];
@@ -249,6 +252,7 @@ describe('ReportUIFeatures', () => {
         filterCheckbox.click();
         expect(getRowIdentifiers()).toEqual([
           '/script2.js(www.example.com)24.0 KiB8.8 KiB',
+          'Module',
           '30.0 KiB0.0 KiB',
           '40.0 KiB0.0 KiB',
         ]);

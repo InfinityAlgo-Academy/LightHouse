@@ -111,11 +111,6 @@ Object {
         "signal": "String.prototype.repeat",
       },
     ],
-    "label": Object {
-      "formattedDefault": "Location",
-      "i18nId": "lighthouse-core/lib/i18n/i18n.js | columnLocation",
-      "values": undefined,
-    },
     "type": "subitems",
   },
   "totalBytes": 0,

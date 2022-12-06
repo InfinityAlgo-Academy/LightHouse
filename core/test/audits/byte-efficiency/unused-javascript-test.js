@@ -163,11 +163,6 @@ Array [
           "sourceWastedBytes": 256,
         },
       ],
-      "label": Object {
-        "formattedDefault": "Module",
-        "i18nId": "lighthouse-core/lib/i18n/i18n.js | module",
-        "values": undefined,
-      },
       "type": "subitems",
     },
     "totalBytes": 83748,

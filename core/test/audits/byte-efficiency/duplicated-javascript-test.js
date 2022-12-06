@@ -60,7 +60,7 @@ describe('DuplicatedJavascript computed artifact', () => {
     };
     const networkRecords = [{url: 'https://example.com', resourceType: 'Document'}];
     const results = await DuplicatedJavascript.audit_(artifacts, networkRecords, context);
-    expect({items: results.items, wastedBytesByUrl: results.wastedBytesByUrl}).
+    expect({ items: results.items, wastedBytesByUrl: results.wastedBytesByUrl }).
 toMatchInlineSnapshot(`
 Object {
   "items": Array [
@@ -77,11 +77,6 @@ Object {
             "url": "https://example.com/coursehero-bundle-2.js",
           },
         ],
-        "label": Object {
-          "formattedDefault": "Script",
-          "i18nId": "lighthouse-core/lib/i18n/i18n.js | scriptResourceType",
-          "values": undefined,
-        },
         "type": "subitems",
       },
       "totalBytes": 0,
@@ -101,11 +96,6 @@ Object {
             "url": "https://example.com/coursehero-bundle-2.js",
           },
         ],
-        "label": Object {
-          "formattedDefault": "Script",
-          "i18nId": "lighthouse-core/lib/i18n/i18n.js | scriptResourceType",
-          "values": undefined,
-        },
         "type": "subitems",
       },
       "totalBytes": 0,
@@ -125,11 +115,6 @@ Object {
             "url": "https://example.com/coursehero-bundle-2.js",
           },
         ],
-        "label": Object {
-          "formattedDefault": "Script",
-          "i18nId": "lighthouse-core/lib/i18n/i18n.js | scriptResourceType",
-          "values": undefined,
-        },
         "type": "subitems",
       },
       "totalBytes": 0,
@@ -149,11 +134,6 @@ Object {
             "url": "https://example.com/coursehero-bundle-2.js",
           },
         ],
-        "label": Object {
-          "formattedDefault": "Script",
-          "i18nId": "lighthouse-core/lib/i18n/i18n.js | scriptResourceType",
-          "values": undefined,
-        },
         "type": "subitems",
       },
       "totalBytes": 0,
@@ -173,11 +153,6 @@ Object {
             "url": "https://example.com/coursehero-bundle-1.js",
           },
         ],
-        "label": Object {
-          "formattedDefault": "Script",
-          "i18nId": "lighthouse-core/lib/i18n/i18n.js | scriptResourceType",
-          "values": undefined,
-        },
         "type": "subitems",
       },
       "totalBytes": 0,
@@ -197,11 +172,6 @@ Object {
             "url": "https://example.com/coursehero-bundle-2.js",
           },
         ],
-        "label": Object {
-          "formattedDefault": "Script",
-          "i18nId": "lighthouse-core/lib/i18n/i18n.js | scriptResourceType",
-          "values": undefined,
-        },
         "type": "subitems",
       },
       "totalBytes": 0,
@@ -221,11 +191,6 @@ Object {
             "url": "https://example.com/coursehero-bundle-2.js",
           },
         ],
-        "label": Object {
-          "formattedDefault": "Script",
-          "i18nId": "lighthouse-core/lib/i18n/i18n.js | scriptResourceType",
-          "values": undefined,
-        },
         "type": "subitems",
       },
       "totalBytes": 0,
@@ -245,11 +210,6 @@ Object {
             "url": "https://example.com/coursehero-bundle-1.js",
           },
         ],
-        "label": Object {
-          "formattedDefault": "Script",
-          "i18nId": "lighthouse-core/lib/i18n/i18n.js | scriptResourceType",
-          "values": undefined,
-        },
         "type": "subitems",
       },
       "totalBytes": 0,
@@ -269,11 +229,6 @@ Object {
             "url": "https://example.com/coursehero-bundle-2.js",
           },
         ],
-        "label": Object {
-          "formattedDefault": "Script",
-          "i18nId": "lighthouse-core/lib/i18n/i18n.js | scriptResourceType",
-          "values": undefined,
-        },
         "type": "subitems",
       },
       "totalBytes": 0,
@@ -293,11 +248,6 @@ Object {
             "url": "https://example.com/coursehero-bundle-2.js",
           },
         ],
-        "label": Object {
-          "formattedDefault": "Script",
-          "i18nId": "lighthouse-core/lib/i18n/i18n.js | scriptResourceType",
-          "values": undefined,
-        },
         "type": "subitems",
       },
       "totalBytes": 0,
@@ -317,11 +267,6 @@ Object {
             "url": "https://example.com/coursehero-bundle-1.js",
           },
         ],
-        "label": Object {
-          "formattedDefault": "Script",
-          "i18nId": "lighthouse-core/lib/i18n/i18n.js | scriptResourceType",
-          "values": undefined,
-        },
         "type": "subitems",
       },
       "totalBytes": 0,
@@ -341,11 +286,6 @@ Object {
             "url": "https://example.com/coursehero-bundle-2.js",
           },
         ],
-        "label": Object {
-          "formattedDefault": "Script",
-          "i18nId": "lighthouse-core/lib/i18n/i18n.js | scriptResourceType",
-          "values": undefined,
-        },
         "type": "subitems",
       },
       "totalBytes": 0,
@@ -363,11 +303,6 @@ Object {
             "url": "https://example.com/coursehero-bundle-2.js",
           },
         ],
-        "label": Object {
-          "formattedDefault": "Script",
-          "i18nId": "lighthouse-core/lib/i18n/i18n.js | scriptResourceType",
-          "values": undefined,
-        },
         "type": "subitems",
       },
       "totalBytes": 0,
