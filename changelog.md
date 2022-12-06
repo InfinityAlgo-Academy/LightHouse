@@ -1,3 +1,5 @@
+<!-- TODO: finish! updated as of 1b4e2f99cadf49081928d547d6bc7cf7612cabbf #14591 -->
+
 <a name="10.0.0"></a>
 # 10.0.0 (2022-12-06)
 [Full Changelog](https://github.com/GoogleChrome/lighthouse/compare/v9.5.0...f03850a)
@@ -6,19 +8,31 @@
 We expect this release to ship in the DevTools of [Chrome XX](https://chromiumdash.appspot.com/schedule), and to PageSpeed Insights within 2 weeks.
 
 ## Notable Changes
+
 ~~ TODO: Move notable changes here ~~
 
+* Types
+* Lighthouse documentation now lives on [developer.chrome.com](developer.chrome.com).
+* [BREAKING] Scoring
+* [BREAKING] Node API
+* [BREAKING] convert to ES modules ([#12689](https://github.com/GoogleChrome/lighthouse/issues/12689))
+* [BREAKING] drop support for node 14 ([#14413](https://github.com/GoogleChrome/lighthouse/pull/14413))
+* [BREAKING] rename lighthouse-(core,cli) folders ([#14242](https://github.com/GoogleChrome/lighthouse/pull/14242))
 
 ## New Audits
 
 TODO: we'll have stuff here soon
+
+## Removed Audits
+
+* [BREAKING] apple-touch-icon: remove audit ([#14243](https://github.com/GoogleChrome/lighthouse/pull/14243))
+* [BREAKING] vulnerable-libraries: remove audit ([#14194](https://github.com/GoogleChrome/lighthouse/pull/14194))
 
 ## Core
 
 * add `BFCacheFailures` artifact ([#14485](https://github.com/GoogleChrome/lighthouse/pull/14485))
 * use LCP specific message for NO_LCP ([#14556](https://github.com/GoogleChrome/lighthouse/pull/14556))
 * expose default and desktop configs on `index.js` ([#14543](https://github.com/GoogleChrome/lighthouse/pull/14543))
-* refactor audits to use async syntax ([#14542](https://github.com/GoogleChrome/lighthouse/pull/14542))
 * remove globals from `externs.d.ts` ([#14537](https://github.com/GoogleChrome/lighthouse/pull/14537))
 * merge `api.js` into `index.js`, new report generator api ([#14531](https://github.com/GoogleChrome/lighthouse/pull/14531))
 * remove deprecated flags check ([#14454](https://github.com/GoogleChrome/lighthouse/pull/14454))
@@ -33,7 +47,6 @@ TODO: we'll have stuff here soon
 * deprecate passes, remove config navigations from FR ([#13881](https://github.com/GoogleChrome/lighthouse/pull/13881))
 * rename pwmetrics-events to metric-trace-events ([14258](https://github.com/GoogleChrome/lighthouse/pull/14258))
 * remove trace-of-tab ([#14237](https://github.com/GoogleChrome/lighthouse/pull/14237))
-* convert to ES modules ([#14182](https://github.com/GoogleChrome/lighthouse/pull/14182))
 * return result for xhtml, but with warning ([#12351](https://github.com/GoogleChrome/lighthouse/pull/12351))
 * move network recorder and monitor to EventEmitter ([#14152](https://github.com/GoogleChrome/lighthouse/pull/14152))
 * make session an event emitter ([#14147](https://github.com/GoogleChrome/lighthouse/pull/14147))
@@ -42,16 +55,15 @@ TODO: we'll have stuff here soon
 * handle sessions inside target-manager ([#14106](https://github.com/GoogleChrome/lighthouse/pull/14106))
 * save native getBoundingClientRect to avoid overrides ([#14002](https://github.com/GoogleChrome/lighthouse/pull/14002))
 * log `requestedUrl` with unexpected value ([#14010](https://github.com/GoogleChrome/lighthouse/pull/14010))
-* fix build-sample-reports ([#13865](https://github.com/GoogleChrome/lighthouse/pull/13865))
 * make `requestedUrl` optional ([#13816](https://github.com/GoogleChrome/lighthouse/pull/13816))
+* fix build-sample-reports ([#13865](https://github.com/GoogleChrome/lighthouse/pull/13865))
 * use `mainDocumentUrl` instead of `finalUrl` ([#13793](https://github.com/GoogleChrome/lighthouse/pull/13793))
 * remove `context.url` ([#13806](https://github.com/GoogleChrome/lighthouse/pull/13806))
 * append sourceURL comment to eval code ([#13754](https://github.com/GoogleChrome/lighthouse/pull/13754))
 * expand URL artifact ([#13776](https://github.com/GoogleChrome/lighthouse/pull/13776))
-* refactor csv output ([#13558](https://github.com/GoogleChrome/lighthouse/pull/13558))
+* [BREAKING] refactor csv output ([#13558](https://github.com/GoogleChrome/lighthouse/pull/13558))
 * always use `MainResource` for main document ([#13756](https://github.com/GoogleChrome/lighthouse/pull/13756))
 * accessibility: link audits directly to axe docs ([#13876](https://github.com/GoogleChrome/lighthouse/pull/13876))
-* apple-touch-icon: remove audit ([#14243](https://github.com/GoogleChrome/lighthouse/pull/14243))
 * build: inline-fs error if file missing, ignorePaths ([#14436](https://github.com/GoogleChrome/lighthouse/pull/14436))
 * cdp: update HTTP method for /json/new call ([#14063](https://github.com/GoogleChrome/lighthouse/pull/14063))
 * computed-artifacts: convert to named exports ([#14352](https://github.com/GoogleChrome/lighthouse/pull/14352))
@@ -60,6 +72,7 @@ TODO: we'll have stuff here soon
 * connection: drop /new tab creation fallback ([#14012](https://github.com/GoogleChrome/lighthouse/pull/14012))
 * crc: exclude non network nodes from being a leaf ([#9801](https://github.com/GoogleChrome/lighthouse/pull/9801))
 * csp-xss: prevent meta warning if header CSPs are secure ([#14490](https://github.com/GoogleChrome/lighthouse/pull/14490))
+* refactor audits to use async syntax ([#14542](https://github.com/GoogleChrome/lighthouse/pull/14542))
 * cumulative-layout-shift: deprecate m89 check ([#14085](https://github.com/GoogleChrome/lighthouse/pull/14085))
 * devtools-log: consolidate implementation into gatherer ([#14080](https://github.com/GoogleChrome/lighthouse/pull/14080))
 * devtoolslog: include Target and Runtime domains ([#14101](https://github.com/GoogleChrome/lighthouse/pull/14101))
@@ -98,7 +111,6 @@ TODO: we'll have stuff here soon
 * network-monitor: resolve server redirects ([#13790](https://github.com/GoogleChrome/lighthouse/pull/13790))
 * network-request: use ms instead of seconds ([#14567](https://github.com/GoogleChrome/lighthouse/pull/14567))
 * page-dependency-graph: compute using URL artifact ([#13772](https://github.com/GoogleChrome/lighthouse/pull/13772))
-* page-functions: remove all `*String` exports ([#14374](https://github.com/GoogleChrome/lighthouse/pull/14374))
 * plugins: allow `supportedModes` in category ([#13921](https://github.com/GoogleChrome/lighthouse/pull/13921))
 * preload-lcp-image: be specific about when to do this ([#13771](https://github.com/GoogleChrome/lighthouse/pull/13771))
 * replay: fix stringify extension ([#14297](https://github.com/GoogleChrome/lighthouse/pull/14297))
@@ -118,7 +130,7 @@ TODO: we'll have stuff here soon
 * user-flow: start/end navigation functions ([#13966](https://github.com/GoogleChrome/lighthouse/pull/13966))
 * uses-responsive-images: higher threshold with breakpoints ([#13853](https://github.com/GoogleChrome/lighthouse/pull/13853))
 * viewport: fix tap delay link ([#14460](https://github.com/GoogleChrome/lighthouse/pull/14460))
-* vulnerable-libraries: remove audit ([#14194](https://github.com/GoogleChrome/lighthouse/pull/14194))
+* page-functions: remove all `*String` exports ([#14374](https://github.com/GoogleChrome/lighthouse/pull/14374))
 
 ## CLI
 
@@ -130,61 +142,58 @@ TODO: we'll have stuff here soon
 ## Report
 
 * reuse numberFormatters for ~50% performance gains ([#14493](https://github.com/GoogleChrome/lighthouse/pull/14493))
+* expand on "learn more" links ([#14091](https://github.com/GoogleChrome/lighthouse/pull/14091))
 * screen emulation and dpr in meta tooltip ([#14515](https://github.com/GoogleChrome/lighthouse/pull/14515))
 * sticky table headers ([#14508](https://github.com/GoogleChrome/lighthouse/pull/14508))
 * reduce stuttery feel of gauge animation ([#14513](https://github.com/GoogleChrome/lighthouse/pull/14513))
 * limit screenshot thumbnail height ([#14511](https://github.com/GoogleChrome/lighthouse/pull/14511))
 * use `focus-visible` for the three-dot menu ([#14497](https://github.com/GoogleChrome/lighthouse/pull/14497))
-* consolidate table headers ([#14315](https://github.com/GoogleChrome/lighthouse/pull/14315))
 * link accessibility audits to new docs ([#14400](https://github.com/GoogleChrome/lighthouse/pull/14400))
 * remove extra space from screenshot preview ([#14424](https://github.com/GoogleChrome/lighthouse/pull/14424))
+* set minimum width of element screenshot preview ([#13856](https://github.com/GoogleChrome/lighthouse/pull/13856))
 * prevent breaking words in opportunity text ([#14329](https://github.com/GoogleChrome/lighthouse/pull/14329))
-* convert generator to ES modules ([6c04777](https://github.com/GoogleChrome/lighthouse/commit/6c04777))
-* expand on "learn more" links ([#14091](https://github.com/GoogleChrome/lighthouse/pull/14091))
 * handle non-numeric numericValues in calc link ([#10880](https://github.com/GoogleChrome/lighthouse/pull/10880))
 * avoid css issue with border when hoisting meta block ([#13877](https://github.com/GoogleChrome/lighthouse/pull/13877))
-* set minimum width of element screenshot preview ([#13856](https://github.com/GoogleChrome/lighthouse/pull/13856))
-* remove eslint --fix step in report generation ([#13864](https://github.com/GoogleChrome/lighthouse/pull/13864))
 * dom: support code snippets within markdown links ([#14121](https://github.com/GoogleChrome/lighthouse/pull/14121))
 * flow: fix ui strings not being bundled ([#14427](https://github.com/GoogleChrome/lighthouse/pull/14427))
+* remove eslint --fix step in report generation ([#13864](https://github.com/GoogleChrome/lighthouse/pull/13864))
+* consolidate table headers ([#14315](https://github.com/GoogleChrome/lighthouse/pull/14315))
 
 ## Deps
 
+* puppeteer: upgrade to 16.1.0 ([#14244](https://github.com/GoogleChrome/lighthouse/pull/14244))
+* chrome-launcher@0.15.1 ([#14070](https://github.com/GoogleChrome/lighthouse/pull/14070))
 * upgrade third-party-web to 0.20.2 ([#14546](https://github.com/GoogleChrome/lighthouse/pull/14546))
 * switch third-party-web dataset to entities-nostats subset ([#14548](https://github.com/GoogleChrome/lighthouse/pull/14548))
-* re-sync yarn.lock file ([#14403](https://github.com/GoogleChrome/lighthouse/pull/14403))
-* update quibble fork to work with new loader api ([#14366](https://github.com/GoogleChrome/lighthouse/pull/14366))
-* update to latest CDT packages ([#14293](https://github.com/GoogleChrome/lighthouse/pull/14293))
-* update typescript-eslint for tsc 4.7 ([#14111](https://github.com/GoogleChrome/lighthouse/pull/14111))
 * update to typescript 4.7 ([#14058](https://github.com/GoogleChrome/lighthouse/pull/14058))
-* chrome-launcher@0.15.1 ([#14070](https://github.com/GoogleChrome/lighthouse/pull/14070))
-* devtools-protocol: upgrade to 0.0.995287 ([#13902](https://github.com/GoogleChrome/lighthouse/pull/13902))
+* update typescript-eslint for tsc 4.7 ([#14111](https://github.com/GoogleChrome/lighthouse/pull/14111))
 * jpeg-js: upgrade to 0.4.4 ([#14221](https://github.com/GoogleChrome/lighthouse/pull/14221))
-* puppeteer: upgrade to 16.1.0 ([#14244](https://github.com/GoogleChrome/lighthouse/pull/14244))
-* snyk: update snyk snapshot ([#13880](https://github.com/GoogleChrome/lighthouse/pull/13880))
-* snyk: update snyk snapshot ([#13774](https://github.com/GoogleChrome/lighthouse/pull/13774))
+* bump node-fetch from 2.6.1 to 2.6.7 ([#13759](https://github.com/GoogleChrome/lighthouse/pull/13759))
+* devtools-protocol: upgrade to 0.0.995287 ([#13902](https://github.com/GoogleChrome/lighthouse/pull/13902))
+* update to latest CDT packages ([#14293](https://github.com/GoogleChrome/lighthouse/pull/14293))
+* update quibble fork to work with new loader api ([#14366](https://github.com/GoogleChrome/lighthouse/pull/14366))
+* re-sync yarn.lock file ([#14403](https://github.com/GoogleChrome/lighthouse/pull/14403))
 
 ## Clients
 
-* convert extension to ES modules ([#14181](https://github.com/GoogleChrome/lighthouse/pull/14181))
+* viewer: ga event for flow-report ([#13932](https://github.com/GoogleChrome/lighthouse/pull/13932))
 * lr: expose computeBenchmarkIndex ([#14582](https://github.com/GoogleChrome/lighthouse/pull/14582))
 * lr: export primary api, presets from lr bundle ([#14425](https://github.com/GoogleChrome/lighthouse/pull/14425))
 * lr: add FR navigation support ([#13901](https://github.com/GoogleChrome/lighthouse/pull/13901))
 * lr: run benchmark repeatedly given special query parameter ([#14075](https://github.com/GoogleChrome/lighthouse/pull/14075))
 * psi: expose hasLocale in bundle types ([#14325](https://github.com/GoogleChrome/lighthouse/pull/14325))
-* viewer: ga event for flow-report ([#13932](https://github.com/GoogleChrome/lighthouse/pull/13932))
 
 ## I18n
 
-* update comments to match expanded "learn more" links ([#14446](https://github.com/GoogleChrome/lighthouse/pull/14446))
+* localize units in report formatter ([#13830](https://github.com/GoogleChrome/lighthouse/pull/13830))
 * fix broken description in installable-manifest audit ([#14444](https://github.com/GoogleChrome/lighthouse/pull/14444))
-* handle string placeholder collisions ([#14432](https://github.com/GoogleChrome/lighthouse/pull/14432))
+* update comments to match expanded "learn more" links ([#14446](https://github.com/GoogleChrome/lighthouse/pull/14446))
+* remove default granularity values from formatter ([#13839](https://github.com/GoogleChrome/lighthouse/pull/13839))
+* replace placeholder using replacer callback ([#14109](https://github.com/GoogleChrome/lighthouse/pull/14109))
 * fix i18n filename path on windows ([#14220](https://github.com/GoogleChrome/lighthouse/pull/14220))
 * fix collect-strings on windows with pathToFileURL ([#14201](https://github.com/GoogleChrome/lighthouse/pull/14201))
-* replace placeholder using replacer callback ([#14109](https://github.com/GoogleChrome/lighthouse/pull/14109))
+* handle string placeholder collisions ([#14432](https://github.com/GoogleChrome/lighthouse/pull/14432))
 * reduce unnecessary message formats ([#14030](https://github.com/GoogleChrome/lighthouse/pull/14030))
-* remove default granularity values from formatter ([#13839](https://github.com/GoogleChrome/lighthouse/pull/13839))
-* localize units in report formatter ([#13830](https://github.com/GoogleChrome/lighthouse/pull/13830))
 
 ## Docs
 
@@ -195,7 +204,6 @@ TODO: we'll have stuff here soon
 * fix some broken links ([#13872](https://github.com/GoogleChrome/lighthouse/pull/13872))
 * architecture: update to reflect FR changes ([#14017](https://github.com/GoogleChrome/lighthouse/pull/14017))
 * budgets: add example using config ([#14278](https://github.com/GoogleChrome/lighthouse/pull/14278))
-* changelog: add 9.6.x release notes ([f03850a](https://github.com/GoogleChrome/lighthouse/commit/f03850a))
 * config: revert #14321 ([#14323](https://github.com/GoogleChrome/lighthouse/pull/14323))
 * config: update to reflect changes in FR ([#14321](https://github.com/GoogleChrome/lighthouse/pull/14321))
 * proto: update protobuf installation guidance ([#14558](https://github.com/GoogleChrome/lighthouse/pull/14558))
@@ -207,6 +215,7 @@ TODO: we'll have stuff here soon
 * user-flows: refactor document ([#14021](https://github.com/GoogleChrome/lighthouse/pull/14021))
 * user-flows: add instructions for DevTools ([#14009](https://github.com/GoogleChrome/lighthouse/pull/14009))
 * user-flows: update api usage ([#13826](https://github.com/GoogleChrome/lighthouse/pull/13826))
+* changelog: add 9.6.x release notes ([f03850a](https://github.com/GoogleChrome/lighthouse/commit/f03850a))
 
 ## Tests
 
@@ -294,48 +303,34 @@ TODO: we'll have stuff here soon
 
 ## Misc
 
-* remove some unwanted TODOs ([#14353](https://github.com/GoogleChrome/lighthouse/pull/14353))
-* change default build folder for devtools gn ([#14492](https://github.com/GoogleChrome/lighthouse/pull/14492))
-* drop support for node 14 ([#14413](https://github.com/GoogleChrome/lighthouse/pull/14413))
-* re-enable pubads after esm migration ([#14241](https://github.com/GoogleChrome/lighthouse/pull/14241))
-* move ES modules lint rules to root ([#14349](https://github.com/GoogleChrome/lighthouse/pull/14349))
-* remove transitionary ES module package.json files ([#14348](https://github.com/GoogleChrome/lighthouse/pull/14348))
-* use a unique local port for the treemap ([#14308](https://github.com/GoogleChrome/lighthouse/pull/14308))
+* [BREAKING] rename LHError to LighthouseError ([#14173](https://github.com/GoogleChrome/lighthouse/pull/14173))
+* inp: switch proccessing "delay" to "time" ([#13999](https://github.com/GoogleChrome/lighthouse/pull/13999))
 * document where network timings come from ([#14227](https://github.com/GoogleChrome/lighthouse/pull/14227))
-* convert shared to ES modules ([b7658eb](https://github.com/GoogleChrome/lighthouse/commit/b7658eb))
 * update tsconfig.json ([e2f7e75](https://github.com/GoogleChrome/lighthouse/commit/e2f7e75))
-* rename lighthouse-(core,cli) folders ([#14242](https://github.com/GoogleChrome/lighthouse/pull/14242))
 * fix broken link for PWA checklist ([#14240](https://github.com/GoogleChrome/lighthouse/pull/14240))
-* mark build folder as not generated for GitHub UI ([#14192](https://github.com/GoogleChrome/lighthouse/pull/14192))
-* rename LHError to LighthouseError ([#14173](https://github.com/GoogleChrome/lighthouse/pull/14173))
-* rename eslint config files to .cjs ([#14172](https://github.com/GoogleChrome/lighthouse/pull/14172))
 * include used files in flow-report tsconfig ([#14174](https://github.com/GoogleChrome/lighthouse/pull/14174))
 * only run scheduled publish job if there are new commits ([#14145](https://github.com/GoogleChrome/lighthouse/pull/14145))
-* fix broken links in changelog ([#14130](https://github.com/GoogleChrome/lighthouse/pull/14130))
 * prevent forks from running cron job ([#13973](https://github.com/GoogleChrome/lighthouse/pull/13973))
 * use top-level await ([#13975](https://github.com/GoogleChrome/lighthouse/pull/13975))
 * remove `createCommonjsRefs` ([#14004](https://github.com/GoogleChrome/lighthouse/pull/14004))
 * shim fs out of lightrider report generator bundle ([#14098](https://github.com/GoogleChrome/lighthouse/pull/14098))
 * replace appendChild with append ([#13995](https://github.com/GoogleChrome/lighthouse/pull/13995))
-* restore expected newline padding around imports ([#13998](https://github.com/GoogleChrome/lighthouse/pull/13998))
 * also update flow json in update:sample-json script ([#13936](https://github.com/GoogleChrome/lighthouse/pull/13936))
-* convert lighthouse-core/test to ES modules ([#13295](https://github.com/GoogleChrome/lighthouse/pull/13295))
 * generate snapshot/timespan reports from sample flow result ([#13937](https://github.com/GoogleChrome/lighthouse/pull/13937))
-* remove 'use strict' from module code ([#13869](https://github.com/GoogleChrome/lighthouse/pull/13869))
-* add brendan back to triage rotation ([#13838](https://github.com/GoogleChrome/lighthouse/pull/13838))
+* use a unique local port for the treemap ([#14308](https://github.com/GoogleChrome/lighthouse/pull/14308))
 * set encoding on streams for unicode correctness ([#13780](https://github.com/GoogleChrome/lighthouse/pull/13780))
+* lantern-trace-saver: fix request finishTime ([#14198](https://github.com/GoogleChrome/lighthouse/pull/14198))
 * build: remove lighthouse shim no longer necessary for plugins ([#14538](https://github.com/GoogleChrome/lighthouse/pull/14538))
 * build: remove non-functional package.json shim ([#14536](https://github.com/GoogleChrome/lighthouse/pull/14536))
 * build: extract bfcache strings from devtools ([#14452](https://github.com/GoogleChrome/lighthouse/pull/14452))
 * build: use git-describe for build bundle version header ([#14347](https://github.com/GoogleChrome/lighthouse/pull/14347))
 * build: fix smokerider bundles ([#14267](https://github.com/GoogleChrome/lighthouse/pull/14267))
-* build: convert to ES modules ([#13967](https://github.com/GoogleChrome/lighthouse/pull/13967))
-* inp: switch proccessing "delay" to "time" ([#13999](https://github.com/GoogleChrome/lighthouse/pull/13999))
-* lantern-trace-saver: fix request finishTime ([#14198](https://github.com/GoogleChrome/lighthouse/pull/14198))
-
-## Build
-
-* deps-dev: bump node-fetch from 2.6.1 to 2.6.7 ([#13759](https://github.com/GoogleChrome/lighthouse/pull/13759))
+* change default build folder for devtools gn ([#14492](https://github.com/GoogleChrome/lighthouse/pull/14492))
+* fix broken links in changelog ([#14130](https://github.com/GoogleChrome/lighthouse/pull/14130))
+* mark build folder as not generated for GitHub UI ([#14192](https://github.com/GoogleChrome/lighthouse/pull/14192))
+* rename eslint config files to .cjs ([#14172](https://github.com/GoogleChrome/lighthouse/pull/14172))
+* restore expected newline padding around imports ([#13998](https://github.com/GoogleChrome/lighthouse/pull/13998))
+* add brendan back to triage rotation ([#13838](https://github.com/GoogleChrome/lighthouse/pull/13838))
 
 <a name="9.6.8"></a>
 # 9.6.8 (2022-10-31)
