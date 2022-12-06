@@ -404,6 +404,15 @@ export class DetailsRenderer {
       renderedRows[0]?.children[0]?.append(' ', firstPartyChipEl);
     }
 
+    if (matchedEntity?.homepage) {
+      const entityLinkEl = this._dom.createElement('a');
+      entityLinkEl.href = matchedEntity?.homepage;
+      entityLinkEl.target = '_blank';
+      entityLinkEl.title = 'Open link in a new tab'; // TOOD: i18n
+      entityLinkEl.classList.add('lh-report-icon--external');
+      renderedRows[0]?.children[0]?.append(' ', entityLinkEl);
+    }
+
     return fragment;
   }
 
@@ -443,7 +452,7 @@ export class DetailsRenderer {
       const group = byEntity.get(entityName) || {
         [primaryKey]: {
           type: 'link',
-          url: matchedEntity?.homepage || '',
+          url: '',
           text: matchedEntity?.name || 'Unattributable', // TODO: i18n
         },
         entity: matchedEntity?.name,
