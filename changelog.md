@@ -484,7 +484,7 @@ We expect this release to ship in the DevTools of [Chrome 103](https://chromiumd
 * trace-processor: ignore `navigationStart` with falsy document url ([#13848](https://github.com/GoogleChrome/lighthouse/pull/13848))
 * resolve redirected script records ([#13751](https://github.com/GoogleChrome/lighthouse/pull/13751))
 * deprecations: drop compat for ConsoleMessages ([#13893](https://github.com/GoogleChrome/lighthouse/pull/13893))
-* deprecations: use translated strings from devtools repo ([#13961](https://github.com/GoogleChrome/lighthouse/pull/14482))
+* deprecations: hard-code english strings ([1883f7](https://github.com/GoogleChrome/lighthouse/commit/1883f7))
 
 ## Report
 
