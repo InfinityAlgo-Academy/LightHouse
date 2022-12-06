@@ -85,7 +85,6 @@ Configuration:
   --save-assets                  Save the trace contents & devtools logs to disk  [boolean] [default: false]
   --list-all-audits              Prints a list of all available audits and exits  [boolean] [default: false]
   --list-trace-categories        Prints a list of all required trace categories and exits  [boolean] [default: false]
-  --print-config                 Print the normalized config for the given config and options, then exit.  [boolean] [default: false]
   --additional-trace-categories  Additional categories to capture with the trace (comma-delimited).  [string]
   --config-path                  The path to the config JSON.
                                  An example config file: core/config/lr-desktop-config.js  [string]

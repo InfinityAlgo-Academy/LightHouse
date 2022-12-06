@@ -67,7 +67,6 @@ beforeEach(async () => {
     listAllAudits: false,
     listLocales: false,
     listTraceCategories: false,
-    printConfig: false,
   };
   mockGetFlags.mockImplementation(() => cliFlags);
 });
@@ -106,10 +105,10 @@ describe('CLI bin', function() {
       expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);
     });
 
-    it('should load the config from the preset', async () => {
-      cliFlags = {...cliFlags, preset: 'experimental'};
+    it('should load the config from the desktop preset', async () => {
+      cliFlags = {...cliFlags, preset: 'desktop'};
       const actualConfig =
-        (await import('../../../core/config/experimental-config.js')).default;
+        (await import('../../../core/config/desktop-config.js')).default;
       await bin.begin();
 
       expect(getRunLighthouseArgs()[2]).toEqual(actualConfig);
