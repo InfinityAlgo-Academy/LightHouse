@@ -90,6 +90,7 @@ If an expectation requires a minimum version of Chromium, use `_minChromiumVersi
 Can be as specific as you like (`_minChromiumVersion: xx` works too).
 
 **Examples**:
+
 ```js
 {
   artifacts: {
@@ -174,6 +175,7 @@ Smokehouse comes with a core set of test definitions, but it can run any set of 
 
 - have a test site on a public URL or via a local server (e.g. `https://localhost:8080`)
 - create a test definition (e.g. in `plugin-tests.js`)
+
   ```js
   const smokeTests = [{
     id: 'pluginTest',
@@ -183,7 +185,9 @@ Smokehouse comes with a core set of test definitions, but it can run any set of 
   };
   module.exports = smokeTests;
   ```
+
 - create a test expectations file (e.g. `expectations.js`)
+
   ```js
   const expectations = [{
     lhr: {
@@ -199,6 +203,7 @@ Smokehouse comes with a core set of test definitions, but it can run any set of 
   };
   module.exports = expectations;
   ```
+
 - with `lighthouse` installed as a dependency/peer dependency, run
 
   `yarn smokehouse --tests-path plugin-tests.js`
