@@ -18,7 +18,7 @@ const UIStrings = {
   title: 'Avoid non-composited animations',
   /** Description of a diagnostic LH audit that shows the user animations that are not composited. Janky means frames may be skipped and the animation will look bad. Acceptable alternatives here might be 'poor', or 'slow'. */
   description: 'Animations which are not composited can be janky and increase CLS. ' +
-    '[Learn how to avoid non-composited animations](https://web.dev/non-composited-animations)',
+    '[Learn how to avoid non-composited animations](https://developer.chrome.com/docs/lighthouse/performance/non-composited-animations/)',
   /** [ICU Syntax] Label identifying the number of animated elements that are not composited. */
   displayValue: `{itemCount, plural,
   =1 {# animated element found}

@@ -22,7 +22,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they need to have an hreflang link on their page. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. "hreflang" is an HTML attribute and should not be translated. */
   description: 'hreflang links tell search engines what version of a page they should ' +
     'list in search results for a given language or region. [Learn more about `hreflang`]' +
-    '(https://web.dev/hreflang/).',
+    '(https://developer.chrome.com/docs/lighthouse/seo/hreflang/).',
   /** A failure reason for a Lighthouse audit that flags incorrect use of the `hreflang` attribute on `link` elements. This failure reason is shown when the hreflang language code is unexpected. */
   unexpectedLanguage: 'Unexpected language code',
   /** A failure reason for a Lighthouse audit that flags incorrect use of the `hreflang` attribute on `link` elements. This failure reason is shown when the `href` attribute value is not fully-qualified. */

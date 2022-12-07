@@ -14,7 +14,7 @@ const UIStrings = {
   title: 'Minify JavaScript',
   /** Description of a Lighthouse audit that tells the user *why* they should minify the page’s JS code to reduce file size. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Minifying JavaScript files can reduce payload sizes and script parse time. ' +
-    '[Learn how to minify JavaScript](https://web.dev/unminified-javascript/).',
+    '[Learn how to minify JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unminified-javascript/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

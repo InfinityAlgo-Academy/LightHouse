@@ -3,7 +3,7 @@
 ### Give me a summary of the perf score changes in v8.0. What's new/different?
 
 First, it may be useful to refresh on [the math behind Lighthouse's metric
-scores and performance score.](https://web.dev/performance-scoring/)
+scores and performance score.](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/)
 
 In [Lighthouse v8.0](https://github.com/GoogleChrome/lighthouse/releases/tag/v8.0.0), we updated the score curves for FCP and TBT measurements,
 making both a bit more strict. CLS has been updated to its new, [windowed
@@ -132,8 +132,7 @@ experience is best practice. [Read more about field & lab](https://developers.go
 
 ### How should I work to optimize CLS differently given that it has been updated?
 
-The [windowing
-adjustment](https://www.google.com/url?q=https://web.dev/evolving-cls/&sa=D&source=editors&ust=1622570731600000&usg=AOvVaw2R7Y5uFrQX7Mpdj__5SdYq)
+The [windowing adjustment](https://web.dev/evolving-cls/)
 will likely not have much effect for the lab measurement, but instead will have
 a large effect on the field CLS for long-lived pages.
 
@@ -176,8 +175,7 @@ double-tap-to-zoom](https://chromium.googlesource.com/chromium/src.git/+/refs/he
 fixes a lot of high FID / low TBT cases and may be observable in your field
 metrics, with higher percentiles improving slightly. Most remaining high FID /
 low TBT cases are likely due to incorrect meta viewport tags, which [Lighthouse
-will
-flag](https://www.google.com/url?q=https://web.dev/viewport/&sa=D&source=editors&ust=1622651275263000&usg=AOvVaw1OS_kJ9oNMlPSjIJbFy7c8).
+will flag](https://developer.chrome.com/docs/lighthouse/pwa/viewport/).
 Delivering a mobile-friendly viewport, reducing main-thread blocking JS, and
 keeping your TBT low is the best defense against bad FID in the field.
 
@@ -231,7 +229,7 @@ compositions (which metrics we are blending together, and at what weights) in
 the [score
 calculator](https://googlechrome.github.io/lighthouse/scorecalc/#FCP=3000&SI=5800&FMP=4000&TTI=7300&FCI=6500&LCP=4000&TBT=600&CLS=0.25&device=mobile&version=8&version=6&version=5),
 and learn more about the [calculation specifics
-here](https://web.dev/performance-scoring/).
+here](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/).
 
 ### What is the most exciting update in LH v8?
 

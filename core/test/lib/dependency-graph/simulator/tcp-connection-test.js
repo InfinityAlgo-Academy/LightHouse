@@ -46,6 +46,12 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
         congestionWindow: 40,
         roundTrips: 5,
         timeElapsed: 500,
+        connectionTiming: {
+          connectionTime: 250,
+          dnsResolutionTime: 0,
+          sslTime: 100,
+          timeToFirstByte: 300,
+        },
       });
       connection.setCongestionWindow(40); // will download all in one round trip
       assert.deepEqual(connection.simulateDownloadUntil(50000), {
@@ -54,6 +60,12 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
         congestionWindow: 40,
         roundTrips: 3,
         timeElapsed: 300,
+        connectionTiming: {
+          connectionTime: 250,
+          dnsResolutionTime: 0,
+          sslTime: 100,
+          timeToFirstByte: 300,
+        },
       });
     });
   });
@@ -90,6 +102,12 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
           congestionWindow: 10,
           roundTrips: 2,
           timeElapsed: 200,
+          connectionTiming: {
+            connectionTime: 150,
+            dnsResolutionTime: 0,
+            sslTime: undefined, // non-SSL
+            timeToFirstByte: 200,
+          },
         });
       });
 
@@ -101,6 +119,12 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
           congestionWindow: 10,
           roundTrips: 3,
           timeElapsed: 300,
+          connectionTiming: {
+            connectionTime: 250,
+            dnsResolutionTime: 0,
+            sslTime: 100,
+            timeToFirstByte: 300,
+          },
         });
       });
 
@@ -112,6 +136,12 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
           congestionWindow: 10,
           roundTrips: 3,
           timeElapsed: 300,
+          connectionTiming: {
+            connectionTime: 250,
+            dnsResolutionTime: 0,
+            sslTime: 100,
+            timeToFirstByte: 300,
+          },
         });
       });
 
@@ -124,6 +154,12 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
           congestionWindow: 10,
           roundTrips: 3,
           timeElapsed: 300 + responseTime,
+          connectionTiming: {
+            connectionTime: 250,
+            dnsResolutionTime: 0,
+            sslTime: 100,
+            timeToFirstByte: 378,
+          },
         });
       });
 
@@ -136,6 +172,12 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
           congestionWindow: 68,
           roundTrips: 105,
           timeElapsed: 10500,
+          connectionTiming: {
+            connectionTime: 250,
+            dnsResolutionTime: 0,
+            sslTime: 100,
+            timeToFirstByte: 300,
+          },
         });
       });
 
@@ -147,6 +189,12 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
           congestionWindow: 10,
           roundTrips: 3,
           timeElapsed: 50,
+          connectionTiming: {
+            connectionTime: 250,
+            dnsResolutionTime: 0,
+            sslTime: 100,
+            timeToFirstByte: 300,
+          },
         });
       });
 
@@ -160,6 +208,9 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
           congestionWindow: 10,
           roundTrips: 0,
           timeElapsed: 0,
+          connectionTiming: {
+            timeToFirstByte: 0,
+          },
         });
       });
 
@@ -175,6 +226,12 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
             congestionWindow: 68,
             roundTrips: 51, // 5 mb / (1460 * 68)
             timeElapsed: 5100,
+            connectionTiming: {
+              connectionTime: 250,
+              dnsResolutionTime: 0,
+              sslTime: 100,
+              timeToFirstByte: 300,
+            },
           }
         );
       });
@@ -191,6 +248,12 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
             congestionWindow: 10,
             roundTrips: 2,
             timeElapsed: 200,
+            connectionTiming: {
+              connectionTime: 150,
+              dnsResolutionTime: 0,
+              sslTime: undefined, // non-SSL
+              timeToFirstByte: 200,
+            },
           }
         );
       });
@@ -205,6 +268,12 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
             congestionWindow: 10,
             roundTrips: 2,
             timeElapsed: 200,
+            connectionTiming: {
+              connectionTime: 150,
+              dnsResolutionTime: 0,
+              sslTime: undefined, // non-SSL
+              timeToFirstByte: 200,
+            },
           }
         );
       });
@@ -222,6 +291,12 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
             congestionWindow: 10,
             roundTrips: 2,
             timeElapsed: 125,
+            connectionTiming: {
+              connectionTime: 150,
+              dnsResolutionTime: 0,
+              sslTime: undefined, // non-SSL
+              timeToFirstByte: 200,
+            },
           }
         );
       });
@@ -240,6 +315,12 @@ describe('DependencyGraph/Simulator/TcpConnection', () => {
             congestionWindow: 68,
             roundTrips: 8,
             timeElapsed: 800, // skips the handshake because time already elapsed
+            connectionTiming: {
+              connectionTime: 250,
+              dnsResolutionTime: 0,
+              sslTime: 100,
+              timeToFirstByte: 300,
+            },
           }
         );
       });

@@ -111,7 +111,9 @@ async function rebaselineArtifacts(artifactKeys) {
 
   // Normalize some data so it doesn't change on every update.
   for (const {artifacts} of flowArtifacts.gatherSteps) {
-    assetSaver.normalizeTimingEntries(artifacts.Timing);
+    const timingCopy = JSON.parse(JSON.stringify(artifacts.Timing));
+    assetSaver.normalizeTimingEntries(timingCopy);
+    artifacts.Timing = timingCopy;
   }
 
   if (artifactKeys.length) {

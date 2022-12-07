@@ -11,7 +11,7 @@ import {FirstContentfulPaint as ComputedFcp} from '../../computed/metrics/first-
 const UIStrings = {
   /** Description of the First Contentful Paint (FCP) metric, which marks the time at which the first text or image is painted by the browser. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'First Contentful Paint marks the time at which the first text or image is ' +
-      'painted. [Learn more about the First Contentful Paint metric](https://web.dev/first-contentful-paint/).',
+      'painted. [Learn more about the First Contentful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/first-contentful-paint/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

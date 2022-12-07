@@ -2,7 +2,7 @@
 
 ## How is the Performance score calculated?
 
-➡️ Please read [Lighthouse Performance Scoring at web.dev](https://web.dev/performance-scoring/).
+➡️ Please read [Lighthouse Performance Scoring at developer.chrome.com](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/).
 
 ## How is the PWA (Progressive Web App) score calculated?
 

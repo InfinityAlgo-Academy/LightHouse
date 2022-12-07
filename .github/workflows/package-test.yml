@@ -9,6 +9,8 @@ jobs:
   package-test:
     runs-on: ubuntu-latest
     name: Package Test
+    env:
+      FORCE_COLOR: true
 
     steps:
     - name: git clone
@@ -31,6 +33,8 @@ jobs:
   package-test-legacy:
     runs-on: ubuntu-latest
     name: Package Test Legacy Navigation
+    env:
+      FORCE_COLOR: true
 
     steps:
     - name: git clone

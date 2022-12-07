@@ -20,7 +20,7 @@ const UIStrings = {
   description: 'Remove large, duplicate JavaScript modules from bundles ' +
     'to reduce unnecessary bytes consumed by network activity. ', // +
   // TODO: we need docs.
-  // '[Learn more](https://web.dev/duplicated-javascript/).',
+  // '[Learn more](https://developer.chrome.com/docs/lighthouse/performance/duplicated-javascript/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
