@@ -9,6 +9,8 @@ jobs:
   # `basics` includes all non-smoke and non-unit CI
   basics:
     runs-on: ubuntu-latest
+    env:
+      FORCE_COLOR: true
 
     # A few steps are duplicated across all jobs. Can be done better when this feature lands:
     #   https://github.community/t/reusing-sharing-inheriting-steps-between-jobs-declarations/16851

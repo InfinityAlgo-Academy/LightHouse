@@ -20,7 +20,7 @@ import {LighthouseError} from '../lib/lh-error.js';
 
 const {promisify} = util;
 
-// TODO(esmodules): Rollup does not support `promisfy` or `stream.pipeline`. Bundled files
+// Rollup does not support `promisfy` or `stream.pipeline`. Bundled files
 // don't need anything in this file except for `stringifyReplacer`, so a check for
 // truthiness before using is enough.
 // TODO: Can remove promisify(pipeline) in Node 15.

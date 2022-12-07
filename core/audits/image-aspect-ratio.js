@@ -22,7 +22,7 @@ const UIStrings = {
   failureTitle: 'Displays images with incorrect aspect ratio',
   /** Description of a Lighthouse audit that tells the user why they should maintain the correct aspect ratios for all images. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Image display dimensions should match natural aspect ratio. ' +
-    '[Learn more about image aspect ratio](https://web.dev/image-aspect-ratio/).',
+    '[Learn more about image aspect ratio](https://developer.chrome.com/docs/lighthouse/best-practices/image-aspect-ratio/).',
   /**  Label for a column in a data table; entries in the column will be the numeric aspect ratio of an image as displayed in a web page. */
   columnDisplayed: 'Aspect Ratio (Displayed)',
   /**  Label for a column in a data table; entries in the column will be the numeric aspect ratio of the raw (actual) image. */

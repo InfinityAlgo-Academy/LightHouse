@@ -12,6 +12,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FORCE_COLOR: true
 
     steps:
     - name: Set $PATH
@@ -79,6 +81,8 @@ jobs:
   e2e:
     needs: [build]
     runs-on: ubuntu-latest
+    env:
+      FORCE_COLOR: true
 
     steps:
     - name: git clone
@@ -121,6 +125,8 @@ jobs:
       # e.g. if set 1 fails, continue with set 2 anyway
       fail-fast: false
     runs-on: ubuntu-latest
+    env:
+      FORCE_COLOR: true
     name: DevTools smoke ${{ matrix.smoke-test-shard }}/${{ strategy.job-total }}
 
     steps:

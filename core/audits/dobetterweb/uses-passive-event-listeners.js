@@ -21,7 +21,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user why they should use passive event listeners on the page. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Consider marking your touch and wheel event listeners as `passive` ' +
       'to improve your page\'s scroll performance. ' +
-      '[Learn more about adopting passive event listeners](https://web.dev/uses-passive-event-listeners/).',
+      '[Learn more about adopting passive event listeners](https://developer.chrome.com/docs/lighthouse/best-practices/uses-passive-event-listeners/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

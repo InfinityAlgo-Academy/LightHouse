@@ -16,7 +16,7 @@ See [Lighthouse Architecture](./docs/architecture.md), our overview and tour of 
 
 ## Contributing a patch
 
-If you have a contribution for our [documentation](https://web.dev/learn/#lighthouse), please submit it in the [web.dev repo](https://github.com/GoogleChrome/web.dev).
+If you have a contribution for our [documentation](https://developer.chrome.com/docs/lighthouse/), please submit it in the [developer.chrome.com repo](https://github.com/GoogleChrome/developer.chrome.com).
 
 1. Submit an issue describing your proposed change.
 1. The maintainers will respond to your issue promptly.

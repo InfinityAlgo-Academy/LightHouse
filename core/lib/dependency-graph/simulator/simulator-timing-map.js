@@ -39,9 +39,17 @@ import {BaseNode} from '../base-node.js';
 /** @typedef {NetworkNodeTimingStarted & Pick<NodeTimingComplete, 'estimatedTimeElapsed'>} NetworkNodeTimingInProgress */
 
 /** @typedef {CpuNodeTimingInProgress & Pick<NodeTimingComplete, 'endTime'>} CpuNodeTimingComplete */
-/** @typedef {NetworkNodeTimingInProgress & Pick<NodeTimingComplete, 'endTime'>} NetworkNodeTimingComplete */
+/** @typedef {NetworkNodeTimingInProgress & Pick<NodeTimingComplete, 'endTime'> & {connectionTiming: ConnectionTiming}} NetworkNodeTimingComplete */
 
 /** @typedef {NodeTimingQueued | CpuNodeTimingStarted | NetworkNodeTimingStarted | CpuNodeTimingInProgress | NetworkNodeTimingInProgress | CpuNodeTimingComplete | NetworkNodeTimingComplete} NodeTimingData */
+
+/**
+ * @typedef ConnectionTiming A breakdown of network connection timings.
+ * @property {number} [dnsResolutionTime]
+ * @property {number} [connectionTime]
+ * @property {number} [sslTime]
+ * @property {number} timeToFirstByte
+ */
 
 class SimulatorTimingMap {
   constructor() {
@@ -83,12 +91,13 @@ class SimulatorTimingMap {
 
   /**
    * @param {Node} node
-   * @param {{endTime: number}} values
+   * @param {{endTime: number, connectionTiming?: ConnectionTiming}} values
    */
   setCompleted(node, values) {
     const nodeTiming = {
       ...this.getInProgress(node),
       endTime: values.endTime,
+      connectionTiming: values.connectionTiming,
     };
 
     this._nodeTimings.set(node, nodeTiming);
