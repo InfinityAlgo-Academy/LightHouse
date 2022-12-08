@@ -110,9 +110,13 @@ class BFCache extends Audit {
 
     const details = Audit.makeTableDetails(headings, results);
 
+    const displayValue = numActionable ?
+      str_(UIStrings.displayValue, {itemCount: numActionable}) :
+      undefined;
+
     return {
       score: numActionable ? 0 : 1,
-      displayValue: str_(UIStrings.displayValue, {itemCount: numActionable}),
+      displayValue,
       details,
     };
   }

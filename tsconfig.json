@@ -106,6 +106,7 @@
   "files": [
     // Opt-in to typechecking for some core tests and test-support files.
     "core/test/audits/script-treemap-data-test.js",
+    "core/test/audits/bf-cache-test.js",
     "cli/test/fixtures/static-server.js",
     "core/test/fixtures/config-plugins/lighthouse-plugin-simple/plugin-simple.js",
   ],
