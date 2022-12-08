@@ -1,6 +1,10 @@
 {
   "flags": {
     "skipAboutBlank": true,
+    "skipAudits": [
+      "uses-http2",
+      "bf-cache"
+    ],
     "disableStorageReset": true
   }
 }

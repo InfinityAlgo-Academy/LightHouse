@@ -6,56 +6,64 @@
       "entryType": "measure",
       "startTime": 0,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:config:resolveArtifactsToDefns",
       "entryType": "measure",
       "startTime": 1,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:config:resolveNavigationsToDefns",
       "entryType": "measure",
       "startTime": 2,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:driver:connect",
       "entryType": "measure",
       "startTime": 3,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:runner:gather",
       "entryType": "measure",
       "startTime": 4,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:gather:getBenchmarkIndex",
       "entryType": "measure",
       "startTime": 5,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:gather:getVersion",
       "entryType": "measure",
       "startTime": 6,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:gather:collectStacks",
       "entryType": "measure",
       "startTime": 7,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     }
   ],
   "LighthouseRunWarnings": [],

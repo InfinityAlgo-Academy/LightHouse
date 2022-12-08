@@ -1,5 +1,9 @@
 {
   "flags": {
-    "skipAboutBlank": true
+    "skipAboutBlank": true,
+    "skipAudits": [
+      "uses-http2",
+      "bf-cache"
+    ]
   }
 }
