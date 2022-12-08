@@ -93,9 +93,9 @@ declare module Details {
 
   interface EntityClassification {
     type: 'entity-classification';
-    origins: Record<string, number>;
     entities: Array<EntityClassificationEntity>;
-    names: Record<string, number>;
+    nameLUT: Record<string, number>;
+    originLUT: Record<string, number>;
   }
 
   /**

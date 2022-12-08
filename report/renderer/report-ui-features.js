@@ -227,7 +227,7 @@ export class ReportUIFeatures {
 
     const mainEntityOrigin = Util.getOrigin(Util.getFinalDisplayedUrl(this.json));
     if (!mainEntityOrigin) return;
-    const mainEntityId = entityClassification.origins[mainEntityOrigin];
+    const mainEntityId = entityClassification.originLUT[mainEntityOrigin];
     const mainEntityName = entityClassification.entities[mainEntityId]?.name;
     if (!mainEntityName) return;
 

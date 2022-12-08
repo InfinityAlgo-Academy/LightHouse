@@ -36,9 +36,9 @@ class EntityClassification extends Audit {
     /** @type {Array<LH.Audit.Details.EntityClassificationEntity>} */
     const entities = [];
     /** @type {Record<string, number>} */
-    const origins = {};
+    const originLUT = {};
     /** @type {Record<string, number>} */
-    const names = {};
+    const nameLUT = {};
 
     for (const [entity, entityUrls] of classifiedEntities.byEntity.entries()) {
       /** @type {LH.Audit.Details.EntityClassificationEntity} */
@@ -56,9 +56,9 @@ class EntityClassification extends Audit {
       entityUrls.forEach(url => {
         const origin = UrlUtils.getOrigin(url);
         if (!origin) return;
-        origins[origin] = id;
+        originLUT[origin] = id;
       });
-      names[shortEntity.name] = id;
+      nameLUT[shortEntity.name] = id;
     }
 
     return {
@@ -66,8 +66,8 @@ class EntityClassification extends Audit {
       details: {
         type: 'entity-classification',
         entities,
-        origins,
-        names,
+        originLUT,
+        nameLUT,
       },
     };
   }
