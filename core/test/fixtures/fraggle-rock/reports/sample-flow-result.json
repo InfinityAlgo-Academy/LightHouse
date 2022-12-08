@@ -83,7 +83,7 @@
             "description": "Speed Index shows how quickly the contents of a page are visibly populated. [Learn more about the Speed Index metric](https://developer.chrome.com/docs/lighthouse/performance/speed-index/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
-            "numericValue": 1903.3357599943133,
+            "numericValue": 1858.6607599943131,
             "numericUnit": "millisecond",
             "displayValue": "1.9 s"
           },
@@ -252,7 +252,7 @@
             "description": "Time to Interactive is the amount of time it takes for the page to become fully interactive. [Learn more about the Time to Interactive metric](https://developer.chrome.com/docs/lighthouse/performance/interactive/).",
             "score": 0.96,
             "scoreDisplayMode": "numeric",
-            "numericValue": 2919.2315,
+            "numericValue": 2926.9816500000006,
             "numericUnit": "millisecond",
             "displayValue": "2.9 s"
           },
@@ -1239,7 +1239,7 @@
             "description": "Collects all available metrics.",
             "score": null,
             "scoreDisplayMode": "informative",
-            "numericValue": 2919,
+            "numericValue": 2927,
             "numericUnit": "millisecond",
             "details": {
               "type": "debugdata",
@@ -1248,8 +1248,8 @@
                   "firstContentfulPaint": 1179,
                   "firstMeaningfulPaint": 1179,
                   "largestContentfulPaint": 2574,
-                  "interactive": 2919,
-                  "speedIndex": 1903,
+                  "interactive": 2927,
+                  "speedIndex": 1859,
                   "totalBlockingTime": 32,
                   "maxPotentialFID": 113,
                   "cumulativeLayoutShift": 0.009249603271484375,
@@ -6145,13 +6145,13 @@
               },
               {
                 "values": {
-                  "timeInMs": 1903.3357599943133
+                  "timeInMs": 1858.6607599943131
                 },
                 "path": "audits[speed-index].displayValue"
               },
               {
                 "values": {
-                  "timeInMs": 2919.2315
+                  "timeInMs": 2926.9816500000006
                 },
                 "path": "audits.interactive.displayValue"
               },
@@ -14409,7 +14409,7 @@
             "description": "Time to Interactive is the amount of time it takes for the page to become fully interactive. [Learn more about the Time to Interactive metric](https://developer.chrome.com/docs/lighthouse/performance/interactive/).",
             "score": 1,
             "scoreDisplayMode": "numeric",
-            "numericValue": 911.4059182891847,
+            "numericValue": 916.9316764602663,
             "numericUnit": "millisecond",
             "displayValue": "0.9 s"
           },
@@ -15357,7 +15357,7 @@
             "description": "Collects all available metrics.",
             "score": null,
             "scoreDisplayMode": "informative",
-            "numericValue": 911,
+            "numericValue": 917,
             "numericUnit": "millisecond",
             "details": {
               "type": "debugdata",
@@ -15366,7 +15366,7 @@
                   "firstContentfulPaint": 829,
                   "firstMeaningfulPaint": 829,
                   "largestContentfulPaint": 1812,
-                  "interactive": 911,
+                  "interactive": 917,
                   "speedIndex": 829,
                   "totalBlockingTime": 21,
                   "maxPotentialFID": 92,
@@ -20286,7 +20286,7 @@
               },
               {
                 "values": {
-                  "timeInMs": 911.4059182891847
+                  "timeInMs": 916.9316764602663
                 },
                 "path": "audits.interactive.displayValue"
               },

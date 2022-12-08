@@ -4678,9 +4678,9 @@
       "id": "unused-javascript",
       "title": "Reduce unused JavaScript",
       "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/).",
-      "score": 0.58,
+      "score": 0.5,
       "scoreDisplayMode": "numeric",
-      "numericValue": 600,
+      "numericValue": 750,
       "numericUnit": "millisecond",
       "displayValue": "Potential savings of 64 KiB",
       "details": {
@@ -4726,7 +4726,7 @@
             "wastedPercent": 70.99531129443884
           }
         ],
-        "overallSavingsMs": 600,
+        "overallSavingsMs": 750,
         "overallSavingsBytes": 65111
       }
     },
@@ -4936,9 +4936,9 @@
       "id": "uses-text-compression",
       "title": "Enable text compression",
       "description": "Text-based resources should be served with compression (gzip, deflate or brotli) to minimize total network bytes. [Learn more about text compression](https://developer.chrome.com/docs/lighthouse/performance/uses-text-compression/).",
-      "score": 0.38,
+      "score": 0.34,
       "scoreDisplayMode": "numeric",
-      "numericValue": 1800,
+      "numericValue": 2120,
       "numericUnit": "millisecond",
       "displayValue": "Potential savings of 143 KiB",
       "details": {
@@ -4972,7 +4972,7 @@
             "wastedBytes": 11647
           }
         ],
-        "overallSavingsMs": 1800,
+        "overallSavingsMs": 2120,
         "overallSavingsBytes": 146478
       }
     },
@@ -5141,9 +5141,9 @@
       "id": "legacy-javascript",
       "title": "Avoid serving legacy JavaScript to modern browsers",
       "description": "Polyfills and transforms enable legacy browsers to use new JavaScript features. However, many aren't necessary for modern browsers. For your bundled JavaScript, adopt a modern script deployment strategy using module/nomodule feature detection to reduce the amount of code shipped to modern browsers, while retaining support for legacy browsers. [Learn how to use modern JavaScript](https://web.dev/publish-modern-javascript/)",
-      "score": 0.88,
+      "score": 0.75,
       "scoreDisplayMode": "numeric",
-      "numericValue": 150,
+      "numericValue": 300,
       "numericUnit": "millisecond",
       "displayValue": "Potential savings of 21 KiB",
       "details": {
@@ -5204,7 +5204,7 @@
             "totalBytes": 0
           }
         ],
-        "overallSavingsMs": 150,
+        "overallSavingsMs": 300,
         "overallSavingsBytes": 21189
       }
     },
