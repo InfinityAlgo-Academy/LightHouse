@@ -11,9 +11,9 @@ import {NotRestoredReasonDescription} from '../lib/bfcache-strings.js';
 /* eslint-disable max-len */
 const UIStrings = {
   /** Title of a diagnostic Lighthouse audit that identifies when the back/forward cache is being used. "back/forward" refers to the back and forward buttons found in modern browsers. This title is shown to users if the back/forward cache was used, or if the back/forward cache was not used for reasons outside the user's control. */
-  title: 'Back/forward cache did not fail with actionable reasons',
+  title: `Page didn't prevent back/forward cache restoration`,
   /** Title of a diagnostic Lighthouse audit that identifies when the back/forward cache is being used. "back/forward" refers to the back and forward buttons found in modern browsers. This title is shown to users if the back/forward cache was not used for reasons that the user can address. */
-  failureTitle: 'Back/forward failed with actionable reasons',
+  failureTitle: 'Page prevented back/forward cache restoration',
   /** Description of a diagnostic Lighthouse audit that identifies when the back/forward cache is being used. "back/forward" refers to the back and forward buttons found in modern browsers. */
   description: 'Many navigations are performed using the back/forward buttons. The back/forward cache can speed up these return navigations. [Learn more about the back/forward cache](https://web.dev/bfcache/)',
   /** Back/forward cache failure type for a back/forward cache failure that the user should be able to address themselves. Shown in a table column with other failure types. */

@@ -5834,7 +5834,7 @@
     },
     "bf-cache": {
       "id": "bf-cache",
-      "title": "Back/forward failed with actionable reasons",
+      "title": "Page prevented back/forward cache restoration",
       "description": "Many navigations are performed using the back/forward buttons. The back/forward cache can speed up these return navigations. [Learn more about the back/forward cache](https://web.dev/bfcache/)",
       "score": 0,
       "scoreDisplayMode": "binary",

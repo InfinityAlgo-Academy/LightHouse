@@ -438,7 +438,7 @@
     "message": "F̂áîĺûŕê ŕêáŝón̂"
   },
   "core/audits/bf-cache.js | failureTitle": {
-    "message": "B̂áĉḱ/f̂ór̂ẃâŕd̂ f́âíl̂éd̂ ẃît́ĥ áĉt́îón̂áb̂ĺê ŕêáŝón̂ś"
+    "message": "P̂áĝé p̂ŕêv́êńt̂éd̂ b́âćk̂/f́ôŕŵár̂d́ ĉáĉh́ê ŕêśt̂ór̂át̂íôń"
   },
   "core/audits/bf-cache.js | failureTypeColumn": {
     "message": "F̂áîĺûŕê t́ŷṕê"
@@ -450,7 +450,7 @@
     "message": "P̂én̂d́îńĝ b́r̂óŵśêŕ ŝúp̂ṕôŕt̂"
   },
   "core/audits/bf-cache.js | title": {
-    "message": "B̂áĉḱ/f̂ór̂ẃâŕd̂ ćâćĥé d̂íd̂ ńôt́ f̂áîĺ ŵít̂h́ âćt̂íôńâb́l̂é r̂éâśôńŝ"
+    "message": "P̂áĝé d̂íd̂ń't̂ ṕr̂év̂én̂t́ b̂áĉḱ/f̂ór̂ẃâŕd̂ ćâćĥé r̂éŝt́ôŕât́îón̂"
   },
   "core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Ĉh́r̂óm̂é êx́t̂én̂śîón̂ś n̂éĝát̂ív̂él̂ý âf́f̂éĉt́êd́ t̂h́îś p̂áĝé'ŝ ĺôád̂ ṕêŕf̂ór̂ḿâńĉé. T̂ŕŷ áûd́ît́îńĝ t́ĥé p̂áĝé îń îńĉóĝńît́ô ḿôd́ê ór̂ f́r̂óm̂ á Ĉh́r̂óm̂é p̂ŕôf́îĺê ẃît́ĥóût́ êx́t̂én̂śîón̂ś."

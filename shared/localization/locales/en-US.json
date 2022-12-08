@@ -438,7 +438,7 @@
     "message": "Failure reason"
   },
   "core/audits/bf-cache.js | failureTitle": {
-    "message": "Back/forward failed with actionable reasons"
+    "message": "Page prevented back/forward cache restoration"
   },
   "core/audits/bf-cache.js | failureTypeColumn": {
     "message": "Failure type"
@@ -450,7 +450,7 @@
     "message": "Pending browser support"
   },
   "core/audits/bf-cache.js | title": {
-    "message": "Back/forward cache did not fail with actionable reasons"
+    "message": "Page didn't prevent back/forward cache restoration"
   },
   "core/audits/bootup-time.js | chromeExtensionsWarning": {
     "message": "Chrome extensions negatively affected this page's load performance. Try auditing the page in incognito mode or from a Chrome profile without extensions."
