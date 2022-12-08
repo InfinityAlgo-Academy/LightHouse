@@ -241,10 +241,10 @@ describe('asset-saver helper', () => {
       const flowArtifacts = await assetSaver.loadFlowArtifacts(artifactsPath);
 
       expect(flowArtifacts.gatherSteps.map(gatherStep => gatherStep.flags)).toEqual([
-        {skipAboutBlank: true},
+        {skipAboutBlank: true, skipAudits: ['uses-http2', 'bf-cache']},
         {name: 'Search input'},
         {name: 'Search results'},
-        {skipAboutBlank: true, disableStorageReset: true},
+        {skipAboutBlank: true, disableStorageReset: true, skipAudits: ['uses-http2', 'bf-cache']},
       ]);
 
       const artifactsList = flowArtifacts.gatherSteps.map(gatherStep => gatherStep.artifacts);
