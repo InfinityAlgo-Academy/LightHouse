@@ -388,7 +388,7 @@ export class DetailsRenderer {
 
     const entityName = group.entity?.toString() || '';
     const matchedEntity = this._entityClassification?.entities[
-      this._entityClassification?.names[entityName]];
+      this._entityClassification?.nameLUT[entityName]];
 
     if (matchedEntity?.category) {
       const categoryChipEl = this._dom.createElement('span');
@@ -447,7 +447,7 @@ export class DetailsRenderer {
     for (const item of items) {
       const entityName = item.entity?.toString() || '';
       const matchedEntity = this._entityClassification?.entities[
-        this._entityClassification?.names[entityName]];
+        this._entityClassification?.nameLUT[entityName]];
       /** @type {TableItem} */
       const group = byEntity.get(entityName) || {
         [primaryKey]: {
