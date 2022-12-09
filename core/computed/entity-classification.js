@@ -76,9 +76,11 @@ class EntityClassification {
   static async compute_(data, context) {
     const madeUpEntityCache = /** @type EntityCache */ ({});
     const networkRecords = await NetworkRecords.request(data.devtoolsLog, context);
-    const firstParty = !data.URL?.finalDisplayedUrl ? undefined :
-      thirdPartyWeb.getEntity(data.URL.finalDisplayedUrl) ||
-      EntityClassification.makeUpAnEntity(madeUpEntityCache, data.URL.finalDisplayedUrl);
+    let firstParty;
+    if (data.URL?.mainDocumentUrl) {
+      firstParty = thirdPartyWeb.getEntity(data.URL.mainDocumentUrl) ||
+        EntityClassification.makeUpAnEntity(madeUpEntityCache, data.URL.mainDocumentUrl);
+    }
     return {...EntityClassification.classify(madeUpEntityCache, networkRecords), firstParty};
   }
 }
