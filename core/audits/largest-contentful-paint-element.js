@@ -12,7 +12,7 @@ const UIStrings = {
   title: 'Largest Contentful Paint element',
   /** Description of a Lighthouse audit that tells the user that the element shown was determined to be the Largest Contentful Paint. */
   description: 'This is the largest contentful element painted within the viewport. ' +
-    '[Learn more about the Largest Contentful Paint element](https://web.dev/lighthouse-largest-contentful-paint/)',
+    '[Learn more about the Largest Contentful Paint element](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-largest-contentful-paint/)',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

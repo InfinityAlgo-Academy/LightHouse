@@ -11,7 +11,7 @@ import {FirstMeaningfulPaint as ComputedFmp} from '../../computed/metrics/first-
 const UIStrings = {
   /** Description of the First Meaningful Paint (FMP) metric, which marks the time at which a majority of the content has been painted by the browser. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'First Meaningful Paint measures when the primary content of a page is ' +
-      'visible. [Learn more about the First Meaningful Paint metric](https://web.dev/first-meaningful-paint/).',
+      'visible. [Learn more about the First Meaningful Paint metric](https://developer.chrome.com/docs/lighthouse/performance/first-meaningful-paint/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

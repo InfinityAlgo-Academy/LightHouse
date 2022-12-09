@@ -11,7 +11,7 @@ import {Interactive} from '../../computed/metrics/interactive.js';
 const UIStrings = {
   /** Description of the Time to Interactive (TTI) metric, which evaluates when a page has completed its primary network activity and main thread work. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Time to Interactive is the amount of time it takes for the page to become fully ' +
-    'interactive. [Learn more about the Time to Interactive metric](https://web.dev/interactive/).',
+    'interactive. [Learn more about the Time to Interactive metric](https://developer.chrome.com/docs/lighthouse/performance/interactive/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

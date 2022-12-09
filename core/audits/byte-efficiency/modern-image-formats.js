@@ -18,7 +18,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they should use newer and more efficient image formats. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Image formats like WebP and AVIF often provide better ' +
     'compression than PNG or JPEG, which means faster downloads and less data consumption. ' +
-    '[Learn more about modern image formats](https://web.dev/uses-webp-images/).',
+    '[Learn more about modern image formats](https://developer.chrome.com/docs/lighthouse/performance/uses-webp-images/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

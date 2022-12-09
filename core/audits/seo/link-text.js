@@ -83,7 +83,7 @@ const UIStrings = {
   failureTitle: 'Links do not have descriptive text',
   /** Description of a Lighthouse audit that tells the user *why* they need to have descriptive text on the links in their page. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Descriptive link text helps search engines understand your content. ' +
-  '[Learn how to make links more accessible](https://web.dev/link-text/).',
+  '[Learn how to make links more accessible](https://developer.chrome.com/docs/lighthouse/seo/link-text/).',
   /** [ICU Syntax] Label for the audit identifying the number of links found. "link" here refers to the links in a web page to other web pages. */
   displayValue: `{itemCount, plural,
     =1 {1 link found}

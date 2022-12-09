@@ -516,10 +516,12 @@ class Util {
         summary = cpuThrottling = networkThrottling = Util.i18n.strings.runtimeUnknown;
     }
 
-    const deviceEmulation = {
-      mobile: Util.i18n.strings.runtimeMobileEmulation,
-      desktop: Util.i18n.strings.runtimeDesktopEmulation,
-    }[settings.formFactor] || Util.i18n.strings.runtimeNoEmulation;
+    let deviceEmulation = Util.i18n.strings.runtimeMobileEmulation;
+    if (settings.screenEmulation.disabled) {
+      deviceEmulation = Util.i18n.strings.runtimeNoEmulation;
+    } else if (!settings.screenEmulation.mobile) {
+      deviceEmulation = Util.i18n.strings.runtimeDesktopEmulation;
+    }
 
     const screenEmulation = settings.screenEmulation.disabled ?
       undefined :
@@ -645,7 +647,7 @@ Util.resetUniqueSuffix = () => {
  */
 const UIStrings = {
   /** Disclaimer shown to users below the metric values (First Contentful Paint, Time to Interactive, etc) to warn them that the numbers they see will likely change slightly the next time they run Lighthouse. */
-  varianceDisclaimer: 'Values are estimated and may vary. The [performance score is calculated](https://web.dev/performance-scoring/) directly from these metrics.',
+  varianceDisclaimer: 'Values are estimated and may vary. The [performance score is calculated](https://developer.chrome.com/docs/lighthouse/performance/performance-scoring/) directly from these metrics.',
   /** Text link pointing to an interactive calculator that explains Lighthouse scoring. The link text should be fairly short. */
   calculatorLink: 'See calculator.',
   /** Label preceding a radio control for filtering the list of audits. The radio choices are various performance metrics (FCP, LCP, TBT), and if chosen, the audits in the report are hidden if they are not relevant to the selected metric. */
