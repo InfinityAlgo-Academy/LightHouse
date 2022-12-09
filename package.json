@@ -33,6 +33,7 @@
     "reset-link": "(yarn unlink || true) && yarn link && yarn link lighthouse",
     "c8": "bash core/scripts/c8.sh",
     "clean": "rm -r dist proto/scripts/*.json proto/scripts/*_pb2.* proto/scripts/*_pb.* proto/scripts/__pycache__ proto/scripts/*.pyc *.report.html *.report.dom.html *.report.json *.devtoolslog.json *.trace.json shared/localization/locales/*.ctc.json || true",
+    "clean-types": "git clean -xf '*.d.ts' '*.d.cts' -e 'node_modules/' -e 'dist/' -e '.tmp/'",
     "lint": "[ \"$CI\" = true ] && eslint --quiet -f codeframe . || eslint .",
     "smoke": "node cli/test/smokehouse/frontends/smokehouse-bin.js",
     "debug": "node --inspect-brk ./cli/index.js",
