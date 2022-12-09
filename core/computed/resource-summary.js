@@ -58,8 +58,8 @@ class ResourceSummary {
     if (budget?.options?.firstPartyHostnames) {
       firstPartyHosts = budget.options.firstPartyHostnames;
     } else {
-      const rootDomain = Util.getRootDomain(URLArtifact.finalDisplayedUrl);
-      firstPartyHosts = [`*.${rootDomain}`];
+      firstPartyHosts = classifiedEntities.firstParty?.domains.map(domain => `*.${domain}`) ||
+        [`*.${Util.getRootDomain(URLArtifact.finalDisplayedUrl)}`];
     }
 
     networkRecords.filter(record => {
@@ -83,15 +83,13 @@ class ResourceSummary {
       resourceSummary.total.resourceSize += record.resourceSize;
       resourceSummary.total.transferSize += record.transferSize;
 
-      const isFirstParty = classifiedEntities.firstParty ?
-        classifiedEntities.firstParty === classifiedEntities.byURL.get(record.url) :
-        firstPartyHosts.some((hostExp) => {
-          const url = new URL(record.url);
-          if (hostExp.startsWith('*.')) {
-            return url.hostname.endsWith(hostExp.slice(2));
-          }
-          return url.hostname === hostExp;
-        });
+      const isFirstParty = firstPartyHosts.some((hostExp) => {
+        const url = new URL(record.url);
+        if (hostExp.startsWith('*.')) {
+          return url.hostname.endsWith(hostExp.slice(2));
+        }
+        return url.hostname === hostExp;
+      });
 
       if (!isFirstParty) {
         resourceSummary['third-party'].count++;
