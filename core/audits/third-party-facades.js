@@ -189,6 +189,7 @@ class ThirdPartyFacades extends Audit {
         transferSize: entitySummary.transferSize,
         blockingTime: entitySummary.blockingTime,
         subItems: {type: 'subitems', items},
+        entity: entity.name,
       });
     }
 
