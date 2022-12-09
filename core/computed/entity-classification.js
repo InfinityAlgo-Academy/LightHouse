@@ -27,6 +27,7 @@ class EntityClassification {
     return /** @type LH.Artifacts.RecognizableEntity */ (entityCache[rootDomain] = {
       name: rootDomain,
       company: rootDomain,
+      category: '',
       categories: [],
       domains: [rootDomain],
       averageExecutionTime: 0,
@@ -48,8 +49,8 @@ class EntityClassification {
     /** @type {Map<LH.Artifacts.RecognizableEntity, Array<string>>} */
     const byEntity = new Map();
 
-    for (const request of networkRecords) {
-      const {url} = request;
+    for (const record of networkRecords) {
+      const {url} = record;
       if (byURL.has(url)) continue;
 
       const entity = thirdPartyWeb.getEntity(url) ||
@@ -75,7 +76,8 @@ class EntityClassification {
   static async compute_(data, context) {
     const madeUpEntityCache = /** @type EntityCache */ ({});
     const networkRecords = await NetworkRecords.request(data.devtoolsLog, context);
-    const firstParty = thirdPartyWeb.getEntity(data.URL.finalDisplayedUrl) ||
+    const firstParty = !data.URL?.finalDisplayedUrl ? undefined :
+      thirdPartyWeb.getEntity(data.URL.finalDisplayedUrl) ||
       EntityClassification.makeUpAnEntity(madeUpEntityCache, data.URL.finalDisplayedUrl);
     return {...EntityClassification.classify(madeUpEntityCache, networkRecords), firstParty};
   }
