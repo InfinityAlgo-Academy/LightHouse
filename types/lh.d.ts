@@ -32,7 +32,7 @@ export import Util = Util_;
 
 export import Puppeteer = Puppeteer_;
 
-// artifacts.ts
+// artifacts.d.ts
 export import Artifacts = Artifacts_.Artifacts;
 export import BaseArtifacts = Artifacts_.BaseArtifacts;
 export import FRArtifacts = Artifacts_.FRArtifacts;
@@ -52,7 +52,7 @@ export import CrdpCommands = _CrdpMappings.Commands;
 
 export import UserFlow = UserFlow_;
 
-// externs.ts
+// externs.d.ts
 export import Flags = Externs.Flags;
 export import CliFlags = Externs.CliFlags;
 export import RunnerResult = Externs.RunnerResult;
@@ -63,14 +63,14 @@ export import LighthouseError = LighthouseError_;
 export import Result = LHResult;
 export import FlowResult = FlowResult_;
 
-// lhr/i18n.ts
+// lhr/i18n.d.ts
 export import IcuMessage = I18n.IcuMessage;
 export import RawIcu = I18n.RawIcu;
 export import FormattedIcu = I18n.FormattedIcu;
 
 export import Protocol = Protocol_;
 
-// lhr/settings.ts
+// lhr/settings.d.ts
 export import Locale = Settings.Locale;
 export import ThrottlingSettings = Settings.ThrottlingSettings;
 export import ScreenEmulationSettings = Settings.ScreenEmulationSettings;
