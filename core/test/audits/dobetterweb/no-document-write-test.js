@@ -7,6 +7,7 @@
 import assert from 'assert/strict';
 
 import DocWriteUseAudit from '../../../audits/dobetterweb/no-document-write.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 
 const URL = 'https://example.com';
 
@@ -17,12 +18,18 @@ describe('Page does not use document.write()', () => {
       URL: {finalDisplayedUrl: URL},
       SourceMaps: [],
       Scripts: [],
+      devtoolsLogs: {defaultPass: []},
     }, {computedCache: new Map()});
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);
   });
 
   it('fails when document.write() is used', async () => {
+    const records = [
+      {url: 'https://example.com/'},
+      {url: 'https://example2.com/two'},
+      {url: 'http://abc.com/'},
+    ];
     const text = 'Do not use document.write';
     const auditResult = await DocWriteUseAudit.audit({
       URL: {finalDisplayedUrl: URL},
@@ -34,8 +41,11 @@ describe('Page does not use document.write()', () => {
       ],
       SourceMaps: [],
       Scripts: [],
+      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(records)},
     }, {computedCache: new Map()});
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
+    assert.deepStrictEqual(auditResult.details.items.map(item => item.entity),
+      ['example.com', 'example2.com']);
   });
 });
