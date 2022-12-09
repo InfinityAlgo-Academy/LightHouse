@@ -31,6 +31,7 @@ jobs:
         node-version: 16.x
 
     - run: yarn install --frozen-lockfile --network-timeout 1000000
+    - run: yarn type-check
     - run: yarn build-all
 
     # Run pptr tests using ToT Chrome instead of stable default.
@@ -53,7 +54,6 @@ jobs:
 
     - run: yarn diff:sample-json
     - run: yarn diff:flow-sample-json
-    - run: yarn type-check
     - run: yarn lint
     - run: yarn test-lantern
     - run: yarn test-legacy-javascript
