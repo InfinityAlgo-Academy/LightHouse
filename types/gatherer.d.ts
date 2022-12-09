@@ -15,12 +15,12 @@ import {ExecutionContext} from '../core/gather/driver/execution-context';
 import {Fetcher} from '../core/gather/fetcher';
 import {ArbitraryEqualityMap} from '../core/lib/arbitrary-equality-map';
 
-import Artifacts from './artifacts';
-import Config from './config';
-import {IcuMessage} from './lhr/i18n';
-import Result from './lhr/lhr';
-import Protocol from './protocol';
-import Puppeteer from './puppeteer';
+import {Artifacts, BaseArtifacts, FRBaseArtifacts, GathererArtifacts, DevtoolsLog, Trace} from './artifacts.js';
+import Config from './config.js';
+import {IcuMessage} from './lhr/i18n.js';
+import Result from './lhr/lhr.js';
+import Protocol from './protocol.js';
+import Puppeteer from './puppeteer.js';
 
 type CrdpEvents = CrdpMappings.Events;
 type CrdpCommands = CrdpMappings.Commands;
@@ -61,11 +61,11 @@ declare module Gatherer {
     /** The Puppeteer page handle. Will be undefined in legacy navigation mode. */
     page?: Puppeteer.Page;
     /** The set of base artifacts that are always collected. */
-    baseArtifacts: Artifacts.FRBaseArtifacts;
+    baseArtifacts: FRBaseArtifacts;
     /** The cached results of computed artifacts. */
     computedCache: Map<string, ArbitraryEqualityMap>;
     /** The set of available dependencies requested by the current gatherer. */
-    dependencies: Pick<Artifacts.GathererArtifacts, Exclude<TDependencies, DefaultDependenciesKey>>;
+    dependencies: Pick<GathererArtifacts, Exclude<TDependencies, DefaultDependenciesKey>>;
     /** The settings used for gathering. */
     settings: Config.Settings;
   }
@@ -88,22 +88,22 @@ declare module Gatherer {
     computedCache: Map<string, ArbitraryEqualityMap>
     /** Gatherers can push to this array to add top-level warnings to the LHR. */
     LighthouseRunWarnings: Array<string | IcuMessage>;
-    baseArtifacts: Artifacts.BaseArtifacts;
+    baseArtifacts: BaseArtifacts;
   }
 
   interface LoadData {
     networkRecords: Array<Artifacts.NetworkRequest>;
-    devtoolsLog: Artifacts.DevtoolsLog;
-    trace?: Artifacts.Trace;
+    devtoolsLog: DevtoolsLog;
+    trace?: Trace;
   }
 
-  type PhaseResultNonPromise = void | Artifacts.GathererArtifacts[keyof Artifacts.GathererArtifacts];
+  type PhaseResultNonPromise = void | GathererArtifacts[keyof GathererArtifacts];
   type PhaseResult = PhaseResultNonPromise | Promise<PhaseResultNonPromise>
 
   type GatherMode = Result.GatherMode;
 
   type DefaultDependenciesKey = '__none__'
-  type DependencyKey = keyof Artifacts.GathererArtifacts | DefaultDependenciesKey
+  type DependencyKey = keyof GathererArtifacts | DefaultDependenciesKey
 
   interface GathererMetaNoDependencies {
     /**
@@ -129,7 +129,7 @@ declare module Gatherer {
       GathererMetaWithDependencies<Exclude<TDependencies, DefaultDependenciesKey>>;
 
   interface GathererInstance {
-    name: keyof Artifacts.GathererArtifacts;
+    name: keyof GathererArtifacts;
     beforePass(context: Gatherer.PassContext): PhaseResult;
     pass(context: Gatherer.PassContext): PhaseResult;
     afterPass(context: Gatherer.PassContext, loadData: Gatherer.LoadData): PhaseResult;
@@ -138,7 +138,7 @@ declare module Gatherer {
   type FRGatherPhase = keyof Omit<Gatherer.FRGathererInstance, 'name'|'meta'>
 
   interface FRGathererInstance<TDependencies extends DependencyKey = DefaultDependenciesKey> {
-    name: keyof Artifacts.GathererArtifacts; // temporary COMPAT measure until artifact config support is available
+    name: keyof GathererArtifacts; // temporary COMPAT measure until artifact config support is available
     meta: GathererMeta<TDependencies>;
     startInstrumentation(context: FRTransitionalContext<DefaultDependenciesKey>): Promise<void>|void;
     startSensitiveInstrumentation(context: FRTransitionalContext<DefaultDependenciesKey>): Promise<void>|void;

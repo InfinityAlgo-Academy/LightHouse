@@ -5,7 +5,7 @@
  */
 
 import {ArbitraryEqualityMap} from '../core/lib/arbitrary-equality-map.js';
-import Artifacts from './artifacts.js';
+import {Artifacts} from './artifacts.js';
 import AuditDetails from './lhr/audit-details.js';
 import Config from './config.js';
 import Gatherer from './gatherer.js';

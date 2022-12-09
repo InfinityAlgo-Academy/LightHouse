@@ -5,7 +5,7 @@
  */
 
 import {ArbitraryEqualityMap as ArbitraryEqualityMap_} from '../core/lib/arbitrary-equality-map.js';
-import Artifacts_ from './artifacts.js';
+import * as Artifacts_ from './artifacts.js';
 import Audit_ from './audit.js';
 import Budget_ from './lhr/budget.js';
 import Config_ from './config.js';
@@ -33,15 +33,15 @@ export import Util = Util_;
 export import Puppeteer = Puppeteer_;
 
 // artifacts.ts
-export import Artifacts = Artifacts_;
+export import Artifacts = Artifacts_.Artifacts;
 export import BaseArtifacts = Artifacts_.BaseArtifacts;
 export import FRArtifacts = Artifacts_.FRArtifacts;
 export import FRBaseArtifacts = Artifacts_.FRBaseArtifacts;
-export import GathererArtifacts = Artifacts.GathererArtifacts;
-export import DevtoolsLog = Artifacts.DevtoolsLog;
-export import Trace = Artifacts.Trace;
-export import TraceCpuProfile = Artifacts.TraceCpuProfile;
-export import TraceEvent = Artifacts.TraceEvent;
+export import GathererArtifacts = Artifacts_.GathererArtifacts;
+export import DevtoolsLog = Artifacts_.DevtoolsLog;
+export import Trace = Artifacts_.Trace;
+export import TraceCpuProfile = Artifacts_.TraceCpuProfile;
+export import TraceEvent = Artifacts_.TraceEvent;
 
 export import Audit = Audit_;
 export import Budget = Budget_;

@@ -23,168 +23,168 @@ import Protocol from './protocol.js';
 import Util from './utility-types.js';
 import Audit from './audit.js';
 
-interface Artifacts extends Artifacts.BaseArtifacts, Artifacts.GathererArtifacts {}
+export interface Artifacts extends BaseArtifacts, GathererArtifacts {}
+
+export type FRArtifacts = Util.StrictOmit<Artifacts,
+  | 'Fonts'
+  | 'Manifest'
+  | 'MixedContent'
+  | keyof FRBaseArtifacts
+>;
+
+/**
+ * Artifacts always created by gathering. These artifacts are available to Lighthouse plugins.
+ * NOTE: any breaking changes here are considered breaking Lighthouse changes that must be done
+ * on a major version bump.
+ */
+export type BaseArtifacts = UniversalBaseArtifacts & ContextualBaseArtifacts & LegacyBaseArtifacts
+
+export type FRBaseArtifacts = UniversalBaseArtifacts & ContextualBaseArtifacts;
+
+/**
+ * The set of base artifacts that are available in every mode of Lighthouse operation.
+ */
+interface UniversalBaseArtifacts {
+  /** The ISO-8601 timestamp of when the test page was fetched and artifacts collected. */
+  fetchTime: string;
+  /** A set of warnings about unexpected things encountered while loading and testing the page. */
+  LighthouseRunWarnings: Array<string | IcuMessage>;
+  /** The benchmark index that indicates rough device class. */
+  BenchmarkIndex: number;
+  /** Many benchmark indexes. Many. */
+  BenchmarkIndexes?: number[];
+  /** An object containing information about the testing configuration used by Lighthouse. */
+  settings: Config.Settings;
+  /** The timing instrumentation of the gather portion of a run. */
+  Timing: Artifacts.MeasureEntry[];
+  /** Device which Chrome is running on. */
+  HostFormFactor: 'desktop'|'mobile';
+  /** The user agent string of the version of Chrome used. */
+  HostUserAgent: string;
+  /** Information about how Lighthouse artifacts were gathered. */
+  GatherContext: {gatherMode: Gatherer.GatherMode};
+}
+
+/**
+ * The set of base artifacts whose semantics differ or may be valueless in certain Lighthouse gather modes.
+ */
+interface ContextualBaseArtifacts {
+  /** The URL initially requested and the post-redirects URL that was actually loaded. */
+  URL: Artifacts.URL;
+  /** If loading the page failed, value is the error that caused it. Otherwise null. */
+  PageLoadError: LighthouseError | null;
+}
+
+/**
+ * The set of base artifacts that were replaced by standard gatherers in Fraggle Rock.
+ */
+interface LegacyBaseArtifacts {
+  /** The user agent string that Lighthouse used to load the page. Set to the empty string if unknown. */
+  NetworkUserAgent: string;
+  /** Information on detected tech stacks (e.g. JS libraries) used by the page. */
+  Stacks: Artifacts.DetectedStack[];
+  /** Parsed version of the page's Web App Manifest, or null if none found. This moved to a regular artifact in Fraggle Rock. */
+  WebAppManifest: Artifacts.Manifest | null;
+  /** Errors preventing page being installable as PWA. This moved to a regular artifact in Fraggle Rock. */
+  InstallabilityErrors: Artifacts.InstallabilityErrors;
+  /** A set of page-load traces, keyed by passName. */
+  traces: {[passName: string]: Trace};
+  /** A set of DevTools debugger protocol records, keyed by passName. */
+  devtoolsLogs: {[passName: string]: DevtoolsLog};
+}
+
+/**
+ * Artifacts provided by the default gatherers that are exposed to plugins with a hardended API.
+ * NOTE: any breaking changes here are considered breaking Lighthouse changes that must be done
+ * on a major version bump.
+ */
+interface PublicGathererArtifacts {
+  /** ConsoleMessages deprecation and intervention warnings, console API calls, and exceptions logged by Chrome during page load. */
+  ConsoleMessages: Artifacts.ConsoleMessage[];
+  /** All the iframe elements in the page. */
+  IFrameElements: Artifacts.IFrameElement[];
+  /** The contents of the main HTML document network resource. */
+  MainDocumentContent: string;
+  /** Information on size and loading for all the images in the page. Natural size information for `picture` and CSS images is only available if the image was one of the largest 50 images. */
+  ImageElements: Artifacts.ImageElement[];
+  /** All the link elements on the page or equivalently declared in `Link` headers. @see https://html.spec.whatwg.org/multipage/links.html */
+  LinkElements: Artifacts.LinkElement[];
+  /** The values of the <meta> elements in the head. */
+  MetaElements: Array<{name?: string, content?: string, property?: string, httpEquiv?: string, charset?: string, node: Artifacts.NodeDetails}>;
+  /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
+  ScriptElements: Array<Artifacts.ScriptElement>;
+  /** The dimensions and devicePixelRatio of the loaded viewport. */
+  ViewportDimensions: Artifacts.ViewportDimensions;
+}
+
+/**
+ * Artifacts provided by the default gatherers. Augment this interface when adding additional
+ * gatherers. Changes to these artifacts are not considered a breaking Lighthouse change.
+ */
+export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArtifacts {
+  /** The results of running the aXe accessibility tests on the page. */
+  Accessibility: Artifacts.Accessibility;
+  /** Array of all anchors on the page. */
+  AnchorElements: Artifacts.AnchorElement[];
+  /** Errors when attempting to use the back/forward cache. */
+  BFCacheFailures: Artifacts.BFCacheFailure[];
+  /** Array of all URLs cached in CacheStorage. */
+  CacheContents: string[];
+  /** CSS coverage information for styles used by page's final state. */
+  CSSUsage: {rules: Crdp.CSS.RuleUsage[], stylesheets: Artifacts.CSSStyleSheetInfo[]};
+  /** The primary log of devtools protocol activity. Used in Fraggle Rock gathering. */
+  DevtoolsLog: DevtoolsLog;
+  /** Information on the document's doctype(or null if not present), specifically the name, publicId, and systemId.
+      All properties default to an empty string if not present */
+  Doctype: Artifacts.Doctype | null;
+  /** Information on the size of all DOM nodes in the page and the most extreme members. */
+  DOMStats: Artifacts.DOMStats;
+  /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
+  EmbeddedContent: Artifacts.EmbeddedContentInfo[];
+  /** Information for font faces used in the page. */
+  Fonts: Artifacts.Font[];
+  /** Information on poorly sized font usage and the text affected by it. */
+  FontSize: Artifacts.FontSize;
+  /** All the input elements, including associated form and label elements. */
+  Inputs: {inputs: Artifacts.InputElement[]; forms: Artifacts.FormElement[]; labels: Artifacts.LabelElement[]};
+  /** Screenshot of the entire page (rather than just the above the fold content). */
+  FullPageScreenshot: Artifacts.FullPageScreenshot | null;
+  /** Information about event listeners registered on the global object. */
+  GlobalListeners: Array<Artifacts.GlobalListener>;
+  /** The issues surfaced in the devtools Issues panel */
+  InspectorIssues: Artifacts.InspectorIssues;
+  /** JS coverage information for code used during audit. Keyed by script id. */
+  // 'url' is excluded because it can be overriden by a magic sourceURL= comment, which makes keeping it a dangerous footgun!
+  JsUsage: Record<string, Omit<Crdp.Profiler.ScriptCoverage, 'url'>>;
+  /** Parsed version of the page's Web App Manifest, or null if none found. */
+  Manifest: Artifacts.Manifest | null;
+  /** The URL loaded with interception */
+  MixedContent: {url: string};
+  /** Size and compression opportunity information for all the images in the page. */
+  OptimizedImages: Array<Artifacts.OptimizedImage | Artifacts.OptimizedImageError>;
+  /** HTML snippets and node paths from any password inputs that prevent pasting. */
+  PasswordInputsWithPreventedPaste: Artifacts.PasswordInputsWithPreventedPaste[];
+  /** Size info of all network records sent without compression and their size after gzipping. */
+  ResponseCompression: {requestId: string, url: string, mimeType: string, transferSize: number, resourceSize: number, gzipSize?: number}[];
+  /** Information on fetching and the content of the /robots.txt file. */
+  RobotsTxt: {status: number|null, content: string|null, errorMessage?: string};
+  /** Information on all scripts in the page. */
+  Scripts: Artifacts.Script[];
+  /** Version information for all ServiceWorkers active after the first page load. */
+  ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[], registrations: Crdp.ServiceWorker.ServiceWorkerRegistration[]};
+  /** Source maps of scripts executed in the page. */
+  SourceMaps: Array<Artifacts.SourceMap>;
+  /** Information on <script> and <link> tags blocking first paint. */
+  TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
+  /** Information about tap targets including their position and size. */
+  TapTargets: Artifacts.TapTarget[];
+  /** The primary log of devtools protocol activity. Used in Fraggle Rock gathering. */
+  Trace: Trace;
+  /** Elements associated with metrics (ie: Largest Contentful Paint element). */
+  TraceElements: Artifacts.TraceElement[];
+}
 
 declare module Artifacts {
-  export type FRArtifacts = Util.StrictOmit<Artifacts,
-    | 'Fonts'
-    | 'Manifest'
-    | 'MixedContent'
-    | keyof Artifacts.FRBaseArtifacts
-  >;
-
-  /**
-   * Artifacts always created by gathering. These artifacts are available to Lighthouse plugins.
-   * NOTE: any breaking changes here are considered breaking Lighthouse changes that must be done
-   * on a major version bump.
-   */
-  export type BaseArtifacts = UniversalBaseArtifacts & ContextualBaseArtifacts & LegacyBaseArtifacts
-
-  export type FRBaseArtifacts = UniversalBaseArtifacts & ContextualBaseArtifacts;
-
-  /**
-   * The set of base artifacts that are available in every mode of Lighthouse operation.
-   */
-  interface UniversalBaseArtifacts {
-    /** The ISO-8601 timestamp of when the test page was fetched and artifacts collected. */
-    fetchTime: string;
-    /** A set of warnings about unexpected things encountered while loading and testing the page. */
-    LighthouseRunWarnings: Array<string | IcuMessage>;
-    /** The benchmark index that indicates rough device class. */
-    BenchmarkIndex: number;
-    /** Many benchmark indexes. Many. */
-    BenchmarkIndexes?: number[];
-    /** An object containing information about the testing configuration used by Lighthouse. */
-    settings: Config.Settings;
-    /** The timing instrumentation of the gather portion of a run. */
-    Timing: Artifacts.MeasureEntry[];
-    /** Device which Chrome is running on. */
-    HostFormFactor: 'desktop'|'mobile';
-    /** The user agent string of the version of Chrome used. */
-    HostUserAgent: string;
-    /** Information about how Lighthouse artifacts were gathered. */
-    GatherContext: {gatherMode: Gatherer.GatherMode};
-  }
-
-  /**
-   * The set of base artifacts whose semantics differ or may be valueless in certain Lighthouse gather modes.
-   */
-  interface ContextualBaseArtifacts {
-    /** The URL initially requested and the post-redirects URL that was actually loaded. */
-    URL: Artifacts.URL;
-    /** If loading the page failed, value is the error that caused it. Otherwise null. */
-    PageLoadError: LighthouseError | null;
-  }
-
-  /**
-   * The set of base artifacts that were replaced by standard gatherers in Fraggle Rock.
-   */
-  interface LegacyBaseArtifacts {
-    /** The user agent string that Lighthouse used to load the page. Set to the empty string if unknown. */
-    NetworkUserAgent: string;
-    /** Information on detected tech stacks (e.g. JS libraries) used by the page. */
-    Stacks: Artifacts.DetectedStack[];
-    /** Parsed version of the page's Web App Manifest, or null if none found. This moved to a regular artifact in Fraggle Rock. */
-    WebAppManifest: Artifacts.Manifest | null;
-    /** Errors preventing page being installable as PWA. This moved to a regular artifact in Fraggle Rock. */
-    InstallabilityErrors: Artifacts.InstallabilityErrors;
-    /** A set of page-load traces, keyed by passName. */
-    traces: {[passName: string]: Artifacts.Trace};
-    /** A set of DevTools debugger protocol records, keyed by passName. */
-    devtoolsLogs: {[passName: string]: Artifacts.DevtoolsLog};
-  }
-
-  /**
-   * Artifacts provided by the default gatherers that are exposed to plugins with a hardended API.
-   * NOTE: any breaking changes here are considered breaking Lighthouse changes that must be done
-   * on a major version bump.
-   */
-  interface PublicGathererArtifacts {
-    /** ConsoleMessages deprecation and intervention warnings, console API calls, and exceptions logged by Chrome during page load. */
-    ConsoleMessages: Artifacts.ConsoleMessage[];
-    /** All the iframe elements in the page. */
-    IFrameElements: Artifacts.IFrameElement[];
-    /** The contents of the main HTML document network resource. */
-    MainDocumentContent: string;
-    /** Information on size and loading for all the images in the page. Natural size information for `picture` and CSS images is only available if the image was one of the largest 50 images. */
-    ImageElements: Artifacts.ImageElement[];
-    /** All the link elements on the page or equivalently declared in `Link` headers. @see https://html.spec.whatwg.org/multipage/links.html */
-    LinkElements: Artifacts.LinkElement[];
-    /** The values of the <meta> elements in the head. */
-    MetaElements: Array<{name?: string, content?: string, property?: string, httpEquiv?: string, charset?: string, node: Artifacts.NodeDetails}>;
-    /** Information on all script elements in the page. Also contains the content of all requested scripts and the networkRecord requestId that contained their content. Note, HTML documents will have one entry per script tag, all with the same requestId. */
-    ScriptElements: Array<Artifacts.ScriptElement>;
-    /** The dimensions and devicePixelRatio of the loaded viewport. */
-    ViewportDimensions: Artifacts.ViewportDimensions;
-  }
-
-  /**
-   * Artifacts provided by the default gatherers. Augment this interface when adding additional
-   * gatherers. Changes to these artifacts are not considered a breaking Lighthouse change.
-   */
-  export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArtifacts {
-    /** The results of running the aXe accessibility tests on the page. */
-    Accessibility: Artifacts.Accessibility;
-    /** Array of all anchors on the page. */
-    AnchorElements: Artifacts.AnchorElement[];
-    /** Errors when attempting to use the back/forward cache. */
-    BFCacheFailures: Artifacts.BFCacheFailure[];
-    /** Array of all URLs cached in CacheStorage. */
-    CacheContents: string[];
-    /** CSS coverage information for styles used by page's final state. */
-    CSSUsage: {rules: Crdp.CSS.RuleUsage[], stylesheets: Artifacts.CSSStyleSheetInfo[]};
-    /** The primary log of devtools protocol activity. Used in Fraggle Rock gathering. */
-    DevtoolsLog: Artifacts.DevtoolsLog;
-    /** Information on the document's doctype(or null if not present), specifically the name, publicId, and systemId.
-        All properties default to an empty string if not present */
-    Doctype: Artifacts.Doctype | null;
-    /** Information on the size of all DOM nodes in the page and the most extreme members. */
-    DOMStats: Artifacts.DOMStats;
-    /** Relevant attributes and child properties of all <object>s, <embed>s and <applet>s in the page. */
-    EmbeddedContent: Artifacts.EmbeddedContentInfo[];
-    /** Information for font faces used in the page. */
-    Fonts: Artifacts.Font[];
-    /** Information on poorly sized font usage and the text affected by it. */
-    FontSize: Artifacts.FontSize;
-    /** All the input elements, including associated form and label elements. */
-    Inputs: {inputs: Artifacts.InputElement[]; forms: Artifacts.FormElement[]; labels: Artifacts.LabelElement[]};
-    /** Screenshot of the entire page (rather than just the above the fold content). */
-    FullPageScreenshot: Artifacts.FullPageScreenshot | null;
-    /** Information about event listeners registered on the global object. */
-    GlobalListeners: Array<Artifacts.GlobalListener>;
-    /** The issues surfaced in the devtools Issues panel */
-    InspectorIssues: Artifacts.InspectorIssues;
-    /** JS coverage information for code used during audit. Keyed by script id. */
-    // 'url' is excluded because it can be overriden by a magic sourceURL= comment, which makes keeping it a dangerous footgun!
-    JsUsage: Record<string, Omit<Crdp.Profiler.ScriptCoverage, 'url'>>;
-    /** Parsed version of the page's Web App Manifest, or null if none found. */
-    Manifest: Artifacts.Manifest | null;
-    /** The URL loaded with interception */
-    MixedContent: {url: string};
-    /** Size and compression opportunity information for all the images in the page. */
-    OptimizedImages: Array<Artifacts.OptimizedImage | Artifacts.OptimizedImageError>;
-    /** HTML snippets and node paths from any password inputs that prevent pasting. */
-    PasswordInputsWithPreventedPaste: Artifacts.PasswordInputsWithPreventedPaste[];
-    /** Size info of all network records sent without compression and their size after gzipping. */
-    ResponseCompression: {requestId: string, url: string, mimeType: string, transferSize: number, resourceSize: number, gzipSize?: number}[];
-    /** Information on fetching and the content of the /robots.txt file. */
-    RobotsTxt: {status: number|null, content: string|null, errorMessage?: string};
-    /** Information on all scripts in the page. */
-    Scripts: Artifacts.Script[];
-    /** Version information for all ServiceWorkers active after the first page load. */
-    ServiceWorker: {versions: Crdp.ServiceWorker.ServiceWorkerVersion[], registrations: Crdp.ServiceWorker.ServiceWorkerRegistration[]};
-    /** Source maps of scripts executed in the page. */
-    SourceMaps: Array<Artifacts.SourceMap>;
-    /** Information on <script> and <link> tags blocking first paint. */
-    TagsBlockingFirstPaint: Artifacts.TagBlockingFirstPaint[];
-    /** Information about tap targets including their position and size. */
-    TapTargets: Artifacts.TapTarget[];
-    /** The primary log of devtools protocol activity. Used in Fraggle Rock gathering. */
-    Trace: Artifacts.Trace;
-    /** Elements associated with metrics (ie: Largest Contentful Paint element). */
-    TraceElements: Artifacts.TraceElement[];
-  }
-
   type ComputedContext = Util.Immutable<{
     computedCache: Map<string, ArbitraryEqualityMap>;
   }>;
@@ -417,10 +417,10 @@ declare module Artifacts {
   }
 
   type BFCacheReasonMap = {
-    [key in LH.Crdp.Page.BackForwardCacheNotRestoredReason]?: string[];
+    [key in Crdp.Page.BackForwardCacheNotRestoredReason]?: string[];
   };
 
-  type BFCacheNotRestoredReasonsTree = Record<LH.Crdp.Page.BackForwardCacheNotRestoredReasonType, BFCacheReasonMap>;
+  type BFCacheNotRestoredReasonsTree = Record<Crdp.Page.BackForwardCacheNotRestoredReasonType, BFCacheReasonMap>;
 
   interface BFCacheFailure {
     notRestoredReasonsTree: BFCacheNotRestoredReasonsTree;
@@ -935,140 +935,138 @@ declare module Artifacts {
     /** The MIME type of the underlying image file. */
     mimeType?: string;
   }
-
-  export interface Trace {
-    traceEvents: TraceEvent[];
-    metadata?: {
-      'cpu-family'?: number;
-    };
-    [futureProps: string]: any;
-  }
-
-  /** The type of the Profile & ProfileChunk event in Chromium traces. Note that this is subtly different from Crdp.Profiler.Profile. */
-  export interface TraceCpuProfile {
-    nodes?: Array<{id: number, callFrame: {functionName: string, url?: string}, parent?: number}>
-    samples?: Array<number>
-    timeDeltas?: Array<number>
-  }
-
-  /**
-   * @see https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview
-   */
-  export interface TraceEvent {
-    name: string;
-    cat: string;
-    args: {
-      fileName?: string;
-      snapshot?: string;
-      sync_id?: string;
-      beginData?: {
-        frame?: string;
-        startLine?: number;
-        url?: string;
-      };
-      data?: {
-        frame?: string;
-        isLoadingMainFrame?: boolean;
-        documentLoaderURL?: string;
-        frames?: {
-          frame: string;
-          url: string;
-          parent?: string;
-          processId?: number;
-        }[];
-        page?: string;
-        readyState?: number;
-        requestId?: string;
-        startTime?: number;
-        timeDeltas?: TraceCpuProfile['timeDeltas'];
-        cpuProfile?: TraceCpuProfile;
-        callFrame?: Required<TraceCpuProfile>['nodes'][0]['callFrame']
-        /** Marker for each synthetic CPU profiler event for the range of _potential_ ts values. */
-        _syntheticProfilerRange?: {
-          earliestPossibleTimestamp: number
-          latestPossibleTimestamp: number
-        }
-        stackTrace?: {
-          url: string
-        }[];
-        styleSheetUrl?: string;
-        timerId?: string;
-        url?: string;
-        is_main_frame?: boolean;
-        cumulative_score?: number;
-        id?: string;
-        nodeId?: number;
-        impacted_nodes?: Array<{
-          node_id: number,
-          old_rect?: Array<number>,
-          new_rect?: Array<number>,
-        }>;
-        score?: number;
-        weighted_score_delta?: number;
-        had_recent_input?: boolean;
-        compositeFailed?: number;
-        unsupportedProperties?: string[];
-        size?: number;
-        /** Responsiveness data. */
-        interactionType?: 'drag'|'keyboard'|'tapOrClick';
-        maxDuration?: number;
-        type?: string;
-      };
-      frame?: string;
-      name?: string;
-      labels?: string;
-    };
-    pid: number;
-    tid: number;
-    /** Timestamp of the event in microseconds. */
-    ts: number;
-    dur: number;
-    ph: 'B'|'b'|'D'|'E'|'e'|'F'|'I'|'M'|'N'|'n'|'O'|'R'|'S'|'T'|'X';
-    s?: 't';
-    id?: string;
-    id2?: {
-      local?: string;
-    };
-  }
-
-  module Trace {
-    /**
-     * Base event of a `ph: 'X'` 'complete' event. Extend with `name` and `args` as
-     * needed.
-     */
-    interface CompleteEvent {
-      ph: 'X';
-      cat: string;
-      pid: number;
-      tid: number;
-      dur: number;
-      ts: number;
-      tdur: number;
-      tts: number;
-    }
-
-    /**
-     * Base event of a `ph: 'b'|'e'|'n'` async event. Extend with `name`, `args`, and
-     * more specific `ph` (if needed).
-     */
-    interface AsyncEvent {
-      ph: 'b'|'e'|'n';
-      cat: string;
-      pid: number;
-      tid: number;
-      ts: number;
-      id: string;
-      scope?: string;
-      // TODO(bckenny): No dur on these. Sort out optional `dur` on trace events.
-      /** @deprecated there is no `dur` on async events. */
-      dur: number;
-    }
-  }
-
-  /**
-   * A record of DevTools Debugging Protocol events.
-   */
-  export type DevtoolsLog = Array<Protocol.RawEventMessage>;
 }
 
-export default Artifacts;
+export interface Trace {
+  traceEvents: TraceEvent[];
+  metadata?: {
+    'cpu-family'?: number;
+  };
+  [futureProps: string]: any;
+}
+
+/** The type of the Profile & ProfileChunk event in Chromium traces. Note that this is subtly different from Crdp.Profiler.Profile. */
+export interface TraceCpuProfile {
+  nodes?: Array<{id: number, callFrame: {functionName: string, url?: string}, parent?: number}>
+  samples?: Array<number>
+  timeDeltas?: Array<number>
+}
+
+/**
+ * @see https://docs.google.com/document/d/1CvAClvFfyA5R-PhYUmn5OOQtYMH4h6I0nSsKchNAySU/preview
+ */
+export interface TraceEvent {
+  name: string;
+  cat: string;
+  args: {
+    fileName?: string;
+    snapshot?: string;
+    sync_id?: string;
+    beginData?: {
+      frame?: string;
+      startLine?: number;
+      url?: string;
+    };
+    data?: {
+      frame?: string;
+      isLoadingMainFrame?: boolean;
+      documentLoaderURL?: string;
+      frames?: {
+        frame: string;
+        url: string;
+        parent?: string;
+        processId?: number;
+      }[];
+      page?: string;
+      readyState?: number;
+      requestId?: string;
+      startTime?: number;
+      timeDeltas?: TraceCpuProfile['timeDeltas'];
+      cpuProfile?: TraceCpuProfile;
+      callFrame?: Required<TraceCpuProfile>['nodes'][0]['callFrame']
+      /** Marker for each synthetic CPU profiler event for the range of _potential_ ts values. */
+      _syntheticProfilerRange?: {
+        earliestPossibleTimestamp: number
+        latestPossibleTimestamp: number
+      }
+      stackTrace?: {
+        url: string
+      }[];
+      styleSheetUrl?: string;
+      timerId?: string;
+      url?: string;
+      is_main_frame?: boolean;
+      cumulative_score?: number;
+      id?: string;
+      nodeId?: number;
+      impacted_nodes?: Array<{
+        node_id: number,
+        old_rect?: Array<number>,
+        new_rect?: Array<number>,
+      }>;
+      score?: number;
+      weighted_score_delta?: number;
+      had_recent_input?: boolean;
+      compositeFailed?: number;
+      unsupportedProperties?: string[];
+      size?: number;
+      /** Responsiveness data. */
+      interactionType?: 'drag'|'keyboard'|'tapOrClick';
+      maxDuration?: number;
+      type?: string;
+    };
+    frame?: string;
+    name?: string;
+    labels?: string;
+  };
+  pid: number;
+  tid: number;
+  /** Timestamp of the event in microseconds. */
+  ts: number;
+  dur: number;
+  ph: 'B'|'b'|'D'|'E'|'e'|'F'|'I'|'M'|'N'|'n'|'O'|'R'|'S'|'T'|'X';
+  s?: 't';
+  id?: string;
+  id2?: {
+    local?: string;
+  };
+}
+
+declare module Trace {
+  /**
+   * Base event of a `ph: 'X'` 'complete' event. Extend with `name` and `args` as
+   * needed.
+   */
+  interface CompleteEvent {
+    ph: 'X';
+    cat: string;
+    pid: number;
+    tid: number;
+    dur: number;
+    ts: number;
+    tdur: number;
+    tts: number;
+  }
+
+  /**
+   * Base event of a `ph: 'b'|'e'|'n'` async event. Extend with `name`, `args`, and
+   * more specific `ph` (if needed).
+   */
+  interface AsyncEvent {
+    ph: 'b'|'e'|'n';
+    cat: string;
+    pid: number;
+    tid: number;
+    ts: number;
+    id: string;
+    scope?: string;
+    // TODO(bckenny): No dur on these. Sort out optional `dur` on trace events.
+    /** @deprecated there is no `dur` on async events. */
+    dur: number;
+  }
+}
+
+/**
+ * A record of DevTools Debugging Protocol events.
+ */
+export type DevtoolsLog = Array<Protocol.RawEventMessage>;
