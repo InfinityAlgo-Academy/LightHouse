@@ -7,7 +7,7 @@
 import {FormattedIcu} from './i18n.js';
 import AuditDetails from './audit-details.js';
 
-export interface ScoreDisplayModes {
+interface ScoreDisplayModes {
   /** Scores of 0-1 (map to displayed scores of 0-100). */
   NUMERIC: 'numeric';
   /** Pass/fail audit (0 and 1 are only possible scores). */
@@ -22,7 +22,7 @@ export interface ScoreDisplayModes {
   ERROR: 'error';
 }
 
-export type ScoreDisplayMode = ScoreDisplayModes[keyof ScoreDisplayModes];
+type ScoreDisplayMode = ScoreDisplayModes[keyof ScoreDisplayModes];
 
 /** Audit result returned in Lighthouse report. All audits offer a description and score of 0-1. */
 export interface Result {
