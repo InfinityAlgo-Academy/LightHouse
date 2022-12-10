@@ -76,11 +76,19 @@ class EntityClassification {
   static async compute_(data, context) {
     const madeUpEntityCache = /** @type EntityCache */ ({});
     const networkRecords = await NetworkRecords.request(data.devtoolsLog, context);
+
+    // When available, first party identification will be done via
+    // `mainDocumentUrl` (for navigations), and falls back to `finalDisplayedUrl` (for timespan/snapshot).
+    // See https://github.com/GoogleChrome/lighthouse/issues/13706
     let firstParty;
     if (data.URL?.mainDocumentUrl) {
       firstParty = thirdPartyWeb.getEntity(data.URL.mainDocumentUrl) ||
         EntityClassification.makeUpAnEntity(madeUpEntityCache, data.URL.mainDocumentUrl);
+    } else if (data.URL?.finalDisplayedUrl) {
+      firstParty = thirdPartyWeb.getEntity(data.URL.finalDisplayedUrl) ||
+        EntityClassification.makeUpAnEntity(madeUpEntityCache, data.URL.finalDisplayedUrl);
     }
+
     return {...EntityClassification.classify(madeUpEntityCache, networkRecords), firstParty};
   }
 }
