@@ -17,7 +17,7 @@ describe('Third party summary', () => {
     const artifacts = {
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},
       traces: {defaultPass: pwaTrace},
-      URL: {finalDisplayedUrl: 'https://pwa-rocks.com'},
+      URL: {finalDisplayedUrl: 'https://pwa.rocks'},
     };
 
     const results = await ThirdPartySummary.audit(artifacts, {computedCache: new Map()});
@@ -82,7 +82,7 @@ describe('Third party summary', () => {
     const artifacts = {
       devtoolsLogs: {defaultPass: pwaDevtoolsLog},
       traces: {defaultPass: pwaTrace},
-      URL: {finalDisplayedUrl: 'https://pwa-rocks.com'},
+      URL: {finalDisplayedUrl: 'https://pwa.rocks'},
     };
 
     const settings = {throttlingMethod: 'simulate', throttling: {cpuSlowdownMultiplier: 4}};
@@ -118,6 +118,14 @@ describe('Third party summary', () => {
         defaultPass: networkRecordsToDevtoolsLog([
           {url: 'http://example.com'},
           {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
+          {url: 'https://pwa.rocks/'},
+          {url: 'https://pwa.rocks/script.js'},
+          {url: 'https://pwa.rocks/0ff789bf.js'},
+          {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'},
+          {url: 'https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'},
+          {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
+          {url: 'https://www.google-analytics.com/analytics.js'},
+          {url: 'https://www.google-analytics.com/plugins/ua/linkid.js'},
         ]),
       },
       traces: {defaultPass: pwaTrace},
@@ -128,6 +136,14 @@ describe('Third party summary', () => {
         defaultPass: networkRecordsToDevtoolsLog([
           {url: 'http://facebook.com'},
           {url: 'http://photos-c.ak.fbcdn.net/photos-ak-sf2p/photo.jpg'},
+          {url: 'https://pwa.rocks/'},
+          {url: 'https://pwa.rocks/script.js'},
+          {url: 'https://pwa.rocks/0ff789bf.js'},
+          {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW'},
+          {url: 'https://www.google-analytics.com/cx/api.js?experiment=jdCfRmudTmy-0USnJ8xPbw'},
+          {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
+          {url: 'https://www.google-analytics.com/analytics.js'},
+          {url: 'https://www.google-analytics.com/plugins/ua/linkid.js'},
         ]),
       },
       traces: {defaultPass: pwaTrace},
@@ -141,7 +157,8 @@ describe('Third party summary', () => {
     const externalEntities = resultsOnExternal.details.items.map(item => item.entity.text);
     const facebookEntities = resultsOnFacebook.details.items.map(item => item.entity.text);
 
-    expect(externalEntities).toEqual(['Google Tag Manager', 'Facebook', 'Google Analytics']);
-    expect(facebookEntities).toEqual(['Google Tag Manager', 'Google Analytics']);
+    expect(externalEntities).toEqual([
+      'Google Tag Manager', 'Facebook', 'pwa.rocks', 'Google Analytics']);
+    expect(facebookEntities).toEqual(['Google Tag Manager', 'pwa.rocks', 'Google Analytics']);
   });
 });
