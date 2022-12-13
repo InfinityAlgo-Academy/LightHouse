@@ -22,7 +22,7 @@ const UIStrings = {
   notActionableFailureType: 'Not actionable',
   /** Failure type for an error caused by missing browser support. Shown in a table column with other failure types. */
   supportPendingFailureType: 'Pending browser support',
-  /** Label for a column in a data table; entries in the column will be a string representing a reason the back/forward cache could not be used. */
+  /** Label for a column in a data table; entries in the column will be a string explaining why a failure occurred. */
   failureReasonColumn: 'Failure reason',
   /** Label for a column in a data table; entries in the column will be a string representing the type of failure preventing the back/forward cache from being used. */
   failureTypeColumn: 'Failure type',

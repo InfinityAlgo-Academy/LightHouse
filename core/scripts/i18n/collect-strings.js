@@ -718,8 +718,6 @@ function checkKnownFixedCollisions(strings) {
       'Document has a valid $MARKDOWN_SNIPPET_0$',
       'Failing Elements',
       'Failing Elements',
-      'Failure reason',
-      'Failure reason',
       'Name',
       'Name',
       'Pages that use portals are not currently eligible for back/forward cache.',
