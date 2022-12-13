@@ -16,11 +16,11 @@ const UIStrings = {
   failureTitle: 'Page prevented back/forward cache restoration',
   /** Description of a diagnostic Lighthouse audit that identifies when the back/forward cache is being used. "back/forward" refers to the back and forward buttons found in modern browsers. */
   description: 'Many navigations are performed using the back/forward buttons. The back/forward cache (bfcache) can speed up these return navigations. [Learn more about the bfcache](https://web.dev/bfcache/)',
-  /** Back/forward cache failure type for a back/forward cache failure that the user should be able to address themselves. Shown in a table column with other failure types. */
+  /** Failure type for an error that the user should be able to address themselves. Shown in a table column with other failure types. */
   actionableFailureType: 'Actionable',
-  /** Back/forward cache failure type for a back/forward cache failure that the user cannot address themselves. Shown in a table column with other failure types. */
+  /** Failure type for an error that the user cannot address themselves. Shown in a table column with other failure types. */
   notActionableFailureType: 'Not actionable',
-  /** Back/forward cache failure type for a back/forward cache failure caused by missing browser support. Shown in a table column with other failure types. */
+  /** Failure type for an error caused by missing browser support. Shown in a table column with other failure types. */
   supportPendingFailureType: 'Pending browser support',
   /** Label for a column in a data table; entries in the column will be a string representing a reason the back/forward cache could not be used. */
   failureReasonColumn: 'Failure reason',
