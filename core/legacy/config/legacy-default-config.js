@@ -59,7 +59,6 @@ legacyDefaultConfig.passes = [{
     'dobetterweb/doctype',
     'dobetterweb/domstats',
     'dobetterweb/optimized-images',
-    'dobetterweb/password-inputs-with-prevented-paste',
     'dobetterweb/response-compression',
     'dobetterweb/tags-blocking-first-paint',
     'seo/font-size',
