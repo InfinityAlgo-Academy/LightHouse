@@ -5,7 +5,6 @@
  */
 
 import a11y from './test-definitions/a11y.js';
-import bfCache from './test-definitions/bf-cache.js';
 import byteEfficiency from './test-definitions/byte-efficiency.js';
 import byteGzip from './test-definitions/byte-gzip.js';
 import cspAllowAll from './test-definitions/csp-allow-all.js';
@@ -69,7 +68,6 @@ import timing from './test-definitions/timing.js';
 /** @type {ReadonlyArray<Smokehouse.TestDfn>} */
 const smokeTests = [
   a11y,
-  bfCache,
   byteEfficiency,
   byteGzip,
   cspAllowAll,

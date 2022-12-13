@@ -7,11 +7,6 @@
 /** @type {LH.Config.Json} */
 const config = {
   extends: 'lighthouse:default',
-  settings: {
-    // BF cache will request the page again, initiating additional network requests.
-    // Disable the audit so we only detect requests from the normal page load.
-    skipAudits: ['bf-cache'],
-  },
   audits: [
     // Test the `ignoredPatterns` audit option.
     {path: 'errors-in-console', options: {ignoredPatterns: ['An ignored error']}},
@@ -41,15 +36,6 @@ const imgB = {
  * Expected Lighthouse audit values for Do Better Web tests.
  */
 const expectations = {
-  networkRequests: {
-    // Number of network requests differs between Fraggle Rock and legacy modes because
-    // FR has fewer passes, preserve this check moving forward.
-    _fraggleRockOnly: true,
-
-    // 22 requests made for a single navigation.
-    // 6 extra requests made because stylesheets are evicted from the cache by the time DT opens.
-    length: 28,
-  },
   artifacts: {
     BenchmarkIndex: '<10000',
     HostFormFactor: 'desktop',
@@ -453,6 +439,37 @@ const expectations = {
               column: '>30',
             },
           }],
+        },
+      },
+      'bf-cache': {
+        details: {
+          items: [
+            {
+              reason: 'The page has an unload handler in the main frame.',
+              failureType: 'Actionable',
+              subItems: {
+                items: [{
+                  frameUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+                }],
+              },
+            },
+            {
+              // The DevTools runner uses Puppeteer to launch Chrome which disables BFCache by default.
+              // https://github.com/puppeteer/puppeteer/issues/8197
+              //
+              // If we ignore the Puppeteer args and force BFCache to be enabled, it causes thew viewport to be sized incorrectly for other tests.
+              // These viewport issues are not present when Lighthouse is run from DevTools manually.
+              // TODO: Investigate why BFCache causes viewport issues only in our DevTools smoke tests.
+              _runner: 'devtools',
+              reason: 'Back/forward cache is disabled by flags. Visit chrome://flags/#back-forward-cache to enable it locally on this device.',
+              failureType: 'Not actionable',
+              subItems: {
+                items: [{
+                  frameUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+                }],
+              },
+            },
+          ],
         },
       },
       'full-page-screenshot': {
