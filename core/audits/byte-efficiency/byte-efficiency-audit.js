@@ -230,7 +230,7 @@ class ByteEfficiencyAudit extends Audit {
       displayValue = str_(i18n.UIStrings.displayValueByteSavings, {wastedBytes});
     }
 
-    const details = Audit.makeOpportunityDetails(result.headings, results, 
+    const details = Audit.makeOpportunityDetails(result.headings, results,
       classifiedEntities, wastedMs, wastedBytes);
 
     return {
