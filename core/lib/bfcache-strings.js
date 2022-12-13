@@ -518,6 +518,7 @@ const UIStrings = {
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 
+/** @type {Record<string, {name: LH.IcuMessage} | undefined>} */
 const NotRestoredReasonDescription = {
   'NotPrimaryMainFrame': {name: str_(UIStrings.notMainFrame)},
   'BackForwardCacheDisabled': {name: str_(UIStrings.backForwardCacheDisabled)},

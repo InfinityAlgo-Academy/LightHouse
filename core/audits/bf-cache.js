@@ -81,14 +81,9 @@ class BFCache extends Audit {
     for (const failureType of ORDERED_FAILURE_TYPES) {
       const reasonsMap = notRestoredReasonsTree[failureType];
 
-      // https://github.com/Microsoft/TypeScript/issues/12870
-      const reasons = /** @type {LH.Crdp.Page.BackForwardCacheNotRestoredReason[]} */
-        (Object.keys(reasonsMap));
-
-      for (const reason of reasons) {
+      for (const [reason, frameUrls] of Object.entries(reasonsMap)) {
         if (failureType === 'PageSupportNeeded') numActionable++;
 
-        const frameUrls = reasonsMap[reason] || [];
         results.push({
           reason: NotRestoredReasonDescription[reason]?.name ?? reason,
           failureType: FAILURE_TYPE_TO_STRING[failureType],

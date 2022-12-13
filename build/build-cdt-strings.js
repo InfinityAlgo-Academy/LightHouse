@@ -109,6 +109,7 @@ export {
     ]);
 
   const extraCode = `
+/** @type {Record<string, {name: LH.IcuMessage} | undefined>} */
 ${notRestoredReasonDescriptionDeclare}
 
 export {
