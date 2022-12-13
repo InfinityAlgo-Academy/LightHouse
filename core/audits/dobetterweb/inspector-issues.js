@@ -180,8 +180,12 @@ class IssuesPanelEntries extends Audit {
     if (cspIssues.length) {
       items.push(this.getContentSecurityPolicyRow(cspIssues));
     }
+    // The audit `csp-xss` is explicitly not scored for actionability reasons, so we shouldn't let
+    // a CSP issue fail this audit either.
+    const itemsRelevantToScoring =
+      items.filter(item => item.issueType !== 'Content security policy');
     return {
-      score: items.length > 0 ? 0 : 1,
+      score: itemsRelevantToScoring.length > 0 ? 0 : 1,
       details: Audit.makeTableDetails(headings, items),
     };
   }

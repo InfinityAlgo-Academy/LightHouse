@@ -233,7 +233,7 @@ describe('Has inspector issues audit', () => {
     const auditResult = InspectorIssuesAudit.audit({
       InspectorIssues: issues,
     });
-    expect(auditResult.score).toBe(0);
+    expect(auditResult.score).toBe(1);
     expect(auditResult.details.items[0]).toMatchObject({
       issueType: 'Content security policy',
       subItems: {
