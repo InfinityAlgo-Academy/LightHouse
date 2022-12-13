@@ -35,14 +35,12 @@ export class DetailsRenderer {
   /**
    * @param {DOM} dom
    * @param {{
-   *  fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot,
-   *  entityClassification?: LH.Audit.Details.EntityClassification,
+   *  fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot
    * }} [options]
    */
   constructor(dom, options = {}) {
     this._dom = dom;
     this._fullPageScreenshot = options.fullPageScreenshot;
-    this._entityClassification = options.entityClassification;
   }
 
   /**

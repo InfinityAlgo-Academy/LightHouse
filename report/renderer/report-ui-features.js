@@ -217,20 +217,6 @@ export class ReportUIFeatures {
   }
 
   _setupThirdPartyFilter() {
-    /** @type {LH.Audit.Details.EntityClassification | undefined | boolean} */
-    const entityClassification =
-      this.json.audits['entity-classification'] &&
-      this.json.audits['entity-classification'].details &&
-      this.json.audits['entity-classification'].details.type === 'entity-classification' &&
-      this.json.audits['entity-classification'].details;
-    if (!entityClassification) return;
-
-    const mainEntityOrigin = Util.getOrigin(Util.getFinalDisplayedUrl(this.json));
-    if (!mainEntityOrigin) return;
-    const mainEntityId = entityClassification.originLUT[mainEntityOrigin];
-    const mainEntityName = entityClassification.entities[mainEntityId]?.name;
-    if (!mainEntityName) return;
-
     // Some audits should not display the third party filter option.
     const thirdPartyFilterAuditExclusions = [
       // These audits deal explicitly with third party resources.
@@ -256,7 +242,7 @@ export class ReportUIFeatures {
 
     tablesWithUrls.forEach((tableEl) => {
       const rowEls = getTableRows(tableEl);
-      const thirdPartyRows = this._getThirdPartyRows(rowEls, mainEntityName);
+      const thirdPartyRows = this._getThirdPartyRows(rowEls, Util.getFinalDisplayedUrl(this.json));
 
       // create input box
       const filterTemplate = this._dom.createComponent('3pFilter');
@@ -332,18 +318,44 @@ export class ReportUIFeatures {
    * From a table with URL entries, finds the rows containing third-party URLs
    * and returns them.
    * @param {HTMLElement[]} rowEls
-   * @param {string} mainEntityName
+   * @param {string} finalDisplayedUrl
    * @return {Array<HTMLElement>}
    */
-  _getThirdPartyRows(rowEls, mainEntityName) {
+  _getThirdPartyRows(rowEls, finalDisplayedUrl) {
+    const finalDisplayedUrlRootDomain = Util.getRootDomain(finalDisplayedUrl);
+
+    /** @type {string | undefined} */
+    let mainEntityName;
+
+    if (this.json.audits['entity-classification'] &&
+        this.json.audits['entity-classification'].details &&
+        this.json.audits['entity-classification'].details.type === 'entity-classification') {
+      /** @type {LH.Audit.Details.EntityClassification | undefined} */
+      const entityClassification = this.json.audits['entity-classification'].details;
+
+      const mainEntityOrigin = Util.getOrigin(finalDisplayedUrl);
+      if (mainEntityOrigin) {
+        const mainEntityId = entityClassification.originLUT[mainEntityOrigin];
+        mainEntityName = entityClassification.entities[mainEntityId]?.name;
+      }
+    }
+
     /** @type {Array<HTMLElement>} */
     const thirdPartyRows = [];
 
     for (const rowEl of rowEls) {
-      const datasetEntity = rowEl.dataset.entity;
-      if (!datasetEntity) continue;
-      const isThirdParty = datasetEntity !== mainEntityName;
-      if (!isThirdParty) continue;
+      // We rely on entity-classification audit for new LHRs that support it.
+      // To main backward compatibility with older LHRs, we'll maintain origin based test.
+      if (mainEntityName && rowEl.dataset?.entity) {
+        if (rowEl.dataset?.entity === mainEntityName) continue;
+      } else {
+        const urlItem = rowEl.querySelector('div.lh-text__url');
+        if (!urlItem) continue;
+        const datasetUrl = urlItem.dataset.url;
+        if (!datasetUrl) continue;
+        const isThirdParty = Util.getRootDomain(datasetUrl) !== finalDisplayedUrlRootDomain;
+        if (!isThirdParty) continue;
+      }
 
       thirdPartyRows.push(rowEl);
     }
