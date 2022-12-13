@@ -53,8 +53,6 @@ export interface CliFlags extends Flags {
   verbose: boolean;
   /** A flag to enable logLevel 'silent'. */
   quiet: boolean;
-  /** A flag to print the normalized config for the given config and options, then exit. */
-  printConfig: boolean;
   /** Use the legacy navigation runner to gather CLI results. */
   legacyNavigation: boolean;
   /** Path to the file where precomputed lantern data should be read from. */
