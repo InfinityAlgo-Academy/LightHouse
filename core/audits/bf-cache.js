@@ -91,6 +91,8 @@ class BFCache extends Audit {
             type: 'subitems',
             items: frameUrls.map(frameUrl => ({frameUrl})),
           },
+          // Include hidden protocol reason code for debugging.
+          protocolReason: reason,
         });
       }
     }
