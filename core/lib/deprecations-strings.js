@@ -38,22 +38,28 @@ const UIStrings = {
   canRequestURLHTTPContainingNewline:
       'Resource requests whose URLs contained both removed whitespace `(n|r|t)` characters and less-than characters (`<`) are blocked. Please remove newlines and encode less-than characters from places like element attribute values in order to load these resources.',
   /**
-   * @description TODO(crbug.com/1320335): Description needed for translation
+   * @description This warning occurs when the website attempts to invoke the
+   *    deprecated `chrome.loadTimes().connectionInfo` API.
    */
   chromeLoadTimesConnectionInfo:
       '`chrome.loadTimes()` is deprecated, instead use standardized API: Navigation Timing 2.',
   /**
-   * @description TODO(crbug.com/1320336): Description needed for translation
+   * @description This warning occurs when the website attempts to invoke the
+   *    deprecated `chrome.loadTimes().firstPaintAfterLoadTime` API.
    */
   chromeLoadTimesFirstPaintAfterLoadTime:
       '`chrome.loadTimes()` is deprecated, instead use standardized API: Paint Timing.',
   /**
-   * @description TODO(crbug.com/1320337): Description needed for translation
+   * @description This warning occurs when the website attempts to invoke the
+   *    deprecated `chrome.loadTimes().wasAlternateProtocolAvailable` API.
    */
   chromeLoadTimesWasAlternateProtocolAvailable:
       '`chrome.loadTimes()` is deprecated, instead use standardized API: `nextHopProtocol` in Navigation Timing 2.',
   /**
-   * @description TODO(crbug.com/1318847): Description needed for translation
+   * @description This warning occurs when the browser attempts to store a
+   *    cookie containing a banned character. Rather than the cookie string
+   *    being truncated at the banned character, the entire cookie will be
+   *    rejected now.
    */
   cookieWithTruncatingChar: 'Cookies containing a `(0|r|n)` character will be rejected instead of truncated.',
   /**
@@ -111,7 +117,9 @@ const UIStrings = {
   geolocationInsecureOriginDeprecatedNotRemoved:
       '`getCurrentPosition()` and `watchPosition()` are deprecated on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details.',
   /**
-   * @description TODO(crbug.com/1318858): Description needed for translation
+   * @description This warning occurs when the `getUserMedia()` API is invoked
+   *    on an insecure (e.g., HTTP) site. This is only permitted on secure sites
+   *    (e.g., HTTPS).
    */
   getUserMediaInsecureOrigin:
       '`getUserMedia()` no longer works on insecure origins. To use this feature, you should consider switching your application to a secure origin, such as HTTPS. See https://goo.gle/chrome-insecure-origins for more details.',
@@ -127,34 +135,87 @@ const UIStrings = {
    */
   identityInCanMakePaymentEvent: 'The merchant origin and arbitrary data from the `canmakepayment` service worker event are deprecated and will be removed: `topOrigin`, `paymentRequestOrigin`, `methodData`, `modifiers`.',
   /**
-   * @description TODO(crbug.com/1320343): Description needed for translation
+   * @description This warning occurs when an insecure context (e.g., HTTP)
+   *    requests a private resource (not on open internet). This is done to
+   *    mitigate the potential for CSRF and other attacks.
    */
   insecurePrivateNetworkSubresourceRequest:
       'The website requested a subresource from a network that it could only access because of its users\' privileged network position. These requests expose non-public devices and servers to the internet, increasing the risk of a cross-site request forgery (CSRF) attack, and/or information leakage. To mitigate these risks, Chrome deprecates requests to non-public subresources when initiated from non-secure contexts, and will start blocking them.',
   /**
-   * @description A deprecation warning shown in the DevTools Issues tab.
-   * It's shown when a video conferencing website attempts to disable
-   * use of IPv6 addresses with a non-standard API.
-   */
-  legacyConstraintGoogIPv6:
-      'IPv6 is enabled-by-default and the ability to disable it using `googIPv6` is targeted to be removed in M108, after which it will be ignored. Please stop using this legacy constraint.',
-  /**
-   * @description TODO(crbug.com/1318865): Description needed for translation
+   * @description This warning occurs when a stylesheet loaded from a local
+   *    file directive does not end in the file type `.css`.
    */
   localCSSFileExtensionRejected:
       'CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension.',
   /**
-   * @description TODO(crbug.com/1320345): Description needed for translation
+   * @description This is a deprecation warning to developers that occurs when
+   * the script attempts to use the Media Source Extensions API in a way that
+   * is no longer supported by the specification for the API. The usage
+   * that is problematic is when the script calls the `SourceBuffer.abort()`
+   * method at a time when there is still processing happening in response to a
+   * previous `SourceBuffer.remove()` call for the same SourceBuffer object.
+   * More precisely, we show this warning to developers when script calls the
+   * SourceBuffer abort() method while the asynchronous processing of a remove()
+   * call on that SourceBuffer is not yet complete. Early versions of the Media
+   * Source Extensions specification allowed such aborts, but standardization of
+   * the specification resulted in disallowing the aborts. The script should
+   * instead wait for the asynchronous remove() operation to complete, which is
+   * observable by listening for the associated 'updateend' event from the
+   * SourceBuffer. A note is also included in the warning, describing when
+   * abort() is meaningful and allowed by the specification for purposes other
+   * than interrupting a remove() operation's asynchronous steps. Those
+   * supported purposes include using abort() to interrupt processing that may
+   * still be happening in response to a previous appendBuffer() call on that
+   * SourceBuffer, or using abort() to clear the internal of any unprocessed
+   * data remaining from previous appendBuffer() calls.
+   * See https://www.w3.org/TR/media-source-2/#dom-sourcebuffer-abort for the
+   * currently specified behavior, which would throw an exception once the
+   * deprecated removal abort is no longer supported.
+   * See https://github.com/w3c/media-source/issues/19 for the discussion that
+   * led to the specification change.
    */
   mediaSourceAbortRemove:
       'Using `SourceBuffer.abort()` to abort `remove()`\'s asynchronous range removal is deprecated due to specification change. Support will be removed in the future. You should listen to the `updateend` event instead. `abort()` is intended to only abort an asynchronous media append or reset parser state.',
   /**
-   * @description TODO(crbug.com/1320346): Description needed for translation
+   * @description This is a deprecation warning to developers that occurs when
+   * the script attempts to use the Media Source Extensions API in a way that is
+   * no longer supported by the specification for the API. The usage that is
+   * problematic is when the script sets the duration attribute of a MediaSource
+   * object too low. The duration attribute of a MediaSource must be longer than
+   * the actual duration of any media (audio or video) already in the
+   * MediaSource. When set too low, the MediaSource must remove audio and video
+   * content that is beyond the time indicated by the new duration. Content
+   * removal that is caused by setting the duration attribute too low is no
+   * longer allowed by the specification. The message describes the minimum
+   * allowable duration value as the "highest presentation timestamp of any
+   * buffered coded frames" as a more precise way of describing the duration of
+   * content already in the MediaSource: "coded frames" are the specification's
+   * way of describing compressed audio frames or compressed video frames, and
+   * they each have a "presentation timestamp" that describes precisely when
+   * that frame's playback occurs in the overall media presentation. Early
+   * versions of the Media Source Extensions specification allowed this to
+   * happen, but standardization of the specification resulted in disallowing
+   * this behavior. The underlying issue leading to this specification change
+   * was that setting the duration attribute should be synchronous, but setting
+   * it lower than the timestamp of something currently buffered would cause
+   * confusing removal of media between that new duration and the previous,
+   * larger, duration. The script should instead explicitly remove that range of
+   * media first, before lowering the duration.
+   * See https://www.w3.org/TR/media-source-2/#dom-mediasource-duration and
+   * https://www.w3.org/TR/media-source-2/#dom-mediasource-duration for the
+   * currently specified behavior, which would throw an exception once support
+   * is removed for deprecated implicit asynchronous range removal when duration
+   * is truncated.
+   * See both https://github.com/w3c/media-source/issues/20 and
+   * https://github.com/w3c/media-source/issues/26 for the discussion that led
+   * to the specification change.
    */
   mediaSourceDurationTruncatingBuffered:
       'Setting `MediaSource.duration` below the highest presentation timestamp of any buffered coded frames is deprecated due to specification change. Support for implicit removal of truncated buffered media will be removed in the future. You should instead perform explicit `remove(newDuration, oldDuration)` on all `sourceBuffers`, where `newDuration < oldDuration`.',
   /**
-   * @description TODO(crbug.com/1320347): Description needed for translation
+   * @description This warning occurs when the browser requests Web MIDI access
+   *    as sysex (system exclusive messages) can be allowed via prompt even if
+   *    the browser did not specifically request it.
    */
   noSysexWebMIDIWithoutPermission:
       'Web MIDI will ask a permission to use even if the sysex is not specified in the `MIDIOptions`.',
@@ -169,7 +230,9 @@ const UIStrings = {
   notificationPermissionRequestedIframe:
       'Permission for the Notification API may no longer be requested from a cross-origin iframe. You should consider requesting permission from a top-level frame or opening a new window instead.',
   /**
-   * @description TODO(crbug.com/1318867): Description needed for translation
+   * @description This warning occurs when the WebRTC protocol attempts to
+   *    negotiate a connection using an obsolete cipher and risks connection
+   *    security.
    */
   obsoleteWebRtcCipherSuite:
       'Your partner is negotiating an obsolete (D)TLS version. Please check with your partner to have this fixed.',
@@ -178,6 +241,14 @@ const UIStrings = {
    */
   openWebDatabaseInsecureContext:
       'WebSQL in non-secure contexts is deprecated and will be removed soon. Please use Web Storage or Indexed Database.',
+  /**
+   * @description Warning displayed to developers when they use the PaymentInstruments API to let them know this API is deprecated.
+   */
+  paymentInstruments: '`paymentManager.instruments` is deprecated. Please use just-in-time install for payment handlers instead.',
+  /**
+   * @description Warning displayed to developers when their Web Payment API usage violates their Content-Security-Policy (CSP) connect-src directive to let them know this CSP bypass has been deprecated.
+   */
+  paymentRequestCSPViolation: 'Your `PaymentRequest` call bypassed Content-Security-Policy (CSP) `connect-src` directive. This bypass is deprecated. Please add the payment method identifier from the `PaymentRequest` API (in `supportedMethods` field) to your CSP `connect-src` directive.',
   /**
    * @description Warning displayed to developers when persistent storage type is used to notify that storage type is deprecated.
    */
@@ -208,7 +279,8 @@ const UIStrings = {
    */
   deprecatedWithReplacement: '{PH1} is deprecated. Please use {PH2} instead.',
   /**
-   * @description TODO(crbug.com/1320357): Description needed for translation
+   * @description This warning occurs when a subresource loaded by a page
+   *    has a URL with an authority portion. These are disallowed.
    */
   requestedSubresourceWithEmbeddedCredentials:
       'Subresource requests whose URLs contain embedded credentials (e.g. `https://user:pass@host/`) are blocked.',
@@ -303,6 +375,14 @@ const UIStrings = {
    */
   xrSupportsSession:
       '`supportsSession()` is deprecated. Please use `isSessionSupported()` and check the resolved boolean value instead.',
+  /**
+   * @description Warning displayed to developers that use overflow:visible
+   * for replaced elements. This declaration was earlier ignored but will now
+   * change the element's painting based on whether the overflow value allows
+   * the element to paint outside its bounds.
+   */
+  overflowVisibleOnReplacedElement:
+      'Specifying `overflow: visible` on img, video and canvas tags may cause them to produce visual content outside of the element bounds. See https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md.',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -395,10 +475,6 @@ function getDescription(issueDetails) {
         feature = 5436853517811712;
         milestone = 92;
         break;
-      case 'LegacyConstraintGoogIPv6':
-        message = str_(UIStrings.legacyConstraintGoogIPv6);
-        milestone = 103;
-        break;
       case 'LocalCSSFileExtensionRejected':
         message = str_(UIStrings.localCSSFileExtensionRejected);
         milestone = 64;
@@ -410,15 +486,6 @@ function getDescription(issueDetails) {
       case 'MediaSourceDurationTruncatingBuffered':
         message = str_(UIStrings.mediaSourceDurationTruncatingBuffered);
         feature = 6107495151960064;
-        break;
-      case 'NavigateEventRestoreScroll':
-        message = str_(
-            UIStrings.deprecatedWithReplacement, {PH1: 'navigateEvent.restoreScroll()', PH2: 'navigateEvent.scroll()'});
-        break;
-      case 'NavigateEventTransitionWhile':
-        message = str_(
-            UIStrings.deprecatedWithReplacement,
-            {PH1: 'navigateEvent.transitionWhile()', PH2: 'navigateEvent.intercept()'});
         break;
       case 'NoSysexWebMIDIWithoutPermission':
         message = str_(UIStrings.noSysexWebMIDIWithoutPermission);
@@ -440,6 +507,14 @@ function getDescription(issueDetails) {
         message = str_(UIStrings.openWebDatabaseInsecureContext);
         feature = 5175124599767040;
         milestone = 105;
+        break;
+      case 'PaymentInstruments':
+        message = str_(UIStrings.paymentInstruments);
+        feature = 5099285054488576;
+        break;
+      case 'PaymentRequestCSPViolation':
+        message = str_(UIStrings.paymentRequestCSPViolation);
+        feature = 6286595631087616;
         break;
       case 'PersistentQuotaType':
         message = str_(UIStrings.persistentQuotaType);
@@ -497,6 +572,11 @@ function getDescription(issueDetails) {
       case 'RequestedSubresourceWithEmbeddedCredentials':
         message = str_(UIStrings.requestedSubresourceWithEmbeddedCredentials);
         feature = 5669008342777856;
+        break;
+      case 'OverflowVisibleOnReplacedElement':
+        message = str_(UIStrings.overflowVisibleOnReplacedElement);
+        feature = 5137515594383360;
+        milestone = 108;
         break;
       case 'RTCConstraintEnableDtlsSrtpFalse':
         message = str_(UIStrings.rtcConstraintEnableDtlsSrtpFalse);

@@ -506,9 +506,13 @@ const UIStrings = {
  */
   errorDocument: 'Back/forward cache is disabled due to a document error.',
   /**
- *  @description Description text for not restored reason ErrorDocument.
+ *  @description Description text for not restored reason FencedFramesEmbedder.
  */
   fencedFramesEmbedder: 'Pages using FencedFrames cannot be stored in bfcache.',
+  /**
+ *  @description Description text for not restored reason KeepaliveRequest.
+ */
+  keepaliveRequest: 'Back/forward cache is disabled due to a keepalive request.',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
@@ -647,6 +651,7 @@ const NotRestoredReasonDescription = {
       {name: str_(UIStrings.embedderExtensionSentMessageToCachedFrame)},
   'ErrorDocument': {name: str_(UIStrings.errorDocument)},
   'FencedFramesEmbedder': {name: str_(UIStrings.fencedFramesEmbedder)},
+  'KeepaliveRequest': {name: str_(UIStrings.keepaliveRequest)},
 };
 
 export {
