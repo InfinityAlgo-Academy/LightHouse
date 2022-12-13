@@ -5835,7 +5835,7 @@
     "bf-cache": {
       "id": "bf-cache",
       "title": "Page prevented back/forward cache restoration",
-      "description": "Many navigations are performed using the back/forward buttons. The back/forward cache can speed up these return navigations. [Learn more about the back/forward cache](https://web.dev/bfcache/)",
+      "description": "Many navigations are performed using the back/forward buttons. The back/forward cache (bfcache) can speed up these return navigations. [Learn more about the bfcache](https://web.dev/bfcache/)",
       "score": 0,
       "scoreDisplayMode": "binary",
       "displayValue": "1 actionable failure reason",
@@ -9790,13 +9790,13 @@
       "core/audits/bf-cache.js | failureTypeColumn": [
         "audits[bf-cache].details.headings[1].label"
       ],
-      "core/lib/bfcache-strings.js | unloadHandlerExistsInMainFrame": [
+      "core/lib/bf-cache-strings.js | unloadHandlerExistsInMainFrame": [
         "audits[bf-cache].details.items[0].reason"
       ],
       "core/audits/bf-cache.js | actionableFailureType": [
         "audits[bf-cache].details.items[0].failureType"
       ],
-      "core/lib/bfcache-strings.js | internalError": [
+      "core/lib/bf-cache-strings.js | internalError": [
         "audits[bf-cache].details.items[1].reason"
       ],
       "core/audits/bf-cache.js | notActionableFailureType": [

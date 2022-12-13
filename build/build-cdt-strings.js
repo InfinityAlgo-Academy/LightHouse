@@ -94,11 +94,11 @@ export {
   fs.writeFileSync(outFile, createStringsModule(uiStringsDeclare, extraCode));
 }
 
-// core/lib/bfcache-strings.js
+// core/lib/bf-cache-strings.js
 {
   // eslint-disable-next-line max-len
   const inFile = `${LH_ROOT}/node_modules/chrome-devtools-frontend/front_end/panels/application/components/BackForwardCacheStrings.ts`;
-  const outFile = `${LH_ROOT}/core/lib/bfcache-strings.js`;
+  const outFile = `${LH_ROOT}/core/lib/bf-cache-strings.js`;
 
   const input = fs.readFileSync(inFile, 'utf-8');
 

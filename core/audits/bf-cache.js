@@ -6,7 +6,7 @@
 
 import {Audit} from './audit.js';
 import * as i18n from '../lib/i18n/i18n.js';
-import {NotRestoredReasonDescription} from '../lib/bfcache-strings.js';
+import {NotRestoredReasonDescription} from '../lib/bf-cache-strings.js';
 
 /* eslint-disable max-len */
 const UIStrings = {
