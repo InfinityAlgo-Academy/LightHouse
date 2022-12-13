@@ -429,7 +429,7 @@
     "message": "Actionable"
   },
   "core/audits/bf-cache.js | description": {
-    "message": "Many navigations are performed using the back/forward buttons. The back/forward cache (bfcache) can speed up these return navigations. [Learn more about the bfcache](https://web.dev/bfcache/)"
+    "message": "Many navigations are performed by going back to a previous page, or forwards again. The back/forward cache (bfcache) can speed up these return navigations. [Learn more about the bfcache](https://web.dev/bfcache/)"
   },
   "core/audits/bf-cache.js | displayValue": {
     "message": "{itemCount, plural,\n    =1 {1 actionable failure reason}\n    other {# actionable failure reasons}\n    }"

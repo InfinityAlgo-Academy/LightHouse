@@ -5835,7 +5835,7 @@
     "bf-cache": {
       "id": "bf-cache",
       "title": "Page prevented back/forward cache restoration",
-      "description": "Many navigations are performed using the back/forward buttons. The back/forward cache (bfcache) can speed up these return navigations. [Learn more about the bfcache](https://web.dev/bfcache/)",
+      "description": "Many navigations are performed by going back to a previous page, or forwards again. The back/forward cache (bfcache) can speed up these return navigations. [Learn more about the bfcache](https://web.dev/bfcache/)",
       "score": 0,
       "scoreDisplayMode": "binary",
       "displayValue": "1 actionable failure reason",
@@ -5868,7 +5868,8 @@
                   "frameUrl": "http://localhost:10200/dobetterweb/dbw_tester.html"
                 }
               ]
-            }
+            },
+            "protocolReason": "UnloadHandlerExistsInMainFrame"
           },
           {
             "reason": "Internal error.",
@@ -5880,7 +5881,8 @@
                   "frameUrl": "http://localhost:10200/dobetterweb/dbw_tester.html"
                 }
               ]
-            }
+            },
+            "protocolReason": "BrowsingInstanceNotSwapped"
           }
         ]
       }
