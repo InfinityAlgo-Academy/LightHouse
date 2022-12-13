@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Evita sol·licitar el permís de notificació en carregar la pàgina"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Impedir enganxar la contrasenya va en detriment d'una bona política de seguretat. [Obtén més informació](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Evita que els usuaris enganxin contingut als camps de contrasenya"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Permet que els usuaris enganxin contingut als camps de contrasenya"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protocol"
   },

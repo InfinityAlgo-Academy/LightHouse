@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Įkeliant puslapį vengiama pateikti užklausą dėl pranešimų leidimo"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Neleidžiant įklijuoti slaptažodžių, pažeidžiama tinkamos saugos politika. [Sužinokite daugiau](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Naudotojams neleidžiama įklijuoti teksto į slaptažodžių laukus"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Naudotojams leidžiama įklijuoti tekstą į slaptažodžių laukus"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protokolas"
   },

@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "[Åvöîðš ŕéqûéšţîñĝ ţĥé ñöţîƒîçåţîöñ þéŕmîššîöñ öñ þåĝé ļöåð one two three four five six seven eight nine ten eleven twelve]"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "[Þŕévéñţîñĝ þåššŵöŕð þåšţîñĝ ûñðéŕmîñéš ĝööð šéçûŕîţý þöļîçý. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/password-inputs-can-be-pasted-into/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen]"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "[Þŕévéñţš ûšéŕš ţö þåšţé îñţö þåššŵöŕð ƒîéļðš one two three four five six seven eight nine]"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "[Åļļöŵš ûšéŕš ţö þåšţé îñţö þåššŵöŕð ƒîéļðš one two three four five six seven eight nine]"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "[Þŕöţöçöļ one]"
   },

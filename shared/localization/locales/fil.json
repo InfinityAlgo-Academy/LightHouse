@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Iniiwasan ang paghiling ng pahintulot sa notification sa pag-load ng page"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Pinapahina ng paghadlang sa pag-paste ng password ang magandang patakarang panseguridad. [Matuto pa](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Pinipigilan ang mga user na mag-paste sa mga field ng password"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Pinapayagan ang mga user na mag-paste sa mga field ng password"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protocol"
   },

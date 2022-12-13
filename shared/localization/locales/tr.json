@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Sayfa yüklemede bildirim izni istemiyor"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Şifre yapıştırmanın engellenmesi, iyi güvenlik politikasına zarar verir. [Daha fazla bilgi](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Kullanıcıların şifre alanlarına yapıştırmalarını önler"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Kullanıcıların şifre alanlarına yapıştırmalarına izin verir"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protokol"
   },

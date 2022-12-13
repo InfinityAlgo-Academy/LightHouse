@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Aucune autorisation d'envoi de notifications n'est demandée au chargement de la page"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Empêcher la copie de contenu dans les champs de mot de passe nuit aux règles de sécurité. [En savoir plus](https://web.dev/password-inputs-can-be-pasted-into/)"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "La copie de contenu n'est pas autorisée dans les champs de mot de passe"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Autoriser les utilisateurs à copier un contenu dans les champs de mot de passe"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protocole"
   },

@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "페이지 로드 시 알림 권한 요청 방지하기"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "비밀번호 붙여넣기 방지로 인해 타당한 보안 정책이 저해됩니다. [자세히 알아보기](https://web.dev/password-inputs-can-be-pasted-into/)"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "사용자가 비밀번호 입력란에 내용을 붙여넣지 못하도록 차단"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "사용자가 비밀번호 입력란에 붙여넣을 수 있도록 허용"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "프로토콜"
   },

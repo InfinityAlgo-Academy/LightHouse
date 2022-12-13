@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "หลีกเลี่ยงการขอสิทธิ์การแจ้งเตือนในการโหลดหน้าเว็บ"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "การป้องกันการวางรหัสผ่านทำให้นโยบายความปลอดภัยที่ดีอ่อนแอลง [ดูข้อมูลเพิ่มเติม](https://web.dev/password-inputs-can-be-pasted-into/)"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "ป้องกันผู้ใช้ไม่ให้วางรหัสผ่านในช่อง"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "อนุญาตผู้ใช้ให้วางรหัสผ่านในช่องได้"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "โปรโตคอล"
   },

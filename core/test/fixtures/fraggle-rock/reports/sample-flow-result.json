@@ -3499,17 +3499,13 @@
               "items": []
             }
           },
-          "password-inputs-can-be-pasted-into": {
-            "id": "password-inputs-can-be-pasted-into",
-            "title": "Allows users to paste into password fields",
-            "description": "Preventing password pasting undermines good security policy. [Learn more about user-friendly password fields](https://developer.chrome.com/docs/lighthouse/best-practices/password-inputs-can-be-pasted-into/).",
-            "score": 1,
-            "scoreDisplayMode": "binary",
-            "details": {
-              "type": "table",
-              "headings": [],
-              "items": []
-            }
+          "inputs-can-be-pasted-into": {
+            "id": "inputs-can-be-pasted-into",
+            "title": "Allows users to paste into input fields",
+            "description": "Preventing input pasting is a UX anti-pattern, and undermines good security policy. [Learn more about user-friendly input fields](https://developer.chrome.com/docs/lighthouse/best-practices/password-inputs-can-be-pasted-into/).",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required Inputs gatherer did not run."
           },
           "uses-passive-event-listeners": {
             "id": "uses-passive-event-listeners",
@@ -4354,7 +4350,7 @@
                 "group": "best-practices-trust-safety"
               },
               {
-                "id": "password-inputs-can-be-pasted-into",
+                "id": "inputs-can-be-pasted-into",
                 "weight": 1,
                 "group": "best-practices-ux"
               },
@@ -4410,7 +4406,7 @@
               }
             ],
             "id": "best-practices",
-            "score": 1
+            "score": null
           },
           "seo": {
             "title": "SEO",
@@ -5952,7 +5948,7 @@
             },
             {
               "startTime": 212,
-              "name": "lh:audit:password-inputs-can-be-pasted-into",
+              "name": "lh:audit:inputs-can-be-pasted-into",
               "duration": 1,
               "entryType": "measure"
             },
@@ -7107,11 +7103,20 @@
             "core/audits/dobetterweb/notification-on-start.js | description": [
               "audits[notification-on-start].description"
             ],
-            "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": [
-              "audits[password-inputs-can-be-pasted-into].title"
+            "core/audits/dobetterweb/inputs-can-be-pasted-into.js | title": [
+              "audits[inputs-can-be-pasted-into].title"
             ],
-            "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": [
-              "audits[password-inputs-can-be-pasted-into].description"
+            "core/audits/dobetterweb/inputs-can-be-pasted-into.js | description": [
+              "audits[inputs-can-be-pasted-into].description"
+            ],
+            "core/lib/lh-error.js | missingRequiredArtifact": [
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "Inputs"
+                },
+                "path": "audits[inputs-can-be-pasted-into].errorMessage"
+              }
             ],
             "core/audits/dobetterweb/uses-passive-event-listeners.js | title": [
               "audits[uses-passive-event-listeners].title"
@@ -12154,17 +12159,13 @@
               }
             }
           },
-          "password-inputs-can-be-pasted-into": {
-            "id": "password-inputs-can-be-pasted-into",
-            "title": "Allows users to paste into password fields",
-            "description": "Preventing password pasting undermines good security policy. [Learn more about user-friendly password fields](https://developer.chrome.com/docs/lighthouse/best-practices/password-inputs-can-be-pasted-into/).",
-            "score": 1,
-            "scoreDisplayMode": "binary",
-            "details": {
-              "type": "table",
-              "headings": [],
-              "items": []
-            }
+          "inputs-can-be-pasted-into": {
+            "id": "inputs-can-be-pasted-into",
+            "title": "Allows users to paste into input fields",
+            "description": "Preventing input pasting is a UX anti-pattern, and undermines good security policy. [Learn more about user-friendly input fields](https://developer.chrome.com/docs/lighthouse/best-practices/password-inputs-can-be-pasted-into/).",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required Inputs gatherer did not run."
           },
           "meta-description": {
             "id": "meta-description",
@@ -12707,7 +12708,7 @@
             ],
             "auditRefs": [
               {
-                "id": "password-inputs-can-be-pasted-into",
+                "id": "inputs-can-be-pasted-into",
                 "weight": 1,
                 "group": "best-practices-ux"
               },
@@ -12733,7 +12734,7 @@
               }
             ],
             "id": "best-practices",
-            "score": 0.75
+            "score": null
           },
           "seo": {
             "title": "SEO",
@@ -13386,7 +13387,7 @@
             },
             {
               "startTime": 77,
-              "name": "lh:audit:password-inputs-can-be-pasted-into",
+              "name": "lh:audit:inputs-can-be-pasted-into",
               "duration": 1,
               "entryType": "measure"
             },
@@ -13872,11 +13873,20 @@
             "core/audits/dobetterweb/js-libraries.js | columnVersion": [
               "audits[js-libraries].details.headings[1].label"
             ],
-            "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": [
-              "audits[password-inputs-can-be-pasted-into].title"
+            "core/audits/dobetterweb/inputs-can-be-pasted-into.js | title": [
+              "audits[inputs-can-be-pasted-into].title"
             ],
-            "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": [
-              "audits[password-inputs-can-be-pasted-into].description"
+            "core/audits/dobetterweb/inputs-can-be-pasted-into.js | description": [
+              "audits[inputs-can-be-pasted-into].description"
+            ],
+            "core/lib/lh-error.js | missingRequiredArtifact": [
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "Inputs"
+                },
+                "path": "audits[inputs-can-be-pasted-into].errorMessage"
+              }
             ],
             "core/audits/seo/meta-description.js | title": [
               "audits[meta-description].title"
@@ -17595,17 +17605,13 @@
               "items": []
             }
           },
-          "password-inputs-can-be-pasted-into": {
-            "id": "password-inputs-can-be-pasted-into",
-            "title": "Allows users to paste into password fields",
-            "description": "Preventing password pasting undermines good security policy. [Learn more about user-friendly password fields](https://developer.chrome.com/docs/lighthouse/best-practices/password-inputs-can-be-pasted-into/).",
-            "score": 1,
-            "scoreDisplayMode": "binary",
-            "details": {
-              "type": "table",
-              "headings": [],
-              "items": []
-            }
+          "inputs-can-be-pasted-into": {
+            "id": "inputs-can-be-pasted-into",
+            "title": "Allows users to paste into input fields",
+            "description": "Preventing input pasting is a UX anti-pattern, and undermines good security policy. [Learn more about user-friendly input fields](https://developer.chrome.com/docs/lighthouse/best-practices/password-inputs-can-be-pasted-into/).",
+            "score": null,
+            "scoreDisplayMode": "error",
+            "errorMessage": "Required Inputs gatherer did not run."
           },
           "uses-passive-event-listeners": {
             "id": "uses-passive-event-listeners",
@@ -18507,7 +18513,7 @@
                 "group": "best-practices-trust-safety"
               },
               {
-                "id": "password-inputs-can-be-pasted-into",
+                "id": "inputs-can-be-pasted-into",
                 "weight": 1,
                 "group": "best-practices-ux"
               },
@@ -18563,7 +18569,7 @@
               }
             ],
             "id": "best-practices",
-            "score": 1
+            "score": null
           },
           "seo": {
             "title": "SEO",
@@ -20087,7 +20093,7 @@
             },
             {
               "startTime": 209,
-              "name": "lh:audit:password-inputs-can-be-pasted-into",
+              "name": "lh:audit:inputs-can-be-pasted-into",
               "duration": 1,
               "entryType": "measure"
             },
@@ -21249,11 +21255,20 @@
             "core/audits/dobetterweb/notification-on-start.js | description": [
               "audits[notification-on-start].description"
             ],
-            "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": [
-              "audits[password-inputs-can-be-pasted-into].title"
+            "core/audits/dobetterweb/inputs-can-be-pasted-into.js | title": [
+              "audits[inputs-can-be-pasted-into].title"
             ],
-            "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": [
-              "audits[password-inputs-can-be-pasted-into].description"
+            "core/audits/dobetterweb/inputs-can-be-pasted-into.js | description": [
+              "audits[inputs-can-be-pasted-into].description"
+            ],
+            "core/lib/lh-error.js | missingRequiredArtifact": [
+              {
+                "values": {
+                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
+                  "artifactName": "Inputs"
+                },
+                "path": "audits[inputs-can-be-pasted-into].errorMessage"
+              }
             ],
             "core/audits/dobetterweb/uses-passive-event-listeners.js | title": [
               "audits[uses-passive-event-listeners].title"

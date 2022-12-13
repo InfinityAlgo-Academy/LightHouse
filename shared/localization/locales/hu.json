@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Kerüli az értesítésekre vonatkozó engedély kérését oldalbetöltéskor"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "A jelszóbeillesztés megakadályozása rossz biztonsági gyakorlat. [További információ](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Megakadályozza, hogy a felhasználók szöveget illesszenek be a jelszómezőkbe"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Lehetővé teszi, hogy a felhasználók beillesszenek a jelszómezőkbe"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protokoll"
   },

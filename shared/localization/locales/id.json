@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Menghindari meminta izin notifikasi pada pemuatan halaman"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Mencegah menempelkan sandi akan merusak kebijakan keamanan yang baik. [Pelajari lebih lanjut](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Mencegah pengguna menempelkan sesuatu ke kolom sandi."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Mengizinkan pengguna menempelkan sesuatu ke kolom sandi"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protokol"
   },

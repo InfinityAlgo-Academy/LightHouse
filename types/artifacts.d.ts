@@ -160,8 +160,6 @@ export interface GathererArtifacts extends PublicGathererArtifacts,LegacyBaseArt
   MixedContent: {url: string};
   /** Size and compression opportunity information for all the images in the page. */
   OptimizedImages: Array<Artifacts.OptimizedImage | Artifacts.OptimizedImageError>;
-  /** HTML snippets and node paths from any password inputs that prevent pasting. */
-  PasswordInputsWithPreventedPaste: Artifacts.PasswordInputsWithPreventedPaste[];
   /** Size info of all network records sent without compression and their size after gzipping. */
   ResponseCompression: {requestId: string, url: string, mimeType: string, transferSize: number, resourceSize: number, gzipSize?: number}[];
   /** Information on fetching and the content of the /robots.txt file. */
@@ -308,8 +306,6 @@ declare module Artifacts {
     source: 'head'|'body'|'headers'
     node: NodeDetails | null
   }
-
-  interface PasswordInputsWithPreventedPaste {node: NodeDetails}
 
   interface Script extends Omit<LH.Crdp.Debugger.ScriptParsedEvent, 'url'|'embedderName'> {
     /**
@@ -854,7 +850,8 @@ declare module Artifacts {
       property: string;
       attribute: string | null;
       prediction: string | null;
-    }
+    };
+    preventsPaste?: boolean;
     node: NodeDetails;
   }
 

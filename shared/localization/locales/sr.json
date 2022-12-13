@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Избегавајте тражење дозволе за обавештења при учитавању странице"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Спречавање лепљења лозинке нарушава добре смернице за безбедност. [Сазнајте више](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Спречава кориснике да налепе вредност у поља за лозинке"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Дозвољава корисницима да налепе вредност у поља за лозинке"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Протокол"
   },

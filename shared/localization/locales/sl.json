@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Ne zahteva dovoljenja za obvestila pri nalaganju strani"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Preprečevanje lepljenja gesel omeji dober pravilnik o varnosti. [Več o tem](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Uporabnikom preprečuje lepljenje v polja za gesla"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Uporabnikom omogoča lepljenje v polja za gesla"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protokol"
   },

@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "ページの読み込み時に通知の許可はリクエストされません"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "パスワードの貼り付けを禁止すると、良好なセキュリティ ポリシーが損なわれます。[詳細](https://web.dev/password-inputs-can-be-pasted-into/)"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "ユーザーはパスワード欄に貼り付けできません"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "ユーザーはパスワード欄に貼り付けできます"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "プロトコル"
   },

@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "避免在网页加载时请求通知权限"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "阻止密码粘贴，会破坏良好的安全政策。[了解详情](https://web.dev/password-inputs-can-be-pasted-into/)。"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "不允许用户粘贴内容到密码字段"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "允许用户粘贴内容到密码字段"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "协议"
   },

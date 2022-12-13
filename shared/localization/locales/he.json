@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "הדף לא מבקש הרשאה להתראות במהלך טעינת הדף"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "מניעה של הדבקת סיסמאות פוגעת ביכולת לקיים מדיניות אבטחה טובה. [מידע נוסף](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "בדף הזה משתמשים לא יכולים להדביק תוכן מועתק לתוך שדות של סיסמאות"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "בדף הזה משתמשים יכולים להדביק תוכן מועתק לתוך שדות של סיסמאות"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "פרוטוקול"
   },

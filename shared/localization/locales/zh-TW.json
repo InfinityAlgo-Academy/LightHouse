@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "避免在載入網頁時要求使用者允許網站顯示通知"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "禁止貼上密碼會對安全性政策造成不良影響[瞭解詳情](https://web.dev/password-inputs-can-be-pasted-into/)。"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "禁止使用者貼到密碼欄位"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "允許使用者貼到密碼欄位"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "通訊協定"
   },

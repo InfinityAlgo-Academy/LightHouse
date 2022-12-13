@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Nežádá při načtení stránky o oprávnění zobrazovat oznámení"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Blokování vkládání hesel je v rozporu s dobrými bezpečnostními zásadami. [Další informace](https://web.dev/password-inputs-can-be-pasted-into/)"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Brání uživatelům ve vkládání obsahu do polí pro hesla"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Povoluje uživatelům vkládání obsahu do polí pro hesla"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protokol"
   },

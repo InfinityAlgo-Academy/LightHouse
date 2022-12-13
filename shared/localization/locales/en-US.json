@@ -689,6 +689,15 @@
   "core/audits/dobetterweb/geolocation-on-start.js | title": {
     "message": "Avoids requesting the geolocation permission on page load"
   },
+  "core/audits/dobetterweb/inputs-can-be-pasted-into.js | description": {
+    "message": "Preventing input pasting is a UX anti-pattern, and undermines good security policy. [Learn more about user-friendly input fields](https://developer.chrome.com/docs/lighthouse/best-practices/password-inputs-can-be-pasted-into/)."
+  },
+  "core/audits/dobetterweb/inputs-can-be-pasted-into.js | failureTitle": {
+    "message": "Prevents users from pasting into input fields"
+  },
+  "core/audits/dobetterweb/inputs-can-be-pasted-into.js | title": {
+    "message": "Allows users to paste into input fields"
+  },
   "core/audits/dobetterweb/inspector-issues.js | columnIssueType": {
     "message": "Issue type"
   },
@@ -733,15 +742,6 @@
   },
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Avoids requesting the notification permission on page load"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Preventing password pasting undermines good security policy. [Learn more about user-friendly password fields](https://developer.chrome.com/docs/lighthouse/best-practices/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Prevents users to paste into password fields"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Allows users to paste into password fields"
   },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protocol"

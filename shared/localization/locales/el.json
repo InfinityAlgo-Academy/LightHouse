@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Αποφυγή αιτήματος για άδεια ειδοποίησης κατά τη φόρτωση σελίδων"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Η απαγόρευση της επικόλλησης κωδικών πρόσβασης υπονομεύει την ορθή πολιτική ασφάλειας. [Μάθετε περισσότερα](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Εμποδίζει την επικόλληση στα πεδία κωδικών πρόσβασης από τους χρήστες"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Επιτρέπει την επικόλληση στα πεδία κωδικών πρόσβασης από τους χρήστες"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Πρωτόκολλο"
   },

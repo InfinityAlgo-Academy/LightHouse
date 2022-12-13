@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Evita solicitar el permiso de notificaciones al cargar la página"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Evitar el pegado de contraseñas debilita las buenas políticas de seguridad. [Obtén más información](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Evita que los usuarios peguen contenido en los campos de contraseña"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Permite que los usuarios peguen contenido en los campos de contraseña"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protocolo"
   },

@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Уникає надсилання запитів на показ сповіщень під час завантаження сторінки"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Якщо заборонити вставляти пароль, це порушить правила щодо високого рівня безпеки. [Докладніше](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Не дозволяє користувачам вставляти вміст у поля паролів"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Дає змогу користувачам вставляти вміст у поля паролів"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Протокол"
   },

@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Evita di chiedere l'autorizzazione di accesso alle notifiche durante il caricamento della pagina"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Impedire di incollare le password pregiudica l'efficacia delle norme di sicurezza. [Ulteriori informazioni](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Impedisce agli utenti di incollare contenuti nei campi delle password"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Consente agli utenti di incollare contenuti nei campi delle password"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protocollo"
   },

@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "يتم تجنُّب طلب إذن الإشعار عند تحميل الصفحة"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "يؤدي منع لصق كلمة المرور إلى تقويض سياسة الأمان الجيدة. [مزيد من المعلومات](https://web.dev/password-inputs-can-be-pasted-into/)"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "يتم منع المستخدمين من اللصق في حقول كلمات المرور"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "يتم السماح للمستخدمين باللصق في حقول كلمات المرور"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "البروتوكول"
   },

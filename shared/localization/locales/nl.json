@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Vermijdt verzoeken om de meldingsrechten bij laden van pagina"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Verhindering van het plakken van wachtwoorden ondermijnt een goed beveiligingsbeleid. [Meer informatie](https://web.dev/password-inputs-can-be-pasted-into/)"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Voorkomt dat gebruikers kunnen plakken in wachtwoordvelden"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Laat gebruikers plakken in wachtwoordvelden"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protocol"
   },

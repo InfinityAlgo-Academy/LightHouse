@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Nie pyta o zgodę na wyświetlanie powiadomień podczas wczytywania strony"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Uniemożliwianie wklejania haseł jest sprzeczne z dobrymi zasadami bezpieczeństwa. [Więcej informacji](https://web.dev/password-inputs-can-be-pasted-into/)"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Uniemożliwia wklejanie tekstu w polach haseł"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Pozwala wklejać tekst w polach haseł"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protokół"
   },

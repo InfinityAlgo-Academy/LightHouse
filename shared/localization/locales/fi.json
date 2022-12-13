@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Välttää ilmoitusten käyttöoikeuden pyytämistä sivun latauksessa"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Salasanan liittämisen estäminen on hyvän tietoturvakäytännön vastaista. [Lue lisää](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Estää käyttäjiä liittämästä sisältöä salasanakenttiin"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Sallii käyttäjien liittää sisältöä salasanakenttiin"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protokolla"
   },

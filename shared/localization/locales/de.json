@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Fordert während des Seitenaufbaus keine Benachrichtigungsberechtigung an"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Das Einfügen von Passwörtern sollte entsprechend guten Sicherheitsrichtlinien zulässig sein. [Weitere Informationen.](https://web.dev/password-inputs-can-be-pasted-into/)"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Hindert Nutzer daran, Inhalte in Passwortfelder einzufügen"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Erlaubt Nutzern, Inhalte in Passwortfelder einzufügen"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protokoll"
   },

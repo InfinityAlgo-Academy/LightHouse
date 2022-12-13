@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Undgår at anmode om tilladelse til notifikationer ved indlæsning af siden"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "En god sikkerhedspolitik undermineres ved at forhindre indsættelse af adgangskoder. [Få flere oplysninger](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Forhindrer brugere i at indsætte indhold i adgangskodefelter"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Tillader, at brugere indsætter indhold i adgangskodefelter"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protokol"
   },

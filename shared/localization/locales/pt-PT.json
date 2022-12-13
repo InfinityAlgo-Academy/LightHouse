@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Evita a solicitação da autorização de notificações no carregamento da página"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Impedir a colagem de palavras-passe compromete o cumprimento de uma política de segurança adequada. [Saiba mais](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Impede que os utilizadores colem conteúdo nos campos de palavra-passe"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Permite que os utilizadores colem nos campos de palavra-passe"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Protocolo"
   },

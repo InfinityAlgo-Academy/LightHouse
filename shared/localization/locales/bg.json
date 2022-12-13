@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Избягва да иска разрешение за известяване при зареждането на страницата"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "Забраната на поставянето на пароли неутрализира добра практика за сигурност. [Научете повече](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "Не позволява на потребителите да поставят в полетата за парола"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "Разрешава на потребителите да поставят в полетата за парола"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "Протокол"
   },

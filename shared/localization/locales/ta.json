@@ -863,15 +863,6 @@
   "core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "பக்கம் ஏற்றப்படும்போது அதுகுறித்த அறிவிப்பைத் தெரிந்துகொள்வதற்கான அனுமதியைக் கோராது"
   },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
-    "message": "கடவுச்சொல்லை ஒட்டுவதைத் தடுப்பதால் நல்ல பாதுகாப்புக் கொள்கை பாதிக்கப்படுகிறது. [மேலும் அறிக](https://web.dev/password-inputs-can-be-pasted-into/)."
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | failureTitle": {
-    "message": "கடவுச்சொல் புலங்களில் பயனர்கள் ஒட்டுவதைத் தடுக்கும்"
-  },
-  "core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | title": {
-    "message": "கடவுச்சொல் புலங்களில் பயனர்கள் ஒட்டுவதை அனுமதிக்கும்"
-  },
   "core/audits/dobetterweb/uses-http2.js | columnProtocol": {
     "message": "நெறிமுறை"
   },
