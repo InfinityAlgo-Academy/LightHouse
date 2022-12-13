@@ -1871,6 +1871,9 @@
   "core/lib/bfcache-strings.js | JavaScriptExecution": {
     "message": "Chrome detected an attempt to execute JavaScript while in the cache."
   },
+  "core/lib/bfcache-strings.js | keepaliveRequest": {
+    "message": "Back/forward cache is disabled due to a keepalive request."
+  },
   "core/lib/bfcache-strings.js | keyboardLock": {
     "message": "Pages that use Keyboard lock are not currently eligible for back/forward cache."
   },
@@ -2165,9 +2168,6 @@
   "core/lib/deprecations-strings.js | insecurePrivateNetworkSubresourceRequest": {
     "message": "The website requested a subresource from a network that it could only access because of its users' privileged network position. These requests expose non-public devices and servers to the internet, increasing the risk of a cross-site request forgery (CSRF) attack, and/or information leakage. To mitigate these risks, Chrome deprecates requests to non-public subresources when initiated from non-secure contexts, and will start blocking them."
   },
-  "core/lib/deprecations-strings.js | legacyConstraintGoogIPv6": {
-    "message": "IPv6 is enabled-by-default and the ability to disable it using `googIPv6` is targeted to be removed in M108, after which it will be ignored. Please stop using this legacy constraint."
-  },
   "core/lib/deprecations-strings.js | localCSSFileExtensionRejected": {
     "message": "CSS cannot be loaded from `file:` URLs unless they end in a `.css` file extension."
   },
@@ -2194,6 +2194,15 @@
   },
   "core/lib/deprecations-strings.js | openWebDatabaseInsecureContext": {
     "message": "WebSQL in non-secure contexts is deprecated and will be removed soon. Please use Web Storage or Indexed Database."
+  },
+  "core/lib/deprecations-strings.js | overflowVisibleOnReplacedElement": {
+    "message": "Specifying `overflow: visible` on img, video and canvas tags may cause them to produce visual content outside of the element bounds. See https://github.com/WICG/shared-element-transitions/blob/main/debugging_overflow_on_images.md."
+  },
+  "core/lib/deprecations-strings.js | paymentInstruments": {
+    "message": "`paymentManager.instruments` is deprecated. Please use just-in-time install for payment handlers instead."
+  },
+  "core/lib/deprecations-strings.js | paymentRequestCSPViolation": {
+    "message": "Your `PaymentRequest` call bypassed Content-Security-Policy (CSP) `connect-src` directive. This bypass is deprecated. Please add the payment method identifier from the `PaymentRequest` API (in `supportedMethods` field) to your CSP `connect-src` directive."
   },
   "core/lib/deprecations-strings.js | persistentQuotaType": {
     "message": "`StorageType.persistent` is deprecated. Please use standardized `navigator.storage` instead."
