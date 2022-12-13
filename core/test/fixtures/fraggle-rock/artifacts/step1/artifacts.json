@@ -6,91 +6,104 @@
       "entryType": "measure",
       "startTime": 0,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:config:resolveArtifactsToDefns",
       "entryType": "measure",
       "startTime": 1,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:config:resolveNavigationsToDefns",
       "entryType": "measure",
       "startTime": 2,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:driver:connect",
       "entryType": "measure",
       "startTime": 3,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:gather:getBenchmarkIndex",
       "entryType": "measure",
       "startTime": 4,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:gather:getVersion",
       "entryType": "measure",
       "startTime": 5,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:prepare:timespanMode",
       "entryType": "measure",
       "startTime": 6,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:gather:prepareThrottlingAndNetwork",
       "entryType": "measure",
       "startTime": 7,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:runner:gather",
       "entryType": "measure",
       "startTime": 8,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:computed:NetworkRecords",
       "entryType": "measure",
       "startTime": 9,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:computed:ProcessedTrace",
       "entryType": "measure",
       "startTime": 10,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:computed:ProcessedNavigation",
       "entryType": "measure",
       "startTime": 11,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:computed:Responsiveness",
       "entryType": "measure",
       "startTime": 12,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     }
   ],
   "LighthouseRunWarnings": [],

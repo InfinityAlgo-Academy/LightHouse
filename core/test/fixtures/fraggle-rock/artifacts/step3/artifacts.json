@@ -6,126 +6,144 @@
       "entryType": "measure",
       "startTime": 0,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:config:resolveArtifactsToDefns",
       "entryType": "measure",
       "startTime": 1,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:config:resolveNavigationsToDefns",
       "entryType": "measure",
       "startTime": 2,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:runner:gather",
       "entryType": "measure",
       "startTime": 3,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:driver:connect",
       "entryType": "measure",
       "startTime": 4,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:gather:getBenchmarkIndex",
       "entryType": "measure",
       "startTime": 5,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:gather:getVersion",
       "entryType": "measure",
       "startTime": 6,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:prepare:navigationMode",
       "entryType": "measure",
       "startTime": 7,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:prepare:navigation",
       "entryType": "measure",
       "startTime": 8,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:gather:prepareThrottlingAndNetwork",
       "entryType": "measure",
       "startTime": 9,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:driver:navigate",
       "entryType": "measure",
       "startTime": 10,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:computed:NetworkRecords",
       "entryType": "measure",
       "startTime": 11,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:gather:getInstallabilityErrors",
       "entryType": "measure",
       "startTime": 12,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:computed:MainResource",
       "entryType": "measure",
       "startTime": 13,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:gather:collectStacks",
       "entryType": "measure",
       "startTime": 14,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:computed:ProcessedTrace",
       "entryType": "measure",
       "startTime": 15,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:computed:ProcessedNavigation",
       "entryType": "measure",
       "startTime": 16,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:computed:Responsiveness",
       "entryType": "measure",
       "startTime": 17,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     }
   ],
   "LighthouseRunWarnings": [],
@@ -19178,5 +19196,258 @@
         "height": 40
       }
     }
+  },
+  "Inputs": {
+    "inputs": [
+      {
+        "parentFormIndex": 0,
+        "labelIndices": [],
+        "id": "",
+        "name": "type",
+        "type": "hidden",
+        "placeholder": "",
+        "autocomplete": {
+          "property": "",
+          "attribute": null,
+          "prediction": null
+        },
+        "preventsPaste": false,
+        "node": {
+          "lhId": "1-20-INPUT",
+          "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,DIV,0,FORM,0,INPUT",
+          "selector": "main#main-content > div > form.flex > input",
+          "boundingRect": {
+            "top": 0,
+            "bottom": 0,
+            "left": 0,
+            "right": 0,
+            "width": 0,
+            "height": 0
+          },
+          "snippet": "<input type=\"hidden\" name=\"type\" value=\"correction\">",
+          "nodeLabel": "main#main-content > div > form.flex > input"
+        }
+      },
+      {
+        "parentFormIndex": 0,
+        "labelIndices": [
+          0
+        ],
+        "id": "",
+        "name": "email",
+        "type": "email",
+        "placeholder": "",
+        "autocomplete": {
+          "property": "",
+          "attribute": null,
+          "prediction": null
+        },
+        "preventsPaste": false,
+        "node": {
+          "lhId": "1-21-INPUT",
+          "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,DIV,0,FORM,1,LABEL,1,INPUT",
+          "selector": "div > form.flex > label.mt-4 > input.rounded-md",
+          "boundingRect": {
+            "top": 428,
+            "bottom": 470,
+            "left": 16,
+            "right": 205,
+            "width": 189,
+            "height": 42
+          },
+          "snippet": "<input type=\"email\" class=\"rounded-md\" name=\"email\">",
+          "nodeLabel": "div > form.flex > label.mt-4 > input.rounded-md"
+        }
+      },
+      {
+        "parentFormIndex": 0,
+        "labelIndices": [
+          1
+        ],
+        "id": "",
+        "name": "episode",
+        "type": "text",
+        "placeholder": "",
+        "autocomplete": {
+          "property": "",
+          "attribute": null,
+          "prediction": null
+        },
+        "preventsPaste": false,
+        "node": {
+          "lhId": "1-22-INPUT",
+          "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,DIV,0,FORM,2,LABEL,1,INPUT",
+          "selector": "div > form.flex > label.mt-4 > input.rounded-md",
+          "boundingRect": {
+            "top": 510,
+            "bottom": 552,
+            "left": 16,
+            "right": 205,
+            "width": 189,
+            "height": 42
+          },
+          "snippet": "<input type=\"text\" class=\"rounded-md\" name=\"episode\">",
+          "nodeLabel": "div > form.flex > label.mt-4 > input.rounded-md"
+        }
+      },
+      {
+        "parentFormIndex": 0,
+        "labelIndices": [
+          2
+        ],
+        "id": "",
+        "name": "url",
+        "type": "url",
+        "placeholder": "",
+        "autocomplete": {
+          "property": "",
+          "attribute": null,
+          "prediction": null
+        },
+        "preventsPaste": false,
+        "node": {
+          "lhId": "1-23-INPUT",
+          "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,DIV,0,FORM,3,LABEL,1,INPUT",
+          "selector": "div > form.flex > label.mt-4 > input.rounded-md",
+          "boundingRect": {
+            "top": 592,
+            "bottom": 634,
+            "left": 16,
+            "right": 344,
+            "width": 328,
+            "height": 42
+          },
+          "snippet": "<input type=\"url\" class=\"rounded-md w-full\" name=\"url\" value=\"\">",
+          "nodeLabel": "div > form.flex > label.mt-4 > input.rounded-md"
+        }
+      },
+      {
+        "parentFormIndex": 0,
+        "labelIndices": [
+          3
+        ],
+        "id": "",
+        "name": "message",
+        "type": "textarea",
+        "placeholder": "",
+        "autocomplete": {
+          "property": "",
+          "attribute": null,
+          "prediction": null
+        },
+        "preventsPaste": false,
+        "node": {
+          "lhId": "1-24-TEXTAREA",
+          "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,DIV,0,FORM,4,LABEL,1,TEXTAREA",
+          "selector": "div > form.flex > label.mt-4 > textarea.w-full",
+          "boundingRect": {
+            "top": 674,
+            "bottom": 740,
+            "left": 16,
+            "right": 344,
+            "width": 328,
+            "height": 66
+          },
+          "snippet": "<textarea class=\"w-full rounded-md\" name=\"message\" required=\"\">",
+          "nodeLabel": "div > form.flex > label.mt-4 > textarea.w-full"
+        }
+      }
+    ],
+    "forms": [
+      {
+        "id": "",
+        "name": "",
+        "autocomplete": "on",
+        "node": {
+          "lhId": "1-15-FORM",
+          "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,DIV,0,FORM",
+          "selector": "div.flex > main#main-content > div > form.flex",
+          "boundingRect": {
+            "top": 388,
+            "bottom": 787,
+            "left": 16,
+            "right": 344,
+            "width": 328,
+            "height": 399
+          },
+          "snippet": "<form class=\"flex flex-col\">",
+          "nodeLabel": "Email\nRelevant Episode\nRelevant URL\nExplanation*\nSubmit"
+        }
+      }
+    ],
+    "labels": [
+      {
+        "for": "",
+        "node": {
+          "lhId": "1-16-LABEL",
+          "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,DIV,0,FORM,1,LABEL",
+          "selector": "main#main-content > div > form.flex > label.mt-4",
+          "boundingRect": {
+            "top": 404,
+            "bottom": 470,
+            "left": 16,
+            "right": 344,
+            "width": 328,
+            "height": 66
+          },
+          "snippet": "<label class=\"mt-4\">",
+          "nodeLabel": "Email"
+        }
+      },
+      {
+        "for": "",
+        "node": {
+          "lhId": "1-17-LABEL",
+          "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,DIV,0,FORM,2,LABEL",
+          "selector": "main#main-content > div > form.flex > label.mt-4",
+          "boundingRect": {
+            "top": 486,
+            "bottom": 552,
+            "left": 16,
+            "right": 344,
+            "width": 328,
+            "height": 66
+          },
+          "snippet": "<label class=\"mt-4\">",
+          "nodeLabel": "Relevant Episode"
+        }
+      },
+      {
+        "for": "",
+        "node": {
+          "lhId": "1-18-LABEL",
+          "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,DIV,0,FORM,3,LABEL",
+          "selector": "main#main-content > div > form.flex > label.mt-4",
+          "boundingRect": {
+            "top": 568,
+            "bottom": 634,
+            "left": 16,
+            "right": 344,
+            "width": 328,
+            "height": 66
+          },
+          "snippet": "<label class=\"mt-4\">",
+          "nodeLabel": "Relevant URL"
+        }
+      },
+      {
+        "for": "",
+        "node": {
+          "lhId": "1-19-LABEL",
+          "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,DIV,0,FORM,4,LABEL",
+          "selector": "main#main-content > div > form.flex > label.mt-4",
+          "boundingRect": {
+            "top": 650,
+            "bottom": 747,
+            "left": 16,
+            "right": 344,
+            "width": 328,
+            "height": 97
+          },
+          "snippet": "<label class=\"mt-4\">",
+          "nodeLabel": "Explanation*"
+        }
+      }
+    ]
   }
 }

@@ -3503,9 +3503,13 @@
             "id": "inputs-can-be-pasted-into",
             "title": "Allows users to paste into input fields",
             "description": "Preventing input pasting is a UX anti-pattern, and undermines good security policy. [Learn more about user-friendly input fields](https://developer.chrome.com/docs/lighthouse/best-practices/password-inputs-can-be-pasted-into/).",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "Required Inputs gatherer did not run."
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            }
           },
           "uses-passive-event-listeners": {
             "id": "uses-passive-event-listeners",
@@ -4406,7 +4410,7 @@
               }
             ],
             "id": "best-practices",
-            "score": null
+            "score": 1
           },
           "seo": {
             "title": "SEO",
@@ -7108,15 +7112,6 @@
             ],
             "core/audits/dobetterweb/inputs-can-be-pasted-into.js | description": [
               "audits[inputs-can-be-pasted-into].description"
-            ],
-            "core/lib/lh-error.js | missingRequiredArtifact": [
-              {
-                "values": {
-                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
-                  "artifactName": "Inputs"
-                },
-                "path": "audits[inputs-can-be-pasted-into].errorMessage"
-              }
             ],
             "core/audits/dobetterweb/uses-passive-event-listeners.js | title": [
               "audits[uses-passive-event-listeners].title"
@@ -12163,9 +12158,13 @@
             "id": "inputs-can-be-pasted-into",
             "title": "Allows users to paste into input fields",
             "description": "Preventing input pasting is a UX anti-pattern, and undermines good security policy. [Learn more about user-friendly input fields](https://developer.chrome.com/docs/lighthouse/best-practices/password-inputs-can-be-pasted-into/).",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "Required Inputs gatherer did not run."
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            }
           },
           "meta-description": {
             "id": "meta-description",
@@ -12734,7 +12733,7 @@
               }
             ],
             "id": "best-practices",
-            "score": null
+            "score": 0.75
           },
           "seo": {
             "title": "SEO",
@@ -13878,15 +13877,6 @@
             ],
             "core/audits/dobetterweb/inputs-can-be-pasted-into.js | description": [
               "audits[inputs-can-be-pasted-into].description"
-            ],
-            "core/lib/lh-error.js | missingRequiredArtifact": [
-              {
-                "values": {
-                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
-                  "artifactName": "Inputs"
-                },
-                "path": "audits[inputs-can-be-pasted-into].errorMessage"
-              }
             ],
             "core/audits/seo/meta-description.js | title": [
               "audits[meta-description].title"
@@ -17609,9 +17599,13 @@
             "id": "inputs-can-be-pasted-into",
             "title": "Allows users to paste into input fields",
             "description": "Preventing input pasting is a UX anti-pattern, and undermines good security policy. [Learn more about user-friendly input fields](https://developer.chrome.com/docs/lighthouse/best-practices/password-inputs-can-be-pasted-into/).",
-            "score": null,
-            "scoreDisplayMode": "error",
-            "errorMessage": "Required Inputs gatherer did not run."
+            "score": 1,
+            "scoreDisplayMode": "binary",
+            "details": {
+              "type": "table",
+              "headings": [],
+              "items": []
+            }
           },
           "uses-passive-event-listeners": {
             "id": "uses-passive-event-listeners",
@@ -18569,7 +18563,7 @@
               }
             ],
             "id": "best-practices",
-            "score": null
+            "score": 1
           },
           "seo": {
             "title": "SEO",
@@ -21260,15 +21254,6 @@
             ],
             "core/audits/dobetterweb/inputs-can-be-pasted-into.js | description": [
               "audits[inputs-can-be-pasted-into].description"
-            ],
-            "core/lib/lh-error.js | missingRequiredArtifact": [
-              {
-                "values": {
-                  "errorCode": "MISSING_REQUIRED_ARTIFACT",
-                  "artifactName": "Inputs"
-                },
-                "path": "audits[inputs-can-be-pasted-into].errorMessage"
-              }
             ],
             "core/audits/dobetterweb/uses-passive-event-listeners.js | title": [
               "audits[uses-passive-event-listeners].title"

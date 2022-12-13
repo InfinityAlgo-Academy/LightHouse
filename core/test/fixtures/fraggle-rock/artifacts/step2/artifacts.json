@@ -6,56 +6,64 @@
       "entryType": "measure",
       "startTime": 0,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:config:resolveArtifactsToDefns",
       "entryType": "measure",
       "startTime": 1,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:config:resolveNavigationsToDefns",
       "entryType": "measure",
       "startTime": 2,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:driver:connect",
       "entryType": "measure",
       "startTime": 3,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:runner:gather",
       "entryType": "measure",
       "startTime": 4,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:gather:getBenchmarkIndex",
       "entryType": "measure",
       "startTime": 5,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:gather:getVersion",
       "entryType": "measure",
       "startTime": 6,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     },
     {
       "name": "lh:gather:collectStacks",
       "entryType": "measure",
       "startTime": 7,
       "duration": 1,
-      "detail": null
+      "detail": null,
+      "gather": true
     }
   ],
   "LighthouseRunWarnings": [],
@@ -2817,5 +2825,61 @@
     "outerWidth": 360,
     "outerHeight": 640,
     "devicePixelRatio": 2.625
+  },
+  "Inputs": {
+    "inputs": [
+      {
+        "parentFormIndex": 0,
+        "labelIndices": [],
+        "id": "",
+        "name": "",
+        "type": "text",
+        "placeholder": "",
+        "autocomplete": {
+          "property": "",
+          "attribute": null,
+          "prediction": null
+        },
+        "preventsPaste": false,
+        "node": {
+          "lhId": "1-56-INPUT",
+          "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,1,FORM,0,INPUT",
+          "selector": "div.flex > main#main-content > form.flex > input.p-2",
+          "boundingRect": {
+            "top": 176,
+            "bottom": 218,
+            "left": 16,
+            "right": 282,
+            "width": 266,
+            "height": 42
+          },
+          "snippet": "<input class=\"p-2 mr-2 rounded-md flex-grow\" type=\"text\" aria-label=\"search text\" value=\"call of duty\">",
+          "nodeLabel": "search text"
+        }
+      }
+    ],
+    "forms": [
+      {
+        "id": "",
+        "name": "",
+        "autocomplete": "on",
+        "node": {
+          "lhId": "1-55-FORM",
+          "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,1,FORM",
+          "selector": "div#__next > div.flex > main#main-content > form.flex",
+          "boundingRect": {
+            "top": 176,
+            "bottom": 218,
+            "left": 16,
+            "right": 329,
+            "width": 313,
+            "height": 42
+          },
+          "snippet": "<form class=\"flex flex-row items-center mb-4\">",
+          "nodeLabel": "Go"
+        }
+      }
+    ],
+    "labels": []
   }
 }
