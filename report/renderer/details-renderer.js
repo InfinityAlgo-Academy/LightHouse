@@ -371,14 +371,10 @@ export class DetailsRenderer {
     if (label) {
       const rowEl = this._dom.createElement('tr');
       const tdEl = this._dom.createChildOf(rowEl, 'td');
+      tdEl.setAttribute('colspan', headings.length.toString());
       tdEl.append(this._renderText(label));
       tdEl.append(this._dom.createElement('hr'));
       rowEl.classList.add('lh-sub-item-row');
-      // Need a `td` per column so that background color of the table will
-      // span the width of the label row.
-      for (let i = 1; i < headings.length; i++) {
-        this._dom.createChildOf(rowEl, 'td');
-      }
       fragment.append(rowEl);
     }
 

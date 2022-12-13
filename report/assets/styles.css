@@ -1515,6 +1515,10 @@
   word-break: normal;
 }
 
+.lh-table hr {
+  border-width: 0.5px;
+}
+
 .lh-row--even {
   background-color: var(--table-higlight-background-color);
 }
