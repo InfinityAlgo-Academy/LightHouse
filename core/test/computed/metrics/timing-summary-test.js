@@ -73,7 +73,7 @@ describe('Timing summary', () => {
     `);
     // Includes performance metrics
     expect(result.metrics.firstContentfulPaint).toBeDefined();
-    // Includes timestamps from trace of tab
+    // Includes timestamps from the processed trace
     expect(result.metrics.observedFirstContentfulPaint).toBeDefined();
     // Includs visual metrics from Speedline
     expect(result.metrics.observedFirstVisualChange).toBeDefined();

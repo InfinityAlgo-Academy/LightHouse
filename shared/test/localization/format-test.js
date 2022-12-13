@@ -11,6 +11,7 @@ import * as constants from '../../../core/config/constants.js';
 import * as format from '../../localization/format.js';
 import {locales} from '../../localization/locales.js';
 import {getModuleDirectory, getModulePath} from '../../../esm-utils.js';
+import {LH_ROOT} from '../../../root.js';
 
 const moduleDir = getModuleDirectory(import.meta);
 const modulePath = getModulePath(import.meta);
@@ -185,37 +186,41 @@ describe('format', () => {
       expect(formattedStr).toEqual('en-XZ cuerda!');
     });
 
-    it('overwrites existing locale strings', async () => {
-      const filename = 'core/audits/is-on-https.js';
-      const {UIStrings} = await import('../../../core/audits/is-on-https.js');
-      const str_ = i18n.createIcuMessageFn(filename, UIStrings);
+    [
+      {label: 'relative path', filename: 'core/audits/is-on-https.js'},
+      {label: 'absolute path', filename: `${LH_ROOT}/core/audits/is-on-https.js`},
+    ].forEach(({label, filename}) => {
+      it(`overwrites existing locale strings: ${label}`, async () => {
+        const {UIStrings} = await import('../../../core/audits/is-on-https.js');
+        const str_ = i18n.createIcuMessageFn(filename, UIStrings);
 
-      // To start with, we get back the intended string..
-      const origTitle = format.getFormatted(str_(UIStrings.title), 'es-419');
-      expect(origTitle).toEqual('Usa HTTPS');
-      const origFailureTitle = format.getFormatted(str_(UIStrings.failureTitle), 'es-419');
-      expect(origFailureTitle).toEqual('No usa HTTPS');
+        // To start with, we get back the intended string..
+        const origTitle = format.getFormatted(str_(UIStrings.title), 'es-419');
+        expect(origTitle).toEqual('Usa HTTPS');
+        const origFailureTitle = format.getFormatted(str_(UIStrings.failureTitle), 'es-419');
+        expect(origFailureTitle).toEqual('No usa HTTPS');
 
-      // Now we declare and register the new string...
-      const localeData = {
-        'core/audits/is-on-https.js | title': {
-          'message': 'new string for es-419 uses https!',
-        },
-      };
-      format.registerLocaleData('es-419', localeData);
+        // Now we declare and register the new string...
+        const localeData = {
+          'core/audits/is-on-https.js | title': {
+            'message': 'new string for es-419 uses https!',
+          },
+        };
+        format.registerLocaleData('es-419', localeData);
 
-      // And confirm that's what is returned
-      const newTitle = format.getFormatted(str_(UIStrings.title), 'es-419');
-      expect(newTitle).toEqual('new string for es-419 uses https!');
+        // And confirm that's what is returned
+        const newTitle = format.getFormatted(str_(UIStrings.title), 'es-419');
+        expect(newTitle).toEqual('new string for es-419 uses https!');
 
-      // Meanwhile another string that wasn't set in registerLocaleData just falls back to english
-      const newFailureTitle = format.getFormatted(str_(UIStrings.failureTitle), 'es-419');
-      expect(newFailureTitle).toEqual('Does not use HTTPS');
+        // Meanwhile another string that wasn't set in registerLocaleData just falls back to english
+        const newFailureTitle = format.getFormatted(str_(UIStrings.failureTitle), 'es-419');
+        expect(newFailureTitle).toEqual('Does not use HTTPS');
 
-      // Restore overwritten strings to avoid messing with other tests
-      locales['es-419'] = clonedLocales['es-419'];
-      const title = format.getFormatted(str_(UIStrings.title), 'es-419');
-      expect(title).toEqual('Usa HTTPS');
+        // Restore overwritten strings to avoid messing with other tests
+        locales['es-419'] = clonedLocales['es-419'];
+        const title = format.getFormatted(str_(UIStrings.title), 'es-419');
+        expect(title).toEqual('Usa HTTPS');
+      });
     });
   });
 

@@ -2351,10 +2351,10 @@ chownr@^1.1.1:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.4.tgz#6fc9d7b42d32a583596337666e7d08084da2cc6b"
   integrity sha512-jJ0bqzaylmJtVnNgzTeSOs8DPavpbYgEr/b0YL8/2GO3xJEhInFmhKMUnEJQjZumK7KXGFhUy89PrsJWlakBVg==
 
-chrome-devtools-frontend@1.0.1040857:
-  version "1.0.1040857"
-  resolved "https://registry.yarnpkg.com/chrome-devtools-frontend/-/chrome-devtools-frontend-1.0.1040857.tgz#4a8ba8805dd773096aa867165a631323c0577277"
-  integrity sha512-N7N9QG+R/DSndqE4wdLBSdbQ9Zus4S/buvNF2EHJOzCJ2hn3I2Z/WWO767flel9Pc4Jvx+Bd/bWlUMHSjgI1Bg==
+chrome-devtools-frontend@1.0.1070764:
+  version "1.0.1070764"
+  resolved "https://registry.yarnpkg.com/chrome-devtools-frontend/-/chrome-devtools-frontend-1.0.1070764.tgz#aa0726ef8b38c20bb48fcd72a1c941d9e6b91b68"
+  integrity sha512-MJCZgLZlKgIpE+gemtc1a9ejPopTA2Rj1iEdRnxl8YON7V13Po4W1vKo+YrVcqUbNpVAaQ5NnZLQQOmnIRTXZg==
 
 chrome-launcher@^0.15.1:
   version "0.15.1"
@@ -2923,10 +2923,10 @@ delayed-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
-devtools-protocol@0.0.1034970, devtools-protocol@0.0.1036444:
-  version "0.0.1034970"
-  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.1034970.tgz#edbbdfee461def49bff61fa8780138ce4a1e105f"
-  integrity sha512-kC7Wo+7z+Bo202DVB7qVqccreL+RpcGk/6eCrpM1qj2azag6UCMg05GL3ty2adg8CXWFpUGdMeyFJfIN8lQtgw==
+devtools-protocol@0.0.1036444, devtools-protocol@0.0.1081726:
+  version "0.0.1081726"
+  resolved "https://registry.yarnpkg.com/devtools-protocol/-/devtools-protocol-0.0.1081726.tgz#2ababa73ef521cc1b36d47ce1e9bfe1b8cdb7555"
+  integrity sha512-u+SmIzR/+iblfZZhTOQHTRFLehNFb/LmMbnlQswJYeyjND7+JWQ6kccA47BernhKF/0KbjTroRCjpv9dsc2yVQ==
 
 diff-sequences@^28.0.2:
   version "28.0.2"
@@ -6033,7 +6033,6 @@ query-string@^4.1.0:
 
 quibble@^0.6.7, quibble@connorjclark/quibble#fork:
   version "0.6.12"
-  uid f49c6c6122f08a4872a1fafc1d2aca68a7fdc2df
   resolved "https://codeload.github.com/connorjclark/quibble/tar.gz/f49c6c6122f08a4872a1fafc1d2aca68a7fdc2df"
   dependencies:
     lodash "^4.17.21"

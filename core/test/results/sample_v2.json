@@ -342,9 +342,9 @@
         ],
         "items": [
           {
+            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "responseTime": 568.468,
-            "entity": "localhost"
+            "responseTime": 568.468
           }
         ],
         "overallSavingsMs": 468.46799999999996
@@ -4600,40 +4600,40 @@
         ],
         "items": [
           {
+            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
             "totalBytes": 903,
-            "wastedMs": 729,
-            "entity": "localhost"
+            "wastedMs": 729
           },
           {
+            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
             "totalBytes": 209,
-            "wastedMs": 879,
-            "entity": "localhost"
+            "wastedMs": 879
           },
           {
+            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
             "totalBytes": 903,
-            "wastedMs": 879,
-            "entity": "localhost"
+            "wastedMs": 879
           },
           {
+            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
             "totalBytes": 903,
-            "wastedMs": 879,
-            "entity": "localhost"
+            "wastedMs": 879
           },
           {
+            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
             "totalBytes": 1052,
-            "wastedMs": 879,
-            "entity": "localhost"
+            "wastedMs": 879
           },
           {
+            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
             "totalBytes": 223,
-            "wastedMs": 879,
-            "entity": "localhost"
+            "wastedMs": 879
           }
         ],
         "overallSavingsMs": 0
@@ -4687,11 +4687,11 @@
         ],
         "items": [
           {
+            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "totalBytes": 166550,
             "wastedBytes": 83568,
-            "wastedPercent": 50.176166426166425,
-            "entity": "localhost"
+            "wastedPercent": 50.176166426166425
           }
         ],
         "overallSavingsMs": 900,
@@ -4755,18 +4755,18 @@
         ],
         "items": [
           {
+            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "totalBytes": 166550,
             "wastedBytes": 43567,
-            "wastedPercent": 26.158609908609908,
-            "entity": "localhost"
+            "wastedPercent": 26.158609908609908
           },
           {
+            "entity": "Google CDN",
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
             "totalBytes": 30346,
             "wastedBytes": 21544,
-            "wastedPercent": 70.99531129443884,
-            "entity": "Google CDN"
+            "wastedPercent": 70.99531129443884
           }
         ],
         "overallSavingsMs": 600,
@@ -4809,6 +4809,7 @@
         ],
         "items": [
           {
+            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-0-IMG",
@@ -4830,10 +4831,10 @@
             "isCrossOrigin": false,
             "totalBytes": 24620,
             "wastedBytes": 12979.05,
-            "wastedWebpBytes": 9002,
-            "entity": "localhost"
+            "wastedWebpBytes": 9002
           },
           {
+            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-2-IMG",
@@ -4855,10 +4856,10 @@
             "isCrossOrigin": false,
             "totalBytes": 24620,
             "wastedBytes": 12979.05,
-            "wastedWebpBytes": 9002,
-            "entity": "localhost"
+            "wastedWebpBytes": 9002
           },
           {
+            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-3-IMG",
@@ -4880,10 +4881,10 @@
             "isCrossOrigin": false,
             "totalBytes": 24620,
             "wastedBytes": 12979.05,
-            "wastedWebpBytes": 9002,
-            "entity": "localhost"
+            "wastedWebpBytes": 9002
           },
           {
+            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-4-IMG",
@@ -4905,10 +4906,10 @@
             "isCrossOrigin": false,
             "totalBytes": 24620,
             "wastedBytes": 12979.05,
-            "wastedWebpBytes": 9002,
-            "entity": "localhost"
+            "wastedWebpBytes": 9002
           },
           {
+            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-5-IMG",
@@ -4930,10 +4931,10 @@
             "isCrossOrigin": false,
             "totalBytes": 24620,
             "wastedBytes": 12979.05,
-            "wastedWebpBytes": 9002,
-            "entity": "localhost"
+            "wastedWebpBytes": 9002
           },
           {
+            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-1-IMG",
@@ -4955,8 +4956,7 @@
             "isCrossOrigin": false,
             "totalBytes": 24620,
             "wastedBytes": 12979.05,
-            "wastedWebpBytes": 9002,
-            "entity": "localhost"
+            "wastedWebpBytes": 9002
           }
         ],
         "overallSavingsMs": 450,
@@ -5011,16 +5011,16 @@
         ],
         "items": [
           {
+            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "totalBytes": 166320,
-            "wastedBytes": 134831,
-            "entity": "localhost"
+            "wastedBytes": 134831
           },
           {
+            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "totalBytes": 17393,
-            "wastedBytes": 11647,
-            "entity": "localhost"
+            "wastedBytes": 11647
           }
         ],
         "overallSavingsMs": 1800,
@@ -5062,6 +5062,7 @@
         ],
         "items": [
           {
+            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-0-IMG",
@@ -5081,10 +5082,10 @@
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar1",
             "totalBytes": 24620,
             "wastedBytes": 22619,
-            "wastedPercent": 91.87426297169812,
-            "entity": "localhost"
+            "wastedPercent": 91.87426297169812
           },
           {
+            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-1-IMG",
@@ -5104,10 +5105,10 @@
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar2",
             "totalBytes": 24620,
             "wastedBytes": 13950,
-            "wastedPercent": 56.66273584905661,
-            "entity": "localhost"
+            "wastedPercent": 56.66273584905661
           },
           {
+            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-3-IMG",
@@ -5127,8 +5128,7 @@
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr2",
             "totalBytes": 24620,
             "wastedBytes": 13950,
-            "wastedPercent": 56.66273584905661,
-            "entity": "localhost"
+            "wastedPercent": 56.66273584905661
           }
         ],
         "overallSavingsMs": 300,
@@ -5165,10 +5165,10 @@
         ],
         "items": [
           {
+            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/lighthouse-rotating.gif",
             "totalBytes": 934285,
-            "wastedBytes": 682028,
-            "entity": "localhost"
+            "wastedBytes": 682028
           }
         ],
         "overallSavingsMs": 3300,
@@ -5229,6 +5229,7 @@
         ],
         "items": [
           {
+            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "wastedBytes": 21189,
             "subItems": {
@@ -5256,8 +5257,7 @@
                 }
               ]
             },
-            "totalBytes": 0,
-            "entity": "localhost"
+            "totalBytes": 0
           }
         ],
         "overallSavingsMs": 150,
