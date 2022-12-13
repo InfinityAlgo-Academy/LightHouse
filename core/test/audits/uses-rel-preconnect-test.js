@@ -197,7 +197,7 @@ describe('Performance: uses-rel-preconnect audit', () => {
     assert.equal(numericValue, 300);
     assert.equal(details.items.length, 1);
     assert.deepStrictEqual(details.items, [
-      {url: 'https://cdn.example.com', wastedMs: 300},
+      {entity: 'example.com', url: 'https://cdn.example.com', wastedMs: 300},
     ]);
   });
 
@@ -250,8 +250,8 @@ describe('Performance: uses-rel-preconnect audit', () => {
     assert.equal(numericValue, 300);
     assert.equal(details.items.length, 2);
     assert.deepStrictEqual(details.items, [
-      {url: 'https://othercdn.example.com', wastedMs: 300},
-      {url: 'http://cdn.example.com', wastedMs: 150},
+      {entity: 'example.com', url: 'https://othercdn.example.com', wastedMs: 300},
+      {entity: 'example.com', url: 'http://cdn.example.com', wastedMs: 150},
     ]);
     assert.equal(warnings.length, 0);
   });

@@ -209,6 +209,7 @@ class UsesRelPreconnectAudit extends Audit {
       results.push({
         url: securityOrigin,
         wastedMs: wastedMs,
+        entity: classifiedEntities?.byURL.get(firstRecordOfOrigin.url)?.name,
       });
     });
 
@@ -238,7 +239,7 @@ class UsesRelPreconnectAudit extends Audit {
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
 
-    const details = Audit.makeOpportunityDetails(headings, results, classifiedEntities, maxWasted);
+    const details = Audit.makeOpportunityDetails(headings, results, null, maxWasted);
 
     return {
       score: ByteEfficiencyAudit.scoreForWastedMs(maxWasted),

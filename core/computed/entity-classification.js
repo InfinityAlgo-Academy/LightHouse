@@ -41,10 +41,13 @@ class EntityClassification {
    *
    * @param {EntityCache} entityCache
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @return {{byEntity: Map<LH.Artifacts.RecognizableEntity, Array<string>>, byURL: Map<string, LH.Artifacts.RecognizableEntity | undefined>}}
+   * @return {{
+   *  byEntity: Map<LH.Artifacts.RecognizableEntity, Array<string>>,
+   *  byURL: Map<string, LH.Artifacts.RecognizableEntity>,
+   * }}
    */
   static classify(entityCache, networkRecords) {
-    /** @type {Map<string, LH.Artifacts.RecognizableEntity | undefined>} */
+    /** @type {Map<string, LH.Artifacts.RecognizableEntity>} */
     const byURL = new Map();
     /** @type {Map<LH.Artifacts.RecognizableEntity, Array<string>>} */
     const byEntity = new Map();

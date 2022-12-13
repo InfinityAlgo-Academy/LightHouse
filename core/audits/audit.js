@@ -227,7 +227,9 @@ class Audit {
       type: 'opportunity',
       headings: items.length === 0 ? [] : headings,
       items: items.map(
-        item => ({...item, entity: classifiedEntities?.byURL.get(item.url)?.name})
+        // We let an existing item.entity take precedence if it was set during
+        // the audit (eg., uses-rel-preconnect).
+        item => ({entity: classifiedEntities?.byURL.get(item.url)?.name, ...item})
       ),
       overallSavingsMs,
       overallSavingsBytes,
