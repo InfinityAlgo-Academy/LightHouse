@@ -456,7 +456,7 @@ const expectations = {
             {
               // Support for this was added in M109
               // https://crbug.com/1350944
-              _maxChromiumVersion: '109',
+              _maxChromiumVersion: '108',
               reason: 'Pages that have requested notifications permissions are not currently eligible for back/forward cache.',
               failureType: 'Pending browser support',
               subItems: {
