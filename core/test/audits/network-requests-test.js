@@ -77,9 +77,6 @@ describe('Network requests audit', () => {
 
   it('should handle times correctly', async () => {
     const records = [
-      // Note: should use rendererEndTime but that is currently a "dummy" value equivalent
-      // to networkEndTime, and our networkRecordsToDevtoolsLog has no ability to roundtrip
-      // that.
       {url: 'https://example.com/0', rendererStartTime: 15.0, networkRequestTime: 15.25, networkEndTime: 15.5},
       {url: 'https://example.com/1', rendererStartTime: 15.5, networkRequestTime: 15.25, networkEndTime: -1},
     ];

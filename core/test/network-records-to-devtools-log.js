@@ -91,30 +91,6 @@ function getRequestServedFromCacheEvent(networkRecord, index) {
  */
 function getResponseReceivedEvent(networkRecord, index) {
   const headers = headersArrayToHeadersDict(networkRecord.responseHeaders);
-  // let timing;
-  // if (networkRecord.timing) {
-  //   timing = {...networkRecord.timing};
-  //   if (timing.requestTime === undefined) {
-  //     timing.requestTime = networkRecord.networkRequestTime / 1000 || 0;
-  //   }
-  //   if (timing.receiveHeadersEnd === undefined) {
-  //     timing.receiveHeadersEnd = networkRecord.responseHeadersEndTime || 0;
-  //   }
-  // }
-
-  // Set timing.requestTime and timing.receiveHeadersEnd to be values that
-  // NetworkRequest will pull from for networkRequestTime and responseHeadersEndTime,
-  // so this roundtrips correctly. Unless, of course, timing values are explicitly set
-  // already.
-  // const timing = networkRecord.timing ? {...networkRecord.timing} : {};
-  // if (timing.requestTime === undefined) {
-  //   timing.requestTime = networkRecord.networkRequestTime / 1000 || 0;
-  // }
-  // if (timing.receiveHeadersEnd === undefined) {
-  //   timing.receiveHeadersEnd = networkRecord.responseHeadersEndTime || 0;
-  // }
-
-  const timing = networkRecord.timing;
 
   return {
     method: 'Network.responseReceived',
@@ -133,7 +109,7 @@ function getResponseReceivedEvent(networkRecord, index) {
         fromServiceWorker: networkRecord.fetchedViaServiceWorker || false,
         encodedDataLength: networkRecord.transferSize === undefined ?
           0 : networkRecord.transferSize,
-        timing,
+        timing: networkRecord.timing,
         protocol: networkRecord.protocol || 'http/1.1',
       },
       frameId: networkRecord.frameId || `${idBase}.1`,
