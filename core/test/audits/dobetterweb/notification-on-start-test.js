@@ -7,9 +7,16 @@
 import assert from 'assert/strict';
 
 import NotificationOnStart from '../../../audits/dobetterweb/notification-on-start.js';
+import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 
 describe('UX: notification audit', () => {
   it('fails when notification has been automatically requested', async () => {
+    const records = [
+      {url: 'https://example.com/'},
+      {url: 'https://example2.com/two'},
+      {url: 'http://abc.com/'},
+      {url: 'https://example.com/two'},
+    ];
     const text = 'Do not request notification permission without a user action.';
     const context = {computedCache: new Map()};
     const auditResult = await NotificationOnStart.audit({
@@ -21,10 +28,12 @@ describe('UX: notification audit', () => {
       ],
       SourceMaps: [],
       Scripts: [],
-      devtoolsLogs: {defaultPass: []},
+      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(records)},
     }, context);
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
+    assert.deepStrictEqual(auditResult.details.items.map(item => item.entity),
+      ['example.com', 'example2.com']);
   });
 
   it('passes when notification has not been automatically requested', async () => {

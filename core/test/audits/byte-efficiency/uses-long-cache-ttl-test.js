@@ -59,6 +59,7 @@ describe('Cache headers audit', () => {
       assert.equal(items.length, 1);
       assert.equal(items[0].cacheLifetimeMs, 0);
       assert.equal(items[0].wastedBytes, 10000);
+      assert.equal(items[0].entity, 'example.com');
       expect(result.displayValue).toBeDisplayString('1 resource found');
     });
   });
@@ -229,6 +230,7 @@ describe('Cache headers audit', () => {
       assert.equal(result.score, 1);
       const items = result.details.items;
       assert.equal(items.length, 1);
+      assert.equal(items[0].entity, 'example.com');
     });
   });
 });

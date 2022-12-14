@@ -220,7 +220,13 @@ class UsesHTTP2Audit extends Audit {
         {key: 'protocol', valueType: 'text', label: str_(UIStrings.columnProtocol)},
       ];
 
-      const details = Audit.makeTableDetails(headings, resources);
+      const details = Audit.makeTableDetails(
+        headings,
+        resources.map(resource => ({
+          entity: classifiedEntities.byURL.get(resource.url)?.name,
+          ...resource,
+        }))
+      );
 
       return {
         displayValue,

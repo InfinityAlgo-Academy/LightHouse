@@ -435,7 +435,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
         },
         // Not needed, but keeps typescript happy.
         totalBytes: 0,
-        entity: classifiedEntities?.byURL.get(script.url)?.name,
+        entity: classifiedEntities.byURL.get(script.url)?.name,
       };
 
       const bundle = bundles.find(bundle => bundle.script.scriptId === script.scriptId);
