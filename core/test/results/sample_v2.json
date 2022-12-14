@@ -5838,7 +5838,7 @@
       "description": "Many navigations are performed by going back to a previous page, or forwards again. The back/forward cache (bfcache) can speed up these return navigations. [Learn more about the bfcache](https://web.dev/bfcache/)",
       "score": 0,
       "scoreDisplayMode": "binary",
-      "displayValue": "1 actionable failure reason",
+      "displayValue": "2 failure reasons",
       "details": {
         "type": "table",
         "headings": [
@@ -9781,7 +9781,7 @@
       "core/audits/bf-cache.js | displayValue": [
         {
           "values": {
-            "itemCount": 1
+            "itemCount": 2
           },
           "path": "audits[bf-cache].displayValue"
         }

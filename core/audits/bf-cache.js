@@ -10,15 +10,15 @@ import {NotRestoredReasonDescription} from '../lib/bf-cache-strings.js';
 
 /* eslint-disable max-len */
 const UIStrings = {
-  /** Title of a diagnostic Lighthouse audit that identifies when the back/forward cache is being used. "back/forward" refers to the back and forward buttons found in modern browsers. This title is shown to users if the back/forward cache was used, or if the back/forward cache was not used for reasons outside the user's control. */
+  /** Title of a diagnostic Lighthouse audit that identifies when the back/forward cache is being used. "back/forward" refers to the back and forward buttons found in modern browsers. This title is shown to users if the back/forward cache was used, or if the there was no attempt to restore the page from the back/forward cache. */
   title: `Page didn't prevent back/forward cache restoration`,
-  /** Title of a diagnostic Lighthouse audit that identifies when the back/forward cache is being used. "back/forward" refers to the back and forward buttons found in modern browsers. This title is shown to users if the back/forward cache was not used for reasons that the user can address. */
+  /** Title of a diagnostic Lighthouse audit that identifies when the back/forward cache is being used. "back/forward" refers to the back and forward buttons found in modern browsers. This title is shown to users if the page attempted to restore from the back/forward cache but the back/forward cache was not used. */
   failureTitle: 'Page prevented back/forward cache restoration',
   /** Description of a diagnostic Lighthouse audit that identifies when the back/forward cache is being used. "back/forward" refers to the back and forward buttons found in modern browsers. */
   description: 'Many navigations are performed by going back to a previous page, or forwards again. The back/forward cache (bfcache) can speed up these return navigations. [Learn more about the bfcache](https://web.dev/bfcache/)',
   /** Failure type for an error that the user should be able to address themselves. Shown in a table column with other failure types. */
   actionableFailureType: 'Actionable',
-  /** Failure type for an error that the user cannot address themselves. Shown in a table column with other failure types. */
+  /** Failure type for an error that the user cannot address in the page's code. Shown in a table column with other failure types. */
   notActionableFailureType: 'Not actionable',
   /** Failure type for an error caused by missing browser support. Shown in a table column with other failure types. */
   supportPendingFailureType: 'Pending browser support',
@@ -27,11 +27,11 @@ const UIStrings = {
   /** Label for a column in a data table; entries in the column will be a string representing the type of failure preventing the back/forward cache from being used. */
   failureTypeColumn: 'Failure type',
   /**
-   * @description [ICU Syntax] Label for an audit identifying the number of back/forward cache failure reasons found in the page that the user can address.
+   * @description [ICU Syntax] Label for an audit identifying the number of back/forward cache failure reasons found in the page.
    */
   displayValue: `{itemCount, plural,
-    =1 {1 actionable failure reason}
-    other {# actionable failure reasons}
+    =1 {1 failure reason}
+    other {# failure reasons}
     }`,
 };
 /* eslint-enable max-len */
@@ -76,14 +76,11 @@ class BFCache extends Audit {
 
     /** @type {LH.Audit.Details.TableItem[]} */
     const results = [];
-    let numActionable = 0;
 
     for (const failureType of ORDERED_FAILURE_TYPES) {
       const reasonsMap = notRestoredReasonsTree[failureType];
 
       for (const [reason, frameUrls] of Object.entries(reasonsMap)) {
-        if (failureType === 'PageSupportNeeded') numActionable++;
-
         results.push({
           reason: NotRestoredReasonDescription[reason]?.name ?? reason,
           failureType: FAILURE_TYPE_TO_STRING[failureType],
@@ -107,12 +104,12 @@ class BFCache extends Audit {
 
     const details = Audit.makeTableDetails(headings, results);
 
-    const displayValue = numActionable ?
-      str_(UIStrings.displayValue, {itemCount: numActionable}) :
+    const displayValue = results.length ?
+      str_(UIStrings.displayValue, {itemCount: results.length}) :
       undefined;
 
     return {
-      score: numActionable ? 0 : 1,
+      score: results.length ? 0 : 1,
       displayValue,
       details,
     };

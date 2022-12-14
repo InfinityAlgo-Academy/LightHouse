@@ -432,7 +432,7 @@
     "message": "M̂án̂ý n̂áv̂íĝát̂íôńŝ ár̂é p̂ér̂f́ôŕm̂éd̂ b́ŷ ǵôín̂ǵ b̂áĉḱ t̂ó â ṕr̂év̂íôúŝ ṕâǵê, ór̂ f́ôŕŵár̂d́ŝ áĝáîń. T̂h́ê b́âćk̂/f́ôŕŵár̂d́ ĉáĉh́ê (b́f̂ćâćĥé) ĉán̂ śp̂éêd́ ûṕ t̂h́êśê ŕêt́ûŕn̂ ńâv́îǵât́îón̂ś. [L̂éâŕn̂ ḿôŕê áb̂óût́ t̂h́ê b́f̂ćâćĥé](https://web.dev/bfcache/)"
   },
   "core/audits/bf-cache.js | displayValue": {
-    "message": "{itemCount, plural,\n    =1 {1 âćt̂íôńâb́l̂é f̂áîĺûŕê ŕêáŝón̂}\n    other {# áĉt́îón̂áb̂ĺê f́âíl̂úr̂é r̂éâśôńŝ}\n    }"
+    "message": "{itemCount, plural,\n    =1 {1 f̂áîĺûŕê ŕêáŝón̂}\n    other {# f́âíl̂úr̂é r̂éâśôńŝ}\n    }"
   },
   "core/audits/bf-cache.js | failureReasonColumn": {
     "message": "F̂áîĺûŕê ŕêáŝón̂"

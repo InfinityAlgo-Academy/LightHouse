@@ -27,7 +27,7 @@ describe('BFCache audit', () => {
 
     const result = await BFCache.audit(artifacts);
 
-    expect(result.displayValue).toBeDisplayString('1 actionable failure reason');
+    expect(result.displayValue).toBeDisplayString('3 failure reasons');
     expect(result.score).toEqual(0);
 
     if (result.details?.type !== 'table') throw new Error('details were not a table');
@@ -59,7 +59,7 @@ describe('BFCache audit', () => {
     ]);
   });
 
-  it('passes if there are no actionable failures', async () => {
+  it('fails if there are only non-actionable failures', async () => {
     /** @type {any} */
     const artifacts = {
       BFCacheFailures: [{
@@ -77,10 +77,31 @@ describe('BFCache audit', () => {
 
     const result = await BFCache.audit(artifacts);
 
+    expect(result.displayValue).toBeDisplayString('2 failure reasons');
+    expect(result.score).toEqual(0);
+
+    if (result.details?.type !== 'table') throw new Error('details were not a table');
+    expect(result.details.items).toHaveLength(2);
+  });
+
+  it('passes if there are no failures', async () => {
+    /** @type {any} */
+    const artifacts = {
+      BFCacheFailures: [{
+        notRestoredReasonsTree: {
+          PageSupportNeeded: {},
+          Circumstantial: {},
+          SupportPending: {},
+        },
+      }],
+    };
+
+    const result = await BFCache.audit(artifacts);
+
     expect(result.displayValue).toBeUndefined();
     expect(result.score).toEqual(1);
 
     if (result.details?.type !== 'table') throw new Error('details were not a table');
-    expect(result.details.items).toHaveLength(2);
+    expect(result.details.items).toHaveLength(0);
   });
 });
