@@ -92,6 +92,33 @@ function getRequestServedFromCacheEvent(networkRecord, index) {
 function getResponseReceivedEvent(networkRecord, index) {
   const headers = headersArrayToHeadersDict(networkRecord.responseHeaders);
 
+  let timing;
+  if (networkRecord.timing) {
+    timing = {...networkRecord.timing};
+  } else {
+    // If the record explicitly does not having a timing object, only create one
+    // if we absolutely need it. See _recomputeTimesWithResourceTiming.
+    const netReqTime = networkRecord.networkRequestTime;
+    const willNeedTimingObject =
+      (netReqTime !== undefined && netReqTime !== networkRecord.rendererStartTime) ||
+      (networkRecord.responseHeadersEndTime !== undefined);
+    if (willNeedTimingObject) timing = {};
+  }
+
+  // Set timing.requestTime and timing.receiveHeadersEnd to be values that
+  // NetworkRequest will pull from for networkRequestTime and responseHeadersEndTime,
+  // so this roundtrips correctly. Unless, of course, timing values are explicitly set
+  // already.
+  if (timing) {
+    if (timing.requestTime === undefined) {
+      timing.requestTime = networkRecord.networkRequestTime / 1000 || 0;
+    }
+    if (timing.receiveHeadersEnd === undefined) {
+      timing.receiveHeadersEnd =
+        (networkRecord.responseHeadersEndTime - networkRecord.networkRequestTime) || 0;
+    }
+  }
+
   return {
     method: 'Network.responseReceived',
     params: {
@@ -109,7 +136,7 @@ function getResponseReceivedEvent(networkRecord, index) {
         fromServiceWorker: networkRecord.fetchedViaServiceWorker || false,
         encodedDataLength: networkRecord.transferSize === undefined ?
           0 : networkRecord.transferSize,
-        timing: networkRecord.timing,
+        timing,
         protocol: networkRecord.protocol || 'http/1.1',
       },
       frameId: networkRecord.frameId || `${idBase}.1`,
@@ -218,25 +245,15 @@ function addRedirectResponseIfNeeded(networkRecords, record) {
  * @return {LH.DevtoolsLog}
  */
 function networkRecordsToDevtoolsLog(networkRecords, options = {}) {
-  // Clone test network records objects before potential modifications.
-  networkRecords = networkRecords.map(record => {
-    if (record.constructor === Object) {
-      record = {...record};
-      if (record.timing) record.timing = {...record.timing};
-    }
-
-    return record;
-  });
-
   const devtoolsLog = [];
   networkRecords.forEach((record, index) => {
-    // If we're operating on network record raw objects (not NetworkRequest instances),
-    // then we're operating on test data that may need to be massaged a bit.
+    // Temporary code while we transition away from startTime and endTime.
+    // This allows us to defer changes to test files.
+    // TODO: remove after timing refactor is done
+    // See https://github.com/GoogleChrome/lighthouse/pull/14311
     if (record.constructor === Object) {
-      // Temporary code while we transition away from startTime and endTime.
-      // This allows us to defer slightly changes to test files.
-      // TODO: remove after timing refactor is done
-      // See https://github.com/GoogleChrome/lighthouse/pull/14311
+      record = networkRecords[index] = JSON.parse(JSON.stringify(record));
+
       if (record.startTime !== undefined) {
         record.networkRequestTime = record.startTime;
         // Old tests never distinguished between these two.
@@ -247,35 +264,6 @@ function networkRecordsToDevtoolsLog(networkRecords, options = {}) {
       }
       if (record.responseReceivedTime !== undefined) {
         record.responseHeadersEndTime = record.responseReceivedTime;
-      }
-
-      // TODO: good?
-      // if (record.rendererStartTime === undefined ^ record.networkEndTime === undefined) {
-      //   // eslint-disable-next-line max-len
-      //   throw new Error('expected test record to define rendererStartTime and networkEndTime together, but never just one');
-      // }
-
-      // Set timing.requestTime and timing.receiveHeadersEnd to be values that
-      // NetworkRequest will pull from for networkRequestTime and responseHeadersEndTime,
-      // so this roundtrips correctly. Unless, of course, timing values are explicitly set
-      // already.
-
-      // If record.timing explicitly does not having a timing object, only create one
-      // if we absolutely need it. See _recomputeTimesWithResourceTiming.
-      const netReqTime = record.networkRequestTime;
-      const willNeedTimingObject =
-        (netReqTime !== undefined && netReqTime !== record.rendererStartTime) ||
-        (record.responseHeadersEndTime !== undefined);
-      if (willNeedTimingObject) record.timing = record.timing || {};
-
-      if (record.timing) {
-        if (record.timing.requestTime === undefined) {
-          record.timing.requestTime = record.networkRequestTime / 1000 || 0;
-        }
-        if (record.timing.receiveHeadersEnd === undefined) {
-          record.timing.receiveHeadersEnd =
-            (record.responseHeadersEndTime - record.networkRequestTime) || 0;
-        }
       }
     }
 
