@@ -94,6 +94,7 @@ declare module Details {
   interface EntityClassification {
     type: 'entity-classification';
     entities: Array<EntityClassificationEntity>;
+    // The two lookup tables (LUT) below provide O(1) index lookup into entities above.
     nameLUT: Record<string, number>;
     originLUT: Record<string, number>;
   }

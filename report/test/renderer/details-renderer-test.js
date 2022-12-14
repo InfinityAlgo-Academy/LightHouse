@@ -173,6 +173,14 @@ describe('DetailsRenderer', () => {
           totalBytes: 71654,
           wastedBytes: 30470,
           wastedPercent: 42,
+          entity: 'example.com',
+        },
+        {
+          url: 'https://example2.com',
+          totalBytes: 7165,
+          wastedBytes: 3047,
+          wastedPercent: 42,
+          // missing entity classification
         }],
         overallSavingsMs: 150,
         overallSavingsBytes: 30470,
@@ -182,10 +190,13 @@ describe('DetailsRenderer', () => {
       assert.equal(oppEl.localName, 'table');
       assert.ok(oppEl.querySelector('.lh-text__url').title === 'https://example.com', 'did not render recursive items');
       assert.equal(oppEl.querySelectorAll('th').length, 3, 'did not render header items');
-      assert.equal(oppEl.querySelectorAll('td').length, 3, 'did not render table cells');
-      assert.equal(oppEl.querySelectorAll('.lh-table-column--url').length, 2, 'url column not set');
-      assert.equal(oppEl.querySelectorAll('.lh-table-column--bytes').length, 4, 'bytes not set');
+      assert.equal(oppEl.querySelectorAll('td').length, 6, 'did not render table cells');
+      assert.equal(oppEl.querySelectorAll('.lh-table-column--url').length, 3, 'url column not set');
+      assert.equal(oppEl.querySelectorAll('.lh-table-column--bytes').length, 6, 'bytes not set');
+      assert.equal(oppEl.querySelectorAll('tbody tr')[0].dataset.entity, 'example.com');
+      assert.equal(oppEl.querySelectorAll('tbody tr')[1].dataset.entity, undefined);
     });
+
 
     it('renders lists', () => {
       const table = {

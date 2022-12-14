@@ -272,7 +272,6 @@ export class ReportRenderer {
       report.audits['full-page-screenshot']?.details &&
       report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' ?
       report.audits['full-page-screenshot'].details : undefined;
-
     const detailsRenderer = new DetailsRenderer(this._dom, {
       fullPageScreenshot,
     });

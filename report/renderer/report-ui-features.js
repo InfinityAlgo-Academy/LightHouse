@@ -326,13 +326,11 @@ export class ReportUIFeatures {
 
     /** @type {string | undefined} */
     let mainEntityName;
-
     if (this.json.audits['entity-classification'] &&
         this.json.audits['entity-classification'].details &&
         this.json.audits['entity-classification'].details.type === 'entity-classification') {
       /** @type {LH.Audit.Details.EntityClassification | undefined} */
       const entityClassification = this.json.audits['entity-classification'].details;
-
       const mainEntityOrigin = Util.getOrigin(finalDisplayedUrl);
       if (mainEntityOrigin) {
         const mainEntityId = entityClassification.originLUT[mainEntityOrigin];
@@ -342,7 +340,6 @@ export class ReportUIFeatures {
 
     /** @type {Array<HTMLElement>} */
     const thirdPartyRows = [];
-
     for (const rowEl of rowEls) {
       // We rely on entity-classification audit for new LHRs that support it.
       // To main backward compatibility with older LHRs, we'll maintain origin based test.
