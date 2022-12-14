@@ -160,6 +160,7 @@ describe('Performance: preload-lcp audit', () => {
     expect(results.details.overallSavingsMs).toEqual(180);
     expect(results.details.items[0].url).toEqual(imageUrl);
     expect(results.details.items[0].wastedMs).toEqual(180);
+    expect(results.details.items[0].entity).toEqual('example.com');
 
     // debugData should be included even if image shouldn't be preloaded.
     expect(results.details.debugData).toMatchObject({
@@ -182,6 +183,7 @@ describe('Performance: preload-lcp audit', () => {
     expect(results.details.overallSavingsMs).toEqual(30);
     expect(results.details.items[0].url).toEqual(imageUrl);
     expect(results.details.items[0].wastedMs).toEqual(30);
+    expect(results.details.items[0].entity).toEqual('example.com');
   });
 
   it('should suggest preloading when LCP is waiting on a dependency', async () => {
@@ -194,6 +196,7 @@ describe('Performance: preload-lcp audit', () => {
     expect(results.details.overallSavingsMs).toEqual(30);
     expect(results.details.items[0].url).toEqual(imageUrl);
     expect(results.details.items[0].wastedMs).toEqual(30);
+    expect(results.details.items[0].entity).toEqual('example.com');
     expect(results.details.debugData).toMatchObject({
       initiatorPath: [
         {url: 'http://www.example.com/image.png', initiatorType: 'script'},

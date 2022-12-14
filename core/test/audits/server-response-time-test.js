@@ -27,7 +27,7 @@ describe('Performance: server-response-time audit', () => {
       numericValue: 630,
       details: {
         overallSavingsMs: 530,
-        items: [{url: 'https://example.com/', responseTime: 630}],
+        items: [{url: 'https://example.com/', responseTime: 630, entity: 'example.com'}],
       },
     });
   });
