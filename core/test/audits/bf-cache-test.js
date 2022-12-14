@@ -45,17 +45,17 @@ describe('BFCache audit', () => {
     ]);
 
     expect(items[1].reason).toBeDisplayString(
-      'Back/forward cache is disabled by flags. Visit chrome://flags/#back-forward-cache to enable it locally on this device.');
-    expect(items[1].failureType).toBeDisplayString('Not actionable');
+      'Pages with cache-control:no-store header cannot enter back/forward cache.');
+    expect(items[1].failureType).toBeDisplayString('Pending browser support');
     expect(items[1].subItems?.items).toEqual([
-      {frameUrl: 'https://example.com'},
+      {frameUrl: 'https://frame.com'},
     ]);
 
     expect(items[2].reason).toBeDisplayString(
-      'Pages with cache-control:no-store header cannot enter back/forward cache.');
-    expect(items[2].failureType).toBeDisplayString('Pending browser support');
+      'Back/forward cache is disabled by flags. Visit chrome://flags/#back-forward-cache to enable it locally on this device.');
+    expect(items[2].failureType).toBeDisplayString('Not actionable');
     expect(items[2].subItems?.items).toEqual([
-      {frameUrl: 'https://frame.com'},
+      {frameUrl: 'https://example.com'},
     ]);
   });
 

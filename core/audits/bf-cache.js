@@ -39,7 +39,7 @@ const UIStrings = {
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);
 
 /** @type {LH.Crdp.Page.BackForwardCacheNotRestoredReasonType[]} */
-const ORDERED_FAILURE_TYPES = ['PageSupportNeeded', 'Circumstantial', 'SupportPending'];
+const ORDERED_FAILURE_TYPES = ['PageSupportNeeded', 'SupportPending', 'Circumstantial'];
 
 /** @type {Record<LH.Crdp.Page.BackForwardCacheNotRestoredReasonType, string | LH.IcuMessage>} */
 const FAILURE_TYPE_TO_STRING = {
