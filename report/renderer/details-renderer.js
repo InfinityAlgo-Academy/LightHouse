@@ -34,9 +34,7 @@ const URL_PREFIXES = ['http://', 'https://', 'data:'];
 export class DetailsRenderer {
   /**
    * @param {DOM} dom
-   * @param {{
-   *  fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot
-   * }} [options]
+   * @param {{fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot}} [options]
    */
   constructor(dom, options = {}) {
     this._dom = dom;
@@ -377,9 +375,6 @@ export class DetailsRenderer {
     for (const subItem of item.subItems.items) {
       const rowEl = this._renderTableRow(subItem, subItemsHeadings);
       rowEl.classList.add('lh-sub-item-row');
-      if (item.entity && typeof(item.entity) === 'string') {
-        rowEl.dataset.entity = item.entity;
-      }
       fragment.append(rowEl);
     }
 
