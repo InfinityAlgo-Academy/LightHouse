@@ -454,6 +454,18 @@ const expectations = {
               },
             },
             {
+              // Support for this was added in M109
+              // https://crbug.com/1350944
+              _maxChromiumVersion: '109',
+              reason: 'Pages that have requested notifications permissions are not currently eligible for back/forward cache.',
+              failureType: 'Pending browser support',
+              subItems: {
+                items: [{
+                  frameUrl: 'http://localhost:10200/dobetterweb/dbw_tester.html',
+                }],
+              },
+            },
+            {
               // The DevTools runner uses Puppeteer to launch Chrome which disables BFCache by default.
               // https://github.com/puppeteer/puppeteer/issues/8197
               //
