@@ -10,8 +10,6 @@ import {createMockContext} from '../mock-driver.js';
 import {flushAllTimersAndMicrotasks, timers} from '../../test-utils.js';
 import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 
-timers.useFakeTimers();
-
 /**
  * @param {Partial<LH.Artifacts.NetworkRequest>=} partial
  * @return {LH.Artifacts.NetworkRequest}
@@ -149,6 +147,9 @@ function mockDeprecation(type) {
 }
 
 describe('instrumentation', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   it('collects inspector issues', async () => {
     const mockContext = createMockContext();
     const mockMixedContentIssue = mockMixedContent({resourceType: 'Audio'});
@@ -304,7 +305,10 @@ describe('_getArtifact', () => {
   });
 });
 
-describe('FR compat', () => {
+describe('FR compat (inspector-issues)', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   let mockContext = createMockContext();
   /** @type {InspectorIssues} */
   let gatherer;

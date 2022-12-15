@@ -36,10 +36,6 @@ beforeEach(() => {
   storageMock.getImportantStorageWarning.mockReset();
 });
 
-afterEach(() => {
-  timers.useRealTimers();
-});
-
 describe('.prepareThrottlingAndNetwork()', () => {
   it('sets throttling appropriately', async () => {
     await prepare.prepareThrottlingAndNetwork(
@@ -263,6 +259,7 @@ describe('.prepareTargetForNavigationMode()', () => {
 
   it('enables async stacks on every main frame navigation', async () => {
     timers.useFakeTimers();
+    after(() => timers.dispose());
 
     sessionMock.sendCommand
       .mockResponse('Debugger.enable')
@@ -329,6 +326,7 @@ describe('.prepareTargetForNavigationMode()', () => {
 
   it('handle javascript dialogs automatically', async () => {
     timers.useFakeTimers();
+    after(() => timers.dispose());
 
     sessionMock.sendCommand.mockResponse('Page.handleJavaScriptDialog');
     sessionMock.on.mockEvent('Page.javascriptDialogOpening', {type: 'confirm'});

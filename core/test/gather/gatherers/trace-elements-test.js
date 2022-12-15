@@ -13,8 +13,6 @@ import {flushAllTimersAndMicrotasks, fnAny, readJson, timers} from '../../test-u
 
 const animationTrace = readJson('../../fixtures/traces/animation.json', import.meta);
 
-timers.useFakeTimers();
-
 function makeLayoutShiftTraceEvent(score, impactedNodes, had_recent_input = false) { // eslint-disable-line camelcase
   return {
     name: 'LayoutShift',
@@ -735,6 +733,9 @@ describe('Trace Elements gatherer - Animated Elements', () => {
 });
 
 describe('instrumentation', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   it('resolves animation name', async () => {
     const connectionStub = new Connection();
     connectionStub.on = createMockOnFn()
@@ -779,7 +780,7 @@ describe('instrumentation', () => {
   });
 });
 
-describe('FR compat', () => {
+describe('FR compat (trace-elements)', () => {
   it('uses loadData in legacy mode', async () => {
     const trace = ['1', '2'];
     const gatherer = new TraceElementsGatherer();
