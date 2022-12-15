@@ -66,9 +66,8 @@ export class DetailsRenderer {
         return null;
 
       default: {
-        // @ts-expect-error We shouldn't reach here, if we handled all details.types above.
-        // I.e., we want next line to err by tsc, and ts-expect-error should suppress.
-        // If we miss handling and execution reaches here, next line doesnt err and tsc throws.
+        // @ts-expect-error - all details.types need to be handled above so tsc thinks this is unreachable.
+        // Call _renderUnknown() to be forward compatible with new, unexpected detail types.
         return this._renderUnknown(details.type, details);
       }
     }
