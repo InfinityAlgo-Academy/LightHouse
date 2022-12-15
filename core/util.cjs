@@ -154,6 +154,10 @@ class Util {
             }
           }
         }
+
+        // TODO: convert printf-style displayValue.
+        // Added:   #5099, v3
+        // Removed: #6767, v4
       }
     }
 
@@ -214,6 +218,20 @@ class Util {
           });
         }
       });
+    }
+
+    // Add some minimal stuff so older reports still work.
+    if (!clone.environment) {
+      // @ts-expect-error
+      clone.environment = {benchmarkIndex: 0};
+    }
+    if (!clone.configSettings.screenEmulation) {
+      // @ts-expect-error
+      clone.configSettings.screenEmulation = {};
+    }
+    if (!clone.i18n) {
+      // @ts-expect-error
+      clone.i18n = {};
     }
 
     return clone;

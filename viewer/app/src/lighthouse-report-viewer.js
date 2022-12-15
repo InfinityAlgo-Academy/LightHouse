@@ -340,6 +340,8 @@ export class LighthouseReportViewer {
     } catch (err) {
       logger.error(err.message);
     }
+
+    document.dispatchEvent(new CustomEvent('lh-file-upload-test-ack'));
   }
 
   /**
