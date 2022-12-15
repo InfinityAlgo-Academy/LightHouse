@@ -635,6 +635,9 @@
   "core/audits/dobetterweb/doctype.js | explanationBadDoctype": {
     "message": "D̂óĉt́ŷṕê ńâḿê ḿûśt̂ b́ê t́ĥé ŝt́r̂ín̂ǵ `html`"
   },
+  "core/audits/dobetterweb/doctype.js | explanationLimitedQuirks": {
+    "message": "D̂óĉúm̂én̂t́ ĉón̂t́âín̂ś â d́ôćt̂ýp̂é t̂h́ât́ t̂ŕîǵĝér̂ś l̂ím̂ít̂éd̂-q́ûír̂ḱŝ-ḿôd́ê"
+  },
   "core/audits/dobetterweb/doctype.js | explanationNoDoctype": {
     "message": "D̂óĉúm̂én̂t́ m̂úŝt́ ĉón̂t́âín̂ á d̂óĉt́ŷṕê"
   },
