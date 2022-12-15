@@ -14,7 +14,7 @@ const exclusions = {
   'devtools': [
     // Disabled because normal Chrome usage makes DevTools not function on
     // these poorly constructed pages
-    'errors-expired-ssl', 'errors-infinite-loop', 'dbw' /* dialog prompt */,
+    'errors-expired-ssl', 'errors-infinite-loop',
     // Disabled because Chrome will follow the redirect first, and Lighthouse will
     // only ever see/run the final URL.
     'redirects-client-paint-server', 'redirects-multiple-server',
