@@ -272,8 +272,13 @@ export class ReportRenderer {
       report.audits['full-page-screenshot']?.details &&
       report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' ?
       report.audits['full-page-screenshot'].details : undefined;
+    const entityClassification =
+      report.audits['entity-classification']?.details &&
+      report.audits['entity-classification'].details.type === 'entity-classification' ?
+      report.audits['entity-classification'].details : undefined;
     const detailsRenderer = new DetailsRenderer(this._dom, {
       fullPageScreenshot,
+      entityClassification,
     });
 
     const categoryRenderer = new CategoryRenderer(this._dom, detailsRenderer);
