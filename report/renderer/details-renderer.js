@@ -61,12 +61,14 @@ export class DetailsRenderer {
       case 'screenshot':
       case 'debugdata':
       case 'full-page-screenshot':
+      case 'entity-classification':
       case 'treemap-data':
         return null;
 
       default: {
-        // @ts-expect-error tsc thinks this is unreachable, but be forward compatible
-        // with new unexpected detail types.
+        // @ts-expect-error We shouldn't reach here, if we handled all details.types above.
+        // I.e., we want next line to err by tsc, and ts-expect-error should suppress.
+        // If we miss handling and execution reaches here, next line doesnt err and tsc throws.
         return this._renderUnknown(details.type, details);
       }
     }
