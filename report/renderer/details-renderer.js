@@ -391,8 +391,7 @@ export class DetailsRenderer {
     renderedRows[0]?.classList.add('lh-row--group');
 
     const entityName = group.entity?.toString() || '';
-    const matchedEntity = this._entityClassification?.entities[
-      this._entityClassification?.nameLUT[entityName]];
+    const matchedEntity = this._entityClassification?.entities[entityName];
 
     if (matchedEntity?.category) {
       const categoryChipEl = this._dom.createElement('span');
@@ -450,16 +449,14 @@ export class DetailsRenderer {
     const byEntity = new Map();
     for (const item of items) {
       const entityName = item.entity?.toString() || '';
-      const matchedEntity = this._entityClassification?.entities[
-        this._entityClassification?.nameLUT[entityName]];
       /** @type {TableItem} */
       const group = byEntity.get(entityName) || {
         [primaryKey]: {
           type: 'link',
           url: '',
-          text: matchedEntity?.name || 'Unattributable', // TODO: i18n
+          text: entityName || 'Unattributable', // TODO: i18n
         },
-        entity: matchedEntity?.name,
+        entity: entityName,
       };
       for (const key of aggregateKeys) {
         group[key] = Number(group[key] || 0) + Number(item[key]);
@@ -499,6 +496,10 @@ export class DetailsRenderer {
         // Find all items that match the entity.
         for (const item of details.items.filter((item) => item.entity === group.entity)) {
           aggregateFragment.append(this._renderTableRowsFromItem(item, details.headings));
+        }
+        if (typeof(group.entity) === 'string') {
+          this._dom.findAll('tr', aggregateFragment).forEach(
+            row => (row.dataset.entity = group.entity?.toString()));
         }
         even = !even;
         tbodyElem.append(aggregateFragment);
