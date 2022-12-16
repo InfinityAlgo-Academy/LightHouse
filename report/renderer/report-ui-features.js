@@ -331,11 +331,7 @@ export class ReportUIFeatures {
         this.json.audits['entity-classification'].details.type === 'entity-classification') {
       /** @type {LH.Audit.Details.EntityClassification} */
       const entityClassification = this.json.audits['entity-classification'].details;
-      const mainEntityOrigin = Util.getOrigin(finalDisplayedUrl);
-      if (mainEntityOrigin) {
-        const mainEntityId = entityClassification.originLUT[mainEntityOrigin];
-        mainEntityName = entityClassification.entities[mainEntityId]?.name;
-      }
+      mainEntityName = entityClassification.firstParty;
     }
 
     /** @type {Array<HTMLElement>} */

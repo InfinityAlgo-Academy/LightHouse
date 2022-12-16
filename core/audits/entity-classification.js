@@ -7,7 +7,6 @@
 import {Audit} from './audit.js';
 import {EntityClassification as ComputedEntityClassification}
   from '../computed/entity-classification.js';
-import UrlUtils from '../lib/url-utils.js';
 
 class EntityClassification extends Audit {
   /**
@@ -33,18 +32,12 @@ class EntityClassification extends Audit {
     const classifiedEntities = await ComputedEntityClassification.request(
       {URL: artifacts.URL, devtoolsLog}, context);
 
-    /** @type {Array<LH.Audit.Details.EntityClassificationEntity>} */
-    const entities = [];
-    /** @type {Record<string, number>} */
-    const originLUT = {};
-    /** @type {Record<string, number>} */
-    const nameLUT = {};
+    /** @type {Record<string, LH.Audit.Details.EntityClassificationEntity>} */
+    const entities = {};
 
-    for (const [entity, entityUrls] of classifiedEntities.byEntity.entries()) {
+    for (const entity of classifiedEntities.byEntity.keys()) {
       /** @type {LH.Audit.Details.EntityClassificationEntity} */
       const shortEntity = {
-        name: entity.name,
-        company: entity.company,
         homepage: entity.homepage,
       };
 
@@ -52,13 +45,7 @@ class EntityClassification extends Audit {
       if (entity === classifiedEntities.firstParty) shortEntity.isFirstParty = true;
       if (entity.isUnrecognized) shortEntity.isUnrecognized = true;
 
-      const id = entities.push(shortEntity) - 1;
-      entityUrls.forEach(url => {
-        const origin = UrlUtils.getOrigin(url);
-        if (!origin) return;
-        originLUT[origin] = id;
-      });
-      nameLUT[shortEntity.name] = id;
+      entities[entity.name] = shortEntity;
     }
 
     return {
@@ -66,8 +53,7 @@ class EntityClassification extends Audit {
       details: {
         type: 'entity-classification',
         entities,
-        originLUT,
-        nameLUT,
+        firstParty: classifiedEntities.firstParty?.name,
       },
     };
   }
