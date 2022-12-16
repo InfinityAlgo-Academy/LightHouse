@@ -10,7 +10,7 @@ import {Util} from '../util.cjs';
 import UrlUtils from '../lib/url-utils.js';
 import thirdPartyWeb from '../lib/third-party-web.js';
 
-/** @typedef {Record<string, LH.Artifacts.RecognizableEntity>} EntityCache */
+/** @typedef {Map<string, LH.Artifacts.RecognizableEntity>} EntityCache */
 
 class EntityClassification {
   /**
@@ -19,12 +19,12 @@ class EntityClassification {
    * @return Entity | undefined
    */
   static makeUpAnEntity(entityCache, url) {
-    if (!UrlUtils.isValid(url)) return undefined;
+    if (!UrlUtils.isValid(url)) return;
     const rootDomain = Util.getRootDomain(url);
-    if (!rootDomain) return undefined;
-    if (rootDomain in entityCache) return entityCache[rootDomain];
+    if (!rootDomain) return;
+    if (entityCache.has(rootDomain)) return entityCache.get(rootDomain);
 
-    return /** @type LH.Artifacts.RecognizableEntity */ (entityCache[rootDomain] = {
+    const unrecognizedEntity = {
       name: rootDomain,
       company: rootDomain,
       category: '',
@@ -34,19 +34,20 @@ class EntityClassification {
       totalExecutionTime: 0,
       totalOccurrences: 0,
       isUnrecognized: true,
-    });
+    };
+    entityCache.set(rootDomain, unrecognizedEntity);
+    return unrecognizedEntity;
   }
 
   /**
-   *
-   * @param {EntityCache} entityCache
-   * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
-   * @return {{
-   *  byEntity: Map<LH.Artifacts.RecognizableEntity, Array<string>>,
-   *  byURL: Map<string, LH.Artifacts.RecognizableEntity>,
-   * }}
+   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
+   * @param {LH.Artifacts.ComputedContext} context
+   * @return {Promise<LH.Artifacts.ClassifiedEntities>}
    */
-  static classify(entityCache, networkRecords) {
+  static async compute_(data, context) {
+    const networkRecords = await NetworkRecords.request(data.devtoolsLog, context);
+    /** @type {EntityCache} */
+    const madeUpEntityCache = new Map();
     /** @type {Map<string, LH.Artifacts.RecognizableEntity>} */
     const byURL = new Map();
     /** @type {Map<LH.Artifacts.RecognizableEntity, Array<string>>} */
@@ -57,42 +58,26 @@ class EntityClassification {
       if (byURL.has(url)) continue;
 
       const entity = thirdPartyWeb.getEntity(url) ||
-        EntityClassification.makeUpAnEntity(entityCache, url);
-
+        EntityClassification.makeUpAnEntity(madeUpEntityCache, url);
       if (!entity) continue;
-
-      byURL.set(url, entity);
 
       const entityURLs = byEntity.get(entity) || [];
       entityURLs.push(url);
       byEntity.set(entity, entityURLs);
+      byURL.set(url, entity);
     }
-
-    return {byURL, byEntity};
-  }
-
-  /**
-   * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
-   * @param {LH.Artifacts.ComputedContext} context
-   * @return {Promise<LH.Artifacts.ClassifiedEntities>}
-   */
-  static async compute_(data, context) {
-    const madeUpEntityCache = /** @type EntityCache */ ({});
-    const networkRecords = await NetworkRecords.request(data.devtoolsLog, context);
 
     // When available, first party identification will be done via
     // `mainDocumentUrl` (for navigations), and falls back to `finalDisplayedUrl` (for timespan/snapshot).
     // See https://github.com/GoogleChrome/lighthouse/issues/13706
     let firstParty;
-    if (data.URL?.mainDocumentUrl) {
-      firstParty = thirdPartyWeb.getEntity(data.URL.mainDocumentUrl) ||
-        EntityClassification.makeUpAnEntity(madeUpEntityCache, data.URL.mainDocumentUrl);
-    } else if (data.URL?.finalDisplayedUrl) {
-      firstParty = thirdPartyWeb.getEntity(data.URL.finalDisplayedUrl) ||
-        EntityClassification.makeUpAnEntity(madeUpEntityCache, data.URL.finalDisplayedUrl);
+    const firstPartyUrl = data.URL?.mainDocumentUrl || data.URL?.finalDisplayedUrl;
+    if (firstPartyUrl) {
+      firstParty = thirdPartyWeb.getEntity(firstPartyUrl) ||
+        EntityClassification.makeUpAnEntity(madeUpEntityCache, firstPartyUrl);
     }
 
-    return {...EntityClassification.classify(madeUpEntityCache, networkRecords), firstParty};
+    return {byURL, byEntity, firstParty};
   }
 }
 

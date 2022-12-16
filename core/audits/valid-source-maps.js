@@ -57,8 +57,9 @@ class ValidSourceMaps extends Audit {
     if (!script.length) return false;
 
     const isLargeJS = script.length >= LARGE_JS_BYTE_THRESHOLD;
-    const isFirstPartyJS = !script.url ? false :
-      classifiedEntities.byURL.get(script.url) === classifiedEntities.firstParty;
+    const isFirstPartyJS = script.url ?
+      classifiedEntities.byURL.get(script.url) === classifiedEntities.firstParty :
+      false;
 
     return isLargeJS && isFirstPartyJS;
   }

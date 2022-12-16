@@ -120,20 +120,20 @@ describe('ReportUIFeatures', () => {
         // Setup entity-classification audit with recognized entities first.
         lhr.audits['entity-classification'].details.entities = [
           {
-            'name': 'example.com',
-            'company': 'example.com',
-            'isFirstParty': true,
-            'isUnrecognized': true,
+            name: 'example.com',
+            company: 'example.com',
+            isFirstParty: true,
+            isUnrecognized: true,
           },
           {
-            'name': 'cdn.com',
-            'company': 'cdn.com',
-            'isUnrecognized': true,
+            name: 'cdn.com',
+            company: 'cdn.com',
+            isUnrecognized: true,
           },
           {
-            'name': 'notexample.com',
-            'company': 'notexample.com',
-            'isUnrecognized': true,
+            name: 'notexample.com',
+            company: 'notexample.com',
+            isUnrecognized: true,
           },
         ];
         lhr.audits['entity-classification'].details.originLUT = {

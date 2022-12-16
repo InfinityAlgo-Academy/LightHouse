@@ -180,7 +180,7 @@ describe('DetailsRenderer', () => {
           totalBytes: 7165,
           wastedBytes: 3047,
           wastedPercent: 42,
-          // missing entity classification
+          entity: undefined,
         }],
         overallSavingsMs: 150,
         overallSavingsBytes: 30470,

@@ -329,7 +329,7 @@ export class ReportUIFeatures {
     if (this.json.audits['entity-classification'] &&
         this.json.audits['entity-classification'].details &&
         this.json.audits['entity-classification'].details.type === 'entity-classification') {
-      /** @type {LH.Audit.Details.EntityClassification | undefined} */
+      /** @type {LH.Audit.Details.EntityClassification} */
       const entityClassification = this.json.audits['entity-classification'].details;
       const mainEntityOrigin = Util.getOrigin(finalDisplayedUrl);
       if (mainEntityOrigin) {
@@ -341,11 +341,11 @@ export class ReportUIFeatures {
     /** @type {Array<HTMLElement>} */
     const thirdPartyRows = [];
     for (const rowEl of rowEls) {
-      // We rely on entity-classification audit for new LHRs that support it.
-      // To main backward compatibility with older LHRs, we'll maintain origin based test.
       if (mainEntityName && rowEl.dataset?.entity) {
+        // We rely on entity-classification audit for new LHRs that support it.
         if (rowEl.dataset?.entity === mainEntityName) continue;
       } else {
+        // To main backward compatibility with older LHRs, we'll maintain origin based test.
         const urlItem = rowEl.querySelector('div.lh-text__url');
         if (!urlItem) continue;
         const datasetUrl = urlItem.dataset.url;
