@@ -5831,6 +5831,26 @@
       "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more about Structured Data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/).",
       "score": null,
       "scoreDisplayMode": "manual"
+    },
+    "entity-classification": {
+      "id": "entity-classification",
+      "title": "Entity Classification",
+      "description": "All 1st and 3rd party entities on the page classified",
+      "score": null,
+      "scoreDisplayMode": "informative",
+      "details": {
+        "type": "entity-classification",
+        "entities": {
+          "localhost": {
+            "isFirstParty": true,
+            "isUnrecognized": true
+          },
+          "Google CDN": {
+            "homepage": "https://developers.google.com/speed/libraries/"
+          }
+        },
+        "firstParty": "localhost"
+      }
     }
   },
   "configSettings": {
@@ -6291,6 +6311,11 @@
         },
         {
           "id": "script-treemap-data",
+          "weight": 0,
+          "group": "hidden"
+        },
+        {
+          "id": "entity-classification",
           "weight": 0,
           "group": "hidden"
         }
@@ -7496,6 +7521,12 @@
       },
       {
         "startTime": 0,
+        "name": "lh:computed:EntityClassification",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
         "name": "lh:audit:timing-budget",
         "duration": 100,
         "entryType": "measure"
@@ -7509,6 +7540,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:third-party-summary",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:computed:EntityClassification",
         "duration": 100,
         "entryType": "measure"
       },
@@ -8289,6 +8326,12 @@
       {
         "startTime": 0,
         "name": "lh:audit:structured-data",
+        "duration": 100,
+        "entryType": "measure"
+      },
+      {
+        "startTime": 0,
+        "name": "lh:audit:entity-classification",
         "duration": 100,
         "entryType": "measure"
       },
