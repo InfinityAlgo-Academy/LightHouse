@@ -158,10 +158,8 @@ describe('Performance: uses-rel-preload audit', () => {
         assert.equal(output.details.items.length, 2);
         assert.equal(output.details.items[0].url, scriptSubNodeUrl);
         assert.equal(output.details.items[0].wastedMs, 330);
-        assert.equal(output.details.items[0].entity, 'example.com');
         assert.equal(output.details.items[1].url, scriptAddedNodeUrl);
         assert.equal(output.details.items[1].wastedMs, 180);
-        assert.equal(output.details.items[1].entity, 'example.com');
       }
     );
   });
@@ -174,7 +172,6 @@ describe('Performance: uses-rel-preload audit', () => {
     return UsesRelPreload.audit_(artifacts, context).then(output => {
       assert.equal(output.details.overallSavingsMs, 314);
       assert.equal(output.details.items.length, 1);
-      assert.equal(output.details.items[0].entity, 'example.com');
     });
   });
 

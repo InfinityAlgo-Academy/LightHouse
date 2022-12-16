@@ -6,18 +6,8 @@
 
 import {Audit} from './audit.js';
 import {JSBundles} from '../computed/js-bundles.js';
-import {EntityClassification} from '../computed/entity-classification.js';
 
 class ViolationAudit extends Audit {
-  /**
-   * @return {Pick<LH.Audit.Meta, 'requiredArtifacts'>}
-   */
-  static get partialMeta() {
-    return {
-      requiredArtifacts: ['devtoolsLogs', 'URL'],
-    };
-  }
-
   /**
    * @param {LH.Artifacts} artifacts
    * @param {LH.Audit.Context} context
@@ -25,10 +15,7 @@ class ViolationAudit extends Audit {
    * @return {Promise<Array<{source: LH.Audit.Details.SourceLocationValue}>>}
    */
   static async getViolationResults(artifacts, context, pattern) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const bundles = await JSBundles.request(artifacts, context);
-    const classifiedEntities = await EntityClassification.request(
-      {URL: artifacts.URL, devtoolsLog: devtoolsLog}, context);
 
     /**
      * @template T
@@ -55,10 +42,7 @@ class ViolationAudit extends Audit {
           seen.add(key);
           return true;
         })
-        .map(source => ({
-          source,
-          entity: classifiedEntities?.byURL.get(source.url)?.name,
-        }));
+        .map(source => ({source}));
   }
 }
 

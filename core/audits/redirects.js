@@ -6,7 +6,6 @@
 
 import {Audit} from './audit.js';
 import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
-import {EntityClassification} from '../computed/entity-classification.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import {ProcessedTrace} from '../computed/processed-trace.js';
 import {NetworkRecords} from '../computed/network-records.js';
@@ -92,8 +91,6 @@ class Redirects extends Audit {
     const processedTrace = await ProcessedTrace.request(trace, context);
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const mainResource = await MainResource.request({URL: artifacts.URL, devtoolsLog}, context);
-    const classifiedEntities = await EntityClassification.request(
-      {URL: artifacts.URL, devtoolsLog}, context);
 
     const metricComputationData = {trace, devtoolsLog, gatherContext, settings, URL: artifacts.URL};
     const metricResult = await LanternInteractive.request(metricComputationData, context);
@@ -144,8 +141,7 @@ class Redirects extends Audit {
       {key: 'url', valueType: 'url', label: str_(i18n.UIStrings.columnURL)},
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnTimeSpent)},
     ];
-    const details = Audit.makeOpportunityDetails(headings, tableRows,
-      classifiedEntities, totalWastedMs);
+    const details = Audit.makeOpportunityDetails(headings, tableRows, totalWastedMs);
 
     return {
       // We award a passing grade if you only have 1 redirect

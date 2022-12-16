@@ -61,13 +61,12 @@ export class DetailsRenderer {
       case 'screenshot':
       case 'debugdata':
       case 'full-page-screenshot':
-      case 'entity-classification':
       case 'treemap-data':
         return null;
 
       default: {
-        // @ts-expect-error - all `details.type`s need to be handled above so tsc thinks this is unreachable.
-        // Call _renderUnknown() to be forward compatible with new, unexpected detail types.
+        // @ts-expect-error tsc thinks this is unreachable, but be forward compatible
+        // with new unexpected detail types.
         return this._renderUnknown(details.type, details);
       }
     }
@@ -399,20 +398,9 @@ export class DetailsRenderer {
     let even = true;
     for (const item of details.items) {
       const rowsFragment = this._renderTableRowsFromItem(item, details.headings);
-
-      // The attribute item.entity could be a string (entity-classification), or
-      // a LinkValue for ThirdPartySummary audit.
-      let entityName = '';
-      if (typeof(item.entity) === 'object' && item.entity.type === 'link') {
-        entityName = item.entity.text;
-      } else if (typeof(item.entity) === 'string') {
-        entityName = item.entity;
-      }
-
       for (const rowEl of this._dom.findAll('tr', rowsFragment)) {
         // For zebra styling.
         rowEl.classList.add(even ? 'lh-row--even' : 'lh-row--odd');
-        if (entityName) rowEl.dataset.entity = entityName;
       }
       even = !even;
       tbodyElem.append(rowsFragment);

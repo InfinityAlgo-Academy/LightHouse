@@ -135,7 +135,6 @@ describe('Performance: Redirects audit', () => {
 
     const output = await RedirectsAudit.audit(artifacts, context);
     expect(output.details.items).toHaveLength(3);
-    output.details.items.forEach(({entity}) => expect(entity).toEqual('lisairish.com'));
     expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0.35`);
     expect(output.numericValue).toMatchInlineSnapshot(`2000`);
   });
@@ -145,7 +144,6 @@ describe('Performance: Redirects audit', () => {
     const context = {settings: {throttlingMethod: 'simulate'}, computedCache: new Map()};
     const output = await RedirectsAudit.audit(artifacts, context);
     expect(output.details.items).toHaveLength(4);
-    output.details.items.forEach(({entity}) => expect(entity).toEqual('example.com'));
     expect(output.details.items.map(item => [item.url, item.wastedMs])).toMatchInlineSnapshot(`
       Array [
         Array [
@@ -174,7 +172,6 @@ describe('Performance: Redirects audit', () => {
     const context = {settings: {}, computedCache: new Map()};
     return RedirectsAudit.audit(artifacts, context).then(output => {
       expect(output.details.items).toHaveLength(4);
-      output.details.items.forEach(({entity}) => expect(entity).toEqual('example.com'));
       expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0.24`);
       expect(output.numericValue).toMatchInlineSnapshot(`3000`);
     });
@@ -185,7 +182,6 @@ describe('Performance: Redirects audit', () => {
     const context = {settings: {}, computedCache: new Map()};
     return RedirectsAudit.audit(artifacts, context).then(output => {
       expect(output.details.items).toHaveLength(3);
-      output.details.items.forEach(({entity}) => expect(entity).toEqual('lisairish.com'));
       expect(Math.round(output.score * 100) / 100).toMatchInlineSnapshot(`0.35`);
       expect(output.numericValue).toMatchInlineSnapshot(`2000`);
     });
@@ -198,7 +194,6 @@ describe('Performance: Redirects audit', () => {
       // If === 1 redirect, perfect score is expected, regardless of latency
       // We will still generate a table and show wasted time
       expect(output.details.items).toHaveLength(2);
-      output.details.items.forEach(({entity}) => expect(entity).toEqual('lisairish.com'));
       expect(output.score).toEqual(1);
       expect(output.numericValue).toMatchInlineSnapshot(`1000`);
     });
@@ -209,7 +204,6 @@ describe('Performance: Redirects audit', () => {
     const context = {settings: {}, computedCache: new Map()};
     return RedirectsAudit.audit(artifacts, context).then(output => {
       assert.equal(output.score, 1);
-      output.details.items.forEach(({entity}) => expect(entity).toEqual('google.com'));
       assert.equal(output.details.items.length, 0);
       assert.equal(output.numericValue, 0);
     });

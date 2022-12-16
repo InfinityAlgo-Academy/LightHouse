@@ -342,7 +342,6 @@
         ],
         "items": [
           {
-            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "responseTime": 568.468
           }
@@ -1138,8 +1137,7 @@
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "total": 1946.3899999999985,
             "scripting": 1195.539,
-            "scriptParseCompile": 6.451,
-            "entity": "localhost"
+            "scriptParseCompile": 6.451
           },
           {
             "url": "Unattributable",
@@ -1151,8 +1149,7 @@
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "total": 99.789,
             "scripting": 93.775,
-            "scriptParseCompile": 5.92,
-            "entity": "localhost"
+            "scriptParseCompile": 5.92
           }
         ],
         "summary": {
@@ -2412,14 +2409,12 @@
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "duration": 1174.877,
-            "startTime": 6845.795,
-            "entity": "localhost"
+            "startTime": 6845.795
           },
           {
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "duration": 145.815,
-            "startTime": 8044.755,
-            "entity": "localhost"
+            "startTime": 8044.755
           }
         ]
       }
@@ -2447,8 +2442,7 @@
               "urlProvider": "network",
               "line": 395,
               "column": 36
-            },
-            "entity": "localhost"
+            }
           }
         ]
       }
@@ -4330,144 +4324,126 @@
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 934487,
-            "wastedBytes": 934487,
-            "entity": "localhost"
+            "wastedBytes": 934487
           },
           {
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 166550,
-            "wastedBytes": 166550,
-            "entity": "localhost"
+            "wastedBytes": 166550
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 24822,
-            "wastedBytes": 24822,
-            "entity": "localhost"
+            "wastedBytes": 24822
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar1",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 24822,
-            "wastedBytes": 24822,
-            "entity": "localhost"
+            "wastedBytes": 24822
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar2",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 24822,
-            "wastedBytes": 24822,
-            "entity": "localhost"
+            "wastedBytes": 24822
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 24822,
-            "wastedBytes": 24822,
-            "entity": "localhost"
+            "wastedBytes": 24822
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr2",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 24822,
-            "wastedBytes": 24822,
-            "entity": "localhost"
+            "wastedBytes": 24822
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr3",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 24822,
-            "wastedBytes": 24822,
-            "entity": "localhost"
+            "wastedBytes": 24822
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_disabled.css?delay=200&isdisabled",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 1190,
-            "wastedBytes": 1190,
-            "entity": "localhost"
+            "wastedBytes": 1190
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 1052,
-            "wastedBytes": 1052,
-            "entity": "localhost"
+            "wastedBytes": 1052
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 903,
-            "wastedBytes": 903,
-            "entity": "localhost"
+            "wastedBytes": 903
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2000&async=true",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 903,
-            "wastedBytes": 903,
-            "entity": "localhost"
+            "wastedBytes": 903
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 903,
-            "wastedBytes": 903,
-            "entity": "localhost"
+            "wastedBytes": 903
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&async=true",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 903,
-            "wastedBytes": 903,
-            "entity": "localhost"
+            "wastedBytes": 903
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 903,
-            "wastedBytes": 903,
-            "entity": "localhost"
+            "wastedBytes": 903
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?scriptActivated&delay=200",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 903,
-            "wastedBytes": 903,
-            "entity": "localhost"
+            "wastedBytes": 903
           },
           {
             "url": "http://localhost:10200/dobetterweb/empty_module.js?delay=500",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 221,
-            "wastedBytes": 221,
-            "entity": "localhost"
+            "wastedBytes": 221
           },
           {
             "url": "http://localhost:10200/dobetterweb/empty.css",
             "cacheLifetimeMs": 0,
             "cacheHitProbability": 0,
             "totalBytes": 207,
-            "wastedBytes": 207,
-            "entity": "localhost"
+            "wastedBytes": 207
           }
         ],
         "summary": {
@@ -4501,53 +4477,43 @@
         "items": [
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-rotating.gif",
-            "totalBytes": 934487,
-            "entity": "localhost"
+            "totalBytes": 934487
           },
           {
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
-            "totalBytes": 166550,
-            "entity": "localhost"
+            "totalBytes": 166550
           },
           {
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
-            "totalBytes": 30346,
-            "entity": "Google CDN"
+            "totalBytes": 30346
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg",
-            "totalBytes": 24822,
-            "entity": "localhost"
+            "totalBytes": 24822
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar1",
-            "totalBytes": 24822,
-            "entity": "localhost"
+            "totalBytes": 24822
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?iar2",
-            "totalBytes": 24822,
-            "entity": "localhost"
+            "totalBytes": 24822
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr1",
-            "totalBytes": 24822,
-            "entity": "localhost"
+            "totalBytes": 24822
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr2",
-            "totalBytes": 24822,
-            "entity": "localhost"
+            "totalBytes": 24822
           },
           {
             "url": "http://localhost:10200/dobetterweb/lighthouse-480x318.jpg?isr3",
-            "totalBytes": 24822,
-            "entity": "localhost"
+            "totalBytes": 24822
           },
           {
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
-            "totalBytes": 17609,
-            "entity": "localhost"
+            "totalBytes": 17609
           }
         ]
       }
@@ -4600,37 +4566,31 @@
         ],
         "items": [
           {
-            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=100",
             "totalBytes": 903,
             "wastedMs": 729
           },
           {
-            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/unknown404.css?delay=200",
             "totalBytes": 209,
             "wastedMs": 879
           },
           {
-            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=2200",
             "totalBytes": 903,
             "wastedMs": 879
           },
           {
-            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/dbw_tester.css?delay=3000&capped",
             "totalBytes": 903,
             "wastedMs": 879
           },
           {
-            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/dbw_tester.js",
             "totalBytes": 1052,
             "wastedMs": 879
           },
           {
-            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/fcp-delayer.js?delay=5000",
             "totalBytes": 223,
             "wastedMs": 879
@@ -4687,7 +4647,6 @@
         ],
         "items": [
           {
-            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "totalBytes": 166550,
             "wastedBytes": 83568,
@@ -4755,14 +4714,12 @@
         ],
         "items": [
           {
-            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "totalBytes": 166550,
             "wastedBytes": 43567,
             "wastedPercent": 26.158609908609908
           },
           {
-            "entity": "Google CDN",
             "url": "http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js",
             "totalBytes": 30346,
             "wastedBytes": 21544,
@@ -4809,7 +4766,6 @@
         ],
         "items": [
           {
-            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-0-IMG",
@@ -4834,7 +4790,6 @@
             "wastedWebpBytes": 9002
           },
           {
-            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-2-IMG",
@@ -4859,7 +4814,6 @@
             "wastedWebpBytes": 9002
           },
           {
-            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-3-IMG",
@@ -4884,7 +4838,6 @@
             "wastedWebpBytes": 9002
           },
           {
-            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-4-IMG",
@@ -4909,7 +4862,6 @@
             "wastedWebpBytes": 9002
           },
           {
-            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-5-IMG",
@@ -4934,7 +4886,6 @@
             "wastedWebpBytes": 9002
           },
           {
-            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-1-IMG",
@@ -5011,13 +4962,11 @@
         ],
         "items": [
           {
-            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "totalBytes": 166320,
             "wastedBytes": 134831
           },
           {
-            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/dbw_tester.html",
             "totalBytes": 17393,
             "wastedBytes": 11647
@@ -5062,7 +5011,6 @@
         ],
         "items": [
           {
-            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-0-IMG",
@@ -5085,7 +5033,6 @@
             "wastedPercent": 91.87426297169812
           },
           {
-            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-1-IMG",
@@ -5108,7 +5055,6 @@
             "wastedPercent": 56.66273584905661
           },
           {
-            "entity": "localhost",
             "node": {
               "type": "node",
               "lhId": "page-3-IMG",
@@ -5165,7 +5111,6 @@
         ],
         "items": [
           {
-            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/lighthouse-rotating.gif",
             "totalBytes": 934285,
             "wastedBytes": 682028
@@ -5229,7 +5174,6 @@
         ],
         "items": [
           {
-            "entity": "localhost",
             "url": "http://localhost:10200/dobetterweb/third_party/aggressive-promise-polyfill.js",
             "wastedBytes": 21189,
             "subItems": {
@@ -5389,8 +5333,7 @@
               "urlProvider": "network",
               "line": 340,
               "column": 24
-            },
-            "entity": "localhost"
+            }
           },
           {
             "source": {
@@ -5399,8 +5342,7 @@
               "urlProvider": "network",
               "line": 344,
               "column": 40
-            },
-            "entity": "localhost"
+            }
           }
         ]
       }
@@ -5440,8 +5382,7 @@
               "urlProvider": "network",
               "line": 278,
               "column": 11
-            },
-            "entity": "localhost"
+            }
           },
           {
             "source": {
@@ -5450,8 +5391,7 @@
               "urlProvider": "network",
               "line": 279,
               "column": 11
-            },
-            "entity": "localhost"
+            }
           },
           {
             "source": {
@@ -5460,8 +5400,7 @@
               "urlProvider": "network",
               "line": 280,
               "column": 11
-            },
-            "entity": "localhost"
+            }
           }
         ]
       }
@@ -5537,8 +5476,7 @@
               "urlProvider": "network",
               "line": 350,
               "column": 15
-            },
-            "entity": "localhost"
+            }
           }
         ]
       }
@@ -5636,8 +5574,7 @@
               "urlProvider": "network",
               "line": 311,
               "column": 5
-            },
-            "entity": "localhost"
+            }
           }
         ]
       }
@@ -5894,26 +5831,6 @@
       "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more about Structured Data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/).",
       "score": null,
       "scoreDisplayMode": "manual"
-    },
-    "entity-classification": {
-      "id": "entity-classification",
-      "title": "Entity Classification",
-      "description": "All 1st and 3rd party entities on the page classified",
-      "score": null,
-      "scoreDisplayMode": "informative",
-      "details": {
-        "type": "entity-classification",
-        "entities": {
-          "localhost": {
-            "isFirstParty": true,
-            "isUnrecognized": true
-          },
-          "Google CDN": {
-            "homepage": "https://developers.google.com/speed/libraries/"
-          }
-        },
-        "firstParty": "localhost"
-      }
     }
   },
   "configSettings": {
@@ -6374,11 +6291,6 @@
         },
         {
           "id": "script-treemap-data",
-          "weight": 0,
-          "group": "hidden"
-        },
-        {
-          "id": "entity-classification",
           "weight": 0,
           "group": "hidden"
         }
@@ -7350,12 +7262,6 @@
       },
       {
         "startTime": 0,
-        "name": "lh:computed:EntityClassification",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
         "name": "lh:audit:interactive",
         "duration": 100,
         "entryType": "measure"
@@ -7585,12 +7491,6 @@
       {
         "startTime": 0,
         "name": "lh:computed:ResourceSummary",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:computed:EntityClassification",
         "duration": 100,
         "entryType": "measure"
       },
@@ -8389,12 +8289,6 @@
       {
         "startTime": 0,
         "name": "lh:audit:structured-data",
-        "duration": 100,
-        "entryType": "measure"
-      },
-      {
-        "startTime": 0,
-        "name": "lh:audit:entity-classification",
         "duration": 100,
         "entryType": "measure"
       },

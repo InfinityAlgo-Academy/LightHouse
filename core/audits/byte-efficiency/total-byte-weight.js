@@ -5,7 +5,6 @@
  */
 
 import {Audit} from '../audit.js';
-import {EntityClassification} from '../../computed/entity-classification.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import {NetworkRecords} from '../../computed/network-records.js';
@@ -36,7 +35,7 @@ class TotalByteWeight extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['devtoolsLogs', 'URL'],
+      requiredArtifacts: ['devtoolsLogs'],
     };
   }
 
@@ -61,8 +60,6 @@ class TotalByteWeight extends Audit {
   static async audit(artifacts, context) {
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const records = await NetworkRecords.request(devtoolsLog, context);
-    const classifiedEntities = await EntityClassification.request(
-      {URL: artifacts.URL, devtoolsLog}, context);
 
     let totalBytes = 0;
     /** @type {Array<{url: string, totalBytes: number}>} */
@@ -75,7 +72,6 @@ class TotalByteWeight extends Audit {
       const result = {
         url: record.url,
         totalBytes: record.transferSize,
-        entity: classifiedEntities.byURL.get(record.url)?.name,
       };
 
       totalBytes += result.totalBytes;

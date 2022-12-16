@@ -214,23 +214,17 @@ class Audit {
   /**
    * @param {LH.Audit.Details.Opportunity['headings']} headings
    * @param {LH.Audit.Details.Opportunity['items']} items
-   * @param {LH.Artifacts.ClassifiedEntities?} classifiedEntities
    * @param {number} overallSavingsMs
    * @param {number=} overallSavingsBytes
    * @return {LH.Audit.Details.Opportunity}
    */
-  static makeOpportunityDetails(headings, items, classifiedEntities,
-      overallSavingsMs, overallSavingsBytes) {
+  static makeOpportunityDetails(headings, items, overallSavingsMs, overallSavingsBytes) {
     Audit.assertHeadingKeysExist(headings, items);
 
     return {
       type: 'opportunity',
       headings: items.length === 0 ? [] : headings,
-      items: items.map(
-        // We let an existing item.entity take precedence if it was set during
-        // the audit (eg., uses-rel-preconnect).
-        item => ({entity: classifiedEntities?.byURL.get(item.url)?.name, ...item})
-      ),
+      items,
       overallSavingsMs,
       overallSavingsBytes,
     };

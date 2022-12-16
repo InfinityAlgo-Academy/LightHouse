@@ -42,8 +42,6 @@ describe('Resources are fetched over http/2', () => {
 
     // make sure we don't pull in domains with only a few requests (GTM, GA)
     expect(hosts).toEqual(new Set(['pwa.rocks']));
-    // make sure entities are identified correctly on each result
-    result.details.items.forEach(({entity}) => expect(entity).toEqual('pwa.rocks'));
     // make sure we flag all the rest
     expect(result.details.items).toHaveLength(60);
     // make sure we report savings
@@ -72,8 +70,6 @@ describe('Resources are fetched over http/2', () => {
     // make sure we flag only the non-sw ones
     expect(urls).not.toContain(records[30].url);
     expect(result.details.items).toHaveLength(30);
-    // make sure entities are identified correctly on each result
-    result.details.items.forEach(({entity}) => expect(entity).toEqual('pwa.rocks'));
     // make sure we report less savings
     expect(result.numericValue).toMatchInlineSnapshot(`320`);
     expect(result.details.overallSavingsMs).toMatchInlineSnapshot(`320`);
@@ -91,8 +87,6 @@ describe('Resources are fetched over http/2', () => {
     expect(hosts).toEqual(new Set(['pwa.rocks']));
     // make sure we flag all the rest
     expect(result.details.items).toHaveLength(60);
-    // make sure entities are identified correctly on each result
-    result.details.items.forEach(({entity}) => expect(entity).toEqual('pwa.rocks'));
     // no savings calculated
     expect(result.numericValue).toBeUndefined();
     expect(result.details.overallSavingsMs).toBeUndefined();

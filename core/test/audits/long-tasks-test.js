@@ -80,10 +80,10 @@ describe('Long tasks audit', () => {
     };
     const result = await LongTasks.audit(artifacts, {computedCache: new Map()});
     expect(result.details.items).toMatchObject([
-      {url: 'Unattributable', duration: 200, startTime: 1000, entity: undefined},
-      {url: 'Unattributable', duration: 200, startTime: 2000, entity: undefined},
-      {url: 'Unattributable', duration: 200, startTime: 3000, entity: undefined},
-      {url: 'Unattributable', duration: 200, startTime: 4000, entity: undefined},
+      {url: 'Unattributable', duration: 200, startTime: 1000},
+      {url: 'Unattributable', duration: 200, startTime: 2000},
+      {url: 'Unattributable', duration: 200, startTime: 3000},
+      {url: 'Unattributable', duration: 200, startTime: 4000},
     ]);
     expect(result.score).toBe(0);
     expect(result.displayValue).toBeDisplayString('4 long tasks found');
@@ -109,8 +109,8 @@ describe('Long tasks audit', () => {
 
     const result = await LongTasks.audit(artifacts, {computedCache: new Map()});
     expect(result.details.items).toMatchObject([
-      {url: 'Unattributable', duration: 100, startTime: 2000, entity: undefined},
-      {url: 'Unattributable', duration: 50, startTime: 4000, entity: undefined},
+      {url: 'Unattributable', duration: 100, startTime: 2000},
+      {url: 'Unattributable', duration: 50, startTime: 4000},
     ]);
     expect(result.score).toBe(0);
     expect(result.displayValue).toBeDisplayString('2 long tasks found');
@@ -141,17 +141,17 @@ describe('Long tasks audit', () => {
     };
     const result = await LongTasks.audit(artifacts, context);
     expect(result.details.items).toMatchObject([
-      {duration: 100, startTime: 600, entity: undefined},
-      {duration: 100, startTime: 700, entity: undefined},
-      {duration: 100, startTime: 800, entity: undefined},
-      {duration: 100, startTime: 900, entity: undefined},
+      {duration: 100, startTime: 600},
+      {duration: 100, startTime: 700},
+      {duration: 100, startTime: 800},
+      {duration: 100, startTime: 900},
     ]);
     expect(result.score).toBe(0);
     expect(result.details.items).toHaveLength(4);
     expect(result.displayValue).toBeDisplayString('4 long tasks found');
   });
 
-  it('should populate url and entity when tasks have an attributable url', async () => {
+  it('should populate url when tasks have an attributable url', async () => {
     const trace = generateTraceWithLongTasks({count: 1, duration: 300, withChildTasks: true});
     const artifacts = {
       URL,
@@ -160,7 +160,7 @@ describe('Long tasks audit', () => {
     };
     const result = await LongTasks.audit(artifacts, {computedCache: new Map()});
     expect(result.details.items).toMatchObject([
-      {url: TASK_URL, duration: 300, startTime: 1000, entity: 'pwa.rocks'},
+      {url: TASK_URL, duration: 300, startTime: 1000},
     ]);
     expect(result.score).toBe(0);
     expect(result.displayValue).toBeDisplayString('1 long task found');

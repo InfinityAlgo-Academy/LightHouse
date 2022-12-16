@@ -97,7 +97,6 @@ describe('LegacyJavaScript audit', () => {
     expect(result.items).toHaveLength(1);
     expect(result.items[0]).toMatchInlineSnapshot(`
       Object {
-        "entity": "Google Tag Manager",
         "subItems": Object {
           "items": Array [
             Object {
@@ -131,7 +130,6 @@ describe('LegacyJavaScript audit', () => {
     ]);
     expect(result.items).toHaveLength(1);
     expect(result.items[0].subItems.items[0].signal).toEqual('String.prototype.repeat');
-    expect(result.items[0].entity).toEqual('example.com');
     expect(result.wastedBytesByUrl).toMatchInlineSnapshot(`
       Map {
         "https://www.example.com/a.js" => 20104,
@@ -166,7 +164,6 @@ describe('LegacyJavaScript audit', () => {
       },
     ]);
     expect(result.items).toHaveLength(1);
-    expect(result.items[0].entity).toEqual('example.com');
   });
 
   it('should identify polyfills in multiple patterns', async () => {
@@ -194,7 +191,6 @@ describe('LegacyJavaScript audit', () => {
     expect(result.items.map(item => getCodeForUrl(item.url))).toEqual(
       scripts.map(script => getCodeForUrl(script.url))
     );
-    expect(result.items[0].entity).toEqual('example.com');
     expect(result.items).toHaveLength(variants.length);
   });
 
@@ -233,7 +229,6 @@ describe('LegacyJavaScript audit', () => {
         location: {line: 0, column: 0},
       },
     ]);
-    expect(result.items[0].entity).toEqual('example.com');
   });
 
   it('uses location from pattern matching over source map', async () => {

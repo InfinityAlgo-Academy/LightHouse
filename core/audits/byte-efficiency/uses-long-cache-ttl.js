@@ -7,7 +7,6 @@
 import parseCacheControl from 'parse-cache-control';
 
 import {Audit} from '../audit.js';
-import {EntityClassification} from '../../computed/entity-classification.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import UrlUtils from '../../lib/url-utils.js';
 import {linearInterpolation} from '../../lib/statistics.js';
@@ -46,7 +45,7 @@ class CacheHeaders extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       scoreDisplayMode: Audit.SCORING_MODES.NUMERIC,
-      requiredArtifacts: ['devtoolsLogs', 'URL'],
+      requiredArtifacts: ['devtoolsLogs'],
     };
   }
 
@@ -196,10 +195,8 @@ class CacheHeaders extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const classifiedEntities = await EntityClassification.request(
-      {URL: artifacts.URL, devtoolsLog}, context);
-    const records = await NetworkRecords.request(devtoolsLog, context);
+    const devtoolsLogs = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
+    const records = await NetworkRecords.request(devtoolsLogs, context);
     const results = [];
     let totalWastedBytes = 0;
 
@@ -259,7 +256,6 @@ class CacheHeaders extends Audit {
         cacheHitProbability,
         totalBytes,
         wastedBytes,
-        entity: classifiedEntities?.byURL.get(url)?.name,
       });
     }
 

@@ -5,7 +5,6 @@
  */
 
 import NoUnloadListeners from '../../audits/no-unload-listeners.js';
-import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 import {createScript} from '../test-utils.js';
 
 const testScripts = [
@@ -19,17 +18,12 @@ const testScripts = [
   {scriptId: '27', url: 'https://example.com/2.js'},
 ].map(createScript);
 
-const devtoolsLogs = {
-  defaultPass: networkRecordsToDevtoolsLog(testScripts.map(({url}) => ({url}))),
-};
-
 describe('No Unload Listeners', () => {
   it('passes when there were no listeners', async () => {
     const artifacts = {
       GlobalListeners: [],
       SourceMaps: [],
       Scripts: testScripts,
-      devtoolsLogs,
     };
     const context = {computedCache: new Map()};
     const result = await NoUnloadListeners.audit(artifacts, context);
@@ -44,7 +38,6 @@ describe('No Unload Listeners', () => {
       GlobalListeners,
       SourceMaps: [],
       Scripts: testScripts,
-      devtoolsLogs,
     };
     const context = {computedCache: new Map()};
     const result = await NoUnloadListeners.audit(artifacts, context);
@@ -60,18 +53,14 @@ describe('No Unload Listeners', () => {
       GlobalListeners,
       SourceMaps: [],
       Scripts: testScripts,
-      devtoolsLogs,
     };
     const context = {computedCache: new Map()};
     const result = await NoUnloadListeners.audit(artifacts, context);
     expect(result.score).toEqual(0);
-
     expect(result.details.items).toMatchObject([
       {
-        entity: 'example.com',
         source: {type: 'source-location', url: 'https://example.com/1.js', urlProvider: 'network', line: 10, column: 30},
       }, {
-        entity: 'example.com',
         source: {type: 'source-location', url: 'https://example.com/2.js', urlProvider: 'network', line: 0, column: 0},
       },
     ]);
@@ -88,7 +77,6 @@ describe('No Unload Listeners', () => {
       GlobalListeners,
       SourceMaps: [],
       Scripts: testScripts,
-      devtoolsLogs,
     };
     const context = {computedCache: new Map()};
     const result = await NoUnloadListeners.audit(artifacts, context);
@@ -97,10 +85,8 @@ describe('No Unload Listeners', () => {
       {
         source: {type: 'url', value: '(unknown):10:30'},
       }, {
-        entity: 'example.com',
         source: {type: 'source-location', url: 'https://example.com/2.js', urlProvider: 'network', line: 1, column: 100},
       },
     ]);
-    expect(result.details.items[0]).not.toHaveProperty('entity');
   });
 });

@@ -42,17 +42,6 @@ class NumericAudit extends Audit {
   }
 }
 
-/**
- * Loads an entity into a mocked entity classification object
- * @param {LH.Artifacts.ClassifiedEntities} classification
- * @param {LH.Artifacts.RecognizableEntity} entity
- * @param {Array<string>} urls
- */
-function loadEntity(classification, entity, urls) {
-  classification.byEntity.set(entity, urls);
-  urls.forEach(url => classification.byURL.set(url, entity));
-}
-
 describe('Audit', () => {
   it('throws if an audit does not override the meta', () => {
     assert.throws(_ => A.meta);
@@ -266,81 +255,6 @@ describe('Audit', () => {
         lineNumber: 201,
         content: 'B',
       });
-    });
-  });
-
-  describe('makeOpportunityDetails', () => {
-    let headings;
-    let items;
-    let classifiedEntities;
-    let firstParty;
-
-    beforeEach(() => {
-      headings = [
-        {key: 'wastedBytes', itemType: 'bytes', displayUnit: 'kb', granularity: 1, text: ''},
-      ];
-      items = [
-        {url: 'http://example.com/', wastedBytes: 200 * 1000},
-        {url: 'https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW', wastedBytes: 30 * 1024},
-        {url: 'https://www.googletagmanager.com/a.js', wastedBytes: 130 * 1024},
-      ];
-      firstParty = {name: 'example.com'};
-      classifiedEntities = {
-        byEntity: new Map(),
-        byURL: new Map(),
-        firstParty,
-      };
-    });
-
-    it('Makes opportunity details with supplied entities', () => {
-      loadEntity(classifiedEntities, firstParty, ['http://example.com/']);
-      loadEntity(classifiedEntities, {name: 'Google CDN'},
-        ['https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW', 'https://www.googletagmanager.com/a.js']);
-
-      const details = Audit.makeOpportunityDetails(headings, items, classifiedEntities);
-      assert.equal(details.items.length, 3);
-      assert.deepStrictEqual(details.headings, [{
-        displayUnit: 'kb',
-        granularity: 1,
-        itemType: 'bytes',
-        key: 'wastedBytes',
-        text: '',
-      }]);
-      details.items.forEach(item => {
-        expect(item.entity).toBeTruthy();
-        expect(['Google CDN', 'example.com']).toContain(item.entity);
-      });
-    });
-
-    it('Makes opportunity details if entity classification is missing', () => {
-      const details = Audit.makeOpportunityDetails(headings, items, null);
-      assert.equal(details.items.length, 3);
-      details.items.forEach(item => {
-        expect(item.entity).toBeFalsy();
-      });
-    });
-
-    it('Does not override item.entity with classification', () => {
-      loadEntity(classifiedEntities, firstParty, ['http://example.com/']);
-      loadEntity(classifiedEntities, {name: 'Google CDN'},
-        ['https://www.googletagmanager.com/gtm.js?id=GTM-Q5SW', 'https://www.googletagmanager.com/a.js']);
-
-      items.forEach(item => item.entity = 'Specific');
-      const details = Audit.makeOpportunityDetails(headings, items, classifiedEntities);
-      assert.equal(details.items.length, 3);
-      details.items.forEach(item => {
-        expect(item.entity).toBeTruthy();
-        expect(item.entity).toEqual('Specific');
-      });
-    });
-
-    it('Missing entities are not classified', () => {
-      loadEntity(classifiedEntities, firstParty, ['http://example.com/']);
-
-      const details = Audit.makeOpportunityDetails(headings, items, classifiedEntities);
-      assert.equal(details.items.length, 3);
-      assert.deepStrictEqual(details.items.map(item => item.entity),
-        ['example.com', undefined, undefined]);
     });
   });
 

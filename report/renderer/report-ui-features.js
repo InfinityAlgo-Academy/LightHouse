@@ -322,33 +322,20 @@ export class ReportUIFeatures {
    * @return {Array<HTMLElement>}
    */
   _getThirdPartyRows(rowEls, finalDisplayedUrl) {
-    const finalDisplayedUrlRootDomain = Util.getRootDomain(finalDisplayedUrl);
-
-    /** @type {string | undefined} */
-    let mainEntityName;
-    if (this.json.audits['entity-classification'] &&
-        this.json.audits['entity-classification'].details &&
-        this.json.audits['entity-classification'].details.type === 'entity-classification') {
-      /** @type {LH.Audit.Details.EntityClassification} */
-      const entityClassification = this.json.audits['entity-classification'].details;
-      mainEntityName = entityClassification.firstParty;
-    }
-
     /** @type {Array<HTMLElement>} */
     const thirdPartyRows = [];
+    const finalDisplayedUrlRootDomain = Util.getRootDomain(finalDisplayedUrl);
+
     for (const rowEl of rowEls) {
-      if (mainEntityName && rowEl.dataset?.entity) {
-        // We rely on entity-classification audit for new LHRs that support it.
-        if (rowEl.dataset?.entity === mainEntityName) continue;
-      } else {
-        // To main backward compatibility with older LHRs, we'll maintain origin based test.
-        const urlItem = rowEl.querySelector('div.lh-text__url');
-        if (!urlItem) continue;
-        const datasetUrl = urlItem.dataset.url;
-        if (!datasetUrl) continue;
-        const isThirdParty = Util.getRootDomain(datasetUrl) !== finalDisplayedUrlRootDomain;
-        if (!isThirdParty) continue;
-      }
+      if (rowEl.classList.contains('lh-sub-item-row')) continue;
+
+      const urlItem = rowEl.querySelector('div.lh-text__url');
+      if (!urlItem) continue;
+
+      const datasetUrl = urlItem.dataset.url;
+      if (!datasetUrl) continue;
+      const isThirdParty = Util.getRootDomain(datasetUrl) !== finalDisplayedUrlRootDomain;
+      if (!isThirdParty) continue;
 
       thirdPartyRows.push(rowEl);
     }

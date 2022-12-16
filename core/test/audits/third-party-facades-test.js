@@ -53,7 +53,6 @@ describe('Third party facades audit', () => {
       .toBeDisplayString('Intercom Widget (Customer Success)');
     expect(results.details.items).toMatchObject([
       {
-        entity: 'Intercom',
         transferSize: 12000,
         blockingTime: 0,
         subItems: {
@@ -102,7 +101,6 @@ describe('Third party facades audit', () => {
     expect(results.details.items[1].product).toBeDisplayString('YouTube Embedded Player (Video)');
     expect(results.details.items).toMatchObject([
       {
-        entity: 'Intercom',
         transferSize: 12000,
         blockingTime: 0,
         subItems: {
@@ -124,7 +122,6 @@ describe('Third party facades audit', () => {
         },
       },
       {
-        entity: 'YouTube',
         transferSize: 10000,
         blockingTime: 0,
         subItems: {
@@ -171,7 +168,6 @@ describe('Third party facades audit', () => {
       .toBeDisplayString('Intercom Widget (Customer Success)');
     expect(results.details.items).toMatchObject([
       {
-        entity: 'Intercom',
         transferSize: 12000,
         blockingTime: 0,
         subItems: {
@@ -270,7 +266,6 @@ describe('Third party facades audit', () => {
     expect(results.details.items).toMatchObject(
       [
         {
-          entity: 'YouTube',
           transferSize: 651350,
           blockingTime: 0,
           subItems: {
@@ -318,7 +313,6 @@ describe('Third party facades audit', () => {
           },
         },
         {
-          entity: 'Vimeo',
           transferSize: 184495,
           blockingTime: 0,
           subItems: {

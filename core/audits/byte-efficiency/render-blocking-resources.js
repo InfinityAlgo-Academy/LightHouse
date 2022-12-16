@@ -13,7 +13,6 @@ import {Audit} from '../audit.js';
 import * as i18n from '../../lib/i18n/i18n.js';
 import {BaseNode} from '../../lib/dependency-graph/base-node.js';
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
-import {EntityClassification} from '../../computed/entity-classification.js';
 import {UnusedCSS} from '../../computed/unused-css.js';
 import {NetworkRequest} from '../../lib/network-request.js';
 import {ProcessedTrace} from '../../computed/processed-trace.js';
@@ -279,9 +278,6 @@ class RenderBlockingResources extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const URL = artifacts.URL;
-    const classifiedEntities = await EntityClassification.request({URL, devtoolsLog}, context);
     const {results, wastedMs} = await RenderBlockingResources.computeResults(artifacts, context);
 
     let displayValue;
@@ -296,7 +292,7 @@ class RenderBlockingResources extends Audit {
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
 
-    const details = Audit.makeOpportunityDetails(headings, results, classifiedEntities, wastedMs);
+    const details = Audit.makeOpportunityDetails(headings, results, wastedMs);
 
     return {
       displayValue,

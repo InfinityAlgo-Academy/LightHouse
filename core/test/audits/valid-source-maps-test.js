@@ -6,7 +6,6 @@
 
 import {createScript, loadSourceMapFixture} from '../test-utils.js';
 import ValidSourceMaps from '../../audits/valid-source-maps.js';
-import {networkRecordsToDevtoolsLog} from '../network-records-to-devtools-log.js';
 
 const largeBundle = loadSourceMapFixture('coursehero-bundle-1');
 const smallBundle = loadSourceMapFixture('coursehero-bundle-2');
@@ -28,14 +27,9 @@ describe('Valid source maps audit', () => {
       URL: {finalDisplayedUrl: 'https://example.com'},
       Scripts: [],
       SourceMaps: [],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-        ]),
-      },
     };
-    const context = {settings: {}, computedCache: new Map()};
-    const auditResult = await ValidSourceMaps.audit(artifacts, context);
+
+    const auditResult = await ValidSourceMaps.audit(artifacts);
     expect(auditResult.score).toEqual(1);
   });
 
@@ -50,15 +44,9 @@ describe('Valid source maps audit', () => {
         {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
         {scriptId: '2', scriptUrl: 'https://example.com/script2.min.js', map: largeBundle.map},
       ],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-        ]),
-      },
     };
 
-    const context = {settings: {}, computedCache: new Map()};
-    const auditResult = await ValidSourceMaps.audit(artifacts, context);
+    const auditResult = await ValidSourceMaps.audit(artifacts);
     expect(auditResult.score).toEqual(1);
   });
 
@@ -73,19 +61,10 @@ describe('Valid source maps audit', () => {
         {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
         //  Missing corresponding source map for large, first-party JS (script2.min.js)
       ],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-          {url: 'https://example.com/script1.min.js'},
-          {url: 'https://example.com/script2.min.js'},
-        ]),
-      },
     };
 
-    const context = {settings: {}, computedCache: new Map()};
-    const auditResult = await ValidSourceMaps.audit(artifacts, context);
+    const auditResult = await ValidSourceMaps.audit(artifacts);
     expect(auditResult.details.items[0].subItems.items.length).toEqual(1);
-    expect(auditResult.details.items[0].entity).toEqual('example.com');
     expect(auditResult.details.items[0].subItems.items[0].error).toBeDisplayString(
       'Large JavaScript file is missing a source map');
     expect(auditResult.score).toEqual(0);
@@ -102,17 +81,9 @@ describe('Valid source maps audit', () => {
         {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
         //  Missing corresponding source map for small, first-party JS (script2.min.js)
       ],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-          {url: 'https://example.com/script1.min.js'},
-          {url: 'https://example.com/script2.min.js'},
-        ]),
-      },
     };
 
-    const context = {settings: {}, computedCache: new Map()};
-    const auditResult = await ValidSourceMaps.audit(artifacts, context);
+    const auditResult = await ValidSourceMaps.audit(artifacts);
     expect(auditResult.score).toEqual(1);
   });
 
@@ -126,17 +97,9 @@ describe('Valid source maps audit', () => {
       SourceMaps: [
         {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
       ],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-          {url: 'https://example.com/script1.min.js'},
-          {url: 'https://d36mpcpuzc4ztk.cloudfront.net/script2.js'},
-        ]),
-      },
     };
 
-    const context = {settings: {}, computedCache: new Map()};
-    const auditResult = await ValidSourceMaps.audit(artifacts, context);
+    const auditResult = await ValidSourceMaps.audit(artifacts);
     expect(auditResult.score).toEqual(1);
   });
 
@@ -155,17 +118,9 @@ describe('Valid source maps audit', () => {
         {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: bundleNormal.map},
         {scriptId: '2', scriptUrl: 'https://example.com/script2.min.js', map: bundleWithMissingContent.map},
       ],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-          {url: 'https://example.com/script1.min.js'},
-          {url: 'https://example.com/script2.min.js'},
-        ]),
-      },
     };
 
-    const context = {settings: {}, computedCache: new Map()};
-    const auditResult = await ValidSourceMaps.audit(artifacts, context);
+    const auditResult = await ValidSourceMaps.audit(artifacts);
 
     // The first result should warn there's a missing source map item
     expect(auditResult.details.items[0].subItems.items.length).toEqual(1);
@@ -174,9 +129,6 @@ describe('Valid source maps audit', () => {
 
     // The second result should have no warnings
     expect(auditResult.details.items[1].subItems.items.length).toEqual(0);
-
-    // All source map items have entities recognized
-    auditResult.details.items.forEach(item => expect(item.entity).toEqual('example.com'));
 
     // The audit should pass because these warnings don't affect your score
     expect(auditResult.score).toEqual(1);
@@ -195,17 +147,9 @@ describe('Valid source maps audit', () => {
       SourceMaps: [
         {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: bundleWithMissingContent.map},
       ],
-      devtoolsLogs: {
-        defaultPass: networkRecordsToDevtoolsLog([
-          {url: 'https://example.com'},
-          {url: 'https://example.com/script1.min.js'},
-          {url: 'https://example.com/script2.min.js'},
-        ]),
-      },
     };
 
-    const context = {settings: {}, computedCache: new Map()};
-    const auditResult = await ValidSourceMaps.audit(artifacts, context);
+    const auditResult = await ValidSourceMaps.audit(artifacts);
 
     // The first result should be the one that fails the audit
     expect(auditResult.details.items[0].subItems.items.length).toEqual(1);
@@ -216,9 +160,6 @@ describe('Valid source maps audit', () => {
     expect(auditResult.details.items[1].subItems.items.length).toEqual(1);
     expect(auditResult.details.items[1].subItems.items[0].error).toBeDisplayString(
       'Warning: missing 1 item in `.sourcesContent`');
-
-    // All source map items have entities recognized
-    auditResult.details.items.forEach(item => expect(item.entity).toEqual('example.com'));
 
     expect(auditResult.score).toEqual(0);
   });

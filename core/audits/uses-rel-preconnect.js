@@ -6,7 +6,6 @@
 
 import {Audit} from './audit.js';
 import {ByteEfficiencyAudit} from './byte-efficiency/byte-efficiency-audit.js';
-import {EntityClassification} from '../computed/entity-classification.js';
 import UrlUtils from '../lib/url-utils.js';
 import * as i18n from '../lib/i18n/i18n.js';
 import {NetworkRecords} from '../computed/network-records.js';
@@ -108,8 +107,6 @@ class UsesRelPreconnectAudit extends Audit {
   static async audit(artifacts, context) {
     const trace = artifacts.traces[UsesRelPreconnectAudit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[UsesRelPreconnectAudit.DEFAULT_PASS];
-    const classifiedEntities = await EntityClassification.request(
-      {URL: artifacts.URL, devtoolsLog}, context);
     const settings = context.settings;
 
     let maxWasted = 0;
@@ -169,7 +166,7 @@ class UsesRelPreconnectAudit extends Audit {
     const preconnectOrigins =
       new Set(preconnectLinks.map(link => UrlUtils.getOrigin(link.href || '')));
 
-    /** @type {Array<{url: string, wastedMs: number, entity?: string}>}*/
+    /** @type {Array<{url: string, wastedMs: number}>}*/
     let results = [];
     origins.forEach(records => {
       // Sometimes requests are done simultaneous and the connection has not been made
@@ -209,7 +206,6 @@ class UsesRelPreconnectAudit extends Audit {
       results.push({
         url: securityOrigin,
         wastedMs: wastedMs,
-        entity: classifiedEntities.byURL.get(firstRecordOfOrigin.url)?.name,
       });
     });
 
@@ -239,7 +235,7 @@ class UsesRelPreconnectAudit extends Audit {
       {key: 'wastedMs', valueType: 'timespanMs', label: str_(i18n.UIStrings.columnWastedMs)},
     ];
 
-    const details = Audit.makeOpportunityDetails(headings, results, null, maxWasted);
+    const details = Audit.makeOpportunityDetails(headings, results, maxWasted);
 
     return {
       score: ByteEfficiencyAudit.scoreForWastedMs(maxWasted),

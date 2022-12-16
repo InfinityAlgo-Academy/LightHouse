@@ -7,16 +7,11 @@
 import assert from 'assert/strict';
 
 import PassiveEventsAudit from '../../../audits/dobetterweb/uses-passive-event-listeners.js';
-import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 
 describe('Page uses passive events listeners where applicable', () => {
   it('fails when scroll blocking listeners should be passive', async () => {
     const text = 'Use passive event listeners when you do not use preventDefault';
-    const records = [
-      {url: 'https://example.com/'},
-      {url: 'https://example2.com/two'},
-      {url: 'http://abc.com/'},
-    ];
+
     const context = {computedCache: new Map()};
     const auditResult = await PassiveEventsAudit.audit({
       ConsoleMessages: [
@@ -28,13 +23,10 @@ describe('Page uses passive events listeners where applicable', () => {
       ],
       SourceMaps: [],
       Scripts: [],
-      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(records)},
     }, context);
 
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
-    assert.deepStrictEqual(auditResult.details.items.map(item => item.entity),
-      ['example.com', 'example2.com']);
   });
 
   it('passes scroll blocking listeners should be passive', async () => {
@@ -43,7 +35,6 @@ describe('Page uses passive events listeners where applicable', () => {
       ConsoleMessages: [],
       SourceMaps: [],
       Scripts: [],
-      devtoolsLogs: {defaultPass: []},
     }, context);
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);

@@ -50,7 +50,6 @@ describe('Total byte weight audit', () => {
       assert.strictEqual(result.score, 1);
       const results = result.details.items;
       assert.strictEqual(results.length, 3);
-      results.forEach(item => expect(item.entity).toBe('google.com'));
       assert.strictEqual(results[0].totalBytes, 71680, 'results are sorted');
     });
   });
@@ -74,7 +73,6 @@ describe('Total byte weight audit', () => {
       assert.ok(0.40 < result.score && result.score < 0.6, 'score is around 0.5');
       assert.strictEqual(result.numericValue, 4180 * 1024);
       const results = result.details.items;
-      results.forEach(item => expect(item.entity).toBe('google.com'));
       assert.strictEqual(results.length, 10, 'results are clipped at top 10');
     });
   });
@@ -100,8 +98,6 @@ describe('Total byte weight audit', () => {
     ]);
 
     const result = await TotalByteWeight.audit(artifacts, {options, computedCache: new Map()});
-    expect(result.details.items.length).toEqual(1);
-    expect(result.details.items[0].entity).toEqual('example.com');
     expect(result.numericValue).toEqual(10_000);
   });
 
@@ -112,8 +108,6 @@ describe('Total byte weight audit', () => {
     ]);
 
     const result = await TotalByteWeight.audit(artifacts, {options, computedCache: new Map()});
-    expect(result.details.items.length).toEqual(1);
-    result.details.items.forEach(item => expect(item.entity).toBe('example.com'));
     expect(result.numericValue).toEqual(5_000);
   });
 });

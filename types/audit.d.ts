@@ -60,7 +60,6 @@ declare module Audit {
     wastedBytes: number;
     totalBytes: number;
     wastedPercent?: number;
-    entity?: string;
   }
 
   // TODO: consider making some of the `string | IcuMessage` into just `IcuMessage` to require i18n.

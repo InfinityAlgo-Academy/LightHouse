@@ -13,7 +13,6 @@
 /** @typedef {import('../../lib/dependency-graph/base-node.js').Node} Node */
 
 import {Audit} from '../audit.js';
-import {EntityClassification} from '../../computed/entity-classification.js';
 import ThirdParty from '../../lib/third-party-web.js';
 import UrlUtils from '../../lib/url-utils.js';
 import {ByteEfficiencyAudit} from '../byte-efficiency/byte-efficiency-audit.js';
@@ -205,7 +204,6 @@ class UsesHTTP2Audit extends Audit {
     const URL = artifacts.URL;
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
     const resources = UsesHTTP2Audit.determineNonHttp2Resources(networkRecords);
-    const classifiedEntities = await EntityClassification.request({URL, devtoolsLog}, context);
 
     let displayValue;
     if (resources.length > 0) {
@@ -220,13 +218,7 @@ class UsesHTTP2Audit extends Audit {
         {key: 'protocol', valueType: 'text', label: str_(UIStrings.columnProtocol)},
       ];
 
-      const details = Audit.makeTableDetails(
-        headings,
-        resources.map(resource => ({
-          entity: classifiedEntities.byURL.get(resource.url)?.name,
-          ...resource,
-        }))
-      );
+      const details = Audit.makeTableDetails(headings, resources);
 
       return {
         displayValue,
@@ -250,7 +242,7 @@ class UsesHTTP2Audit extends Audit {
       {key: 'protocol', valueType: 'text', label: str_(UIStrings.columnProtocol)},
     ];
 
-    const details = Audit.makeOpportunityDetails(headings, resources, classifiedEntities, wastedMs);
+    const details = Audit.makeOpportunityDetails(headings, resources, wastedMs);
 
     return {
       displayValue,

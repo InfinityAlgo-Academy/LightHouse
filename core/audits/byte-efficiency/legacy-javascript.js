@@ -19,11 +19,10 @@
 
 import fs from 'fs';
 
-import {Audit} from '../audit.js';
 import {ByteEfficiencyAudit} from './byte-efficiency-audit.js';
-import {EntityClassification} from '../../computed/entity-classification.js';
 import {JSBundles} from '../../computed/js-bundles.js';
 import * as i18n from '../../lib/i18n/i18n.js';
+import thirdPartyWeb from '../../lib/third-party-web.js';
 import {getRequestForScript} from '../../lib/script-helpers.js';
 import {LH_ROOT} from '../../../root.js';
 
@@ -402,10 +401,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
    * @return {Promise<ByteEfficiencyProduct>}
    */
   static async audit_(artifacts, networkRecords, context) {
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const classifiedEntities = await EntityClassification.request(
-      {URL: artifacts.URL, devtoolsLog}, context);
-
+    const mainDocumentEntity = thirdPartyWeb.getEntity(artifacts.URL.finalDisplayedUrl);
     const bundles = await JSBundles.request(artifacts, context);
 
     /** @type {Item[]} */
@@ -435,7 +431,6 @@ class LegacyJavascript extends ByteEfficiencyAudit {
         },
         // Not needed, but keeps typescript happy.
         totalBytes: 0,
-        entity: classifiedEntities.byURL.get(script.url)?.name,
       };
 
       const bundle = bundles.find(bundle => bundle.script.scriptId === script.scriptId);
@@ -455,7 +450,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     const wastedBytesByUrl = new Map();
     for (const item of items) {
       // Only estimate savings if first party code has legacy code.
-      if (classifiedEntities.byURL.get(item.url) === classifiedEntities.firstParty) {
+      if (thirdPartyWeb.isFirstParty(item.url, mainDocumentEntity)) {
         wastedBytesByUrl.set(item.url, item.wastedBytes);
       }
     }

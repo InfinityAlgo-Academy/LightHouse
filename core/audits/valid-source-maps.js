@@ -4,8 +4,8 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
+import thirdPartyWeb from '../lib/third-party-web.js';
 import {Audit} from './audit.js';
-import {EntityClassification} from '../computed/entity-classification.js';
 import * as i18n from '../lib/i18n/i18n.js';
 
 const UIStrings = {
@@ -43,36 +43,31 @@ class ValidSourceMaps extends Audit {
       title: str_(UIStrings.title),
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['Scripts', 'SourceMaps', 'URL', 'devtoolsLogs'],
+      requiredArtifacts: ['Scripts', 'SourceMaps', 'URL'],
     };
   }
 
   /**
    * Returns true if the size of the script exceeds a static threshold.
    * @param {LH.Artifacts.Script} script
-   * @param {LH.Artifacts.ClassifiedEntities} classifiedEntities
+   * @param {string} finalURL
    * @return {boolean}
    */
-  static isLargeFirstPartyJS(script, classifiedEntities) {
+  static isLargeFirstPartyJS(script, finalURL) {
     if (!script.length) return false;
 
     const isLargeJS = script.length >= LARGE_JS_BYTE_THRESHOLD;
     const isFirstPartyJS = script.url ?
-      classifiedEntities.byURL.get(script.url) === classifiedEntities.firstParty :
-      false;
+      thirdPartyWeb.isFirstParty(script.url, thirdPartyWeb.getEntity(finalURL)) : false;
 
     return isLargeJS && isFirstPartyJS;
   }
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @param {LH.Audit.Context} context
    */
-  static async audit(artifacts, context) {
+  static async audit(artifacts) {
     const {SourceMaps} = artifacts;
-    const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
-    const classifiedEntities = await EntityClassification.request(
-      {URL: artifacts.URL, devtoolsLog}, context);
 
     /** @type {Set<string>} */
     const isMissingMapForLargeFirstPartyScriptUrl = new Set();
@@ -82,7 +77,7 @@ class ValidSourceMaps extends Audit {
     for (const script of artifacts.Scripts) {
       const sourceMap = SourceMaps.find(m => m.scriptId === script.scriptId);
       const errors = [];
-      const isLargeFirstParty = this.isLargeFirstPartyJS(script, classifiedEntities);
+      const isLargeFirstParty = this.isLargeFirstPartyJS(script, artifacts.URL.finalDisplayedUrl);
 
       if (isLargeFirstParty && (!sourceMap || !sourceMap.map)) {
         missingMapsForLargeFirstPartyFile = true;
@@ -115,7 +110,6 @@ class ValidSourceMaps extends Audit {
             type: /** @type {const} */ ('subitems'),
             items: errors,
           },
-          entity: classifiedEntities?.byURL.get(script.url)?.name,
         });
       }
     }

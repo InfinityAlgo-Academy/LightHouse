@@ -7,16 +7,11 @@
 import assert from 'assert/strict';
 
 import GeolocationOnStartAudit from '../../../audits/dobetterweb/geolocation-on-start.js';
-import {networkRecordsToDevtoolsLog} from '../../network-records-to-devtools-log.js';
 
 describe('UX: geolocation audit', () => {
   it('fails when geolocation has been automatically requested', async () => {
     const text = 'Do not request geolocation permission without a user action.';
-    const records = [
-      {url: 'https://example.com/'},
-      {url: 'https://example2.com/two'},
-      {url: 'http://abc.com/'},
-    ];
+
     const context = {computedCache: new Map()};
     const auditResult = await GeolocationOnStartAudit.audit({
       ConsoleMessages: [
@@ -27,12 +22,9 @@ describe('UX: geolocation audit', () => {
       ],
       SourceMaps: [],
       Scripts: [],
-      devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(records)},
     }, context);
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
-    assert.deepStrictEqual(auditResult.details.items.map(item => item.entity),
-      ['example.com', 'example2.com']);
   });
 
   it('passes when geolocation has not been automatically requested', async () => {
@@ -41,7 +33,6 @@ describe('UX: geolocation audit', () => {
       ConsoleMessages: [],
       SourceMaps: [],
       Scripts: [],
-      devtoolsLogs: {defaultPass: []},
     }, context);
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);

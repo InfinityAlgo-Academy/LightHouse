@@ -73,21 +73,6 @@ class Util {
   }
 
   /**
-   * @param {string} url
-   * @return {?string}
-   */
-  static getOrigin(url) {
-    try {
-      const urlInfo = new URL(url);
-      // check for both host and origin since some URLs schemes like data and file set origin to the
-      // string "null" instead of the object
-      return (urlInfo.host && urlInfo.origin) || null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  /**
    * Returns a new LHR that's reshaped for slightly better ergonomics within the report rendereer.
    * Also, sets up the localized UI strings used within renderer and makes changes to old LHRs to be
    * compatible with current renderer.
