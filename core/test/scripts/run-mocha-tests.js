@@ -50,8 +50,6 @@ function getFailedTests() {
 // all test files (everything if --no-parallel, else each worker will load a subset of the files
 // all at once). This results in unexpected mocks contaminating other test files.
 //
-// Tests do other undesired things in the global scope too, such as enabling fake timers.
-//
 // For now, we isolate a number of tests until they can be refactored.
 //
 // To run tests without isolation, and all in one process:
@@ -63,21 +61,6 @@ function getFailedTests() {
 //    yarn mocha --no-parallel
 // (also, just comment out the `testsToRunIsolated` below, as they won't impact this verification)
 const testsToIsolate = new Set([
-  // grep -lRE '^timers\.useFakeTimers' --include='*-test.*' --exclude-dir=node_modules
-  'flow-report/test/common-test.tsx',
-  'core/test/gather/session-test.js',
-  'core/test/legacy/gather/driver-test.js',
-  'core/test/gather/driver/execution-context-test.js',
-  'core/test/gather/driver/navigation-test.js',
-  'core/test/gather/driver/wait-for-condition-test.js',
-  'core/test/gather/gatherers/css-usage-test.js',
-  'core/test/gather/gatherers/image-elements-test.js',
-  'core/test/gather/gatherers/inspector-issues-test.js',
-  'core/test/gather/gatherers/js-usage-test.js',
-  'core/test/gather/gatherers/source-maps-test.js',
-  'core/test/gather/gatherers/trace-elements-test.js',
-  'core/test/gather/gatherers/trace-test.js',
-
   // grep -lRE '^await td\.replace' --include='*-test.*' --exclude-dir=node_modules
   'core/test/gather/snapshot-runner-test.js',
   'core/test/gather/timespan-runner-test.js',

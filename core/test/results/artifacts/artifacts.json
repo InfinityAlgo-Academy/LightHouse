@@ -10554,7 +10554,8 @@
   "Doctype": {
     "name": "html",
     "publicId": "",
-    "systemId": ""
+    "systemId": "",
+    "documentCompatMode": "CSS1Compat"
   },
   "DOMStats": {
     "depth": {
