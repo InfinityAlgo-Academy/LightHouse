@@ -21,9 +21,9 @@
 
 import {Audit} from './audit.js';
 import * as i18n from '../lib/i18n/i18n.js';
+import {EntityClassification} from '../computed/entity-classification.js';
 import thirdPartyWeb from '../lib/third-party-web.js';
 import {NetworkRecords} from '../computed/network-records.js';
-import {MainResource} from '../computed/main-resource.js';
 import {MainThreadTasks} from '../computed/main-thread-tasks.js';
 import ThirdPartySummary from './third-party-summary.js';
 
@@ -121,15 +121,15 @@ class ThirdPartyFacades extends Audit {
 
   /**
    * @param {Map<string, import('./third-party-summary.js').Summary>} byURL
-   * @param {ThirdPartyEntity | undefined} mainEntity
+   * @param {LH.Artifacts.ClassifiedEntities} classifiedEntities
    * @return {FacadableProduct[]}
    */
-  static getProductsWithFacade(byURL, mainEntity) {
+  static getProductsWithFacade(byURL, classifiedEntities) {
     /** @type {Map<string, FacadableProduct>} */
     const facadableProductMap = new Map();
     for (const url of byURL.keys()) {
-      const entity = thirdPartyWeb.getEntity(url);
-      if (!entity || thirdPartyWeb.isFirstParty(url, mainEntity)) continue;
+      const entity = classifiedEntities.byURL.get(url);
+      if (!entity || entity === classifiedEntities.firstParty) continue;
 
       const product = thirdPartyWeb.getProduct(url);
       if (!product || !product.facades || !product.facades.length) continue;
@@ -151,14 +151,15 @@ class ThirdPartyFacades extends Audit {
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const devtoolsLog = artifacts.devtoolsLogs[Audit.DEFAULT_PASS];
     const networkRecords = await NetworkRecords.request(devtoolsLog, context);
-    const mainResource = await MainResource.request({devtoolsLog, URL: artifacts.URL}, context);
-    const mainEntity = thirdPartyWeb.getEntity(mainResource.url);
+    const classifiedEntities = await EntityClassification.request(
+      {URL: artifacts.URL, devtoolsLog}, context);
     const tasks = await MainThreadTasks.request(trace, context);
     const multiplier = settings.throttlingMethod === 'simulate' ?
       settings.throttling.cpuSlowdownMultiplier : 1;
-    const summaries = ThirdPartySummary.getSummaries(networkRecords, tasks, multiplier);
+    const summaries = ThirdPartySummary.getSummaries(networkRecords, tasks, multiplier,
+      classifiedEntities);
     const facadableProducts =
-      ThirdPartyFacades.getProductsWithFacade(summaries.byURL, mainEntity);
+      ThirdPartyFacades.getProductsWithFacade(summaries.byURL, classifiedEntities);
 
     /** @type {LH.Audit.Details.TableItem[]} */
     const results = [];
@@ -188,6 +189,7 @@ class ThirdPartyFacades extends Audit {
         transferSize: entitySummary.transferSize,
         blockingTime: entitySummary.blockingTime,
         subItems: {type: 'subitems', items},
+        entity: entity.name,
       });
     }
 
