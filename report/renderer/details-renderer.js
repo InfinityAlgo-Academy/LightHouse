@@ -402,7 +402,7 @@ export class DetailsRenderer {
 
       // The attribute item.entity could be a string (entity-classification), or
       // a LinkValue for ThirdPartySummary audit.
-      let entityName = '';
+      let entityName;
       if (typeof item.entity === 'object' && item.entity.type === 'link') {
         entityName = item.entity.text;
       } else if (typeof item.entity === 'string') {
