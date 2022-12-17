@@ -13,16 +13,23 @@ import {fnAny} from '../../test-utils.js';
 const getServiceWorkerVersions = fnAny();
 const getServiceWorkerRegistrations = fnAny();
 
-await td.replaceEsm('../../../gather/driver/service-workers.js', {
-  getServiceWorkerVersions,
-  getServiceWorkerRegistrations,
-});
-
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
-const ServiceWorkerGather = (await import('../../../gather/gatherers/service-worker.js')).default;
-
 describe('service worker gatherer', () => {
+  /** @type {import('../../../gather/gatherers/service-worker.js').default} */
+  let ServiceWorkerGather;
+
+  before(async () => {
+    await td.replaceEsm('../../../gather/driver/service-workers.js', {
+      getServiceWorkerVersions,
+      getServiceWorkerRegistrations,
+    });
+
+    // Some imports needs to be done dynamically, so that their dependencies will be mocked.
+    // https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+    ServiceWorkerGather = (await import('../../../gather/gatherers/service-worker.js')).default;
+  });
+
+  after(() => td.reset());
+
   it('obtains the active service worker registration', async () => {
     const url = 'https://example.com/';
     const versions = [{
