@@ -65,8 +65,8 @@ const testsToIsolate = new Set([
   'core/test/gather/snapshot-runner-test.js',
   'core/test/gather/timespan-runner-test.js',
   'core/test/user-flow-test.js',
-  'core/test/gather/driver/prepare-test.js',
-  'core/test/gather/gatherers/link-elements-test.js',
+  // 'core/test/gather/driver/prepare-test.js',
+  // 'core/test/gather/gatherers/link-elements-test.js',
   'core/test/gather/gatherers/service-worker-test.js',
   'core/test/runner-test.js',
 
@@ -302,7 +302,7 @@ async function main() {
   const testsToRunIsolated = [];
   for (const test of testsToRun) {
     if (argv.isolation && testsToIsolate.has(test)) {
-      testsToRunIsolated.push(test);
+      // testsToRunIsolated.push(test);
     } else {
       testsToRunTogether.push(test);
     }
