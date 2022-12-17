@@ -84,6 +84,7 @@ declare module Details {
    * Entities (1P and 3P) classified and exposed in LHR.
    */
   interface EntityClassificationEntity {
+    name: string;
     homepage?: string;
     isFirstParty?: boolean;
     isUnrecognized?: boolean;
@@ -91,8 +92,10 @@ declare module Details {
 
   interface EntityClassification {
     type: 'entity-classification';
-    entities: Record<string, EntityClassificationEntity>;
-    firstParty?: string;
+    entities: Array<EntityClassificationEntity>;
+    // The two lookup tables (LUT) below provide O(1) index lookup into entities above.
+    nameLUT: Record<string, number>;
+    originLUT: Record<string, number>;
   }
 
   /**
