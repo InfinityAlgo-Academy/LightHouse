@@ -34,11 +34,15 @@ const URL_PREFIXES = ['http://', 'https://', 'data:'];
 export class DetailsRenderer {
   /**
    * @param {DOM} dom
-   * @param {{fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot}} [options]
+   * @param {{
+   *  fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot,
+   *  entityClassification?: LH.Audit.Details.EntityClassification,
+   * }} [options]
    */
   constructor(dom, options = {}) {
     this._dom = dom;
     this._fullPageScreenshot = options.fullPageScreenshot;
+    this._entityClassification = options.entityClassification;
   }
 
   /**
@@ -61,6 +65,7 @@ export class DetailsRenderer {
       case 'screenshot':
       case 'debugdata':
       case 'full-page-screenshot':
+      case 'entity-classification':
       case 'treemap-data':
         return null;
 
@@ -377,6 +382,47 @@ export class DetailsRenderer {
 
   /**
    * @param {{headings: TableColumnHeading[], items: TableItem[]}} details
+   * @return {TableItem[]}
+   */
+  _computeTableItemEntities(details) {
+    if (!this._entityClassification) return details.items;
+
+    // If details.items are already marked with entity attribute during an audit, nothing to do here.
+    if (details.items.length && details.items.find(item => typeof item.entity !== 'undefined')) {
+      return details.items;
+    }
+
+    const urlKey = details.headings.find(heading => heading.valueType === 'url')?.key;
+    if (!urlKey) {
+      // look for next way to find a url.
+      return details.items;
+    }
+
+    /** @type {TableItem[]} */
+    return details.items.map(item => {
+      /** @type {string|undefined} */
+      let url;
+      if (typeof item[urlKey] === 'string') {
+        url = item[urlKey]?.toString();
+      }
+      if (!url) return item;
+
+      let origin;
+      try {
+        // Non-URLs can appear in valueType: url columns, like 'Unattributable'
+        origin = Util.parseURL(url).origin;
+      } catch (e) {}
+      if (!origin) return item;
+
+      const entityId = this._entityClassification?.originLUT[origin];
+      if (!entityId) return item;
+      const entity = this._entityClassification?.entities[entityId];
+      return {entity: entity?.name, ...item};
+    });
+  }
+
+  /**
+   * @param {{headings: TableColumnHeading[], items: TableItem[]}} details
    * @return {Element}
    */
   _renderTable(details) {
@@ -396,11 +442,24 @@ export class DetailsRenderer {
 
     const tbodyElem = this._dom.createChildOf(tableElem, 'tbody');
     let even = true;
-    for (const item of details.items) {
+
+    const entityMarkedItems = this._computeTableItemEntities(details);
+    for (const item of entityMarkedItems) {
       const rowsFragment = this._renderTableRowsFromItem(item, details.headings);
+
+      // The attribute item.entity could be a string (entity-classification), or
+      // a LinkValue for ThirdPartySummary audit.
+      let entityName = '';
+      if (typeof(item.entity) === 'object' && item.entity.type === 'link') {
+        entityName = item.entity.text;
+      } else if (typeof(item.entity) === 'string') {
+        entityName = item.entity;
+      }
+
       for (const rowEl of this._dom.findAll('tr', rowsFragment)) {
         // For zebra styling.
         rowEl.classList.add(even ? 'lh-row--even' : 'lh-row--odd');
+        if (entityName) rowEl.dataset.entity = entityName;
       }
       even = !even;
       tbodyElem.append(rowsFragment);
