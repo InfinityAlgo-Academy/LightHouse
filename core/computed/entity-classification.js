@@ -19,7 +19,10 @@ class EntityClassification {
    * @return Entity | undefined
    */
   static makeUpAnEntity(entityCache, url) {
-    if (!UrlUtils.isValid(url)) return;
+    // We can make up an entity only for those URLs with a valid domain attached.
+    // So we further restrict from allowed URLs to (/^h/ or http[s] and h2).
+    if (!(UrlUtils.isValid(url) && UrlUtils.isProtocolAllowed(url) &&
+      Util.createOrReturnURL(url).protocol[0] === 'h')) return;
     const rootDomain = Util.getRootDomain(url);
     if (!rootDomain) return;
     if (entityCache.has(rootDomain)) return entityCache.get(rootDomain);

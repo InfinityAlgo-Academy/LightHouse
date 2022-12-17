@@ -93,11 +93,28 @@ describe('Entity Classification computed artifact', () => {
     };
     const result = await EntityClassification.request(artifacts, context);
     const entities = Array.from(result.byEntity.keys()).map(e => e.name);
-    // make sure first party is not identified
-    expect(result.firstParty).not.toBeFalsy();
+    // make sure first party is identified
     expect(result.firstParty.name).toBe('third-party.com');
     // make sure all entities were identified
     expect(entities).toEqual(['example.com', 'third-party.com']);
     expect(result.byURL.size).toBe(4);
+  });
+
+  it('does not classify non-network URLs', async () => {
+    artifacts.URL = {
+      mainDocumentUrl: 'http://third-party.com',
+    };
+    artifacts.devtoolsLog = networkRecordsToDevtoolsLog([
+      {url: 'http://third-party.com'},
+      {url: 'chrome://version'},
+      {url: 'data:foobar'},
+    ]);
+    const result = await EntityClassification.request(artifacts, context);
+    const entities = Array.from(result.byEntity.keys()).map(e => e.name);
+    // make sure first party is identified
+    expect(result.firstParty.name).toBe('third-party.com');
+    // make sure only valid network urls with a domain is recognized.
+    expect(entities).toEqual(['third-party.com']);
+    expect(result.byURL.size).toBe(1);
   });
 });
