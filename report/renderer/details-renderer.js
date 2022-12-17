@@ -66,7 +66,7 @@ export class DetailsRenderer {
         return null;
 
       default: {
-        // @ts-expect-error - all `details.type`s need to be handled above so tsc thinks this is unreachable.
+        // @ts-expect-error - all detail types need to be handled above so tsc thinks this is unreachable.
         // Call _renderUnknown() to be forward compatible with new, unexpected detail types.
         return this._renderUnknown(details.type, details);
       }
@@ -403,9 +403,9 @@ export class DetailsRenderer {
       // The attribute item.entity could be a string (entity-classification), or
       // a LinkValue for ThirdPartySummary audit.
       let entityName = '';
-      if (typeof(item.entity) === 'object' && item.entity.type === 'link') {
+      if (typeof item.entity === 'object' && item.entity.type === 'link') {
         entityName = item.entity.text;
-      } else if (typeof(item.entity) === 'string') {
+      } else if (typeof item.entity === 'string') {
         entityName = item.entity;
       }
 
