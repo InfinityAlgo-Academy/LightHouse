@@ -64,7 +64,7 @@ const testsToIsolate = new Set([
   // grep -lRE '^await td\.replace' --include='*-test.*' --exclude-dir=node_modules
   'core/test/gather/snapshot-runner-test.js',
   'core/test/gather/timespan-runner-test.js',
-  'core/test/user-flow-test.js',
+  // 'core/test/user-flow-test.js',
   // 'core/test/gather/driver/prepare-test.js',
   // 'core/test/gather/gatherers/link-elements-test.js',
   'core/test/gather/gatherers/service-worker-test.js',
@@ -74,7 +74,7 @@ const testsToIsolate = new Set([
   'core/test/gather/navigation-runner-test.js',
   'core/test/gather/snapshot-runner-test.js',
   'core/test/gather/timespan-runner-test.js',
-  'core/test/user-flow-test.js',
+  // 'core/test/user-flow-test.js',
   'core/test/legacy/gather/gather-runner-test.js',
   'core/test/gather/gatherers/dobetterweb/response-compression-test.js',
   'core/test/gather/gatherers/script-elements-test.js',

@@ -11,19 +11,30 @@ import {Runner} from '../runner.js';
 import {createMockPage, mockRunnerModule} from './gather/mock-driver.js';
 
 const snapshotModule = {snapshotGather: jestMock.fn()};
-await td.replaceEsm('../gather/snapshot-runner.js', snapshotModule);
 const navigationModule = {navigationGather: jestMock.fn()};
-await td.replaceEsm('../gather/navigation-runner.js', navigationModule);
 const timespanModule = {startTimespanGather: jestMock.fn()};
-await td.replaceEsm('../gather/timespan-runner.js', timespanModule);
-
-const mockRunner = await mockRunnerModule();
-
-// Some imports needs to be done dynamically, so that their dependencies will be mocked.
-// https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
-const {getStepName, getFlowName, UserFlow, auditGatherSteps} = await import('../user-flow.js');
 
 describe('UserFlow', () => {
+  /** @type {Awaited<ReturnType<typeof mockRunnerModule>>} */
+  let mockRunner;
+  /** @type {import('../user-flow.js')} */
+  // @ts-expect-error
+  let {getStepName, getFlowName, UserFlow, auditGatherSteps} = {};
+
+  before(async () => {
+    await td.replaceEsm('../gather/snapshot-runner.js', snapshotModule);
+    await td.replaceEsm('../gather/navigation-runner.js', navigationModule);
+    await td.replaceEsm('../gather/timespan-runner.js', timespanModule);
+
+    mockRunner = await mockRunnerModule();
+
+    // Some imports needs to be done dynamically, so that their dependencies will be mocked.
+    // https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
+    ({getStepName, getFlowName, UserFlow, auditGatherSteps} = await import('../user-flow.js'));
+  });
+
+  after(() => td.reset());
+
   let mockPage = createMockPage();
 
   beforeEach(() => {

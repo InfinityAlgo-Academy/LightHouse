@@ -9,17 +9,18 @@ import * as td from 'testdouble';
 import {createMockSession, createMockDriver} from '../mock-driver.js';
 import {flushAllTimersAndMicrotasks, fnAny, timers} from '../../test-utils.js';
 
-describe('prepare', () => {
-  const storageMock = {
-    clearDataForOrigin: fnAny(),
-    clearBrowserCaches: fnAny(),
-    getImportantStorageWarning: fnAny(),
-  };
+const storageMock = {
+  clearDataForOrigin: fnAny(),
+  clearBrowserCaches: fnAny(),
+  getImportantStorageWarning: fnAny(),
+};
 
+describe('prepare', () => {
   /** @type {import('../../../gather/driver/prepare.js')} */
   let prepare;
   /** @type {import('../../../config/constants.js')} */
   let constants;
+
   before(async () => {
     await td.replaceEsm('../../../gather/driver/storage.js', storageMock);
 
@@ -28,6 +29,7 @@ describe('prepare', () => {
     prepare = await import('../../../gather/driver/prepare.js');
     constants = await import('../../../config/constants.js');
   });
+
   after(() => td.reset());
 
   const url = 'https://example.com';
