@@ -10,7 +10,7 @@ import {Util} from '../util.cjs';
 import UrlUtils from '../lib/url-utils.js';
 import thirdPartyWeb from '../lib/third-party-web.js';
 
-/** @typedef {Map<string, LH.Artifacts.RecognizableEntity>} EntityCache */
+/** @typedef {Map<string, LH.Artifacts.Entity>} EntityCache */
 
 class EntityClassification {
   /**
@@ -45,29 +45,29 @@ class EntityClassification {
   /**
    * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @return {Promise<LH.Artifacts.ClassifiedEntities>}
+   * @return {Promise<LH.Artifacts.EntityClassification>}
    */
   static async compute_(data, context) {
     const networkRecords = await NetworkRecords.request(data.devtoolsLog, context);
     /** @type {EntityCache} */
     const madeUpEntityCache = new Map();
-    /** @type {Map<string, LH.Artifacts.RecognizableEntity>} */
-    const byURL = new Map();
-    /** @type {Map<LH.Artifacts.RecognizableEntity, Array<string>>} */
-    const byEntity = new Map();
+    /** @type {Map<string, LH.Artifacts.Entity>} */
+    const urlToEntity = new Map();
+    /** @type {Map<LH.Artifacts.Entity, Array<string>>} */
+    const entityToURLs = new Map();
 
     for (const record of networkRecords) {
       const {url} = record;
-      if (byURL.has(url)) continue;
+      if (urlToEntity.has(url)) continue;
 
       const entity = thirdPartyWeb.getEntity(url) ||
         EntityClassification.makeUpAnEntity(madeUpEntityCache, url);
       if (!entity) continue;
 
-      const entityURLs = byEntity.get(entity) || [];
+      const entityURLs = entityToURLs.get(entity) || [];
       entityURLs.push(url);
-      byEntity.set(entity, entityURLs);
-      byURL.set(url, entity);
+      entityToURLs.set(entity, entityURLs);
+      urlToEntity.set(url, entity);
     }
 
     // When available, first party identification will be done via
@@ -80,7 +80,7 @@ class EntityClassification {
         EntityClassification.makeUpAnEntity(madeUpEntityCache, firstPartyUrl);
     }
 
-    return {byURL, byEntity, firstParty};
+    return {urlToEntity, entityToURLs, firstParty};
   }
 }
 

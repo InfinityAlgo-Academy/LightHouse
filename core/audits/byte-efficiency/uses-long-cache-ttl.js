@@ -259,7 +259,7 @@ class CacheHeaders extends Audit {
         cacheHitProbability,
         totalBytes,
         wastedBytes,
-        entity: classifiedEntities?.byURL.get(url)?.name,
+        entity: classifiedEntities?.urlToEntity.get(url)?.name,
       });
     }
 

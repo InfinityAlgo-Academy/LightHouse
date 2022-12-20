@@ -214,7 +214,7 @@ class Audit {
   /**
    * @param {LH.Audit.Details.Opportunity['headings']} headings
    * @param {LH.Audit.Details.Opportunity['items']} items
-   * @param {LH.Artifacts.ClassifiedEntities?} classifiedEntities
+   * @param {LH.Artifacts.EntityClassification|null} classifiedEntities
    * @param {number} overallSavingsMs
    * @param {number=} overallSavingsBytes
    * @return {LH.Audit.Details.Opportunity}
@@ -229,7 +229,7 @@ class Audit {
       items: items.map(
         // We let an existing item.entity take precedence if it was set during
         // the audit (eg., uses-rel-preconnect).
-        item => ({entity: classifiedEntities?.byURL.get(item.url)?.name, ...item})
+        item => ({entity: classifiedEntities?.urlToEntity.get(item.url)?.name, ...item})
       ),
       overallSavingsMs,
       overallSavingsBytes,

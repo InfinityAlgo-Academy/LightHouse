@@ -35,7 +35,7 @@ class EntityClassification extends Audit {
     /** @type {Record<string, LH.Audit.Details.EntityClassificationEntity>} */
     const entities = {};
 
-    for (const entity of classifiedEntities.byEntity.keys()) {
+    for (const entity of classifiedEntities.entityToURLs.keys()) {
       /** @type {LH.Audit.Details.EntityClassificationEntity} */
       const shortEntity = {
         homepage: entity.homepage,

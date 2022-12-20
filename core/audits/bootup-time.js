@@ -108,7 +108,7 @@ class BootupTime extends Audit {
           // Highlight the JavaScript task costs
           scripting: scriptingTotal,
           scriptParseCompile: parseCompileTotal,
-          entity: classifiedEntities?.byURL.get(url)?.name,
+          entity: classifiedEntities?.urlToEntity.get(url)?.name,
         };
       })
       .filter(result => result.total >= context.options.thresholdInMs)

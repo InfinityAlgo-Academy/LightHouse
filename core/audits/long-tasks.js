@@ -97,7 +97,7 @@ class LongTasks extends Audit {
         url,
         duration: task.duration,
         startTime: task.startTime,
-        entity: classifiedEntities?.byURL.get(url)?.name,
+        entity: classifiedEntities?.urlToEntity.get(url)?.name,
       };
     });
 

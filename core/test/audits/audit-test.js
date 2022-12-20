@@ -44,13 +44,13 @@ class NumericAudit extends Audit {
 
 /**
  * Loads an entity into a mocked entity classification object
- * @param {LH.Artifacts.ClassifiedEntities} classification
- * @param {LH.Artifacts.RecognizableEntity} entity
+ * @param {LH.Artifacts.EntityClassification} classification
+ * @param {LH.Artifacts.Entity} entity
  * @param {Array<string>} urls
  */
 function loadEntity(classification, entity, urls) {
-  classification.byEntity.set(entity, urls);
-  urls.forEach(url => classification.byURL.set(url, entity));
+  classification.entityToURLs.set(entity, urls);
+  urls.forEach(url => classification.urlToEntity.set(url, entity));
 }
 
 describe('Audit', () => {
@@ -286,8 +286,8 @@ describe('Audit', () => {
       ];
       firstParty = {name: 'example.com'};
       classifiedEntities = {
-        byEntity: new Map(),
-        byURL: new Map(),
+        urlToEntity: new Map(),
+        entityToURLs: new Map(),
         firstParty,
       };
     });

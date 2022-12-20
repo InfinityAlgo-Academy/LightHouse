@@ -935,14 +935,14 @@ declare module Artifacts {
     mimeType?: string;
   }
 
-  interface RecognizableEntity extends IEntity {
+  interface Entity extends IEntity {
     isUnrecognized?: boolean;
   }
 
-  interface ClassifiedEntities {
-    byEntity: Map<RecognizableEntity, Array<string>>,
-    byURL: Map<string, RecognizableEntity>,
-    firstParty?: RecognizableEntity
+  interface EntityClassification {
+    entityToURLs: Map<Entity, Array<string>>,
+    urlToEntity: Map<string, Entity>,
+    firstParty?: Entity
   }
 }
 

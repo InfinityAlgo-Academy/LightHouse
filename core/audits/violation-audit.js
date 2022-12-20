@@ -57,7 +57,7 @@ class ViolationAudit extends Audit {
         })
         .map(source => ({
           source,
-          entity: classifiedEntities?.byURL.get(source.url)?.name,
+          entity: classifiedEntities?.urlToEntity.get(source.url)?.name,
         }));
   }
 }

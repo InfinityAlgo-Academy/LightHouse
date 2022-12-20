@@ -223,7 +223,7 @@ class UsesHTTP2Audit extends Audit {
       const details = Audit.makeTableDetails(
         headings,
         resources.map(resource => ({
-          entity: classifiedEntities.byURL.get(resource.url)?.name,
+          entity: classifiedEntities.urlToEntity.get(resource.url)?.name,
           ...resource,
         }))
       );

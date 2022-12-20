@@ -208,7 +208,7 @@ class ByteEfficiencyAudit extends Audit {
    * @param {Node|null} graph
    * @param {Simulator} simulator
    * @param {LH.Artifacts['GatherContext']} gatherContext
-   * @param {LH.Artifacts.ClassifiedEntities} classifiedEntities
+   * @param {LH.Artifacts.EntityClassification} classifiedEntities
    * @return {LH.Audit.Product}
    */
   static createAuditProduct(result, graph, simulator, gatherContext, classifiedEntities) {

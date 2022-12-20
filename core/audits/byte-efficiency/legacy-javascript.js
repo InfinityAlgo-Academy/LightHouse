@@ -435,7 +435,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
         },
         // Not needed, but keeps typescript happy.
         totalBytes: 0,
-        entity: classifiedEntities.byURL.get(script.url)?.name,
+        entity: classifiedEntities.urlToEntity.get(script.url)?.name,
       };
 
       const bundle = bundles.find(bundle => bundle.script.scriptId === script.scriptId);
@@ -455,7 +455,7 @@ class LegacyJavascript extends ByteEfficiencyAudit {
     const wastedBytesByUrl = new Map();
     for (const item of items) {
       // Only estimate savings if first party code has legacy code.
-      if (classifiedEntities.byURL.get(item.url) === classifiedEntities.firstParty) {
+      if (classifiedEntities.urlToEntity.get(item.url) === classifiedEntities.firstParty) {
         wastedBytesByUrl.set(item.url, item.wastedBytes);
       }
     }

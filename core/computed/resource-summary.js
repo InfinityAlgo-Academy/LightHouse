@@ -36,7 +36,7 @@ class ResourceSummary {
    * @param {Array<LH.Artifacts.NetworkRequest>} networkRecords
    * @param {LH.Artifacts.URL} URLArtifact
    * @param {LH.Util.ImmutableObject<LH.Budget[]|null>} budgets
-   * @param {LH.Artifacts.ClassifiedEntities} classifiedEntities
+   * @param {LH.Artifacts.EntityClassification} classifiedEntities
    * @return {Record<LH.Budget.ResourceType, ResourceEntry>}
    */
   static summarize(networkRecords, URLArtifact, budgets, classifiedEntities) {

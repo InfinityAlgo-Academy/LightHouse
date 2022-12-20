@@ -75,7 +75,7 @@ class TotalByteWeight extends Audit {
       const result = {
         url: record.url,
         totalBytes: record.transferSize,
-        entity: classifiedEntities.byURL.get(record.url)?.name,
+        entity: classifiedEntities.urlToEntity.get(record.url)?.name,
       };
 
       totalBytes += result.totalBytes;

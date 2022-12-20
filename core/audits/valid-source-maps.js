@@ -50,7 +50,7 @@ class ValidSourceMaps extends Audit {
   /**
    * Returns true if the size of the script exceeds a static threshold.
    * @param {LH.Artifacts.Script} script
-   * @param {LH.Artifacts.ClassifiedEntities} classifiedEntities
+   * @param {LH.Artifacts.EntityClassification} classifiedEntities
    * @return {boolean}
    */
   static isLargeFirstPartyJS(script, classifiedEntities) {
@@ -58,7 +58,7 @@ class ValidSourceMaps extends Audit {
 
     const isLargeJS = script.length >= LARGE_JS_BYTE_THRESHOLD;
     const isFirstPartyJS = script.url ?
-      classifiedEntities.byURL.get(script.url) === classifiedEntities.firstParty :
+      classifiedEntities.urlToEntity.get(script.url) === classifiedEntities.firstParty :
       false;
 
     return isLargeJS && isFirstPartyJS;
@@ -115,7 +115,7 @@ class ValidSourceMaps extends Audit {
             type: /** @type {const} */ ('subitems'),
             items: errors,
           },
-          entity: classifiedEntities?.byURL.get(script.url)?.name,
+          entity: classifiedEntities?.urlToEntity.get(script.url)?.name,
         });
       }
     }
