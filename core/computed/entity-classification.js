@@ -73,6 +73,7 @@ class EntityClassification {
     // When available, first party identification will be done via
     // `mainDocumentUrl` (for navigations), and falls back to `finalDisplayedUrl` (for timespan/snapshot).
     // See https://github.com/GoogleChrome/lighthouse/issues/13706
+    /** @type {LH.Artifacts.Entity | undefined} */
     let firstParty;
     const firstPartyUrl = data.URL?.mainDocumentUrl || data.URL?.finalDisplayedUrl;
     if (firstPartyUrl) {
@@ -80,7 +81,28 @@ class EntityClassification {
         EntityClassification.makeUpAnEntity(madeUpEntityCache, firstPartyUrl);
     }
 
-    return {urlToEntity, entityToURLs, firstParty};
+    /**
+     * Convenience function to return the entity name for a URL.
+     * @param {string} url
+     * @returns string | undefined
+     */
+    function getEntityName(url) {
+      return urlToEntity.get(url)?.name;
+    }
+
+    /**
+     * Convenience function to check if a URL belongs to first party.
+     * @param {string} url
+     * @returns boolean
+     */
+    function isFirstParty(url) {
+      return urlToEntity.get(url) === firstParty;
+    }
+
+    return {
+      urlToEntity, entityToURLs, firstParty,
+      getEntityName, isFirstParty,
+    };
   }
 }
 

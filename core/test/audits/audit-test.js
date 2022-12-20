@@ -289,6 +289,12 @@ describe('Audit', () => {
         urlToEntity: new Map(),
         entityToURLs: new Map(),
         firstParty,
+        getEntityName(url) {
+          return this.urlToEntity.get(url)?.name;
+        },
+        isFirstParty(url) {
+          return this.urlToEntity.get(url)?.name;
+        },
       };
     });
 

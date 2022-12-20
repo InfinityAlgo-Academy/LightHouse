@@ -942,7 +942,11 @@ declare module Artifacts {
   interface EntityClassification {
     entityToURLs: Map<Entity, Array<string>>,
     urlToEntity: Map<string, Entity>,
-    firstParty?: Entity
+    firstParty?: Entity,
+
+    // Convenience methods.
+    getEntityName: (url: string) => string | undefined,
+    isFirstParty: (url: string) => boolean,
   }
 }
 

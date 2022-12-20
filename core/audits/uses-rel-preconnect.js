@@ -209,7 +209,7 @@ class UsesRelPreconnectAudit extends Audit {
       results.push({
         url: securityOrigin,
         wastedMs: wastedMs,
-        entity: classifiedEntities.urlToEntity.get(firstRecordOfOrigin.url)?.name,
+        entity: classifiedEntities.getEntityName(firstRecordOfOrigin.url),
       });
     });
 

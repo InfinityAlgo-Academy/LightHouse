@@ -57,10 +57,7 @@ class ValidSourceMaps extends Audit {
     if (!script.length) return false;
 
     const isLargeJS = script.length >= LARGE_JS_BYTE_THRESHOLD;
-    const isFirstPartyJS = script.url ?
-      classifiedEntities.urlToEntity.get(script.url) === classifiedEntities.firstParty :
-      false;
-
+    const isFirstPartyJS = script.url ? classifiedEntities.isFirstParty(script.url) : false;
     return isLargeJS && isFirstPartyJS;
   }
 
@@ -115,7 +112,7 @@ class ValidSourceMaps extends Audit {
             type: /** @type {const} */ ('subitems'),
             items: errors,
           },
-          entity: classifiedEntities?.urlToEntity.get(script.url)?.name,
+          entity: classifiedEntities?.getEntityName(script.url),
         });
       }
     }

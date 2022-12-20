@@ -229,7 +229,7 @@ class Audit {
       items: items.map(
         // We let an existing item.entity take precedence if it was set during
         // the audit (eg., uses-rel-preconnect).
-        item => ({entity: classifiedEntities?.urlToEntity.get(item.url)?.name, ...item})
+        item => ({entity: classifiedEntities?.getEntityName(item.url), ...item})
       ),
       overallSavingsMs,
       overallSavingsBytes,
