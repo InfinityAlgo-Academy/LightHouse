@@ -121,14 +121,14 @@ class ThirdPartyFacades extends Audit {
 
   /**
    * @param {Map<string, import('./third-party-summary.js').Summary>} byURL
-   * @param {LH.Artifacts.ClassifiedEntities} classifiedEntities
+   * @param {LH.Artifacts.EntityClassification} classifiedEntities
    * @return {FacadableProduct[]}
    */
   static getProductsWithFacade(byURL, classifiedEntities) {
     /** @type {Map<string, FacadableProduct>} */
     const facadableProductMap = new Map();
     for (const url of byURL.keys()) {
-      const entity = classifiedEntities.byURL.get(url);
+      const entity = classifiedEntities.urlToEntity.get(url);
       if (!entity || entity === classifiedEntities.firstParty) continue;
 
       const product = thirdPartyWeb.getProduct(url);

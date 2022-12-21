@@ -19,19 +19,22 @@ describe('Entity-Classification audit', () => {
     const results = await EntityClassification.audit(artifacts, {computedCache: new Map()});
     expect(results.score).toBe(1);
     expect(results.details.type).toBe('entity-classification');
-    const entities = {
-      'pwa.rocks': {
+    const entities = [
+      {
         homepage: undefined,
-        isFirstParty: true, // Identifies first party
-        isUnrecognized: true, // Marks 3pweb-unrecognized parties
+        isFirstParty: true,
+        isUnrecognized: true,
+        name: 'pwa.rocks',
       },
-      'Google Tag Manager': {
+      {
         homepage: 'https://marketingplatform.google.com/about/tag-manager/',
+        name: 'Google Tag Manager',
       },
-      'Google Analytics': {
+      {
         homepage: 'https://marketingplatform.google.com/about/analytics/',
+        name: 'Google Analytics',
       },
-    };
+    ];
     expect(results.details.entities).toEqual(entities);
   });
 
@@ -51,12 +54,12 @@ describe('Entity-Classification audit', () => {
     const results = await EntityClassification.audit(artifacts, {computedCache: new Map()});
 
     const entities = results.details.entities;
-    Object.entries(entities).forEach(([name, entity]) => {
+    entities.forEach(entity => {
       // Make sure isFirstParty is missing from entity when falsy.
-      if (name === 'example.com') expect(entity.isFirstParty).toBe(true);
+      if (entity.name === 'example.com') expect(entity.isFirstParty).toBe(true);
       else expect(entity).not.toHaveProperty('isFirstParty');
     });
-    expect(Object.keys(entities)).toEqual([
+    expect(entities.map(entity => entity.name)).toEqual([
       'example.com', 'pwa.rocks', 'Google Tag Manager', 'Google Analytics']);
   });
 
@@ -70,10 +73,9 @@ describe('Entity-Classification audit', () => {
       URL: {mainDocumentUrl: 'http://example.com'},
     };
     const results = await EntityClassification.audit(artifacts, {computedCache: new Map()});
-    const entities = results.details.entities;
-    Object.entries(entities).forEach(([name, entity]) => {
+    results.details.entities.forEach(entity => {
       // Make sure isFirstParty is missing from entity when falsy.
-      if (name === 'example.com') expect(entity.isFirstParty).toBe(true);
+      if (entity.name === 'example.com') expect(entity.isFirstParty).toBe(true);
       else expect(entity).not.toHaveProperty('isFirstParty');
     });
   });
@@ -92,10 +94,10 @@ describe('Entity-Classification audit', () => {
     };
     const results = await EntityClassification.audit(artifacts, {computedCache: new Map()});
     const entities = results.details.entities;
-    Object.values(entities).forEach(entity => {
+    entities.forEach(entity => {
       expect(entity).not.toHaveProperty('isFirstParty');
     });
-    expect(Object.keys(entities)).toEqual([
+    expect(entities.map(entity => entity.name)).toEqual([
       'example.com', 'pwa.rocks', 'Google Tag Manager', 'Google Analytics']);
   });
 
@@ -114,10 +116,10 @@ describe('Entity-Classification audit', () => {
     };
     const results = await EntityClassification.audit(artifacts, {computedCache: new Map()});
     const entities = results.details.entities;
-    Object.entries(entities).forEach(([name, entity]) => {
-      if (name === 'pwa.rocks') expect(entity.isFirstParty).toBe(true);
+    entities.forEach(entity => {
+      if (entity.name === 'pwa.rocks') expect(entity.isFirstParty).toBe(true);
       else expect(entity).not.toHaveProperty('isFirstParty');
     });
-    expect(Object.keys(entities)).toEqual(['example.com', 'pwa.rocks']);
+    expect(entities.map(entity => entity.name)).toEqual(['example.com', 'pwa.rocks']);
   });
 });

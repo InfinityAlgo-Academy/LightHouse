@@ -36,14 +36,14 @@ describe('Entity Classification computed artifact', () => {
   it('computes entity classification for all urls in devtoolsLogs', async () => {
     const result = await EntityClassification.request(artifacts, context);
     // make sure classification was successful
-    expect(result).toHaveProperty('byURL');
-    expect(result).toHaveProperty('byEntity');
+    expect(result).toHaveProperty('urlToEntity');
+    expect(result).toHaveProperty('entityToURLs');
     expect(result).toHaveProperty('firstParty');
     // make sure all entities have been identified
-    expect(result.byURL.size).toBe(4);
-    expect(result.byEntity.size).toBe(2);
+    expect(result.urlToEntity.size).toBe(4);
+    expect(result.entityToURLs.size).toBe(2);
     // make sure first party is one of the entities
-    expect(result.byEntity.keys()).toContainEqual(result.firstParty);
+    expect(result.entityToURLs.keys()).toContainEqual(result.firstParty);
   });
 
   it('identifies 1st party URL given finalDisplayedUrl', async () => {
@@ -52,13 +52,13 @@ describe('Entity Classification computed artifact', () => {
     };
     const result = await EntityClassification.request(artifacts, context);
 
-    const entities = Array.from(result.byEntity.keys()).map(e => e.name);
+    const entities = Array.from(result.entityToURLs.keys()).map(e => e.name);
     // make sure first party is correctly identified.
     expect(result.firstParty).not.toBeFalsy();
     expect(result.firstParty.name).toBe('example.com');
     // make sure all entities were identified.
     expect(entities).toEqual(['example.com', 'third-party.com']);
-    expect(result.byURL.size).toBe(4);
+    expect(result.urlToEntity.size).toBe(4);
   });
 
   it('identifies 1st party URL given mainDocumentUrl', async () => {
@@ -66,24 +66,24 @@ describe('Entity Classification computed artifact', () => {
       mainDocumentUrl: 'http://cdn.example.com',
     };
     const result = await EntityClassification.request(artifacts, context);
-    const entities = Array.from(result.byEntity.keys()).map(e => e.name);
+    const entities = Array.from(result.entityToURLs.keys()).map(e => e.name);
     // make sure first party is correctly identified.
     expect(result.firstParty).not.toBeFalsy();
     expect(result.firstParty.name).toBe('example.com');
     // make sure all entities were identified
     expect(entities).toEqual(['example.com', 'third-party.com']);
-    expect(result.byURL.size).toBe(4);
+    expect(result.urlToEntity.size).toBe(4);
   });
 
   it('does not identify 1st party if URL artifact is missing', async () => {
     artifacts.URL = {};
     const result = await EntityClassification.request(artifacts, context);
-    const entities = Array.from(result.byEntity.keys()).map(e => e.name);
+    const entities = Array.from(result.entityToURLs.keys()).map(e => e.name);
     // make sure first party is not identified
     expect(result.firstParty).toBeFalsy();
     // make sure all entities were identified
     expect(entities).toEqual(['example.com', 'third-party.com']);
-    expect(result.byURL.size).toBe(4);
+    expect(result.urlToEntity.size).toBe(4);
   });
 
   it('prioritizes mainDocumentUrl over finalDisplayUrl when both are available', async () => {
@@ -92,12 +92,30 @@ describe('Entity Classification computed artifact', () => {
       mainDocumentUrl: 'http://third-party.com',
     };
     const result = await EntityClassification.request(artifacts, context);
-    const entities = Array.from(result.byEntity.keys()).map(e => e.name);
+    const entities = Array.from(result.entityToURLs.keys()).map(e => e.name);
     // make sure first party is not identified
     expect(result.firstParty).not.toBeFalsy();
     expect(result.firstParty.name).toBe('third-party.com');
     // make sure all entities were identified
     expect(entities).toEqual(['example.com', 'third-party.com']);
-    expect(result.byURL.size).toBe(4);
+    expect(result.urlToEntity.size).toBe(4);
+  });
+
+  it('does not classify non-network URLs', async () => {
+    artifacts.URL = {
+      mainDocumentUrl: 'http://third-party.com',
+    };
+    artifacts.devtoolsLog = networkRecordsToDevtoolsLog([
+      {url: 'http://third-party.com'},
+      {url: 'chrome://version'},
+      {url: 'data:foobar'},
+    ]);
+    const result = await EntityClassification.request(artifacts, context);
+    const entities = Array.from(result.entityToURLs.keys()).map(e => e.name);
+    // make sure first party is identified
+    expect(result.firstParty.name).toBe('third-party.com');
+    // make sure only valid network urls with a domain is recognized.
+    expect(entities).toEqual(['third-party.com']);
+    expect(result.urlToEntity.size).toBe(1);
   });
 });

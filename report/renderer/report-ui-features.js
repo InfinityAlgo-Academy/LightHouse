@@ -322,20 +322,33 @@ export class ReportUIFeatures {
    * @return {Array<HTMLElement>}
    */
   _getThirdPartyRows(rowEls, finalDisplayedUrl) {
-    /** @type {Array<HTMLElement>} */
-    const thirdPartyRows = [];
     const finalDisplayedUrlRootDomain = Util.getRootDomain(finalDisplayedUrl);
 
+    /** @type {string | undefined} */
+    let mainEntityName;
+    if (this.json.audits['entity-classification'] &&
+        this.json.audits['entity-classification'].details &&
+        this.json.audits['entity-classification'].details.type === 'entity-classification') {
+      /** @type {LH.Audit.Details.EntityClassification} */
+      const entityClassification = this.json.audits['entity-classification'].details;
+      mainEntityName = entityClassification.firstParty;
+    }
+
+    /** @type {Array<HTMLElement>} */
+    const thirdPartyRows = [];
     for (const rowEl of rowEls) {
-      if (rowEl.classList.contains('lh-sub-item-row')) continue;
-
-      const urlItem = rowEl.querySelector('div.lh-text__url');
-      if (!urlItem) continue;
-
-      const datasetUrl = urlItem.dataset.url;
-      if (!datasetUrl) continue;
-      const isThirdParty = Util.getRootDomain(datasetUrl) !== finalDisplayedUrlRootDomain;
-      if (!isThirdParty) continue;
+      if (mainEntityName && rowEl.dataset?.entity) {
+        // We rely on entity-classification audit for new LHRs that support it.
+        if (rowEl.dataset?.entity === mainEntityName) continue;
+      } else {
+        // Continue the legacy root domain check for back compat.
+        const urlItem = rowEl.querySelector('div.lh-text__url');
+        if (!urlItem) continue;
+        const datasetUrl = urlItem.dataset.url;
+        if (!datasetUrl) continue;
+        const isThirdParty = Util.getRootDomain(datasetUrl) !== finalDisplayedUrlRootDomain;
+        if (!isThirdParty) continue;
+      }
 
       thirdPartyRows.push(rowEl);
     }

@@ -3696,16 +3696,28 @@
             "scoreDisplayMode": "informative",
             "details": {
               "type": "entity-classification",
-              "entities": {
-                "mikescerealshack.co": {
+              "entities": [
+                {
+                  "name": "mikescerealshack.co",
                   "isFirstParty": true,
                   "isUnrecognized": true
                 },
-                "Google Fonts": {
+                {
+                  "name": "Google Fonts",
                   "homepage": "https://fonts.google.com/"
                 }
+              ],
+              "firstParty": "mikescerealshack.co",
+              "originLUT": {
+                "https://www.mikescerealshack.co": 0,
+                "https://events.mikescerealshack.co": 0,
+                "https://fonts.googleapis.com": 1,
+                "https://fonts.gstatic.com": 1
               },
-              "firstParty": "mikescerealshack.co"
+              "nameLUT": {
+                "mikescerealshack.co": 0,
+                "Google Fonts": 1
+              }
             }
           }
         },
@@ -9159,16 +9171,27 @@
             "scoreDisplayMode": "informative",
             "details": {
               "type": "entity-classification",
-              "entities": {
-                "mikescerealshack.co": {
+              "entities": [
+                {
+                  "name": "mikescerealshack.co",
                   "isFirstParty": true,
                   "isUnrecognized": true
                 },
-                "Algolia": {
+                {
+                  "name": "Algolia",
                   "homepage": "https://www.algolia.com/"
                 }
+              ],
+              "firstParty": "mikescerealshack.co",
+              "originLUT": {
+                "https://www.mikescerealshack.co": 0,
+                "https://cdn.mikescerealshack.co": 0,
+                "https://mnl4bjjsnz-dsn.algolia.net": 1
               },
-              "firstParty": "mikescerealshack.co"
+              "nameLUT": {
+                "mikescerealshack.co": 0,
+                "Algolia": 1
+              }
             }
           }
         },
@@ -17935,16 +17958,28 @@
             "scoreDisplayMode": "informative",
             "details": {
               "type": "entity-classification",
-              "entities": {
-                "mikescerealshack.co": {
+              "entities": [
+                {
+                  "name": "mikescerealshack.co",
                   "isFirstParty": true,
                   "isUnrecognized": true
                 },
-                "Google Fonts": {
+                {
+                  "name": "Google Fonts",
                   "homepage": "https://fonts.google.com/"
                 }
+              ],
+              "firstParty": "mikescerealshack.co",
+              "originLUT": {
+                "https://www.mikescerealshack.co": 0,
+                "https://events.mikescerealshack.co": 0,
+                "https://fonts.googleapis.com": 1,
+                "https://fonts.gstatic.com": 1
               },
-              "firstParty": "mikescerealshack.co"
+              "nameLUT": {
+                "mikescerealshack.co": 0,
+                "Google Fonts": 1
+              }
             }
           }
         },

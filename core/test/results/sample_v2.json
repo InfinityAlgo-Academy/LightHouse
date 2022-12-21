@@ -5840,16 +5840,26 @@
       "scoreDisplayMode": "informative",
       "details": {
         "type": "entity-classification",
-        "entities": {
-          "localhost": {
+        "entities": [
+          {
+            "name": "localhost",
             "isFirstParty": true,
             "isUnrecognized": true
           },
-          "Google CDN": {
+          {
+            "name": "Google CDN",
             "homepage": "https://developers.google.com/speed/libraries/"
           }
+        ],
+        "firstParty": "localhost",
+        "originLUT": {
+          "http://localhost:10200": 0,
+          "http://ajax.googleapis.com": 1
         },
-        "firstParty": "localhost"
+        "nameLUT": {
+          "localhost": 0,
+          "Google CDN": 1
+        }
       }
     }
   },

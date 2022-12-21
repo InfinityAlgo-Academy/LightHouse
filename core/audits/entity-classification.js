@@ -40,7 +40,7 @@ class EntityClassification extends Audit {
     /** @type {Record<string, number>} */
     const nameLUT = {};
 
-    for (const [entity, entityUrls] of classifiedEntities.byEntity.entries()) {
+    for (const [entity, entityUrls] of classifiedEntities.entityToURLs.entries()) {
       /** @type {LH.Audit.Details.EntityClassificationEntity} */
       const shortEntity = {
         name: entity.name,
@@ -65,6 +65,7 @@ class EntityClassification extends Audit {
       details: {
         type: 'entity-classification',
         entities,
+        firstParty: classifiedEntities.firstParty?.name,
         originLUT,
         nameLUT,
       },

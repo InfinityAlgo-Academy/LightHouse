@@ -10,7 +10,7 @@ import {Util} from '../util.cjs';
 import UrlUtils from '../lib/url-utils.js';
 import thirdPartyWeb from '../lib/third-party-web.js';
 
-/** @typedef {Map<string, LH.Artifacts.RecognizableEntity>} EntityCache */
+/** @typedef {Map<string, LH.Artifacts.Entity>} EntityCache */
 
 class EntityClassification {
   /**
@@ -20,6 +20,10 @@ class EntityClassification {
    */
   static makeUpAnEntity(entityCache, url) {
     if (!UrlUtils.isValid(url)) return;
+    // We can make up an entity only for those URLs with a valid domain attached.
+    // So we further restrict from allowed URLs to (/^h/ or http[s] and h2).
+    if (!(UrlUtils.isValid(url) && UrlUtils.isProtocolAllowed(url) &&
+      Util.createOrReturnURL(url).protocol[0] === 'h')) return;
     const rootDomain = Util.getRootDomain(url);
     if (!rootDomain) return;
     if (entityCache.has(rootDomain)) return entityCache.get(rootDomain);
@@ -42,34 +46,35 @@ class EntityClassification {
   /**
    * @param {{URL: LH.Artifacts['URL'], devtoolsLog: LH.DevtoolsLog}} data
    * @param {LH.Artifacts.ComputedContext} context
-   * @return {Promise<LH.Artifacts.ClassifiedEntities>}
+   * @return {Promise<LH.Artifacts.EntityClassification>}
    */
   static async compute_(data, context) {
     const networkRecords = await NetworkRecords.request(data.devtoolsLog, context);
     /** @type {EntityCache} */
     const madeUpEntityCache = new Map();
-    /** @type {Map<string, LH.Artifacts.RecognizableEntity>} */
-    const byURL = new Map();
-    /** @type {Map<LH.Artifacts.RecognizableEntity, Array<string>>} */
-    const byEntity = new Map();
+    /** @type {Map<string, LH.Artifacts.Entity>} */
+    const urlToEntity = new Map();
+    /** @type {Map<LH.Artifacts.Entity, Array<string>>} */
+    const entityToURLs = new Map();
 
     for (const record of networkRecords) {
       const {url} = record;
-      if (byURL.has(url)) continue;
+      if (urlToEntity.has(url)) continue;
 
       const entity = thirdPartyWeb.getEntity(url) ||
         EntityClassification.makeUpAnEntity(madeUpEntityCache, url);
       if (!entity) continue;
 
-      const entityURLs = byEntity.get(entity) || [];
+      const entityURLs = entityToURLs.get(entity) || [];
       entityURLs.push(url);
-      byEntity.set(entity, entityURLs);
-      byURL.set(url, entity);
+      entityToURLs.set(entity, entityURLs);
+      urlToEntity.set(url, entity);
     }
 
     // When available, first party identification will be done via
     // `mainDocumentUrl` (for navigations), and falls back to `finalDisplayedUrl` (for timespan/snapshot).
     // See https://github.com/GoogleChrome/lighthouse/issues/13706
+    /** @type {LH.Artifacts.Entity | undefined} */
     let firstParty;
     const firstPartyUrl = data.URL?.mainDocumentUrl || data.URL?.finalDisplayedUrl;
     if (firstPartyUrl) {
@@ -77,7 +82,28 @@ class EntityClassification {
         EntityClassification.makeUpAnEntity(madeUpEntityCache, firstPartyUrl);
     }
 
-    return {byURL, byEntity, firstParty};
+    /**
+     * Convenience function to return the entity name for a URL.
+     * @param {string} url
+     * @returns string | undefined
+     */
+    function getEntityName(url) {
+      return urlToEntity.get(url)?.name;
+    }
+
+    /**
+     * Convenience function to check if a URL belongs to first party.
+     * @param {string} url
+     * @returns boolean
+     */
+    function isFirstParty(url) {
+      return urlToEntity.get(url) === firstParty;
+    }
+
+    return {
+      urlToEntity, entityToURLs, firstParty,
+      getEntityName, isFirstParty,
+    };
   }
 }
 
