@@ -4,7 +4,6 @@
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 
-import puppeteer from 'puppeteer';
 import puppeteerCore from 'puppeteer-core';
 
 /**
@@ -12,11 +11,17 @@ import puppeteerCore from 'puppeteer-core';
  * Anytime we want to use a Puppeteer type within Lighthouse, we should pull the union type from here rather than one of the packages directly.
  */
 
+type IfNotAny<T> = [T & 0] extends [1] ? never : T;
+
 declare module Puppeteer {
-  export type Browser = puppeteerCore.Browser | puppeteer.Browser;
-  export type Page = puppeteerCore.Page | puppeteer.Page;
-  export type CDPSession = puppeteerCore.CDPSession | puppeteer.CDPSession;
-  export type Connection = puppeteerCore.Connection | puppeteer.Connection;
+  // @ts-ignore Puppeteer is an optional dependency. `IfNotAny` will handle the `any` type if it's not installed.
+  export type Browser = puppeteerCore.Browser | IfNotAny<import('puppeteer').Browser>;
+  // @ts-ignore Puppeteer is an optional dependency. `IfNotAny` will handle the `any` type if it's not installed.
+  export type Page = puppeteerCore.Page | IfNotAny<import('puppeteer').Page>;
+  // @ts-ignore Puppeteer is an optional dependency. `IfNotAny` will handle the `any` type if it's not installed.
+  export type CDPSession = puppeteerCore.CDPSession | IfNotAny<import('puppeteer').CDPSession>;
+  // @ts-ignore Puppeteer is an optional dependency. `IfNotAny` will handle the `any` type if it's not installed.
+  export type Connection = puppeteerCore.Connection | IfNotAny<import('puppeteer').Connection>;
 }
 
 export default Puppeteer;
