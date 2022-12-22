@@ -10,8 +10,6 @@ import SourceMaps from '../../../gather/gatherers/source-maps.js';
 import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
 import {flushAllTimersAndMicrotasks, fnAny, timers} from '../../test-utils.js';
 
-timers.useFakeTimers();
-
 const mapJson = JSON.stringify({
   version: 3,
   file: 'out.js',
@@ -22,6 +20,9 @@ const mapJson = JSON.stringify({
 });
 
 describe('SourceMaps gatherer', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   /**
    * `scriptParsedEvent` mocks the `sourceMapURL` and `url` seen from the protocol.
    * `map` mocks the (JSON) of the source maps that `Runtime.evaluate` returns.

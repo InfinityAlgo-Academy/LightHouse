@@ -162,6 +162,7 @@ const rootHooks = {
       });
     }
   },
+  // This runs _once_, after all of the tests in the root suite.
   async afterAll() {
     timers.dispose();
     td.reset();

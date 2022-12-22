@@ -1,6 +1,6 @@
 # User Flows in Lighthouse
 
-Historically, Lighthouse has analyzed the cold pageload of a page. Starting in 2022 (Lighthouse v10), it can analyze and report on the entire page lifecycle via "user flows".
+Historically, Lighthouse has analyzed the cold pageload of a page. Starting in 2022, it can analyze and report on the entire page lifecycle via "user flows".
 
 #### You might be interested in flows if…
 
@@ -40,12 +40,12 @@ In DevTools, navigation is easy: ensure it's the selected mode and then click _A
 ```js
 import {writeFileSync} from 'fs';
 import puppeteer from 'puppeteer';
-import lighthouse from 'lighthouse/core/api.js';
+import {startFlow} from 'lighthouse/lighthouse-core/fraggle-rock/api.js';
 
 (async function() {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  const flow = await lighthouse.startFlow(page);
+  const flow = await startFlow(page);
 
   // Navigate with a URL
   await flow.navigate('https://example.com');
@@ -54,11 +54,6 @@ import lighthouse from 'lighthouse/core/api.js';
   await flow.navigate(async () => {
     await page.click('a.link');
   });
-
-  // Navigate with startNavigation/endNavigation
-  await flow.startNavigation();
-  await page.click('a.link');
-  await flow.endNavigation();
 
   await browser.close();
   writeFileSync('report.html', await flow.generateReport());
@@ -69,13 +64,11 @@ import lighthouse from 'lighthouse/core/api.js';
 
 ##### Triggering a navigation via user interactions
 
-Instead of providing a URL to navigate to, you can provide a callback function or use `startNavigation`/`endNavigation`, as seen above. This is useful when you want to audit a navigation that's initiated by a scenario like a button click or form submission.
+Instead of providing a URL to navigate to, you can provide a callback function, as seen above. This is useful when you want to audit a navigation that's initiated by a scenario like a button click or form submission.
 
 > Aside: Lighthouse typically clears out any active Service Worker and Cache Storage for the origin under test. However, in this case, as it doesn't know the URL being analyzed, Lighthouse cannot clear this storage. This generally reflects the real user experience, but if you still wish to clear the Service Workers and Cache Storage you must do it manually.
 
 This callback function _must_ perform an action that will trigger a navigation. Any interactions completed before the callback promise resolves will be captured by the navigation.
-
-The `startNavigation`/`endNavigation` functions _must_ surround an action that triggers a navigation. Any interactions completed after `startNavigation` is invoked and before `endNavigation` is invoked will be captured by the navigation.
 
 ### Timespan
 
@@ -90,15 +83,15 @@ In DevTools, select "Timespan" as the mode and click _Start timespan_. Record wh
 ```js
 import {writeFileSync} from 'fs';
 import puppeteer from 'puppeteer';
-import lighthouse from 'lighthouse/core/api.js';
+import {startFlow} from 'lighthouse/lighthouse-core/fraggle-rock/api.js';
 
 (async function() {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto('https://secret.login');
-  const flow = await lighthouse.startFlow(page);
+  const flow = await startFlow(page);
 
-  await flow.beginTimespan();
+  await flow.startTimespan();
   await page.type('#password', 'L1ghth0useR0cks!');
   await page.click('#login');
   await page.waitForSelector('#dashboard');
@@ -125,13 +118,13 @@ In DevTools, select "Snapshot" as the mode. Set up the page in the state you wan
 ```js
 import {writeFileSync} from 'fs';
 import puppeteer from 'puppeteer';
-import lighthouse from 'lighthouse/core/api.js';
+import {startFlow} from 'lighthouse/lighthouse-core/fraggle-rock/api.js';
 
 (async function() {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto('https://example.com');
-  const flow = await lighthouse.startFlow(page);
+  const flow = await startFlow(page);
 
   await page.click('#expand-sidebar');
   await flow.snapshot();
@@ -164,7 +157,7 @@ The below example codifies a user flow for an ecommerce site where the user navi
 import {writeFileSync} from 'fs';
 import puppeteer from 'puppeteer';
 import * as pptrTestingLibrary from 'pptr-testing-library';
-import lighthouse from 'lighthouse/core/api.js';
+import {startFlow} from 'lighthouse/lighthouse-core/fraggle-rock/api.js';
 
 const {getDocument, queries} = pptrTestingLibrary;
 
@@ -182,7 +175,7 @@ async function search(page) {
   // Setup the browser and Lighthouse.
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  const flow = await lighthouse.startFlow(page);
+  const flow = await startFlow(page);
 
   // Phase 1 - Navigate to the landing page.
   await flow.navigate('https://www.bestbuy.com');

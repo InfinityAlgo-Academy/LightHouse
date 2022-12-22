@@ -12,9 +12,10 @@ import {FlowStepThumbnail} from '../src/common';
 
 let lhr: LH.Result;
 
-timers.useFakeTimers();
-
 describe('FlowStepThumbnail', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   beforeEach(() => {
     global.console.warn = jestMock.fn();
 

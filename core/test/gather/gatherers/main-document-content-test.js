@@ -13,7 +13,7 @@ const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', 
 
 const URL = getURLArtifactFromDevtoolsLog(devtoolsLog);
 
-describe('FR compat', () => {
+describe('FR compat (main-document-content)', () => {
   it('uses loadData in legacy mode', async () => {
     const gatherer = new MainDocumentContent();
     const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);

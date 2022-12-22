@@ -107,6 +107,18 @@ function loadSourceMapAndUsageFixture(name) {
 }
 
 /**
+ * @param {string} name
+ * @return {{devtoolsLog: LH.DevtoolsLog, trace: LH.Trace}}
+ */
+function loadTraceFixture(name) {
+  const dir = `${LH_ROOT}/core/test/fixtures/traces`;
+  return {
+    devtoolsLog: JSON.parse(fs.readFileSync(`${dir}/${name}.devtools.log.json`, 'utf-8')),
+    trace: JSON.parse(fs.readFileSync(`${dir}/${name}.json`, 'utf-8')),
+  };
+}
+
+/**
  * @template {unknown[]} TParams
  * @template TReturn
  * @param {(...args: TParams) => TReturn} fn
@@ -337,6 +349,7 @@ export {
   createDecomposedPromise,
   flushAllTimersAndMicrotasks,
   makeMocksForGatherRunner,
+  loadTraceFixture,
   fnAny,
   mockCommands,
   createScript,

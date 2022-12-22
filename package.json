@@ -137,13 +137,13 @@
     "archiver": "^3.0.0",
     "c8": "^7.11.3",
     "chalk": "^2.4.1",
-    "chrome-devtools-frontend": "1.0.1040857",
+    "chrome-devtools-frontend": "1.0.1070764",
     "concurrently": "^6.4.0",
     "conventional-changelog-cli": "^2.1.1",
     "cpy": "^8.1.2",
     "cross-env": "^7.0.2",
     "csv-validator": "^0.0.3",
-    "devtools-protocol": "0.0.1034970",
+    "devtools-protocol": "0.0.1081726",
     "es-main": "^1.0.2",
     "eslint": "^8.4.1",
     "eslint-config-google": "^0.14.0",
@@ -215,8 +215,8 @@
     "yargs-parser": "^21.0.0"
   },
   "resolutions": {
-    "puppeteer/**/devtools-protocol": "0.0.1034970",
-    "puppeteer-core/**/devtools-protocol": "0.0.1034970",
+    "puppeteer/**/devtools-protocol": "0.0.1081726",
+    "puppeteer-core/**/devtools-protocol": "0.0.1081726",
     "testdouble/**/quibble": "connorjclark/quibble#fork"
   },
   "repository": "GoogleChrome/lighthouse",

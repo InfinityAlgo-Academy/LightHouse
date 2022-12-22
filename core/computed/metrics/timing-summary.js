@@ -87,7 +87,7 @@ class TimingSummary {
       cumulativeLayoutShiftMainFrame,
       totalCumulativeLayoutShift,
 
-      // Include all timestamps of interest from trace of tab
+      // Include all timestamps of interest from the processed trace
       observedTimeOrigin: processedTrace.timings.timeOrigin,
       observedTimeOriginTs: processedTrace.timestamps.timeOrigin,
       // For now, navigationStart is always timeOrigin.

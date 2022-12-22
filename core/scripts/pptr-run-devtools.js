@@ -288,6 +288,13 @@ async function installConsoleListener(inspectorSession, logs) {
 }
 
 /**
+ * @param {puppeteer.Dialog} dialog
+ */
+function dismissDialog(dialog) {
+  dialog.dismiss();
+}
+
+/**
  * @param {string} url
  * @param {{config?: LH.Config.Json, chromeFlags?: string[], useLegacyNavigation?: boolean}} [options]
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, logs: string[]}>}
@@ -315,9 +322,13 @@ async function testUrlFromDevtools(url, options = {}) {
     const logs = [];
     await installConsoleListener(inspectorSession, logs);
 
+    page.on('dialog', dismissDialog);
+
     await page.goto(url, {waitUntil: ['domcontentloaded']});
 
     await waitForFunction(inspectorSession, waitForLighthouseReady);
+
+    page.off('dialog', dismissDialog);
 
     if (!useLegacyNavigation) {
       await evaluateInSession(inspectorSession, disableLegacyNavigation);

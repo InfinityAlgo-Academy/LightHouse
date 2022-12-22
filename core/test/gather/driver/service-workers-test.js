@@ -8,76 +8,80 @@ import {createMockSession} from '../mock-driver.js';
 import {makePromiseInspectable, flushAllTimersAndMicrotasks, timers} from '../../test-utils.js';
 import * as serviceWorkers from '../../../gather/driver/service-workers.js';
 
-let sessionMock = createMockSession();
+/** @type {ReturnType<typeof createMockSession>} */
+let sessionMock;
 
-beforeEach(() => {
-  sessionMock = createMockSession();
-});
+describe('Service Worker driver functions', () => {
+  beforeEach(() => {
+    timers.useRealTimers();
+    sessionMock = createMockSession();
+  });
+  after(() => timers.dispose());
 
-afterEach(() => {
-  timers.useRealTimers();
-});
+  describe('.getServiceWorkerVersions', () => {
+    it('returns the data from service worker events', async () => {
+      sessionMock.sendCommand
+        .mockResponse('ServiceWorker.enable')
+        .mockResponse('ServiceWorker.disable');
+      sessionMock.on.mockEvent('ServiceWorker.workerVersionUpdated', {
+        versions: [{registrationId: '1', status: 'activated'}],
+      });
 
-describe('.getServiceWorkerVersions', () => {
-  it('returns the data from service worker events', async () => {
-    sessionMock.sendCommand
-      .mockResponse('ServiceWorker.enable')
-      .mockResponse('ServiceWorker.disable');
-    sessionMock.on.mockEvent('ServiceWorker.workerVersionUpdated', {
-      versions: [{registrationId: '1', status: 'activated'}],
+      const results = await serviceWorkers.getServiceWorkerVersions(sessionMock.asSession());
+      expect(results).toEqual({versions: [{registrationId: '1', status: 'activated'}]});
     });
 
-    const results = await serviceWorkers.getServiceWorkerVersions(sessionMock.asSession());
-    expect(results).toEqual({versions: [{registrationId: '1', status: 'activated'}]});
-  });
+    it('returns when there are no active candidates', async () => {
+      sessionMock.sendCommand
+        .mockResponse('ServiceWorker.enable')
+        .mockResponse('ServiceWorker.disable');
+      sessionMock.on.mockEvent('ServiceWorker.workerVersionUpdated', {
+        versions: [{registrationId: '1', status: 'redundant'}],
+      });
 
-  it('returns when there are no active candidates', async () => {
-    sessionMock.sendCommand
-      .mockResponse('ServiceWorker.enable')
-      .mockResponse('ServiceWorker.disable');
-    sessionMock.on.mockEvent('ServiceWorker.workerVersionUpdated', {
-      versions: [{registrationId: '1', status: 'redundant'}],
+      const results = await serviceWorkers.getServiceWorkerVersions(sessionMock.asSession());
+      expect(results).toEqual({versions: [{registrationId: '1', status: 'redundant'}]});
     });
 
-    const results = await serviceWorkers.getServiceWorkerVersions(sessionMock.asSession());
-    expect(results).toEqual({versions: [{registrationId: '1', status: 'redundant'}]});
-  });
+    it('waits for currently installing workers', async () => {
+      timers.useFakeTimers();
+      after(() => timers.dispose());
 
-  it('waits for currently installing workers', async () => {
-    timers.useFakeTimers();
-    sessionMock.sendCommand
-      .mockResponse('ServiceWorker.enable')
-      .mockResponse('ServiceWorker.disable');
+      sessionMock.sendCommand
+        .mockResponse('ServiceWorker.enable')
+        .mockResponse('ServiceWorker.disable');
 
-    const resultPromise = makePromiseInspectable(
-      serviceWorkers.getServiceWorkerVersions(sessionMock.asSession())
-    );
-    await flushAllTimersAndMicrotasks();
-    expect(resultPromise.isDone()).toBe(false);
+      const resultPromise = makePromiseInspectable(
+        serviceWorkers.getServiceWorkerVersions(sessionMock.asSession())
+      );
+      await flushAllTimersAndMicrotasks();
+      expect(resultPromise.isDone()).toBe(false);
 
-    const workerVersionUpdated = sessionMock.on.findListener('ServiceWorker.workerVersionUpdated');
-    workerVersionUpdated({versions: [{status: 'installing'}]});
-    await flushAllTimersAndMicrotasks();
-    expect(resultPromise.isDone()).toBe(false);
+      const workerVersionUpdated =
+        sessionMock.on.findListener('ServiceWorker.workerVersionUpdated');
+      workerVersionUpdated({versions: [{status: 'installing'}]});
+      await flushAllTimersAndMicrotasks();
+      expect(resultPromise.isDone()).toBe(false);
 
-    const versions = {versions: [{registrationId: '3', status: 'activated'}]};
-    workerVersionUpdated(versions);
-    await flushAllTimersAndMicrotasks();
-    expect(resultPromise.isDone()).toBe(true);
-    expect(await resultPromise).toEqual(versions);
-  });
-});
-
-describe('.getServiceWorkerRegistrations', () => {
-  it('returns the data from service worker events', async () => {
-    sessionMock.sendCommand
-      .mockResponse('ServiceWorker.enable')
-      .mockResponse('ServiceWorker.disable');
-    sessionMock.once.mockEvent('ServiceWorker.workerRegistrationUpdated', {
-      registrations: [{registrationId: '2'}],
+      const versions = {versions: [{registrationId: '3', status: 'activated'}]};
+      workerVersionUpdated(versions);
+      await flushAllTimersAndMicrotasks();
+      expect(resultPromise.isDone()).toBe(true);
+      expect(await resultPromise).toEqual(versions);
     });
+  });
 
-    const results = await serviceWorkers.getServiceWorkerRegistrations(sessionMock.asSession());
-    expect(results).toEqual({registrations: [{registrationId: '2'}]});
+  describe('.getServiceWorkerRegistrations', () => {
+    it('returns the data from service worker events', async () => {
+      sessionMock.sendCommand
+        .mockResponse('ServiceWorker.enable')
+        .mockResponse('ServiceWorker.disable');
+      sessionMock.once.mockEvent('ServiceWorker.workerRegistrationUpdated', {
+        registrations: [{registrationId: '2'}],
+      });
+
+      const results = await serviceWorkers.getServiceWorkerRegistrations(sessionMock.asSession());
+      expect(results).toEqual({registrations: [{registrationId: '2'}]});
+    });
   });
 });
