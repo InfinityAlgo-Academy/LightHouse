@@ -100,8 +100,11 @@ class EntityClassification {
     }
 
     return {
-      urlToEntity, entityToURLs, firstParty,
-      getEntityName, isFirstParty,
+      urlToEntity,
+      entityToURLs,
+      firstParty,
+      getEntityName,
+      isFirstParty,
     };
   }
 }
