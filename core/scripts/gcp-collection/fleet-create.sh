@@ -16,6 +16,8 @@ node fleet-create-directories.js $@
 
 cd "$LH_ROOT/.tmp/gcp-instances"
 
+trap "trap - SIGTERM && kill -- -$$" SIGINT SIGTERM EXIT
+
 for instance in $(ls)
 do
   cd "$instance"
