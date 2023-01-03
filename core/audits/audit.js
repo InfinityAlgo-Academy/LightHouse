@@ -346,7 +346,7 @@ class Audit {
     let scoreDisplayMode = audit.meta.scoreDisplayMode || Audit.SCORING_MODES.BINARY;
 
     // But override if product contents require it.
-    if (product.errorMessage) {
+    if (product.errorMessage !== undefined) {
       // Error result.
       scoreDisplayMode = Audit.SCORING_MODES.ERROR;
     } else if (product.notApplicable) {

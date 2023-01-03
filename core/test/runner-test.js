@@ -598,10 +598,10 @@ describe('Runner', () => {
               return testAuditMeta;
             }
             static audit() {
-              throw new Error(errorMessage, {cause: ThrowyAudit.aFn()});
+              this.aFn();
             }
             static aFn() {
-              return new Error();
+              throw new Error(errorMessage);
             }
           },
         ],

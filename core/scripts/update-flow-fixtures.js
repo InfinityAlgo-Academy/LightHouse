@@ -19,7 +19,7 @@ import log from 'lighthouse-logger';
 import {LH_ROOT} from '../../root.js';
 import * as api from '../index.js';
 import * as assetSaver from '../lib/asset-saver.js';
-import { cleanAndFormatLHR } from './cleanup-LHR-for-diff.js';
+import {cleanAndFormatLHR} from './cleanup-LHR-for-diff.js';
 
 /* eslint-disable max-len */
 const ARTIFACTS_PATH = `${LH_ROOT}/core/test/fixtures/fraggle-rock/artifacts/`;
