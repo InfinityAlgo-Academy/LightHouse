@@ -179,9 +179,9 @@ class Config {
 
     const audits = await Config.requireAudits(configJSON.audits, configDir);
 
-    const config = new Config(configJSON, {settings, passes, audits});
+    const resolvedConfig = new Config(configJSON, {settings, passes, audits});
     log.timeEnd(status);
-    return config;
+    return resolvedConfig;
   }
 
   /**

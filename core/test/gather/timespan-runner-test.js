@@ -117,7 +117,7 @@ describe('Timespan Runner', () => {
     await timespan.endTimespanGather();
 
     expect(mockRunner.gather.mock.calls[0][1]).toMatchObject({
-      config: {
+      resolvedConfig: {
         settings: flags,
       },
     });

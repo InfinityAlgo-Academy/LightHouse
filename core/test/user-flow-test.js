@@ -459,7 +459,7 @@ describe('UserFlow', () => {
         [
           gatherSteps[0].artifacts,
           {
-            config: {
+            resolvedConfig: {
               settings: {
                 skipAudits: ['uses-http2'],
               },
@@ -469,7 +469,7 @@ describe('UserFlow', () => {
         [
           gatherSteps[1].artifacts,
           {
-            config: {
+            resolvedConfig: {
               settings: {
                 onlyCategories: ['performance'],
               },
@@ -479,7 +479,7 @@ describe('UserFlow', () => {
         [
           gatherSteps[2].artifacts,
           {
-            config: {
+            resolvedConfig: {
               settings: {
                 onlyCategories: ['accessibility'],
               },

@@ -63,9 +63,9 @@ async function legacyNavigation(url, flags = {}, configJSON, userConnection) {
   flags.logLevel = flags.logLevel || 'error';
   log.setLevel(flags.logLevel);
 
-  const config = await Config.fromJson(configJSON, flags);
+  const resolvedConfig = await Config.fromJson(configJSON, flags);
   const computedCache = new Map();
-  const options = {config, computedCache};
+  const options = {resolvedConfig, computedCache};
   const connection = userConnection || new CriConnection(flags.port, flags.hostname);
 
   // kick off a lighthouse run

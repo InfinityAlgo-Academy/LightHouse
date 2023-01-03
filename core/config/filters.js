@@ -257,19 +257,19 @@ function filterCategoriesByAvailableAudits(categories, availableAudits) {
 /**
  * Filters a config's artifacts, audits, and categories down to the set that supports the specified gather mode.
  *
- * @param {LH.Config.FRConfig} config
+ * @param {LH.Config.FRConfig} resolvedConfig
  * @param {LH.Gatherer.GatherMode} mode
  * @return {LH.Config.FRConfig}
  */
-function filterConfigByGatherMode(config, mode) {
-  const artifacts = filterArtifactsByGatherMode(config.artifacts, mode);
-  const supportedAudits = filterAuditsByGatherMode(config.audits, mode);
+function filterConfigByGatherMode(resolvedConfig, mode) {
+  const artifacts = filterArtifactsByGatherMode(resolvedConfig.artifacts, mode);
+  const supportedAudits = filterAuditsByGatherMode(resolvedConfig.audits, mode);
   const audits = filterAuditsByAvailableArtifacts(supportedAudits, artifacts || []);
-  const supportedCategories = filterCategoriesByGatherMode(config.categories, mode);
+  const supportedCategories = filterCategoriesByGatherMode(resolvedConfig.categories, mode);
   const categories = filterCategoriesByAvailableAudits(supportedCategories, audits || []);
 
   return {
-    ...config,
+    ...resolvedConfig,
     artifacts,
     audits,
     categories,
@@ -280,22 +280,22 @@ function filterConfigByGatherMode(config, mode) {
  * Filters a config's artifacts, audits, and categories down to the requested set.
  * Skip audits overrides inclusion via `onlyAudits`/`onlyCategories`.
  *
- * @param {LH.Config.FRConfig} config
+ * @param {LH.Config.FRConfig} resolvedConfig
  * @param {Pick<LH.Config.Settings, 'onlyAudits'|'onlyCategories'|'skipAudits'>} filters
  * @return {LH.Config.FRConfig}
  */
-function filterConfigByExplicitFilters(config, filters) {
+function filterConfigByExplicitFilters(resolvedConfig, filters) {
   const {onlyAudits, onlyCategories, skipAudits} = filters;
 
-  warnOnUnknownOnlyCategories(config.categories, onlyCategories);
+  warnOnUnknownOnlyCategories(resolvedConfig.categories, onlyCategories);
 
-  let baseAuditIds = getAuditIdsInCategories(config.categories, undefined);
+  let baseAuditIds = getAuditIdsInCategories(resolvedConfig.categories, undefined);
   if (onlyCategories) {
-    baseAuditIds = getAuditIdsInCategories(config.categories, onlyCategories);
+    baseAuditIds = getAuditIdsInCategories(resolvedConfig.categories, onlyCategories);
   } else if (onlyAudits) {
     baseAuditIds = new Set();
-  } else if (!config.categories || !Object.keys(config.categories).length) {
-    baseAuditIds = new Set(config.audits?.map(audit => audit.implementation.meta.id));
+  } else if (!resolvedConfig.categories || !Object.keys(resolvedConfig.categories).length) {
+    baseAuditIds = new Set(resolvedConfig.audits?.map(audit => audit.implementation.meta.id));
   }
 
   const auditIdsToKeep = new Set(
@@ -306,17 +306,19 @@ function filterConfigByExplicitFilters(config, filters) {
     ].filter(auditId => !skipAudits || !skipAudits.includes(auditId))
   );
 
-  const audits = auditIdsToKeep.size && config.audits ?
-    config.audits.filter(audit => auditIdsToKeep.has(audit.implementation.meta.id)) :
-    config.audits;
+  const audits = auditIdsToKeep.size && resolvedConfig.audits ?
+    resolvedConfig.audits.filter(audit => auditIdsToKeep.has(audit.implementation.meta.id)) :
+    resolvedConfig.audits;
 
-  const availableCategories = filterCategoriesByAvailableAudits(config.categories, audits || []);
+  const availableCategories =
+    filterCategoriesByAvailableAudits(resolvedConfig.categories, audits || []);
   const categories = filterCategoriesByExplicitFilters(availableCategories, onlyCategories);
-  const artifacts = filterArtifactsByAvailableAudits(config.artifacts, audits);
-  const navigations = filterNavigationsByAvailableArtifacts(config.navigations, artifacts || []);
+  const artifacts = filterArtifactsByAvailableAudits(resolvedConfig.artifacts, audits);
+  const navigations =
+    filterNavigationsByAvailableArtifacts(resolvedConfig.navigations, artifacts || []);
 
   return {
-    ...config,
+    ...resolvedConfig,
     artifacts,
     navigations,
     audits,

@@ -10,8 +10,8 @@ import {initializeConfig} from '../../config/config.js';
 import {stackPacksToInclude} from '../../lib/stack-packs.js';
 
 async function getAuditIds() {
-  const {config} = await initializeConfig('navigation');
-  return config.audits.map(a => a.implementation.meta.id);
+  const {resolvedConfig} = await initializeConfig('navigation');
+  return resolvedConfig.audits.map(a => a.implementation.meta.id);
 }
 
 describe('stack-packs lib', () => {

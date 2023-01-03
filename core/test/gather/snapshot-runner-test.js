@@ -103,7 +103,7 @@ describe('Snapshot Runner', () => {
     await snapshotGather(page, {config, flags});
 
     expect(mockRunner.gather.mock.calls[0][1]).toMatchObject({
-      config: {
+      resolvedConfig: {
         settings: flags,
       },
     });

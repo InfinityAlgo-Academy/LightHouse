@@ -247,22 +247,22 @@ function assertArtifactTopologicalOrder(navigations) {
 }
 
 /**
- * @param {LH.Config.FRConfig} config
+ * @param {LH.Config.FRConfig} resolvedConfig
  * @return {{warnings: string[]}}
  */
-function assertValidConfig(config) {
-  const {warnings} = assertValidFRNavigations(config.navigations);
+function assertValidConfig(resolvedConfig) {
+  const {warnings} = assertValidFRNavigations(resolvedConfig.navigations);
 
-  for (const artifactDefn of config.artifacts || []) {
+  for (const artifactDefn of resolvedConfig.artifacts || []) {
     assertValidFRGatherer(artifactDefn.gatherer);
   }
 
-  for (const auditDefn of config.audits || []) {
+  for (const auditDefn of resolvedConfig.audits || []) {
     assertValidAudit(auditDefn);
   }
 
-  assertValidCategories(config.categories, config.audits, config.groups);
-  assertValidSettings(config.settings);
+  assertValidCategories(resolvedConfig.categories, resolvedConfig.audits, resolvedConfig.groups);
+  assertValidSettings(resolvedConfig.settings);
   return {warnings};
 }
 
