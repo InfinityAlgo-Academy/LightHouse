@@ -28,11 +28,11 @@ const moduleDir = getModuleDirectory(import.meta);
 
 /** @typedef {import('./legacy/gather/connections/connection.js').Connection} Connection */
 /** @typedef {import('./lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
-/** @typedef {LH.Config.Config} Config */
+/** @typedef {LH.Config.LegacyResolvedConfig} Config */
 
 class Runner {
   /**
-   * @template {LH.Config.Config | LH.Config.FRConfig} TConfig
+   * @template {LH.Config.LegacyResolvedConfig | LH.Config.ResolvedConfig} TConfig
    * @param {LH.Artifacts} artifacts
    * @param {{resolvedConfig: TConfig, driverMock?: Driver, computedCache: Map<string, ArbitraryEqualityMap>}} options
    * @return {Promise<LH.RunnerResult|undefined>}
@@ -142,7 +142,7 @@ class Runner {
    * -G and -A will run partial lighthouse pipelines,
    * and -GA will run everything plus save artifacts and lhr to disk.
    *
-   * @template {LH.Config.Config | LH.Config.FRConfig} TConfig
+   * @template {LH.Config.LegacyResolvedConfig | LH.Config.ResolvedConfig} TConfig
    * @param {(runnerData: {resolvedConfig: TConfig, driverMock?: Driver}) => Promise<LH.Artifacts>} gatherFn
    * @param {{resolvedConfig: TConfig, driverMock?: Driver, computedCache: Map<string, ArbitraryEqualityMap>}} options
    * @return {Promise<LH.Artifacts>}

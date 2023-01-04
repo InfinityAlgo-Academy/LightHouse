@@ -243,7 +243,7 @@ describe('Fraggle Rock Config Filtering', () => {
     });
   });
 
-  /** @type {LH.Config.FRConfig['categories']} */
+  /** @type {LH.Config.ResolvedConfig['categories']} */
   const categories = {
     snapshot: {title: 'Snapshot', auditRefs: [{id: 'snapshot', weight: 0}]},
     timespan: {title: 'Timespan', auditRefs: [{id: 'timespan', weight: 0}]},
@@ -392,7 +392,7 @@ describe('Fraggle Rock Config Filtering', () => {
   });
 
   describe('filterConfigByExplicitFilters', () => {
-    /** @type {LH.Config.FRConfig} */
+    /** @type {LH.Config.ResolvedConfig} */
     let resolvedConfig;
 
     beforeEach(() => {

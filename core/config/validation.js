@@ -79,7 +79,7 @@ function assertValidFRGatherer(gathererDefn) {
 
 /**
  * Throws an error if the provided object does not implement the required navigations interface.
- * @param {LH.Config.FRConfig['navigations']} navigationsDefn
+ * @param {LH.Config.ResolvedConfig['navigations']} navigationsDefn
  * @return {{warnings: string[]}}
  */
 function assertValidFRNavigations(navigationsDefn) {
@@ -164,9 +164,9 @@ function assertValidAudit(auditDefinition) {
 }
 
 /**
- * @param {LH.Config.FRConfig['categories']} categories
- * @param {LH.Config.FRConfig['audits']} audits
- * @param {LH.Config.FRConfig['groups']} groups
+ * @param {LH.Config.ResolvedConfig['categories']} categories
+ * @param {LH.Config.ResolvedConfig['audits']} audits
+ * @param {LH.Config.ResolvedConfig['groups']} groups
  */
 function assertValidCategories(categories, audits, groups) {
   if (!categories) {
@@ -247,7 +247,7 @@ function assertArtifactTopologicalOrder(navigations) {
 }
 
 /**
- * @param {LH.Config.FRConfig} resolvedConfig
+ * @param {LH.Config.ResolvedConfig} resolvedConfig
  * @return {{warnings: string[]}}
  */
 function assertValidConfig(resolvedConfig) {

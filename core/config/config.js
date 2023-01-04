@@ -238,7 +238,7 @@ function resolveFakeNavigations(artifactDefns, settings) {
  * @param {LH.Gatherer.GatherMode} gatherMode
  * @param {LH.Config.Json=} configJSON
  * @param {LH.Flags=} flags
- * @return {Promise<{resolvedConfig: LH.Config.FRConfig, warnings: string[]}>}
+ * @return {Promise<{resolvedConfig: LH.Config.ResolvedConfig, warnings: string[]}>}
  */
 async function initializeConfig(gatherMode, configJSON, flags = {}) {
   const status = {msg: 'Initialize config', id: 'lh:config'};
@@ -256,7 +256,7 @@ async function initializeConfig(gatherMode, configJSON, flags = {}) {
 
   const navigations = resolveFakeNavigations(artifacts, settings);
 
-  /** @type {LH.Config.FRConfig} */
+  /** @type {LH.Config.ResolvedConfig} */
   let resolvedConfig = {
     artifacts,
     navigations,
@@ -276,11 +276,11 @@ async function initializeConfig(gatherMode, configJSON, flags = {}) {
 }
 
 /**
- * @param {LH.Config.FRConfig} resolvedConfig
+ * @param {LH.Config.ResolvedConfig} resolvedConfig
  * @return {string}
  */
 function getConfigDisplayString(resolvedConfig) {
-  /** @type {LH.Config.FRConfig} */
+  /** @type {LH.Config.ResolvedConfig} */
   const resolvedConfigCopy = JSON.parse(JSON.stringify(resolvedConfig));
 
   if (resolvedConfigCopy.navigations) {

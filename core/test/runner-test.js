@@ -41,7 +41,7 @@ await td.replaceEsm('../gather/driver/service-workers.js', {
 // https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
 const {Runner} = await import('../runner.js');
 const {GatherRunner} = await import('../legacy/gather/gather-runner.js');
-const {Config} = await import('../legacy/config/config.js');
+const {LegacyResolvedConfig} = await import('../legacy/config/config.js');
 const {Audit} = await import('../audits/audit.js');
 const {Gatherer} = await import('../gather/gatherers/gatherer.js');
 const i18n = await import('../lib/i18n/i18n.js');
@@ -95,7 +95,7 @@ describe('Runner', () => {
 
   describe('Gather Mode & Audit Mode', () => {
     const url = 'https://example.com';
-    const generateConfig = settings => Config.fromJson({
+    const generateConfig = settings => LegacyResolvedConfig.fromJson({
       passes: [{
         gatherers: ['viewport-dimensions'],
       }],
@@ -153,7 +153,7 @@ describe('Runner', () => {
     });
 
     it('does not include a top-level runtimeError when gatherers were successful', async () => {
-      const resolvedConfig = await Config.fromJson({
+      const resolvedConfig = await LegacyResolvedConfig.fromJson({
         settings: {
           auditMode: moduleDir + '/fixtures/artifacts/perflog/',
         },
@@ -203,7 +203,7 @@ describe('Runner', () => {
             LighthouseError.errors.UNSUPPORTED_OLD_CHROME, {featureName: 'VRML'});
         }
       }
-      const gatherConfig = await Config.fromJson({
+      const gatherConfig = await LegacyResolvedConfig.fromJson({
         settings: {gatherMode: artifactsPath},
         passes: [{gatherers: [WarningAndErrorGatherer]}],
       });
@@ -233,7 +233,7 @@ describe('Runner', () => {
         }
         static audit() {}
       }
-      const auditConfig = await Config.fromJson({
+      const auditConfig = await LegacyResolvedConfig.fromJson({
         settings: {auditMode: artifactsPath},
         audits: [{implementation: DummyAudit}],
       });
@@ -251,7 +251,7 @@ describe('Runner', () => {
 
   it('expands gatherers', async () => {
     const url = 'https://example.com';
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       passes: [{
         gatherers: ['viewport-dimensions'],
       }],
@@ -268,7 +268,7 @@ describe('Runner', () => {
 
   it('rejects when given neither passes nor artifacts', async () => {
     const url = 'https://example.com';
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       audits: [
         'content-width',
       ],
@@ -302,7 +302,7 @@ describe('Runner', () => {
       }
     }
 
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       settings: {
         auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
       },
@@ -321,7 +321,7 @@ describe('Runner', () => {
   });
 
   it('accepts trace artifacts as paths and outputs appropriate data', async () => {
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       settings: {
         auditMode: moduleDir + '/fixtures/artifacts/perflog/',
       },
@@ -340,7 +340,7 @@ describe('Runner', () => {
 
   it('rejects when given an invalid trace artifact', async () => {
     const url = 'https://example.com';
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       passes: [{
         recordTrace: true,
         gatherers: [],
@@ -365,7 +365,7 @@ describe('Runner', () => {
   });
 
   it('finds correct timings for multiple gather/audit pairs run separately', async () => {
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       passes: [{
         gatherers: ['viewport-dimensions'],
       }],
@@ -394,7 +394,7 @@ describe('Runner', () => {
 
   describe('Bad required artifact handling', () => {
     it('outputs an error audit result when trace required but not provided', async () => {
-      const resolvedConfig = await Config.fromJson({
+      const resolvedConfig = await LegacyResolvedConfig.fromJson({
         settings: {
           auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
@@ -412,7 +412,7 @@ describe('Runner', () => {
     });
 
     it('outputs an error audit result when devtoolsLog required but not provided', async () => {
-      const resolvedConfig = await Config.fromJson({
+      const resolvedConfig = await LegacyResolvedConfig.fromJson({
         settings: {
           auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
@@ -430,7 +430,7 @@ describe('Runner', () => {
     });
 
     it('outputs an error audit result when missing a required artifact', async () => {
-      const resolvedConfig = await Config.fromJson({
+      const resolvedConfig = await LegacyResolvedConfig.fromJson({
         settings: {
           auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
@@ -464,7 +464,7 @@ describe('Runner', () => {
       await assetSaver.saveArtifacts(artifacts, resolvedPath);
 
       // Load artifacts via auditMode.
-      const resolvedConfig = await Config.fromJson({
+      const resolvedConfig = await LegacyResolvedConfig.fromJson({
         settings: {
           auditMode: resolvedPath,
         },
@@ -497,7 +497,7 @@ describe('Runner', () => {
       }
 
       const auditMockFn = SimpleAudit.audit = jestMock.fn().mockReturnValue({score: 1});
-      const resolvedConfig = await Config.fromJson({
+      const resolvedConfig = await LegacyResolvedConfig.fromJson({
         settings: {
           auditMode: moduleDir + '/fixtures/artifacts/alphabet-artifacts/',
         },
@@ -530,7 +530,7 @@ describe('Runner', () => {
       }
 
       const auditMockFn = SimpleAudit.audit = jestMock.fn().mockReturnValue({score: 1});
-      const resolvedConfig = await Config.fromJson({
+      const resolvedConfig = await LegacyResolvedConfig.fromJson({
         settings: {
           auditMode: moduleDir + '/fixtures/artifacts/alphabet-artifacts/',
         },
@@ -561,7 +561,7 @@ describe('Runner', () => {
 
     it('produces an error audit result when an audit throws an Error', async () => {
       const errorMessage = 'Audit yourself';
-      const resolvedConfig = await Config.fromJson({
+      const resolvedConfig = await LegacyResolvedConfig.fromJson({
         settings: {
           auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
         },
@@ -587,7 +587,7 @@ describe('Runner', () => {
   });
 
   it('accepts devtoolsLog in artifacts', async () => {
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       settings: {
         auditMode: moduleDir + '/fixtures/artifacts/perflog/',
       },
@@ -605,7 +605,7 @@ describe('Runner', () => {
 
   it('rejects when not given audits to run (and not -G)', async () => {
     const url = 'https://example.com';
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       passes: [{
         gatherers: ['viewport-dimensions'],
       }],
@@ -621,7 +621,7 @@ describe('Runner', () => {
 
   it('returns data even if no config categories are provided', async () => {
     const url = 'https://example.com/';
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       passes: [{
         gatherers: ['viewport-dimensions'],
       }],
@@ -641,7 +641,7 @@ describe('Runner', () => {
 
   it('returns categories', async () => {
     const url = 'https://example.com/';
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       passes: [{
         gatherers: ['viewport-dimensions'],
       }],
@@ -682,7 +682,7 @@ describe('Runner', () => {
   });
 
   it('results include artifacts when given artifacts and audits', async () => {
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       settings: {
         auditMode: moduleDir + '/fixtures/artifacts/perflog/',
       },
@@ -699,7 +699,7 @@ describe('Runner', () => {
 
   it('results include artifacts when given passes and audits', async () => {
     const url = 'https://example.com';
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       passes: [{
         passName: 'firstPass',
         gatherers: ['meta-elements', 'viewport-dimensions'],
@@ -722,7 +722,7 @@ describe('Runner', () => {
   });
 
   it('includes any LighthouseRunWarnings from artifacts in output', async () => {
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       settings: {
         auditMode: moduleDir + '/fixtures/artifacts/perflog/',
       },
@@ -740,7 +740,7 @@ describe('Runner', () => {
   it('includes any LighthouseRunWarnings from audits in LHR', async () => {
     const warningString = 'Really important audit warning!';
 
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       settings: {
         auditMode: moduleDir + '/fixtures/artifacts/empty-artifacts/',
       },
@@ -801,7 +801,7 @@ describe('Runner', () => {
     };
 
     it('includes a top-level runtimeError when a gatherer throws one', async () => {
-      const resolvedConfig = await Config.fromJson(configJson);
+      const resolvedConfig = await LegacyResolvedConfig.fromJson(configJson);
       const {lhr} = await runGatherAndAudit(createGatherFn('https://example.com/'), {resolvedConfig, driverMock});
 
       // Audit error included the runtimeError
@@ -832,7 +832,7 @@ describe('Runner', () => {
         }
       });
 
-      const resolvedConfig = await Config.fromJson(configJson);
+      const resolvedConfig = await LegacyResolvedConfig.fromJson(configJson);
       const {lhr} = await runGatherAndAudit(
         createGatherFn(url),
         {resolvedConfig, driverMock: errorDriverMock}
@@ -860,7 +860,7 @@ describe('Runner', () => {
     };
 
     try {
-      await runGatherAndAudit(createGatherFn('https://example.com/'), {driverMock: erroringDriver, resolvedConfig: await Config.fromJson()});
+      await runGatherAndAudit(createGatherFn('https://example.com/'), {driverMock: erroringDriver, resolvedConfig: await LegacyResolvedConfig.fromJson()});
       assert.fail('should have thrown');
     } catch (err) {
       assert.equal(err.code, LighthouseError.errors.PROTOCOL_TIMEOUT.code);
@@ -871,7 +871,7 @@ describe('Runner', () => {
 
   it('can handle array of outputs', async () => {
     const url = 'https://example.com';
-    const resolvedConfig = await Config.fromJson({
+    const resolvedConfig = await LegacyResolvedConfig.fromJson({
       extends: 'lighthouse:default',
       settings: {
         onlyCategories: ['performance'],

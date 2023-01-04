@@ -45,7 +45,7 @@ describe('NavigationRunner', () => {
   let driver;
   /** @type {LH.Puppeteer.Page} */
   let page;
-  /** @type {LH.Config.FRConfig} */
+  /** @type {LH.Config.ResolvedConfig} */
   let resolvedConfig;
   /** @type {LH.Config.NavigationDefn} */
   let navigation;

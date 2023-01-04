@@ -29,7 +29,7 @@ import {NetworkRecords} from '../computed/network-records.js';
  * @typedef NavigationContext
  * @property {Driver} driver
  * @property {LH.Puppeteer.Page} page
- * @property {LH.Config.FRConfig} resolvedConfig
+ * @property {LH.Config.ResolvedConfig} resolvedConfig
  * @property {LH.Config.NavigationDefn} navigation
  * @property {LH.NavigationRequestor} requestor
  * @property {LH.FRBaseArtifacts} baseArtifacts
@@ -42,7 +42,7 @@ const DEFAULT_HOSTNAME = '127.0.0.1';
 const DEFAULT_PORT = 9222;
 
 /**
- * @param {{driver: Driver, resolvedConfig: LH.Config.FRConfig, requestor: LH.NavigationRequestor}} args
+ * @param {{driver: Driver, resolvedConfig: LH.Config.ResolvedConfig, requestor: LH.NavigationRequestor}} args
  * @return {Promise<{baseArtifacts: LH.FRBaseArtifacts}>}
  */
 async function _setup({driver, resolvedConfig, requestor}) {
@@ -250,7 +250,7 @@ async function _navigation(navigationContext) {
 }
 
 /**
- * @param {{driver: Driver, page: LH.Puppeteer.Page, resolvedConfig: LH.Config.FRConfig, requestor: LH.NavigationRequestor; baseArtifacts: LH.FRBaseArtifacts, computedCache: NavigationContext['computedCache']}} args
+ * @param {{driver: Driver, page: LH.Puppeteer.Page, resolvedConfig: LH.Config.ResolvedConfig, requestor: LH.NavigationRequestor; baseArtifacts: LH.FRBaseArtifacts, computedCache: NavigationContext['computedCache']}} args
  * @return {Promise<{artifacts: Partial<LH.FRArtifacts & LH.FRBaseArtifacts>}>}
  */
 async function _navigations(args) {
@@ -299,7 +299,7 @@ async function _navigations(args) {
 }
 
 /**
- * @param {{requestedUrl?: string, driver: Driver, resolvedConfig: LH.Config.FRConfig}} args
+ * @param {{requestedUrl?: string, driver: Driver, resolvedConfig: LH.Config.ResolvedConfig}} args
  */
 async function _cleanup({requestedUrl, driver, resolvedConfig}) {
   const didResetStorage = !resolvedConfig.settings.disableStorageReset && requestedUrl;

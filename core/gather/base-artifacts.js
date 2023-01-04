@@ -12,7 +12,7 @@ import {
 } from './driver/environment.js';
 
 /**
- * @param {LH.Config.FRConfig} resolvedConfig
+ * @param {LH.Config.ResolvedConfig} resolvedConfig
  * @param {LH.Gatherer.FRTransitionalDriver} driver
  * @param {{gatherMode: LH.Gatherer.GatherMode}} context
  * @return {Promise<LH.BaseArtifacts>}
