@@ -187,6 +187,36 @@ describe('.evaluateAsync', () => {
     const value = await executionContext.evaluateAsync('"magic"', {useIsolation: true});
     expect(value).toEqual('mocked value');
   });
+
+  it('handles runtime evaluation exception', async () => {
+    /** @type {LH.Crdp.Runtime.ExceptionDetails} */
+    const exceptionDetails = {
+      exceptionId: 1,
+      text: 'Uncaught',
+      lineNumber: 7,
+      columnNumber: 8,
+      stackTrace: {description: '', callFrames: []},
+      exception: {
+        type: 'object',
+        subtype: 'error',
+        className: 'ReferenceError',
+        description: 'ReferenceError: Prosmise is not defined\n' +
+          '    at wrapInNativePromise (_lighthouse-eval.js:8:9)\n' +
+          '    at _lighthouse-eval.js:83:8',
+      },
+    };
+    sessionMock.sendCommand = createMockSendCommandFn()
+      .mockResponse('Page.enable')
+      .mockResponse('Runtime.enable')
+      .mockResponse('Page.getResourceTree', {frameTree: {frame: {id: '1337'}}})
+      .mockResponse('Page.createIsolatedWorld', {executionContextId: 9001})
+      .mockResponse('Runtime.evaluate', {exceptionDetails});
+
+    const promise = executionContext.evaluateAsync('new Prosmise', {useIsolation: true});
+    await expect(promise).rejects.toThrow(/Expression: new Prosmise/);
+    await expect(promise).rejects.toThrow(/elided/);
+    await expect(promise).rejects.toThrow(/at wrapInNativePromise/);
+  });
 });
 
 describe('.evaluate', () => {

@@ -129,17 +129,14 @@ class ExecutionContext {
     // Also occurs when the expression is not valid JavaScript.
     const ex = response.exceptionDetails;
     if (ex) {
-      const message = ex.exception?.description || ex.text;
-      const evaluationError = new Error(`Runtime.evaluate exception: ${message}`);
-      if (ex.exception?.description && ex.stackTrace) {
-        // The description contains the stack trace formatted as expected, if present.
-        evaluationError.stack = ex.exception.description;
-      } else {
-        // Otherwise, for syntax errors there is no stack trace, but we can add information about the
-        // line/col of the parsing error instead.
-        evaluationError.stack =
-          `${message}\n    at <expression>:${ex.lineNumber}:${ex.columnNumber}`;
-      }
+      const elidedExpression = expression.replace(/\s+/g, ' ').substring(0, 100);
+      const messageLines = [
+        'Runtime.evaluate exception',
+        `Expression: ${elidedExpression}\n---- (elided)`,
+        !ex.stackTrace ? `Parse error at: ${ex.lineNumber + 1}:${ex.columnNumber + 1}` : null,
+        ex.exception?.description || ex.text,
+      ].filter(Boolean);
+      const evaluationError = new Error(messageLines.join('\n'));
       return Promise.reject(evaluationError);
     }
 
