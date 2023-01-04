@@ -135,17 +135,17 @@ class LegacyResolvedConfig {
   /**
    * Resolves the provided config (inherits from extended config, if set), resolves
    * all referenced modules, and validates.
-   * @param {LH.Config.Json=} configJSON If not provided, uses the default config.
+   * @param {LH.Config.Json=} config If not provided, uses the default config.
    * @param {LH.Flags=} flags
    * @return {Promise<LegacyResolvedConfig>}
    */
-  static async fromJson(configJSON, flags) {
+  static async fromJson(config, flags) {
     const status = {msg: 'Create config', id: 'lh:init:config'};
     log.time(status, 'verbose');
     let configPath = flags?.configPath;
 
-    if (!configJSON) {
-      configJSON = legacyDefaultConfig;
+    if (!config) {
+      config = legacyDefaultConfig;
       configPath = path.resolve(getModuleDirectory(import.meta), defaultConfigPath);
     }
 
@@ -154,33 +154,33 @@ class LegacyResolvedConfig {
     }
 
     // We don't want to mutate the original config object
-    configJSON = deepCloneConfigJson(configJSON);
+    config = deepCloneConfigJson(config);
 
     // Extend the default config if specified
-    if (configJSON.extends) {
-      if (configJSON.extends !== 'lighthouse:default') {
+    if (config.extends) {
+      if (config.extends !== 'lighthouse:default') {
         throw new Error('`lighthouse:default` is the only valid extension method.');
       }
-      configJSON = LegacyResolvedConfig.extendConfigJSON(
-        deepCloneConfigJson(legacyDefaultConfig), configJSON);
+      config = LegacyResolvedConfig.extendConfigJSON(
+        deepCloneConfigJson(legacyDefaultConfig), config);
     }
 
     // The directory of the config path, if one was provided.
     const configDir = configPath ? path.dirname(configPath) : undefined;
 
     // Validate and merge in plugins (if any).
-    configJSON = await mergePlugins(configJSON, configDir, flags);
+    config = await mergePlugins(config, configDir, flags);
 
-    const settings = resolveSettings(configJSON.settings || {}, flags);
+    const settings = resolveSettings(config.settings || {}, flags);
 
     // Augment passes with necessary defaults and require gatherers.
-    const passesWithDefaults = LegacyResolvedConfig.augmentPassesWithDefaults(configJSON.passes);
+    const passesWithDefaults = LegacyResolvedConfig.augmentPassesWithDefaults(config.passes);
     LegacyResolvedConfig.adjustDefaultPassForThrottling(settings, passesWithDefaults);
     const passes = await LegacyResolvedConfig.requireGatherers(passesWithDefaults, configDir);
 
-    const audits = await LegacyResolvedConfig.requireAudits(configJSON.audits, configDir);
+    const audits = await LegacyResolvedConfig.requireAudits(config.audits, configDir);
 
-    const resolvedConfig = new LegacyResolvedConfig(configJSON, {settings, passes, audits});
+    const resolvedConfig = new LegacyResolvedConfig(config, {settings, passes, audits});
     log.timeEnd(status);
     return resolvedConfig;
   }
@@ -188,10 +188,10 @@ class LegacyResolvedConfig {
   /**
    * @deprecated `Config.fromJson` should be used instead.
    * @constructor
-   * @param {LH.Config.Json} configJSON
+   * @param {LH.Config.Json} config
    * @param {{settings: LH.Config.Settings, passes: ?LH.Config.Pass[], audits: ?LH.Config.AuditDefn[]}} opts
    */
-  constructor(configJSON, opts) {
+  constructor(config, opts) {
     /** @type {LH.Config.Settings} */
     this.settings = opts.settings;
     /** @type {?Array<LH.Config.Pass>} */
@@ -199,9 +199,9 @@ class LegacyResolvedConfig {
     /** @type {?Array<LH.Config.AuditDefn>} */
     this.audits = opts.audits;
     /** @type {?Record<string, LH.Config.Category>} */
-    this.categories = configJSON.categories || null;
+    this.categories = config.categories || null;
     /** @type {?Record<string, LH.Config.Group>} */
-    this.groups = configJSON.groups || null;
+    this.groups = config.groups || null;
 
     LegacyResolvedConfig.filterConfigIfNeeded(this);
 

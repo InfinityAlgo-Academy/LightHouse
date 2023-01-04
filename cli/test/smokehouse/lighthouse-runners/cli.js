@@ -27,16 +27,16 @@ const execFileAsync = promisify(execFile);
 /**
  * Launch Chrome and do a full Lighthouse run via the Lighthouse CLI.
  * @param {string} url
- * @param {LH.Config.Json=} configJson
+ * @param {LH.Config.Json=} config
  * @param {{isDebug?: boolean, useFraggleRock?: boolean}=} testRunnerOptions
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
  */
-async function runLighthouse(url, configJson, testRunnerOptions = {}) {
+async function runLighthouse(url, config, testRunnerOptions = {}) {
   const {isDebug} = testRunnerOptions;
   const tmpDir = `${LH_ROOT}/.tmp/smokehouse`;
   await fs.mkdir(tmpDir, {recursive: true});
   const tmpPath = await fs.mkdtemp(`${tmpDir}/smokehouse-`);
-  return internalRun(url, tmpPath, configJson, testRunnerOptions)
+  return internalRun(url, tmpPath, config, testRunnerOptions)
     // Wait for internalRun() before removing scratch directory.
     .finally(() => !isDebug && fs.rm(tmpPath, {recursive: true, force: true}));
 }
@@ -45,11 +45,11 @@ async function runLighthouse(url, configJson, testRunnerOptions = {}) {
  * Internal runner.
  * @param {string} url
  * @param {string} tmpPath
- * @param {LH.Config.Json=} configJson
+ * @param {LH.Config.Json=} config
  * @param {{isDebug?: boolean, useLegacyNavigation?: boolean}=} options
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
  */
-async function internalRun(url, tmpPath, configJson, options) {
+async function internalRun(url, tmpPath, config, options) {
   const {isDebug = false, useLegacyNavigation = false} = options || {};
   const localConsole = new LocalConsole();
 
@@ -72,9 +72,9 @@ async function internalRun(url, tmpPath, configJson, options) {
   }
 
   // Config can be optionally provided.
-  if (configJson) {
+  if (config) {
     const configPath = `${tmpPath}/config.json`;
-    await fs.writeFile(configPath, JSON.stringify(configJson));
+    await fs.writeFile(configPath, JSON.stringify(config));
     args.push(`--config-path=${configPath}`);
   }
 

@@ -134,21 +134,21 @@ function purpleify(str) {
 }
 
 /**
- * @param {LH.Config.Json=} configJson
+ * @param {LH.Config.Json=} config
  * @return {LH.Config.Json|undefined}
  */
-function convertToLegacyConfig(configJson) {
-  if (!configJson) return configJson;
+function convertToLegacyConfig(config) {
+  if (!config) return config;
 
   return {
-    ...configJson,
+    ...config,
     passes: [{
       passName: 'defaultPass',
-      pauseAfterFcpMs: configJson.settings?.pauseAfterFcpMs,
-      pauseAfterLoadMs: configJson.settings?.pauseAfterLoadMs,
-      networkQuietThresholdMs: configJson.settings?.networkQuietThresholdMs,
-      cpuQuietThresholdMs: configJson.settings?.cpuQuietThresholdMs,
-      blankPage: configJson.settings?.blankPage,
+      pauseAfterFcpMs: config.settings?.pauseAfterFcpMs,
+      pauseAfterLoadMs: config.settings?.pauseAfterLoadMs,
+      networkQuietThresholdMs: config.settings?.networkQuietThresholdMs,
+      cpuQuietThresholdMs: config.settings?.cpuQuietThresholdMs,
+      blankPage: config.settings?.blankPage,
     }],
   };
 }
@@ -184,15 +184,15 @@ async function runSmokeTest(smokeTestDefn, testOptions) {
       bufferedConsole.log(`  Retrying run (${i} out of ${retries} retries)…`);
     }
 
-    let configJson = smokeTestDefn.config;
+    let config = smokeTestDefn.config;
     if (useLegacyNavigation) {
-      configJson = convertToLegacyConfig(configJson);
+      config = convertToLegacyConfig(config);
     }
 
     // Run Lighthouse.
     try {
       result = {
-        ...await lighthouseRunner(requestedUrl, configJson, {isDebug, useLegacyNavigation}),
+        ...await lighthouseRunner(requestedUrl, config, {isDebug, useLegacyNavigation}),
         networkRequests: takeNetworkRequestUrls ? takeNetworkRequestUrls() : undefined,
       };
 

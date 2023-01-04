@@ -38,19 +38,19 @@ const defaultConfigPath = path.join(
 );
 
 /**
- * @param {LH.Config.Json|undefined} configJSON
+ * @param {LH.Config.Json|undefined} config
  * @param {{configPath?: string}} context
  * @return {{configWorkingCopy: LH.Config.Json, configDir?: string, configPath?: string}}
  */
-function resolveWorkingCopy(configJSON, context) {
+function resolveWorkingCopy(config, context) {
   let {configPath} = context;
 
   if (configPath && !path.isAbsolute(configPath)) {
     throw new Error('configPath must be an absolute path');
   }
 
-  if (!configJSON) {
-    configJSON = defaultConfig;
+  if (!config) {
+    config = defaultConfig;
     configPath = defaultConfigPath;
   }
 
@@ -58,24 +58,24 @@ function resolveWorkingCopy(configJSON, context) {
   const configDir = configPath ? path.dirname(configPath) : undefined;
 
   return {
-    configWorkingCopy: deepCloneConfigJson(configJSON),
+    configWorkingCopy: deepCloneConfigJson(config),
     configPath,
     configDir,
   };
 }
 
 /**
- * @param {LH.Config.Json} configJSON
+ * @param {LH.Config.Json} config
  * @return {LH.Config.Json}
  */
-function resolveExtensions(configJSON) {
-  if (!configJSON.extends) return configJSON;
+function resolveExtensions(config) {
+  if (!config.extends) return config;
 
-  if (configJSON.extends !== 'lighthouse:default') {
+  if (config.extends !== 'lighthouse:default') {
     throw new Error('`lighthouse:default` is the only valid extension method.');
   }
 
-  const {artifacts, ...extensionJSON} = configJSON;
+  const {artifacts, ...extensionJSON} = config;
   const defaultClone = deepCloneConfigJson(defaultConfig);
   const mergedConfig = mergeConfigFragment(defaultClone, extensionJSON);
 
@@ -236,15 +236,15 @@ function resolveFakeNavigations(artifactDefns, settings) {
 
 /**
  * @param {LH.Gatherer.GatherMode} gatherMode
- * @param {LH.Config.Json=} configJSON
+ * @param {LH.Config.Json=} config
  * @param {LH.Flags=} flags
  * @return {Promise<{resolvedConfig: LH.Config.ResolvedConfig, warnings: string[]}>}
  */
-async function initializeConfig(gatherMode, configJSON, flags = {}) {
+async function initializeConfig(gatherMode, config, flags = {}) {
   const status = {msg: 'Initialize config', id: 'lh:config'};
   log.time(status, 'verbose');
 
-  let {configWorkingCopy, configDir} = resolveWorkingCopy(configJSON, flags);
+  let {configWorkingCopy, configDir} = resolveWorkingCopy(config, flags);
 
   configWorkingCopy = resolveExtensions(configWorkingCopy);
   configWorkingCopy = await mergePlugins(configWorkingCopy, configDir, flags);

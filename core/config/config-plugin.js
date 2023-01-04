@@ -215,7 +215,7 @@ class ConfigPlugin {
   }
 
   /**
-   * Extracts and validates a ConfigJson from the provided plugin input, throwing
+   * Extracts and validates a config from the provided plugin input, throwing
    * if it deviates from the expected object shape.
    * @param {unknown} pluginJson
    * @param {string} pluginName

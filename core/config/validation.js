@@ -39,16 +39,16 @@ function isValidArtifactDependency(dependent, dependency) {
 
 /**
  * Throws if pluginName is invalid or (somehow) collides with a category in the
- * configJSON being added to.
- * @param {LH.Config.Json} configJSON
+ * config being added to.
+ * @param {LH.Config.Json} config
  * @param {string} pluginName
  */
-function assertValidPluginName(configJSON, pluginName) {
+function assertValidPluginName(config, pluginName) {
   if (!pluginName.startsWith('lighthouse-plugin-')) {
     throw new Error(`plugin name '${pluginName}' does not start with 'lighthouse-plugin-'`);
   }
 
-  if (configJSON.categories?.[pluginName]) {
+  if (config.categories?.[pluginName]) {
     throw new Error(`plugin name '${pluginName}' not allowed because it is the id of a category already found in config`); // eslint-disable-line max-len
   }
 }

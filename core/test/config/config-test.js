@@ -30,11 +30,11 @@ describe('Fraggle Rock Config', () => {
   });
 
   it('should not mutate the original input', async () => {
-    const configJson = {artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}]};
-    const {resolvedConfig} = await initializeConfig(gatherMode, configJson);
-    expect(configJson).toEqual({artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}]});
-    expect(resolvedConfig).not.toBe(configJson);
-    expect(resolvedConfig).not.toEqual(configJson);
+    const config = {artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}]};
+    const {resolvedConfig} = await initializeConfig(gatherMode, config);
+    expect(config).toEqual({artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}]});
+    expect(resolvedConfig).not.toBe(config);
+    expect(resolvedConfig).not.toEqual(config);
     expect(resolvedConfig.artifacts).toMatchObject([{gatherer: {path: 'accessibility'}}]);
   });
 
@@ -47,13 +47,13 @@ describe('Fraggle Rock Config', () => {
 
   it('should resolve settings with defaults', async () => {
     /** @type {LH.Config.Json} */
-    const configJson = {
+    const config = {
       extends: 'lighthouse:default',
       settings: {output: 'csv', maxWaitForFcp: 1234},
     };
     const {resolvedConfig} = await initializeConfig(
       gatherMode,
-      configJson,
+      config,
       {maxWaitForFcp: 12345}
     );
 
@@ -77,8 +77,8 @@ describe('Fraggle Rock Config', () => {
   });
 
   it('should resolve artifact definitions', async () => {
-    const configJson = {artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}]};
-    const {resolvedConfig} = await initializeConfig(gatherMode, configJson);
+    const config = {artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}]};
+    const {resolvedConfig} = await initializeConfig(gatherMode, config);
 
     expect(resolvedConfig).toMatchObject({
       artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}],
@@ -88,8 +88,8 @@ describe('Fraggle Rock Config', () => {
   it('should throw on invalid artifact definitions', async () => {
     const nonFRGatherer = new BaseGatherer();
     nonFRGatherer.getArtifact = jestMock.fn();
-    const configJson = {artifacts: [{id: 'LegacyGather', gatherer: {instance: nonFRGatherer}}]};
-    await expect(initializeConfig(gatherMode, configJson)).rejects.toThrow(/FRGatherer gatherer/);
+    const config = {artifacts: [{id: 'LegacyGather', gatherer: {instance: nonFRGatherer}}]};
+    await expect(initializeConfig(gatherMode, config)).rejects.toThrow(/FRGatherer gatherer/);
   });
 
   it('should filter configuration by gatherMode', async () => {
@@ -97,14 +97,14 @@ describe('Fraggle Rock Config', () => {
     timespanGatherer.getArtifact = jestMock.fn();
     timespanGatherer.meta = {supportedModes: ['timespan']};
 
-    const configJson = {
+    const config = {
       artifacts: [
         {id: 'Accessibility', gatherer: 'accessibility'},
         {id: 'Timespan', gatherer: {instance: timespanGatherer}},
       ],
     };
 
-    const {resolvedConfig} = await initializeConfig('snapshot', configJson);
+    const {resolvedConfig} = await initializeConfig('snapshot', config);
     expect(resolvedConfig).toMatchObject({
       artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}],
     });
@@ -146,7 +146,7 @@ describe('Fraggle Rock Config', () => {
     /** @type {LH.Gatherer.FRGathererInstance<'ImageElements'>} */
     let dependentGatherer;
     /** @type {LH.Config.Json} */
-    let configJson;
+    let config;
 
     beforeEach(() => {
       const dependencySymbol = Symbol('dependency');
@@ -161,7 +161,7 @@ describe('Fraggle Rock Config', () => {
         dependencies: {ImageElements: dependencySymbol},
       };
 
-      configJson = {
+      config = {
         artifacts: [
           {id: 'Dependency', gatherer: {instance: dependencyGatherer}},
           {id: 'Dependent', gatherer: {instance: dependentGatherer}},
@@ -170,7 +170,7 @@ describe('Fraggle Rock Config', () => {
     });
 
     it('should resolve artifact dependencies', async () => {
-      const {resolvedConfig} = await initializeConfig('snapshot', configJson);
+      const {resolvedConfig} = await initializeConfig('snapshot', config);
       expect(resolvedConfig).toMatchObject({
         artifacts: [
           {id: 'Dependency', gatherer: {instance: dependencyGatherer}},
@@ -188,7 +188,7 @@ describe('Fraggle Rock Config', () => {
     });
 
     it('should resolve artifact dependencies in navigations', async () => {
-      const {resolvedConfig} = await initializeConfig('snapshot', configJson);
+      const {resolvedConfig} = await initializeConfig('snapshot', config);
       expect(resolvedConfig).toMatchObject({
         navigations: [
           {
@@ -207,33 +207,33 @@ describe('Fraggle Rock Config', () => {
     });
 
     it('should throw when dependencies are out of order in artifacts', async () => {
-      if (!configJson.artifacts) throw new Error('Failed to run beforeEach');
-      configJson.artifacts = [configJson.artifacts[1], configJson.artifacts[0]];
-      await expect(initializeConfig('snapshot', configJson))
+      if (!config.artifacts) throw new Error('Failed to run beforeEach');
+      config.artifacts = [config.artifacts[1], config.artifacts[0]];
+      await expect(initializeConfig('snapshot', config))
         .rejects.toThrow(/Failed to find dependency/);
     });
 
     it('should throw when timespan needs snapshot', async () => {
       dependentGatherer.meta.supportedModes = ['timespan'];
       dependencyGatherer.meta.supportedModes = ['snapshot'];
-      await expect(initializeConfig('navigation', configJson))
+      await expect(initializeConfig('navigation', config))
         .rejects.toThrow(/Dependency.*is invalid/);
     });
 
     it('should throw when timespan needs navigation', async () => {
       dependentGatherer.meta.supportedModes = ['timespan'];
       dependencyGatherer.meta.supportedModes = ['navigation'];
-      await expect(initializeConfig('navigation', configJson))
+      await expect(initializeConfig('navigation', config))
         .rejects.toThrow(/Dependency.*is invalid/);
     });
   });
 
   describe('.resolveFakeNavigations', () => {
     it('should resolve a single fake navigation definitions', async () => {
-      const configJson = {
+      const config = {
         artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}],
       };
-      const {resolvedConfig} = await initializeConfig('navigation', configJson);
+      const {resolvedConfig} = await initializeConfig('navigation', config);
 
       expect(resolvedConfig).toMatchObject({
         artifacts: [{id: 'Accessibility', gatherer: {path: 'accessibility'}}],
@@ -245,10 +245,10 @@ describe('Fraggle Rock Config', () => {
 
     it('should set default properties on navigations', async () => {
       gatherMode = 'navigation';
-      const configJson = {
+      const config = {
         artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}],
       };
-      const {resolvedConfig} = await initializeConfig(gatherMode, configJson);
+      const {resolvedConfig} = await initializeConfig(gatherMode, config);
 
       expect(resolvedConfig).toMatchObject({
         navigations: [
@@ -267,14 +267,14 @@ describe('Fraggle Rock Config', () => {
 
     it('should ensure minimum quiet thresholds when throttlingMethod is devtools', async () => {
       gatherMode = 'navigation';
-      const configJson = {
+      const config = {
         settings: {
           cpuQuietThresholdMs: 10_000,
         },
         artifacts: [{id: 'Accessibility', gatherer: 'accessibility'}],
       };
 
-      const {resolvedConfig} = await initializeConfig(gatherMode, configJson, {
+      const {resolvedConfig} = await initializeConfig(gatherMode, config, {
         throttlingMethod: 'devtools',
       });
 
@@ -444,7 +444,7 @@ describe('Fraggle Rock Config', () => {
 describe('getConfigDisplayString', () => {
   it('doesn\'t include empty audit options in output', async () => {
     const aOpt = 'auditOption';
-    const configJson = {
+    const config = {
       extends: 'lighthouse:default',
       passes: [{
         passName: 'defaultPass',
@@ -458,7 +458,7 @@ describe('getConfigDisplayString', () => {
       ],
     };
 
-    const {resolvedConfig} = await initializeConfig('navigation', configJson);
+    const {resolvedConfig} = await initializeConfig('navigation', config);
     const printed = getConfigDisplayString(resolvedConfig);
     const printedConfig = JSON.parse(printed);
 
@@ -493,7 +493,7 @@ describe('getConfigDisplayString', () => {
     expect(localizableCount).toBeGreaterThan(0);
   });
 
-  it('returns a valid ConfigJson that can make an identical Config', async () => {
+  it('returns a valid config that can make an identical Config', async () => {
     // depends on defaultConfig having a `path` for all gatherers and audits.
     const {resolvedConfig: firstConfig} = await initializeConfig('navigation');
     const firstPrint = getConfigDisplayString(firstConfig);

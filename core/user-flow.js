@@ -321,9 +321,9 @@ async function auditGatherSteps(gatherSteps, options) {
     // If the gather step is not active, we must recreate the runner options.
     if (!runnerOptions) {
       // Step specific configs take precedence over a config for the entire flow.
-      const configJson = options.config;
+      const config = options.config;
       const {gatherMode} = artifacts.GatherContext;
-      const {resolvedConfig} = await initializeConfig(gatherMode, configJson, flags);
+      const {resolvedConfig} = await initializeConfig(gatherMode, config, flags);
       runnerOptions = {
         resolvedConfig,
         computedCache: new Map(),

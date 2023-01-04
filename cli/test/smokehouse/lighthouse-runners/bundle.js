@@ -26,9 +26,9 @@ import {loadArtifacts, saveArtifacts} from '../../../../core/lib/asset-saver.js'
 // This runs only in the worker. The rest runs on the main thread.
 if (!isMainThread && parentPort) {
   (async () => {
-    const {url, configJson, testRunnerOptions} = workerData;
+    const {url, config, testRunnerOptions} = workerData;
     try {
-      const result = await runBundledLighthouse(url, configJson, testRunnerOptions);
+      const result = await runBundledLighthouse(url, config, testRunnerOptions);
       // Save to assets directory because LighthouseError won't survive postMessage.
       const assetsDir = fs.mkdtempSync(os.tmpdir() + '/smoke-bundle-assets-');
       await saveArtifacts(result.artifacts, assetsDir);
@@ -46,11 +46,11 @@ if (!isMainThread && parentPort) {
 
 /**
  * @param {string} url
- * @param {LH.Config.Json|undefined} configJson
+ * @param {LH.Config.Json|undefined} config
  * @param {{isDebug?: boolean, useLegacyNavigation?: boolean}} testRunnerOptions
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts}>}
  */
-async function runBundledLighthouse(url, configJson, testRunnerOptions) {
+async function runBundledLighthouse(url, config, testRunnerOptions) {
   if (isMainThread || !parentPort) {
     throw new Error('must be called in worker');
   }
@@ -87,12 +87,12 @@ async function runBundledLighthouse(url, configJson, testRunnerOptions) {
     if (testRunnerOptions.useLegacyNavigation) {
       const connection = new CriConnection(port);
       runnerResult =
-        await legacyNavigation(url, {port, logLevel}, configJson, connection);
+        await legacyNavigation(url, {port, logLevel}, config, connection);
     } else {
       // Puppeteer is not included in the bundle, we must create the page here.
       const browser = await puppeteer.connect({browserURL: `http://localhost:${port}`});
       const page = await browser.newPage();
-      runnerResult = await lighthouse(url, {port, logLevel}, configJson, page);
+      runnerResult = await lighthouse(url, {port, logLevel}, config, page);
     }
     if (!runnerResult) throw new Error('No runnerResult');
 
@@ -109,17 +109,17 @@ async function runBundledLighthouse(url, configJson, testRunnerOptions) {
 /**
  * Launch Chrome and do a full Lighthouse run via the Lighthouse DevTools bundle.
  * @param {string} url
- * @param {LH.Config.Json=} configJson
+ * @param {LH.Config.Json=} config
  * @param {{isDebug?: boolean, useLegacyNavigation?: boolean}=} testRunnerOptions
  * @return {Promise<{lhr: LH.Result, artifacts: LH.Artifacts, log: string}>}
  */
-async function runLighthouse(url, configJson, testRunnerOptions = {}) {
+async function runLighthouse(url, config, testRunnerOptions = {}) {
   /** @type {string[]} */
   const logs = [];
   const worker = new Worker(new URL(import.meta.url), {
     stdout: true,
     stderr: true,
-    workerData: {url, configJson, testRunnerOptions},
+    workerData: {url, config, testRunnerOptions},
   });
   worker.stdout.setEncoding('utf8');
   worker.stderr.setEncoding('utf8');

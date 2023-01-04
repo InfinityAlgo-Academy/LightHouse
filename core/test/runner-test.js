@@ -792,7 +792,7 @@ describe('Runner', () => {
       }
     }
 
-    const configJson = {
+    const config = {
       passes: [
         {gatherers: [RuntimeErrorGatherer]},
         {gatherers: [RuntimeError2Gatherer], passName: 'second'},
@@ -801,7 +801,7 @@ describe('Runner', () => {
     };
 
     it('includes a top-level runtimeError when a gatherer throws one', async () => {
-      const resolvedConfig = await LegacyResolvedConfig.fromJson(configJson);
+      const resolvedConfig = await LegacyResolvedConfig.fromJson(config);
       const {lhr} = await runGatherAndAudit(createGatherFn('https://example.com/'), {resolvedConfig, driverMock});
 
       // Audit error included the runtimeError
@@ -832,7 +832,7 @@ describe('Runner', () => {
         }
       });
 
-      const resolvedConfig = await LegacyResolvedConfig.fromJson(configJson);
+      const resolvedConfig = await LegacyResolvedConfig.fromJson(config);
       const {lhr} = await runGatherAndAudit(
         createGatherFn(url),
         {resolvedConfig, driverMock: errorDriverMock}

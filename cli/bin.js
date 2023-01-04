@@ -64,19 +64,19 @@ async function begin() {
   const urlUnderTest = cliFlags._[0];
 
   /** @type {LH.Config.Json|undefined} */
-  let configJson;
+  let config;
   if (cliFlags.configPath) {
     // Resolve the config file path relative to where cli was called.
     cliFlags.configPath = path.resolve(process.cwd(), cliFlags.configPath);
 
     if (cliFlags.configPath.endsWith('.json')) {
-      configJson = JSON.parse(fs.readFileSync(cliFlags.configPath, 'utf-8'));
+      config = JSON.parse(fs.readFileSync(cliFlags.configPath, 'utf-8'));
     } else {
       const configModuleUrl = url.pathToFileURL(cliFlags.configPath).href;
-      configJson = (await import(configModuleUrl)).default;
+      config = (await import(configModuleUrl)).default;
     }
   } else if (cliFlags.preset) {
-    configJson = (await import(`../core/config/${cliFlags.preset}-config.js`)).default;
+    config = (await import(`../core/config/${cliFlags.preset}-config.js`)).default;
   }
 
   if (cliFlags.budgetPath) {
@@ -132,7 +132,7 @@ async function begin() {
     });
   }
 
-  return runLighthouse(urlUnderTest, cliFlags, configJson);
+  return runLighthouse(urlUnderTest, cliFlags, config);
 }
 
 export {
