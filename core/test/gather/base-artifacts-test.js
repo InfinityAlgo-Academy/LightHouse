@@ -30,22 +30,22 @@ describe('getBaseArtifacts', () => {
   });
 
   it('should fetch benchmark index', async () => {
-    const {config} = await initializeConfig('navigation');
-    const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
+    const {resolvedConfig} = await initializeConfig('navigation');
+    const artifacts = await getBaseArtifacts(resolvedConfig, driverMock.asDriver(), {gatherMode});
     expect(artifacts.BenchmarkIndex).toEqual(500);
   });
 
   it('should fetch host user agent', async () => {
-    const {config} = await initializeConfig('navigation');
-    const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
+    const {resolvedConfig} = await initializeConfig('navigation');
+    const artifacts = await getBaseArtifacts(resolvedConfig, driverMock.asDriver(), {gatherMode});
     expect(artifacts.HostUserAgent).toContain('Macintosh');
     expect(artifacts.HostFormFactor).toEqual('desktop');
   });
 
   it('should return settings', async () => {
-    const {config} = await initializeConfig('navigation');
-    const artifacts = await getBaseArtifacts(config, driverMock.asDriver(), {gatherMode});
-    expect(artifacts.settings).toEqual(config.settings);
+    const {resolvedConfig} = await initializeConfig('navigation');
+    const artifacts = await getBaseArtifacts(resolvedConfig, driverMock.asDriver(), {gatherMode});
+    expect(artifacts.settings).toEqual(resolvedConfig.settings);
   });
 });
 
@@ -56,9 +56,9 @@ describe('finalizeArtifacts', () => {
   let gathererArtifacts = {};
 
   beforeEach(async () => {
-    const {config} = await initializeConfig(gatherMode);
+    const {resolvedConfig} = await initializeConfig(gatherMode);
     const driver = getMockDriverForArtifacts().asDriver();
-    baseArtifacts = await getBaseArtifacts(config, driver, {gatherMode});
+    baseArtifacts = await getBaseArtifacts(resolvedConfig, driver, {gatherMode});
     baseArtifacts.URL = {finalDisplayedUrl: 'https://example.com'};
     gathererArtifacts = {};
   });

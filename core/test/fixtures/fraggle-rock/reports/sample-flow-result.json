@@ -2934,7 +2934,7 @@
           "use-landmarks": {
             "id": "use-landmarks",
             "title": "HTML5 landmark elements are used to improve navigation",
-            "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more about landmark elements](https://developer.chrome.com/docs/lighthouse/accessibility/use-landmarks/).",
+            "description": "Landmark elements (`<main>`, `<nav>`, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more about landmark elements](https://developer.chrome.com/docs/lighthouse/accessibility/use-landmarks/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
@@ -3720,6 +3720,7 @@
           "disableStorageReset": false,
           "debugNavigation": false,
           "channel": "node",
+          "usePassiveGathering": true,
           "skipAboutBlank": true,
           "blankPage": "about:blank",
           "budgets": null,
@@ -9148,6 +9149,7 @@
           "disableStorageReset": false,
           "debugNavigation": false,
           "channel": "node",
+          "usePassiveGathering": true,
           "skipAboutBlank": false,
           "blankPage": "about:blank",
           "budgets": null,
@@ -11965,7 +11967,7 @@
           "use-landmarks": {
             "id": "use-landmarks",
             "title": "HTML5 landmark elements are used to improve navigation",
-            "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more about landmark elements](https://developer.chrome.com/docs/lighthouse/accessibility/use-landmarks/).",
+            "description": "Landmark elements (`<main>`, `<nav>`, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more about landmark elements](https://developer.chrome.com/docs/lighthouse/accessibility/use-landmarks/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
@@ -12406,6 +12408,7 @@
           "disableStorageReset": false,
           "debugNavigation": false,
           "channel": "node",
+          "usePassiveGathering": true,
           "skipAboutBlank": false,
           "blankPage": "about:blank",
           "budgets": null,
@@ -16984,7 +16987,7 @@
           "use-landmarks": {
             "id": "use-landmarks",
             "title": "HTML5 landmark elements are used to improve navigation",
-            "description": "Landmark elements (<main>, <nav>, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more about landmark elements](https://developer.chrome.com/docs/lighthouse/accessibility/use-landmarks/).",
+            "description": "Landmark elements (`<main>`, `<nav>`, etc.) are used to improve the keyboard navigation of the page for assistive technology. [Learn more about landmark elements](https://developer.chrome.com/docs/lighthouse/accessibility/use-landmarks/).",
             "score": null,
             "scoreDisplayMode": "manual"
           },
@@ -17897,6 +17900,7 @@
           "disableStorageReset": true,
           "debugNavigation": false,
           "channel": "node",
+          "usePassiveGathering": true,
           "skipAboutBlank": true,
           "blankPage": "about:blank",
           "budgets": null,

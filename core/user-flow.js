@@ -73,8 +73,13 @@ class UserFlow {
    */
   _getNextFlags(flags) {
     const clonedFlowFlags = this._options?.flags && deepClone(this._options?.flags);
-    if (!flags) return clonedFlowFlags;
-    return mergeConfigFragment(clonedFlowFlags || {}, flags, true);
+    const mergedFlags = mergeConfigFragment(clonedFlowFlags || {}, flags || {}, true);
+
+    if (mergedFlags.usePassiveGathering === undefined) {
+      mergedFlags.usePassiveGathering = true;
+    }
+
+    return mergedFlags;
   }
 
   /**
@@ -334,9 +339,9 @@ async function auditGatherSteps(gatherSteps, options) {
       // Step specific configs take precedence over a config for the entire flow.
       const configJson = options.config;
       const {gatherMode} = artifacts.GatherContext;
-      const {config} = await initializeConfig(gatherMode, configJson, flags);
+      const {resolvedConfig} = await initializeConfig(gatherMode, configJson, flags);
       runnerOptions = {
-        config,
+        resolvedConfig,
         computedCache: new Map(),
       };
     }

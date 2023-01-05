@@ -8,7 +8,7 @@ import log from 'lighthouse-logger';
 
 import {Runner} from './runner.js';
 import {CriConnection} from './legacy/gather/connections/cri.js';
-import {Config} from './legacy/config/config.js';
+import {LegacyResolvedConfig} from './legacy/config/config.js';
 import UrlUtils from './lib/url-utils.js';
 import {Driver} from './legacy/gather/driver.js';
 import {UserFlow, auditGatherSteps} from './user-flow.js';
@@ -63,9 +63,9 @@ async function legacyNavigation(url, flags = {}, configJSON, userConnection) {
   flags.logLevel = flags.logLevel || 'error';
   log.setLevel(flags.logLevel);
 
-  const config = await Config.fromJson(configJSON, flags);
+  const resolvedConfig = await LegacyResolvedConfig.fromJson(configJSON, flags);
   const computedCache = new Map();
-  const options = {config, computedCache};
+  const options = {resolvedConfig, computedCache};
   const connection = userConnection || new CriConnection(flags.port, flags.hostname);
 
   // kick off a lighthouse run

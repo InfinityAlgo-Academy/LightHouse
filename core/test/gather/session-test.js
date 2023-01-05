@@ -17,9 +17,10 @@ import {
   timers,
 } from '../test-utils.js';
 
-timers.useFakeTimers();
-
 describe('ProtocolSession', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   const DEFAULT_TIMEOUT = 30_000;
 
   /** @type {LH.Puppeteer.CDPSession} */

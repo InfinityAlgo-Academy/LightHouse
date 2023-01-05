@@ -18,7 +18,7 @@ INSTANCE_NAME="lighthouse-collection-$GCLOUD_USER-$INSTANCE_SUFFIX"
 CLOUDSDK_CORE_PROJECT=${LIGHTHOUSE_COLLECTION_GCLOUD_PROJECT:-lighthouse-lantern-collect}
 LIGHTHOUSE_GIT_REF=${TARGET_GIT_REF:-main}
 NUMBER_OF_RUNS=${TARGET_RUNS:-1}
-BASE_LIGHTHOUSE_FLAGS="--max-wait-for-load=90000 $LIGHTHOUSE_FLAGS"
+BASE_LIGHTHOUSE_FLAGS="--max-wait-for-load=90000 ${LIGHTHOUSE_FLAGS:-}"
 ZONE=us-central1-a
 
 gcloud --project="$CLOUDSDK_CORE_PROJECT" compute instances create $INSTANCE_NAME \
@@ -36,7 +36,7 @@ EOF
 # Instance needs time to start up.
 until gcloud --project="$CLOUDSDK_CORE_PROJECT" compute scp ./.tmp_env $INSTANCE_NAME:/tmp/lhenv --zone="$ZONE" --scp-flag="-o ConnectTimeout=5"
 do
-  echo "Waiting for start up ..."
+  echo "Waiting for start up (scp connection errors are expected for ~30s) ..."
   sleep 10
 done
 rm .tmp_env
@@ -65,7 +65,7 @@ echo "  $ bash .tmp/gcp/$INSTANCE_NAME-copy-traces.sh"
 echo "  For LHR data for smaller transfer sizes replication"
 echo "  $ bash .tmp/gcp/$INSTANCE_NAME-copy-lhrs.sh"
 echo "  To delete the instance"
-echo "  $ bash .tmp/gcp/$INSTANCE_NAME-delete-instance.sh"
+echo "  $ bash .tmp/gcp/$INSTANCE_NAME-delete.sh"
 
 cd $LH_ROOT
 mkdir -p .tmp/gcp/

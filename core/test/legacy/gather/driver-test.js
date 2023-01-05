@@ -17,8 +17,6 @@ import {
 
 const {createMockSendCommandFn} = mockCommands;
 
-timers.useFakeTimers();
-
 /**
  * @typedef DriverMockMethods
  * @property {Driver['evaluate']} evaluate redefined to remove "private" designation
@@ -44,6 +42,9 @@ beforeEach(() => {
 });
 
 describe('.getRequestContent', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   it('throws if getRequestContent takes too long', async () => {
     const mockTimeout = 5000;
     const driverTimeout = 1000;
@@ -68,6 +69,9 @@ describe('.getRequestContent', () => {
 });
 
 describe('.evaluateAsync', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   // The logic here is tested by core/test/gather/driver/execution-context-test.js
   // Just exercise a bit of the plumbing here to ensure we delegate correctly for plugin backcompat.
   it('evaluates an expression', async () => {
@@ -94,6 +98,9 @@ describe('.evaluateAsync', () => {
 });
 
 describe('.sendCommand', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   it('.sendCommand timesout when commands take too long', async () => {
     const mockTimeout = 5000;
     // @ts-expect-error
@@ -117,6 +124,9 @@ describe('.sendCommand', () => {
 });
 
 describe('.beginTrace', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   beforeEach(() => {
     connectionStub.sendCommand = createMockSendCommandFn()
       .mockResponse('Browser.getVersion', fakeDriver.protocolGetVersionResponse)
@@ -145,6 +155,9 @@ describe('.beginTrace', () => {
 });
 
 describe('Domain.enable/disable State', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   it('dedupes (simple)', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
       .mockResponse('Network.enable')
@@ -201,6 +214,9 @@ describe('Domain.enable/disable State', () => {
 });
 
 describe('Multi-target management', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   it('enables the Network domain for iframes', async () => {
     connectionStub.sendCommand = createMockSendCommandFn()
       .mockResponseToSession('Network.enable', '123')

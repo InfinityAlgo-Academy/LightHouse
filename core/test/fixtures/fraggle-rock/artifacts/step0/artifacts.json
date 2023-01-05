@@ -194,6 +194,7 @@
     "disableStorageReset": false,
     "debugNavigation": false,
     "channel": "node",
+    "usePassiveGathering": true,
     "skipAboutBlank": true,
     "blankPage": "about:blank",
     "budgets": null,

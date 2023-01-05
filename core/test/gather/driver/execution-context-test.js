@@ -13,8 +13,6 @@ import {
   timers,
 } from '../../test-utils.js';
 
-timers.useFakeTimers();
-
 // This can be removed when FR becomes the default.
 const createMockSendCommandFn =
   mockCommands.createMockSendCommandFn.bind(null, {useSessionId: false});
@@ -89,6 +87,9 @@ describe('ExecutionContext', () => {
 });
 
 describe('.evaluateAsync', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   /** @type {LH.Gatherer.FRProtocolSession} */
   let sessionMock;
   /** @type {ExecutionContext} */

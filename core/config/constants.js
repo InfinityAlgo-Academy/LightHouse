@@ -110,6 +110,7 @@ const defaultSettings = {
   disableStorageReset: false,
   debugNavigation: false,
   channel: 'node',
+  usePassiveGathering: false,
   skipAboutBlank: false,
   blankPage: 'about:blank',
 

@@ -662,6 +662,9 @@
   "core/audits/dobetterweb/doctype.js | explanationBadDoctype": {
     "message": "Doctype name must be the string `html`"
   },
+  "core/audits/dobetterweb/doctype.js | explanationLimitedQuirks": {
+    "message": "Document contains a doctype that triggers limited-quirks-mode"
+  },
   "core/audits/dobetterweb/doctype.js | explanationNoDoctype": {
     "message": "Document must contain a doctype"
   },
@@ -1703,8 +1706,14 @@
   "core/gather/driver/navigation.js | warningTimeout": {
     "message": "The page loaded too slowly to finish within the time limit. Results may be incomplete."
   },
+  "core/gather/driver/storage.js | warningCacheTimeout": {
+    "message": "Clearing the browser cache timed out. Try auditing this page again and file a bug if the issue persists."
+  },
   "core/gather/driver/storage.js | warningData": {
     "message": "{locationCount, plural,\n    =1 {There may be stored data affecting loading performance in this location: {locations}. Audit this page in an incognito window to prevent those resources from affecting your scores.}\n    other {There may be stored data affecting loading performance in these locations: {locations}. Audit this page in an incognito window to prevent those resources from affecting your scores.}\n  }"
+  },
+  "core/gather/driver/storage.js | warningOriginDataTimeout": {
+    "message": "Clearing the origin data timed out. Try auditing this page again and file a bug if the issue persists."
   },
   "core/lib/bf-cache-strings.js | appBanner": {
     "message": "Pages that requested an AppBanner are not currently eligible for back/forward cache."

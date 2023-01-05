@@ -1,5 +1,6 @@
 {
   "flags": {
-    "name": "Search results"
+    "name": "Search results",
+    "usePassiveGathering": true
   }
 }
