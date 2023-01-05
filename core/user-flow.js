@@ -73,8 +73,13 @@ class UserFlow {
    */
   _getNextFlags(flags) {
     const clonedFlowFlags = this._options?.flags && deepClone(this._options?.flags);
-    if (!flags) return clonedFlowFlags;
-    return mergeConfigFragment(clonedFlowFlags || {}, flags, true);
+    const mergedFlags = mergeConfigFragment(clonedFlowFlags || {}, flags || {}, true);
+
+    if (mergedFlags.usePassiveGathering === undefined) {
+      mergedFlags.usePassiveGathering = true;
+    }
+
+    return mergedFlags;
   }
 
   /**

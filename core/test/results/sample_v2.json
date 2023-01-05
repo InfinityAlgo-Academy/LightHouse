@@ -5866,6 +5866,7 @@
     "disableStorageReset": false,
     "debugNavigation": false,
     "channel": "cli",
+    "usePassiveGathering": false,
     "skipAboutBlank": false,
     "blankPage": "about:blank",
     "budgets": [
