@@ -5,8 +5,7 @@
  */
 
 import {Audit} from './audit.js';
-import {EntityClassification as ComputedEntityClassification}
-  from '../computed/entity-classification.js';
+import {EntityClassification as ComputedEntityClassification} from '../computed/entity-classification.js';
 
 class EntityClassification extends Audit {
   /**

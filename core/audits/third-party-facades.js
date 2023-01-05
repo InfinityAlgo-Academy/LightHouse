@@ -129,7 +129,7 @@ class ThirdPartyFacades extends Audit {
     const facadableProductMap = new Map();
     for (const url of byURL.keys()) {
       const entity = classifiedEntities.urlToEntity.get(url);
-      if (!entity || entity === classifiedEntities.firstParty) continue;
+      if (!entity || classifiedEntities.isFirstParty(url)) continue;
 
       const product = thirdPartyWeb.getProduct(url);
       if (!product || !product.facades || !product.facades.length) continue;
