@@ -34,6 +34,7 @@ const args = yargs(process.argv.slice(2))
     },
     'rebaseline-artifacts': {
       type: 'array',
+      alias: 'a',
     },
     'output-path': {
       type: 'string',
@@ -75,7 +76,7 @@ async function waitForImagesToLoad(page) {
 const config = {
   extends: 'lighthouse:default',
   settings: {
-    skipAudits: ['uses-http2'],
+    skipAudits: ['tap-targets'],
   },
 };
 
