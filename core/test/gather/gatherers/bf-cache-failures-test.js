@@ -126,6 +126,22 @@ describe('BFCacheFailures', () => {
     });
   });
 
+  it('passively collects bf cache events in navigation mode when passive flag set', async () => {
+    context.gatherMode = 'navigation';
+    context.dependencies.DevtoolsLog = [];
+    context.settings.usePassiveGathering = true;
+
+    const gatherer = new BFCacheFailures();
+    const artifact = await gatherer.getArtifact(context);
+
+    expect(mockContext.driver.defaultSession.sendCommand)
+      .not.toHaveBeenCalledWith('Page.navigate', {url: 'chrome://terms'});
+    expect(mockContext.driver.defaultSession.sendCommand)
+      .not.toHaveBeenCalledWith('Page.navigateToHistoryEntry', {entryId: 1});
+
+    expect(artifact).toHaveLength(0);
+  });
+
   it('passively collects bf cache event in timespan mode', async () => {
     context.gatherMode = 'timespan';
     context.dependencies.DevtoolsLog = [{

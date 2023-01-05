@@ -231,7 +231,7 @@ function createMockContext() {
     computedCache: new Map(),
     dependencies: {},
     baseArtifacts: createMockBaseArtifacts(),
-    settings: constants.defaultSettings,
+    settings: JSON.parse(JSON.stringify(constants.defaultSettings)),
 
     /** @return {LH.Gatherer.FRTransitionalContext} */
     asContext() {
