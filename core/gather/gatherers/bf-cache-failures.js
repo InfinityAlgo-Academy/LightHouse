@@ -136,7 +136,7 @@ class BFCacheFailures extends FRGatherer {
    */
   async getArtifact(context) {
     const events = this.passivelyCollectBFCacheEvents(context);
-    if (context.gatherMode === 'navigation') {
+    if (context.gatherMode === 'navigation' && !context.settings.usePassiveGathering) {
       const activelyCollectedEvent = await this.activelyCollectBFCacheEvent(context);
       if (activelyCollectedEvent) events.push(activelyCollectedEvent);
     }

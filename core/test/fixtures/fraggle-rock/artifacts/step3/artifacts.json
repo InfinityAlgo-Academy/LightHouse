@@ -190,8 +190,7 @@
     "onlyAudits": null,
     "onlyCategories": null,
     "skipAudits": [
-      "uses-http2",
-      "bf-cache"
+      "uses-http2"
     ]
   },
   "BenchmarkIndex": 2210.5,

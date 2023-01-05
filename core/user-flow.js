@@ -93,17 +93,6 @@ class UserFlow {
       newStepFlags.skipAboutBlank = true;
     }
 
-    // BFCache will actively load the page in navigation mode.
-    // To prevent this from impacting future flow steps, we can disable the audit.
-    // If `skipAudits` is defined on the config, we should append this rather than override.
-    const skipAuditsSet = new Set(
-      newStepFlags.skipAudits ||
-      this._options?.config?.settings?.skipAudits ||
-      []
-    );
-    skipAuditsSet.add('bf-cache');
-    newStepFlags.skipAudits = Array.from(skipAuditsSet);
-
     // On repeat navigations, we want to disable storage reset by default (i.e. it's not a cold load).
     const isSubsequentNavigation = this._gatherSteps
       .some(step => step.artifacts.GatherContext.gatherMode === 'navigation');
