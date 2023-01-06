@@ -13,7 +13,13 @@ import {ExecutionContext} from './execution-context.js';
 
 /** @typedef {InstanceType<import('./network-monitor.js')['NetworkMonitor']>} NetworkMonitor */
 /** @typedef {import('./network-monitor.js').NetworkMonitorEvent} NetworkMonitorEvent */
-/** @typedef {{promise: Promise<void>, cancel: function(): void}} CancellableWait */
+
+/**
+ * @template [T=void]
+ * @typedef CancellableWait
+ * @prop {Promise<T>} promise
+ * @prop {() => void} cancel
+ */
 
 /**
  * @typedef WaitOptions
@@ -40,7 +46,7 @@ function waitForNothing() {
  * Returns a promise that resolve when a frame has been navigated.
  * Used for detecting that our about:blank reset has been completed.
  * @param {LH.Gatherer.FRProtocolSession} session
- * @return {CancellableWait}
+ * @return {CancellableWait<LH.Crdp.Page.FrameNavigatedEvent>}
  */
 function waitForFrameNavigated(session) {
   /** @type {(() => void)} */
@@ -48,6 +54,7 @@ function waitForFrameNavigated(session) {
     throw new Error('waitForFrameNavigated.cancel() called before it was defined');
   };
 
+  /** @type {Promise<LH.Crdp.Page.FrameNavigatedEvent>} */
   const promise = new Promise((resolve, reject) => {
     session.once('Page.frameNavigated', resolve);
     cancel = () => {
