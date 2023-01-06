@@ -48,6 +48,7 @@ describe('Cache headers audit', () => {
       devtoolsLogs: {
         [CacheHeadersAudit.DEFAULT_PASS]: devtoolLogs,
       },
+      URL: {},
     };
   }
 

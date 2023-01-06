@@ -29,6 +29,7 @@ describe('UX: notification audit', () => {
       SourceMaps: [],
       Scripts: [],
       devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(records)},
+      URL: {},
     }, context);
     assert.equal(auditResult.score, 0);
     assert.equal(auditResult.details.items.length, 2);
@@ -43,6 +44,7 @@ describe('UX: notification audit', () => {
       SourceMaps: [],
       Scripts: [],
       devtoolsLogs: {defaultPass: []},
+      URL: {},
     }, context);
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);

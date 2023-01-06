@@ -78,7 +78,7 @@ describe('Entity-Classification audit', () => {
     });
   });
 
-  it('does not identify 1st party if URL artifact is missing', async () => {
+  it('does not identify 1st party if URL artifact contents are missing', async () => {
     const artifacts = {
       devtoolsLogs: {
         defaultPass: networkRecordsToDevtoolsLog([
@@ -89,6 +89,7 @@ describe('Entity-Classification audit', () => {
           {url: 'https://www.google-analytics.com/cx/api.js?experiment=qvpc5qIfRC2EMnbn6bbN5A'},
         ]),
       },
+      URL: {},
     };
     const results = await EntityClassification.audit(artifacts, {computedCache: new Map()});
     const entities = results.details.entities;

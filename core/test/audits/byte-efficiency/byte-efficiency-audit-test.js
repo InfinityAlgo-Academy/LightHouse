@@ -356,6 +356,7 @@ describe('Byte efficiency base audit', () => {
       GatherContext: {gatherMode: 'timespan'},
       traces: {defaultPass: trace},
       devtoolsLogs: {defaultPass: []},
+      URL: {},
     };
     const computedCache = new Map();
 

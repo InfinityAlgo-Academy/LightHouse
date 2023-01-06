@@ -29,6 +29,7 @@ describe('Page uses passive events listeners where applicable', () => {
       SourceMaps: [],
       Scripts: [],
       devtoolsLogs: {defaultPass: networkRecordsToDevtoolsLog(records)},
+      URL: {},
     }, context);
 
     assert.equal(auditResult.score, 0);
@@ -44,6 +45,7 @@ describe('Page uses passive events listeners where applicable', () => {
       SourceMaps: [],
       Scripts: [],
       devtoolsLogs: {defaultPass: []},
+      URL: {},
     }, context);
     assert.equal(auditResult.score, 1);
     assert.equal(auditResult.details.items.length, 0);

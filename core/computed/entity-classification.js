@@ -75,7 +75,7 @@ class EntityClassification {
     // See https://github.com/GoogleChrome/lighthouse/issues/13706
     /** @type {LH.Artifacts.Entity | undefined} */
     let firstParty;
-    const firstPartyUrl = data.URL?.mainDocumentUrl || data.URL?.finalDisplayedUrl;
+    const firstPartyUrl = data.URL.mainDocumentUrl || data.URL.finalDisplayedUrl;
     if (firstPartyUrl) {
       firstParty = thirdPartyWeb.getEntity(firstPartyUrl) ||
         EntityClassification.makeUpAnEntity(madeUpEntityCache, firstPartyUrl);
@@ -84,7 +84,7 @@ class EntityClassification {
     /**
      * Convenience function to return the entity name for a URL.
      * @param {string} url
-     * @returns string | undefined
+     * @return {string | undefined}
      */
     function getEntityName(url) {
       return urlToEntity.get(url)?.name;
