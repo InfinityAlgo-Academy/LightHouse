@@ -22,6 +22,7 @@ cd ./lighthouse
 git checkout -f "$LIGHTHOUSE_GIT_REF"
 
 sudo yarn --frozen-lockfile
+sudo yarn build-report
 sudo yarn link
 
 cd /home/lighthouse

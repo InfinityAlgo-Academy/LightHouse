@@ -32,7 +32,9 @@ beforeEach(() => {
     .mockResponse('Network.setBlockedURLs')
     .mockResponse('Network.setExtraHTTPHeaders');
   storageMock.clearDataForOrigin.mockReset();
+  storageMock.clearDataForOrigin.mockReturnValue([]);
   storageMock.clearBrowserCaches.mockReset();
+  storageMock.clearBrowserCaches.mockReturnValue([]);
   storageMock.getImportantStorageWarning.mockReset();
 });
 
@@ -194,14 +196,20 @@ describe('.prepareTargetForIndividualNavigation()', () => {
   });
 
   it('collects storage warnings', async () => {
-    storageMock.getImportantStorageWarning.mockResolvedValue({message: 'This is a warning'});
+    storageMock.getImportantStorageWarning.mockResolvedValue('This is a storage warning');
+    storageMock.clearDataForOrigin.mockResolvedValue(['This is a clear data warning']);
+    storageMock.clearBrowserCaches.mockResolvedValue(['This is a clear cache warning']);
     const {warnings} = await prepare.prepareTargetForIndividualNavigation(
       sessionMock.asSession(),
       {...constants.defaultSettings, disableStorageReset: false},
       {...constants.defaultNavigationConfig, disableStorageReset: false, requestor: url}
     );
 
-    expect(warnings).toEqual([{message: 'This is a warning'}]);
+    expect(warnings).toEqual([
+      'This is a storage warning',
+      'This is a clear data warning',
+      'This is a clear cache warning',
+    ]);
   });
 });
 

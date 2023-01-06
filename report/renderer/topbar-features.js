@@ -240,7 +240,8 @@ export class TopbarFeatures {
    */
   _setUpCollapseDetailsAfterPrinting() {
     // FF and IE implement these old events.
-    if ('onbeforeprint' in self) {
+    const supportsOldPrintEvents = 'onbeforeprint' in self;
+    if (supportsOldPrintEvents) {
       self.addEventListener('afterprint', this.collapseAllDetails);
     } else {
       // Note: FF implements both window.onbeforeprint and media listeners. However,

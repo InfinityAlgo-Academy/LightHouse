@@ -1,5 +1,6 @@
 {
   "flags": {
-    "name": "Search input"
+    "name": "Search input",
+    "usePassiveGathering": true
   }
 }

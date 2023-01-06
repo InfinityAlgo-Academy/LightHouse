@@ -34,9 +34,9 @@ declare module Config {
   }
 
   /**
-   * The normalized and fully resolved config.
+   * The normalized and fully resolved legacy config.
    */
-  interface Config {
+  interface LegacyResolvedConfig {
     settings: Settings;
     passes: Pass[] | null;
     audits: AuditDefn[] | null;
@@ -45,9 +45,9 @@ declare module Config {
   }
 
   /**
-   * The normalized and fully resolved Fraggle Rock config.
+   * The normalized and fully resolved config.
    */
-  interface FRConfig {
+  interface ResolvedConfig {
     settings: Settings;
     artifacts: AnyArtifactDefn[] | null;
     navigations: NavigationDefn[] | null;

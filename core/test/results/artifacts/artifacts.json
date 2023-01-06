@@ -40,6 +40,10 @@
     ],
     "maxWaitForFcp": 30000,
     "maxWaitForLoad": 45000,
+    "pauseAfterFcpMs": 1000,
+    "pauseAfterLoadMs": 1000,
+    "networkQuietThresholdMs": 1000,
+    "cpuQuietThresholdMs": 1000,
     "formFactor": "mobile",
     "throttling": {
       "rttMs": 150,
@@ -63,6 +67,9 @@
     "disableStorageReset": false,
     "debugNavigation": false,
     "channel": "cli",
+    "usePassiveGathering": false,
+    "skipAboutBlank": false,
+    "blankPage": "about:blank",
     "budgets": [
       {
         "path": "/",
@@ -169,13 +176,7 @@
     "precomputedLanternData": null,
     "onlyAudits": null,
     "onlyCategories": null,
-    "skipAudits": null,
-    "skipAboutBlank": false,
-    "pauseAfterFcpMs": 1000,
-    "pauseAfterLoadMs": 1000,
-    "networkQuietThresholdMs": 1000,
-    "cpuQuietThresholdMs": 1000,
-    "blankPage": "about:blank"
+    "skipAudits": null
   },
   "URL": {
     "requestedUrl": "http://localhost:10200/dobetterweb/dbw_tester.html",

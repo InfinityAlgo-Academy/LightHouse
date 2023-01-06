@@ -120,7 +120,7 @@ const mergeConfigFragment = _mergeConfigFragment;
  * Merge an array of items by a caller-defined key. `mergeConfigFragment` is used to merge any items
  * with a matching key.
  *
- * @template T
+ * @template {Record<string, any>} T
  * @param {Array<T>|null|undefined} baseArray
  * @param {Array<T>|null|undefined} extensionArray
  * @param {(item: T) => string} keyFn

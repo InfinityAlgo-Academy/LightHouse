@@ -270,8 +270,8 @@ describe('UserFlow', () => {
 
       expect(timespanModule.startTimespanGather).toHaveBeenCalledTimes(2);
       expect(flow._gatherSteps).toMatchObject([
-        {flags: {name: 'My Timespan'}},
-        {flags: undefined},
+        {flags: {name: 'My Timespan', usePassiveGathering: true}},
+        {flags: {usePassiveGathering: true}},
       ]);
     });
 
@@ -323,8 +323,8 @@ describe('UserFlow', () => {
 
       expect(snapshotModule.snapshotGather).toHaveBeenCalledTimes(2);
       expect(flow._gatherSteps).toMatchObject([
-        {flags: {name: 'My Snapshot'}},
-        {flags: undefined},
+        {flags: {name: 'My Snapshot', usePassiveGathering: true}},
+        {flags: {usePassiveGathering: true}},
       ]);
     });
 
@@ -459,7 +459,7 @@ describe('UserFlow', () => {
         [
           gatherSteps[0].artifacts,
           {
-            config: {
+            resolvedConfig: {
               settings: {
                 skipAudits: ['uses-http2'],
               },
@@ -469,7 +469,7 @@ describe('UserFlow', () => {
         [
           gatherSteps[1].artifacts,
           {
-            config: {
+            resolvedConfig: {
               settings: {
                 onlyCategories: ['performance'],
               },
@@ -479,7 +479,7 @@ describe('UserFlow', () => {
         [
           gatherSteps[2].artifacts,
           {
-            config: {
+            resolvedConfig: {
               settings: {
                 onlyCategories: ['accessibility'],
               },
