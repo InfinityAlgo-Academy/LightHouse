@@ -419,6 +419,14 @@ class Config {
       includedAudits.add('full-page-screenshot');
     }
 
+    // The `entity-classification` audit is similar, the audit belongs to no category,
+    // but we still want to include it unless explictly excluded.
+    const explicitlyExcludesClassification =
+      settings.skipAudits && settings.skipAudits.includes('entity-classification');
+    if (!explicitlyExcludesClassification && (settings.onlyCategories || settings.skipAudits)) {
+      includedAudits.add('entity-classification');
+    }
+
     return {categories, requestedAuditNames: includedAudits};
   }
 

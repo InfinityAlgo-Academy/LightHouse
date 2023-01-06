@@ -553,7 +553,7 @@ describe('Fraggle Rock Config Filtering', () => {
       });
     });
 
-    it('should preserve full-page-screenshot', async () => {
+    it('should preserve filter-resistant audits', async () => {
       config = (await initializeConfig('navigation')).config;
 
       const filtered = filters.filterConfigByExplicitFilters(config, {
@@ -564,7 +564,7 @@ describe('Fraggle Rock Config Filtering', () => {
 
       if (!filtered.audits) throw new Error('No audits produced');
       const auditIds = filtered.audits.map(audit => audit.implementation.meta.id);
-      expect(auditIds).toEqual(['full-page-screenshot', 'color-contrast']);
+      expect(auditIds).toEqual(['full-page-screenshot', 'color-contrast', 'entity-classification']);
     });
   });
 });

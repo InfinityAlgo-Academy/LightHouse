@@ -6376,11 +6376,6 @@
           "id": "script-treemap-data",
           "weight": 0,
           "group": "hidden"
-        },
-        {
-          "id": "entity-classification",
-          "weight": 0,
-          "group": "hidden"
         }
       ],
       "id": "performance",

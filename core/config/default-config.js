@@ -532,7 +532,6 @@ const defaultConfig = {
         {id: 'screenshot-thumbnails', weight: 0, group: 'hidden'},
         {id: 'final-screenshot', weight: 0, group: 'hidden'},
         {id: 'script-treemap-data', weight: 0, group: 'hidden'},
-        {id: 'entity-classification', weight: 0, group: 'hidden'},
       ],
     },
     'accessibility': {

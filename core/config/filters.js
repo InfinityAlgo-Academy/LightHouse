@@ -27,7 +27,7 @@ const baseArtifactKeys = Object.keys(baseArtifactKeySource);
 
 // Some audits are used by the report for additional information.
 // Keep these audits unless they are *directly* skipped with `skipAudits`.
-const filterResistantAuditIds = ['full-page-screenshot'];
+const filterResistantAuditIds = ['full-page-screenshot', 'entity-classification'];
 
 // Some artifacts are used by the report for additional information.
 // Always run these artifacts even if audits do not request them.
