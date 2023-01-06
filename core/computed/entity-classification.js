@@ -93,7 +93,7 @@ class EntityClassification {
     /**
      * Convenience function to check if a URL belongs to first party.
      * @param {string} url
-     * @returns boolean
+     * @return {boolean}
      */
     function isFirstParty(url) {
       return urlToEntity.get(url) === firstParty;
