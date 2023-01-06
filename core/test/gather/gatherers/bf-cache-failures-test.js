@@ -45,6 +45,8 @@ describe('BFCacheFailures', () => {
   let mockContext = createMockContext();
   /** @type {LH.Crdp.Page.BackForwardCacheNotUsedEvent|undefined} */
   let mockActiveBfCacheEvent;
+  /** @type {Partial<LH.Crdp.Page.FrameNavigatedEvent>} */
+  let frameNavigatedEvent = {type: 'Navigation'};
 
   beforeEach(() => {
     mockContext = createMockContext();
@@ -72,9 +74,10 @@ describe('BFCacheFailures', () => {
         }
       });
 
+    frameNavigatedEvent = {type: 'Navigation'};
     mockContext.driver.defaultSession.once
       .mockEvent('Page.loadEventFired', {})
-      .mockEvent('Page.frameNavigated', {});
+      .mockEvent('Page.frameNavigated', frameNavigatedEvent);
   });
 
   it('actively triggers bf cache in navigation mode', async () => {
@@ -198,6 +201,7 @@ describe('BFCacheFailures', () => {
 
   it('returns an empty list if no events were found passively or actively', async () => {
     mockActiveBfCacheEvent = undefined;
+    frameNavigatedEvent.type = 'BackForwardCacheRestore';
 
     const gatherer = new BFCacheFailures();
     const artifact = await gatherer.getArtifact(context);
