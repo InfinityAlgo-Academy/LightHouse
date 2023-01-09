@@ -47,7 +47,7 @@ function getObservedDeviceMetrics() {
 }
 
 /**
- * The screenshot dimensions are sized to `window.outerHeight` / `window.innerWidth`,
+ * The screenshot dimensions are sized to `window.outerHeight` / `window.outerWidth`,
  * however the bounding boxes of the elements are relative to `window.innerHeight` / `window.innerWidth`.
  */
 function getScreenshotAreaSize() {
@@ -135,7 +135,6 @@ class FullPageScreenshot extends FRGatherer {
       await context.driver.executionContext.evaluate(getScreenshotAreaSize, {
         args: [],
         useIsolation: true,
-        deps: [kebabCaseToCamelCase],
       });
 
     return {
