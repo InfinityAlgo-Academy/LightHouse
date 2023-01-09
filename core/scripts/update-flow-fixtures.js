@@ -76,7 +76,7 @@ async function waitForImagesToLoad(page) {
 const config = {
   extends: 'lighthouse:default',
   settings: {
-    skipAudits: ['tap-targets'],
+    skipAudits: ['uses-http2'],
   },
 };
 
