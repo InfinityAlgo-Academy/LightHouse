@@ -50,7 +50,7 @@ describe('SummaryFlowStep', () => {
 
     const screenshot =
       root.getByAltText('Screenshot of a page tested by Lighthouse') as HTMLImageElement;
-    expect(screenshot.src).toMatch(/data:image\/webp;base64/);
+    expect(screenshot.src).toMatch(/data:image\/jpeg;base64/);
 
     const gauges = root.getAllByTestId('CategoryScore');
     expect(gauges).toHaveLength(4);
@@ -107,7 +107,7 @@ describe('SummaryFlowStep', () => {
 
     const screenshot =
       root.getByAltText('Screenshot of a page tested by Lighthouse') as HTMLImageElement;
-    expect(screenshot.src).toMatch(/data:image\/jpeg;base64/);
+    expect(screenshot.src).toMatch(/data:image\/webp;base64/);
 
     const gauges = root.getAllByTestId('CategoryScore');
     expect(gauges).toHaveLength(4);
