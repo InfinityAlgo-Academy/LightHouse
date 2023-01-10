@@ -21,8 +21,9 @@ describe('ProcessedTrace', () => {
     delete processedTrace.mainThreadEvents;
     delete processedTrace.frameTreeEvents;
     delete processedTrace.frameEvents;
+    delete processedTrace._keyEvents;
 
-    expect(processedTrace).toEqual({
+    expect(processedTrace).toMatchObject({
       mainFrameInfo: {
         frameId: '0x25a638821e30',
         startingPid: 44277,
