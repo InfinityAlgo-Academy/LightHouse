@@ -112,7 +112,6 @@ class ValidSourceMaps extends Audit {
             type: /** @type {const} */ ('subitems'),
             items: errors,
           },
-          entity: classifiedEntities?.getEntityName(script.url),
         });
       }
     }

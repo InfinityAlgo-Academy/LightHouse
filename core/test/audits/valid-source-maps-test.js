@@ -85,7 +85,6 @@ describe('Valid source maps audit', () => {
     const context = {settings: {}, computedCache: new Map()};
     const auditResult = await ValidSourceMaps.audit(artifacts, context);
     expect(auditResult.details.items[0].subItems.items.length).toEqual(1);
-    expect(auditResult.details.items[0].entity).toEqual('example.com');
     expect(auditResult.details.items[0].subItems.items[0].error).toBeDisplayString(
       'Large JavaScript file is missing a source map');
     expect(auditResult.score).toEqual(0);
@@ -175,9 +174,6 @@ describe('Valid source maps audit', () => {
     // The second result should have no warnings
     expect(auditResult.details.items[1].subItems.items.length).toEqual(0);
 
-    // All source map items have entities recognized
-    auditResult.details.items.forEach(item => expect(item.entity).toEqual('example.com'));
-
     // The audit should pass because these warnings don't affect your score
     expect(auditResult.score).toEqual(1);
   });
@@ -216,9 +212,6 @@ describe('Valid source maps audit', () => {
     expect(auditResult.details.items[1].subItems.items.length).toEqual(1);
     expect(auditResult.details.items[1].subItems.items[0].error).toBeDisplayString(
       'Warning: missing 1 item in `.sourcesContent`');
-
-    // All source map items have entities recognized
-    auditResult.details.items.forEach(item => expect(item.entity).toEqual('example.com'));
 
     expect(auditResult.score).toEqual(0);
   });
