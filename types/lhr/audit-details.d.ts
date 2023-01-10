@@ -10,7 +10,6 @@ import Treemap from './treemap';
 type Details =
   Details.CriticalRequestChain |
   Details.DebugData |
-  Details.EntityClassification | 
   Details.Filmstrip |
   Details.FullPageScreenshot |
   Details.List |

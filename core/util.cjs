@@ -153,6 +153,10 @@ class Util {
               delete heading.subItemsHeading.itemType;
             }
           }
+
+          // Mark entities on items.
+          audit.details.items = Util.getEntityClassifiedTableItems(audit.detail,
+            result.entityClassification);
         }
       }
     }
@@ -217,6 +221,50 @@ class Util {
     }
 
     return clone;
+  }
+
+  /**
+   * Classify entities on TableItems.
+   *
+   * @param {{headings: TableColumnHeading[], items: TableItem[]}} details
+   * @param {LH.Result.EntityClassification} entityClassification
+   * @return {TableItem[]}
+   */
+  static getEntityClassifiedTableItems(details, entityClassification) {
+    if (!entityClassification) return details.items;
+
+    // If details.items are already marked with entity attribute during an audit, nothing to do here.
+    if (details.items.length && details.items.find(item => typeof item.entity !== 'undefined')) {
+      return details.items;
+    }
+
+    const urlKey = details.headings.find(heading => heading.valueType === 'url')?.key;
+    if (!urlKey) {
+      // look for next way to find a url.
+      return details.items;
+    }
+
+    /** @type {TableItem[]} */
+    return details.items.map(item => {
+      /** @type {string|undefined} */
+      let url;
+      if (typeof item[urlKey] === 'string') {
+        url = item[urlKey]?.toString();
+      }
+      if (!url) return item;
+
+      let origin;
+      try {
+        // Non-URLs can appear in valueType: url columns, like 'Unattributable'
+        origin = Util.parseURL(url).origin;
+      } catch (e) {}
+      if (!origin) return item;
+
+      const entityId = entityClassification?.originLUT[origin];
+      if (!entityId) return item;
+      const entity = entityClassification?.entities[entityId];
+      return {entity: entity?.name, ...item};
+    });
   }
 
   /**
