@@ -515,7 +515,7 @@ class TraceProcessor {
 
       // Fallback as many test/fixture traces are missing metadata blocks
       if (!tid) {
-        log.warn('trace-processor',
+        log.warn('TraceProcessor',
           'Trace processor falling back to undesirable mainThread match technique.');
 
         // All of these are dispatched on the main thread.
