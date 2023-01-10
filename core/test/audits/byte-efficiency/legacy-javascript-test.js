@@ -121,6 +121,40 @@ describe('LegacyJavaScript audit', () => {
     expect(result.wastedBytesByUrl).toMatchInlineSnapshot(`Map {}`);
   });
 
+  it('legacy polyfill in unrecognized party does not contribute to wasted bytes', async () => {
+    const result = await getResult([
+      {
+        code: 'String.prototype.repeat = function() {}',
+        url: 'https://www.foobarbaz.com/a.js',
+      },
+    ]);
+    expect(result.items).toHaveLength(1);
+    expect(result.items[0]).toMatchInlineSnapshot(`
+      Object {
+        "subItems": Object {
+          "items": Array [
+            Object {
+              "location": Object {
+                "column": 0,
+                "line": 0,
+                "original": undefined,
+                "type": "source-location",
+                "url": "https://www.foobarbaz.com/a.js",
+                "urlProvider": "network",
+              },
+              "signal": "String.prototype.repeat",
+            },
+          ],
+          "type": "subitems",
+        },
+        "totalBytes": 0,
+        "url": "https://www.foobarbaz.com/a.js",
+        "wastedBytes": 20104,
+      }
+    `);
+    expect(result.wastedBytesByUrl).toMatchInlineSnapshot(`Map {}`);
+  });
+
   it('legacy polyfill in first party resource contributes to wasted bytes', async () => {
     const result = await getResult([
       {
