@@ -135,7 +135,6 @@ async function rebaselineArtifacts(artifactKeys) {
         // @ts-expect-error
         gatherStep.artifacts[key] = newGatherStep.artifacts[key];
       }
-      flowArtifacts.gatherSteps[i] = gatherStep;
     }
   }
 

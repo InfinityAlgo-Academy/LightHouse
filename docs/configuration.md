@@ -36,14 +36,15 @@ lighthouse('https://example.com/', {port: 9222}, config);
 
 ## Properties
 
-| Name | Type |
-| - | - |
+| Name | Type | |
+| - | - | - |
 | extends | <code>string&#124;undefined</code> |
 | settings | <code>Object&#124;undefined</code> |
 | passes | <code>Object[]</code> |
 | audits | <code>string[]</code> |
 | categories | <code>Object&#124;undefined</code> |
 | groups | <code>Object&#124;undefined</code> |
+| plugins | <code>string[]</code> | Includes plugins and their audits. Refer to the [plugin documentation](https://github.com/GoogleChrome/lighthouse/blob/master/docs/plugins.md) for details.|
 
 ### `extends: "lighthouse:default"|undefined`
 

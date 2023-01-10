@@ -1679,8 +1679,14 @@
   "core/gather/driver/navigation.js | warningTimeout": {
     "message": "T̂h́ê ṕâǵê ĺôád̂éd̂ t́ôó ŝĺôẃl̂ý t̂ó f̂ín̂íŝh́ ŵít̂h́îń t̂h́ê t́îḿê ĺîḿît́. R̂éŝúl̂t́ŝ ḿâý b̂é îńĉóm̂ṕl̂ét̂é."
   },
+  "core/gather/driver/storage.js | warningCacheTimeout": {
+    "message": "Ĉĺêár̂ín̂ǵ t̂h́ê b́r̂óŵśêŕ ĉáĉh́ê t́îḿêd́ ôút̂. T́r̂ý âúd̂ít̂ín̂ǵ t̂h́îś p̂áĝé âǵâín̂ án̂d́ f̂íl̂é â b́ûǵ îf́ t̂h́ê íŝśûé p̂ér̂śîśt̂ś."
+  },
   "core/gather/driver/storage.js | warningData": {
     "message": "{locationCount, plural,\n    =1 {T̂h́êŕê ḿâý b̂é ŝt́ôŕêd́ d̂át̂á âf́f̂éĉt́îńĝ ĺôád̂ín̂ǵ p̂ér̂f́ôŕm̂án̂ćê ín̂ t́ĥíŝ ĺôćât́îón̂: {locations}. Áûd́ît́ t̂h́îś p̂áĝé îń âń îńĉóĝńît́ô ẃîńd̂óŵ t́ô ṕr̂év̂én̂t́ t̂h́ôśê ŕêśôúr̂ćêś f̂ŕôḿ âf́f̂éĉt́îńĝ ýôúr̂ śĉór̂éŝ.}\n    other {T́ĥér̂é m̂áŷ b́ê śt̂ór̂éd̂ d́ât́â áf̂f́êćt̂ín̂ǵ l̂óâd́îńĝ ṕêŕf̂ór̂ḿâńĉé îń t̂h́êśê ĺôćât́îón̂ś: {locations}. Âúd̂ít̂ t́ĥíŝ ṕâǵê ín̂ án̂ ín̂ćôǵn̂ít̂ó ŵín̂d́ôẃ t̂ó p̂ŕêv́êńt̂ t́ĥóŝé r̂éŝóûŕĉéŝ f́r̂óm̂ áf̂f́êćt̂ín̂ǵ ŷóûŕ ŝćôŕêś.}\n  }"
+  },
+  "core/gather/driver/storage.js | warningOriginDataTimeout": {
+    "message": "Ĉĺêár̂ín̂ǵ t̂h́ê ór̂íĝín̂ d́ât́â t́îḿêd́ ôút̂. T́r̂ý âúd̂ít̂ín̂ǵ t̂h́îś p̂áĝé âǵâín̂ án̂d́ f̂íl̂é â b́ûǵ îf́ t̂h́ê íŝśûé p̂ér̂śîśt̂ś."
   },
   "core/lib/bfcache-strings.js | appBanner": {
     "message": "P̂áĝéŝ t́ĥát̂ ŕêq́ûéŝt́êd́ âń Âṕp̂B́âńn̂ér̂ ár̂é n̂ót̂ ćûŕr̂én̂t́l̂ý êĺîǵîb́l̂é f̂ór̂ b́âćk̂/f́ôŕŵár̂d́ ĉáĉh́ê."

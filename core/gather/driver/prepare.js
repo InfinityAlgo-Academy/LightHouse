@@ -70,6 +70,7 @@ async function dismissJavaScriptDialogs(session) {
 }
 
 /**
+ * Reset the storage and warn if any stored data could be affecting the scores.
  * @param {LH.Gatherer.FRProtocolSession} session
  * @param {string} url
  * @return {Promise<{warnings: Array<LH.IcuMessage>}>}
@@ -78,11 +79,14 @@ async function resetStorageForUrl(session, url) {
   /** @type {Array<LH.IcuMessage>} */
   const warnings = [];
 
-  // Reset the storage and warn if there appears to be other important data.
-  const warning = await storage.getImportantStorageWarning(session, url);
-  if (warning) warnings.push(warning);
-  await storage.clearDataForOrigin(session, url);
-  await storage.clearBrowserCaches(session);
+  const importantStorageWarning = await storage.getImportantStorageWarning(session, url);
+  if (importantStorageWarning) warnings.push(importantStorageWarning);
+
+  const clearDataWarnings = await storage.clearDataForOrigin(session, url);
+  warnings.push(...clearDataWarnings);
+
+  const clearCacheWarnings = await storage.clearBrowserCaches(session);
+  warnings.push(...clearCacheWarnings);
 
   return {warnings};
 }
