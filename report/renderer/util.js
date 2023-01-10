@@ -151,8 +151,8 @@ class Util {
           }
 
           // Mark entities on items.
-          audit.details.items = Util.getEntityClassifiedTableItems(audit.details,
-            result.entityClassification);
+          audit.details.items = Util.getEntityClassifiedTableItems(audit.details.headings,
+            audit.details.items, result.entityClassification);
         }
       }
     }
@@ -221,27 +221,26 @@ class Util {
 
   /**
    * Classify entities on TableItems.
-   *
-   * @param {{headings: LH.Audit.Details.TableColumnHeading[], items: LH.Audit.Details.TableItem[]}} details
+   * @param {LH.FormattedIcu<LH.Audit.Details.TableColumnHeading[]>} headings
+   * @param {LH.FormattedIcu<LH.Audit.Details.TableItem[]>} items
    * @param {LH.Result.EntityClassification=} entityClassification
-   * @return {LH.Audit.Details.TableItem[]}
+   * @return {LH.FormattedIcu<LH.Audit.Details.TableItem[]>}
    */
-  static getEntityClassifiedTableItems(details, entityClassification) {
-    if (!entityClassification) return details.items;
+  static getEntityClassifiedTableItems(headings, items, entityClassification) {
+    if (!entityClassification) return items;
 
     // If details.items are already marked with entity attribute during an audit, nothing to do here.
-    if (details.items.length && details.items.find(item => typeof item.entity !== 'undefined')) {
-      return details.items;
+    if (items.length && items.find(item => typeof item.entity !== 'undefined')) {
+      return items;
     }
 
-    const urlKey = details.headings.find(heading => heading.valueType === 'url')?.key;
+    const urlKey = headings.find(heading => heading.valueType === 'url')?.key;
     if (!urlKey) {
       // look for next way to find a url.
-      return details.items;
+      return items;
     }
 
-    /** @type {LH.Audit.Details.TableItem[]} */
-    return details.items.map(item => {
+    return items.map(item => {
       /** @type {string|undefined} */
       let url;
       if (typeof item[urlKey] === 'string') {
