@@ -432,6 +432,17 @@ class GatherRunner {
 
     const baseArtifacts = passContext.baseArtifacts;
 
+    if (!passContext.settings.disableFullPageScreenshot) {
+      try {
+        baseArtifacts.FullPageScreenshot =
+          // @ts-expect-error
+          await FullPageScreenshot.collectFullPageScreenshot(passContext);
+      } catch (err) {
+        log.error('GatherRunner FullPageScreenshot', err);
+        baseArtifacts.FullPageScreenshot = null;
+      }
+    }
+
     // Fetch the manifest, if it exists.
     try {
       baseArtifacts.WebAppManifest = await WebAppManifest.getWebAppManifest(
@@ -461,17 +472,6 @@ class GatherRunner {
     } catch (err) {
       log.error('GatherRunner Stacks', err);
       baseArtifacts.Stacks = [];
-    }
-
-    if (!passContext.settings.disableFullPageScreenshot) {
-      try {
-        baseArtifacts.FullPageScreenshot =
-          // @ts-expect-error
-          await FullPageScreenshot.collectFullPageScreenshot(passContext);
-      } catch (err) {
-        log.error('GatherRunner FullPageScreenshot', err);
-        baseArtifacts.FullPageScreenshot = null;
-      }
     }
 
     // Find the NetworkUserAgent actually used in the devtoolsLogs.
