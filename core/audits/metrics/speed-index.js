@@ -11,7 +11,7 @@ import {SpeedIndex as ComputedSi} from '../../computed/metrics/speed-index.js';
 const UIStrings = {
   /** Description of the Speed Index metric, which summarizes how quickly the page looked visually complete. This is displayed within a tooltip when the user hovers on the metric name to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'Speed Index shows how quickly the contents of a page are visibly populated. ' +
-      '[Learn more about the Speed Index metric](https://web.dev/speed-index/).',
+      '[Learn more about the Speed Index metric](https://developer.chrome.com/docs/lighthouse/performance/speed-index/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

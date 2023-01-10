@@ -38,7 +38,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user why they should avoid `document.write`. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description: 'For users on slow connections, external scripts dynamically injected via ' +
       '`document.write()` can delay page load by tens of seconds. ' +
-      '[Learn how to avoid document.write()](https://web.dev/no-document-write/).',
+      '[Learn how to avoid document.write()](https://developer.chrome.com/docs/lighthouse/best-practices/no-document-write/).',
 };
 
 const str_ = i18n.createIcuMessageFn(import.meta.url, UIStrings);

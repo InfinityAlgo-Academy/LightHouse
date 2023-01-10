@@ -1,0 +1,2831 @@
+{
+  "fetchTime": "2022-03-15T21:49:59.811Z",
+  "Timing": [
+    {
+      "name": "lh:config",
+      "entryType": "measure",
+      "startTime": 0,
+      "duration": 1,
+      "detail": null,
+      "gather": true
+    },
+    {
+      "name": "lh:config:resolveArtifactsToDefns",
+      "entryType": "measure",
+      "startTime": 1,
+      "duration": 1,
+      "detail": null,
+      "gather": true
+    },
+    {
+      "name": "lh:config:resolveNavigationsToDefns",
+      "entryType": "measure",
+      "startTime": 2,
+      "duration": 1,
+      "detail": null,
+      "gather": true
+    },
+    {
+      "name": "lh:driver:connect",
+      "entryType": "measure",
+      "startTime": 3,
+      "duration": 1,
+      "detail": null,
+      "gather": true
+    },
+    {
+      "name": "lh:runner:gather",
+      "entryType": "measure",
+      "startTime": 4,
+      "duration": 1,
+      "detail": null,
+      "gather": true
+    },
+    {
+      "name": "lh:gather:getBenchmarkIndex",
+      "entryType": "measure",
+      "startTime": 5,
+      "duration": 1,
+      "detail": null,
+      "gather": true
+    },
+    {
+      "name": "lh:gather:getVersion",
+      "entryType": "measure",
+      "startTime": 6,
+      "duration": 1,
+      "detail": null,
+      "gather": true
+    },
+    {
+      "name": "lh:gather:collectStacks",
+      "entryType": "measure",
+      "startTime": 7,
+      "duration": 1,
+      "detail": null,
+      "gather": true
+    }
+  ],
+  "LighthouseRunWarnings": [],
+  "settings": {
+    "output": "json",
+    "maxWaitForFcp": 30000,
+    "maxWaitForLoad": 45000,
+    "pauseAfterFcpMs": 1000,
+    "pauseAfterLoadMs": 1000,
+    "networkQuietThresholdMs": 1000,
+    "cpuQuietThresholdMs": 1000,
+    "formFactor": "mobile",
+    "throttling": {
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "requestLatencyMs": 562.5,
+      "downloadThroughputKbps": 1474.5600000000002,
+      "uploadThroughputKbps": 675,
+      "cpuSlowdownMultiplier": 4
+    },
+    "throttlingMethod": "simulate",
+    "screenEmulation": {
+      "mobile": true,
+      "width": 360,
+      "height": 640,
+      "deviceScaleFactor": 2.625,
+      "disabled": false
+    },
+    "emulatedUserAgent": "Mozilla/5.0 (Linux; Android 7.0; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4695.0 Mobile Safari/537.36 Chrome-Lighthouse",
+    "auditMode": false,
+    "gatherMode": false,
+    "disableStorageReset": false,
+    "debugNavigation": false,
+    "channel": "node",
+    "usePassiveGathering": true,
+    "skipAboutBlank": false,
+    "blankPage": "about:blank",
+    "budgets": null,
+    "locale": "en-US",
+    "blockedUrlPatterns": null,
+    "additionalTraceCategories": null,
+    "extraHeaders": null,
+    "precomputedLanternData": null,
+    "onlyAudits": null,
+    "onlyCategories": null,
+    "skipAudits": [
+      "uses-http2"
+    ]
+  },
+  "BenchmarkIndex": 2206.5,
+  "HostUserAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4945.0 Safari/537.36",
+  "HostFormFactor": "desktop",
+  "URL": {
+    "finalDisplayedUrl": "https://www.mikescerealshack.co/search?q=call+of+duty"
+  },
+  "PageLoadError": null,
+  "GatherContext": {
+    "gatherMode": "snapshot"
+  },
+  "Stacks": [
+    {
+      "detector": "js",
+      "id": "react",
+      "name": "React",
+      "npm": "react"
+    },
+    {
+      "detector": "js",
+      "id": "react-fast",
+      "name": "React (Fast path)",
+      "npm": "react"
+    },
+    {
+      "detector": "js",
+      "id": "next",
+      "name": "Next.js",
+      "version": "10.0.6",
+      "npm": "next"
+    },
+    {
+      "detector": "js",
+      "id": "next-fast",
+      "name": "Next.js (Fast path)",
+      "npm": "next"
+    }
+  ],
+  "NetworkUserAgent": "",
+  "WebAppManifest": null,
+  "InstallabilityErrors": {
+    "errors": []
+  },
+  "Accessibility": {
+    "violations": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143"
+        ],
+        "nodes": [
+          {
+            "target": [
+              "a:nth-child(3) > .sm\\:flex-nowrap.hover\\:bg-gray-100.rounded-sm > .max-w-full.sm\\:hidden.mt-1 > div > .truncate.text-sm:nth-child(1) > .text-gray-400.mr-2"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.53 (foreground color: #9ca3af, background color: #ffffff, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+            "node": {
+              "lhId": "7-0-SPAN",
+              "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,2,A,0,DIV,2,DIV,0,DIV,0,DIV,0,SPAN",
+              "selector": "div.max-w-full > div > div.text-sm > span.text-gray-400",
+              "boundingRect": {
+                "top": 278,
+                "bottom": 298,
+                "left": 24,
+                "right": 68,
+                "width": 44,
+                "height": 20
+              },
+              "snippet": "<span class=\"text-gray-400 mr-2\">",
+              "nodeLabel": "Oscar:"
+            },
+            "relatedNodes": [
+              {
+                "lhId": "7-1-MAIN",
+                "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN",
+                "selector": "body > div#__next > div.flex > main#main-content",
+                "boundingRect": {
+                  "top": 80,
+                  "bottom": 618,
+                  "left": 0,
+                  "right": 360,
+                  "width": 360,
+                  "height": 538
+                },
+                "snippet": "<main id=\"main-content\" class=\"w-full bg-white rounded-lg p-4 relative overflow-hidden\" style=\"box-shadow: black 0px 2px 1px;\">",
+                "nodeLabel": "\"call of duty\" Search Results\nGo\nS8E13 Jury Duty\n10:41-11:34\nOscar:Wow, it's so…"
+              }
+            ]
+          },
+          {
+            "target": [
+              ".max-w-full.sm\\:hidden.mt-1 > div > .truncate.text-sm:nth-child(2) > .text-gray-400.mr-2"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.53 (foreground color: #9ca3af, background color: #ffffff, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+            "node": {
+              "lhId": "7-2-SPAN",
+              "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,2,A,0,DIV,2,DIV,0,DIV,1,DIV,0,SPAN",
+              "selector": "div.max-w-full > div > div.text-sm > span.text-gray-400",
+              "boundingRect": {
+                "top": 298,
+                "bottom": 318,
+                "left": 24,
+                "right": 76,
+                "width": 52,
+                "height": 20
+              },
+              "snippet": "<span class=\"text-gray-400 mr-2\">",
+              "nodeLabel": "Angela:"
+            },
+            "relatedNodes": [
+              {
+                "lhId": "7-1-MAIN",
+                "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN",
+                "selector": "body > div#__next > div.flex > main#main-content",
+                "boundingRect": {
+                  "top": 80,
+                  "bottom": 618,
+                  "left": 0,
+                  "right": 360,
+                  "width": 360,
+                  "height": 538
+                },
+                "snippet": "<main id=\"main-content\" class=\"w-full bg-white rounded-lg p-4 relative overflow-hidden\" style=\"box-shadow: black 0px 2px 1px;\">",
+                "nodeLabel": "\"call of duty\" Search Results\nGo\nS8E13 Jury Duty\n10:41-11:34\nOscar:Wow, it's so…"
+              }
+            ]
+          },
+          {
+            "target": [
+              ".max-w-full.sm\\:hidden.mt-1 > div > .truncate.text-sm:nth-child(3) > .text-gray-400.mr-2"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.53 (foreground color: #9ca3af, background color: #ffffff, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+            "node": {
+              "lhId": "7-3-SPAN",
+              "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,2,A,0,DIV,2,DIV,0,DIV,2,DIV,0,SPAN",
+              "selector": "div.max-w-full > div > div.text-sm > span.text-gray-400",
+              "boundingRect": {
+                "top": 318,
+                "bottom": 338,
+                "left": 24,
+                "right": 64,
+                "width": 40,
+                "height": 20
+              },
+              "snippet": "<span class=\"text-gray-400 mr-2\">",
+              "nodeLabel": "Kevin:"
+            },
+            "relatedNodes": [
+              {
+                "lhId": "7-1-MAIN",
+                "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN",
+                "selector": "body > div#__next > div.flex > main#main-content",
+                "boundingRect": {
+                  "top": 80,
+                  "bottom": 618,
+                  "left": 0,
+                  "right": 360,
+                  "width": 360,
+                  "height": 538
+                },
+                "snippet": "<main id=\"main-content\" class=\"w-full bg-white rounded-lg p-4 relative overflow-hidden\" style=\"box-shadow: black 0px 2px 1px;\">",
+                "nodeLabel": "\"call of duty\" Search Results\nGo\nS8E13 Jury Duty\n10:41-11:34\nOscar:Wow, it's so…"
+              }
+            ]
+          },
+          {
+            "target": [
+              "a:nth-child(4) > .sm\\:flex-nowrap.hover\\:bg-gray-100.rounded-sm > .max-w-full.sm\\:hidden.mt-1 > div > .truncate.text-sm > .text-gray-400.mr-2"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.53 (foreground color: #9ca3af, background color: #ffffff, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+            "node": {
+              "lhId": "7-4-SPAN",
+              "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,A,0,DIV,2,DIV,0,DIV,0,DIV,0,SPAN",
+              "selector": "div.max-w-full > div > div.text-sm > span.text-gray-400",
+              "boundingRect": {
+                "top": 438,
+                "bottom": 458,
+                "left": 24,
+                "right": 68,
+                "width": 44,
+                "height": 20
+              },
+              "snippet": "<span class=\"text-gray-400 mr-2\">",
+              "nodeLabel": "Karen:"
+            },
+            "relatedNodes": [
+              {
+                "lhId": "7-1-MAIN",
+                "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN",
+                "selector": "body > div#__next > div.flex > main#main-content",
+                "boundingRect": {
+                  "top": 80,
+                  "bottom": 618,
+                  "left": 0,
+                  "right": 360,
+                  "width": 360,
+                  "height": 538
+                },
+                "snippet": "<main id=\"main-content\" class=\"w-full bg-white rounded-lg p-4 relative overflow-hidden\" style=\"box-shadow: black 0px 2px 1px;\">",
+                "nodeLabel": "\"call of duty\" Search Results\nGo\nS8E13 Jury Duty\n10:41-11:34\nOscar:Wow, it's so…"
+              }
+            ]
+          },
+          {
+            "target": [
+              "a:nth-child(5) > .sm\\:flex-nowrap.hover\\:bg-gray-100.rounded-sm > .px-4.flex-grow.justify-center > .sm\\:flex-row.sm\\:items-center.flex-col > .text-gray-500.text-xs.leading-normal"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 4.39 (foreground color: #6b7280, background color: #f3f4f6, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1",
+            "node": {
+              "lhId": "7-5-DIV",
+              "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,4,A,0,DIV,1,DIV,0,DIV,1,DIV",
+              "selector": "div.flex > div.px-4 > div.flex > div.text-gray-500",
+              "boundingRect": {
+                "top": 525,
+                "bottom": 543,
+                "left": 152,
+                "right": 320,
+                "width": 168,
+                "height": 18
+              },
+              "snippet": "<div class=\"text-gray-500 text-xs leading-normal\">",
+              "nodeLabel": "3:34-4:07"
+            },
+            "relatedNodes": [
+              {
+                "lhId": "7-6-DIV",
+                "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,4,A,0,DIV",
+                "selector": "div.flex > main#main-content > a > div.flex",
+                "boundingRect": {
+                  "top": 482,
+                  "bottom": 586,
+                  "left": 16,
+                  "right": 344,
+                  "width": 328,
+                  "height": 104
+                },
+                "snippet": "<div class=\"flex flex-row flex-wrap sm:flex-nowrap p-2 mb-4 hover:bg-gray-100 cursor-p…\">",
+                "nodeLabel": "S3E3 The Coup\n3:34-4:07\nJim:…game called Call of Duty, and …"
+              }
+            ]
+          },
+          {
+            "target": [
+              "a:nth-child(5) > .sm\\:flex-nowrap.hover\\:bg-gray-100.rounded-sm > .max-w-full.sm\\:hidden.mt-1 > div > .truncate.text-sm > .text-gray-400.mr-2"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 2.3 (foreground color: #9ca3af, background color: #f3f4f6, font size: 10.5pt (14px), font weight: normal). Expected contrast ratio of 4.5:1",
+            "node": {
+              "lhId": "7-7-SPAN",
+              "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,4,A,0,DIV,2,DIV,0,DIV,0,DIV,0,SPAN",
+              "selector": "div.max-w-full > div > div.text-sm > span.text-gray-400",
+              "boundingRect": {
+                "top": 558,
+                "bottom": 578,
+                "left": 24,
+                "right": 52,
+                "width": 28,
+                "height": 20
+              },
+              "snippet": "<span class=\"text-gray-400 mr-2\">",
+              "nodeLabel": "Jim:"
+            },
+            "relatedNodes": [
+              {
+                "lhId": "7-6-DIV",
+                "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,4,A,0,DIV",
+                "selector": "div.flex > main#main-content > a > div.flex",
+                "boundingRect": {
+                  "top": 482,
+                  "bottom": 586,
+                  "left": 16,
+                  "right": 344,
+                  "width": 328,
+                  "height": 104
+                },
+                "snippet": "<div class=\"flex flex-row flex-wrap sm:flex-nowrap p-2 mb-4 hover:bg-gray-100 cursor-p…\">",
+                "nodeLabel": "S3E3 The Coup\n3:34-4:07\nJim:…game called Call of Duty, and …"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "image-alt",
+        "impact": "critical",
+        "tags": [
+          "cat.text-alternatives",
+          "wcag2a",
+          "wcag111",
+          "section508",
+          "section508.22.a",
+          "ACT"
+        ],
+        "nodes": [
+          {
+            "target": [
+              "a:nth-child(3) > .sm\\:flex-nowrap.hover\\:bg-gray-100.rounded-sm > div:nth-child(1) > .w-28.sm\\:h-24.sm\\:w-44"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\"",
+            "node": {
+              "lhId": "7-8-IMG",
+              "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,2,A,0,DIV,0,DIV,0,IMG",
+              "selector": "a > div.flex > div > img.h-16",
+              "boundingRect": {
+                "top": 210,
+                "bottom": 274,
+                "left": 24,
+                "right": 136,
+                "width": 112,
+                "height": 64
+              },
+              "snippet": "<img src=\"https://cdn.mikescerealshack.co/frames/s8/e13/128w/81d89db1bf3d43b5b21f813…\" fallbacksrc=\"https://cdn.mikescerealshack.co/frames/s8/e13/128w/7026b6c1508a8c97799215a…\" class=\"h-16 w-28 sm:h-24 sm:w-44 max-w-none\">",
+              "nodeLabel": "a > div.flex > div > img.h-16"
+            },
+            "relatedNodes": []
+          },
+          {
+            "target": [
+              "a:nth-child(4) > .sm\\:flex-nowrap.hover\\:bg-gray-100.rounded-sm > div:nth-child(1) > .w-28.sm\\:h-24.sm\\:w-44"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\"",
+            "node": {
+              "lhId": "7-9-IMG",
+              "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,A,0,DIV,0,DIV,0,IMG",
+              "selector": "a > div.flex > div > img.h-16",
+              "boundingRect": {
+                "top": 370,
+                "bottom": 434,
+                "left": 24,
+                "right": 136,
+                "width": 112,
+                "height": 64
+              },
+              "snippet": "<img src=\"https://cdn.mikescerealshack.co/frames/s3/e3/128w/9b3031eb3988ba363fe94692…\" fallbacksrc=\"https://cdn.mikescerealshack.co/frames/s3/e3/128w/5de94bb353874938309d3f80…\" class=\"h-16 w-28 sm:h-24 sm:w-44 max-w-none\">",
+              "nodeLabel": "a > div.flex > div > img.h-16"
+            },
+            "relatedNodes": []
+          },
+          {
+            "target": [
+              "a:nth-child(5) > .sm\\:flex-nowrap.hover\\:bg-gray-100.rounded-sm > div:nth-child(1) > .w-28.sm\\:h-24.sm\\:w-44"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element does not have an alt attribute\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute\n  Element's default semantics were not overridden with role=\"none\" or role=\"presentation\"",
+            "node": {
+              "lhId": "7-10-IMG",
+              "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,4,A,0,DIV,0,DIV,0,IMG",
+              "selector": "a > div.flex > div > img.h-16",
+              "boundingRect": {
+                "top": 490,
+                "bottom": 554,
+                "left": 24,
+                "right": 136,
+                "width": 112,
+                "height": 64
+              },
+              "snippet": "<img src=\"https://cdn.mikescerealshack.co/frames/s3/e3/128w/793a408ca63a660b5d7aa1a4…\" fallbacksrc=\"https://cdn.mikescerealshack.co/frames/s3/e3/128w/a8a4fc239c89991d59a855ce…\" class=\"h-16 w-28 sm:h-24 sm:w-44 max-w-none\">",
+              "nodeLabel": "a > div.flex > div > img.h-16"
+            },
+            "relatedNodes": []
+          }
+        ]
+      }
+    ],
+    "incomplete": [
+      {
+        "id": "color-contrast",
+        "impact": "serious",
+        "tags": [
+          "cat.color",
+          "wcag2aa",
+          "wcag143"
+        ],
+        "nodes": [
+          {
+            "target": [
+              ".font-daniel"
+            ],
+            "failureSummary": "Fix any of the following:\n  Element's background color could not be determined because it's partially obscured by another element",
+            "node": {
+              "lhId": "7-11-DIV",
+              "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,2,HEADER,1,DIV,0,DIV",
+              "selector": "div.flex > header.px-6 > div.mt-2 > div.font-daniel",
+              "boundingRect": {
+                "top": 72,
+                "bottom": 112,
+                "left": 24,
+                "right": 336,
+                "width": 312,
+                "height": 40
+              },
+              "snippet": "<div class=\"font-daniel font-bold w-full text-center sm:w-auto sm:max-w-60 sm:text-lef…\">",
+              "nodeLabel": "the unofficial search engine and meme creator for The Office"
+            },
+            "relatedNodes": [
+              {
+                "lhId": "7-1-MAIN",
+                "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN",
+                "selector": "body > div#__next > div.flex > main#main-content",
+                "boundingRect": {
+                  "top": 80,
+                  "bottom": 618,
+                  "left": 0,
+                  "right": 360,
+                  "width": 360,
+                  "height": 538
+                },
+                "snippet": "<main id=\"main-content\" class=\"w-full bg-white rounded-lg p-4 relative overflow-hidden\" style=\"box-shadow: black 0px 2px 1px;\">",
+                "nodeLabel": "\"call of duty\" Search Results\nGo\nS8E13 Jury Duty\n10:41-11:34\nOscar:Wow, it's so…"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "notApplicable": [
+      {
+        "id": "accesskeys"
+      },
+      {
+        "id": "aria-command-name"
+      },
+      {
+        "id": "aria-input-field-name"
+      },
+      {
+        "id": "aria-meter-name"
+      },
+      {
+        "id": "aria-progressbar-name"
+      },
+      {
+        "id": "aria-required-children"
+      },
+      {
+        "id": "aria-required-parent"
+      },
+      {
+        "id": "aria-roledescription"
+      },
+      {
+        "id": "aria-toggle-field-name"
+      },
+      {
+        "id": "aria-tooltip-name"
+      },
+      {
+        "id": "aria-treeitem-name"
+      },
+      {
+        "id": "definition-list"
+      },
+      {
+        "id": "dlitem"
+      },
+      {
+        "id": "duplicate-id-active"
+      },
+      {
+        "id": "duplicate-id-aria"
+      },
+      {
+        "id": "frame-title"
+      },
+      {
+        "id": "input-button-name"
+      },
+      {
+        "id": "input-image-alt"
+      },
+      {
+        "id": "meta-refresh"
+      },
+      {
+        "id": "object-alt"
+      },
+      {
+        "id": "role-img-alt"
+      },
+      {
+        "id": "scrollable-region-focusable"
+      },
+      {
+        "id": "select-name"
+      },
+      {
+        "id": "tabindex"
+      },
+      {
+        "id": "td-headers-attr"
+      },
+      {
+        "id": "th-has-data-cells"
+      },
+      {
+        "id": "valid-lang"
+      },
+      {
+        "id": "video-caption"
+      }
+    ],
+    "version": "4.3.5"
+  },
+  "AnchorElements": [
+    {
+      "href": "https://www.mikescerealshack.co/",
+      "rawHref": "/",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "",
+      "rel": "",
+      "target": "",
+      "node": {
+        "lhId": "7-12-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,2,HEADER,0,DIV,1,DIV,0,A",
+        "selector": "header.px-6 > div.flex > div.flex-grow > a",
+        "boundingRect": {
+          "top": 12,
+          "bottom": 52,
+          "left": 136,
+          "right": 224,
+          "width": 89,
+          "height": 40
+        },
+        "snippet": "<a class=\"\" href=\"/\">",
+        "nodeLabel": "Mike's Cereal Shack Co Logo - The Office Meme Creator"
+      },
+      "listeners": [
+        {
+          "type": "click"
+        }
+      ]
+    },
+    {
+      "href": "https://www.mikescerealshack.co/",
+      "rawHref": "/",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "Search",
+      "rel": "",
+      "target": "",
+      "node": {
+        "lhId": "7-13-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,2,HEADER,1,DIV,1,UL,0,LI,0,A",
+        "selector": "div.mt-2 > ul.space-y-2 > li > a.text-white",
+        "boundingRect": {
+          "top": 129,
+          "bottom": 151,
+          "left": 24,
+          "right": 82,
+          "width": 58,
+          "height": 23
+        },
+        "snippet": "<a class=\"text-white hover:text-teal-bright font-bold\" href=\"/\">",
+        "nodeLabel": "Search"
+      },
+      "listeners": [
+        {
+          "type": "click"
+        }
+      ]
+    },
+    {
+      "href": "https://www.mikescerealshack.co/scenes/s8/e11/4?random=y",
+      "rawHref": "/scenes/s8/e11/4?random=y",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "Random Scene",
+      "rel": "",
+      "target": "",
+      "node": {
+        "lhId": "7-14-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,2,HEADER,1,DIV,1,UL,1,LI,0,A",
+        "selector": "div.mt-2 > ul.space-y-2 > li > a.text-white",
+        "boundingRect": {
+          "top": 161,
+          "bottom": 183,
+          "left": 24,
+          "right": 147,
+          "width": 123,
+          "height": 23
+        },
+        "snippet": "<a class=\"text-white hover:text-teal-bright font-bold\" href=\"/scenes/s8/e11/4?random=y\">",
+        "nodeLabel": "Random Scene"
+      },
+      "listeners": [
+        {
+          "type": "click"
+        }
+      ]
+    },
+    {
+      "href": "https://www.mikescerealshack.co/corrections?url=https%3A%2F%2Fwww.mikescerealshack.co%2Fsearch%3Fq%3Dcall%2Bof%2Bduty",
+      "rawHref": "/corrections?url=https%3A%2F%2Fwww.mikescerealshack.co%2Fsearch%3Fq%3Dcall%2Bof%2Bduty",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "Corrections",
+      "rel": "",
+      "target": "",
+      "node": {
+        "lhId": "7-15-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,2,HEADER,1,DIV,1,UL,2,LI,0,A",
+        "selector": "div.mt-2 > ul.space-y-2 > li > a.text-white",
+        "boundingRect": {
+          "top": 193,
+          "bottom": 215,
+          "left": 24,
+          "right": 121,
+          "width": 97,
+          "height": 23
+        },
+        "snippet": "<a class=\"text-white hover:text-teal-bright font-bold\" href=\"/corrections?url=https%3A%2F%2Fwww.mikescerealshack.co%2Fsearch%3Fq%3Dcall…\">",
+        "nodeLabel": "Corrections"
+      },
+      "listeners": [
+        {
+          "type": "click"
+        }
+      ]
+    },
+    {
+      "href": "https://www.mikescerealshack.co/abuse?url=https%3A%2F%2Fwww.mikescerealshack.co%2Fsearch%3Fq%3Dcall%2Bof%2Bduty",
+      "rawHref": "/abuse?url=https%3A%2F%2Fwww.mikescerealshack.co%2Fsearch%3Fq%3Dcall%2Bof%2Bduty",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "Report Abuse",
+      "rel": "",
+      "target": "",
+      "node": {
+        "lhId": "7-16-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,2,HEADER,1,DIV,1,UL,3,LI,0,A",
+        "selector": "div.mt-2 > ul.space-y-2 > li > a.text-white",
+        "boundingRect": {
+          "top": 225,
+          "bottom": 247,
+          "left": 24,
+          "right": 134,
+          "width": 110,
+          "height": 23
+        },
+        "snippet": "<a class=\"text-white hover:text-teal-bright font-bold\" href=\"/abuse?url=https%3A%2F%2Fwww.mikescerealshack.co%2Fsearch%3Fq%3Dcall%2Bof%…\">",
+        "nodeLabel": "Report Abuse"
+      },
+      "listeners": [
+        {
+          "type": "click"
+        }
+      ]
+    },
+    {
+      "href": "mailto:contact@mikescerealshack.co",
+      "rawHref": "mailto:contact@mikescerealshack.co",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "Contact Us",
+      "rel": "",
+      "target": "",
+      "node": {
+        "lhId": "7-17-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,2,HEADER,1,DIV,1,UL,4,LI,0,A",
+        "selector": "div.mt-2 > ul.space-y-2 > li > a.text-white",
+        "boundingRect": {
+          "top": 257,
+          "bottom": 279,
+          "left": 24,
+          "right": 114,
+          "width": 90,
+          "height": 23
+        },
+        "snippet": "<a class=\"text-white hover:text-teal-bright font-bold\" href=\"mailto:contact@mikescerealshack.co\">",
+        "nodeLabel": "Contact Us"
+      },
+      "listeners": [
+        {
+          "type": "click"
+        }
+      ]
+    },
+    {
+      "href": "https://www.mikescerealshack.co/terms",
+      "rawHref": "/terms",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "Terms of Service",
+      "rel": "",
+      "target": "",
+      "node": {
+        "lhId": "7-18-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,2,HEADER,1,DIV,1,UL,5,LI,0,A",
+        "selector": "div.mt-2 > ul.space-y-2 > li > a.text-white",
+        "boundingRect": {
+          "top": 289,
+          "bottom": 311,
+          "left": 24,
+          "right": 160,
+          "width": 136,
+          "height": 23
+        },
+        "snippet": "<a class=\"text-white hover:text-teal-bright font-bold\" href=\"/terms\">",
+        "nodeLabel": "Terms of Service"
+      },
+      "listeners": [
+        {
+          "type": "click"
+        }
+      ]
+    },
+    {
+      "href": "https://www.mikescerealshack.co/privacy",
+      "rawHref": "/privacy",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "Privacy Policy",
+      "rel": "",
+      "target": "",
+      "node": {
+        "lhId": "7-19-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,2,HEADER,1,DIV,1,UL,6,LI,0,A",
+        "selector": "div.mt-2 > ul.space-y-2 > li > a.text-white",
+        "boundingRect": {
+          "top": 321,
+          "bottom": 343,
+          "left": 24,
+          "right": 139,
+          "width": 115,
+          "height": 23
+        },
+        "snippet": "<a class=\"text-white hover:text-teal-bright font-bold\" href=\"/privacy\">",
+        "nodeLabel": "Privacy Policy"
+      },
+      "listeners": [
+        {
+          "type": "click"
+        }
+      ]
+    },
+    {
+      "href": "https://www.mikescerealshack.co/scenes/s8/e13/18?q=call+of+duty",
+      "rawHref": "/scenes/s8/e13/18?q=call+of+duty",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "S8E13 Jury Duty\n10:41-11:34\nOscar:Wow, it's so... healthy.\nAngela:No, I think he came early just…\nKevin:… got Little Kevin Call of Duty…",
+      "rel": "",
+      "target": "",
+      "node": {
+        "lhId": "7-20-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,2,A",
+        "selector": "div#__next > div.flex > main#main-content > a",
+        "boundingRect": {
+          "top": 202,
+          "bottom": 346,
+          "left": 16,
+          "right": 344,
+          "width": 328,
+          "height": 144
+        },
+        "snippet": "<a href=\"/scenes/s8/e13/18?q=call+of+duty\">",
+        "nodeLabel": "S8E13 Jury Duty\n10:41-11:34\nOscar:Wow, it's so... healthy.\nAngela:No, I think h…"
+      },
+      "listeners": [
+        {
+          "type": "click"
+        }
+      ]
+    },
+    {
+      "href": "https://www.mikescerealshack.co/scenes/s3/e3/35?q=call+of+duty",
+      "rawHref": "/scenes/s3/e3/35?q=call+of+duty",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "S3E3 The Coup\n9:06-9:09\nKaren:… the rocker sign] Call of Duty…",
+      "rel": "",
+      "target": "",
+      "node": {
+        "lhId": "7-21-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,A",
+        "selector": "div#__next > div.flex > main#main-content > a",
+        "boundingRect": {
+          "top": 362,
+          "bottom": 466,
+          "left": 16,
+          "right": 344,
+          "width": 328,
+          "height": 104
+        },
+        "snippet": "<a href=\"/scenes/s3/e3/35?q=call+of+duty\">",
+        "nodeLabel": "S3E3 The Coup\n9:06-9:09\nKaren:… the rocker sign] Call of Duty…"
+      },
+      "listeners": [
+        {
+          "type": "click"
+        }
+      ]
+    },
+    {
+      "href": "https://www.mikescerealshack.co/scenes/s3/e3/19?q=call+of+duty",
+      "rawHref": "/scenes/s3/e3/19?q=call+of+duty",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "S3E3 The Coup\n3:34-4:07\nJim:…game called Call of Duty, and …",
+      "rel": "",
+      "target": "",
+      "node": {
+        "lhId": "7-22-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,4,A",
+        "selector": "div#__next > div.flex > main#main-content > a",
+        "boundingRect": {
+          "top": 482,
+          "bottom": 586,
+          "left": 16,
+          "right": 344,
+          "width": 328,
+          "height": 104
+        },
+        "snippet": "<a href=\"/scenes/s3/e3/19?q=call+of+duty\">",
+        "nodeLabel": "S3E3 The Coup\n3:34-4:07\nJim:…game called Call of Duty, and …"
+      },
+      "listeners": [
+        {
+          "type": "click"
+        }
+      ]
+    },
+    {
+      "href": "https://www.mikescerealshack.co/terms",
+      "rawHref": "/terms",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "Terms of Service",
+      "rel": "",
+      "target": "",
+      "node": {
+        "lhId": "7-23-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,5,FOOTER,2,DIV,0,DIV,0,A",
+        "selector": "footer.w-full > div.w-full > div > a",
+        "boundingRect": {
+          "top": 670,
+          "bottom": 682,
+          "left": 147,
+          "right": 213,
+          "width": 66,
+          "height": 12
+        },
+        "snippet": "<a href=\"/terms\">",
+        "nodeLabel": "Terms of Service"
+      },
+      "listeners": [
+        {
+          "type": "click"
+        }
+      ]
+    },
+    {
+      "href": "https://www.mikescerealshack.co/privacy",
+      "rawHref": "/privacy",
+      "onclick": "",
+      "role": "",
+      "name": "",
+      "text": "Privacy Policy",
+      "rel": "",
+      "target": "",
+      "node": {
+        "lhId": "7-24-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,5,FOOTER,2,DIV,1,DIV,0,A",
+        "selector": "footer.w-full > div.w-full > div > a",
+        "boundingRect": {
+          "top": 682,
+          "bottom": 694,
+          "left": 153,
+          "right": 207,
+          "width": 54,
+          "height": 12
+        },
+        "snippet": "<a href=\"/privacy\">",
+        "nodeLabel": "Privacy Policy"
+      },
+      "listeners": [
+        {
+          "type": "click"
+        }
+      ]
+    }
+  ],
+  "Doctype": {
+    "name": "html",
+    "publicId": "",
+    "systemId": "",
+    "documentCompatMode": "CSS1Compat"
+  },
+  "DOMStats": {
+    "depth": {
+      "max": 11,
+      "lhId": "7-25-SPAN",
+      "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,2,A,0,DIV,1,DIV,1,DIV,0,DIV,0,DIV,0,SPAN",
+      "selector": "div.hidden > div > div.text-sm > span.text-gray-400",
+      "boundingRect": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "height": 0
+      },
+      "snippet": "<span class=\"text-gray-400 mr-2\">",
+      "nodeLabel": "Oscar:"
+    },
+    "width": {
+      "max": 17,
+      "lhId": "7-26-BODY",
+      "devtoolsNodePath": "1,HTML,1,BODY",
+      "selector": "body",
+      "boundingRect": {
+        "top": 0,
+        "bottom": 702,
+        "left": 0,
+        "right": 360,
+        "width": 360,
+        "height": 702
+      },
+      "snippet": "<body>",
+      "nodeLabel": "body"
+    },
+    "totalBodyElements": 155
+  },
+  "EmbeddedContent": [],
+  "FontSize": {
+    "analyzedFailingNodesData": [
+      {
+        "nodeId": 572,
+        "parentNode": {
+          "backendNodeId": 156,
+          "attributes": [],
+          "nodeName": "DIV",
+          "parentNode": {
+            "backendNodeId": 370,
+            "attributes": [
+              "class",
+              "w-full sm:w-auto mb-2"
+            ],
+            "nodeName": "DIV"
+          }
+        },
+        "textLength": 44,
+        "fontSize": 8,
+        "cssRule": {
+          "type": "Regular",
+          "range": {
+            "startLine": 0,
+            "startColumn": 14054,
+            "endLine": 0,
+            "endColumn": 14088
+          },
+          "styleSheetId": "90459.31",
+          "parentRule": {
+            "origin": "regular",
+            "selectors": [
+              {
+                "text": ".text-2xs",
+                "range": {
+                  "startLine": 0,
+                  "startColumn": 14044,
+                  "endLine": 0,
+                  "endColumn": 14053
+                }
+              }
+            ]
+          },
+          "stylesheet": {
+            "styleSheetId": "90459.31",
+            "frameId": "25CBDDCFD1B2874E0A16720CD128DDC7",
+            "sourceURL": "https://www.mikescerealshack.co/_next/static/css/08dcb440d7d83b488817.css",
+            "origin": "regular",
+            "title": "",
+            "ownerNode": 53,
+            "disabled": false,
+            "isInline": false,
+            "isMutable": false,
+            "isConstructed": false,
+            "startLine": 0,
+            "startColumn": 0,
+            "length": 18126,
+            "endLine": 0,
+            "endColumn": 18126
+          }
+        }
+      },
+      {
+        "nodeId": 576,
+        "parentNode": {
+          "backendNodeId": 374,
+          "attributes": [],
+          "nodeName": "DIV",
+          "parentNode": {
+            "backendNodeId": 370,
+            "attributes": [
+              "class",
+              "w-full sm:w-auto mb-2"
+            ],
+            "nodeName": "DIV"
+          }
+        },
+        "textLength": 44,
+        "fontSize": 8,
+        "cssRule": {
+          "type": "Regular",
+          "range": {
+            "startLine": 0,
+            "startColumn": 14054,
+            "endLine": 0,
+            "endColumn": 14088
+          },
+          "styleSheetId": "90459.31",
+          "parentRule": {
+            "origin": "regular",
+            "selectors": [
+              {
+                "text": ".text-2xs",
+                "range": {
+                  "startLine": 0,
+                  "startColumn": 14044,
+                  "endLine": 0,
+                  "endColumn": 14053
+                }
+              }
+            ]
+          },
+          "stylesheet": {
+            "styleSheetId": "90459.31",
+            "frameId": "25CBDDCFD1B2874E0A16720CD128DDC7",
+            "sourceURL": "https://www.mikescerealshack.co/_next/static/css/08dcb440d7d83b488817.css",
+            "origin": "regular",
+            "title": "",
+            "ownerNode": 53,
+            "disabled": false,
+            "isInline": false,
+            "isMutable": false,
+            "isConstructed": false,
+            "startLine": 0,
+            "startColumn": 0,
+            "length": 18126,
+            "endLine": 0,
+            "endColumn": 18126
+          }
+        }
+      },
+      {
+        "nodeId": 574,
+        "parentNode": {
+          "backendNodeId": 372,
+          "attributes": [],
+          "nodeName": "DIV",
+          "parentNode": {
+            "backendNodeId": 370,
+            "attributes": [
+              "class",
+              "w-full sm:w-auto mb-2"
+            ],
+            "nodeName": "DIV"
+          }
+        },
+        "textLength": 43,
+        "fontSize": 8,
+        "cssRule": {
+          "type": "Regular",
+          "range": {
+            "startLine": 0,
+            "startColumn": 14054,
+            "endLine": 0,
+            "endColumn": 14088
+          },
+          "styleSheetId": "90459.31",
+          "parentRule": {
+            "origin": "regular",
+            "selectors": [
+              {
+                "text": ".text-2xs",
+                "range": {
+                  "startLine": 0,
+                  "startColumn": 14044,
+                  "endLine": 0,
+                  "endColumn": 14053
+                }
+              }
+            ]
+          },
+          "stylesheet": {
+            "styleSheetId": "90459.31",
+            "frameId": "25CBDDCFD1B2874E0A16720CD128DDC7",
+            "sourceURL": "https://www.mikescerealshack.co/_next/static/css/08dcb440d7d83b488817.css",
+            "origin": "regular",
+            "title": "",
+            "ownerNode": 53,
+            "disabled": false,
+            "isInline": false,
+            "isMutable": false,
+            "isConstructed": false,
+            "startLine": 0,
+            "startColumn": 0,
+            "length": 18126,
+            "endLine": 0,
+            "endColumn": 18126
+          }
+        }
+      },
+      {
+        "nodeId": 581,
+        "parentNode": {
+          "backendNodeId": 379,
+          "attributes": [
+            "href",
+            "/terms"
+          ],
+          "nodeName": "A",
+          "parentNode": {
+            "backendNodeId": 378,
+            "attributes": [],
+            "nodeName": "DIV"
+          }
+        },
+        "textLength": 16,
+        "fontSize": 8,
+        "cssRule": {
+          "type": "Regular",
+          "range": {
+            "startLine": 0,
+            "startColumn": 14054,
+            "endLine": 0,
+            "endColumn": 14088
+          },
+          "styleSheetId": "90459.31",
+          "parentRule": {
+            "origin": "regular",
+            "selectors": [
+              {
+                "text": ".text-2xs",
+                "range": {
+                  "startLine": 0,
+                  "startColumn": 14044,
+                  "endLine": 0,
+                  "endColumn": 14053
+                }
+              }
+            ]
+          },
+          "stylesheet": {
+            "styleSheetId": "90459.31",
+            "frameId": "25CBDDCFD1B2874E0A16720CD128DDC7",
+            "sourceURL": "https://www.mikescerealshack.co/_next/static/css/08dcb440d7d83b488817.css",
+            "origin": "regular",
+            "title": "",
+            "ownerNode": 53,
+            "disabled": false,
+            "isInline": false,
+            "isMutable": false,
+            "isConstructed": false,
+            "startLine": 0,
+            "startColumn": 0,
+            "length": 18126,
+            "endLine": 0,
+            "endColumn": 18126
+          }
+        }
+      },
+      {
+        "nodeId": 584,
+        "parentNode": {
+          "backendNodeId": 382,
+          "attributes": [
+            "href",
+            "/privacy"
+          ],
+          "nodeName": "A",
+          "parentNode": {
+            "backendNodeId": 381,
+            "attributes": [],
+            "nodeName": "DIV"
+          }
+        },
+        "textLength": 14,
+        "fontSize": 8,
+        "cssRule": {
+          "type": "Regular",
+          "range": {
+            "startLine": 0,
+            "startColumn": 14054,
+            "endLine": 0,
+            "endColumn": 14088
+          },
+          "styleSheetId": "90459.31",
+          "parentRule": {
+            "origin": "regular",
+            "selectors": [
+              {
+                "text": ".text-2xs",
+                "range": {
+                  "startLine": 0,
+                  "startColumn": 14044,
+                  "endLine": 0,
+                  "endColumn": 14053
+                }
+              }
+            ]
+          },
+          "stylesheet": {
+            "styleSheetId": "90459.31",
+            "frameId": "25CBDDCFD1B2874E0A16720CD128DDC7",
+            "sourceURL": "https://www.mikescerealshack.co/_next/static/css/08dcb440d7d83b488817.css",
+            "origin": "regular",
+            "title": "",
+            "ownerNode": 53,
+            "disabled": false,
+            "isInline": false,
+            "isMutable": false,
+            "isConstructed": false,
+            "startLine": 0,
+            "startColumn": 0,
+            "length": 18126,
+            "endLine": 0,
+            "endColumn": 18126
+          }
+        }
+      }
+    ],
+    "analyzedFailingTextLength": 161,
+    "failingTextLength": 161,
+    "totalTextLength": 633
+  },
+  "FullPageScreenshot": {
+    "screenshot": {
+      "data": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gIoSUNDX1BST0ZJTEUAAQEAAAIYAAAAAAQwAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAAHRyWFlaAAABZAAAABRnWFlaAAABeAAAABRiWFlaAAABjAAAABRyVFJDAAABoAAAAChnVFJDAAABoAAAAChiVFJDAAABoAAAACh3dHB0AAAByAAAABRjcHJ0AAAB3AAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFgAAAAcAHMAUgBHAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z3BhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABYWVogAAAAAAAA9tYAAQAAAADTLW1sdWMAAAAAAAAAAQAAAAxlblVTAAAAIAAAABwARwBvAG8AZwBsAGUAIABJAG4AYwAuACAAMgAwADEANv/bAEMAGxIUFxQRGxcWFx4cGyAoQisoJSUoUTo9MEJgVWVkX1VdW2p4mYFqcZBzW12FtYaQnqOrratngLzJuqbHmairpP/bAEMBHB4eKCMoTisrTqRuXW6kpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpP/AABEIAr4BaAMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAAAwQBAgUGB//EAEoQAAEDAgMEBgYHBgUDAwUBAAEAAgMEEQUSIRMxQVEUFSJUYdEycYGRkqMjZJOiscHhBjNCUqHwNFNicnMkNfE2goNEY3SywrP/xAAYAQEBAQEBAAAAAAAAAAAAAAAAAQIDBP/EAB4RAQEBAAMBAQEBAQAAAAAAAAABEQISUTEhQQMy/9oADAMBAAIRAxEAPwDjoiLs8wiIgIiICIiAiIgIiICIiAiIgIiICIiAisR0c8kgjyZTlzdrdZaQU755tk2wdrvRESIpqemfUZ8pADBckoIUREUREQEREBERAREQEREBERAREQEREBERAREQEREBWurq3usvwFVV3dp+0P8AKfhapavGSuZ1dW91l+EqOalqIGh00L42k2Bc2wuuvtP2h/l+6xU8TdijoGdPFos+mjR2rHl7VNrV4xzkRFpgREQEREBERAREQFcw+kbUzxNkvke4g2NrWAPmFTXoMEa6OjL7NDWlzi613NuNLe5Z5fGuE2oJaCFmaozRmF92sDWm/jYc9Pz8FzqONk1WAbNjBzEOPDku/WRGqpmRtyuOQFpboXA79PWuFU0MkIDrOseY1U4/q/6fn46XWFPtGgPFiNXW4cj7yoaWaJpic6dujHGziBlJcD5rkq3SU0b43TzuyxNNrcytOWSRdkfSySRRF8WyAJDRpr4n3qlXZIpyKd4yOaMwY7T+ijcwVFQRSxEN4NvuWOiT7UxCMl4323D2oYuVgpTRNdHsxJp6JF/HcuarBoagSCPZ9oi+8Wt61p0ebaujEbi9u8DWyLESK3FA3oFRI9vbaQG33g3F/wAVUVBERFEREBERAREQEREBEXSwnCjiDXvdJkjabXAuSVPhJrnsa572saLucbAcyuvL+zszKcvbM18gFywDf6ipHUNFgzhUVUzpXA3iY0WJIW0v7StdTkR07xMRYXIyjxvxWbb/AB0nGT/pwBqiw0WACytuYiIgIiIC7uw/aD/NI/8Ac1cJWOn1ve5vjKzY1xsjq7D9oP8AOPvYqeJxYoyBhr5C6PPpq30rHl7VW6fW98n+MqOaoqJ2hs08kjQbgOcSLqZVvKI0RFtgREQEREBERAREQF6SJ2wNmEhhGU25Lza61BViVgiebPaLDxClmufO2Zyn8dV75Bd0IfYhoEjrFuXifDck7WSUuzj7eRtw5x7W/dr/AHooYpXwk5CC072HcVI6opg0nojsx4XFvfdc+tl/Haf7cOfH9/HDqqUl2eEZr7wBdYgq5aPNC5gOt7HeCt66ew2bXanfZ25UF0c5mLxxOUzB5Y3KBbL+vsUkk9W5skjYDGHNHaGhFuP9VzV3czmUpbWvaA4b2m1x5+pC/jmwVM1M7O9rnNeP4r6+orduJyNdI4RsBeb+rRWmtpaiOmieczslgGndoL35blCMMj2WZ02VzvRvoP1Q/P6ry1r5oXscxozuDrj1AfkoJInxhpe2weMzfEK+ygiFEZnOJcWZhrYA2VuWOERAvYx7o2WAcdLIa4SIirQiIgIiICIiAiIgLo4VizsPa9jo9pG43sDYgrnIpZpLju9YUmMPFPVwOicXWieDexKkl/ZyMU7jHM8ygXFwLE8lwGOcx7XtNnNNweRXVm/aKpkpzG2BjJHCxeCdPUP1WbLPjpLL9cgG4uiAWFkW3MREQEWrHhwtx5LZQswREVBERAREQEREBERAREQEREBZ3LCILLK+oY22fN6xdYkrZnixdb1KuiM9Z4yTc3KwiI0IiIMtJaQWkgjcQsIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAi1e8NFuPJFNWcbURaDvCxkbyWyLLq1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIa1yN5JkbyWyIawGgbgiyiD2uF4bDQ07ewDMRd7yNb8lfRFhsREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERBQxTDYa6nd2AJgLseBrfkivorqYIiKK50OLxy1LIBE8OfK+K5ta7QCT/AFXRVdtFTMkEjYmh4e54P+p28rnR1mIYlJK7DzDFTxuyh8guXnyQdlFzKTEKhkVT1jAY3U4uXtacrx4KCnqMZrY+lQimiidrHHICS4eJQdh7gxhc42DRcqscSpG0bawy/QONg7Kedt1rqhh+I1Fc3EWTsEexbYM4tNnXF+O5UJf/AEdT/wC//wDooPUoi5E1dWVddLS4cI2Ng0llkF9eQCDrqpJiNNHWtoy8umdbstaTb18lVpK6qirhQ4g2PaPF4pI9zvAqlhUdccarCZYS5rmCY5T2h4ckHokWk0rYIXyyGzGNLifALkU1Ti9ew1VOKeGEk7NkgJLh42QdSOqhlqJYGPvJFbO2x0vuUy8/g88kmI4nNJHs5Q1uZt72IBH5Lp4NVSVmGQ1E1s7817Cw0JH5ILhIAJJsBxWGPbI0OY4OadxBuCuR0qrqosTjY6NpheWtJb/DrdQYI3ERg7XwyRbMMcY2Ze1mud/9UHoFVrK5tJJCxzHOMpIFuFhdRYdiLanCm1cpALWnaW4Eb1phhfiNJHVVkbC4uc6IAWyt3ILdFUtrKWOoa0ta8XAO9bzTxQNzTSsjbze4BZhijgibFE0NY0WAHBcLFTFDjbJsRiMlIYsrCW5mtdfiEHchnhqG5oZWSN5scCpFy8OpKHpbqzD5hlc3K6NhGX3cFFHWYhiUkjqAww0zHZQ+QXLz5IOyi5lBiMhdUQV7Wxz0wzPcz0XN33Cr01Vi2ItNTSinhpyTs2ygkuHjZB20XIwrEaqqr6mCojbHsmjsjgeOvJRYPXYpiLWSlsLIWvs9xBu/1BB3Fq9wYwucbBouVyI6zEMSkldh5hip43ZQ+QXLz5KWmqquWnq4a2DZyxNPbaDkeLbwUF+mqIqqBs0Ds0btxsRfhxUq85gpxSXC4hSmCKJlw0yAkvNyT6hwXVwiufXU7zMwRzRPMcjRuuEFqaaKBmeaVkbb2u9wA/qtYqumndlhqIpDyY8Fc39qLdXxZrZdu29/aqmNjC20d6PYCqzN2WwtmvfwQejRcutr6mJ1PR07GurJm3Ob0WDiT/VRPq8Rw6aI1xhmp5XBhfGLFhP5IOyi5NZW1b8U6BRuiiIjzl8ut/ABbQ1deykrOlwtbLAwuZI0HK/Q7vcg6ijnmjp4XTSuysYLuNr2UOGTvqcPgnktne25sFy5ayWswXEzLl+jkdG2wtoLIOyKiIxRy7RoZIAWFxte+7epV5rFW1BwzCix7BHeIAEa58uh9Sv11bWYdh4fMYZJ3yBjXAEMaDxPuQdZFyoZcVgq4mVLYqiCXe+Jp7Hr8F1UBERAREQF5/DqyPBGSUNfmjyvLo35SQ8H1L0CwQDvF0HJbNPjNFWMbDsoXNywvdoXnn6lDQY1BS0jKWrZJHUQtDNmGEl1t1l3Viwvfig89g75JJsYfLGY3uAcWHe24dooJf8A0dT/AO//APor1KIC4MU4wXEasVbXCCpftGSgXF+IPvXeWCL70HDilOL4xBUwMcKWlB+kcLZyeAU2Ff8AesV/3M/ArrLKCCtgNTRTQA2MjC0E87LkYdjENFSto61kkVRCMmXITm5Wsu8sWF7oODgjn1GJYk6WMxOkDTlO8A3t/RYwrEocMpOg1rXxTROIAyE57m+lvWvQLCDg4IX1AxUlhY+SQ9h28XB0Uv7OVkQpI6B2ZlTGHFzHNI0uT+a7SIPLVsU0FfPhcIIjrnte0j+Efxfh7gvTxsbFG2Ngs1oDQOQC51NSzSY1UVtRHlaxuzgBIOnE/wB8100BcyuxJ1FWhlVD/wBG9v70NJseRXTRBwMPEVRjhqcPiMdMIi2R2XK158B7vcqMFLh9A+SnxVkrHtcSyQF2V7fYvWrBAO8XQcDC6OCpZWPpqV8EUkZiZK95JeDxsfYs4bi0WH0zaGua+KeHsgBpOYX0tZd9YsEHBwWV8+N18skToi9jSGO3gcL+yysfsv8A9mZ/ud+K66IPP4dWR4IyShr80eV5dG/KSHg+pXaaulr6eqk2Bjpw0iJzt79N9l0iAd4usoOZ+zn/AGSm/wDd/wDsVHgf+KxP/wDJd+a66IOP+04BoIgRcGdt/wCqgxGmjwivgxGCFog9CVrW+jfiP7/Fd9EHn8cpo3VtPXysdNSZMkmzJu0akO04aqtssKqqiKCgppakud23F72tYOeq9SsAAbhZBxMYlo+mCPEqUtiy3jqW3vflotcIEtVBXwMklkpHNyQPl36g3Xd371lBwMNxeGiomUlUyVlTFduzDCS7lZVqRzn/ALP4o57crjK4lvI6aL06yg4GJNecCw6RrHPERie4NFzYNVmtxGCpw3bxU3TKfPlkbYgtHO1uC6yIPM0ckDcTpm4NJO6JxO2jdfI1vt4r0yxayygIiICIiAijkmiiNpJWMP8AqcAtel03eIvjCuVNiZFD0um7xF8YTpdN3iL4wnW+GxMih6XTd4i+MJ0um7xF8YTrfDYmRQ9Lpu8RfGE6XTd4i+MJ1vhsTIoel03eIvjCdLpu8RfGE63w2JkUPS6bvEXxhOl03eIvjCdb4bEyKHpdN3iL4wnS6bvEXxhOt8NiZFD0um7xF8YTpdN3iL4wnW+GxMih6XTd4i+MJ0um7xF8YTrfDYmRQ9Lpu8RfGE6XTd4i+MJ1vhsTIoel03eIvjCdLpu8RfGE63w2JkUPS6bvEXxhOl03eIvjCdb4bEyKHpdN3iL4wnS6bvEXxhOt8NiZFD0um7xF8YTpdN3iL4wnW+GxMih6XTd4i+MJ0um7xF8YTrfDYmRQ9Lpu8RfGE6XTd4i+MJ1vhsTIoel03eIvjCdLpu8RfGE63w2JkUTKiB7srJo3HkHAqVLMUREUBERAREQEREBRzv2UEkg1LWl3uCkUNZ/g5/8Ajd+Cs+pfiCjpInQNllY2WSQBznPF96n6JTd3i+AJR/4OD/jb+CmWuXK7f1JJiHolN3eL4AnRKbu8XwBTLV72xsL3uDWtFySbALPa+rkR9Epu7xfAE6JTd3i+ALcSMc8sa9pcACQDqAdxW6dr6ZEPRKbu8XwBOiU3d4vgC3lljhjMkr2sY3e5xsAssc17A9pBa4XBHEJ2vpkR9Epu7xfAE6JTd3i+AKR8jIwC97WgkAXNrk7gtk7X0yIeiU3d4vgCdEpu7xfAFLdZTtfTIh6JTd3i+AJ0Sm7vF8AWtC90kDi8kkSyDXkHuA/oFYTtfTIh6JTd3i+AJ0Sm7vF8AUyJ2vpkQ9Epu7xfAE6JTd3i+AKZE7X0yIeiU3d4vgCdEpu7xfAFMidr6ZEPRKbu8XwBOiU3d4vgCmRO19MiHolN3eL4AnRKbu8XwBTIna+mRD0Sm7vF8ATolN3eL4ApkTtfTIh6JTd3i+AJ0Sm7vF8AUyJ2vpkQ9Epu7xfAE6JTd3i+AKZE7X0yIeiU3d4vgCdEpu7xfAFMidr6ZEPRKbu8XwBOiU3d4vgCmRO19MitJQ00jC3YsbfcWtsQsYdI+WlG0N3NJaTzsrSp4X/hnf8AI78VrbeN1PlcPHcVqRWvp4JXRMj07JsSfWuZ1hW98qPtHeakxn/utT/vVNrXPcGtBcTuAF1EWOsK3vlR9o7zTrCt75UfaO81Xc0tJDgQRvBWFR0aHGKumna6Sd8sd+017r6e1ezXztfRFmtQREUUUNZ/g5/+N34KZQ1n+Dn/AON34K8fsS/Cj/wcH/G38FTMlXV1lTFBUCnZAQ0EMDi4kX1vwVyj/wAHB/xt/BQz4eyWZ8zJpoHvADzE4DNbde4/qnL7SfEMk1a6ano88cMzoy+WRozDTTsg87qnWTVQjxGlqJWyNjpw5pDQL3vv8V0X4ZAYoWRl8Jg0jfGbOHP13WgwiC095ZnOqGZJHOcCT47lFa0f/dp/+CL81tNLU1Fe+lgmEDYmBzn5Q4uJvYC/DRWY6VkdQ+dpdmexrCDusL2/FaVNCyeYTNllhlDcueJ1iRyN0HKrJKipp2wyygPirGROc1os/UEGx9e5dWuqHUOHSTfvHxs46XO5ajDYGwMiBeA2UTF17lzgb3J4qzNEyaJ0UjQ5jxYg8Qg4+Ix1kUdMZ6lszXVEeZuQNym/C35q7SVMkja0vcDspnNbpuAAIWnU8TtntKipkETg6MOeCG29n4rebC4pZpJBNPGJf3jGPs1/r/RBz2Goq6jC5TUlj5IXkkMGhsL+/wDJWH188EVZC8h1THIGxaekH+h/fgrJwyLY07GSysNOLMe0jNbjfSyikphUY6yYxkNp4/SI0c43sPGwv70E2FBzaOz3ZnCWUF1rXO0dqriq4d/h3/8ANL//AKOVpAREQEREBERAREQEREBERAREQEREBERAREQFTwv/AAzv+R34q4qeF/4Z3/I78Vuf81m/Y8pjP/dan/erTJX0eGUnR3iF1S520l4ixsBfgFVxn/utT/vWtLXy08RhLI5oib5JW5gDzHJRHTlppMRZS7WoglG12e2YCHEWvY3Fiq7IqGsNRBBTOhfGxzmSGQnNbmDuuqk2IzyyRObliERvGyNtmtPqUkuKyyRyNbDBE6UWkfGyznDj70VQX0RfO19EUpBERRoUVU0vpZmtFyWOA9ylRWXLor0D2vooS03swA+sBWFUfQRueXxySwl2p2brXWOr/rdX9p+i3Zxt3Wf2LiKn1f8AW6v7T9E6v+t1f2n6KZx9Nvi4ip9X/W6v7T9E6v8ArdX9p+iZx9Nvi4ip9X/W6v7T9E6v+t1f2n6JnH02+LiKn1f9bq/tP0Tq/wCt1f2n6JnH02+LiKn1f9bq/tP0Tq/63V/afomcfTb4uIqfV/1ur+0/ROr/AK3V/afomcfTb4uIqfV/1ur+0/ROr/rdX9p+iZx9Nvi4ip9X/W6v7T9E6v8ArdX9p+iZx9Nvi4ip9X/W6v7T9E6v+t1f2n6JnH02+LiKn1f9bq/tP0Tq/wCt1f2n6JnH02+LiKn1f9bq/tP0Tq/63V/afomcfTb4uIqfV/1ur+0/ROr/AK3V/afomcfTb4uIqfV/1ur+0/ROr/rdX9p+iZx9Nvi4ip9X/W6v7T9E6v8ArdX9p+iZx9Nvi4ip9X/W6v7T9E6v+t1f2n6JnH02+LiKn1f9bq/tP0Tq/wCt1f2n6JnH02+LbnBrS5xsBqSVUwsHoma2jnucPVdOroz+8mnlb/K99wrYAaAALAaABLZJkP3deNx6B8OKSlwOWQ5mnmFzl9BlijmblljZI3k5oIUPV9F3On+zb5LOmPCIvd9X0Xc6f7NvknV9F3On+zb5K6Y8TTwPqZ2QxglzjYL36iip4ICTDDHHffkaBdSqWrJgiIooiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAvLjFa/jP9xvkvULyLWKVqLHWlf8A5/3G+Sx1pX/5/wBxvkosi0c6Jps57QfWouRY60r/APP+43yWDiuIf5/3G+SiaGvF2kEeCGMIfiTrbEP8/wC43yTrevvrP9xvkoCwLUsUXFrreu7z9xvktziWI5QRNoeORvkqIYSbAX8FOJDZwcNQmrOMSnFcQG+f7jfJOtq7/P8AuN8lzI6hznhjjcXVkBE/FvrWu/z/ALjfJZ61rv8AP+43yVSyzZT9XIsnFa62k/3G+S9MvIEaL161xZ5CIi0wIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICIiAvMgAL0y80s1rihqcwgeWEB1tCuLKxzXdo3J1uu7MwOhcDoLLmlge0tfYkcVNazUNFKYqhupsdCF1y4fyn3LmugvJHkGgOquuktJ6Wiv1MxsXD+V3wrUu/0u9yxI+5vmNvUtuksaGgBF1E8gxkg29aB2m/RYmkAzRgXcXH2C6uwNpKOlNXJ9IT6DXDjySTV7Y57onunY7JZrRfQKcZv5HKjJWzSVDpi7V3DgrUFVn0NvUUsTtqVpu6xBBtdb5UsNqLbsn5reyyqMhesXlXbl6pa4s8hc04jUvdM+npBLFDIY3DPZ7iN9hZdJcKtY4yzmKjqIazN9HJDfK/kXHd67rTC9PVVLq3otKyIOEYkc6W/E2sAPUom4nNJT0zooY9rNI6MhzzlBF7kG27RQ18LH1wdiEEs0QiAjMTXEB38V8uvJQGCQUdEJoJzEyZxDGNdnbHY5b5deSDo1VVW01MyV8cAO0DXAOJ0JAFtBzSsqa2IzPiihbDC2+aUm79Lm1t3tUNSxsmFBlNDOAJWdmRrs3pAk662WMTImdJDU0E0uXWB8QJvccxuN+aDp08u3p45cpbnaHWO8XCjkqSyuhpsoIkY52a+61vNZg27KFm0aHVAjFxe13W81Rp5JazEoJjTSwiKJwftG2GY20HPdvQXumU/ROlbQbC189juWkmIUsU+wfMBLpZliSb7lx5HVEWByYcKOodO0Ft2su0i+8H1Lp0sLhi1XK6MgGOMNcRod97H3ILBrKcUoqtqNiQCHWOtzZaYhUvpacSRsa9xe1gDjYamy5sMD+szh9v+mhk6SPUdzfiufYruMte6jaWMe8tlY4hjS42DgToEGzayeKeOKsgbGJDlZJG/M0u5HQEKw2phdE+Vr7sjLg42Olt6ozukxGSCOOCWOJkrZHvlbl9HUAA63Vdz56alraTok8kj3SGNzGXa4O1Gvt3ILjsVgFbHT6lskecPDTxtYbvFWG1cDqZ1QJBsmXzOsdLb1z4myU9RQSvhlLeiiJ2VhJa7s7xw3KKogf1m+gaL09S4VD/AAA9Ie0hvvQdprg9oc3cRcLZEQEREBERAREQEREBERAREQF5ppXpV5TPZ4B0FlmtcVtrQ4c1y66EwTgAiz9wV2Cdkk7YgSC42uRouZPJtKySUnM1m78lJG9bzyCGLZD03ekeQWInB9g51hzVR7i95cTclA423rbFuujZoB1DuWqic8g3IbYeCno3vlhB2liNNGhZfrURxvkLm+k4EDcFP6v8RshdJOxrtHSnO/8A0tUOJVfSJrM/dM0aPzWJaouE0g0dKbepvJVCVWWdyyDbVaX1WyDsQa5Da3Y3e1TWUVExohY7W5aFYDczw0bybLk6/wAQu3L1Kp9XUuWxj/qVcW5Mc+V0RFRaXuk2JkeGmVwvm1sBe11pleRVYpXRxPc91443OBcd5sdFXE5kZUkzdrZ52hjvR36fhdB0kUTZH3a3ZPI07Vxb8bqsC4OH0j9KjLq47rbkF5FTqtqIi7M4va3UMdYN8eZUdTVi4ayZrcmUuN7F1yNPVbVB0EWAQRcagrKCCCmZDNNKC5z5nAuJ8BYD1KdEQEREBQMpmMq5Km7nPkaG67mgcAp0QEREBERAREQEREBERAREQEREBeKdNrZzjcL2q8nIG7E6DUb/AGKW4smqjw5kTpwQADZp43KpvccoHPVWKt9oootwFyQqhN3XSKzwWW6rU7lluoVRfw54bnaTobEKOqm+nlIO5uUKs1xBWjnFzjfibqATf2IU4oqjA9IrYrUekpGtzPa3mUV0KWoIaxjm2FrAgq6yUxSNeBctN9VCIqbS7XkcybKZzoQ0HILE21cVixuV0GYsdg55jBI03rrLznSY2w7PJFlO+w1969GrxZ5Z/BROp4nAgt3uzbzv5qVFplGyGNmUNbYNvbXmsuiY7Pdvptyu13j+yt0QYAsLBabGO98v8Wffx5qREELqWFwALSbC3pHdyPNbvjY9mVzezpp6luiAiIgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICojB6ANLRAbHhnd5q8oA+WQuMYYGg2GbigquwPDXm7qe/wD8jvNY6hwzu3zHeatioGVvYcXG/ZGpFt62M7ezla5xcL2A1sgpdQ4Z3b5jvNOoMM7t8x3mrpnZZpaHOLtwA1WvSmZS7K7R2W1tboKvUWG92+Y7zWOoMM7t8x3mr7H579lzbW3hR1UzoRG4AFpeGuvwB0v77IKnUOGd2+Y7zTqHDO7fMd5qZtaTWTRuAETGkh3Mi1/xWY6w7KLaRufM9mcsjG4e1BB1BhndvmO81luB4a12YU1iP9bvNWY6yKQgDMLsLrkWtY2I9YSKsilbC5gd9KSGi2otvv7kGkeGUcZuyBt+ZJP4rEmF0Ujsz4bn/cR+amqpDHAXBxbq0XAvvIChbPLUPnha10ZY4APtpbRBg4VRHfD993mrqrx1jJJAxrJLEloeW9kkb1tPUthc1mR73OuQ1gubBMEyKs6sjGTIySRz25g1rdQOZUsMrJow9l7HmLEHkgkRFRhxAZTtWPsJC0vDeyNbD8kF5FWkrY43vbkkeGem5rbhvrWX1jGvyMZJKQA45BewO5BYRUenZyySIExuje61tSQQFr05+SleY3gSek0NuXdm+nhdB0EVZlbG7KC17SX7MhwtlNr6qWOVskkjGg/RkAnhfegkREQEREBERAREQEREBERAREQEREBERAREQFAGSxlwjLC0m4zcFOsFwBDSRc7ggrup3ZGtGV9rk5tNTxuFlsUrC1wc1zsuV2ZWEQQGOUObIHNc8Czr6ArUQSb3Ft9oHmysrVzg21za5sEAZszr2y8Lb1pVRbenki3Fw0PI8FKiDny0Ej6WJge0ShxL3cw6+b8VPJDK2oE1PkN2ZC15IGm61lO57WAF7g0E21NtULmhwaXDMdQL6lBRkw+R0LQHt2he4yHcCHekAtujvp5Z52APAaTEwDXMbX/qFeWHOaxpc4hoGpJOgQQ1ET5qXZ3bnJaTy0IJ/BYiikjqZXdkxyHNv1BsB+Smc5rW5nOAHMnRM7doY79oDNbwQU46SZlUJPo2tzEuLCQXjxG72qSsgfNkytjeG30eSCPEEblOZGNkbGT2nAkDnZboKTKephLJGPZJJswx+ckXtxv7VvFDUQR2YY3OcXPeTcDMeXgrEb2yNzMN280zt2mzv27ZreCDDNpd20y2v2cvLxVZ1I80MkF25nOJB4auuriIOdNh73Sylgjc2Q3u8m7Tx0G9Sinmglc6m2Za9rQQ+4sQLC1lcRBQp6KSNsbXuacrHtJH+o3W8VNMOi7TZ/QXHZJ1GWw4K4iChVwZIqyV7gA7K5hG8EAW/qFNTRyxQRjs53OzS38dTZWCA4WcARyKygIiICLV72sLQ42zHKPErZARaGRjZGxk9pwJA52W6AiLDXNe0OaQ4HcQUGUREBERAREQEREBERAREQFRlfeZ0oa47MgAgaWG9XlgNaG5QABysgr5TLPINo8NAFsptvWjHulMYe8tBZe4Nrm6thrW7mgcNAopYiQ0MDLD+FzdFRX2j8uUPc5pkIzZraW5rIc42DiSBK213XI9qsRQhsZa8B2Y3ItotwxgAAaAAbgWQVXOJikkMzmvBIyg7vCysRbr5ySQLgndosmNjjcsaTzIWwa0EkAAnfYKCpibBJDGx3oulYD71WdNLHOGOGaaGKSxt6Q0sV03Na62ZoNjcXG4oWNLw8tGYCwNtUFBjtm+mdHUvldKbOaXXBFrk24WU9c5r8Omcxwc0sNiDcKXo8Qz5I2sc4EFzWgFbNiY2ERZQWAZbHXRBVxNubDn6kWsdDbiFoacSV+QTShohGrX6ntHir5aHNLSAQdLFasijj9CNrdLaC2iDnsmlLIM0jickoJvvsbArMQkiZRzbeR5lLWvDnXBuL7lf2UYt9G3S9tN196zs2WaMjbN9EW3epBzMMe58gY95Y1mYsYDbP2jc+NuSnmi22Jhu0ewbHXIbE9rmrYijGW0bOybt7I09Szlbnz5Rmta9tbIOW6ecsgiL3OBe9rnB2UuynTVW8PfI6OQPdmDXkNJdmNuRKsOhicwsdGwtJuQWi11ljWsaGsaGtG4AWCDnwvzs20lU9ku0yll7ga2y5VrK8uiqpX1L45I3ODWh1gLbtON10NjFtNps2Z/5sov70dBC9+d8THO3XLQSqKMTH1Mwa6eVrRAw2a62pvqtYjN0WGqdPI55eA4X7JGa25dJrGNN2taDYDQcBwWNnHkDMjcoNwLaIOU6eoO1kDnB7ZC0DaANGugy8VdxKWSKnaYyRmeGuINrA+PBTmGIybQxsL/AObKL+9buaHNLXAEHeCoOUZp4o5w17g1obq5+csubE39SkJ2VZCyOpkka5riWl+bhoVfZFHG0tZG1rTvAFgtWU8LDdkMbT4NAVFCNjjTUb3yyPdJI0kudu7J3LenllkkipnPdnhcTK6+pA3e+49yv7NlmjI2zfRFt3qUUEJjlmlcQXSO4cANAEEVY94qImsc4Xjk0B3mwsoxU5oaENlu97m5rHU9k3v7VZdC99WyUkZGNIAG8k28lsKeFrswhjDr3uGi91BQp3uM7WyTPdtS4BzX3a7fw3tIU2FmOOhjJk1cNznbrclabDE2QyNjYHne4NFysdHg1+hj1vfsjjvQbtc118rgbb7FbLVjGMvkY1t99hZbICIiAiIgIiICIiAiIgKu2d73FjAMwcQTwAurCrtgex5ewjMXEkcCLoNnVDWkjK4hvpOA0CztmZXuN7M3qJ9KS99g0hxvck3C2fTkyNLSAzTMOdtyDJnDC7NmOoAFt1wtmzhwd2HgttdttVq6FzpC64tna73BbFjxK57cuoA19aCVEVVxru1lbT8bXLuenDlf2oJp5mQMzPubmwAFyTyChbXRF72va+MsZndnFrBMQsI45M7WOY8FpcDa+7XkNd6qBjq2qma98esIbeM3DTe414qi2K1p0MUrXFpc0ObbNbkt6Od1RTskcwsJA37j6vBRiGolljfUGMCMGwZc3JFr67lJRxyQ07YpMvYFgWneFBF0lzsOdO52Rwzatbe1iRuKw+tkbJUs2LiIhcEDw46rTotT0J9MRFY5rOzHib7rKZ1PIZ5yC3ZzNsddQbWVGjKt7nUxc0xtka4uzDkAb+pSRVscjmDJI0P9Bzm2DlF0SWRkLZSwCNjmHKTqCLclrT0D45Is7YrR/wAQJJdy0OgQTVdWKaWIOF2vDtwuSRawHvWekPiiYahn0sh7McYufV+qxV0gqZYi42awO1BsQTaxHuUU1JNMyIymN8kRPEgPB523FBMysjc5rcr2uc4sIcLZTa9isPqQZWsY5wtKIycoIcbE2UbaFwp5AMjJS4PblvZpG7UrZtI9sVO3M0uZJtHnmbG/4oEeIxPyERyhj3ZQ8t7N+S1xWvNBAxzI9pLI8MjZfeStm0jxQRwXbma4Enho661xWgNfAwMk2csbw+N9r2IUEVHV4i2cx4hSsZGW5hLGey3wOqjH7RUTnNAZOQ9+VrsmjvEareCixGV7zX1bDGWFmziFgbi1yqIwTEdjT07p6d0NPLnboQSL310QJsYq2bexZ2K0Qjs/w9ryXYr6+CgY102Yl5s1rBdzj4LlS4JUv21nxfSVgnFyfR103b9VexWglqn089NIxk9O4ubnHZN+fuQVa/HmDDHz0Ydtc4YQ9v7s+IUlZiFRR4NBUNAfM7KDtWW38wDoq8mB1MlFUh80Tqmpka9x1DRa+m7xV/GaGWvoRDC5jXh4dd5NtPUggixWpp6o02JQMY4sL2OiNw4AEnf6lY62p+j002WTLUvyM0Fwb211VaPCqmoqjU4jOxzxG5jGRDstuCCdfWq8eDYiG0kT56d0NNKHtAuCRe/JBLTY/mfV7aml2cBuCxmoF7a3O/8AVXm4pTvnpoWB73VDM7bDcOZ5KCDD5KetrHvfE6kqbue03zA/hbUqj+zNI4Rz1bTn0MUBfusNfdf80HokVdhrNo3aCDJftZSb2tw9v9FYQEREBERAREQEREBERAREQEREBERAREQEREGCARYi4WGMawWY0NHICy2RAREQEREBERAREQEREBERAREQEREBERAREQYIDgQQCDoQeKwxjY2hrGhrRuAFgtkQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQF47rzEe8fcb5L2K+fLPJ04TXTjxvEHPANRob/wADfJTUuL10h7U9/wD2N8lyYv3rfWrFGdff+CcV5SY6xxqSnfed5cMps0AalUX/ALT1e5jWjXfbVc6SUTTPcTa+gvyWaek6RJZpFuJ5LdrE4668OPVE7JPpMjrDKMo8lN07ETGJBOMp/wBLfJcuup2xRh0emVW46oOpWNyncDe6kulmOzBUzuYC59yYy7cN+impZpJHSh7r5SLaDkqkHotH/wBo/kp6M/ST+tv4KsKNXiFVHDC5kti5xB7I8lVjxeudKQZtAf5G+S0qgSxjidASB71UhN53esLO/qutJiVWJLCXTT+EeSy/Eatr2gS6E/yjyVST98PYt5v3jFqqt1ldVRBmSW1zr2R5LtrzlZqI7816NQoi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0QSVeM0tJO6F4ke5mryxtwz1qtJikkuNQU1OXCAtDnODL576+weKVeFVZqKp1JNE2KrAEgeDcepTUuFvpsQima9pijpxFr6RN96DSrr68Yo6jo4oH5YxJ27gn23W1PjcT6djponskM2xcwa2d5LFXQ15xR1ZRyQNzRiP6S5I9llE/A5BQtZHODUibbF7hoXILNdizKfpUccb3TQMDj2bt1tbj4rWkxmOVlKJopI3z6Altmk+Gu7VQxYVVyTVklXLETUxZLx30NuR4KDE6eSmwFjKl7NtA9ogdHf2e210HYpK2KsfM2IPtC7IXEaE+C3mnbCWtyue925rRclc+mgqaCjoqeBl3vfeZxFwBvPkr08UhmZNCW5mgtIduIP/AIQadPiDHOLZBlcGEZdblbNrIyJC9r4jGLuDxY2UQpJi5znuju6Vkml9w4LeppHTySHMAHRho5gg3VRjphdUwRiN8YeTcPba4sraqCGpkqYZZTEGx3uGk63FlNL0nP8ARCIssPSJve+v9P6oqVFpFtNmNsGB9z6F7Wvp/RbqAiIgIiICkUakQEREBERBGi3sEsEGiLewSwQaIt7BLBBoRcWKwxjWCzGho5AWUlglgg0Rb2CWCDRFvYJYINEW9glgg0Rb2CWCDRFvYJYINEW9glgg0Rb2CWCDRFvYJYINEW9glgg0Wr42SWzsa6xuLi9ipbBLBBoi3sEsEGiLewSwQaIt7BLBBoi3sEsEGiLewSwQaIt7BLBBopFiwWUBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREENJUMq6aOeMgteL+o8Qpl4GmrKmjJNNO6O+8DUH2FWevMU738tvkria9qi8V15ine/lt8k68xTvfy2+SYbHtUXiuvMU738tvknXmKd7+W3yTDY9qi8V15ine/lt8k68xTvfy2+SYbHtUXiuvMU738tvknXmKd7+W3yTDY9qi8V15ine/lt8k68xTvfy2+SYbHtUXiuvMU738tvknXmKd7+W3yTDY9qi8V15ine/lt8k68xTvfy2+SYbHtUXiuvMU738tvknXmKd7+W3yTDY9qi8V15ine/lt8k68xTvfy2+SYbHtUXiuvMU738tvknXmKd7+W3yTDY9qi8V15ine/lt8k68xTvfy2+SYbHtUXiuvMU738tvknXmKd7+W3yTDY9qi8V15ine/lt8k68xTvfy2+SYbHtUXiuvMU738tvknXmKd7+W3yTDY9qi8V15ine/lt8k68xTvfy2+SYbHtUXiuvMU738tvknXmKd7+W3yTDY9qi8V15ine/lt8k68xTvfy2+SYbHtUXiuvMU738tvknXmKd7+W3yTDY9qi8V15ine/lt8k68xTvfy2+SYbHtUXiuvMU738tvknXmKd7+W3yTDY9qi8V15ine/lt8k68xTvfy2+SYbHr6uoZSU0k8hAawX9Z4BF4eprKmsINTO6S24HQD2BExNQoiLSCIiAiIgIiICIiDIBJAGpOi32TibNLXHjY7loCQQRvCk22p+jYL7xY6oAgkN7gC1955C61dE9pAI3mw14rfpDjva06EDfoCLLElQ+QtJOoN+O9Bq+Ms4g87cFv0d2lnNsdx11P9haPkL7XAHq4rfpJzXyM4aa2Ft3FBgQuIuHN8fDS/5LBieDuuNO1w1WdubNGRvZvz1vvvqtXPLn5iBbTTgg2EDiRZzbG1jrrfd+CCEluYObuJ48BdZ6Q7OXZGcDx0I3cVjbHK0BjRlBGl+IsUGGwPds7D09yz0eTKCAD6vZ5rLKh8bQABp53QVLw0CzbAgjTiLWP9EGNg+9tL794tb17lqIyQSSGgG1zzW5qXmQPsLgWAufNaiUjNdrXAm9juBQBDIbWANzYajnZNhJ/Lf1EHjZbtqpGtAFtDfjzvuWG1MjWNaNzd2/ndBq6F7GZ3Wt4G9/7stujv3XbfLm1NuXmsPmLo8ga1rfC/8AfFHTuMeTK0C1tPZ5IAglN+zuvpcX0To8mug08QtukvzF2VubWx5X1WBUEZrMYA4WIsdUGjY3OY543N3rIgec2gGW97kIyZzGZAG21vcb7rY1DiCMjdb336oMOp5GutYeu4t+idHl/ltv3kBNu7tXa0hxuQs9IfnDrC4vbeEERBBIO8LCy45nE6am+iwgIiICIiAiIgIiICIiAiIgIiICIiAiIgIiICsWYcurBH2b/wA3C/jzVdEFkiFou5rM2nZD7jf61uGQE2OWwFhrv19arsiL23DmjUNsb7ys9Hk5D3jx8kErRT5wLNsLG5O/XitIw2zvQDr/AMW72KMRPJcANW79QtjTvABGU38Ryv8Amg2iDc0h7GUbg4i55WutwI7D93qOzu5cfbzULYXuc5oHabwWpY4Fwt6Iudf75oLBMeRwszxIIvew3e3ktYshLiA3KBueRcnwWhgkA1b4WuL77fistppD/KPHMNdbIJPowNcliNN1/RN7+2yw7Jmhvk9LtWta2n96rQ0zwCbtO/d7fJY6PIL3AFr/AMQ4IJ4xBlv2bm+hI01HP2qN4YB2NnkF7333v71HsJAbED3jRZ2Em0LALkG2nNBK4RNDyQx2ri0B3DS272rJbBe122aM2/fqdPwUIgeWZtBpfU25eaPgeyQMNrl2UEG4uglLacNBFjpffv0468/UhZFYEBhOXcXbzpv19fJRtp3uJGgtfx5cvWFq6IsvmLQeV0EzxC2dgGUsF76+JWWspw2xc1x1IN9/LiOCh2EhLgADlJB15IYJABpqTa3igmDYRmy5CLHVztQeGiPjjdnyBhJ3HNre/LlZQCCQ2s0a+I5XTYSaaDdf0h/fFBvE1hY0nJ/Fe5A4aIQBGLbOwHauRe/9+xRyROjtm0JvotEBERAREQEREBERAREQEREBERAREQEREBERAREQEREG7JCzcB6Qdr4f+Vs2dzWgACwN+Pj5qJEErZ3Nkc/K27t41sstqXt3Af15AfkFCiCUTuD3P0JdvvdDMS9zi1pzCxGv98FEiCY1Dy/PYA/rf8U6Q4ABrGtA4C/MH8lCiCYVDw2wA/u/mhqCf4GgG97X1v8A+FCiCd1S998wBB3gk+fgtdu8Pe8WBeLHwUSIJnVDnE3DbG+nu8lqZnFwdYXDy/2qNEEwqHhoaQ0gAjW/MeSw+YvuXNaXG+ttyiRBM6oc4HstGa97cSeKdJfyb6Nv79yhRBMal5aGm1gLceVk6Q7IGFrS0C1jfXd4+ChRBJLMZfSa32KNEQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQSROAZIDl9HS4B1uPyuppWwNDi0A2Btrv1FuPrVVTCnkLQRY3132/vcgkcILuAa0auAOY7gNCtXsiErAMoad4zfiozA8EAC9xfT1X/NZMEg3gcdcwsg3k2bYnBoZmJbexvbfu/otw2F1i7INNGgjw8R471XdE9oOZtrLd1NIOR9tre/1oN8sBcGAgAgnNfx8llwicy7Qy9txda3moujyW3C+63v8AJYMLxvHM7wg3qGxNDdmePPePeoERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAUm1dp4NLQPZZRoglFQ8AgWG72Wt5BZNQSMuzZl1uNdb28fBQoglfLmiazkSTp/fj702zi5xcA4OFiDeyiRBN0l53hp56evzWNt9E9gAGYjQbgP7sokQEREBERAREQEREBERAREQEREBERAREQEREH//2Q==",
+      "width": 360,
+      "height": 702
+    },
+    "nodes": {
+      "page-0-IMG": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "height": 0
+      },
+      "page-1-IMG": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "height": 0
+      },
+      "page-2-DIV": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "height": 0
+      },
+      "page-3-H1": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "height": 0
+      },
+      "page-4-DIV": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "height": 0
+      },
+      "page-5-DIV": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "height": 0
+      },
+      "page-6-DIV": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "height": 0
+      },
+      "page-7-IMG": {
+        "top": 12,
+        "bottom": 52,
+        "left": 136,
+        "right": 224,
+        "width": 89,
+        "height": 40
+      },
+      "page-8-IMG": {
+        "top": 210,
+        "bottom": 274,
+        "left": 24,
+        "right": 136,
+        "width": 112,
+        "height": 64
+      },
+      "page-9-IMG": {
+        "top": 370,
+        "bottom": 434,
+        "left": 24,
+        "right": 136,
+        "width": 112,
+        "height": 64
+      },
+      "page-10-IMG": {
+        "top": 490,
+        "bottom": 554,
+        "left": 24,
+        "right": 136,
+        "width": 112,
+        "height": 64
+      },
+      "page-11-FOOTER": {
+        "top": 618,
+        "bottom": 702,
+        "left": 0,
+        "right": 360,
+        "width": 360,
+        "height": 84
+      },
+      "page-12-svg": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "height": 0
+      },
+      "7-0-SPAN": {
+        "top": 278,
+        "bottom": 298,
+        "left": 24,
+        "right": 68,
+        "width": 44,
+        "height": 20
+      },
+      "7-1-MAIN": {
+        "top": 80,
+        "bottom": 618,
+        "left": 0,
+        "right": 360,
+        "width": 360,
+        "height": 538
+      },
+      "7-2-SPAN": {
+        "top": 298,
+        "bottom": 318,
+        "left": 24,
+        "right": 76,
+        "width": 52,
+        "height": 20
+      },
+      "7-3-SPAN": {
+        "top": 318,
+        "bottom": 338,
+        "left": 24,
+        "right": 64,
+        "width": 40,
+        "height": 20
+      },
+      "7-4-SPAN": {
+        "top": 438,
+        "bottom": 458,
+        "left": 24,
+        "right": 68,
+        "width": 44,
+        "height": 20
+      },
+      "7-5-DIV": {
+        "top": 525,
+        "bottom": 543,
+        "left": 152,
+        "right": 320,
+        "width": 168,
+        "height": 18
+      },
+      "7-6-DIV": {
+        "top": 482,
+        "bottom": 586,
+        "left": 16,
+        "right": 344,
+        "width": 328,
+        "height": 104
+      },
+      "7-7-SPAN": {
+        "top": 558,
+        "bottom": 578,
+        "left": 24,
+        "right": 52,
+        "width": 28,
+        "height": 20
+      },
+      "7-8-IMG": {
+        "top": 210,
+        "bottom": 274,
+        "left": 24,
+        "right": 136,
+        "width": 112,
+        "height": 64
+      },
+      "7-9-IMG": {
+        "top": 370,
+        "bottom": 434,
+        "left": 24,
+        "right": 136,
+        "width": 112,
+        "height": 64
+      },
+      "7-10-IMG": {
+        "top": 490,
+        "bottom": 554,
+        "left": 24,
+        "right": 136,
+        "width": 112,
+        "height": 64
+      },
+      "7-11-DIV": {
+        "top": 72,
+        "bottom": 112,
+        "left": 24,
+        "right": 336,
+        "width": 312,
+        "height": 40
+      },
+      "7-12-A": {
+        "top": 12,
+        "bottom": 52,
+        "left": 136,
+        "right": 224,
+        "width": 89,
+        "height": 40
+      },
+      "7-13-A": {
+        "top": 129,
+        "bottom": 151,
+        "left": 24,
+        "right": 82,
+        "width": 58,
+        "height": 23
+      },
+      "7-14-A": {
+        "top": 161,
+        "bottom": 183,
+        "left": 24,
+        "right": 147,
+        "width": 123,
+        "height": 23
+      },
+      "7-15-A": {
+        "top": 193,
+        "bottom": 215,
+        "left": 24,
+        "right": 121,
+        "width": 97,
+        "height": 23
+      },
+      "7-16-A": {
+        "top": 225,
+        "bottom": 247,
+        "left": 24,
+        "right": 134,
+        "width": 110,
+        "height": 23
+      },
+      "7-17-A": {
+        "top": 257,
+        "bottom": 279,
+        "left": 24,
+        "right": 114,
+        "width": 90,
+        "height": 23
+      },
+      "7-18-A": {
+        "top": 289,
+        "bottom": 311,
+        "left": 24,
+        "right": 160,
+        "width": 136,
+        "height": 23
+      },
+      "7-19-A": {
+        "top": 321,
+        "bottom": 343,
+        "left": 24,
+        "right": 139,
+        "width": 115,
+        "height": 23
+      },
+      "7-20-A": {
+        "top": 202,
+        "bottom": 346,
+        "left": 16,
+        "right": 344,
+        "width": 328,
+        "height": 144
+      },
+      "7-21-A": {
+        "top": 362,
+        "bottom": 466,
+        "left": 16,
+        "right": 344,
+        "width": 328,
+        "height": 104
+      },
+      "7-22-A": {
+        "top": 482,
+        "bottom": 586,
+        "left": 16,
+        "right": 344,
+        "width": 328,
+        "height": 104
+      },
+      "7-23-A": {
+        "top": 670,
+        "bottom": 682,
+        "left": 147,
+        "right": 213,
+        "width": 66,
+        "height": 12
+      },
+      "7-24-A": {
+        "top": 682,
+        "bottom": 694,
+        "left": 153,
+        "right": 207,
+        "width": 54,
+        "height": 12
+      },
+      "7-25-SPAN": {
+        "top": 0,
+        "bottom": 0,
+        "left": 0,
+        "right": 0,
+        "width": 0,
+        "height": 0
+      },
+      "7-26-BODY": {
+        "top": 0,
+        "bottom": 702,
+        "left": 0,
+        "right": 360,
+        "width": 360,
+        "height": 702
+      }
+    }
+  },
+  "ImageElements": [
+    {
+      "src": "https://www.mikescerealshack.co/logo-text.svg",
+      "srcset": "",
+      "displayedWidth": 89,
+      "displayedHeight": 40,
+      "clientRect": {
+        "top": 12,
+        "bottom": 52,
+        "left": 135.5546875,
+        "right": 224.4375
+      },
+      "attributeWidth": null,
+      "attributeHeight": null,
+      "naturalDimensions": {
+        "width": 1000,
+        "height": 450
+      },
+      "computedStyles": {
+        "position": "static",
+        "objectFit": "fill",
+        "imageRendering": "auto"
+      },
+      "isCss": false,
+      "isPicture": false,
+      "loading": "auto",
+      "isInShadowDOM": false,
+      "node": {
+        "lhId": "page-7-IMG",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,2,HEADER,0,DIV,1,DIV,0,A,0,IMG",
+        "selector": "div.flex > div.flex-grow > a > img.h-10",
+        "boundingRect": {
+          "top": 12,
+          "bottom": 52,
+          "left": 136,
+          "right": 224,
+          "width": 89,
+          "height": 40
+        },
+        "snippet": "<img src=\"/logo-text.svg\" class=\"h-10\" alt=\"Mike's Cereal Shack Co Logo - The Office Meme Creator\">",
+        "nodeLabel": "Mike's Cereal Shack Co Logo - The Office Meme Creator"
+      },
+      "cssEffectiveRules": {
+        "width": null,
+        "height": "2.5rem",
+        "aspectRatio": null
+      }
+    },
+    {
+      "src": "https://cdn.mikescerealshack.co/frames/s8/e13/128w/81d89db1bf3d43b5b21f813d2f2a9777.jpg",
+      "srcset": "",
+      "displayedWidth": 112,
+      "displayedHeight": 64,
+      "clientRect": {
+        "top": 210,
+        "bottom": 274,
+        "left": 24,
+        "right": 136
+      },
+      "attributeWidth": null,
+      "attributeHeight": null,
+      "naturalDimensions": {
+        "width": 128,
+        "height": 72
+      },
+      "computedStyles": {
+        "position": "static",
+        "objectFit": "fill",
+        "imageRendering": "auto"
+      },
+      "isCss": false,
+      "isPicture": false,
+      "loading": "auto",
+      "isInShadowDOM": false,
+      "node": {
+        "lhId": "page-8-IMG",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,2,A,0,DIV,0,DIV,0,IMG",
+        "selector": "a > div.flex > div > img.h-16",
+        "boundingRect": {
+          "top": 210,
+          "bottom": 274,
+          "left": 24,
+          "right": 136,
+          "width": 112,
+          "height": 64
+        },
+        "snippet": "<img src=\"https://cdn.mikescerealshack.co/frames/s8/e13/128w/81d89db1bf3d43b5b21f813…\" fallbacksrc=\"https://cdn.mikescerealshack.co/frames/s8/e13/128w/7026b6c1508a8c97799215a…\" class=\"h-16 w-28 sm:h-24 sm:w-44 max-w-none\">",
+        "nodeLabel": "a > div.flex > div > img.h-16"
+      },
+      "cssEffectiveRules": {
+        "width": "7rem",
+        "height": "4rem",
+        "aspectRatio": null
+      }
+    },
+    {
+      "src": "https://cdn.mikescerealshack.co/frames/s3/e3/128w/9b3031eb3988ba363fe946929a79e016.jpg",
+      "srcset": "",
+      "displayedWidth": 112,
+      "displayedHeight": 64,
+      "clientRect": {
+        "top": 370,
+        "bottom": 434,
+        "left": 24,
+        "right": 136
+      },
+      "attributeWidth": null,
+      "attributeHeight": null,
+      "naturalDimensions": {
+        "width": 128,
+        "height": 72
+      },
+      "computedStyles": {
+        "position": "static",
+        "objectFit": "fill",
+        "imageRendering": "auto"
+      },
+      "isCss": false,
+      "isPicture": false,
+      "loading": "auto",
+      "isInShadowDOM": false,
+      "node": {
+        "lhId": "page-9-IMG",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,A,0,DIV,0,DIV,0,IMG",
+        "selector": "a > div.flex > div > img.h-16",
+        "boundingRect": {
+          "top": 370,
+          "bottom": 434,
+          "left": 24,
+          "right": 136,
+          "width": 112,
+          "height": 64
+        },
+        "snippet": "<img src=\"https://cdn.mikescerealshack.co/frames/s3/e3/128w/9b3031eb3988ba363fe94692…\" fallbacksrc=\"https://cdn.mikescerealshack.co/frames/s3/e3/128w/5de94bb353874938309d3f80…\" class=\"h-16 w-28 sm:h-24 sm:w-44 max-w-none\">",
+        "nodeLabel": "a > div.flex > div > img.h-16"
+      },
+      "cssEffectiveRules": {
+        "width": "7rem",
+        "height": "4rem",
+        "aspectRatio": null
+      }
+    },
+    {
+      "src": "https://cdn.mikescerealshack.co/frames/s3/e3/128w/793a408ca63a660b5d7aa1a41ac126ca.jpg",
+      "srcset": "",
+      "displayedWidth": 112,
+      "displayedHeight": 64,
+      "clientRect": {
+        "top": 490,
+        "bottom": 554,
+        "left": 24,
+        "right": 136
+      },
+      "attributeWidth": null,
+      "attributeHeight": null,
+      "naturalDimensions": {
+        "width": 128,
+        "height": 72
+      },
+      "computedStyles": {
+        "position": "static",
+        "objectFit": "fill",
+        "imageRendering": "auto"
+      },
+      "isCss": false,
+      "isPicture": false,
+      "loading": "auto",
+      "isInShadowDOM": false,
+      "node": {
+        "lhId": "page-10-IMG",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,4,A,0,DIV,0,DIV,0,IMG",
+        "selector": "a > div.flex > div > img.h-16",
+        "boundingRect": {
+          "top": 490,
+          "bottom": 554,
+          "left": 24,
+          "right": 136,
+          "width": 112,
+          "height": 64
+        },
+        "snippet": "<img src=\"https://cdn.mikescerealshack.co/frames/s3/e3/128w/793a408ca63a660b5d7aa1a4…\" fallbacksrc=\"https://cdn.mikescerealshack.co/frames/s3/e3/128w/a8a4fc239c89991d59a855ce…\" class=\"h-16 w-28 sm:h-24 sm:w-44 max-w-none\">",
+        "nodeLabel": "a > div.flex > div > img.h-16"
+      },
+      "cssEffectiveRules": {
+        "width": "7rem",
+        "height": "4rem",
+        "aspectRatio": null
+      }
+    }
+  ],
+  "MetaElements": [
+    {
+      "name": "viewport",
+      "content": "width=device-width",
+      "node": {
+        "lhId": "7-27-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,0,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta name=\"viewport\" content=\"width=device-width\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "",
+      "content": "",
+      "charset": "utf-8",
+      "node": {
+        "lhId": "7-28-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,1,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta charset=\"utf-8\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "description",
+      "content": "Mike's Cereal Shack is the unofficial search engine and meme creator for The Office. Search every line of The Office script and instantly turn the scene into a meme to share with friends.",
+      "node": {
+        "lhId": "7-29-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,3,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta name=\"description\" content=\"Mike's Cereal Shack is the unofficial search engine and meme creator for T…\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "",
+      "content": "website",
+      "property": "og:type",
+      "node": {
+        "lhId": "7-30-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,9,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta property=\"og:type\" content=\"website\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "",
+      "content": "Mike's Cereal Shack is the unofficial search engine and meme creator for The Office. Search every line of The Office script and instantly turn the scene into a meme to share with friends.",
+      "property": "og:description",
+      "node": {
+        "lhId": "7-31-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,10,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta property=\"og:description\" content=\"Mike's Cereal Shack is the unofficial search engine and meme creator for T…\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "",
+      "content": "http://www.mikescerealshack.co/mcs-header.jpg",
+      "property": "og:image",
+      "node": {
+        "lhId": "7-32-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,11,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta property=\"og:image\" content=\"http://www.mikescerealshack.co/mcs-header.jpg\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "",
+      "content": "https://www.mikescerealshack.co/mcs-header.jpg",
+      "property": "og:image:secure_url",
+      "node": {
+        "lhId": "7-33-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,12,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta property=\"og:image:secure_url\" content=\"https://www.mikescerealshack.co/mcs-header.jpg\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "",
+      "content": "1200",
+      "property": "og:image:width",
+      "node": {
+        "lhId": "7-34-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,13,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta property=\"og:image:width\" content=\"1200\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "",
+      "content": "626",
+      "property": "og:image:height",
+      "node": {
+        "lhId": "7-35-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,14,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta property=\"og:image:height\" content=\"626\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "",
+      "content": "Mike's Cereal Shack logo above many iconic scenes from The Office",
+      "property": "og:image:alt",
+      "node": {
+        "lhId": "7-36-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,15,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta property=\"og:image:alt\" content=\"Mike's Cereal Shack logo above many iconic scenes from The Office\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "twitter:card",
+      "content": "summary_large_image",
+      "node": {
+        "lhId": "7-37-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,16,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta name=\"twitter:card\" content=\"summary_large_image\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "twitter:site",
+      "content": "@MikesCerealShak",
+      "node": {
+        "lhId": "7-38-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,17,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta name=\"twitter:site\" content=\"@MikesCerealShak\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "twitter:creator",
+      "content": "@MikesCerealShak",
+      "node": {
+        "lhId": "7-39-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,18,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta name=\"twitter:creator\" content=\"@MikesCerealShak\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "viewport",
+      "content": "width=device-width",
+      "node": {
+        "lhId": "7-40-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,19,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta name=\"viewport\" content=\"width=device-width\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "",
+      "content": "\"call of duty\" Results - Mike's Cereal Shack: The Office Search Engine",
+      "property": "og:title",
+      "node": {
+        "lhId": "7-41-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,21,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta property=\"og:title\" content=\"&quot;call of duty&quot; Results - Mike's Cereal Shack: The Office Search Engine\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "",
+      "content": "https://www.mikescerealshack.co/search",
+      "property": "og:url",
+      "node": {
+        "lhId": "7-42-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,22,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta property=\"og:url\" content=\"https://www.mikescerealshack.co/search\">",
+        "nodeLabel": "head > meta"
+      }
+    },
+    {
+      "name": "next-head-count",
+      "content": "22",
+      "node": {
+        "lhId": "7-43-META",
+        "devtoolsNodePath": "1,HTML,0,HEAD,23,META",
+        "selector": "head > meta",
+        "boundingRect": {
+          "top": 0,
+          "bottom": 0,
+          "left": 0,
+          "right": 0,
+          "width": 0,
+          "height": 0
+        },
+        "snippet": "<meta name=\"next-head-count\" content=\"22\">",
+        "nodeLabel": "head > meta"
+      }
+    }
+  ],
+  "PasswordInputsWithPreventedPaste": [],
+  "RobotsTxt": {
+    "status": 404,
+    "content": null
+  },
+  "TapTargets": [
+    {
+      "clientRects": [
+        {
+          "width": 88.8828125,
+          "height": 40,
+          "left": 135.5546875,
+          "top": 12,
+          "right": 224.4375,
+          "bottom": 52
+        },
+        {
+          "width": 88.8828125,
+          "height": 40,
+          "left": 135.5546875,
+          "top": 12,
+          "right": 224.4375,
+          "bottom": 52
+        }
+      ],
+      "href": "https://www.mikescerealshack.co/",
+      "node": {
+        "lhId": "7-12-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,2,HEADER,0,DIV,1,DIV,0,A",
+        "selector": "header.px-6 > div.flex > div.flex-grow > a",
+        "boundingRect": {
+          "top": -50,
+          "bottom": -10,
+          "left": 136,
+          "right": 224,
+          "width": 89,
+          "height": 40
+        },
+        "snippet": "<a class=\"\" href=\"/\">",
+        "nodeLabel": "Mike's Cereal Shack Co Logo - The Office Meme Creator"
+      }
+    },
+    {
+      "clientRects": [
+        {
+          "width": 281.3046875,
+          "height": 42,
+          "left": 16,
+          "top": 144,
+          "right": 297.3046875,
+          "bottom": 186
+        }
+      ],
+      "href": "",
+      "node": {
+        "lhId": "7-44-INPUT",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,1,FORM,0,INPUT",
+        "selector": "div.flex > main#main-content > form.flex > input.p-2",
+        "boundingRect": {
+          "top": 82,
+          "bottom": 124,
+          "left": 16,
+          "right": 297,
+          "width": 281,
+          "height": 42
+        },
+        "snippet": "<input class=\"p-2 mr-2 rounded-md flex-grow\" type=\"text\" aria-label=\"search text\" value=\"call of duty\">",
+        "nodeLabel": "search text"
+      }
+    },
+    {
+      "clientRects": [
+        {
+          "width": 38.6953125,
+          "height": 40,
+          "left": 305.3046875,
+          "top": 145,
+          "right": 344,
+          "bottom": 185
+        }
+      ],
+      "href": "",
+      "node": {
+        "lhId": "7-45-BUTTON",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,1,FORM,1,BUTTON",
+        "selector": "div.flex > main#main-content > form.flex > button.p-2",
+        "boundingRect": {
+          "top": 83,
+          "bottom": 123,
+          "left": 305,
+          "right": 344,
+          "width": 39,
+          "height": 40
+        },
+        "snippet": "<button class=\"p-2 rounded-md bg-teal-dark hover:bg-teal-bright text-white\" type=\"submit\">",
+        "nodeLabel": "Go"
+      }
+    },
+    {
+      "clientRects": [
+        {
+          "width": 328,
+          "height": 144,
+          "left": 16,
+          "top": 202,
+          "right": 344,
+          "bottom": 346
+        },
+        {
+          "width": 328,
+          "height": 144,
+          "left": 16,
+          "top": 202,
+          "right": 344,
+          "bottom": 346
+        },
+        {
+          "width": 112,
+          "height": 64,
+          "left": 24,
+          "top": 210,
+          "right": 136,
+          "bottom": 274
+        },
+        {
+          "width": 112,
+          "height": 64,
+          "left": 24,
+          "top": 210,
+          "right": 136,
+          "bottom": 274
+        },
+        {
+          "width": 200,
+          "height": 64,
+          "left": 136,
+          "top": 210,
+          "right": 336,
+          "bottom": 274
+        },
+        {
+          "width": 168,
+          "height": 42,
+          "left": 152,
+          "top": 221,
+          "right": 320,
+          "bottom": 263
+        },
+        {
+          "width": 160,
+          "height": 24,
+          "left": 152,
+          "top": 221,
+          "right": 312,
+          "bottom": 245
+        },
+        {
+          "width": 168,
+          "height": 18,
+          "left": 152,
+          "top": 245,
+          "right": 320,
+          "bottom": 263
+        },
+        {
+          "width": 267.9296875,
+          "height": 60,
+          "left": 24,
+          "top": 278,
+          "right": 291.9296875,
+          "bottom": 338
+        },
+        {
+          "width": 267.9296875,
+          "height": 60,
+          "left": 24,
+          "top": 278,
+          "right": 291.9296875,
+          "bottom": 338
+        },
+        {
+          "width": 267.9296875,
+          "height": 20,
+          "left": 24,
+          "top": 278,
+          "right": 291.9296875,
+          "bottom": 298
+        },
+        {
+          "width": 44.484375,
+          "height": 19.5,
+          "left": 24,
+          "top": 278,
+          "right": 68.484375,
+          "bottom": 297.5
+        },
+        {
+          "width": 146.6796875,
+          "height": 19.5,
+          "left": 76.484375,
+          "top": 278,
+          "right": 223.1640625,
+          "bottom": 297.5
+        },
+        {
+          "width": 267.9296875,
+          "height": 20,
+          "left": 24,
+          "top": 298,
+          "right": 291.9296875,
+          "bottom": 318
+        },
+        {
+          "width": 52.4375,
+          "height": 19.5,
+          "left": 24,
+          "top": 298,
+          "right": 76.4375,
+          "bottom": 317.5
+        },
+        {
+          "width": 199.3515625,
+          "height": 19.5,
+          "left": 84.4375,
+          "top": 298,
+          "right": 283.7890625,
+          "bottom": 317.5
+        },
+        {
+          "width": 8.140625,
+          "height": 19.5,
+          "left": 283.7890625,
+          "top": 298,
+          "right": 291.9296875,
+          "bottom": 317.5
+        },
+        {
+          "width": 267.9296875,
+          "height": 20,
+          "left": 24,
+          "top": 318,
+          "right": 291.9296875,
+          "bottom": 338
+        },
+        {
+          "width": 40.3125,
+          "height": 19.5,
+          "left": 24,
+          "top": 318,
+          "right": 64.3125,
+          "bottom": 337.5
+        },
+        {
+          "width": 107.609375,
+          "height": 19.5,
+          "left": 80.453125,
+          "top": 318,
+          "right": 188.0625,
+          "bottom": 337.5
+        },
+        {
+          "width": 82.4765625,
+          "height": 19.5,
+          "left": 188.0625,
+          "top": 318,
+          "right": 270.5390625,
+          "bottom": 337.5
+        }
+      ],
+      "href": "https://www.mikescerealshack.co/scenes/s8/e13/18?q=call+of+duty",
+      "node": {
+        "lhId": "7-20-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,2,A",
+        "selector": "div#__next > div.flex > main#main-content > a",
+        "boundingRect": {
+          "top": 140,
+          "bottom": 284,
+          "left": 16,
+          "right": 344,
+          "width": 328,
+          "height": 144
+        },
+        "snippet": "<a href=\"/scenes/s8/e13/18?q=call+of+duty\">",
+        "nodeLabel": "S8E13 Jury Duty\n10:41-11:34\nOscar:Wow, it's so... healthy.\nAngela:No, I think h…"
+      }
+    },
+    {
+      "clientRects": [
+        {
+          "width": 328,
+          "height": 104,
+          "left": 16,
+          "top": 362,
+          "right": 344,
+          "bottom": 466
+        },
+        {
+          "width": 328,
+          "height": 104,
+          "left": 16,
+          "top": 362,
+          "right": 344,
+          "bottom": 466
+        },
+        {
+          "width": 112,
+          "height": 64,
+          "left": 24,
+          "top": 370,
+          "right": 136,
+          "bottom": 434
+        },
+        {
+          "width": 112,
+          "height": 64,
+          "left": 24,
+          "top": 370,
+          "right": 136,
+          "bottom": 434
+        },
+        {
+          "width": 200,
+          "height": 64,
+          "left": 136,
+          "top": 370,
+          "right": 336,
+          "bottom": 434
+        },
+        {
+          "width": 168,
+          "height": 42,
+          "left": 152,
+          "top": 381,
+          "right": 320,
+          "bottom": 423
+        },
+        {
+          "width": 160,
+          "height": 24,
+          "left": 152,
+          "top": 381,
+          "right": 312,
+          "bottom": 405
+        },
+        {
+          "width": 168,
+          "height": 18,
+          "left": 152,
+          "top": 405,
+          "right": 320,
+          "bottom": 423
+        },
+        {
+          "width": 267.0390625,
+          "height": 20,
+          "left": 24,
+          "top": 438,
+          "right": 291.0390625,
+          "bottom": 458
+        },
+        {
+          "width": 267.0390625,
+          "height": 20,
+          "left": 24,
+          "top": 438,
+          "right": 291.0390625,
+          "bottom": 458
+        },
+        {
+          "width": 267.0390625,
+          "height": 20,
+          "left": 24,
+          "top": 438,
+          "right": 291.0390625,
+          "bottom": 458
+        },
+        {
+          "width": 43.703125,
+          "height": 19.5,
+          "left": 24,
+          "top": 438,
+          "right": 67.703125,
+          "bottom": 457.5
+        },
+        {
+          "width": 116.578125,
+          "height": 19.5,
+          "left": 83.84375,
+          "top": 438,
+          "right": 200.421875,
+          "bottom": 457.5
+        },
+        {
+          "width": 82.4765625,
+          "height": 19.5,
+          "left": 200.421875,
+          "top": 438,
+          "right": 282.8984375,
+          "bottom": 457.5
+        }
+      ],
+      "href": "https://www.mikescerealshack.co/scenes/s3/e3/35?q=call+of+duty",
+      "node": {
+        "lhId": "7-21-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,3,A",
+        "selector": "div#__next > div.flex > main#main-content > a",
+        "boundingRect": {
+          "top": 300,
+          "bottom": 404,
+          "left": 16,
+          "right": 344,
+          "width": 328,
+          "height": 104
+        },
+        "snippet": "<a href=\"/scenes/s3/e3/35?q=call+of+duty\">",
+        "nodeLabel": "S3E3 The Coup\n9:06-9:09\nKaren:… the rocker sign] Call of Duty…"
+      }
+    },
+    {
+      "clientRects": [
+        {
+          "width": 328,
+          "height": 104,
+          "left": 16,
+          "top": 482,
+          "right": 344,
+          "bottom": 586
+        },
+        {
+          "width": 328,
+          "height": 104,
+          "left": 16,
+          "top": 482,
+          "right": 344,
+          "bottom": 586
+        },
+        {
+          "width": 112,
+          "height": 64,
+          "left": 24,
+          "top": 490,
+          "right": 136,
+          "bottom": 554
+        },
+        {
+          "width": 112,
+          "height": 64,
+          "left": 24,
+          "top": 490,
+          "right": 136,
+          "bottom": 554
+        },
+        {
+          "width": 200,
+          "height": 64,
+          "left": 136,
+          "top": 490,
+          "right": 336,
+          "bottom": 554
+        },
+        {
+          "width": 168,
+          "height": 42,
+          "left": 152,
+          "top": 501,
+          "right": 320,
+          "bottom": 543
+        },
+        {
+          "width": 160,
+          "height": 24,
+          "left": 152,
+          "top": 501,
+          "right": 312,
+          "bottom": 525
+        },
+        {
+          "width": 168,
+          "height": 18,
+          "left": 152,
+          "top": 525,
+          "right": 320,
+          "bottom": 543
+        },
+        {
+          "width": 266.7578125,
+          "height": 20,
+          "left": 24,
+          "top": 558,
+          "right": 290.7578125,
+          "bottom": 578
+        },
+        {
+          "width": 266.7578125,
+          "height": 20,
+          "left": 24,
+          "top": 558,
+          "right": 290.7578125,
+          "bottom": 578
+        },
+        {
+          "width": 266.7578125,
+          "height": 20,
+          "left": 24,
+          "top": 558,
+          "right": 290.7578125,
+          "bottom": 578
+        },
+        {
+          "width": 28.2734375,
+          "height": 19.5,
+          "left": 24,
+          "top": 558,
+          "right": 52.2734375,
+          "bottom": 577.5
+        },
+        {
+          "width": 45.7734375,
+          "height": 19.5,
+          "left": 68.4140625,
+          "top": 558,
+          "right": 114.1875,
+          "bottom": 577.5
+        },
+        {
+          "width": 136.796875,
+          "height": 19.5,
+          "left": 114.1875,
+          "top": 558,
+          "right": 250.984375,
+          "bottom": 577.5
+        },
+        {
+          "width": 31.6328125,
+          "height": 19.5,
+          "left": 250.984375,
+          "top": 558,
+          "right": 282.6171875,
+          "bottom": 577.5
+        }
+      ],
+      "href": "https://www.mikescerealshack.co/scenes/s3/e3/19?q=call+of+duty",
+      "node": {
+        "lhId": "7-22-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,3,MAIN,4,A",
+        "selector": "div#__next > div.flex > main#main-content > a",
+        "boundingRect": {
+          "top": 420,
+          "bottom": 524,
+          "left": 16,
+          "right": 344,
+          "width": 328,
+          "height": 104
+        },
+        "snippet": "<a href=\"/scenes/s3/e3/19?q=call+of+duty\">",
+        "nodeLabel": "S3E3 The Coup\n3:34-4:07\nJim:…game called Call of Duty, and …"
+      }
+    },
+    {
+      "clientRects": [
+        {
+          "width": 65.625,
+          "height": 11.5,
+          "left": 147.1875,
+          "top": 670,
+          "right": 212.8125,
+          "bottom": 681.5
+        }
+      ],
+      "href": "https://www.mikescerealshack.co/terms",
+      "node": {
+        "lhId": "7-23-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,5,FOOTER,2,DIV,0,DIV,0,A",
+        "selector": "footer.w-full > div.w-full > div > a",
+        "boundingRect": {
+          "top": 608,
+          "bottom": 620,
+          "left": 147,
+          "right": 213,
+          "width": 66,
+          "height": 12
+        },
+        "snippet": "<a href=\"/terms\">",
+        "nodeLabel": "Terms of Service"
+      }
+    },
+    {
+      "clientRects": [
+        {
+          "width": 54.03125,
+          "height": 11.5,
+          "left": 152.984375,
+          "top": 682,
+          "right": 207.015625,
+          "bottom": 693.5
+        }
+      ],
+      "href": "https://www.mikescerealshack.co/privacy",
+      "node": {
+        "lhId": "7-24-A",
+        "devtoolsNodePath": "1,HTML,1,BODY,0,DIV,0,DIV,5,FOOTER,2,DIV,1,DIV,0,A",
+        "selector": "footer.w-full > div.w-full > div > a",
+        "boundingRect": {
+          "top": 620,
+          "bottom": 632,
+          "left": 153,
+          "right": 207,
+          "width": 54,
+          "height": 12
+        },
+        "snippet": "<a href=\"/privacy\">",
+        "nodeLabel": "Privacy Policy"
+      }
+    }
+  ],
+  "ViewportDimensions": {
+    "innerWidth": 360,
+    "innerHeight": 640,
+    "outerWidth": 360,
+    "outerHeight": 640,
+    "devicePixelRatio": 2.625
+  }
+}

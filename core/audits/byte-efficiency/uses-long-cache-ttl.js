@@ -21,7 +21,7 @@ const UIStrings = {
   /** Description of a Lighthouse audit that tells the user *why* they need to adopt a long cache lifetime policy. This is displayed after a user expands the section to see more. No character length limits. The last sentence starting with 'Learn' becomes link text to additional documentation. */
   description:
     'A long cache lifetime can speed up repeat visits to your page. ' +
-    '[Learn more about efficient cache policies](https://web.dev/uses-long-cache-ttl/).',
+    '[Learn more about efficient cache policies](https://developer.chrome.com/docs/lighthouse/performance/uses-long-cache-ttl/).',
   /** [ICU Syntax] Label for the audit identifying network resources with inefficient cache values. Clicking this will expand the audit to show the resources. */
   displayValue: `{itemCount, plural,
     =1 {1 resource found}

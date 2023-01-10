@@ -59,6 +59,11 @@ class JsUsage extends FRGatherer {
         continue;
       }
 
+      // Scripts run via puppeteer's evaluate interface will have this url.
+      if (scriptUsage.url === '__puppeteer_evaluation_script__') {
+        continue;
+      }
+
       usageByScriptId[scriptUsage.scriptId] = scriptUsage;
     }
 

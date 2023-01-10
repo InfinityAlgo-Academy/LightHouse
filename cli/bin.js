@@ -27,11 +27,9 @@ import * as commands from './commands/commands.js';
 import * as Printer from './printer.js';
 import {getFlags} from './cli-flags.js';
 import {runLighthouse} from './run.js';
-import {generateConfig, generateLegacyConfig} from '../core/index.js';
 import {askPermission} from './sentry-prompt.js';
 import {LH_ROOT} from '../root.js';
 import {Sentry} from '../core/lib/sentry.js';
-import {getConfigDisplayString} from '../core/config/config.js';
 
 const pkg = JSON.parse(fs.readFileSync(LH_ROOT + '/package.json', 'utf-8'));
 
@@ -114,17 +112,6 @@ async function begin() {
     }
 
     cliFlags.precomputedLanternData = data;
-  }
-
-  if (cliFlags.printConfig) {
-    if (cliFlags.legacyNavigation) {
-      const config = await generateLegacyConfig(configJson, cliFlags);
-      process.stdout.write(config.getPrintString());
-    } else {
-      const config = await generateConfig(configJson, cliFlags);
-      process.stdout.write(getConfigDisplayString(config));
-    }
-    return;
   }
 
   // By default, cliFlags.enableErrorReporting is undefined so the user is

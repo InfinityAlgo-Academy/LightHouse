@@ -120,7 +120,7 @@ const mergeConfigFragment = _mergeConfigFragment;
  * Merge an array of items by a caller-defined key. `mergeConfigFragment` is used to merge any items
  * with a matching key.
  *
- * @template T
+ * @template {Record<string, any>} T
  * @param {Array<T>|null|undefined} baseArray
  * @param {Array<T>|null|undefined} extensionArray
  * @param {(item: T) => string} keyFn
@@ -237,7 +237,6 @@ async function requireWrapper(requirePath) {
   if (module.default) return module.default;
 
   // Find a valid named export.
-  // TODO(esmodules): actually make all the audits/gatherers use named exports
   const methods = new Set(['meta']);
   const possibleNamedExports = Object.keys(module).filter(key => {
     if (!(module[key] && module[key] instanceof Object)) return false;

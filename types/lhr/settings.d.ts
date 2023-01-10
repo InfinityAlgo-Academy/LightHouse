@@ -73,6 +73,8 @@ export type ScreenEmulationSettings = {
   debugNavigation?: boolean;
   /** If set to true, will skip the initial navigation to about:blank. This option is ignored when using the legacy navigation runner. */
   skipAboutBlank?: boolean;
+  /** If set to true, gatherers should avoid any behavior that may be destructive to the page state. (e.g. extra navigations, resizing the viewport) */
+  usePassiveGathering?: boolean;
 
   /** How Lighthouse should interpret this run in regards to scoring performance metrics and skipping mobile-only tests in desktop. Must be set even if throttling/emulation is being applied outside of Lighthouse. */
   formFactor?: 'mobile'|'desktop';

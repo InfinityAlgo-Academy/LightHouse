@@ -16,7 +16,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on the Javascript libraries that are used on the page. */
   title: 'Detected JavaScript libraries',
   /** Description of a Lighthouse audit that tells the user what this audit is detecting. This is displayed after a user expands the section to see more. No character length limits. */
-  description: 'All front-end JavaScript libraries detected on the page. [Learn more about this JavaScript library detection diagnostic audit](https://web.dev/js-libraries/).',
+  description: 'All front-end JavaScript libraries detected on the page. [Learn more about this JavaScript library detection diagnostic audit](https://developer.chrome.com/docs/lighthouse/best-practices/js-libraries/).',
   /** Label for a column in a data table; entries will be the version numbers of the detected Javascript libraries.  */
   columnVersion: 'Version',
 };

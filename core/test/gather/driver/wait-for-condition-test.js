@@ -16,7 +16,6 @@ import {
 
 const {createMockOnceFn} = mockCommands;
 
-timers.useFakeTimers();
 
 function createMockWaitForFn() {
   const {promise, resolve, reject} = createDecomposedPromise();
@@ -54,6 +53,9 @@ function createMockMultipleInvocationWaitForFn() {
 }
 
 describe('waitForFullyLoaded()', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   let session;
   let networkMonitor;
   /** @type {import('../../../gather/driver/wait-for-condition.js').WaitOptions} */
@@ -223,6 +225,9 @@ describe('waitForFullyLoaded()', () => {
 });
 
 describe('waitForFcp()', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   let session;
 
   beforeEach(() => {

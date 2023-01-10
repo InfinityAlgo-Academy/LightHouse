@@ -16,8 +16,6 @@ const devtoolsLog = readJson('../../fixtures/traces/lcp-m78.devtools.log.json', 
 
 const networkRecords = NetworkRecorder.recordsFromLogs(devtoolsLog);
 
-timers.useFakeTimers();
-
 /**
  * @param {Partial<LH.Artifacts.ImageElement>=} partial
  * @return {LH.Artifacts.ImageElement}
@@ -70,6 +68,9 @@ function makeImageElements() {
 }
 
 describe('.fetchElementsWithSizingInformation', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   let gatherer = makeImageElements();
   let driver = createMockDriver();
   beforeEach(() => {
@@ -128,6 +129,9 @@ describe('.fetchElementsWithSizingInformation', () => {
 });
 
 describe('.fetchSourceRules', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   let gatherer = makeImageElements();
   let session = createMockSession();
 
@@ -229,6 +233,9 @@ describe('.fetchSourceRules', () => {
 });
 
 describe('.collectExtraDetails', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   let gatherer = makeImageElements();
   let driver = createMockDriver().asDriver();
 
@@ -291,7 +298,7 @@ describe('.collectExtraDetails', () => {
   });
 });
 
-describe('FR compat', () => {
+describe('FR compat (image-elements)', () => {
   it('uses loadData in legacy mode', async () => {
     const gatherer = new ImageElements();
     const mockContext = createMockContext();

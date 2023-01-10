@@ -5,7 +5,7 @@
 import {assert} from 'chai';
 
 import {expectError} from '../../conductor/events.js';
-import {getBrowserAndPages} from '../../shared/helper.js';
+import {$textContent, getBrowserAndPages} from '../../shared/helper.js';
 import {describe, it} from '../../shared/mocha-extensions.js';
 import {
   clickStartButton,
@@ -17,6 +17,7 @@ import {
   selectDevice,
   selectMode,
   setThrottlingMethod,
+  unregisterAllServiceWorkers,
   waitForResult,
   waitForTimespanStarted,
 } from '../helpers/lighthouse-helpers.js';
@@ -29,12 +30,19 @@ describe('Timespan', async function() {
   this.timeout(60_000);
 
   beforeEach(() => {
+    // https://github.com/GoogleChrome/lighthouse/issues/14572
+    expectError(/Request CacheStorage\.requestCacheNames failed/);
+
     // https://bugs.chromium.org/p/chromium/issues/detail?id=1357791
     expectError(/Protocol Error: the message with wrong session id/);
     expectError(/Protocol Error: the message with wrong session id/);
     expectError(/Protocol Error: the message with wrong session id/);
     expectError(/Protocol Error: the message with wrong session id/);
     expectError(/Protocol Error: the message with wrong session id/);
+  });
+
+  afterEach(async () => {
+    await unregisterAllServiceWorkers();
   });
 
   it('successfully returns a Lighthouse report for user interactions', async () => {
@@ -88,10 +96,10 @@ describe('Timespan', async function() {
 
     // Trace was collected in timespan mode.
     // Timespan mode can only do DevTools throttling so the text will be "View Trace".
-    const viewTraceText = await reportEl.$eval('.lh-button--trace', viewTraceEl => {
-      return viewTraceEl.textContent;
-    });
-    assert.strictEqual(viewTraceText, 'View Trace');
+    const viewTraceButton = await $textContent('View Trace', reportEl);
+    if (!viewTraceButton) {
+      throw new Error('Could not find view trace button');
+    }
 
     // Ensure service worker is not cleared in timespan mode.
     assert.strictEqual(await getServiceWorkerCount(), 1);
