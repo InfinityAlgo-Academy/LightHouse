@@ -81,26 +81,6 @@ declare module Details {
   }
 
   /**
-   * Entities (1P and 3P) classified and exposed in LHR.
-   */
-  interface EntityClassificationEntity {
-    name: string;
-    homepage?: string;
-    isFirstParty?: boolean;
-    isUnrecognized?: boolean;
-  }
-
-  interface EntityClassification {
-    type: 'entity-classification';
-    entities: Array<EntityClassificationEntity>;
-    firstParty?: string;
-
-    // The two lookup tables (LUT) below provide O(1) index lookup into entities above.
-    nameLUT: Record<string, number>;
-    originLUT: Record<string, number>;
-  }
-
-  /**
    * A screenshot of the entire page, including width and height information,
    * and the locations of interesting nodes.
    * Used by element screenshots renderer.

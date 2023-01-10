@@ -18,6 +18,7 @@ import {Audit} from './audits/audit.js';
 import * as format from '../shared/localization/format.js';
 import * as stackPacks from './lib/stack-packs.js';
 import * as assetSaver from './lib/asset-saver.js';
+import {getEntityClassification} from './lib/entity-classification.js';
 import {Sentry} from './lib/sentry.js';
 import {ReportGenerator} from '../report/generator/report-generator.js';
 import {LighthouseError} from './lib/lh-error.js';
@@ -110,6 +111,8 @@ class Runner {
         categories,
         categoryGroups: config.groups || undefined,
         stackPacks: stackPacks.getStackPacks(artifacts.Stacks),
+        entityClassification: await getEntityClassification(artifacts,
+          {options: {}, computedCache, settings}),
         timing: this._getTiming(artifacts),
         i18n: {
           rendererFormattedStrings: format.getRendererFormattedStrings(settings.locale),

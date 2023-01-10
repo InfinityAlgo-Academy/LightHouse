@@ -55,6 +55,8 @@ interface Result {
   };
   /** An array containing the result of all stack packs. */
   stackPacks?: Result.StackPack[];
+  /** Entity-classification. */
+  entityClassification?: Result.EntityClassification;
 }
 
 // Result namespace
@@ -136,6 +138,25 @@ declare module Result {
     iconDataURL: string;
     /** A set of descriptions for some of Lighthouse's audits, keyed by audit `id`. */
     descriptions: Record<string, string>;
+  }
+
+  /**
+   * @alexnj, Write something nice here.
+   */
+  interface EntityClassification {
+    entities: Array<Entity>;
+    firstParty?: string;
+    // The two lookup tables (LUT) below provide O(1) index lookup into entities above.
+    nameLUT: Record<string, number>;
+    originLUT: Record<string, number>;
+  }
+
+  interface Entity {
+    name: string;
+    homepage?: string;
+    category?: string;
+    isFirstParty?: boolean;
+    isUnrecognized?: boolean;
   }
 
   /**

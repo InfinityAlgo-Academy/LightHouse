@@ -3687,38 +3687,6 @@
             "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more about Structured Data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/).",
             "score": null,
             "scoreDisplayMode": "manual"
-          },
-          "entity-classification": {
-            "id": "entity-classification",
-            "title": "Entity Classification",
-            "description": "All 1st and 3rd party entities on the page classified",
-            "score": null,
-            "scoreDisplayMode": "informative",
-            "details": {
-              "type": "entity-classification",
-              "entities": [
-                {
-                  "name": "mikescerealshack.co",
-                  "isFirstParty": true,
-                  "isUnrecognized": true
-                },
-                {
-                  "name": "Google Fonts",
-                  "homepage": "https://fonts.google.com/"
-                }
-              ],
-              "firstParty": "mikescerealshack.co",
-              "originLUT": {
-                "https://www.mikescerealshack.co": 0,
-                "https://events.mikescerealshack.co": 0,
-                "https://fonts.googleapis.com": 1,
-                "https://fonts.gstatic.com": 1
-              },
-              "nameLUT": {
-                "mikescerealshack.co": 0,
-                "Google Fonts": 1
-              }
-            }
           }
         },
         "configSettings": {
@@ -4077,11 +4045,6 @@
               },
               {
                 "id": "script-treemap-data",
-                "weight": 0,
-                "group": "hidden"
-              },
-              {
-                "id": "entity-classification",
                 "weight": 0,
                 "group": "hidden"
               }
@@ -4713,6 +4676,30 @@
             }
           }
         ],
+        "entityClassification": {
+          "entities": [
+            {
+              "name": "mikescerealshack.co",
+              "isFirstParty": true,
+              "isUnrecognized": true
+            },
+            {
+              "name": "Google Fonts",
+              "homepage": "https://fonts.google.com/"
+            }
+          ],
+          "firstParty": "mikescerealshack.co",
+          "originLUT": {
+            "https://www.mikescerealshack.co": 0,
+            "https://events.mikescerealshack.co": 0,
+            "https://fonts.googleapis.com": 1,
+            "https://fonts.gstatic.com": 1
+          },
+          "nameLUT": {
+            "mikescerealshack.co": 0,
+            "Google Fonts": 1
+          }
+        },
         "timing": {
           "entries": [
             {
@@ -6085,18 +6072,12 @@
             },
             {
               "startTime": 228,
-              "name": "lh:audit:entity-classification",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 229,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 230
+          "total": 229
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -9162,37 +9143,6 @@
             "score": null,
             "scoreDisplayMode": "error",
             "errorMessage": "This version of Chrome is too old to support 'detailed EventTiming trace events'. Use a newer version to see full results."
-          },
-          "entity-classification": {
-            "id": "entity-classification",
-            "title": "Entity Classification",
-            "description": "All 1st and 3rd party entities on the page classified",
-            "score": null,
-            "scoreDisplayMode": "informative",
-            "details": {
-              "type": "entity-classification",
-              "entities": [
-                {
-                  "name": "mikescerealshack.co",
-                  "isFirstParty": true,
-                  "isUnrecognized": true
-                },
-                {
-                  "name": "Algolia",
-                  "homepage": "https://www.algolia.com/"
-                }
-              ],
-              "firstParty": "mikescerealshack.co",
-              "originLUT": {
-                "https://www.mikescerealshack.co": 0,
-                "https://cdn.mikescerealshack.co": 0,
-                "https://mnl4bjjsnz-dsn.algolia.net": 1
-              },
-              "nameLUT": {
-                "mikescerealshack.co": 0,
-                "Algolia": 1
-              }
-            }
           }
         },
         "configSettings": {
@@ -9424,11 +9374,6 @@
                 "id": "script-treemap-data",
                 "weight": 0,
                 "group": "hidden"
-              },
-              {
-                "id": "entity-classification",
-                "weight": 0,
-                "group": "hidden"
               }
             ],
             "id": "performance",
@@ -9570,6 +9515,29 @@
           }
         },
         "stackPacks": [],
+        "entityClassification": {
+          "entities": [
+            {
+              "name": "mikescerealshack.co",
+              "isFirstParty": true,
+              "isUnrecognized": true
+            },
+            {
+              "name": "Algolia",
+              "homepage": "https://www.algolia.com/"
+            }
+          ],
+          "firstParty": "mikescerealshack.co",
+          "originLUT": {
+            "https://www.mikescerealshack.co": 0,
+            "https://cdn.mikescerealshack.co": 0,
+            "https://mnl4bjjsnz-dsn.algolia.net": 1
+          },
+          "nameLUT": {
+            "mikescerealshack.co": 0,
+            "Algolia": 1
+          }
+        },
         "timing": {
           "entries": [
             {
@@ -10078,18 +10046,12 @@
             },
             {
               "startTime": 84,
-              "name": "lh:audit:entity-classification",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 85,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 86
+          "total": 85
         },
         "i18n": {
           "rendererFormattedStrings": {
@@ -17949,38 +17911,6 @@
             "description": "Run the [Structured Data Testing Tool](https://search.google.com/structured-data/testing-tool/) and the [Structured Data Linter](http://linter.structured-data.org/) to validate structured data. [Learn more about Structured Data](https://developer.chrome.com/docs/lighthouse/seo/structured-data/).",
             "score": null,
             "scoreDisplayMode": "manual"
-          },
-          "entity-classification": {
-            "id": "entity-classification",
-            "title": "Entity Classification",
-            "description": "All 1st and 3rd party entities on the page classified",
-            "score": null,
-            "scoreDisplayMode": "informative",
-            "details": {
-              "type": "entity-classification",
-              "entities": [
-                {
-                  "name": "mikescerealshack.co",
-                  "isFirstParty": true,
-                  "isUnrecognized": true
-                },
-                {
-                  "name": "Google Fonts",
-                  "homepage": "https://fonts.google.com/"
-                }
-              ],
-              "firstParty": "mikescerealshack.co",
-              "originLUT": {
-                "https://www.mikescerealshack.co": 0,
-                "https://events.mikescerealshack.co": 0,
-                "https://fonts.googleapis.com": 1,
-                "https://fonts.gstatic.com": 1
-              },
-              "nameLUT": {
-                "mikescerealshack.co": 0,
-                "Google Fonts": 1
-              }
-            }
           }
         },
         "configSettings": {
@@ -18339,11 +18269,6 @@
               },
               {
                 "id": "script-treemap-data",
-                "weight": 0,
-                "group": "hidden"
-              },
-              {
-                "id": "entity-classification",
                 "weight": 0,
                 "group": "hidden"
               }
@@ -18975,6 +18900,30 @@
             }
           }
         ],
+        "entityClassification": {
+          "entities": [
+            {
+              "name": "mikescerealshack.co",
+              "isFirstParty": true,
+              "isUnrecognized": true
+            },
+            {
+              "name": "Google Fonts",
+              "homepage": "https://fonts.google.com/"
+            }
+          ],
+          "firstParty": "mikescerealshack.co",
+          "originLUT": {
+            "https://www.mikescerealshack.co": 0,
+            "https://events.mikescerealshack.co": 0,
+            "https://fonts.googleapis.com": 1,
+            "https://fonts.gstatic.com": 1
+          },
+          "nameLUT": {
+            "mikescerealshack.co": 0,
+            "Google Fonts": 1
+          }
+        },
         "timing": {
           "entries": [
             {
@@ -20329,18 +20278,12 @@
             },
             {
               "startTime": 225,
-              "name": "lh:audit:entity-classification",
-              "duration": 1,
-              "entryType": "measure"
-            },
-            {
-              "startTime": 226,
               "name": "lh:runner:generate",
               "duration": 1,
               "entryType": "measure"
             }
           ],
-          "total": 227
+          "total": 226
         },
         "i18n": {
           "rendererFormattedStrings": {

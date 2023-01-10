@@ -323,16 +323,7 @@ export class ReportUIFeatures {
    */
   _getThirdPartyRows(rowEls, finalDisplayedUrl) {
     const finalDisplayedUrlRootDomain = Util.getRootDomain(finalDisplayedUrl);
-
-    /** @type {string | undefined} */
-    let mainEntityName;
-    if (this.json.audits['entity-classification'] &&
-        this.json.audits['entity-classification'].details &&
-        this.json.audits['entity-classification'].details.type === 'entity-classification') {
-      /** @type {LH.Audit.Details.EntityClassification} */
-      const entityClassification = this.json.audits['entity-classification'].details;
-      mainEntityName = entityClassification.firstParty;
-    }
+    const mainEntityName = this.json.entityClassification?.firstParty;
 
     /** @type {Array<HTMLElement>} */
     const thirdPartyRows = [];

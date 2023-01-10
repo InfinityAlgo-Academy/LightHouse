@@ -36,7 +36,7 @@ export class DetailsRenderer {
    * @param {DOM} dom
    * @param {{
    *  fullPageScreenshot?: LH.Audit.Details.FullPageScreenshot,
-   *  entityClassification?: LH.Audit.Details.EntityClassification,
+   *  entityClassification?: LH.Result.EntityClassification,
    * }} [options]
    */
   constructor(dom, options = {}) {
@@ -65,7 +65,6 @@ export class DetailsRenderer {
       case 'screenshot':
       case 'debugdata':
       case 'full-page-screenshot':
-      case 'entity-classification':
       case 'treemap-data':
         return null;
 
