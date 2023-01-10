@@ -432,17 +432,6 @@ class GatherRunner {
 
     const baseArtifacts = passContext.baseArtifacts;
 
-    if (!passContext.settings.disableFullPageScreenshot) {
-      try {
-        baseArtifacts.FullPageScreenshot =
-          // @ts-expect-error
-          await FullPageScreenshot.collectFullPageScreenshot(passContext);
-      } catch (err) {
-        log.error('GatherRunner FullPageScreenshot', err);
-        baseArtifacts.FullPageScreenshot = null;
-      }
-    }
-
     // Fetch the manifest, if it exists.
     try {
       baseArtifacts.WebAppManifest = await WebAppManifest.getWebAppManifest(
@@ -533,7 +522,7 @@ class GatherRunner {
           computedCache: options.computedCache,
           LighthouseRunWarnings: baseArtifacts.LighthouseRunWarnings,
         };
-        const passResults = await GatherRunner.runPass(passContext);
+        const passResults = await GatherRunner.runPass(passContext, isFirstPass);
         Object.assign(artifacts, passResults.artifacts);
 
         // If we encountered a pageLoadError, don't try to keep loading the page in future passes.
@@ -575,7 +564,7 @@ class GatherRunner {
    * @param {LH.Gatherer.PassContext} passContext
    * @return {Promise<{artifacts: Partial<LH.GathererArtifacts>, pageLoadError?: LH.LighthouseError}>}
    */
-  static async runPass(passContext) {
+  static async runPass(passContext, isFirstPass) {
     const status = {
       msg: `Running ${passContext.passConfig.passName} pass`,
       id: `lh:gather:runPass-${passContext.passConfig.passName}`,
@@ -636,6 +625,17 @@ class GatherRunner {
 
     // Run `afterPass()` on gatherers and return collected artifacts.
     await GatherRunner.afterPass(passContext, loadData, gathererResults);
+
+    if (isFirstPass && !passContext.settings.disableFullPageScreenshot) {
+      try {
+        passContext.baseArtifacts.FullPageScreenshot =
+          await FullPageScreenshot.collectFullPageScreenshot({...passContext, dependencies: []});
+      } catch (err) {
+        log.error('GatherRunner FullPageScreenshot', err);
+        passContext.baseArtifacts.FullPageScreenshot = null;
+      }
+    }
+
     const artifacts = GatherRunner.collectArtifacts(gathererResults);
 
     log.timeEnd(status);
