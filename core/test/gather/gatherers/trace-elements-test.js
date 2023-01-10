@@ -7,7 +7,7 @@
 import TraceElementsGatherer from '../../../gather/gatherers/trace-elements.js';
 import {Driver} from '../../../legacy/gather/driver.js';
 import {Connection} from '../../../legacy/gather/connections/connection.js';
-import {createTestTrace} from '../../create-test-trace.js';
+import {createTestTrace, rootFrame} from '../../create-test-trace.js';
 import {createMockSendCommandFn, createMockOnFn} from '../mock-commands.js';
 import {flushAllTimersAndMicrotasks, fnAny, readJson, timers} from '../../test-utils.js';
 
@@ -61,7 +61,7 @@ function makeLCPTraceEvent(nodeId) {
         size: 1212,
         type: 'text',
       },
-      frame: '3EFC2700D7BC3F4734CAF2F726EFB78C',
+      frame: rootFrame,
     },
     cat: 'loading,rail,devtools.timeline',
     name: 'largestContentfulPaint::Candidate',
@@ -403,7 +403,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
   });
 
   it('properly resolves all node id types', async () => {
-    const layoutShiftNodeData = {
+    const layoutShiftNodeData = { // nodeId: 4
       traceEventType: 'layout-shift',
       devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
       selector: 'body > div#shift',
@@ -418,7 +418,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
         height: 150,
       },
     };
-    const animationNodeData = {
+    const animationNodeData = { // nodeId: 5
       traceEventType: 'animation',
       devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
       selector: 'body > div#animated',
@@ -433,7 +433,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
         height: 140,
       },
     };
-    const LCPNodeData = {
+    const LCPNodeData = { // nodeId: 6
       traceEventType: 'largest-contentful-paint',
       devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
       selector: 'body > div#lcp',
@@ -451,13 +451,17 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     };
     const connectionStub = new Connection();
     connectionStub.sendCommand = createMockSendCommandFn()
+      // nodeId: 6
       .mockResponse('DOM.resolveNode', {object: {objectId: 1}})
       .mockResponse('Runtime.callFunctionOn', {result: {value: LCPNodeData}})
+      // nodeId: 4
       .mockResponse('DOM.resolveNode', {object: {objectId: 2}})
       .mockResponse('Runtime.callFunctionOn', {result: {value: layoutShiftNodeData}})
+      // nodeId: 7
       .mockResponse('DOM.resolveNode', () => { // 2nd CLS node
         throw Error('No node found');
       })
+      // nodeId: 5
       .mockResponse('DOM.resolveNode', {object: {objectId: 3}})
       .mockResponse('Runtime.callFunctionOn', {result: {value: animationNodeData}});
     const driver = new Driver(connectionStub);
@@ -488,8 +492,9 @@ describe('Trace Elements gatherer - Animated Elements', () => {
     gatherer.animationIdToName.set('1', 'example');
 
     const result = await gatherer._getArtifact({driver, computedCache: new Map()}, trace);
+    const sorted = result.sort((a, b) => a.nodeId - b.nodeId);
 
-    expect(result).toEqual([
+    expect(sorted).toEqual([
       {
         ...LCPNodeData,
         nodeId: 6,
@@ -506,7 +511,7 @@ describe('Trace Elements gatherer - Animated Elements', () => {
         ],
         nodeId: 5,
       },
-    ]);
+    ].sort((a, b) => a.nodeId - b.nodeId));
   });
 
   it('properly resolves all animated elements in real trace', async () => {

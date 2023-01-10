@@ -198,4 +198,7 @@ function createTestTrace(options) {
   return {traceEvents};
 }
 
-export {createTestTrace};
+export {
+  createTestTrace,
+  rootFrame,
+};
