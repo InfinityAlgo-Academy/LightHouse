@@ -39,8 +39,11 @@ const elements = {
  * @type {Smokehouse.ExpectedRunnerResult}
  */
 const expectations = {
-  artifacts: {
-    FullPageScreenshot: {
+  lhr: {
+    requestedUrl: 'http://localhost:10200/screenshot.html?width=1000px&height=1000px',
+    finalDisplayedUrl: 'http://localhost:10200/screenshot.html?width=1000px&height=1000px',
+    audits: {},
+    fullPageScreenshot: {
       screenshot: {
         width: '>1000',
         height: '>1000',
@@ -55,11 +58,6 @@ const expectations = {
         ],
       },
     },
-  },
-  lhr: {
-    requestedUrl: 'http://localhost:10200/screenshot.html?width=1000px&height=1000px',
-    finalDisplayedUrl: 'http://localhost:10200/screenshot.html?width=1000px&height=1000px',
-    audits: {},
   },
 };
 
