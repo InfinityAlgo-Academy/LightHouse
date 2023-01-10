@@ -932,7 +932,7 @@ Object {
     });
   });
 
-  it.only('manages cross-process / cross-iframe traces', () => {
+  it('manages cross-process / cross-iframe traces', () => {
     function summarizeTrace(trace) {
       const processed = TraceProcessor.processTrace(trace);
       const keyEventsLen = processed._keyEvents.length;
