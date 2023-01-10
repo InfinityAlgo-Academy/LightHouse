@@ -55,7 +55,7 @@ interface Result {
   };
   /** An array containing the result of all stack packs. */
   stackPacks?: Result.StackPack[];
-  /** Entity-classification. */
+  /** Entity classification for this Lighthouse run. */
   entityClassification?: Result.EntityClassification;
 }
 
@@ -141,21 +141,33 @@ declare module Result {
   }
 
   /**
-   * @alexnj, Write something nice here.
+   * Entity classification for the run, for resolving URLs/items to entities in report.
+   * The two lookup tables (LUT) below provide space-optimized, O(1) index lookup into entities.
    */
   interface EntityClassification {
+    /** All entities (1st and 3rd party) discovered during the run */
     entities: Array<Entity>;
+    /** Name of the first-party entity */
     firstParty?: string;
-    // The two lookup tables (LUT) below provide O(1) index lookup into entities above.
+    /** Entity-name to entity index lookup table  */
     nameLUT: Record<string, number>;
+    /** URL origin to entity index lookup table */
     originLUT: Record<string, number>;
   }
 
+  /**
+   * An entity that's either recognized by third-party-web or made up by Lighthouse.
+   */
   interface Entity {
+    /** Name of the entity. Maps to third-party-web unique name for recognized entities and a root domain name for the unrecognized. */
     name: string;
+    /** Homepage URL for a recognized entity, if available in third-party-web. */
     homepage?: string;
+    /** Category name that the entity belongs to, if available. */
     category?: string;
+    /** Is this entity the first party? */
     isFirstParty?: boolean;
+    /** Is this entity recognized by third-party-web? */
     isUnrecognized?: boolean;
   }
 

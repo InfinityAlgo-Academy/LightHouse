@@ -10,13 +10,13 @@ import Treemap from './treemap';
 type Details =
   Details.CriticalRequestChain |
   Details.DebugData |
+  Details.TreemapData |
   Details.Filmstrip |
-  Details.FullPageScreenshot |
   Details.List |
   Details.Opportunity |
   Details.Screenshot |
-  Details.Table |
-  Details.TreemapData;
+  Details.FullPageScreenshot |
+  Details.Table;
 
 // Details namespace.
 declare module Details {

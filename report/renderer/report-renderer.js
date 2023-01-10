@@ -275,6 +275,7 @@ export class ReportRenderer {
     const detailsRenderer = new DetailsRenderer(this._dom, {
       fullPageScreenshot,
     });
+
     const categoryRenderer = new CategoryRenderer(this._dom, detailsRenderer);
 
     /** @type {Record<string, CategoryRenderer>} */
