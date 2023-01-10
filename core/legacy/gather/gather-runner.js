@@ -22,6 +22,7 @@ import NetworkUserAgent from '../../gather/gatherers/network-user-agent.js';
 import Stacks from '../../gather/gatherers/stacks.js';
 import {finalizeArtifacts} from '../../gather/base-artifacts.js';
 import UrlUtils from '../../lib/url-utils.js';
+import FullPageScreenshot from '../../gather/gatherers/full-page-screenshot.js';
 
 /** @typedef {import('./driver.js').Driver} Driver */
 /** @typedef {import('../../lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
@@ -404,6 +405,7 @@ class GatherRunner {
       WebAppManifest: null, // updated later
       InstallabilityErrors: {errors: []}, // updated later
       Stacks: [], // updated later
+      FullPageScreenshot: null, // updated later
       traces: {},
       devtoolsLogs: {},
       settings: options.settings,
@@ -459,6 +461,17 @@ class GatherRunner {
     } catch (err) {
       log.error('GatherRunner Stacks', err);
       baseArtifacts.Stacks = [];
+    }
+
+    if (!passContext.settings.disableFullPageScreenshot) {
+      try {
+        baseArtifacts.FullPageScreenshot =
+          // @ts-expect-error
+          await FullPageScreenshot.collectFullPageScreenshot(passContext);
+      } catch (err) {
+        log.error('GatherRunner FullPageScreenshot', err);
+        baseArtifacts.FullPageScreenshot = null;
+      }
     }
 
     // Find the NetworkUserAgent actually used in the devtoolsLogs.

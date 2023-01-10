@@ -111,6 +111,7 @@ const defaultSettings = {
   debugNavigation: false,
   channel: 'node',
   usePassiveGathering: false,
+  disableFullPageScreenshot: false,
   skipAboutBlank: false,
   blankPage: 'about:blank',
 

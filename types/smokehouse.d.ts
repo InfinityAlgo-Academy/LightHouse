@@ -22,7 +22,8 @@ declare global {
       };
       timing?: {
         entries?: any
-      }
+      };
+      fullPageScreenshot?: any;
     }
 
     export type ExpectedRunnerResult = {

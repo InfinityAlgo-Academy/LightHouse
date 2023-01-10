@@ -45,6 +45,7 @@ const BASE_ARTIFACT_BLANKS = {
   GatherContext: '',
   InstallabilityErrors: '',
   Stacks: '',
+  FullPageScreenshot: '',
   traces: '',
   devtoolsLogs: '',
   settings: '',
@@ -412,14 +413,6 @@ class LegacyResolvedConfig {
         category.auditRefs.forEach(audit => includedAudits.add(audit.id));
       }
     });
-
-    // The `full-page-screenshot` audit belongs to no category, but we still want to include
-    // it (unless explictly excluded) because there are audits in every category that can use it.
-    const explicitlyExcludesFullPageScreenshot =
-      settings.skipAudits && settings.skipAudits.includes('full-page-screenshot');
-    if (!explicitlyExcludesFullPageScreenshot && (settings.onlyCategories || settings.skipAudits)) {
-      includedAudits.add('full-page-screenshot');
-    }
 
     return {categories, requestedAuditNames: includedAudits};
   }

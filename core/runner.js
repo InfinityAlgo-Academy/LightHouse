@@ -110,6 +110,8 @@ class Runner {
         categories,
         categoryGroups: resolvedConfig.groups || undefined,
         stackPacks: stackPacks.getStackPacks(artifacts.Stacks),
+        fullPageScreenshot: resolvedConfig.settings.disableFullPageScreenshot ?
+          undefined : artifacts.FullPageScreenshot,
         timing: this._getTiming(artifacts),
         i18n: {
           rendererFormattedStrings: format.getRendererFormattedStrings(settings.locale),

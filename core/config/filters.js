@@ -27,12 +27,13 @@ const baseArtifactKeys = Object.keys(baseArtifactKeySource);
 
 // Some audits are used by the report for additional information.
 // Keep these audits unless they are *directly* skipped with `skipAudits`.
-const filterResistantAuditIds = ['full-page-screenshot'];
+/** @type {string[]} */
+const filterResistantAuditIds = [];
 
 // Some artifacts are used by the report for additional information.
 // Always run these artifacts even if audits do not request them.
 // These are similar to base artifacts but they cannot be run in all 3 modes.
-const filterResistantArtifactIds = ['Stacks', 'NetworkUserAgent'];
+const filterResistantArtifactIds = ['Stacks', 'NetworkUserAgent', 'FullPageScreenshot'];
 
 /**
  * Returns the set of audit IDs used in the list of categories.
@@ -302,7 +303,7 @@ function filterConfigByExplicitFilters(resolvedConfig, filters) {
     [
       ...baseAuditIds, // Start with our base audits.
       ...(onlyAudits || []), // Additionally include the opt-in audits from `onlyAudits`.
-      ...filterResistantAuditIds, // Always include our filter-resistant audits (full-page-screenshot).
+      ...filterResistantAuditIds, // Always include any filter-resistant audits.
     ].filter(auditId => !skipAudits || !skipAudits.includes(auditId))
   );
 
@@ -313,7 +314,10 @@ function filterConfigByExplicitFilters(resolvedConfig, filters) {
   const availableCategories =
     filterCategoriesByAvailableAudits(resolvedConfig.categories, audits || []);
   const categories = filterCategoriesByExplicitFilters(availableCategories, onlyCategories);
-  const artifacts = filterArtifactsByAvailableAudits(resolvedConfig.artifacts, audits);
+  let artifacts = filterArtifactsByAvailableAudits(resolvedConfig.artifacts, audits);
+  if (artifacts && resolvedConfig.settings.disableFullPageScreenshot) {
+    artifacts = artifacts.filter(({id}) => id !== 'FullPageScreenshot');
+  }
   const navigations =
     filterNavigationsByAvailableArtifacts(resolvedConfig.navigations, artifacts || []);
 

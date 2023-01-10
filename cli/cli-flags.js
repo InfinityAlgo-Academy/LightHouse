@@ -205,12 +205,16 @@ function getYargsParser(manualArgv) {
         type: 'string',
         describe: 'The path to the budget.json file for LightWallet.',
       },
+      'disable-full-page-screenshot': {
+        type: 'boolean',
+        describe: 'Disables collection of the full page screenshot, which can be quite large',
+      },
     })
     .group([
       'save-assets', 'list-all-audits', 'list-locales', 'list-trace-categories', 'additional-trace-categories',
       'config-path', 'preset', 'chrome-flags', 'port', 'hostname', 'form-factor', 'screenEmulation', 'emulatedUserAgent',
       'max-wait-for-load', 'enable-error-reporting', 'gather-mode', 'audit-mode',
-      'only-audits', 'only-categories', 'skip-audits', 'budget-path',
+      'only-audits', 'only-categories', 'skip-audits', 'budget-path', 'disable-full-page-screenshot',
     ], 'Configuration:')
 
     // Output

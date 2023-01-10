@@ -443,30 +443,26 @@ const expectations = {
           }],
         },
       },
-      'full-page-screenshot': {
-        score: null,
-        details: {
-          type: 'full-page-screenshot',
-          screenshot: {
-            width: 360,
-            // Allow for differences in platforms.
-            height: '1350±100',
-            data: /^data:image\/webp;.{500,}/,
-          },
-          nodes: {
-            _includes: [
-              // Test that the numbers for individual elements are in the ballpark.
-              [/[0-9]-[0-9]+-IMG/, imgA],
-              [/[0-9]-[0-9]+-IMG/, imgB],
-              // And then many more nodes...
-            ],
-            _excludes: [
-              // Ensure that the nodes we found above are unique.
-              [/[0-9]-[0-9]+-IMG/, imgA],
-              [/[0-9]-[0-9]+-IMG/, imgB],
-            ],
-          },
-        },
+    },
+    fullPageScreenshot: {
+      screenshot: {
+        width: 360,
+        // Allow for differences in platforms.
+        height: '1350±100',
+        data: /^data:image\/webp;.{500,}/,
+      },
+      nodes: {
+        _includes: [
+          // Test that the numbers for individual elements are in the ballpark.
+          [/[0-9]-[0-9]+-IMG/, imgA],
+          [/[0-9]-[0-9]+-IMG/, imgB],
+          // And then many more nodes...
+        ],
+        _excludes: [
+          // Ensure that the nodes we found above are unique.
+          [/[0-9]-[0-9]+-IMG/, imgA],
+          [/[0-9]-[0-9]+-IMG/, imgB],
+        ],
       },
     },
   },

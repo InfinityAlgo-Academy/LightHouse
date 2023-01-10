@@ -6,6 +6,8 @@
 
 /* globals window getBoundingClientRect requestAnimationFrame */
 
+import log from 'lighthouse-logger';
+
 import FRGatherer from '../base-gatherer.js';
 import * as emulation from '../../lib/emulation.js';
 import {pageFunctions} from '../../lib/page-functions.js';
@@ -73,8 +75,21 @@ class FullPageScreenshot extends FRGatherer {
 
   /**
    * @param {LH.Gatherer.FRTransitionalContext} context
+   * @return {Promise<LH.Artifacts['FullPageScreenshot']>}
+   */
+  static async collectFullPageScreenshot(context) {
+    const status = {msg: 'Collect full page screenshot', id: 'lh:gather:fullPageScreenshot'};
+    log.time(status);
+    const impl = new FullPageScreenshot();
+    const result = await impl.getArtifact(context);
+    log.timeEnd(status);
+    return result;
+  }
+
+  /**
+   * @param {LH.Gatherer.FRTransitionalContext} context
    * @param {{height: number, width: number, mobile: boolean}} deviceMetrics
-   * @return {Promise<LH.Artifacts.FullPageScreenshot['screenshot']>}
+   * @return {Promise<LH.Result.FullPageScreenshot['screenshot']>}
    */
   async _takeScreenshot(context, deviceMetrics) {
     const session = context.driver.defaultSession;
@@ -146,11 +161,11 @@ class FullPageScreenshot extends FRGatherer {
    * to re-collect the bounding client rectangle.
    * @see pageFunctions.getNodeDetails
    * @param {LH.Gatherer.FRTransitionalContext} context
-   * @return {Promise<LH.Artifacts.FullPageScreenshot['nodes']>}
+   * @return {Promise<LH.Result.FullPageScreenshot['nodes']>}
    */
   async _resolveNodes(context) {
     function resolveNodes() {
-      /** @type {LH.Artifacts.FullPageScreenshot['nodes']} */
+      /** @type {LH.Result.FullPageScreenshot['nodes']} */
       const nodes = {};
       if (!window.__lighthouseNodesDontTouchOrAllVarianceGoesAway) return nodes;
 

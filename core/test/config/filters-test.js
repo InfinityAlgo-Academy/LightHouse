@@ -10,7 +10,6 @@ import {Audit as BaseAudit} from '../../audits/audit.js';
 import BaseGatherer from '../../gather/base-gatherer.js';
 import {defaultSettings, defaultNavigationConfig} from '../../config/constants.js';
 import * as filters from '../../config/filters.js';
-import {initializeConfig} from '../../config/config.js';
 
 describe('Fraggle Rock Config Filtering', () => {
   const snapshotGatherer = new BaseGatherer();
@@ -551,20 +550,6 @@ describe('Fraggle Rock Config Filtering', () => {
           {implementation: NavigationOnlyAudit},
         ],
       });
-    });
-
-    it('should preserve full-page-screenshot', async () => {
-      resolvedConfig = (await initializeConfig('navigation')).resolvedConfig;
-
-      const filtered = filters.filterConfigByExplicitFilters(resolvedConfig, {
-        onlyAudits: ['color-contrast'],
-        onlyCategories: null,
-        skipAudits: null,
-      });
-
-      if (!filtered.audits) throw new Error('No audits produced');
-      const auditIds = filtered.audits.map(audit => audit.implementation.meta.id);
-      expect(auditIds).toEqual(['full-page-screenshot', 'color-contrast']);
     });
   });
 });

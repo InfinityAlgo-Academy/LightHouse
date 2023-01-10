@@ -275,7 +275,6 @@ const defaultConfig = {
     'valid-source-maps',
     'preload-lcp-image',
     'csp-xss',
-    'full-page-screenshot',
     'script-treemap-data',
     'manual/pwa-cross-browser',
     'manual/pwa-page-transitions',

@@ -23,13 +23,6 @@ describe('FlowStepThumbnail', () => {
       gatherMode: 'navigation',
       configSettings: {screenEmulation: {width: 400, height: 600}},
       audits: {
-        'full-page-screenshot': {
-          details: {
-            type: 'full-page-screenshot',
-            screenshot: {data: 'FPS', width: 400, height: 600},
-            nodes: {},
-          },
-        },
         'screenshot-thumbnails': {
           details: {
             type: 'filmstrip',
@@ -39,6 +32,10 @@ describe('FlowStepThumbnail', () => {
             ],
           },
         },
+      },
+      fullPageScreenshot: {
+        screenshot: {data: 'FPS', width: 400, height: 600},
+        nodes: {},
       },
     } as any;
   });

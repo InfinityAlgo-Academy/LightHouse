@@ -29,29 +29,26 @@ const expectations = {
   lhr: {
     requestedUrl: 'http://localhost:10200/scaled-content.html',
     finalDisplayedUrl: 'http://localhost:10200/scaled-content.html',
-    audits: {
-      'full-page-screenshot': {
-        details: {
-          nodes: {
-            _includes: [
-              [
-                /-BODY$/,
-                {
-                  top: 0,
-                  bottom: 2000,
-                  left: 0,
-                  right: 720,
-                  width: 720,
-                  height: 2000,
-                },
-              ],
-            ],
-          },
-          screenshot: {
-            height: 2000,
-            width: 720,
-          },
-        },
+    audits: {},
+    fullPageScreenshot: {
+      nodes: {
+        _includes: [
+          [
+            /-BODY$/,
+            {
+              top: 0,
+              bottom: 2000,
+              left: 0,
+              right: 720,
+              width: 720,
+              height: 2000,
+            },
+          ],
+        ],
+      },
+      screenshot: {
+        height: 2000,
+        width: 720,
       },
     },
   },

@@ -112,6 +112,8 @@ export type ScreenEmulationSettings = {
   cpuQuietThresholdMs?: number;
   /** The URL to use for the "blank" neutral page in between navigations. Defaults to `about:blank`. */
   blankPage?: string;
+  /** Disables collection of the full page screenshot, which can be rather large and possibly leave the page in an undesirable state. */
+  disableFullPageScreenshot?: boolean;
 }
 
 export interface ConfigSettings extends Required<SharedFlagsSettings> {

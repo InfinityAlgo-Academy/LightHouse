@@ -105,6 +105,7 @@ Configuration:
   --only-categories              Only run the specified categories. Available categories: accessibility, best-practices, performance, pwa, seo  [array]
   --skip-audits                  Run everything except these audits  [array]
   --budget-path                  The path to the budget.json file for LightWallet.  [string]
+  --disable-full-page-screenshot Disables collection of the full page screenshot, which can be quite large  [boolean]
 
 Output:
   --output       Reporter for the results, supports multiple values. choices: "json", "html", "csv"  [array] [default: ["html"]]

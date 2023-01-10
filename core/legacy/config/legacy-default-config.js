@@ -70,7 +70,6 @@ legacyDefaultConfig.passes = [{
     'trace-elements',
     'inspector-issues',
     'source-maps',
-    'full-page-screenshot',
     'bf-cache-failures',
   ],
 },

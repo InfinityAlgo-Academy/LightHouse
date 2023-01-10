@@ -68,6 +68,7 @@
     "debugNavigation": false,
     "channel": "cli",
     "usePassiveGathering": false,
+    "disableFullPageScreenshot": false,
     "skipAboutBlank": false,
     "blankPage": "about:blank",
     "budgets": [

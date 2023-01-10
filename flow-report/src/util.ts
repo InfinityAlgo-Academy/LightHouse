@@ -42,13 +42,10 @@ function getScreenDimensions(reportResult: LH.Result) {
 }
 
 function getFullPageScreenshot(reportResult: LH.Result) {
-  const fullPageScreenshotAudit = reportResult.audits['full-page-screenshot'];
-  const fullPageScreenshot =
-    fullPageScreenshotAudit?.details &&
-    fullPageScreenshotAudit.details.type === 'full-page-screenshot' &&
-    fullPageScreenshotAudit.details;
-
-  return fullPageScreenshot || null;
+  return reportResult.fullPageScreenshot ? {
+    type: 'full-page-screenshot',
+    ...reportResult.fullPageScreenshot,
+  } as LH.Audit.Details.FullPageScreenshot : null;
 }
 
 function getFilmstripFrames(

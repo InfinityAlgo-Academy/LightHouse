@@ -134,9 +134,9 @@ async function distinguishLHR(lhr, tabId) {
     finalSSDetails.data = await decorateScreenshot(finalSSDetails.data, tabId);
   }
 
-  const fpSSDetails = lhr.audits['full-page-screenshot']?.details;
-  if (fpSSDetails && fpSSDetails.type === 'full-page-screenshot') {
-    fpSSDetails.screenshot.data = await decorateScreenshot(fpSSDetails.screenshot.data, tabId);
+  if (lhr.fullPageScreenshot) {
+    lhr.fullPageScreenshot.screenshot.data =
+      await decorateScreenshot(lhr.fullPageScreenshot.screenshot.data, tabId);
   }
 }
 

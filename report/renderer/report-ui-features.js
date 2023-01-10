@@ -299,11 +299,11 @@ export class ReportUIFeatures {
    * @param {Element} rootEl
    */
   _setupElementScreenshotOverlay(rootEl) {
-    const fullPageScreenshot =
-      this.json.audits['full-page-screenshot'] &&
-      this.json.audits['full-page-screenshot'].details &&
-      this.json.audits['full-page-screenshot'].details.type === 'full-page-screenshot' &&
-      this.json.audits['full-page-screenshot'].details;
+    /** @type {LH.Audit.Details.FullPageScreenshot=} */
+    const fullPageScreenshot = this.json.fullPageScreenshot ? {
+      type: 'full-page-screenshot',
+      ...this.json.fullPageScreenshot,
+    } : undefined;
     if (!fullPageScreenshot) return;
 
     ElementScreenshotRenderer.installOverlayFeature({

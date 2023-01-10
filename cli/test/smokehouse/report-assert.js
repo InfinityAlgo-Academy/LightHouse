@@ -391,30 +391,34 @@ function collateResults(localConsole, actual, expected) {
     return makeComparison(auditName + ' audit', actualResult, expectedResult);
   });
 
-  const timingAssertions = [];
+  /** @type {Comparison[]} */
+  const extraAssertions = [];
+
   if (expected.lhr.timing) {
     const comparison = makeComparison('timing', actual.lhr.timing, expected.lhr.timing);
-    timingAssertions.push(comparison);
+    extraAssertions.push(comparison);
   }
 
-  /** @type {Comparison[]} */
-  const requestCountAssertion = [];
   if (expected.networkRequests) {
-    requestCountAssertion.push(makeComparison(
+    extraAssertions.push(makeComparison(
       'Requests',
       actual.networkRequests,
       expected.networkRequests
     ));
   }
 
+  if (expected.lhr.fullPageScreenshot) {
+    extraAssertions.push(makeComparison('fullPageScreenshot', actual.lhr.fullPageScreenshot,
+      expected.lhr.fullPageScreenshot));
+  }
+
   return [
     makeComparison('final url', actual.lhr.finalDisplayedUrl, expected.lhr.finalDisplayedUrl),
     runtimeErrorAssertion,
     runWarningsAssertion,
-    ...requestCountAssertion,
     ...artifactAssertions,
     ...auditAssertions,
-    ...timingAssertions,
+    ...extraAssertions,
   ];
 }
 

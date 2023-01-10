@@ -29,15 +29,12 @@ const expectations = {
   lhr: {
     requestedUrl: 'http://localhost:10200/max-texture-size.html',
     finalDisplayedUrl: 'http://localhost:10200/max-texture-size.html',
-    audits: {
-      'full-page-screenshot': {
-        details: {
-          screenshot: {
-            data: /^data:image\/webp;base64,.{50}/,
-            height: 16383,
-            width: 360,
-          },
-        },
+    audits: {},
+    fullPageScreenshot: {
+      screenshot: {
+        data: /^data:image\/webp;base64,.{50}/,
+        height: 16383,
+        width: 360,
       },
     },
   },
@@ -48,4 +45,3 @@ export default {
   expectations,
   config,
 };
-

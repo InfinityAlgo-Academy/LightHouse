@@ -99,6 +99,7 @@
     "debugNavigation": false,
     "channel": "node",
     "usePassiveGathering": true,
+    "disableFullPageScreenshot": false,
     "skipAboutBlank": false,
     "blankPage": "about:blank",
     "budgets": null,

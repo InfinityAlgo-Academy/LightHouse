@@ -268,10 +268,11 @@ export class ReportRenderer {
     Util.i18n = i18n;
     Util.reportJson = report;
 
-    const fullPageScreenshot =
-      report.audits['full-page-screenshot']?.details &&
-      report.audits['full-page-screenshot'].details.type === 'full-page-screenshot' ?
-      report.audits['full-page-screenshot'].details : undefined;
+    /** @type {LH.Audit.Details.FullPageScreenshot=} */
+    const fullPageScreenshot = report.fullPageScreenshot ? {
+      type: 'full-page-screenshot',
+      ...report.fullPageScreenshot,
+    } : undefined;
     const detailsRenderer = new DetailsRenderer(this._dom, {
       fullPageScreenshot,
     });

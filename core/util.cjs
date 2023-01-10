@@ -216,6 +216,21 @@ class Util {
       });
     }
 
+    // In 10.0, full-page-screenshot became a top-level property on the LHR.
+    if (clone.audits['full-page-screenshot']) {
+      const details = /** @type {LH.Audit.Details.FullPageScreenshot=} */ (
+        clone.audits['full-page-screenshot'].details);
+      if (details) {
+        clone.fullPageScreenshot = {
+          screenshot: details.screenshot,
+          nodes: details.nodes,
+        };
+      } else {
+        clone.fullPageScreenshot = null;
+      }
+      delete clone.audits['full-page-screenshot'];
+    }
+
     return clone;
   }
 
