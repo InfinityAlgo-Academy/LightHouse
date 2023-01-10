@@ -215,4 +215,32 @@ describe('Valid source maps audit', () => {
 
     expect(auditResult.score).toEqual(0);
   });
+
+  it('does not consider unrecognized third-party entities as first-party', async () => {
+    const artifacts = {
+      URL: {finalDisplayedUrl: 'https://example.com'},
+      Scripts: [
+        {scriptId: '1', url: 'https://example.com/script1.min.js', content: largeBundle.content},
+        {scriptId: '2', url: 'https://foobarbaz.com/script2.min.js', content: largeBundle.content},
+      ].map(createScript),
+      SourceMaps: [
+        {scriptId: '1', scriptUrl: 'https://example.com/script1.min.js', map: largeBundle.map},
+        //  Missing corresponding source map for large, unrecognized third-party JS (script2.min.js)
+      ],
+      devtoolsLogs: {
+        defaultPass: networkRecordsToDevtoolsLog([
+          {url: 'https://example.com'},
+          {url: 'https://example.com/script1.min.js'},
+          {url: 'https://foobarbaz.com/script2.min.js'},
+        ]),
+      },
+    };
+
+    const context = {settings: {}, computedCache: new Map()};
+    const auditResult = await ValidSourceMaps.audit(artifacts, context);
+    expect(auditResult.details.items.length).toEqual(1);
+    expect(auditResult.details.items[0].scriptUrl).toEqual('https://example.com/script1.min.js');
+    expect(auditResult.details.items[0].subItems.items.length).toEqual(1);
+    expect(auditResult.score).toEqual(1);
+  });
 });
