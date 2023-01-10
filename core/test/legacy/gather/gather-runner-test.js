@@ -46,11 +46,11 @@ function createTypeHackedGatherRunner() {
 // Some imports needs to be done dynamically, so that their dependencies will be mocked.
 // https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
 /** @typedef {import('../../../legacy/gather/driver.js').Driver} Driver */
-/** @typedef {import('../../../legacy/config/config.js').Config} Config */
+/** @typedef {import('../../../legacy/config/config.js').LegacyResolvedConfig} LegacyResolvedConfig */
 /** @typedef {import('../../../legacy/gather/connections/connection.js').Connection} Connection */
 const {Driver} = await import('../../../legacy/gather/driver.js');
 const {GatherRunner: GatherRunner_} = await import('../../../legacy/gather/gather-runner.js');
-const {Config} = await import('../../../legacy/config/config.js');
+const {LegacyResolvedConfig} = await import('../../../legacy/config/config.js');
 const {Gatherer} = await import('../../../gather/gatherers/gatherer.js');
 const {LighthouseError} = await import('../../../lib/lh-error.js');
 const {Connection} = await import('../../../legacy/gather/connections/connection.js');
@@ -67,13 +67,13 @@ before(async () => {
  * @param {LH.Config.Json} json
  */
 async function makeConfig(json) {
-  const config = await Config.fromJson(json);
+  const config = await LegacyResolvedConfig.fromJson(json);
 
   // Since the config is for `gather-runner`, ensure it has `passes`.
   if (!config.passes) {
     throw new Error('gather-runner test configs must have `passes`');
   }
-  return /** @type {Config & {passes: Array<LH.Config.Pass>}} */ (config);
+  return /** @type {LegacyResolvedConfig & {passes: Array<LH.Config.Pass>}} */ (config);
 }
 
 class TestGatherer extends Gatherer {

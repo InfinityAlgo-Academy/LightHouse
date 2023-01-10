@@ -2,10 +2,10 @@
 
 By default, the instance will be called `lighthouse-collection-$gcloudusername-instance0` but you can replace `instance0` by supplying an arg to `run.sh`.
 
-1. Googlers: [set up ssh to gcloud](go/lighthouse-ssh-gcloud-readme).
+1. Googlers: [set up ssh to gcloud](go/common-fw-policy-flows).
 1. Spin up machines and start the collection.
-   1. (Prerequiste) Install GCloud SDK and authenticate locally, Run `brew cask install google-cloud-sdk && gcloud auth login`
-    1. (Prerequiste Googlers only) Ensure you're on the corp VPN or you won't be able to SSH into a Google-owned instance.
+   1. (Prerequiste) Install GCloud SDK and authenticate locally, Run `brew install google-cloud-sdk && gcloud auth login`
+    1. (Prerequiste Googlers only) Ensure you're on the corp VPN or you won't be able to SSH into a Google-owned instance (run `gcert`).
    1. (Optional) Run `export TARGET_GIT_REF=<a lighthouse git ref that has been pushed> ` if wanting to run on anything but main.
    1. (Optional) Run `export TARGET_RUNS=<a number> ` if needing more than 1 run per URL.
    1. (Optional) Run `export LIGHTHOUSE_FLAGS=...` to configure Lighthouse CLI.

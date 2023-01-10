@@ -28,18 +28,18 @@ const moduleDir = getModuleDirectory(import.meta);
 
 /** @typedef {import('./legacy/gather/connections/connection.js').Connection} Connection */
 /** @typedef {import('./lib/arbitrary-equality-map.js').ArbitraryEqualityMap} ArbitraryEqualityMap */
-/** @typedef {LH.Config.Config} Config */
+/** @typedef {LH.Config.LegacyResolvedConfig} Config */
 
 class Runner {
   /**
-   * @template {LH.Config.Config | LH.Config.FRConfig} TConfig
+   * @template {LH.Config.LegacyResolvedConfig | LH.Config.ResolvedConfig} TConfig
    * @param {LH.Artifacts} artifacts
-   * @param {{config: TConfig, driverMock?: Driver, computedCache: Map<string, ArbitraryEqualityMap>}} options
+   * @param {{resolvedConfig: TConfig, driverMock?: Driver, computedCache: Map<string, ArbitraryEqualityMap>}} options
    * @return {Promise<LH.RunnerResult|undefined>}
    */
   static async audit(artifacts, options) {
-    const {config, computedCache} = options;
-    const settings = config.settings;
+    const {resolvedConfig, computedCache} = options;
+    const settings = resolvedConfig.settings;
 
     try {
       const runnerStatus = {msg: 'Audit phase', id: 'lh:runner:audit'};
@@ -54,10 +54,10 @@ class Runner {
       // Potentially quit early
       if (settings.gatherMode && !settings.auditMode) return;
 
-      if (!config.audits) {
+      if (!resolvedConfig.audits) {
         throw new Error('No audits to evaluate.');
       }
-      const auditResultsById = await Runner._runAudits(settings, config.audits, artifacts,
+      const auditResultsById = await Runner._runAudits(settings, resolvedConfig.audits, artifacts,
           lighthouseRunWarnings, computedCache);
 
       // LHR construction phase
@@ -79,8 +79,8 @@ class Runner {
 
       /** @type {Record<string, LH.RawIcu<LH.Result.Category>>} */
       let categories = {};
-      if (config.categories) {
-        categories = ReportScoring.scoreAllCategories(config.categories, auditResultsById);
+      if (resolvedConfig.categories) {
+        categories = ReportScoring.scoreAllCategories(resolvedConfig.categories, auditResultsById);
       }
 
       log.timeEnd(resultsStatus);
@@ -108,7 +108,7 @@ class Runner {
         audits: auditResultsById,
         configSettings: settings,
         categories,
-        categoryGroups: config.groups || undefined,
+        categoryGroups: resolvedConfig.groups || undefined,
         stackPacks: stackPacks.getStackPacks(artifacts.Stacks),
         timing: this._getTiming(artifacts),
         i18n: {
@@ -142,13 +142,13 @@ class Runner {
    * -G and -A will run partial lighthouse pipelines,
    * and -GA will run everything plus save artifacts and lhr to disk.
    *
-   * @template {LH.Config.Config | LH.Config.FRConfig} TConfig
-   * @param {(runnerData: {config: TConfig, driverMock?: Driver}) => Promise<LH.Artifacts>} gatherFn
-   * @param {{config: TConfig, driverMock?: Driver, computedCache: Map<string, ArbitraryEqualityMap>}} options
+   * @template {LH.Config.LegacyResolvedConfig | LH.Config.ResolvedConfig} TConfig
+   * @param {(runnerData: {resolvedConfig: TConfig, driverMock?: Driver}) => Promise<LH.Artifacts>} gatherFn
+   * @param {{resolvedConfig: TConfig, driverMock?: Driver, computedCache: Map<string, ArbitraryEqualityMap>}} options
    * @return {Promise<LH.Artifacts>}
    */
   static async gather(gatherFn, options) {
-    const settings = options.config.settings;
+    const settings = options.resolvedConfig.settings;
 
     // Either load saved artifacts from disk or from the browser.
     try {
@@ -170,7 +170,7 @@ class Runner {
         log.time(runnerStatus, 'verbose');
 
         artifacts = await gatherFn({
-          config: options.config,
+          resolvedConfig: options.resolvedConfig,
           driverMock: options.driverMock,
         });
 
@@ -248,22 +248,22 @@ class Runner {
   /**
    * Establish connection, load page and collect all required artifacts
    * @param {string} requestedUrl
-   * @param {{config: Config, computedCache: Map<string, ArbitraryEqualityMap>, driverMock?: Driver}} runnerOpts
+   * @param {{resolvedConfig: Config, computedCache: Map<string, ArbitraryEqualityMap>, driverMock?: Driver}} runnerOpts
    * @param {Connection} connection
    * @return {Promise<LH.Artifacts>}
    */
   static async _gatherArtifactsFromBrowser(requestedUrl, runnerOpts, connection) {
-    if (!runnerOpts.config.passes) {
+    if (!runnerOpts.resolvedConfig.passes) {
       throw new Error('No browser artifacts are either provided or requested.');
     }
     const driver = runnerOpts.driverMock || new Driver(connection);
     const gatherOpts = {
       driver,
       requestedUrl,
-      settings: runnerOpts.config.settings,
+      settings: runnerOpts.resolvedConfig.settings,
       computedCache: runnerOpts.computedCache,
     };
-    const artifacts = await GatherRunner.run(runnerOpts.config.passes, gatherOpts);
+    const artifacts = await GatherRunner.run(runnerOpts.resolvedConfig.passes, gatherOpts);
     return artifacts;
   }
 

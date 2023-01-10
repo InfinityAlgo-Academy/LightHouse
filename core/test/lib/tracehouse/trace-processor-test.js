@@ -294,8 +294,8 @@ describe('TraceProcessor', () => {
   describe('getMainThreadTopLevelEvents', () => {
     it('gets durations of top-level tasks', () => {
       const trace = {traceEvents: pwaTrace};
-      const tabTrace = TraceProcessor.processTrace(trace);
-      const ret = TraceProcessor.getMainThreadTopLevelEvents(tabTrace);
+      const processedTrace = TraceProcessor.processTrace(trace);
+      const ret = TraceProcessor.getMainThreadTopLevelEvents(processedTrace);
 
       assert.equal(ret.length, 645);
     });
@@ -303,7 +303,7 @@ describe('TraceProcessor', () => {
     it('filters events based on start and end times', () => {
       const baseTime = 20000 * 1000;
       const name = 'TaskQueueManager::ProcessTaskFromWorkQueue';
-      const tabTrace = {
+      const processedTrace = {
         timeOriginEvt: {ts: baseTime},
         mainThreadEvents: [
           // 15ms to 25ms
@@ -318,7 +318,7 @@ describe('TraceProcessor', () => {
       };
 
       const ret = TraceProcessor.getMainThreadTopLevelEvents(
-        tabTrace,
+        processedTrace,
         50,
         1500
       );
@@ -335,8 +335,8 @@ describe('TraceProcessor', () => {
   describe('getMainThreadTopLevelEventDurations', () => {
     it('gets durations of top-level tasks', async () => {
       const trace = {traceEvents: pwaTrace};
-      const tabTrace = TraceProcessor.processTrace(trace);
-      const events = TraceProcessor.getMainThreadTopLevelEvents(tabTrace);
+      const processedTrace = TraceProcessor.processTrace(trace);
+      const events = TraceProcessor.getMainThreadTopLevelEvents(processedTrace);
       const ret = TraceProcessor.getMainThreadTopLevelEventDurations(events);
       const durations = ret.durations;
 
@@ -373,9 +373,10 @@ describe('TraceProcessor', () => {
 
     it('compute correct defaults', async () => {
       const trace = {traceEvents: pwaTrace};
-      const tabTrace = TraceProcessor.processTrace(trace);
-      const events = TraceProcessor.getMainThreadTopLevelEvents(tabTrace);
-      const ret = TraceProcessor.getRiskToResponsiveness(events, 0, tabTrace.timings.traceEnd);
+      const processedTrace = TraceProcessor.processTrace(trace);
+      const events = TraceProcessor.getMainThreadTopLevelEvents(processedTrace);
+      const ret = TraceProcessor.getRiskToResponsiveness(
+        events, 0, processedTrace.timings.traceEnd);
       assert.equal(ret.durations.length, 645);
       assert.equal(Math.round(ret.totalTime), 2143);
       assert.equal(ret.clippedLength, 0);

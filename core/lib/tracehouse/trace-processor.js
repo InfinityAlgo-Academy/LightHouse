@@ -740,7 +740,7 @@ class TraceProcessor {
       // define the frame tree. Unfortunately, many test traces do not that frame info due to minification.
       // This ensures there is always a minimal frame tree and events so those tests don't fail.
       log.warn(
-        'trace-of-tab',
+        'TraceProcessor',
         'frameTreeEvents may be incomplete, make sure the trace has frame events'
       );
       frameIdToRootFrameId.set(mainFrameInfo.frameId, mainFrameInfo.frameId);
@@ -964,10 +964,11 @@ class TraceProcessor {
     if (!firstMeaningfulPaint) {
       const fmpCand = 'firstMeaningfulPaintCandidate';
       fmpFellBack = true;
-      log.verbose('trace-of-tab', `No firstMeaningfulPaint found, falling back to last ${fmpCand}`);
+      log.verbose('TraceProcessor',
+        `No firstMeaningfulPaint found, falling back to last ${fmpCand}`);
       const lastCandidate = frameEvents.filter(e => e.name === fmpCand).pop();
       if (!lastCandidate) {
-        log.verbose('trace-of-tab', 'No `firstMeaningfulPaintCandidate` events found in trace');
+        log.verbose('TraceProcessor', 'No `firstMeaningfulPaintCandidate` events found in trace');
       }
       firstMeaningfulPaint = lastCandidate;
     }

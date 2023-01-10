@@ -18,9 +18,10 @@ const {createMockOnceFn} = mockCommands;
 // https://github.com/GoogleChrome/lighthouse/blob/main/docs/hacking-tips.md#mocking-modules-with-testdouble
 const {gotoURL, getNavigationWarnings} = await import('../../../gather/driver/navigation.js');
 
-timers.useFakeTimers();
-
 describe('.gotoURL', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   /** @type {LH.Gatherer.FRTransitionalDriver} */
   let driver;
   /** @type {ReturnType<typeof createMockDriver>} */

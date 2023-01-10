@@ -20,6 +20,8 @@ const UIStrings = {
   explanationNoDoctype: 'Document must contain a doctype',
   /** Explanatory message stating that the document has wrong doctype */
   explanationWrongDoctype: 'Document contains a doctype that triggers quirks-mode',
+  /** Explanatory message stating that the document has wrong doctype */
+  explanationLimitedQuirks: 'Document contains a doctype that triggers limited-quirks-mode',
   /** Explanatory message stating that the publicId field is not empty. */
   explanationPublicId: 'Expected publicId to be an empty string',
   /** Explanatory message stating that the systemId field is not empty. */
@@ -41,6 +43,7 @@ class Doctype extends Audit {
       failureTitle: str_(UIStrings.failureTitle),
       description: str_(UIStrings.description),
       requiredArtifacts: ['Doctype'],
+      __internalOptionalArtifacts: ['InspectorIssues'],
     };
   }
 
@@ -61,6 +64,25 @@ class Doctype extends Audit {
     const doctypePublicId = artifacts.Doctype.publicId;
     const doctypeSystemId = artifacts.Doctype.systemId;
     const compatMode = artifacts.Doctype.documentCompatMode;
+    const quirksModeIssues = artifacts.InspectorIssues?.quirksModeIssue || [];
+
+    // Can only determine limited quirks mode with some helps from the protocol via
+    // inspector issues. But cannot get inspector issues in snapshot mode, so in that
+    // case we cannot distinguish no-quirks-mode from limited-quirks-mode.
+    const isLimitedQuirksMode = quirksModeIssues.some(issue => issue.isLimitedQuirksMode);
+
+    if (compatMode === 'CSS1Compat' && !isLimitedQuirksMode) {
+      return {
+        score: 1,
+      };
+    }
+
+    if (isLimitedQuirksMode) {
+      return {
+        score: 0,
+        explanation: str_(UIStrings.explanationLimitedQuirks),
+      };
+    }
 
     if (doctypePublicId !== '') {
       return {
@@ -87,16 +109,10 @@ class Doctype extends Audit {
 
     // Catch-all for any quirks-mode situations the above checks didn't get.
     // https://github.com/GoogleChrome/lighthouse/issues/10030
-    if (compatMode === 'BackCompat') {
-      return {
-        score: 0,
-        explanation: str_(UIStrings.explanationWrongDoctype),
-      };
-    } else {
-      return {
-        score: 1,
-      };
-    }
+    return {
+      score: 0,
+      explanation: str_(UIStrings.explanationWrongDoctype),
+    };
   }
 }
 

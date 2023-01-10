@@ -8,9 +8,10 @@ import {makePromiseInspectable, flushAllTimersAndMicrotasks, timers} from '../..
 import {createMockContext} from '../mock-driver.js';
 import TraceGatherer from '../../../gather/gatherers/trace.js';
 
-timers.useFakeTimers();
-
 describe('TraceGatherer', () => {
+  before(() => timers.useFakeTimers());
+  after(() => timers.dispose());
+
   let gatherer = new TraceGatherer();
   let context = createMockContext();
 

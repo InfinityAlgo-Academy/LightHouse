@@ -243,7 +243,7 @@ describe('Fraggle Rock Config Filtering', () => {
     });
   });
 
-  /** @type {LH.Config.FRConfig['categories']} */
+  /** @type {LH.Config.ResolvedConfig['categories']} */
   const categories = {
     snapshot: {title: 'Snapshot', auditRefs: [{id: 'snapshot', weight: 0}]},
     timespan: {title: 'Timespan', auditRefs: [{id: 'timespan', weight: 0}]},
@@ -392,11 +392,11 @@ describe('Fraggle Rock Config Filtering', () => {
   });
 
   describe('filterConfigByExplicitFilters', () => {
-    /** @type {LH.Config.FRConfig} */
-    let config;
+    /** @type {LH.Config.ResolvedConfig} */
+    let resolvedConfig;
 
     beforeEach(() => {
-      config = {
+      resolvedConfig = {
         artifacts: navigationArtifacts,
         navigations,
         audits,
@@ -407,7 +407,7 @@ describe('Fraggle Rock Config Filtering', () => {
     });
 
     it('should filter via onlyAudits', () => {
-      const filtered = filters.filterConfigByExplicitFilters(config, {
+      const filtered = filters.filterConfigByExplicitFilters(resolvedConfig, {
         onlyAudits: ['snapshot'],
         onlyCategories: null,
         skipAudits: null,
@@ -424,7 +424,7 @@ describe('Fraggle Rock Config Filtering', () => {
     });
 
     it('should filter via skipAudits', () => {
-      const filtered = filters.filterConfigByExplicitFilters(config, {
+      const filtered = filters.filterConfigByExplicitFilters(resolvedConfig, {
         onlyAudits: null,
         onlyCategories: null,
         skipAudits: ['snapshot', 'navigation'],
@@ -440,7 +440,7 @@ describe('Fraggle Rock Config Filtering', () => {
     });
 
     it('should filter via onlyCategories', () => {
-      const filtered = filters.filterConfigByExplicitFilters(config, {
+      const filtered = filters.filterConfigByExplicitFilters(resolvedConfig, {
         onlyAudits: null,
         onlyCategories: ['timespan'],
         skipAudits: null,
@@ -463,7 +463,7 @@ describe('Fraggle Rock Config Filtering', () => {
       const saveWarning = evt => warnings.push(evt);
 
       log.events.on('warning', saveWarning);
-      const filtered = filters.filterConfigByExplicitFilters(config, {
+      const filtered = filters.filterConfigByExplicitFilters(resolvedConfig, {
         onlyAudits: null,
         onlyCategories: ['timespan', 'thisIsNotACategory'],
         skipAudits: null,
@@ -485,7 +485,7 @@ describe('Fraggle Rock Config Filtering', () => {
     });
 
     it('should filter via a combination of filters', () => {
-      const filtered = filters.filterConfigByExplicitFilters(config, {
+      const filtered = filters.filterConfigByExplicitFilters(resolvedConfig, {
         onlyCategories: ['mixed'],
         onlyAudits: ['snapshot', 'timespan'],
         skipAudits: ['timespan', 'navigation'],
@@ -500,15 +500,15 @@ describe('Fraggle Rock Config Filtering', () => {
     });
 
     it('should filter out audits and artifacts not in the categories by default', () => {
-      config = {
-        ...config,
+      resolvedConfig = {
+        ...resolvedConfig,
         audits: [
           ...audits,
           {implementation: NavigationOnlyAudit, options: {}},
         ],
       };
 
-      const filtered = filters.filterConfigByExplicitFilters(config, {
+      const filtered = filters.filterConfigByExplicitFilters(resolvedConfig, {
         onlyAudits: null,
         onlyCategories: null,
         skipAudits: null,
@@ -526,8 +526,8 @@ describe('Fraggle Rock Config Filtering', () => {
     });
 
     it('should keep all audits if there are no categories', () => {
-      config = {
-        ...config,
+      resolvedConfig = {
+        ...resolvedConfig,
         audits: [
           ...audits,
           {implementation: NavigationOnlyAudit, options: {}},
@@ -535,7 +535,7 @@ describe('Fraggle Rock Config Filtering', () => {
         categories: {},
       };
 
-      const filtered = filters.filterConfigByExplicitFilters(config, {
+      const filtered = filters.filterConfigByExplicitFilters(resolvedConfig, {
         onlyAudits: null,
         onlyCategories: null,
         skipAudits: null,
@@ -554,9 +554,9 @@ describe('Fraggle Rock Config Filtering', () => {
     });
 
     it('should preserve full-page-screenshot', async () => {
-      config = (await initializeConfig('navigation')).config;
+      resolvedConfig = (await initializeConfig('navigation')).resolvedConfig;
 
-      const filtered = filters.filterConfigByExplicitFilters(config, {
+      const filtered = filters.filterConfigByExplicitFilters(resolvedConfig, {
         onlyAudits: ['color-contrast'],
         onlyCategories: null,
         skipAudits: null,

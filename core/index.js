@@ -8,10 +8,9 @@ import log from 'lighthouse-logger';
 
 import {Runner} from './runner.js';
 import {CriConnection} from './legacy/gather/connections/cri.js';
-import {Config} from './legacy/config/config.js';
+import {LegacyResolvedConfig} from './legacy/config/config.js';
 import UrlUtils from './lib/url-utils.js';
 import {Driver} from './legacy/gather/driver.js';
-import {initializeConfig} from './config/config.js';
 import {UserFlow, auditGatherSteps} from './user-flow.js';
 import {ReportGenerator} from '../report/generator/report-generator.js';
 import {startTimespanGather} from './gather/timespan-runner.js';
@@ -64,9 +63,9 @@ async function legacyNavigation(url, flags = {}, configJSON, userConnection) {
   flags.logLevel = flags.logLevel || 'error';
   log.setLevel(flags.logLevel);
 
-  const config = await generateLegacyConfig(configJSON, flags);
+  const resolvedConfig = await LegacyResolvedConfig.fromJson(configJSON, flags);
   const computedCache = new Map();
-  const options = {config, computedCache};
+  const options = {resolvedConfig, computedCache};
   const connection = userConnection || new CriConnection(flags.port, flags.hostname);
 
   // kick off a lighthouse run
@@ -146,34 +145,6 @@ async function auditFlowArtifacts(flowArtifacts, config) {
   return await auditGatherSteps(gatherSteps, {name, config});
 }
 
-/**
- * Generate a Lighthouse Config.
- * @param {LH.Config.Json=} configJson Configuration for the Lighthouse run. If
- *   not present, the default config is used.
- * @param {LH.Flags=} flags Optional settings for the Lighthouse run. If present,
- *   they will override any settings in the config.
- * @param {LH.Gatherer.GatherMode=} gatherMode Gather mode used to collect artifacts. If present
- *   the config may override certain settings based on the mode.
- * @return {Promise<LH.Config.FRConfig>}
- */
-async function generateConfig(configJson, flags = {}, gatherMode = 'navigation') {
-  const {config} = await initializeConfig(gatherMode, configJson, flags);
-  return config;
-}
-
-/**
- * Generate a legacy Lighthouse Config.
- * @deprecated
- * @param {LH.Config.Json=} configJson Configuration for the Lighthouse run. If
- *   not present, the default config is used.
- * @param {LH.Flags=} flags Optional settings for the Lighthouse run. If present,
- *   they will override any settings in the config.
- * @return {Promise<Config>}
- */
-function generateLegacyConfig(configJson, flags) {
-  return Config.fromJson(configJson, flags);
-}
-
 function getAuditList() {
   return Runner.getAuditList();
 }
@@ -194,8 +165,6 @@ export {
   snapshot,
   generateReport,
   auditFlowArtifacts,
-  generateConfig,
-  generateLegacyConfig,
   getAuditList,
   traceCategories,
 };

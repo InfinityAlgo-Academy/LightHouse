@@ -516,10 +516,12 @@ class Util {
         summary = cpuThrottling = networkThrottling = Util.i18n.strings.runtimeUnknown;
     }
 
-    const deviceEmulation = {
-      mobile: Util.i18n.strings.runtimeMobileEmulation,
-      desktop: Util.i18n.strings.runtimeDesktopEmulation,
-    }[settings.formFactor] || Util.i18n.strings.runtimeNoEmulation;
+    let deviceEmulation = Util.i18n.strings.runtimeMobileEmulation;
+    if (settings.screenEmulation.disabled) {
+      deviceEmulation = Util.i18n.strings.runtimeNoEmulation;
+    } else if (!settings.screenEmulation.mobile) {
+      deviceEmulation = Util.i18n.strings.runtimeDesktopEmulation;
+    }
 
     const screenEmulation = settings.screenEmulation.disabled ?
       undefined :

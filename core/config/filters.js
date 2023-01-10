@@ -39,7 +39,7 @@ const filterResistantArtifactIds = ['Stacks', 'NetworkUserAgent'];
  * If `onlyCategories` is not set, this function returns the list of all audit IDs across all
  * categories.
  *
- * @param {LH.Config.FRConfig['categories']} allCategories
+ * @param {LH.Config.ResolvedConfig['categories']} allCategories
  * @param {string[] | undefined} onlyCategories
  * @return {Set<string>}
  */
@@ -55,9 +55,9 @@ function getAuditIdsInCategories(allCategories, onlyCategories) {
 /**
  * Filters an array of artifacts down to the set that's required by the specified audits.
  *
- * @param {LH.Config.FRConfig['artifacts']} artifacts
- * @param {LH.Config.FRConfig['audits']} audits
- * @return {LH.Config.FRConfig['artifacts']}
+ * @param {LH.Config.ResolvedConfig['artifacts']} artifacts
+ * @param {LH.Config.ResolvedConfig['audits']} audits
+ * @return {LH.Config.ResolvedConfig['artifacts']}
  */
 function filterArtifactsByAvailableAudits(artifacts, audits) {
   if (!artifacts) return null;
@@ -95,9 +95,9 @@ function filterArtifactsByAvailableAudits(artifacts, audits) {
 /**
  * Filters an array of artifacts down to the set that supports the specified gather mode.
  *
- * @param {LH.Config.FRConfig['artifacts']} artifacts
+ * @param {LH.Config.ResolvedConfig['artifacts']} artifacts
  * @param {LH.Gatherer.GatherMode} mode
- * @return {LH.Config.FRConfig['artifacts']}
+ * @return {LH.Config.ResolvedConfig['artifacts']}
  */
 function filterArtifactsByGatherMode(artifacts, mode) {
   if (!artifacts) return null;
@@ -109,9 +109,9 @@ function filterArtifactsByGatherMode(artifacts, mode) {
 /**
  * Filters an array of navigations down to the set supported by the available artifacts.
  *
- * @param {LH.Config.FRConfig['navigations']} navigations
+ * @param {LH.Config.ResolvedConfig['navigations']} navigations
  * @param {Array<LH.Config.AnyArtifactDefn>} availableArtifacts
- * @return {LH.Config.FRConfig['navigations']}
+ * @return {LH.Config.ResolvedConfig['navigations']}
  */
 function filterNavigationsByAvailableArtifacts(navigations, availableArtifacts) {
   if (!navigations) return navigations;
@@ -133,9 +133,9 @@ function filterNavigationsByAvailableArtifacts(navigations, availableArtifacts) 
 /**
  * Filters an array of audits down to the set that can be computed using only the specified artifacts.
  *
- * @param {LH.Config.FRConfig['audits']} audits
+ * @param {LH.Config.ResolvedConfig['audits']} audits
  * @param {Array<LH.Config.AnyArtifactDefn>} availableArtifacts
- * @return {LH.Config.FRConfig['audits']}
+ * @return {LH.Config.ResolvedConfig['audits']}
  */
 function filterAuditsByAvailableArtifacts(audits, availableArtifacts) {
   if (!audits) return null;
@@ -152,9 +152,9 @@ function filterAuditsByAvailableArtifacts(audits, availableArtifacts) {
 /**
  * Optional `supportedModes` property can explicitly exclude an audit even if all required artifacts are available.
  *
- * @param {LH.Config.FRConfig['audits']} audits
+ * @param {LH.Config.ResolvedConfig['audits']} audits
  * @param {LH.Gatherer.GatherMode} mode
- * @return {LH.Config.FRConfig['audits']}
+ * @return {LH.Config.ResolvedConfig['audits']}
  */
 function filterAuditsByGatherMode(audits, mode) {
   if (!audits) return null;
@@ -168,9 +168,9 @@ function filterAuditsByGatherMode(audits, mode) {
 /**
  * Optional `supportedModes` property can explicitly exclude a category even if some audits are available.
  *
- * @param {LH.Config.Config['categories']} categories
+ * @param {LH.Config.LegacyResolvedConfig['categories']} categories
  * @param {LH.Gatherer.GatherMode} mode
- * @return {LH.Config.Config['categories']}
+ * @return {LH.Config.LegacyResolvedConfig['categories']}
  */
 function filterCategoriesByGatherMode(categories, mode) {
   if (!categories) return null;
@@ -185,9 +185,9 @@ function filterCategoriesByGatherMode(categories, mode) {
 /**
  * Filters a categories object and their auditRefs down to the specified category ids.
  *
- * @param {LH.Config.Config['categories']} categories
+ * @param {LH.Config.LegacyResolvedConfig['categories']} categories
  * @param {string[] | null | undefined} onlyCategories
- * @return {LH.Config.Config['categories']}
+ * @return {LH.Config.LegacyResolvedConfig['categories']}
  */
 function filterCategoriesByExplicitFilters(categories, onlyCategories) {
   if (!categories || !onlyCategories) return categories;
@@ -201,7 +201,7 @@ function filterCategoriesByExplicitFilters(categories, onlyCategories) {
  * Logs a warning if any specified onlyCategory is not a known category that can
  * be included.
  *
- * @param {LH.Config.Config['categories']} allCategories
+ * @param {LH.Config.LegacyResolvedConfig['categories']} allCategories
  * @param {string[] | null} onlyCategories
  * @return {void}
  */
@@ -219,9 +219,9 @@ function warnOnUnknownOnlyCategories(allCategories, onlyCategories) {
  * Filters a categories object and their auditRefs down to the set that can be computed using
  * only the specified audits.
  *
- * @param {LH.Config.Config['categories']} categories
+ * @param {LH.Config.LegacyResolvedConfig['categories']} categories
  * @param {Array<LH.Config.AuditDefn>} availableAudits
- * @return {LH.Config.Config['categories']}
+ * @return {LH.Config.LegacyResolvedConfig['categories']}
  */
 function filterCategoriesByAvailableAudits(categories, availableAudits) {
   if (!categories) return categories;
@@ -257,19 +257,19 @@ function filterCategoriesByAvailableAudits(categories, availableAudits) {
 /**
  * Filters a config's artifacts, audits, and categories down to the set that supports the specified gather mode.
  *
- * @param {LH.Config.FRConfig} config
+ * @param {LH.Config.ResolvedConfig} resolvedConfig
  * @param {LH.Gatherer.GatherMode} mode
- * @return {LH.Config.FRConfig}
+ * @return {LH.Config.ResolvedConfig}
  */
-function filterConfigByGatherMode(config, mode) {
-  const artifacts = filterArtifactsByGatherMode(config.artifacts, mode);
-  const supportedAudits = filterAuditsByGatherMode(config.audits, mode);
+function filterConfigByGatherMode(resolvedConfig, mode) {
+  const artifacts = filterArtifactsByGatherMode(resolvedConfig.artifacts, mode);
+  const supportedAudits = filterAuditsByGatherMode(resolvedConfig.audits, mode);
   const audits = filterAuditsByAvailableArtifacts(supportedAudits, artifacts || []);
-  const supportedCategories = filterCategoriesByGatherMode(config.categories, mode);
+  const supportedCategories = filterCategoriesByGatherMode(resolvedConfig.categories, mode);
   const categories = filterCategoriesByAvailableAudits(supportedCategories, audits || []);
 
   return {
-    ...config,
+    ...resolvedConfig,
     artifacts,
     audits,
     categories,
@@ -280,22 +280,22 @@ function filterConfigByGatherMode(config, mode) {
  * Filters a config's artifacts, audits, and categories down to the requested set.
  * Skip audits overrides inclusion via `onlyAudits`/`onlyCategories`.
  *
- * @param {LH.Config.FRConfig} config
+ * @param {LH.Config.ResolvedConfig} resolvedConfig
  * @param {Pick<LH.Config.Settings, 'onlyAudits'|'onlyCategories'|'skipAudits'>} filters
- * @return {LH.Config.FRConfig}
+ * @return {LH.Config.ResolvedConfig}
  */
-function filterConfigByExplicitFilters(config, filters) {
+function filterConfigByExplicitFilters(resolvedConfig, filters) {
   const {onlyAudits, onlyCategories, skipAudits} = filters;
 
-  warnOnUnknownOnlyCategories(config.categories, onlyCategories);
+  warnOnUnknownOnlyCategories(resolvedConfig.categories, onlyCategories);
 
-  let baseAuditIds = getAuditIdsInCategories(config.categories, undefined);
+  let baseAuditIds = getAuditIdsInCategories(resolvedConfig.categories, undefined);
   if (onlyCategories) {
-    baseAuditIds = getAuditIdsInCategories(config.categories, onlyCategories);
+    baseAuditIds = getAuditIdsInCategories(resolvedConfig.categories, onlyCategories);
   } else if (onlyAudits) {
     baseAuditIds = new Set();
-  } else if (!config.categories || !Object.keys(config.categories).length) {
-    baseAuditIds = new Set(config.audits?.map(audit => audit.implementation.meta.id));
+  } else if (!resolvedConfig.categories || !Object.keys(resolvedConfig.categories).length) {
+    baseAuditIds = new Set(resolvedConfig.audits?.map(audit => audit.implementation.meta.id));
   }
 
   const auditIdsToKeep = new Set(
@@ -306,17 +306,19 @@ function filterConfigByExplicitFilters(config, filters) {
     ].filter(auditId => !skipAudits || !skipAudits.includes(auditId))
   );
 
-  const audits = auditIdsToKeep.size && config.audits ?
-    config.audits.filter(audit => auditIdsToKeep.has(audit.implementation.meta.id)) :
-    config.audits;
+  const audits = auditIdsToKeep.size && resolvedConfig.audits ?
+    resolvedConfig.audits.filter(audit => auditIdsToKeep.has(audit.implementation.meta.id)) :
+    resolvedConfig.audits;
 
-  const availableCategories = filterCategoriesByAvailableAudits(config.categories, audits || []);
+  const availableCategories =
+    filterCategoriesByAvailableAudits(resolvedConfig.categories, audits || []);
   const categories = filterCategoriesByExplicitFilters(availableCategories, onlyCategories);
-  const artifacts = filterArtifactsByAvailableAudits(config.artifacts, audits);
-  const navigations = filterNavigationsByAvailableArtifacts(config.navigations, artifacts || []);
+  const artifacts = filterArtifactsByAvailableAudits(resolvedConfig.artifacts, audits);
+  const navigations =
+    filterNavigationsByAvailableArtifacts(resolvedConfig.navigations, artifacts || []);
 
   return {
-    ...config,
+    ...resolvedConfig,
     artifacts,
     navigations,
     audits,

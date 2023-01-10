@@ -6,6 +6,7 @@
 
 import {createMockSession} from '../mock-driver.js';
 import * as storage from '../../../gather/driver/storage.js';
+import {LighthouseError} from '../../../lib/lh-error.js';
 
 let sessionMock = createMockSession();
 
@@ -19,13 +20,62 @@ describe('.clearDataForOrigin', () => {
     sessionMock.sendCommand.mockResponse('Storage.clearDataForOrigin', ({storageTypes}) => {
       foundStorageTypes = storageTypes;
     });
-    await storage.clearDataForOrigin(sessionMock.asSession(), 'https://example.com');
+    const warnings = await storage.clearDataForOrigin(sessionMock.asSession(), 'https://example.com');
     // Should not see cookies, websql, indexeddb, or local_storage.
     // Cookies are not cleared to preserve login.
     // websql, indexeddb, and local_storage are not cleared to preserve important user data.
     expect(foundStorageTypes).toMatchInlineSnapshot(
       `"file_systems,shader_cache,service_workers,cache_storage"`
     );
+    expect(warnings).toHaveLength(0);
+  });
+
+  it('returns a warning if clearing data timed out', async () => {
+    sessionMock.sendCommand.mockResponse('Storage.clearDataForOrigin', () => {
+      throw new LighthouseError(
+        LighthouseError.errors.PROTOCOL_TIMEOUT,
+        {protocolMethod: 'Storage.clearDataForOrigin'}
+      );
+    });
+    const warnings = await storage.clearDataForOrigin(sessionMock.asSession(), 'https://example.com');
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0]).toBeDisplayString(
+      'Clearing the origin data timed out. ' +
+      'Try auditing this page again and file a bug if the issue persists.'
+    );
+  });
+
+  it('throws non-timeout errors', async () => {
+    sessionMock.sendCommand.mockResponse('Storage.clearDataForOrigin', () => {
+      throw new Error('Not a timeout');
+    });
+    const resultPromise = storage.clearDataForOrigin(sessionMock.asSession(), 'https://example.com');
+    await expect(resultPromise).rejects.toThrow('Not a timeout');
+  });
+});
+
+describe('.clearBrowserCaches', () => {
+  it('returns a warning if clearing data timed out', async () => {
+    sessionMock.sendCommand.mockResponse('Network.clearBrowserCache', () => {
+      throw new LighthouseError(
+        LighthouseError.errors.PROTOCOL_TIMEOUT,
+        {protocolMethod: 'Network.clearBrowserCache'}
+      );
+    });
+    const warnings = await storage.clearBrowserCaches(sessionMock.asSession());
+    expect(warnings).toHaveLength(1);
+    expect(warnings[0]).toBeDisplayString(
+      'Clearing the browser cache timed out. ' +
+      'Try auditing this page again and file a bug if the issue persists.'
+    );
+  });
+
+  it('throws non-timeout errors', async () => {
+    sessionMock.sendCommand.mockResponse('Network.clearBrowserCache', () => {
+      throw new Error('Not a timeout');
+    });
+    const resultPromise = storage.clearBrowserCaches(sessionMock.asSession());
+    await expect(resultPromise).rejects.toThrow('Not a timeout');
   });
 });
 
